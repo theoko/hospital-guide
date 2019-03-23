@@ -26,12 +26,22 @@ public class ScreenController {
         stage.hide();
     }
 
+    private void addStyles(Scene scene) {
+        scene.getStylesheets().add(getClass().getResource("/css/jfoenix-components.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/css/custom.css").toExternalForm());
+    }
+
     public void activate(String name) throws Exception {
 
         this.stage = null;
         this.stage = new Stage();
 
+        // Init scene
         Scene s = new Scene(FXMLLoader.load(getClass().getResource(screenMap.get(name))));
+
+        // Add CSS to scene
+        addStyles(s);
+
         stage.setTitle(Character.toUpperCase(name.charAt(0)) + name.substring(1));
         stage.setScene(s);
         stage.setResizable(true);

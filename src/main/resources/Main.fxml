@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXHamburger?>
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.transitions.hamburger.HamburgerNextArrowBasicTransition?>
 <?import javafx.geometry.Insets?>
-<?import com.jfoenix.controls.*?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Tab?>
+<?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -11,8 +15,14 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Line?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
     <children>
+        <JFXHamburger fx:id="menuBurger" prefHeight="112.0" prefWidth="45.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="5.0">
+            <HamburgerNextArrowBasicTransition />
+         <effect>
+            <ColorAdjust brightness="-1.0" saturation="0.66" />
+         </effect>
+        </JFXHamburger>
         <JFXTabPane prefHeight="728.0" prefWidth="1085.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
                 <Tab text="Floor 1">
@@ -20,17 +30,17 @@
                         <AnchorPane prefHeight="400.0" prefWidth="600.0">
                             <children>
                                 <VBox prefHeight="383.0" prefWidth="554.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                <ImageView pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <ImageView fx:id="floorOneMap" blendMode="MULTIPLY" fitHeight="820.0" fitWidth="1154.0" layoutX="110.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-69.0" AnchorPane.topAnchor="-2.0">
                                     <image>
                                         <Image url="@images/map_icons.png" />
                                     </image>
                                 </ImageView>
-                                <ButtonBar prefHeight="47.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="440.0">
+                                <ButtonBar layoutX="5.0" layoutY="547.0" prefHeight="47.0" prefWidth="600.0" AnchorPane.bottomAnchor="-107.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="-5.0" AnchorPane.topAnchor="547.0">
                                     <buttons>
-                                        <JFXButton mnemonicParsing="false" buttonType="FLAT" style="-fx-text-fill:WHITE;-fx-background-color:#5264AE;-fx-font-size:14px;" text="Add Location..." />
-                                        <JFXButton mnemonicParsing="false" buttonType="FLAT" style="-fx-text-fill:WHITE;-fx-background-color:#5264AE;-fx-font-size:14px;" text="Add Path..." />
-                                        <JFXButton mnemonicParsing="false" buttonType="FLAT" style="-fx-text-fill:WHITE;-fx-background-color:#5264AE;-fx-font-size:14px;" text="Save" />
-                                        <JFXButton mnemonicParsing="false" buttonType="FLAT" style="-fx-text-fill:WHITE;-fx-background-color:#5264AE;-fx-font-size:14px;" text="Back" />
+                                        <JFXButton buttonType="FLAT" mnemonicParsing="false" style="-fx-text-fill:WHITE;-fx-background-color:#5264AE;-fx-font-size:14px;" text="Add Location..." />
+                                        <JFXButton buttonType="FLAT" mnemonicParsing="false" style="-fx-text-fill:WHITE;-fx-background-color:#5264AE;-fx-font-size:14px;" text="Add Path..." />
+                                        <JFXButton buttonType="FLAT" mnemonicParsing="false" style="-fx-text-fill:WHITE;-fx-background-color:#5264AE;-fx-font-size:14px;" text="Save" />
+                                        <JFXButton buttonType="FLAT" mnemonicParsing="false" style="-fx-text-fill:WHITE;-fx-background-color:#5264AE;-fx-font-size:14px;" text="Back" />
                                     </buttons>
                                     <padding>
                                         <Insets right="10.0" />
@@ -47,7 +57,10 @@
                         </AnchorPane>
                     </content>
                 </Tab>
-                <Tab text="Floor 2" />
+                <Tab text="Floor 2">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+               </content></Tab>
                 <Tab text="Floor 3">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
