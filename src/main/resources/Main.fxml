@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXComboBox?>
-<?import com.jfoenix.controls.JFXHamburger?>
 <?import com.jfoenix.controls.JFXTabPane?>
-<?import com.jfoenix.transitions.hamburger.HamburgerNextArrowBasicTransition?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
-<?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -19,12 +15,6 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <JFXHamburger fx:id="menuBurger" prefHeight="112.0" prefWidth="45.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="5.0">
-            <HamburgerNextArrowBasicTransition />
-         <effect>
-            <ColorAdjust brightness="-1.0" saturation="0.66" />
-         </effect>
-        </JFXHamburger>
         <JFXTabPane prefHeight="728.0" prefWidth="1085.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
                 <Tab text="Floor 1">

@@ -40,7 +40,7 @@
     </Label>
 
     <!-- Add Email Label -->
-    <Label text="Email ID : " GridPane.rowIndex="3">
+    <Label text="Email: " GridPane.rowIndex="3">
     </Label>
     <!-- Add Email Text Field -->
     <JFXTextField fx:id="emailField" prefHeight="40" GridPane.columnIndex="1" GridPane.rowIndex="3" />
@@ -54,7 +54,7 @@
 
 
     <!-- Add Submit Button -->
-    <JFXButton fx:id="submitButton" defaultButton="true" onAction="#handleLogin" prefHeight="40" prefWidth="100" style="-fx-text-fill:WHITE;-fx-background-color:#5264AE;-fx-font-size:14px;" text="Submit" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.rowSpan="1">
+    <JFXButton fx:id="submitButton" defaultButton="true" onAction="#handleLogin" prefHeight="40" prefWidth="100" style="-fx-text-fill:WHITE;-fx-background-color:#3f8cff;-fx-font-size:14px;" text="Submit" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.rowSpan="1">
         <GridPane.margin>
             <Insets bottom="20" left="0" right="0" top="20" />
         </GridPane.margin>
