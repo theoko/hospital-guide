@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <TabPane prefHeight="728.0" prefWidth="1085.0" tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab text="Floor 1">
+                    <content>
+                        <AnchorPane prefHeight="400.0" prefWidth="600.0">
+                            <children>
+                                <VBox prefHeight="383.0" prefWidth="554.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                <ImageView pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@images/map_icons.png" />
+                                    </image>
+                                </ImageView>
+                                <ButtonBar prefHeight="47.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="440.0">
+                                    <buttons>
+                                        <Button mnemonicParsing="false" text="Add Location..." />
+                                        <Button mnemonicParsing="false" text="Add Path..." />
+                                        <Button mnemonicParsing="false" text="Save" />
+                                        <Button mnemonicParsing="false" text="Back" />
+                                    </buttons>
+                                    <padding>
+                                        <Insets right="10.0" />
+                                    </padding>
+                                </ButtonBar>
+                                <Circle fill="#d0d0d0" layoutX="162.0" layoutY="335.0" radius="25.0" stroke="BLACK" strokeType="INSIDE" />
+                                <Circle fill="#d0d0d0" layoutX="293.0" layoutY="335.0" radius="25.0" stroke="BLACK" strokeType="INSIDE" />
+                                <Line endX="75.0" endY="1.0" layoutX="217.0" layoutY="284.0" startX="-56.5999755859375" />
+                                <Line endX="-97.79998779296875" endY="8.79998779296875" layoutX="259.0" layoutY="301.0" startX="-97.79998779296875" startY="-14.399993896484375" />
+                                <Line endX="-102.0" endY="13.0" layoutX="394.0" layoutY="296.0" startX="-102.0" startY="-11.5" />
+                                <Circle fill="#7b7b7b" layoutX="292.0" layoutY="285.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
+                                <Circle fill="#7b7b7b" layoutX="162.0" layoutY="285.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="Floor 2" />
+                <Tab text="Floor 3">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    </content>
+                </Tab>
+                <Tab text="Floor 4">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    </content>
+                </Tab>
+                <Tab text="Floor 5">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </children>
+</AnchorPane>

@@ -65,7 +65,7 @@ public class Main extends Application {
         scene.getStylesheets().add(Main.class.getResource("/css/jfoenix-components.css").toExternalForm());
         primaryStage.setTitle("App");
         primaryStage.setScene(scene);
-        primaryStage.setResizable(false);
+        primaryStage.setResizable(true);
 
         primaryStage.show();
 
