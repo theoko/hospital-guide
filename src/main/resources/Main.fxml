@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXHamburger?>
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import com.jfoenix.transitions.hamburger.HamburgerNextArrowBasicTransition?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.image.Image?>
@@ -14,6 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
     <children>
@@ -35,17 +37,6 @@
                                         <Image url="@images/map_icons.png" />
                                     </image>
                                 </ImageView>
-                                <ButtonBar layoutX="5.0" layoutY="547.0" prefHeight="47.0" prefWidth="600.0" AnchorPane.bottomAnchor="-107.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="-5.0" AnchorPane.topAnchor="547.0">
-                                    <buttons>
-                                        <JFXButton buttonType="FLAT" mnemonicParsing="false" style="-fx-text-fill:WHITE;-fx-background-color:#5264AE;-fx-font-size:14px;" text="Add Location..." />
-                                        <JFXButton buttonType="FLAT" mnemonicParsing="false" style="-fx-text-fill:WHITE;-fx-background-color:#5264AE;-fx-font-size:14px;" text="Add Path..." />
-                                        <JFXButton buttonType="FLAT" mnemonicParsing="false" style="-fx-text-fill:WHITE;-fx-background-color:#5264AE;-fx-font-size:14px;" text="Save" />
-                                        <JFXButton buttonType="FLAT" mnemonicParsing="false" style="-fx-text-fill:WHITE;-fx-background-color:#5264AE;-fx-font-size:14px;" text="Back" />
-                                    </buttons>
-                                    <padding>
-                                        <Insets right="10.0" />
-                                    </padding>
-                                </ButtonBar>
                                 <Circle fill="#d0d0d0" layoutX="162.0" layoutY="335.0" radius="25.0" stroke="BLACK" strokeType="INSIDE" />
                                 <Circle fill="#d0d0d0" layoutX="293.0" layoutY="335.0" radius="25.0" stroke="BLACK" strokeType="INSIDE" />
                                 <Line endX="75.0" endY="1.0" layoutX="217.0" layoutY="284.0" startX="-56.5999755859375" />
@@ -78,5 +69,29 @@
                 </Tab>
             </tabs>
         </JFXTabPane>
+
+        <AnchorPane fx:id="profilePane" layoutX="310.0" layoutY="32.0" prefWidth="0.0" style="-fx-background-color: #00d683; -fx-background-radius: 10 0 0 0;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+            <children>
+                <Label alignment="CENTER" contentDisplay="CENTER" layoutY="65.0" prefHeight="70.0" prefWidth="240.0" text="Welcome User!" textAlignment="CENTER" textFill="#ffffff">
+                    <font>
+                        <Font name="Moon Bold" size="24.0" />
+                    </font>
+                </Label>
+            <VBox prefHeight="200.0" prefWidth="240.0" spacing="10" AnchorPane.bottomAnchor="0.0">
+               <children>
+                    <JFXButton buttonType="RAISED" mnemonicParsing="false" prefWidth="Infinity" style="-fx-text-fill:WHITE;-fx-background-color:#3f8cff;-fx-font-size:14px;" text="Add Path...">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets></JFXButton>
+                    <JFXButton buttonType="RAISED" minWidth="100" mnemonicParsing="false" prefWidth="Infinity" style="-fx-text-fill:WHITE;-fx-background-color:#3f8cff;-fx-font-size:14px;" text="Add Location..." />
+                    <JFXButton buttonType="RAISED" mnemonicParsing="false" prefWidth="Infinity" style="-fx-text-fill:WHITE;-fx-background-color:#3f8cff;-fx-font-size:14px;" text="Save" />
+                    <JFXButton buttonType="RAISED" mnemonicParsing="false" prefWidth="Infinity" style="-fx-text-fill:WHITE;-fx-background-color:#3f8cff;-fx-font-size:14px;" text="Back" />
+               </children>
+               <padding>
+                  <Insets left="10.0" right="10.0" />
+               </padding>
+            </VBox>
+            </children>
+        </AnchorPane>
     </children>
 </AnchorPane>
