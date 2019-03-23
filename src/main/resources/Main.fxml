@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.*?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -14,7 +13,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <TabPane prefHeight="728.0" prefWidth="1085.0" tabClosingPolicy="UNAVAILABLE">
+        <JFXTabPane prefHeight="728.0" prefWidth="1085.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
                 <Tab text="Floor 1">
                     <content>
@@ -28,10 +27,10 @@
                                 </ImageView>
                                 <ButtonBar prefHeight="47.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="440.0">
                                     <buttons>
-                                        <Button mnemonicParsing="false" text="Add Location..." />
-                                        <Button mnemonicParsing="false" text="Add Path..." />
-                                        <Button mnemonicParsing="false" text="Save" />
-                                        <Button mnemonicParsing="false" text="Back" />
+                                        <JFXButton mnemonicParsing="false" buttonType="FLAT" style="-fx-text-fill:WHITE;-fx-background-color:#5264AE;-fx-font-size:14px;" text="Add Location..." />
+                                        <JFXButton mnemonicParsing="false" buttonType="FLAT" style="-fx-text-fill:WHITE;-fx-background-color:#5264AE;-fx-font-size:14px;" text="Add Path..." />
+                                        <JFXButton mnemonicParsing="false" buttonType="FLAT" style="-fx-text-fill:WHITE;-fx-background-color:#5264AE;-fx-font-size:14px;" text="Save" />
+                                        <JFXButton mnemonicParsing="false" buttonType="FLAT" style="-fx-text-fill:WHITE;-fx-background-color:#5264AE;-fx-font-size:14px;" text="Back" />
                                     </buttons>
                                     <padding>
                                         <Insets right="10.0" />
@@ -65,6 +64,6 @@
                     </content>
                 </Tab>
             </tabs>
-        </TabPane>
+        </JFXTabPane>
     </children>
 </AnchorPane>
