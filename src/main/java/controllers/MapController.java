@@ -14,12 +14,6 @@ public class MapController {
     @FXML
     ImageView floorOneMap;
 
-    @FXML
-    JFXButton zoomIn;
-
-    @FXML
-    JFXButton zoomOut;
-
     double sceneX, sceneY;
     double translateX, translateY;
 
@@ -51,22 +45,4 @@ public class MapController {
         // Handle onScroll event
 
     }
-
-    public void floorOneMapZoomin(ActionEvent event) {
-        System.out.println("kill me now");
-    }
-   // public void floorOneMapZoomin(ActionEvent event) {
-  //      System.out.println("zoomin: " + event.toString());
-
-        // Handle onclick event
-
-   // }
-
-    public void floorOneMapZoomout(ActionEvent event) {
-        System.out.println("kill me again");
-    }
-
-
-
-
 }
