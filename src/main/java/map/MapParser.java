@@ -9,8 +9,8 @@ public class MapParser {
 
     public static Map parse(String pathNodes, String pathEdges) {
         HashMap<String, Location> lstLocations = parseNodes(pathNodes);
-        HashMap<String, Path> lstPaths = parseEdges(pathEdges, lstLocations);
-        Map map = new Map(lstLocations, lstPaths);
+        parseEdges(pathEdges, lstLocations);
+        Map map = new Map(lstLocations);
         return map;
     }
 
@@ -33,7 +33,7 @@ public class MapParser {
             while ((line = br.readLine()) != null) {
                 String[] splitLine = line.split(splitter);
                 String locID = splitLine[0];
-                Location newLoc = new Location(locID, Integer.parseInt(splitLine[1]), Integer.parseInt(splitLine[2]), splitLine[3], splitLine[4], splitLine[5], splitLine[6], splitLine[7]);
+                Location newLoc = new Location(locID, Integer.parseInt(splitLine[1]), Integer.parseInt(splitLine[2]), splitLine[3], splitLine[4], createNode(splitLine[5]), splitLine[6], splitLine[7]);
                 lstLocations.put(locID, newLoc);
                 System.out.println(locID + " parsed.");
             }
@@ -51,16 +51,8 @@ public class MapParser {
         return lstLocations;
     }
 
-    /**
-     * Parses the edges from a data file and connects nodes
-     * @param pathEdges File path for edge data file
-     * @param lstLocations List of nodes/locations
-     * @return
-     */
-    private static HashMap<String, Path> parseEdges(String pathEdges, HashMap<String, Location> lstLocations) {
+    private static void parseEdges(String pathEdges, HashMap<String, Location> lstLocations) {
         // edgeID,startNode,endNode
-
-        HashMap<String, Path> lstPath = new HashMap<String, Path>();
 
         BufferedReader br = null;
         String line;
@@ -74,13 +66,17 @@ public class MapParser {
                 String pathID = splitLine[0];
                 Location start = lstLocations.get(splitLine[1]);
                 Location end = lstLocations.get(splitLine[2]);
-
-                Path newPath = new Path(pathID, start, end);
-                lstPath.put(pathID, newPath);
                 System.out.println(pathID + " parsed.");
 
-                start.addNeighbor(end);
-                end.addNeighbor(start);
+                double dist = Math.pow((Math.pow(start.getxCord() - end.getxCord(), 2.0) + (Math.pow(start.getyCord() - end.getyCord(), 2.0))), 0.5);
+                System.out.println("Start Location: (" + start.getxCord() + ", " + start.getyCord() + ")");
+                System.out.println("End Location: (" + end.getxCord() + ", " + end.getyCord() + ")");
+                System.out.println("Distance: " + dist);
+
+                Neighbor nEnd = new Neighbor(pathID, end, dist);
+                start.addNeighbor(nEnd);
+                Neighbor nStart = new Neighbor(pathID, start, dist);
+                end.addNeighbor(nStart);
                 System.out.println(start.getNodeID() + " and " + end.getNodeID() + " connected.");
             }
         } catch (IOException e) {
@@ -94,6 +90,15 @@ public class MapParser {
                 }
             }
         }
-        return lstPath;
+    }
+
+    //TODO: Complete switch statement
+    private static NodeType createNode(String nodeType) {
+        switch (nodeType) {
+            case "BATH":
+                return NodeType.BATH;
+            default:
+                return NodeType.STAI;
+        }
     }
 }
