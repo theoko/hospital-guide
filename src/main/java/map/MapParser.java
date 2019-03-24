@@ -15,8 +15,8 @@ public class MapParser {
     }
 
     /**
-     * Parses the nodes from a csv file
-     * @param pathNodes File path for node csv file
+     * Parses the nodes from a data file
+     * @param pathNodes File path for node data file
      */
     private static HashMap<String, Location> parseNodes(String pathNodes) {
         // nodeID,xcoord,ycoord,floor,building,nodeType,longName,shortName
@@ -52,8 +52,8 @@ public class MapParser {
     }
 
     /**
-     * Parses the edges from a csv file and connects nodes
-     * @param pathEdges File path for edge csv file
+     * Parses the edges from a data file and connects nodes
+     * @param pathEdges File path for edge data file
      * @param lstLocations List of nodes/locations
      * @return
      */
