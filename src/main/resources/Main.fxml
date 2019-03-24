@@ -22,7 +22,7 @@
                         <AnchorPane prefHeight="400.0" prefWidth="600.0">
                             <children>
                                 <VBox prefHeight="383.0" prefWidth="554.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                <ImageView fx:id="floorOneMap" blendMode="MULTIPLY" fitHeight="820.0" fitWidth="1154.0" layoutX="110.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-69.0" AnchorPane.topAnchor="-2.0">
+                                <ImageView fx:id="floorOneMap" onMouseDragged="#floorOneMapOnMouseDragged" onMousePressed="#floorOneMapOnMousePressed" onScroll="#floorOneMapScroll" blendMode="MULTIPLY" fitHeight="820.0" fitWidth="1154.0" layoutX="110.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-69.0" AnchorPane.topAnchor="-2.0">
                                     <image>
                                         <Image url="@images/map_icons.png" />
                                     </image>

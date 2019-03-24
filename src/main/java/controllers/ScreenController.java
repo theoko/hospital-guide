@@ -60,8 +60,10 @@ public class ScreenController {
 
         stage = new Stage();
 
-        // Init scene
+        // Init parent
         Parent root = FXMLLoader.load(ScreenController.class.getResource(screenMap.get(name)));
+
+        // Init scene
         Scene s = new Scene(root);
 
         // Add CSS to scene

@@ -4,7 +4,6 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 
 public class AuthController {
@@ -36,8 +35,9 @@ public class AuthController {
             errorMessage.setManaged(false);
 
             // Hide window
-            ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
+            ScreenController.deactivate();
 
+            // Move to another scene
             ScreenController.moveTo("main");
 
         } else {

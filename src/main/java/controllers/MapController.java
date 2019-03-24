@@ -1,28 +1,46 @@
 package controllers;
 
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 
 public class MapController {
 
     @FXML
-    static ImageView floorOneMap;
+    ImageView floorOneMap;
 
-    static EventHandler<MouseEvent> floorOneMapOnMouseDraggedEventHandler = new EventHandler<MouseEvent>() {
-        @Override
-        public void handle(MouseEvent event) {
+    double sceneX, sceneY;
+    double translateX, translateY;
 
-            System.out.println("test");
-        }
-    };
+    public void floorOneMapOnMousePressed(MouseEvent event) {
 
-    static EventHandler<MouseEvent> floorOneMapOnMousePressedEventHandler = new EventHandler<MouseEvent>() {
-        @Override
-        public void handle(MouseEvent event) {
-            System.out.println("test2");
-        }
-    };
+        // Handle onMousePressed event
+        sceneX = event.getSceneX();
+        sceneY = event.getSceneY();
+
+        translateX = ((ImageView) (event.getSource())).getTranslateX();
+        translateY = ((ImageView) (event.getSource())).getTranslateY();
+    }
+
+    public void floorOneMapOnMouseDragged(MouseEvent event) {
+
+        // Handle onMouseDragged event
+        double offsetX = event.getSceneX() - sceneX;
+        double offsetY = event.getSceneY() - sceneY;
+        double newTranslateX = translateX + offsetX;
+        double newTranslateY = translateY + offsetY;
+
+        ((ImageView) (event.getSource())).setTranslateX(newTranslateX);
+        ((ImageView) (event.getSource())).setTranslateY(newTranslateY);
+    }
+
+    public void floorOneMapScroll(ScrollEvent event) {
+        System.out.println("scroll: " + event.toString());
+
+        // Handle onScroll event
+
+    }
 
 }
