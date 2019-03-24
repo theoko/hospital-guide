@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <AnchorPane maxWidth="-Infinity" minWidth="150.0" prefHeight="199.0" prefWidth="441.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label text="Room Details" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
@@ -36,8 +37,8 @@
       </GridPane>
       <ButtonBar layoutX="107.0" layoutY="258.0" prefHeight="40.0" prefWidth="365.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <buttons>
-            <Button mnemonicParsing="false" text="Confirm" />
-            <Button mnemonicParsing="false" text="Cancel" />
+            <JFXButton mnemonicParsing="false" text="Confirm" style="-fx-text-fill:WHITE;-fx-background-color:#3f8cff;" />
+            <JFXButton mnemonicParsing="false" text="Cancel" style="-fx-text-fill:WHITE;-fx-background-color:#3f8cff;"/>
          </buttons>
          <padding>
             <Insets right="5.0" />
