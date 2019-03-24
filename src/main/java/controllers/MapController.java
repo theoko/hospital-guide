@@ -1,15 +1,24 @@
 package controllers;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 
+import java.awt.event.ActionEvent;
+
 public class MapController {
 
     @FXML
     ImageView floorOneMap;
+
+    @FXML
+    JFXButton zoomIn;
+
+    @FXML
+    JFXButton zoomOut;
 
     double sceneX, sceneY;
     double translateX, translateY;
@@ -42,5 +51,22 @@ public class MapController {
         // Handle onScroll event
 
     }
+
+    public void floorOneMapZoomin(ActionEvent event) {
+        System.out.println("kill me now");
+    }
+   // public void floorOneMapZoomin(ActionEvent event) {
+  //      System.out.println("zoomin: " + event.toString());
+
+        // Handle onclick event
+
+   // }
+
+    public void floorOneMapZoomout(ActionEvent event) {
+        System.out.println("kill me again");
+    }
+
+
+
 
 }
