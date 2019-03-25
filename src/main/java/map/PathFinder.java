@@ -46,9 +46,9 @@ public class PathFinder {
                 Location lCurr = nCurr.getLocation();
                 if (!used.containsKey(lCurr.getNodeID())) {
                     double newDist = currDist + nCurr.getDist();
-                    double heuristic = calcDist(lCurr.getxCord(), end.getxCord(), lCurr.getyCord(), end.getyCord());
-                    nCurr.setDist(newDist + heuristic);
-                    inQueue.add(nCurr); //TODO: Adding distances
+                    double heuristic = calcDist(lCurr.getxCord(), lCurr.getyCord(), end.getxCord(), end.getyCord());
+                    Neighbor newNeigh = new Neighbor(nCurr.getEdgeID(), nCurr.getLocation(), newDist + heuristic);
+                    inQueue.add(newNeigh);
                     parent.put(lCurr.getNodeID(), nNext);
                 }
             }
@@ -67,8 +67,10 @@ public class PathFinder {
     }
 
     private static void printPath(Stack<Neighbor> path) {
-        for (Neighbor curr : path) {
+        while (!path.isEmpty()) {
+            Neighbor curr = path.pop();
             System.out.println("Location: " + curr.getLocation().getNodeID());
+            System.out.println("Distance: " + curr.getDist());
         }
     }
 

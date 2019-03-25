@@ -68,7 +68,7 @@ public class MapParser {
                 Location end = lstLocations.get(splitLine[2]);
                 System.out.println(pathID + " parsed.");
 
-                double dist = PathFinder.calcDist(start.getxCord(), end.getxCord(), start.getyCord(), end.getyCord());
+                double dist = PathFinder.calcDist(start.getxCord(), start.getyCord(), end.getxCord(), end.getyCord());
                 System.out.println("Start Location: (" + start.getxCord() + ", " + start.getyCord() + ")");
                 System.out.println("End Location: (" + end.getxCord() + ", " + end.getyCord() + ")");
                 System.out.println("Distance: " + dist);
