@@ -9,6 +9,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 
+import static helpers.UIHelpers.MIN_PIXELS;
+
 public class MapController {
 
     @FXML
@@ -44,24 +46,28 @@ public class MapController {
         // Handle onScroll event
         double delta = -event.getDeltaY();
 
-        Rectangle2D viewport = floorOneMap.getViewport();
+//        Rectangle2D viewport = floorOneMap.getViewport();
 
-//        double scale = MapHelpers.clamp(Math.pow(1.01, delta),
-//
-//                Math.min(MIN_PIXELS / viewport.getWidth(), MIN_PIXELS / viewport.getHeight()),
-//
-//                Math.max(UIHelpers.getScreenWidth() / viewport.getWidth(), UIHelpers.getScreenHeight() / viewport.getHeight())
-//
-//        );
-//
-//        Point2D mouse = MapHelpers.imageViewToImage(floorOneMap, new Point2D(e.getX(), e.getY()));
-//
-//        double newMinX = MapHelpers.clamp(mouse.getX() - (mouse.getX() - viewport.getMinX()) * scale,
-//                0, UIHelpers.getScreenWidth() - newWidth);
-//        double newMinY = MapHelpers.clamp(mouse.getY() - (mouse.getY() - viewport.getMinY()) * scale,
-//                0, UIHelpers.getScreenHeight() - newHeight);
-//
-//        floorOneMap.setViewport(new Rectangle2D());
+
+        double scale = MapHelpers.clamp(Math.pow(1.01, delta),
+
+                Math.min(MIN_PIXELS / floorOneMap.getViewport().getWidth(), MIN_PIXELS / floorOneMap.getViewport().getHeight()),
+
+                Math.max(UIHelpers.getScreenWidth() / floorOneMap.getViewport().getWidth(), UIHelpers.getScreenHeight() / floorOneMap.getViewport().getHeight())
+
+        );
+
+        Point2D mouse = MapHelpers.imageViewToImage(floorOneMap, new Point2D(event.getX(), event.getY()));
+
+        double newWidth = floorOneMap.getViewport().getWidth() * scale;
+        double newHeight = floorOneMap.getViewport().getHeight() * scale;
+
+        double newMinX = MapHelpers.clamp(mouse.getX() - (mouse.getX() - floorOneMap.getViewport().getMinX()) * scale,
+                0, UIHelpers.getScreenWidth() - newWidth);
+        double newMinY = MapHelpers.clamp(mouse.getY() - (mouse.getY() - floorOneMap.getViewport().getMinY()) * scale,
+                0, UIHelpers.getScreenHeight() - newHeight);
+
+        floorOneMap.setViewport(new Rectangle2D(newMinX, newMinY, newWidth, newHeight));
     }
 
 
