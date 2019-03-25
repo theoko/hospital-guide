@@ -43,14 +43,14 @@
     <Label text="Email: " GridPane.rowIndex="3">
     </Label>
     <!-- Add Email Text Field -->
-    <JFXTextField fx:id="emailField" prefHeight="40" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+    <JFXTextField fx:id="emailField" prefHeight="30" promptText="username@email.com" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
 
     <!-- Add Password Label -->
     <Label text="Password : " GridPane.rowIndex="4">
     </Label>
     <!-- Add Password Field -->
-    <JFXPasswordField fx:id="passwordField" prefHeight="40" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+    <JFXPasswordField fx:id="passwordField" prefHeight="30" promptText="password" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 
 
     <!-- Add Submit Button -->

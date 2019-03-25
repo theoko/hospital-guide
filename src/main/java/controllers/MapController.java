@@ -72,4 +72,13 @@ public class MapController {
 
 
 
+    public void floorOneMapZoomIn(MouseEvent event) {
+        System.out.println("scroll: " + event.toString());
+
+
+    }
+
+    public void floorOneMapZoomOut(MouseEvent event) {
+        System.out.println("scroll: " + event.toString());
+    }
 }
