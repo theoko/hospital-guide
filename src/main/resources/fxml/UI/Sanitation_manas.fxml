@@ -3,14 +3,14 @@
 <?import com.gluonhq.charm.glisten.control.ExpansionPanel?>
 <?import com.gluonhq.charm.glisten.control.ExpansionPanel.CollapsedPanel?>
 <?import com.gluonhq.charm.glisten.control.ExpansionPanelContainer?>
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" text="Sanitation Service Request" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171">
+<TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" text="Sanitation Service Request" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
   <content>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="598.0">
          <children>
@@ -48,14 +48,14 @@
                   </ExpansionPanel>
                 </items>
             </ExpansionPanelContainer>
-            <Button layoutX="508.0" layoutY="227.0" mnemonicParsing="false" text="OK" />
-            <Button layoutX="432.0" layoutY="227.0" mnemonicParsing="false" text="Cancel" />
+            <JFXButton layoutX="432.0" layoutY="227.0" mnemonicParsing="false" style="-fx-text-fill:WHITE;-fx-background-color:#3f8cff;" text="Cancel" />
             <MenuButton layoutX="479.0" layoutY="22.0" mnemonicParsing="false" text="Log Out">
               <items>
                 <MenuItem mnemonicParsing="false" text="Action 1" />
                 <MenuItem mnemonicParsing="false" text="Action 2" />
               </items>
             </MenuButton>
+            <JFXButton layoutX="508.0" layoutY="227.0" mnemonicParsing="false" style="-fx-text-fill:WHITE;-fx-background-color:#3f8cff;" text="OK" />
          </children></AnchorPane>
   </content>
 </TitledPane>
