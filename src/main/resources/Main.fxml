@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
@@ -16,6 +17,11 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MapController">
     <children>
+      <AnchorPane AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="240.0" AnchorPane.topAnchor="30.0" style="-fx-background-color: #00d683;">
+         <children>
+            <JFXTextField focusColor="#3f8cff" unFocusColor="#3f8cff" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+         </children>
+      </AnchorPane>
         <JFXTabPane prefHeight="728.0" prefWidth="1085.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <tabs>
                 <Tab text="Floor 1">
@@ -86,8 +92,8 @@
                       </Label>
                   <HBox alignment="TOP_CENTER" spacing="40.0">
                      <children>
-                        <JFXButton text="Settings" />
-                        <JFXButton text="Logout" />
+                        <JFXButton text="Settings" style="-fx-text-fill: WHITE" />
+                        <JFXButton text="Logout" style="-fx-text-fill: WHITE" />
                      </children>
                   </HBox>
                </children>
