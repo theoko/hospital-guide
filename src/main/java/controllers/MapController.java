@@ -21,6 +21,9 @@ import static helpers.UIHelpers.MIN_PIXELS;
 public class MapController {
 
     @FXML
+    ImageView floorOneMap;
+
+    @FXML
     private AnchorPane Map;
 
     @FXML
