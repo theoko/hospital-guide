@@ -12,16 +12,16 @@ public class Neighbor implements Comparable<Neighbor> {
         this.dist = dist;
     }
 
-    public String getEdgeID() {
-        return edgeID;
-    }
-
     public Location getLocation() {
         return node;
     }
 
     public double getDist() {
         return dist;
+    }
+
+    public void setDist(double dist) {
+        this.dist = dist;
     }
 
     @Override
