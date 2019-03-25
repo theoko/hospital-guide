@@ -12,4 +12,8 @@ public class Map {
     public Location getLocation(String nodeID) {
         return lstLocations.get(nodeID);
     }
+
+    public HashMap<String, Location> getAllLocations() {
+        return lstLocations;
+    }
 }
