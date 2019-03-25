@@ -9,7 +9,12 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
+import sun.plugin.javascript.navig.Anchor;
+
 import java.awt.event.ActionEvent;
+import java.util.Stack;
 
 import static helpers.UIHelpers.MIN_PIXELS;
 
@@ -17,6 +22,15 @@ public class MapController {
 
     @FXML
     ImageView floorOneMap;
+
+    @FXML
+    private AnchorPane Map;
+
+    @FXML
+    JFXButton zoomIn;
+
+    @FXML
+    JFXButton zoomOut;
 
     double sceneX, sceneY;
     double translateX, translateY;
@@ -27,8 +41,8 @@ public class MapController {
         sceneX = event.getSceneX();
         sceneY = event.getSceneY();
 
-        translateX = ((ImageView) (event.getSource())).getTranslateX();
-        translateY = ((ImageView) (event.getSource())).getTranslateY();
+        translateX = ((AnchorPane) event.getSource()).getTranslateX();
+        translateY = ((AnchorPane) event.getSource()).getTranslateY();
     }
 
     public void floorOneMapOnMouseDragged(MouseEvent event) {
@@ -39,8 +53,8 @@ public class MapController {
         double newTranslateX = translateX + offsetX;
         double newTranslateY = translateY + offsetY;
 
-        ((ImageView) (event.getSource())).setTranslateX(newTranslateX);
-        ((ImageView) (event.getSource())).setTranslateY(newTranslateY);
+        ((AnchorPane) event.getSource()).setTranslateX(newTranslateX);
+        ((AnchorPane) event.getSource()).setTranslateY(newTranslateY);
     }
 
     public void floorOneMapScroll(ScrollEvent event) {
@@ -78,6 +92,10 @@ public class MapController {
         System.out.println("scroll: " + event.toString());
 
 
+   /*     zoomIn.addEventHandler(event.MOUSE_CLICKED, Event -> {
+                Map.fireEvent(Event.copyFor(Map, Map));
+            Event.consume();
+        });*/
     }
 
     public void floorOneMapZoomOut(MouseEvent event) {
