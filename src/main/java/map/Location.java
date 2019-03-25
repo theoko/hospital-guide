@@ -1,6 +1,5 @@
 package map;
 
-import javax.xml.soap.Node;
 import java.util.ArrayList;
 
 public class Location {

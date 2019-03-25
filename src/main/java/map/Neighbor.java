@@ -26,11 +26,11 @@ public class Neighbor implements Comparable<Neighbor> {
 
     @Override
     public int compareTo(Neighbor n) {
-        if (dist - n.getDist() > 0) {
+        if (dist - n.getDist() > 0) { // Positive: this > n
             return 1;
-        } else if (dist - n.getDist() == 0.0) {
+        } else if (dist - n.getDist() == 0.0) { // Zero: this == n
             return 0;
-        } else {
+        } else { // Negative: this < n
             return -1;
         }
     }
