@@ -32,7 +32,7 @@ public class PathFinder {
      * @param end The end location
      * @return A stack of locations that contains the path
      */
-    private static Stack<Neighbor> findPath(Map map, Location start, Location end) {
+    public static Stack<Neighbor> findPath(Map map, Location start, Location end) {
         // Create a new stack to hold the path from start to end
         Stack<Neighbor> path = new Stack<>();
 
