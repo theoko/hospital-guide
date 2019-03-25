@@ -123,10 +123,10 @@ public class PathFinder {
 
     /**
      * Equation to calculate the distance between two points
-     * @param x1
-     * @param y1
-     * @param x2
-     * @param y2
+     * @param x1 X-Location of point 1
+     * @param y1 Y-Location of point 1
+     * @param x2 X-Location of point 2
+     * @param y2 Y-Location of point 2
      * @return The distance as a double
      */
     public static double calcDist(int x1, int y1, int x2, int y2) {
