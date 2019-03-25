@@ -9,12 +9,12 @@ public class Location {
     private int yCord;
     private String floor;
     private String building;
-    private String nodeType;
+    private NodeType nodeType;
     private String longName;
     private String shortName;
-    private ArrayList<Location> lstNeighbors;
+    private ArrayList<Neighbor> lstNeighbors;
 
-    public Location(String nodeID, int xCord, int yCord, String floor, String building, String nodeType, String longName, String shortName) {
+    public Location(String nodeID, int xCord, int yCord, String floor, String building, NodeType nodeType, String longName, String shortName) {
         this.nodeID = nodeID;
         this.xCord = xCord;
         this.yCord = yCord;
@@ -23,7 +23,7 @@ public class Location {
         this.nodeType = nodeType;
         this.longName = longName;
         this.shortName = shortName;
-        this.lstNeighbors = new ArrayList<Location>();
+        this.lstNeighbors = new ArrayList<Neighbor>();
     }
 
     public String getNodeID() {
@@ -46,7 +46,7 @@ public class Location {
         return building;
     }
 
-    public String getNodeType() {
+    public NodeType getNodeType() {
         return nodeType;
     }
 
@@ -58,11 +58,12 @@ public class Location {
         return shortName;
     }
 
-    public void addNeighbor(Location neighbor) {
+    public void addNeighbor(Neighbor neighbor) {
         lstNeighbors.add(neighbor);
     }
 
-    public ArrayList<Location> getNeighbors() {
+    public ArrayList<Neighbor> getNeighbors() {
         return lstNeighbors;
     }
+
 }
