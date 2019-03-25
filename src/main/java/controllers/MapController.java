@@ -1,5 +1,6 @@
 package controllers;
 
+import com.jfoenix.controls.JFXButton;
 import helpers.MapHelpers;
 import helpers.UIHelpers;
 import javafx.fxml.FXML;
@@ -8,6 +9,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
+import java.awt.event.ActionEvent;
 
 import static helpers.UIHelpers.MIN_PIXELS;
 
