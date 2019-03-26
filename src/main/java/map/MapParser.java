@@ -115,7 +115,7 @@ public class MapParser {
     }
 
     private static String strToPath(String path) {
-        return MapParser.class.getResource(path).getFile();
+        return MapParser.class.getResource(path).getFile().replaceAll("%20", " ");
     }
 
     /**

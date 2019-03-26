@@ -27,6 +27,9 @@ public class Database {
         }
     }
 
+    /**
+     * Creates the basic database tables
+     */
     private void createTables() {
         Statement statement = null;
         try {

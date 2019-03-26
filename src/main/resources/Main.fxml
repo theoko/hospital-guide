@@ -91,8 +91,8 @@
                           </Label>
                      <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0">
                         <children>
-                           <JFXButton style="-fx-text-fill: WHITE; -fx-background-color: #3f8cff; -fx-font-size: 14px;" text="Settings" />
-                           <JFXButton style="-fx-text-fill: WHITE; -fx-background-color: #3f8cff; -fx-font-size: 14px;" text="Logout" />
+                           <JFXButton fx:id="settingsButton" style="-fx-text-fill: WHITE; -fx-background-color: #3f8cff; -fx-font-size: 14px;" text="Settings" />
+                           <JFXButton fx:id="logoutButton" style="-fx-text-fill: WHITE; -fx-background-color: #3f8cff; -fx-font-size: 14px;" text="Logout" />
                         </children>
                      </HBox>
                   </children>

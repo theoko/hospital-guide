@@ -1,32 +1,30 @@
 package controllers;
 
 import com.jfoenix.controls.JFXButton;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
-import de.jensd.fx.glyphs.fontawesome.utils.FontAwesomeIconFactory;
-import helpers.MapHelpers;
-import helpers.UIHelpers;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
-import javafx.geometry.Point2D;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.input.ZoomEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 import map.Map;
 import map.MapDisplay;
 import map.MapParser;
-import sun.plugin.javascript.navig.Anchor;
-
-import java.awt.event.ActionEvent;
-import java.util.Stack;
-
-import static helpers.UIHelpers.MIN_PIXELS;
 
 public class MapController {
 
+    /**
+     * Side menu
+     */
+    @FXML
+    JFXButton settingsButton;
+
+    @FXML
+    JFXButton logoutButton;
+
+    /**
+     * Map
+     */
     @FXML
     ImageView floorOneMap;
 
@@ -41,6 +39,10 @@ public class MapController {
 
     double sceneX, sceneY;
     double translateX, translateY;
+
+    public MapController() {
+        
+    }
 
     public void initialize() {
         Map map = MapParser.parse("/data/nodes.csv", "/data/edges.csv");
