@@ -9,6 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.input.ZoomEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import map.Map;
 import map.MapDisplay;
 import map.MapParser;
@@ -135,5 +136,11 @@ public class MapController {
         floorOneMapZoom(new ZoomEvent(ZoomEvent.ZOOM, 0, 0, 0, 0, false, false, false, false,
                 false, false, 0.2, 0.2, null));
         event.consume();
+    }
+
+    public void logOut(MouseEvent event) throws Exception {
+        event.consume();
+        ScreenController.deactivate();
+        ScreenController.activate("welcome");
     }
 }

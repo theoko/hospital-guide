@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.media.MediaView?>
+
+<AnchorPane prefHeight="600" prefWidth="700" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LogoController">
+    <MediaView fx:id="logoMv" fitHeight="400.0" fitWidth="500.0" layoutX="5.0" layoutY="80.0" onMouseClicked="#playVid"/>
+</AnchorPane>
