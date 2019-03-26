@@ -20,4 +20,8 @@ public class Constants {
     public static String SETTINGS_BUTTON_TOOLTIP = "Access user settings";
     public static String LOGOUT_BUTTON_TOOLTIP = "Logout";
 
+    public static enum NodeType {
+        BATH, CONF, DEPT, ELEV, EXIT, HALL, INFO, LABS, REST, RETL, SERV, STAI
+    }
+
 }

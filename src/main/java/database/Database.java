@@ -2,6 +2,7 @@ package database;
 
 import helpers.Constants;
 import models.user.Admin;
+import models.user.Employee;
 import models.user.User;
 
 import java.sql.*;
@@ -241,32 +242,21 @@ public class Database {
     }
 
     public Admin getAdminByID(int adminID) {
-        try {
+        return (Admin) getUserByID(adminID);
+    }
 
-            PreparedStatement statement;
+    public Employee getEmployeeByID(int employeeID) {
+        return (Employee) getUserByID(employeeID);
+    }
 
-            statement = connection.prepareStatement(
-                    "SELECT * FROM " + Constants.USERS_TABLE + " WHERE USERID=?"
-            );
+    /**
+     * Generalized function for filtering tables
+     * @return a list of objects
+     */
+    public List<Object> filterTable() {
+        
 
-            statement.setInt(1, adminID);
-
-            ResultSet resultSet = statement.executeQuery();
-
-            Admin admin = new Admin(
-                    resultSet.getInt("USERID"),
-                    resultSet.getString("USERNAME"),
-                    resultSet.getString("PASSWORD"),
-                    resultSet.getInt("USERTYPE")
-            );
-
-            return admin;
-
-        } catch (SQLException e) {
-            System.out.println("Cannot get admin by ID!");
-
-            return null;
-        }
+        return new ArrayList<>();
     }
 
     /**
@@ -311,46 +301,14 @@ public class Database {
      * Returns a list of admins
      */
     public List<Admin> getAdmins() throws Exception {
-        try {
-            Statement statement;
+        return new ArrayList<>();
+    }
 
-            statement = connection.createStatement();
-
-            String query = "SELECT * FROM " + Constants.ADMIN_TABLE;
-
-            ResultSet resultSet = statement.executeQuery(query);
-
-            List<Admin> returnList = new ArrayList<>();
-
-            while(resultSet.next()) {
-
-                int adminID = resultSet.getInt("ADMINID");
-
-                // Get admin
-                Admin adminReturned = getAdminByID(adminID);
-
-                if(adminReturned == null) {
-                    throw new Exception("Admin table is not correctly linked with the user table");
-                }
-
-                Admin admin = new Admin(
-                        resultSet.getInt("ADMINID"),
-                        adminReturned.getUsername(),
-                        adminReturned.getPassword(),
-                        adminReturned.getUserType()
-                );
-
-                returnList.add(admin);
-
-            }
-
-            return returnList;
-
-        } catch (SQLException e) {
-            System.out.println("Failed to get admins!");
-
-            return null;
-        }
+    /**
+     * Returns a list of employees
+     */
+    public List<Employee> getEmployees() throws Exception {
+        return new ArrayList<>();
     }
 
     public static void main(String[] args) {

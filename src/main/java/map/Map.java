@@ -1,5 +1,7 @@
 package map;
 
+import models.location.Location;
+
 import java.util.HashMap;
 
 public class Map {

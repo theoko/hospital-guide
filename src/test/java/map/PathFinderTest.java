@@ -1,5 +1,6 @@
 package map;
 
+import models.location.Location;
 import org.junit.Test;
 
 import java.util.Stack;

@@ -1,5 +1,7 @@
 package map;
 
+import models.location.Location;
+
 public class Neighbor implements Comparable<Neighbor> {
 
     private String edgeID;
