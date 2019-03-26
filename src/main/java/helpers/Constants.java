@@ -14,6 +14,11 @@ public class Constants {
     public static String NODES_TABLE = "NODES";
     public static String EDGES_TABLE = "EDGES";
 
+    public static String DB_PROJECTION = "projection";
+    public static String DB_RELATION = "relation";
+    public static String DB_CONDITION = "condition";
+
+
     /**
      * UI
      */
@@ -23,5 +28,6 @@ public class Constants {
     public static enum NodeType {
         BATH, CONF, DEPT, ELEV, EXIT, HALL, INFO, LABS, REST, RETL, SERV, STAI
     }
+
 
 }

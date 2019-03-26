@@ -1,17 +1,24 @@
 package database;
 
+import com.querydsl.sql.SQLTemplates;
 import helpers.Constants;
+import models.map.Location;
 import models.user.Admin;
 import models.user.Employee;
 import models.user.User;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Database {
 
     Connection connection;
+
+//    SQLTemplates dialect;
+//    Configuration configuration;
+//    SQLQueryFactory sqlQueryFactory;
 
     public Database() {
 
@@ -23,11 +30,62 @@ public class Database {
 
         connection = null;
 
+//        dataSource = new DataSource() {
+//            @Override
+//            public Connection getConnection() throws SQLException {
+//                return connection;
+//            }
+//
+//            @Override
+//            public Connection getConnection(String username, String password) throws SQLException {
+//                return connection;
+//            }
+//
+//            @Override
+//            public <T> T unwrap(Class<T> iface) throws SQLException {
+//                return null;
+//            }
+//
+//            @Override
+//            public boolean isWrapperFor(Class<?> iface) throws SQLException {
+//                return false;
+//            }
+//
+//            @Override
+//            public PrintWriter getLogWriter() throws SQLException {
+//                return null;
+//            }
+//
+//            @Override
+//            public void setLogWriter(PrintWriter out) throws SQLException {
+//
+//            }
+//
+//            @Override
+//            public void setLoginTimeout(int seconds) throws SQLException {
+//
+//            }
+//
+//            @Override
+//            public int getLoginTimeout() throws SQLException {
+//                return 0;
+//            }
+//
+//            @Override
+//            public Logger getParentLogger() throws SQLFeatureNotSupportedException {
+//                return null;
+//            }
+//        };
+
         try {
             connection = DriverManager.getConnection("jdbc:derby:" + Constants.DB_NAME + ";create=true");
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+//        dialect = new DerbyTemplates();
+//        configuration = new Configuration(dialect);
+////        sqlQueryFactory = new SQLQueryFactory(configuration, dataSource);
     }
 
     /**
@@ -249,12 +307,53 @@ public class Database {
         return (Employee) getUserByID(employeeID);
     }
 
+    public boolean addNode(Location location) {
+
+
+
+//        new SQLInsertClause(connection, dialect, location);
+
+        return true;
+
+    }
+
+    public boolean addEdge() {
+        return true;
+    }
+
     /**
      * Generalized function for filtering tables
      * @return a list of objects
      */
-    public List<Object> filterTable() {
-        
+    public List<Object> filterTable(HashMap<String, ArrayList<String>> builder) {
+
+//        // Start with select
+//        String query = "SELECT ";
+//
+//        ArrayList<String> projection = builder.get(Constants.DB_PROJECTION);
+//        ArrayList<String> relation = builder.get(Constants.DB_RELATION);
+//        ArrayList<String> condition = builder.get(Constants.DB_CONDITION);
+//
+//        for(int i=0; i<projection.size(); i++) {
+//            query += projection.get(i);
+//
+//            if(i < projection.size() - 1)
+//                query += ", ";
+//        }
+//
+//        query += " FROM ";
+//
+//        for(int i=0; i<relation.size(); i++) {
+//            query += relation.get(i);
+//            query += " " + Character.toUpperCase(relation.get(i).charAt(0));
+//
+//            if(i < relation.size() - 1)
+//                query += ", ";
+//        }
+//
+//        System.out.println(query);
+
+
 
         return new ArrayList<>();
     }
@@ -313,7 +412,19 @@ public class Database {
 
     public static void main(String[] args) {
         Database db = new Database();
-        db.createTables();
+//        db.createTables();
+
+        HashMap<String, ArrayList<String>> builder = new HashMap<>();
+
+        ArrayList<String> proj = new ArrayList<>();
+        proj.add("USERID");
+        proj.add("USERNAME");
+
+        ArrayList<String> relation = new ArrayList<>();
+
+        builder.put(Constants.DB_PROJECTION, proj);
+
+        db.filterTable(builder);
 
     }
 }

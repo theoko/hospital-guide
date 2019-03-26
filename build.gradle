@@ -10,7 +10,6 @@ mainClassName = "Main" // replace with your main class
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-
 repositories {
     mavenCentral()
     jcenter()
@@ -48,7 +47,9 @@ dependencies {
             [group: 'org.apache.derby', name: 'derbyclient', version: '10.11.1.1'],
             [group: 'org.apache.derby', name: 'derbytools', version: '10.11.1.1'],
             [group: 'de.jensd', name: 'fontawesomefx-commons', version: '8.11'],
-            [group: 'de.jensd', name: 'fontawesomefx-fontawesome', version: '4.6.1-2']
+            [group: 'de.jensd', name: 'fontawesomefx-fontawesome', version: '4.6.1-2'],
+            [group: 'com.querydsl', name: 'querydsl-sql', version: '4.2.1'],
+            [group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.6.1']
     )
     compile(
             [group: 'junit', name: 'junit', version: '4.12'],
@@ -57,7 +58,9 @@ dependencies {
             [group: 'org.apache.derby', name: 'derbyclient', version: '10.11.1.1'],
             [group: 'org.apache.derby', name: 'derbytools', version: '10.11.1.1'],
             [group: 'de.jensd', name: 'fontawesomefx-commons', version: '8.11'],
-            [group: 'de.jensd', name: 'fontawesomefx-fontawesome', version: '4.6.1-2']
+            [group: 'de.jensd', name: 'fontawesomefx-fontawesome', version: '4.6.1-2'],
+            [group: 'com.querydsl', name: 'querydsl-sql', version: '4.2.1'],
+            [group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.6.1']
     )
 }
 
