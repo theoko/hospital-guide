@@ -1,5 +1,6 @@
 package map;
 
+import helpers.Constants;
 import models.location.Location;
 
 import java.io.BufferedReader;
@@ -125,32 +126,32 @@ public class MapParser {
      * @param nodeType String of the type of node
      * @return A NodeType enum of the given type
      */
-    private static NodeType createNode(String nodeType) {
+    private static Constants.NodeType createNode(String nodeType) {
         switch (nodeType) {
             case "BATH":
-                return NodeType.BATH;
+                return Constants.NodeType.BATH;
             case "CONF":
-                return NodeType.CONF;
+                return Constants.NodeType.CONF;
             case "DEPT":
-                return NodeType.DEPT;
+                return Constants.NodeType.DEPT;
             case "ELEV":
-                return NodeType.ELEV;
+                return Constants.NodeType.ELEV;
             case "EXIT":
-                return NodeType.EXIT;
+                return Constants.NodeType.EXIT;
             case "HALL":
-                return NodeType.HALL;
+                return Constants.NodeType.HALL;
             case "INFO":
-                return NodeType.INFO;
+                return Constants.NodeType.INFO;
             case "LABS":
-                return NodeType.LABS;
+                return Constants.NodeType.LABS;
             case "REST":
-                return NodeType.REST;
+                return Constants.NodeType.REST;
             case "RETL":
-                return NodeType.RETL;
+                return Constants.NodeType.RETL;
             case "SERV":
-                return NodeType.SERV;
+                return Constants.NodeType.SERV;
             default:
-                return NodeType.STAI;
+                return Constants.NodeType.STAI;
         }
     }
 }

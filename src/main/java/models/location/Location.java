@@ -1,5 +1,6 @@
 package models.location;
 
+import helpers.Constants;
 import map.Neighbor;
 import map.NodeType;
 
@@ -12,12 +13,12 @@ public class Location {
     private int yCord;
     private String floor;
     private String building;
-    private NodeType nodeType;
+    private Constants.NodeType nodeType;
     private String longName;
     private String shortName;
     private ArrayList<Neighbor> lstNeighbors;
 
-    public Location(String nodeID, int xCord, int yCord, String floor, String building, NodeType nodeType, String longName, String shortName) {
+    public Location(String nodeID, int xCord, int yCord, String floor, String building, Constants.NodeType nodeType, String longName, String shortName) {
         this.nodeID = nodeID;
         this.xCord = xCord;
         this.yCord = yCord;
@@ -49,7 +50,7 @@ public class Location {
         return building;
     }
 
-    public NodeType getNodeType() {
+    public Constants.NodeType getNodeType() {
         return nodeType;
     }
 
