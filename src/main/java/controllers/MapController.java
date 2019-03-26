@@ -1,7 +1,9 @@
 package controllers;
 
 import com.jfoenix.controls.JFXButton;
+import helpers.Constants;
 import javafx.fxml.FXML;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
@@ -40,11 +42,15 @@ public class MapController {
     double sceneX, sceneY;
     double translateX, translateY;
 
-    public MapController() {
-        
-    }
-
     public void initialize() {
+        // Set tooltip for sidemenu buttons
+        settingsButton.setTooltip(new Tooltip(Constants.SETTINGS_BUTTON_TOOLTIP));
+        logoutButton.setTooltip(new Tooltip(Constants.LOGOUT_BUTTON_TOOLTIP));
+
+        // Set icons for sidemenu buttons
+//        settingsButton.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.COG));
+//        logoutButton.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.SIGN_OUT));
+
         Map map = MapParser.parse("/data/nodes.csv", "/data/edges.csv");
         MapDisplay.display(map, panMap, "Tower", "1");
     }

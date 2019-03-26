@@ -1,10 +1,11 @@
 package database;
 
 import helpers.Constants;
+import models.User;
 
-import javax.lang.model.type.NullType;
-import javax.swing.text.StyledEditorKit;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Database {
 
@@ -81,7 +82,6 @@ public class Database {
 
         try {
 
-            // TODO: check if table exists
             boolean createUsersResult = statement.execute(usersTable);
             boolean createEmployeeResult = statement.execute(employeeTable);
             boolean createCustodianResult = statement.execute(custodianTable);
@@ -89,6 +89,30 @@ public class Database {
 
             boolean createNodesResult = statement.execute(nodesTable);
             boolean createEdgesTable = statement.execute(edgesTable);
+
+            if(!createUsersResult) {
+                System.out.println("Failed to create users table");
+            }
+
+            if(!createEmployeeResult) {
+                System.out.println("Failed to create employee table");
+            }
+
+            if(!createCustodianResult) {
+                System.out.println("Failed to create custodian table");
+            }
+
+            if(!createAdminResult) {
+                System.out.println("Failed to create admin table");
+            }
+
+            if(!createNodesResult) {
+                System.out.println("Failed to create nodes table");
+            }
+
+            if(!createEdgesTable) {
+                System.out.println("Failed to create edges table");
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -98,9 +122,13 @@ public class Database {
 
     }
 
+
+    /**
+     * Drop tables
+     */
     private boolean dropUsersTable(){
         try {
-            Statement statement = null;
+            Statement statement;
 
             statement = connection.createStatement();
 
@@ -114,7 +142,7 @@ public class Database {
 
     private boolean dropEmployeeTable(){
         try {
-            Statement statement = null;
+            Statement statement;
 
             statement = connection.createStatement();
 
@@ -128,7 +156,7 @@ public class Database {
 
     private boolean dropCustodianTable(){
         try {
-            Statement statement = null;
+            Statement statement;
 
             statement = connection.createStatement();
 
@@ -142,7 +170,7 @@ public class Database {
 
     private boolean dropAdminTable(){
         try {
-            Statement statement = null;
+            Statement statement;
 
             statement = connection.createStatement();
 
@@ -156,7 +184,7 @@ public class Database {
 
     private boolean dropNodesTable(){
         try {
-            Statement statement = null;
+            Statement statement;
 
             statement = connection.createStatement();
 
@@ -170,7 +198,7 @@ public class Database {
 
     private boolean dropEdgesTable(){
         try {
-            Statement statement = null;
+            Statement statement;
 
             statement = connection.createStatement();
 
@@ -179,6 +207,43 @@ public class Database {
             System.out.println("Table " + Constants.EDGES_TABLE + " cannot be dropped");
 
             return false;
+        }
+    }
+
+    /**
+     * Returns a list of users
+     */
+    public List<User> getUsers() {
+        try {
+            Statement statement;
+
+            statement = connection.createStatement();
+
+            String query = "SELECT * FROM " + Constants.USERS_TABLE;
+
+            ResultSet resultSet = statement.executeQuery(query);
+
+            ArrayList<User> returnList = new ArrayList<>();
+
+            while(resultSet.next()) {
+
+                User user = new User(
+                        resultSet.getInt("userID"),
+                        resultSet.getString("username"),
+                        resultSet.getString("password"),
+                        resultSet.getInt("userType")
+                );
+
+                returnList.add(user);
+
+            }
+
+            return returnList;
+
+        } catch (SQLException e) {
+            System.out.println("Failed to get users!");
+
+            return new ArrayList();
         }
     }
 

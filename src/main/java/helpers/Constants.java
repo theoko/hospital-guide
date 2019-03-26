@@ -14,5 +14,10 @@ public class Constants {
     public static String NODES_TABLE = "NODES";
     public static String EDGES_TABLE = "EDGES";
 
+    /**
+     * UI
+     */
+    public static String SETTINGS_BUTTON_TOOLTIP = "Access user settings";
+    public static String LOGOUT_BUTTON_TOOLTIP = "Logout";
 
 }
