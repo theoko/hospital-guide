@@ -4,7 +4,6 @@ import helpers.Constants;
 import models.user.Admin;
 import models.user.User;
 
-import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -212,7 +211,7 @@ public class Database {
         }
     }
 
-    public User getUser(int userID) {
+    public User getUserByID(int userID) {
         try {
 
             PreparedStatement statement;
@@ -235,7 +234,36 @@ public class Database {
             return user;
 
         } catch (SQLException e) {
-            System.out.println("Cannot get user!");
+            System.out.println("Cannot get user by ID!");
+
+            return null;
+        }
+    }
+
+    public Admin getAdminByID(int adminID) {
+        try {
+
+            PreparedStatement statement;
+
+            statement = connection.prepareStatement(
+                    "SELECT * FROM " + Constants.USERS_TABLE + " WHERE USERID=?"
+            );
+
+            statement.setInt(1, adminID);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            Admin admin = new Admin(
+                    resultSet.getInt("USERID"),
+                    resultSet.getString("USERNAME"),
+                    resultSet.getString("PASSWORD"),
+                    resultSet.getInt("USERTYPE")
+            );
+
+            return admin;
+
+        } catch (SQLException e) {
+            System.out.println("Cannot get admin by ID!");
 
             return null;
         }
@@ -298,18 +326,18 @@ public class Database {
 
                 int adminID = resultSet.getInt("ADMINID");
 
-                // Get associated user
-                User user = getUser(adminID);
+                // Get admin
+                Admin adminReturned = getAdminByID(adminID);
 
-                if(user == null) {
+                if(adminReturned == null) {
                     throw new Exception("Admin table is not correctly linked with the user table");
                 }
 
                 Admin admin = new Admin(
                         resultSet.getInt("ADMINID"),
-                        user.getUsername(),
-                        user.getPassword(),
-                        user.getUserType()
+                        adminReturned.getUsername(),
+                        adminReturned.getPassword(),
+                        adminReturned.getUserType()
                 );
 
                 returnList.add(admin);
