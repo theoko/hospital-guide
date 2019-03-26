@@ -70,12 +70,46 @@ public class MapController {
     public void floorOneMapScroll(ScrollEvent event) {
         ((AnchorPane) event.getSource()).setTranslateX(((AnchorPane) event.getSource()).getTranslateX() + event.getDeltaX());
         ((AnchorPane) event.getSource()).setTranslateY(((AnchorPane) event.getSource()).getTranslateY() + event.getDeltaY());
+
+        if (((AnchorPane) event.getSource()).getTranslateX() <= 0) {
+            ((AnchorPane) event.getSource()).setTranslateX(0);
+        }
+
+        if (((AnchorPane) event.getSource()).getTranslateX() >= 180) {
+            ((AnchorPane) event.getSource()).setTranslateX(180);
+        }
+
+        if (((AnchorPane) event.getSource()).getTranslateY() <= 0) {
+            ((AnchorPane) event.getSource()).setTranslateY(0);
+        }
+
+        if (((AnchorPane) event.getSource()).getTranslateY() >= 180) {
+            ((AnchorPane) event.getSource()).setTranslateY(180);
+        }
     }
 
     public void floorOneMapZoom(ZoomEvent event) {
         ((AnchorPane) event.getSource()).setScaleX(((AnchorPane) event.getSource()).getScaleX() * event.getZoomFactor());
         ((AnchorPane) event.getSource()).setScaleY(((AnchorPane) event.getSource()).getScaleY() * event.getZoomFactor());
+        if(((AnchorPane) event.getSource()).getScaleX() <= 0.55 && ((AnchorPane) event.getSource()).getScaleY() <= 0.55) {
+            ((AnchorPane) event.getSource()).setScaleX(0.55);
+            ((AnchorPane) event.getSource()).setScaleY(0.55);
+        }
+        if(((AnchorPane) event.getSource()).getScaleX() >= 8 && ((AnchorPane) event.getSource()).getScaleY() >= 8) {
+            ((AnchorPane) event.getSource()).setScaleX(8);
+            ((AnchorPane) event.getSource()).setScaleY(8);
+        }
+    }
 
+    public void floorOneMapZoomDone(ZoomEvent event) {
+        if(((AnchorPane) event.getSource()).getScaleX() <= 0.85 && ((AnchorPane) event.getSource()).getScaleY() <= 0.85) {
+            ((AnchorPane) event.getSource()).setScaleX(0.85);
+            ((AnchorPane) event.getSource()).setScaleY(0.85);
+        }
+        if(((AnchorPane) event.getSource()).getScaleX() >= 4 && ((AnchorPane) event.getSource()).getScaleY() >= 4) {
+            ((AnchorPane) event.getSource()).setScaleX(4);
+            ((AnchorPane) event.getSource()).setScaleY(4);
+        }
     }
 
     public void floorOneMapZoomIn(MouseEvent event) {

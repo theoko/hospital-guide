@@ -29,9 +29,9 @@
                             <children>
                                 <JFXButton fx:id="zoomIn" buttonType="RAISED" layoutX="800.0" layoutY="650.0" mnemonicParsing="false" onMouseClicked="#floorOneMapZoomIn" prefHeight="40" prefWidth="40" style="-fx-text-fill:WHITE;-fx-background-color:#3f8cff;-fx-font-size:14px;" text="+" />
                                 <JFXButton fx:id="zoomOut" buttonType="RAISED" layoutX="800.0" layoutY="700.0" mnemonicParsing="false" onMouseClicked="#floorOneMapZoomOut" prefHeight="40" prefWidth="40" style="-fx-text-fill:WHITE;-fx-background-color:#3f8cff;-fx-font-size:14px;" text="-" />
-                                <AnchorPane fx:id="panMap" onMouseDragged="#floorOneMapOnMouseDragged" onMousePressed="#floorOneMapOnMousePressed" onScroll="#floorOneMapScroll" onZoom="#floorOneMapZoom" prefHeight="400.0" prefWidth="600.0">
+                                <AnchorPane fx:id="panMap" onMouseDragged="#floorOneMapOnMouseDragged" onMousePressed="#floorOneMapOnMousePressed" onScroll="#floorOneMapScroll" onZoomFinished="#floorOneMapZoomDone" onZoom="#floorOneMapZoom" prefHeight="400.0" prefWidth="400.0">
                                     <children>
-                                        <ImageView fx:id="floorOneMap" blendMode="MULTIPLY" fitHeight="820.0" fitWidth="1154.0" layoutX="110.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-69.0" AnchorPane.topAnchor="-2.0">
+                                        <ImageView fx:id="floorOneMap" blendMode="MULTIPLY" fitHeight="820.0" fitWidth="1154.0" layoutX="50.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-2.0">
                                             <image>
                                                 <Image url="@images/our_map.png" />
                                             </image>
