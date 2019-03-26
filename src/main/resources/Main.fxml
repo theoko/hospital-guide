@@ -9,16 +9,13 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Circle?>
-<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MapController">
     <children>
       <AnchorPane style="-fx-background-color: #00d683;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="240.0" AnchorPane.topAnchor="30.0" />
-        <JFXTabPane prefHeight="728.0" prefWidth="1085.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+        <JFXTabPane prefHeight="728.0" prefWidth="1085.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <AnchorPane style="-fx-background-color: #00d683;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="240.0" AnchorPane.topAnchor="30.0">
          <children>
             <JFXTextField focusColor="#3f8cff" unFocusColor="#3f8cff" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
@@ -32,7 +29,7 @@
                             <children>
                                 <JFXButton fx:id="zoomIn" buttonType="RAISED" layoutX="800.0" layoutY="650.0" mnemonicParsing="false" onMouseClicked="#floorOneMapZoomIn" prefHeight="40" prefWidth="40" style="-fx-text-fill:WHITE;-fx-background-color:#3f8cff;-fx-font-size:14px;" text="+" />
                                 <JFXButton fx:id="zoomOut" buttonType="RAISED" layoutX="800.0" layoutY="700.0" mnemonicParsing="false" onMouseClicked="#floorOneMapZoomOut" prefHeight="40" prefWidth="40" style="-fx-text-fill:WHITE;-fx-background-color:#3f8cff;-fx-font-size:14px;" text="-" />
-                                <AnchorPane fx:id="Map" onMouseDragged="#floorOneMapOnMouseDragged" onMousePressed="#floorOneMapOnMousePressed" onScroll="#floorOneMapScroll" onZoom="#floorOneMapZoom" prefHeight="400.0" prefWidth="600.0">
+                                <AnchorPane fx:id="panMap" onMouseDragged="#floorOneMapOnMouseDragged" onMousePressed="#floorOneMapOnMousePressed" onScroll="#floorOneMapScroll" onZoom="#floorOneMapZoom" prefHeight="400.0" prefWidth="600.0">
                                     <children>
                                         <ImageView fx:id="floorOneMap" blendMode="MULTIPLY" fitHeight="820.0" fitWidth="1154.0" layoutX="110.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-69.0" AnchorPane.topAnchor="-2.0">
                                             <image>
