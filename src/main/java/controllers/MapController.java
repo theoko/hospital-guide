@@ -11,6 +11,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import map.Map;
+import map.MapDisplay;
+import map.MapParser;
 import sun.plugin.javascript.navig.Anchor;
 
 import java.awt.event.ActionEvent;
@@ -24,7 +27,7 @@ public class MapController {
     ImageView floorOneMap;
 
     @FXML
-    private AnchorPane Map;
+    AnchorPane panMap;
 
     @FXML
     JFXButton zoomIn;
@@ -34,6 +37,11 @@ public class MapController {
 
     double sceneX, sceneY;
     double translateX, translateY;
+
+    public void initialize() {
+        Map map = MapParser.parse("/data/nodes.csv", "/data/edges.csv");
+        MapDisplay.display(map, panMap, "Tower", "1");
+    }
 
     public void floorOneMapOnMousePressed(MouseEvent event) {
 

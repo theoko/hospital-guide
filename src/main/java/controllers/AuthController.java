@@ -18,8 +18,8 @@ public class AuthController {
     Label errorMessage;
 
 
-    final String TEMP_USERNAME = "admin@hospital.com";
-    final String TEMP_PASSWORD = "admin";
+    final String TEMP_USERNAME = "root";
+    final String TEMP_PASSWORD = "";
 
     private boolean authenticate(String username, String password) {
         return username.equals(TEMP_USERNAME) && password.equals(TEMP_PASSWORD);

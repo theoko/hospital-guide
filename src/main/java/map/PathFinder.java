@@ -9,7 +9,7 @@ public class PathFinder {
 
     public static void main(String[] args) {
         // Create map
-        Map map = MapParser.parse(PathFinder.class.getResource("/data/nodes.csv").getFile(), PathFinder.class.getResource("/data/edges.csv").getFile());
+        Map map = MapParser.parse("/data/nodes.csv", "/data/edges.csv");
         // Start and end locations
         Location start = map.getLocation("ADEPT00301");
         Location end = map.getLocation("DDEPT00402");

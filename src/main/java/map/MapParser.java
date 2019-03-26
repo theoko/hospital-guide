@@ -15,9 +15,9 @@ public class MapParser {
      */
     public static Map parse(String pathNodes, String pathEdges) {
         // Generates a hashmap of unlinked locations
-        HashMap<String, Location> lstLocations = parseNodes(pathNodes);
+        HashMap<String, Location> lstLocations = parseNodes(strToPath(pathNodes));
         // Links the locations
-        parseEdges(pathEdges, lstLocations);
+        parseEdges(strToPath(pathEdges), lstLocations);
         Map map = new Map(lstLocations);
         return map;
     }
@@ -112,6 +112,10 @@ public class MapParser {
                 }
             }
         }
+    }
+
+    private static String strToPath(String path) {
+        return MapParser.class.getResource(path).getFile();
     }
 
     /**

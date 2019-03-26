@@ -9,20 +9,17 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Circle?>
-<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MapController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MapController">
     <children>
-      <AnchorPane AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="240.0" AnchorPane.topAnchor="30.0" style="-fx-background-color: #00d683;">
+      <AnchorPane style="-fx-background-color: #00d683;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="240.0" AnchorPane.topAnchor="30.0">
          <children>
             <JFXTextField focusColor="#3f8cff" unFocusColor="#3f8cff" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
          </children>
       </AnchorPane>
-        <JFXTabPane prefHeight="728.0" prefWidth="1085.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <JFXTabPane prefHeight="728.0" prefWidth="1085.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <tabs>
                 <Tab text="Floor 1">
                     <content>
@@ -30,20 +27,13 @@
                             <children>
                                 <JFXButton fx:id="zoomIn" buttonType="RAISED" layoutX="800.0" layoutY="650.0" mnemonicParsing="false" onMouseClicked="#floorOneMapZoomIn" prefHeight="40" prefWidth="40" style="-fx-text-fill:WHITE;-fx-background-color:#3f8cff;-fx-font-size:14px;" text="+" />
                                 <JFXButton fx:id="zoomOut" buttonType="RAISED" layoutX="800.0" layoutY="700.0" mnemonicParsing="false" onMouseClicked="#floorOneMapZoomOut" prefHeight="40" prefWidth="40" style="-fx-text-fill:WHITE;-fx-background-color:#3f8cff;-fx-font-size:14px;" text="-" />
-                                <AnchorPane fx:id="Map" onMouseDragged="#floorOneMapOnMouseDragged" onMousePressed="#floorOneMapOnMousePressed" onScroll="#floorOneMapScroll" prefHeight="400.0" prefWidth="600.0">
+                                <AnchorPane fx:id="panMap" onMouseDragged="#floorOneMapOnMouseDragged" onMousePressed="#floorOneMapOnMousePressed" onScroll="#floorOneMapScroll" prefHeight="400.0" prefWidth="600.0">
                                     <children>
                                         <ImageView fx:id="floorOneMap" blendMode="MULTIPLY" fitHeight="820.0" fitWidth="1154.0" layoutX="110.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-69.0" AnchorPane.topAnchor="-2.0">
                                             <image>
-                                                <Image url="@images/map_icons.png" />
+                                                <Image url="@images/our_map.png" />
                                             </image>
                                         </ImageView>
-                                        <Circle fill="#d0d0d0" layoutX="162.0" layoutY="335.0" radius="25.0" stroke="BLACK" strokeType="INSIDE" />
-                                        <Circle fill="#d0d0d0" layoutX="293.0" layoutY="335.0" radius="25.0" stroke="BLACK" strokeType="INSIDE" />
-                                        <Line endX="75.0" endY="1.0" layoutX="217.0" layoutY="284.0" startX="-56.5999755859375" />
-                                        <Line endX="-97.79998779296875" endY="8.79998779296875" layoutX="259.0" layoutY="301.0" startX="-97.79998779296875" startY="-14.399993896484375" />
-                                        <Line endX="-102.0" endY="13.0" layoutX="394.0" layoutY="296.0" startX="-102.0" startY="-11.5" />
-                                        <Circle fill="#7b7b7b" layoutX="292.0" layoutY="285.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
-                                        <Circle fill="#7b7b7b" layoutX="162.0" layoutY="285.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
                                     </children>
                                 </AnchorPane>
                             </children>
@@ -59,12 +49,12 @@
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                     </content>
                 </Tab>
-                <Tab text="Floor 4">
+                <Tab text="Floor L1">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                     </content>
                 </Tab>
-                <Tab text="Floor 5">
+                <Tab text="Floor L2">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                     </content>

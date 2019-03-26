@@ -1,6 +1,6 @@
 package map;
 
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
@@ -8,18 +8,23 @@ import java.util.HashMap;
 
 public class MapDisplay {
 
-    private final static double defRadius = 25.0;
+    private final static double defRadius = 10.0;
+    private final static double xShift = 1110.0;
+    private final static double yShift = 575.0;
 
-    public static void display(Map map, Pane pane, String floor) {
+    public static void display(Map map, AnchorPane pane, String building, String floor) {
         HashMap<String, Location> lstLocations = map.getAllLocations();
         for (Location loc : lstLocations.values()) {
-            if (loc.getFloor().equals(floor)) {
-                double xLoc = (double) loc.getxCord();
-                double yLoc = (double) loc.getyCord();
-                Color color = nodeColor(loc);
-
-                Circle circle = new Circle(xLoc, yLoc, defRadius, color);
-                pane.getChildren().add(circle);
+            if (loc.getBuilding().equals(building) && loc.getFloor().equals(floor)) {
+                if (loc.getNodeType() != NodeType.HALL) {
+                    double xLoc = (double) loc.getxCord() - xShift;
+                    double yLoc = (double) loc.getyCord() - yShift;
+                    System.out.println("(" + xLoc + ", " + yLoc + ")");
+                    Color color = nodeColor(loc);
+                    Circle circle = new Circle(xLoc, yLoc, defRadius, color);
+                    circle.setStroke(Color.BLACK);
+                    pane.getChildren().add(circle);
+                }
             }
         }
     }
@@ -33,23 +38,23 @@ public class MapDisplay {
             case DEPT:
                 return Color.GRAY;
             case ELEV:
-                return Color.GRAY;
+                return Color.YELLOW;
             case EXIT:
                 return Color.GRAY;
             case HALL:
-                return Color.GRAY;
+                return Color.RED;
             case INFO:
                 return Color.GRAY;
             case LABS:
                 return Color.GRAY;
             case REST:
-                return Color.GRAY;
+                return Color.BLUE;
             case RETL:
-                return Color.GRAY;
+                return Color.WHITE;
             case SERV:
                 return Color.GRAY;
             default:
-                return Color.GRAY;
+                return Color.YELLOW;
         }
     }
 }
