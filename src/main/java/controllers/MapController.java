@@ -1,6 +1,8 @@
 package controllers;
 
 import com.jfoenix.controls.JFXButton;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.utils.FontAwesomeIconFactory;
 import helpers.MapHelpers;
 import helpers.UIHelpers;
 import javafx.event.EventType;
