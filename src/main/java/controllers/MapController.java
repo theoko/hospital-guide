@@ -3,12 +3,14 @@ package controllers;
 import com.jfoenix.controls.JFXButton;
 import helpers.MapHelpers;
 import helpers.UIHelpers;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
+import javafx.scene.input.ZoomEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import map.Map;
@@ -66,47 +68,28 @@ public class MapController {
     }
 
     public void floorOneMapScroll(ScrollEvent event) {
-
-        // Handle onScroll event
-        double delta = -event.getDeltaY();
-
-//        Rectangle2D viewport = floorOneMap.getViewport();
-
-
-        double scale = MapHelpers.clamp(Math.pow(1.01, delta),
-
-                Math.min(MIN_PIXELS / floorOneMap.getViewport().getWidth(), MIN_PIXELS / floorOneMap.getViewport().getHeight()),
-
-                Math.max(UIHelpers.getScreenWidth() / floorOneMap.getViewport().getWidth(), UIHelpers.getScreenHeight() / floorOneMap.getViewport().getHeight())
-
-        );
-
-        Point2D mouse = MapHelpers.imageViewToImage(floorOneMap, new Point2D(event.getX(), event.getY()));
-
-        double newWidth = floorOneMap.getViewport().getWidth() * scale;
-        double newHeight = floorOneMap.getViewport().getHeight() * scale;
-
-        double newMinX = MapHelpers.clamp(mouse.getX() - (mouse.getX() - floorOneMap.getViewport().getMinX()) * scale,
-                0, UIHelpers.getScreenWidth() - newWidth);
-        double newMinY = MapHelpers.clamp(mouse.getY() - (mouse.getY() - floorOneMap.getViewport().getMinY()) * scale,
-                0, UIHelpers.getScreenHeight() - newHeight);
-
-        floorOneMap.setViewport(new Rectangle2D(newMinX, newMinY, newWidth, newHeight));
+        ((AnchorPane) event.getSource()).setTranslateX(((AnchorPane) event.getSource()).getTranslateX() + event.getDeltaX());
+        ((AnchorPane) event.getSource()).setTranslateY(((AnchorPane) event.getSource()).getTranslateY() + event.getDeltaY());
     }
 
+    public void floorOneMapZoom(ZoomEvent event) {
+        ((AnchorPane) event.getSource()).setScaleX(((AnchorPane) event.getSource()).getScaleX() * event.getZoomFactor());
+        ((AnchorPane) event.getSource()).setScaleY(((AnchorPane) event.getSource()).getScaleY() * event.getZoomFactor());
 
+    }
 
     public void floorOneMapZoomIn(MouseEvent event) {
-        System.out.println("scroll: " + event.toString());
-
-
-   /*     zoomIn.addEventHandler(event.MOUSE_CLICKED, Event -> {
-                Map.fireEvent(Event.copyFor(Map, Map));
-            Event.consume();
-        });*/
+        System.out.println("Zoom In function under construction: " + event.toString());
+        floorOneMapZoom(new ZoomEvent(ZoomEvent.ZOOM, 0, 0, 0, 0, false, false, false, false,
+                false, false, 4.2, 4.2, null));
+        event.consume();
     }
 
     public void floorOneMapZoomOut(MouseEvent event) {
-        System.out.println("scroll: " + event.toString());
+        System.out.println("Zoom Out function under construction: " + event.toString());
+        System.out.println("Zoom In function under construction: " + event.toString());
+        floorOneMapZoom(new ZoomEvent(ZoomEvent.ZOOM, 0, 0, 0, 0, false, false, false, false,
+                false, false, 0.2, 0.2, null));
+        event.consume();
     }
 }
