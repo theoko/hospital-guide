@@ -35,43 +35,46 @@ public class Database {
             e.printStackTrace();
         }
 
-        dropUsersTable();
-        dropEmployeeTable();
-        dropCustodianTable();
-        dropAdminTable();
-        dropNodesTable();
         dropEdgesTable();
+        dropNodesTable();
+        dropAdminTable();
+        dropCustodianTable();
+        dropEmployeeTable();
+        dropUsersTable();
 
         String usersTable = "CREATE TABLE " + Constants.USERS_TABLE +
-                "(userID INT CONSTRAINT usersTable_pk PRIMARY KEY," +
+                "(userID INT PRIMARY KEY," +
                 " username VARCHAR(20), " +
                 "password VARCHAR(32)," +
                 " userType INT)";
 
         String employeeTable = "CREATE TABLE " + Constants.EMPLOYEE_TABLE +
-                "(employeeID INT," +
-                " userID INT REFERENCES USERS(userID))";
+                "(employeeID INT PRIMARY KEY," +
+                " CONSTRAINT employeeID_fk FOREIGN KEY(employeeID) REFERENCES " + Constants.USERS_TABLE + "(userID))";
 
         String custodianTable = "CREATE TABLE " + Constants.CUSTODIAN_TABLE +
-                "(employeeID INT REFERENCES EMPLOYEE(employeeID))";
+                "(employeeID INT REFERENCES " + Constants.EMPLOYEE_TABLE + "(employeeID))";
 
-        String adminTable = "CREATE TABLE " + Constants.EMPLOYEE_TABLE +
-                "(FOREIGN KEY (userID) REFERENCES EMPLOYEE(employeeID))";
+        String adminTable = "CREATE TABLE " + Constants.ADMIN_TABLE +
+                "(adminID INT PRIMARY KEY," +
+                " CONSTRAINT adminID_fk FOREIGN KEY(adminID) REFERENCES " + Constants.USERS_TABLE + "(userID))";
 
         String nodesTable = "CREATE TABLE " + Constants.NODES_TABLE +
                 "(nodeID VARCHAR(30) PRIMARY KEY," +
-                " xCoord INT," +
-                " yCoord INT," +
-                " floor INT," +
-                " building VARCHAR(30)," +
-                " nodeType VARCHAR(30)," +
-                " longName VARCHAR(30)," +
-                " shortName VARCHAR(30))";
+                "xCoord INT," +
+                "yCoord INT," +
+                "floor INT," +
+                "building VARCHAR(30)," +
+                "nodeType VARCHAR(30)," +
+                "longName VARCHAR(30)," +
+                "shortName VARCHAR(30))";
 
         String edgesTable = "CREATE TABLE " + Constants.EDGES_TABLE +
-                "(edgeID VARCHAR(30)," +
-                " FOREIGN KEY (startNodeID) REFERENCES NODES(userID)," +
-                " FOREIGN KEY (endNodeID) REFERENCES NODES(userID))";
+                "(edgeID VARCHAR(30) PRIMARY KEY," +
+                "startNodeID VARCHAR(30)," +
+                "endNodeID VARCHAR(30)," +
+                "CONSTRAINT startNodeID_fk FOREIGN KEY(startNodeID) REFERENCES " + Constants.NODES_TABLE + "(nodeID)," +
+                "CONSTRAINT endNodeID_fk FOREIGN KEY(endNodeID) REFERENCES " + Constants.NODES_TABLE + "(nodeID))";
 
         try {
 
