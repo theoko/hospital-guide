@@ -1,8 +1,10 @@
 package database;
 
 import helpers.Constants;
-import models.User;
+import models.user.Admin;
+import models.user.User;
 
+import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -210,11 +212,41 @@ public class Database {
         }
     }
 
+    public User getUser(int userID) {
+        try {
+
+            PreparedStatement statement;
+
+            statement = connection.prepareStatement(
+                    "SELECT * FROM " + Constants.USERS_TABLE + " WHERE USERID=?"
+            );
+
+            statement.setInt(1, userID);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            User user = new User(
+                    resultSet.getInt("USERID"),
+                    resultSet.getString("USERNAME"),
+                    resultSet.getString("PASSWORD"),
+                    resultSet.getInt("USERTYPE")
+            );
+
+            return user;
+
+        } catch (SQLException e) {
+            System.out.println("Cannot get user!");
+
+            return null;
+        }
+    }
+
     /**
      * Returns a list of users
      */
     public List<User> getUsers() {
         try {
+
             Statement statement;
 
             statement = connection.createStatement();
@@ -228,10 +260,10 @@ public class Database {
             while(resultSet.next()) {
 
                 User user = new User(
-                        resultSet.getInt("userID"),
-                        resultSet.getString("username"),
-                        resultSet.getString("password"),
-                        resultSet.getInt("userType")
+                        resultSet.getInt("USERID"),
+                        resultSet.getString("USERNAME"),
+                        resultSet.getString("PASSWORD"),
+                        resultSet.getInt("USERTYPE")
                 );
 
                 returnList.add(user);
@@ -243,7 +275,53 @@ public class Database {
         } catch (SQLException e) {
             System.out.println("Failed to get users!");
 
-            return new ArrayList();
+            return null;
+        }
+    }
+
+    /**
+     * Returns a list of admins
+     */
+    public List<Admin> getAdmins() throws Exception {
+        try {
+            Statement statement;
+
+            statement = connection.createStatement();
+
+            String query = "SELECT * FROM " + Constants.ADMIN_TABLE;
+
+            ResultSet resultSet = statement.executeQuery(query);
+
+            List<Admin> returnList = new ArrayList<>();
+
+            while(resultSet.next()) {
+
+                int adminID = resultSet.getInt("ADMINID");
+
+                // Get associated user
+                User user = getUser(adminID);
+
+                if(user == null) {
+                    throw new Exception("Admin table is not correctly linked with the user table");
+                }
+
+                Admin admin = new Admin(
+                        resultSet.getInt("ADMINID"),
+                        user.getUsername(),
+                        user.getPassword(),
+                        user.getUserType()
+                );
+
+                returnList.add(admin);
+
+            }
+
+            return returnList;
+
+        } catch (SQLException e) {
+            System.out.println("Failed to get admins!");
+
+            return null;
         }
     }
 
