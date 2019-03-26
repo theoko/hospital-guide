@@ -1,8 +1,8 @@
 package database;
 
-import com.querydsl.sql.SQLTemplates;
 import helpers.Constants;
 import models.map.Location;
+import models.map.Neighbor;
 import models.user.Admin;
 import models.user.Employee;
 import models.user.User;
@@ -14,7 +14,7 @@ import java.util.List;
 
 public class Database {
 
-    Connection connection;
+    static Connection connection;
 
 //    SQLTemplates dialect;
 //    Configuration configuration;
@@ -30,53 +30,6 @@ public class Database {
 
         connection = null;
 
-//        dataSource = new DataSource() {
-//            @Override
-//            public Connection getConnection() throws SQLException {
-//                return connection;
-//            }
-//
-//            @Override
-//            public Connection getConnection(String username, String password) throws SQLException {
-//                return connection;
-//            }
-//
-//            @Override
-//            public <T> T unwrap(Class<T> iface) throws SQLException {
-//                return null;
-//            }
-//
-//            @Override
-//            public boolean isWrapperFor(Class<?> iface) throws SQLException {
-//                return false;
-//            }
-//
-//            @Override
-//            public PrintWriter getLogWriter() throws SQLException {
-//                return null;
-//            }
-//
-//            @Override
-//            public void setLogWriter(PrintWriter out) throws SQLException {
-//
-//            }
-//
-//            @Override
-//            public void setLoginTimeout(int seconds) throws SQLException {
-//
-//            }
-//
-//            @Override
-//            public int getLoginTimeout() throws SQLException {
-//                return 0;
-//            }
-//
-//            @Override
-//            public Logger getParentLogger() throws SQLFeatureNotSupportedException {
-//                return null;
-//            }
-//        };
-
         try {
             connection = DriverManager.getConnection("jdbc:derby:" + Constants.DB_NAME + ";create=true");
         } catch (SQLException e) {
@@ -85,7 +38,7 @@ public class Database {
 
 //        dialect = new DerbyTemplates();
 //        configuration = new Configuration(dialect);
-////        sqlQueryFactory = new SQLQueryFactory(configuration, dataSource);
+//        sqlQueryFactory = new SQLQueryFactory(configuration, dataSource);
     }
 
     /**
@@ -124,19 +77,19 @@ public class Database {
                 " CONSTRAINT adminID_fk FOREIGN KEY(adminID) REFERENCES " + Constants.USERS_TABLE + "(userID))";
 
         String nodesTable = "CREATE TABLE " + Constants.NODES_TABLE +
-                "(nodeID VARCHAR(30) PRIMARY KEY," +
+                "(nodeID VARCHAR(100) PRIMARY KEY," +
                 "xCoord INT," +
                 "yCoord INT," +
-                "floor INT," +
-                "building VARCHAR(30)," +
-                "nodeType VARCHAR(30)," +
-                "longName VARCHAR(30)," +
-                "shortName VARCHAR(30))";
+                "floor VARCHAR(100)," +
+                "building VARCHAR(100)," +
+                "nodeType VARCHAR(100)," +
+                "longName VARCHAR(100)," +
+                "shortName VARCHAR(100))";
 
         String edgesTable = "CREATE TABLE " + Constants.EDGES_TABLE +
-                "(edgeID VARCHAR(30) PRIMARY KEY," +
-                "startNodeID VARCHAR(30)," +
-                "endNodeID VARCHAR(30)," +
+                "(edgeID VARCHAR(100) PRIMARY KEY," +
+                "startNodeID VARCHAR(100)," +
+                "endNodeID VARCHAR(100)," +
                 "CONSTRAINT startNodeID_fk FOREIGN KEY(startNodeID) REFERENCES " + Constants.NODES_TABLE + "(nodeID)," +
                 "CONSTRAINT endNodeID_fk FOREIGN KEY(endNodeID) REFERENCES " + Constants.NODES_TABLE + "(nodeID))";
 
@@ -307,18 +260,64 @@ public class Database {
         return (Employee) getUserByID(employeeID);
     }
 
-    public boolean addNode(Location location) {
+    public static boolean addNode(Location location) {
 
+        try {
 
+            PreparedStatement statement;
 
-//        new SQLInsertClause(connection, dialect, location);
+            statement = connection.prepareStatement(
+                    "INSERT INTO " + Constants.NODES_TABLE + " (NODEID, XCOORD, YCOORD, FLOOR, BUILDING, NODETYPE, LONGNAME, SHORTNAME) " +
+                            "VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+            );
 
-        return true;
+            statement.setString(1, location.getNodeID());
+            statement.setInt(2, location.getxCord());
+            statement.setInt(3, location.getyCord());
+            statement.setString(4, location.getFloor());
+            statement.setString(5, location.getBuilding());
+            statement.setString(6, location.getNodeType().toString());
+            statement.setString(7, location.getLongName());
+            statement.setString(8, location.getShortName());
+
+            statement.execute();
+
+            return true;
+
+        } catch (SQLException e) {
+            System.out.println("Location cannot be added!");
+            e.printStackTrace();
+
+            return false;
+        }
 
     }
 
-    public boolean addEdge() {
-        return true;
+    public static boolean addEdge(Neighbor neighbor) {
+
+        try {
+
+            PreparedStatement statement;
+
+            statement = connection.prepareStatement(
+                    "INSERT INTO " + Constants.EDGES_TABLE + " (EDGEID, STARTNODEID, ENDNODEID) " +
+                            "VALUES (?, ?, ?)"
+            );
+
+            statement.setString(1, neighbor.getEdgeID());
+            statement.setString(2, neighbor.getLocation().getNodeID());
+            statement.setString(3, String.valueOf(neighbor.getDist()));
+
+            statement.execute();
+
+            return true;
+
+        } catch (SQLException e) {
+            System.out.println("Neighbor cannot be added!");
+
+            return false;
+        }
+
     }
 
     /**
@@ -412,19 +411,20 @@ public class Database {
 
     public static void main(String[] args) {
         Database db = new Database();
+
 //        db.createTables();
 
-        HashMap<String, ArrayList<String>> builder = new HashMap<>();
-
-        ArrayList<String> proj = new ArrayList<>();
-        proj.add("USERID");
-        proj.add("USERNAME");
-
-        ArrayList<String> relation = new ArrayList<>();
-
-        builder.put(Constants.DB_PROJECTION, proj);
-
-        db.filterTable(builder);
+//        HashMap<String, ArrayList<String>> builder = new HashMap<>();
+//
+//        ArrayList<String> proj = new ArrayList<>();
+//        proj.add("USERID");
+//        proj.add("USERNAME");
+//
+//        ArrayList<String> relation = new ArrayList<>();
+//
+//        builder.put(Constants.DB_PROJECTION, proj);
+//
+//        db.filterTable(builder);
 
     }
 }
