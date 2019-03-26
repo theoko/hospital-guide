@@ -1,6 +1,8 @@
 package map;
 
-import models.location.Location;
+import models.map.Location;
+import models.map.Map;
+import models.map.Neighbor;
 import org.junit.Test;
 
 import java.util.Stack;

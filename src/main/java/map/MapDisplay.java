@@ -1,9 +1,11 @@
 package map;
 
+import helpers.Constants;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import models.location.Location;
+import models.map.Location;
+import models.map.Map;
 
 import java.util.HashMap;
 
@@ -17,7 +19,7 @@ public class MapDisplay {
         HashMap<String, Location> lstLocations = map.getAllLocations();
         for (Location loc : lstLocations.values()) {
             if (loc.getBuilding().equals(building) && loc.getFloor().equals(floor)) {
-                if (loc.getNodeType() != NodeType.HALL) {
+                if (loc.getNodeType() != Constants.NodeType.HALL) {
                     double xLoc = (double) loc.getxCord() - xShift;
                     double yLoc = (double) loc.getyCord() - yShift;
                     System.out.println("(" + xLoc + ", " + yLoc + ")");

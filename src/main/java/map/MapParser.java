@@ -1,7 +1,9 @@
 package map;
 
 import helpers.Constants;
-import models.location.Location;
+import models.map.Location;
+import models.map.Map;
+import models.map.Neighbor;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -33,7 +35,7 @@ public class MapParser {
     private static HashMap<String, Location> parseNodes(String pathNodes) {
         // nodeID,xcoord,ycoord,floor,building,nodeType,longName,shortName
 
-        // New hashmap of location nodes
+        // New hashmap of map nodes
         HashMap<String, Location> lstLocations = new HashMap<>();
 
         // Declares a new file reader
@@ -49,9 +51,9 @@ public class MapParser {
                 // Split line
                 String[] splitLine = line.split(splitter);
                 String locID = splitLine[0];
-                // Create a new location with the given fields
+                // Create a new map with the given fields
                 Location newLoc = new Location(locID, Integer.parseInt(splitLine[1]), Integer.parseInt(splitLine[2]), splitLine[3], splitLine[4], createNode(splitLine[5]), splitLine[6], splitLine[7]);
-                // Add the location into the map
+                // Add the map into the map
                 lstLocations.put(locID, newLoc);
                 System.out.println(locID + " parsed.");
             }
@@ -122,9 +124,9 @@ public class MapParser {
     }
 
     /**
-     * Creates a NodeType enum from a string
+     * Creates a Constants.NodeType enum from a string
      * @param nodeType String of the type of node
-     * @return A NodeType enum of the given type
+     * @return A Constants.NodeType enum of the given type
      */
     private static Constants.NodeType createNode(String nodeType) {
         switch (nodeType) {

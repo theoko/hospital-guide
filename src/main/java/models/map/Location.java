@@ -1,8 +1,6 @@
-package models.location;
+package models.map;
 
 import helpers.Constants;
-import map.Neighbor;
-import map.NodeType;
 
 import java.util.ArrayList;
 

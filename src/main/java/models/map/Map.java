@@ -1,6 +1,6 @@
-package map;
+package models.map;
 
-import models.location.Location;
+import models.map.Location;
 
 import java.util.HashMap;
 

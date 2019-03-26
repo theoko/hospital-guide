@@ -1,6 +1,8 @@
 package map;
 
-import models.location.Location;
+import models.map.Location;
+import models.map.Map;
+import models.map.Neighbor;
 
 import java.util.HashMap;
 import java.util.List;
@@ -28,10 +30,10 @@ public class PathFinder {
     }
 
     /**
-     * Finds a path from the start location to the end location using a*
+     * Finds a path from the start map to the end map using a*
      * @param map The map of the hospital
-     * @param start The start location
-     * @param end The end location
+     * @param start The start map
+     * @param end The end map
      * @return A stack of locations that contains the path
      */
     public static Stack<Neighbor> findPath(Map map, Location start, Location end) {
@@ -48,13 +50,13 @@ public class PathFinder {
         inQueue.add(sNeigh);
         parent.put(start.getNodeID(), null);
 
-        // Loop while queue isn't empty or end location is found
+        // Loop while queue isn't empty or end map is found
         while (!inQueue.isEmpty()) {
-            // Poll next neighbor off the queue and get its location
+            // Poll next neighbor off the queue and get its map
             Neighbor nNext = inQueue.poll();
             Location lNext = nNext.getLocation();
 
-            // Check to see if location is our end location
+            // Check to see if map is our end map
             if (lNext.getNodeID().equals(end.getNodeID())) {
                 System.out.println("Found node!");
                 // Generate path from parent map and end node
@@ -69,13 +71,13 @@ public class PathFinder {
             // Gets the node's neighbors and loop thru them all
             List<Neighbor> lstNeighbors = lNext.getNeighbors();
             for (Neighbor nCurr : lstNeighbors) {
-                // Get the real location from the neighbor
+                // Get the real map from the neighbor
                 Location lCurr = nCurr.getLocation();
                 // Check duplicate
                 if (!used.containsKey(lCurr.getNodeID())) {
                     // Add the node's value to the current value
                     double newDist = currDist + nCurr.getDist();
-                    // Calculate the heuristic based on distance to end location
+                    // Calculate the heuristic based on distance to end map
                     //TODO: Create a more accurate heuristic for nodes on different floors
                     double heuristic = calcDist(lCurr.getxCord(), lCurr.getyCord(), end.getxCord(), end.getyCord());
 
@@ -91,9 +93,9 @@ public class PathFinder {
     }
 
     /**
-     * Generates a path from the given parent map and end location
+     * Generates a path from the given parent map and end map
      * @param parent Hashmap of each node's parent
-     * @param end The end location
+     * @param end The end map
      * @return A stack of locations containing the path
      */
     private static Stack<Neighbor> genPath(HashMap<String, Neighbor> parent, Neighbor end) {

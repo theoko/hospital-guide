@@ -1,6 +1,4 @@
-package map;
-
-import models.location.Location;
+package models.map;
 
 public class Neighbor implements Comparable<Neighbor> {
 

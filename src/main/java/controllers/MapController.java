@@ -9,7 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.input.ZoomEvent;
 import javafx.scene.layout.AnchorPane;
-import map.Map;
+import models.map.Map;
 import map.MapDisplay;
 import map.MapParser;
 
