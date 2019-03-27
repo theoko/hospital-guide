@@ -1,5 +1,6 @@
 import controllers.ScreenController;
 import helpers.Constants;
+import helpers.FileHelpers;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import map.CSVParser;
@@ -24,8 +25,7 @@ public class Main extends Application {
             System.out.println("Need to create the database!");
         }
 
-        CSVParser.parse("/data/nodes.csv", "/data/edges.csv");
-
+        CSVParser.parse(FileHelpers.getNodesCSV(), FileHelpers.getEdgesCSV());
 
         screenController = new ScreenController(primaryStage);
 

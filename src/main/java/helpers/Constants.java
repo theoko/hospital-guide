@@ -18,6 +18,12 @@ public class Constants {
     public static String DB_RELATION = "relation";
     public static String DB_CONDITION = "condition";
 
+    /**
+     * FILES
+     */
+    public static String CSV_NODES = "/data/nodes.csv";
+    public static String CSV_EDGES = "/data/edges.csv";
+
 
     /**
      * UI

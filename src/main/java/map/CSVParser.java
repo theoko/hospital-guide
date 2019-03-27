@@ -3,6 +3,7 @@ package map;
 import com.opencsv.CSVWriter;
 import database.Database;
 import helpers.Constants;
+import helpers.FileHelpers;
 import models.map.Edge;
 import models.map.Location;
 
@@ -13,13 +14,13 @@ import java.util.List;
 public class CSVParser {
 
     public static void main(String[] args) {
-        parse("/data/nodes.csv", "/data/edges.csv");
+        parse(FileHelpers.getNodesCSV(), FileHelpers.getEdgesCSV());
         export("/data/eNodes.csv", "/data/eEdges.csv");
     }
 
-    public static void parse(String pathNodes, String pathEdges) {
-        HashMap<String, Location> lstLocations = parseNodes(strToPath(pathNodes));
-        parseEdges(strToPath(pathEdges), lstLocations);
+    public static void parse(InputStream pathNodes, InputStream pathEdges) {
+        HashMap<String, Location> lstLocations = parseNodes(pathNodes);
+        parseEdges(pathEdges, lstLocations);
     }
 
     public static void export(String pathNodes, String pathEdges) {
@@ -27,7 +28,7 @@ public class CSVParser {
         exportEdges(strToPath(pathEdges), lstLocations);
     }
 
-    private static HashMap<String, Location> parseNodes(String pathNodes) {
+    private static HashMap<String, Location> parseNodes(InputStream pathNodes) {
         // nodeID,xcoord,ycoord,floor,building,nodeType,longName,shortName
 
         HashMap<String, Location> lstLocations = new HashMap<>();
@@ -38,7 +39,7 @@ public class CSVParser {
         String splitter = ","; // CSV default seperator
 
         try {
-            br = new BufferedReader(new FileReader(pathNodes)); // Creates a new file reader
+            br = new BufferedReader(new InputStreamReader(pathNodes)); // Creates a new file reader
             br.readLine(); // Ignores first line
             // Loop until EOF
             while ((line = br.readLine()) != null) {
@@ -65,7 +66,7 @@ public class CSVParser {
         return lstLocations;
     }
 
-    private static void parseEdges(String pathEdges, HashMap<String, Location> lstLocations) {
+    private static void parseEdges(InputStream pathEdges, HashMap<String, Location> lstLocations) {
         // edgeID,startNode,endNode
 
         BufferedReader br = null;
@@ -73,7 +74,7 @@ public class CSVParser {
         String splitter = ",";
 
         try {
-            br = new BufferedReader(new FileReader(pathEdges));
+            br = new BufferedReader(new InputStreamReader(pathEdges));
             br.readLine();
             while ((line = br.readLine()) != null) {
                 String[] splitLine = line.split(splitter);

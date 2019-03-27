@@ -1,6 +1,7 @@
 package map;
 
 import database.Database;
+import helpers.FileHelpers;
 import models.map.Location;
 import models.map.Map;
 import models.map.SubPath;
@@ -14,7 +15,7 @@ public class PathFinder {
 
     public static void main(String[] args) {
         Database db = new Database();
-        CSVParser.parse("/data/nodes.csv", "/data/edges.csv");
+        CSVParser.parse(FileHelpers.getNodesCSV(), FileHelpers.getEdgesCSV());
 
         // Create map
         Map map = MapParser.parse();
