@@ -1,5 +1,6 @@
 package map;
 
+import database.Database;
 import models.map.Location;
 import models.map.Map;
 import models.map.SubPath;
@@ -12,8 +13,11 @@ import java.util.Stack;
 public class PathFinder {
 
     public static void main(String[] args) {
+        Database db = new Database();
+        CSVParser.parse("/data/nodes.csv", "/data/edges.csv");
+
         // Create map
-        Map map = MapParser.parse("/data/nodes.csv", "/data/edges.csv");
+        Map map = MapParser.parse();
         // Start and end locations
         Location start = map.getLocation("ADEPT00301");
         Location end = map.getLocation("DDEPT00402");
@@ -69,7 +73,7 @@ public class PathFinder {
             used.put(lNext.getNodeID(), nNext);
 
             // Gets the node's neighbors and loop thru them all
-            List<SubPath> lstSubPaths = lNext.getNeighbors();
+            List<SubPath> lstSubPaths = lNext.getSubPaths();
             for (SubPath nCurr : lstSubPaths) {
                 // Get the real map from the neighbor
                 Location lCurr = nCurr.getLocation();

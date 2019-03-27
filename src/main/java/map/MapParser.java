@@ -1,38 +1,38 @@
 package map;
 
 import database.Database;
-import helpers.Constants;
 import models.map.Edge;
 import models.map.Location;
 import models.map.Map;
 import models.map.SubPath;
-
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 public class MapParser {
 
-    public static Map parse(String pathNodes, String pathEdges) {
+    public static Map parse() {
         // Generates a hashmap of unlinked locations
-        HashMap<String, Location> lstLocations = parseNodes(pathNodes);
+        HashMap<String, Location> lstLocations = Database.getLocations();
         // Links the locations
-        HashMap<String, Edge> lstEdges = parseEdges(pathEdges, lstLocations);
+        HashMap<String, Edge> lstEdges = parseEdges(lstLocations);
         Map map = new Map(lstLocations, lstEdges);
         return map;
     }
 
-    private static HashMap<String, Location> parseNodes(String pathNodes) {
-        // New hashmap of map nodes
-        HashMap<String, Location> lstLocations = new HashMap<>();
+    private static HashMap<String, Edge> parseEdges(HashMap<String, Location> lstLocations) {
+        HashMap<String, Edge> mapEdges = new HashMap<>();
+        List<Edge> lstEdges = Database.getEdges(lstLocations);
+        for (Edge edge : lstEdges) {
+            String edgeID = edge.getEdgeID();
+            Location start = lstLocations.get(edge.getStart().getNodeID());
+            Location end = lstLocations.get(edge.getEnd().getNodeID());
+            double dist = PathFinder.calcDist(start.getxCord(), start.getyCord(), end.getxCord(), end.getyCord());
 
-        return lstLocations;
-    }
+            start.addSubPath(new SubPath(edgeID, end, dist));
+            end.addSubPath(new SubPath(edgeID, start, dist));
 
-    private static HashMap<String, Edge> parseEdges(String pathEdges, HashMap<String, Location> lstLocations) {
-        HashMap<String, Edge> lstEdges = new HashMap<>();
-
-        return lstEdges;
+            mapEdges.put(edge.getEdgeID(), edge);
+        }
+        return mapEdges;
     }
 }

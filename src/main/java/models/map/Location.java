@@ -60,11 +60,11 @@ public class Location {
         return shortName;
     }
 
-    public void addNeighbor(SubPath subPath) {
+    public void addSubPath(SubPath subPath) {
         lstSubPaths.add(subPath);
     }
 
-    public ArrayList<SubPath> getNeighbors() {
+    public ArrayList<SubPath> getSubPaths() {
         return lstSubPaths;
     }
 

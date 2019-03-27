@@ -3,7 +3,6 @@ package database;
 import helpers.Constants;
 import models.map.Edge;
 import models.map.Location;
-import models.map.SubPath;
 import models.user.Admin;
 import models.user.Employee;
 import models.user.User;
@@ -55,7 +54,7 @@ public class Database {
             e.printStackTrace();
         }
 
-        dropNeighborTable();
+        dropEdgeTable();
         dropLocationTable();
         dropAdminTable();
         dropCustodianTable();
@@ -212,7 +211,7 @@ public class Database {
         }
     }
 
-    private boolean dropNeighborTable(){
+    private boolean dropEdgeTable(){
         try {
             Statement statement;
 
@@ -401,7 +400,7 @@ public class Database {
     /**
      * Returns a list of nodes
      */
-    public List<Location> getLocation() {
+    public static HashMap<String, Location> getLocations() {
         try {
 
             Statement statement;
@@ -412,12 +411,13 @@ public class Database {
 
             ResultSet resultSet = statement.executeQuery(query);
 
-            ArrayList<Location> returnList = new ArrayList<>();
+            HashMap<String, Location> returnList = new HashMap<>();
 
             while(resultSet.next()) {
 
+                String nodeID = resultSet.getString("NODEID");
                 Location node = new Location(
-                        resultSet.getString("NODEID"),
+                        nodeID,
                         resultSet.getInt("XCOORD"),
                         resultSet.getInt("YCOORD"),
                         resultSet.getString("FLOOR"),
@@ -427,7 +427,7 @@ public class Database {
                         resultSet.getString("SHORTNAME")
                 );
 
-                returnList.add(node);
+                returnList.put(nodeID, node);
 
             }
 
@@ -436,6 +436,30 @@ public class Database {
         } catch (SQLException e) {
             System.out.println("Failed to get users!");
 
+            return null;
+        }
+    }
+
+    public static List<Edge> getEdges(HashMap<String, Location> lstLocations) {
+        try {
+            Statement statement;
+            statement = connection.createStatement();
+            String query = "SELECT * FROM " + Constants.EDGES_TABLE;
+            ResultSet resultSet = statement.executeQuery(query);
+            List<Edge> returnList = new ArrayList<>();
+
+            while(resultSet.next()) {
+                String edgeID = resultSet.getString("EDGEID");
+                Edge edge = new Edge(
+                        edgeID,
+                        lstLocations.get(resultSet.getString("STARTNODEID")),
+                        lstLocations.get(resultSet.getString("ENDNODEID"))
+                );
+                returnList.add(edge);
+            }
+            return returnList;
+        } catch (SQLException e) {
+            System.out.println("Failed to get users!");
             return null;
         }
     }
@@ -475,7 +499,7 @@ public class Database {
     /**
      * Translates data from int to an enum
      */
-    public Constants.NodeType intToEnum(int num){
+    public static Constants.NodeType intToEnum(int num){
         switch (num) {
             case 0:
                 return Constants.NodeType.BATH;

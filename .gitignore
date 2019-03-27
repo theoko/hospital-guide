@@ -6,6 +6,7 @@ out/
 gradlew
 gradlew.bat
 derby.log
+teamF/
 *.class
 *.jar
 *.lock
