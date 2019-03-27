@@ -106,30 +106,6 @@ public class Database {
             boolean createNodesResult = statement.execute(locationTable);
             boolean createEdgesTable = statement.execute(neighborTable);
 
-            if(!createUsersResult) {
-                System.out.println("Failed to create users table");
-            }
-
-            if(!createEmployeeResult) {
-                System.out.println("Failed to create employee table");
-            }
-
-            if(!createCustodianResult) {
-                System.out.println("Failed to create custodian table");
-            }
-
-            if(!createAdminResult) {
-                System.out.println("Failed to create admin table");
-            }
-
-            if(!createNodesResult) {
-                System.out.println("Failed to create nodes table");
-            }
-
-            if(!createEdgesTable) {
-                System.out.println("Failed to create edges table");
-            }
-
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {
@@ -149,6 +125,7 @@ public class Database {
             statement = connection.createStatement();
 
             return statement.execute("DROP TABLE " + Constants.USERS_TABLE);
+
         } catch (SQLException e) {
             System.out.println("Table " + Constants.USERS_TABLE + " cannot be dropped");
 
@@ -163,6 +140,7 @@ public class Database {
             statement = connection.createStatement();
 
             return statement.execute("DROP TABLE " + Constants.EMPLOYEE_TABLE);
+
         } catch (SQLException e) {
             System.out.println("Table " + Constants.EMPLOYEE_TABLE + " cannot be dropped");
 
@@ -177,6 +155,7 @@ public class Database {
             statement = connection.createStatement();
 
             return statement.execute("DROP TABLE " + Constants.CUSTODIAN_TABLE);
+
         } catch (SQLException e) {
             System.out.println("Table " + Constants.CUSTODIAN_TABLE + " cannot be dropped");
 
@@ -191,6 +170,7 @@ public class Database {
             statement = connection.createStatement();
 
             return statement.execute("DROP TABLE " + Constants.ADMIN_TABLE);
+
         } catch (SQLException e) {
             System.out.println("Table " + Constants.ADMIN_TABLE + " cannot be dropped");
 
@@ -205,6 +185,7 @@ public class Database {
             statement = connection.createStatement();
 
             return statement.execute("DROP TABLE " + Constants.NODES_TABLE);
+
         } catch (SQLException e) {
             System.out.println("Table " + Constants.NODES_TABLE + " cannot be dropped");
 
@@ -219,11 +200,49 @@ public class Database {
             statement = connection.createStatement();
 
             return statement.execute("DROP TABLE " + Constants.EDGES_TABLE);
+
         } catch (SQLException e) {
             System.out.println("Table " + Constants.EDGES_TABLE + " cannot be dropped");
 
             return false;
         }
+    }
+
+    /**
+     * Generalized function for filtering tables
+     * @return a list of objects
+     */
+    public List<Object> filterTable(HashMap<String, ArrayList<String>> builder) {
+
+//        // Start with select
+//        String query = "SELECT ";
+//
+//        ArrayList<String> projection = builder.get(Constants.DB_PROJECTION);
+//        ArrayList<String> relation = builder.get(Constants.DB_RELATION);
+//        ArrayList<String> condition = builder.get(Constants.DB_CONDITION);
+//
+//        for(int i=0; i<projection.size(); i++) {
+//            query += projection.get(i);
+//
+//            if(i < projection.size() - 1)
+//                query += ", ";
+//        }
+//
+//        query += " FROM ";
+//
+//        for(int i=0; i<relation.size(); i++) {
+//            query += relation.get(i);
+//            query += " " + Character.toUpperCase(relation.get(i).charAt(0));
+//
+//            if(i < relation.size() - 1)
+//                query += ", ";
+//        }
+//
+//        System.out.println(query);
+
+
+
+        return new ArrayList<>();
     }
 
     public User getUserByID(int userID) {
@@ -283,9 +302,7 @@ public class Database {
             statement.setString(7, location.getLongName());
             statement.setString(8, location.getShortName());
 
-            statement.execute();
-
-            return true;
+            return statement.execute();
 
         } catch (SQLException e) {
             System.out.println("Location " + location.getNodeID() + " cannot be added!");
@@ -311,9 +328,7 @@ public class Database {
             statement.setString(2, edge.getStart().getNodeID());
             statement.setString(3, edge.getEnd().getNodeID());
 
-            statement.execute();
-
-            return true;
+            return statement.execute();
 
         } catch (SQLException e) {
             System.out.println("SubPath cannot be added!");
@@ -321,43 +336,6 @@ public class Database {
             return false;
         }
 
-    }
-
-    /**
-     * Generalized function for filtering tables
-     * @return a list of objects
-     */
-    public List<Object> filterTable(HashMap<String, ArrayList<String>> builder) {
-
-//        // Start with select
-//        String query = "SELECT ";
-//
-//        ArrayList<String> projection = builder.get(Constants.DB_PROJECTION);
-//        ArrayList<String> relation = builder.get(Constants.DB_RELATION);
-//        ArrayList<String> condition = builder.get(Constants.DB_CONDITION);
-//
-//        for(int i=0; i<projection.size(); i++) {
-//            query += projection.get(i);
-//
-//            if(i < projection.size() - 1)
-//                query += ", ";
-//        }
-//
-//        query += " FROM ";
-//
-//        for(int i=0; i<relation.size(); i++) {
-//            query += relation.get(i);
-//            query += " " + Character.toUpperCase(relation.get(i).charAt(0));
-//
-//            if(i < relation.size() - 1)
-//                query += ", ";
-//        }
-//
-//        System.out.println(query);
-
-
-
-        return new ArrayList<>();
     }
 
     /**
@@ -458,11 +436,82 @@ public class Database {
                 );
                 returnList.add(edge);
             }
+
             return returnList;
+
         } catch (SQLException e) {
             System.out.println("Failed to get users!");
             return null;
         }
+    }
+
+    /**
+     * Updates the location object specified on the database
+     * @param updatedLocation
+     * @return true if the location was updated successfully, false otherwise
+     */
+    public static boolean updateLocation(Location updatedLocation) {
+
+        try {
+            PreparedStatement statement;
+
+            statement = connection.prepareStatement(
+                    "UPDATE " + Constants.NODES_TABLE +
+                            " SET XCOORD=?, YCOORD=?, FLOOR=?, BUILDING=?, NODETYPE=?, LONGNAME=?, SHORTNAME=?" +
+                            " WHERE NODEID=?"
+            );
+
+            statement.setInt(1, updatedLocation.getxCord());
+            statement.setInt(2, updatedLocation.getyCord());
+            statement.setString(3, updatedLocation.getFloor());
+            statement.setString(4, updatedLocation.getBuilding());
+            statement.setString(5, String.valueOf(DatabaseHelpers.enumToInt(updatedLocation.getNodeType())));
+            statement.setString(6, updatedLocation.getLongName());
+            statement.setString(7, updatedLocation.getShortName());
+
+            statement.setString(8, updatedLocation.getNodeID());
+
+            return statement.execute();
+
+        } catch (SQLException e) {
+            System.out.println("Failed to update location: " + updatedLocation.getNodeID());
+            e.printStackTrace();
+
+            return false;
+        }
+
+
+    }
+
+    /**
+     * Updates the edge object specified on the database
+     * @param updatedEdge
+     * @return true if the edge was updated successfully, false otherwise
+     */
+    public static boolean updateEdge(Edge updatedEdge) {
+
+        try {
+            PreparedStatement statement;
+
+            statement = connection.prepareStatement(
+                    "UPDATE " + Constants.EDGES_TABLE +
+                            " SET STARTNODEID=?, ENDNODEID=?" +
+                            " WHERE EDGEID=?"
+            );
+
+            statement.setString(1, updatedEdge.getStart().getNodeID());
+            statement.setString(2, updatedEdge.getEnd().getNodeID());
+            statement.setString(3, updatedEdge.getEdgeID());
+
+            return statement.execute();
+
+        } catch (SQLException e) {
+            System.out.println("Failed to update edge: " + updatedEdge.getEdgeID());
+            e.printStackTrace();
+
+            return false;
+        }
+
     }
 
     /**
