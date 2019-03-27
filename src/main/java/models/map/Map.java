@@ -1,14 +1,14 @@
 package models.map;
 
-import models.map.Location;
-
 import java.util.HashMap;
 
 public class Map {
     private HashMap<String, Location> lstLocations;
+    private HashMap<String, Edge> lstEdges;
 
-    public Map(HashMap<String, Location> lstLocations) {
+    public Map(HashMap<String, Location> lstLocations, HashMap<String, Edge> lstEdges) {
         this.lstLocations = lstLocations;
+        this.lstEdges = lstEdges;
     }
 
     public Location getLocation(String nodeID) {
@@ -17,5 +17,13 @@ public class Map {
 
     public HashMap<String, Location> getAllLocations() {
         return lstLocations;
+    }
+
+    public Edge getEdge(String edgeID) {
+        return lstEdges.get(edgeID);
+    }
+
+    public HashMap<String, Edge> getAllEdges() {
+        return lstEdges;
     }
 }

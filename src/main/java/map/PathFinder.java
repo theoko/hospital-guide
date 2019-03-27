@@ -2,7 +2,7 @@ package map;
 
 import models.map.Location;
 import models.map.Map;
-import models.map.Neighbor;
+import models.map.SubPath;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +21,7 @@ public class PathFinder {
         // Timer for findPath
         long startTime = System.currentTimeMillis();
         // Finds the path from start to end
-        Stack<Neighbor> path = findPath(map, start, end);
+        Stack<SubPath> path = findPath(map, start, end);
         long endTime = System.currentTimeMillis();
         long totalTime = endTime - startTime;
         // Prints out path and time
@@ -36,24 +36,24 @@ public class PathFinder {
      * @param end The end map
      * @return A stack of locations that contains the path
      */
-    public static Stack<Neighbor> findPath(Map map, Location start, Location end) {
+    public static Stack<SubPath> findPath(Map map, Location start, Location end) {
         // Create a new stack to hold the path from start to end
-        Stack<Neighbor> path = new Stack<>();
+        Stack<SubPath> path = new Stack<>();
 
         // Create priority queue and hashmaps
-        PriorityQueue<Neighbor> inQueue = new PriorityQueue<>();
-        HashMap<String, Neighbor> parent = new HashMap<>();
-        HashMap<String, Neighbor> used = new HashMap<>();
+        PriorityQueue<SubPath> inQueue = new PriorityQueue<>();
+        HashMap<String, SubPath> parent = new HashMap<>();
+        HashMap<String, SubPath> used = new HashMap<>();
 
         // Initialize values
-        Neighbor sNeigh = new Neighbor("", start, 0.0);
+        SubPath sNeigh = new SubPath("", start, 0.0);
         inQueue.add(sNeigh);
         parent.put(start.getNodeID(), null);
 
         // Loop while queue isn't empty or end map is found
         while (!inQueue.isEmpty()) {
             // Poll next neighbor off the queue and get its map
-            Neighbor nNext = inQueue.poll();
+            SubPath nNext = inQueue.poll();
             Location lNext = nNext.getLocation();
 
             // Check to see if map is our end map
@@ -69,8 +69,8 @@ public class PathFinder {
             used.put(lNext.getNodeID(), nNext);
 
             // Gets the node's neighbors and loop thru them all
-            List<Neighbor> lstNeighbors = lNext.getNeighbors();
-            for (Neighbor nCurr : lstNeighbors) {
+            List<SubPath> lstSubPaths = lNext.getNeighbors();
+            for (SubPath nCurr : lstSubPaths) {
                 // Get the real map from the neighbor
                 Location lCurr = nCurr.getLocation();
                 // Check duplicate
@@ -82,7 +82,7 @@ public class PathFinder {
                     double heuristic = calcDist(lCurr.getxCord(), lCurr.getyCord(), end.getxCord(), end.getyCord());
 
                     // Create a new neighbor with updated distance value
-                    Neighbor newNeigh = new Neighbor(nCurr.getEdgeID(), nCurr.getLocation(), newDist + heuristic);
+                    SubPath newNeigh = new SubPath(nCurr.getEdgeID(), nCurr.getLocation(), newDist + heuristic);
                     // Add the new neighbor into the queue and add its parent into the parent map
                     inQueue.add(newNeigh);
                     parent.put(lCurr.getNodeID(), nNext);
@@ -98,11 +98,11 @@ public class PathFinder {
      * @param end The end map
      * @return A stack of locations containing the path
      */
-    private static Stack<Neighbor> genPath(HashMap<String, Neighbor> parent, Neighbor end) {
+    private static Stack<SubPath> genPath(HashMap<String, SubPath> parent, SubPath end) {
         // Create an empty stack of neighbors
-        Stack<Neighbor> path = new Stack<>();
+        Stack<SubPath> path = new Stack<>();
         // Start at the last node (end)
-        Neighbor prev = end;
+        SubPath prev = end;
         // Loop thru until the start is reached (parent == null)
         while (prev != null) {
             path.push(prev);
@@ -116,10 +116,10 @@ public class PathFinder {
      * Prints out the path (represented in a stack)
      * @param path A stack of locations containing the path
      */
-    private static void printPath(Stack<Neighbor> path) {
+    private static void printPath(Stack<SubPath> path) {
         // Pop thru the stack and print out each element
         while (!path.isEmpty()) {
-            Neighbor curr = path.pop();
+            SubPath curr = path.pop();
             System.out.println("Location: " + curr.getLocation().getNodeID());
             System.out.println("Distance: " + curr.getDist());
         }
