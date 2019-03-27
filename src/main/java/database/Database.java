@@ -1,6 +1,5 @@
 package database;
 
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import helpers.Constants;
 import models.map.Location;
 import models.map.Neighbor;

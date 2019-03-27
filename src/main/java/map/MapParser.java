@@ -55,7 +55,7 @@ public class MapParser {
                 // Create a new map with the given fields
                 Location newLoc = new Location(locID, Integer.parseInt(splitLine[1]), Integer.parseInt(splitLine[2]), splitLine[3], splitLine[4], createNode(splitLine[5]), splitLine[6], splitLine[7]);
 
-                Database.addNode(newLoc);
+                Database.addLocation(newLoc);
 
                 // Add the map into the map
                 lstLocations.put(locID, newLoc);
@@ -109,8 +109,8 @@ public class MapParser {
                 Neighbor nStart = new Neighbor(pathID, start, dist);
                 end.addNeighbor(nStart);
 
-                Database.addEdge(nEnd);
-                Database.addEdge(nStart);
+                Database.addNeighbor(nEnd);
+                Database.addNeighbor(nStart);
 
                 System.out.println(start.getNodeID() + " and " + end.getNodeID() + " connected.");
             }
