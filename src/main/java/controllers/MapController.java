@@ -51,7 +51,6 @@ public class MapController {
 //        settingsButton.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.COG));
 //        logoutButton.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.SIGN_OUT));
 
-       // CSVParser.parse("/data/nodes.csv", "/data/edges.csv");
         Map map = MapParser.parse();
         MapDisplay.display(map, panMap, "Tower", "1");
     }

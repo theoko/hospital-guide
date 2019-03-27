@@ -9,6 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.input.ZoomEvent;
 import javafx.scene.layout.AnchorPane;
+import map.CSVParser;
 import map.MapDisplay;
 import map.MapParser;
 import models.map.Map;
@@ -52,7 +53,7 @@ public class RegMapController {
 //        logoutButton.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.SIGN_OUT));
 
         //Database db = new Database();
-        //CSVParser.parse("/data/nodes.csv", "/data/edges.csv");
+
         Map map = MapParser.parse();
         MapDisplay.display(map, panMap, "Tower", "1");
     }
