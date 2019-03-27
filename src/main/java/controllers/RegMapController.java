@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 import map.MapDisplay;
 import map.MapParser;
 
-public class MapController {
+public class RegMapController {
 
     /**
      * Side menu

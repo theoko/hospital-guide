@@ -1,10 +1,17 @@
 package controllers;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.DoubleProperty;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.net.URL;
 import java.util.HashMap;
 
@@ -20,8 +27,8 @@ public class ScreenController {
             // Initialize screens
             this.initializeScreens(this.stage);
 
-            // Activate login screen
-            this.activate("login");
+            // Activate logo screen
+            this.activate("logo");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -31,6 +38,9 @@ public class ScreenController {
     public void initializeScreens(Stage stage) throws Exception {
 
         // Initialize screen controller to switch between different scenes
+        this.addScreen("logo","/Logo.fxml");
+        this.addScreen("welcome","/Welcome.fxml");
+        this.addScreen("regMain","/RegMain.fxml");
         this.addScreen("login","/Login.fxml");
         this.addScreen("main","/Main.fxml");
 
@@ -76,6 +86,5 @@ public class ScreenController {
         stage.setResizable(true);
 
         stage.show();
-
     }
 }

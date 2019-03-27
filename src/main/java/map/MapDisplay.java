@@ -4,6 +4,7 @@ import helpers.Constants;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -11,6 +12,7 @@ import models.map.Edge;
 import models.map.Location;
 import models.map.Map;
 
+import java.awt.*;
 import java.util.HashMap;
 
 public class MapDisplay {

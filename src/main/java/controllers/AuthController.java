@@ -48,4 +48,10 @@ public class AuthController {
 
     }
 
+    public void goBack(ActionEvent actionEvent) throws Exception {
+        actionEvent.consume();
+        ScreenController.deactivate();
+        ScreenController.moveTo("welcome");
+    }
+
 }
