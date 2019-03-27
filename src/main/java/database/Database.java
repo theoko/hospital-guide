@@ -9,6 +9,9 @@ import models.user.Admin;
 import models.user.Employee;
 import models.user.User;
 
+import javax.xml.crypto.Data;
+import java.io.File;
+import java.nio.file.Files;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,6 +33,8 @@ public class Database {
             e.printStackTrace();
         }
 
+        System.gc();
+
         connection = null;
 
         try {
@@ -38,10 +43,22 @@ public class Database {
             e.printStackTrace();
         }
 
-        createTables();
+//        createTables();
 
 //        dialect = new DerbyTemplates();
 //        configuration = new Configuration(dialect);
+    }
+
+    /**
+     * Drops all database tables
+     */
+    public void dropTables() {
+        dropEdgeTable();
+        dropLocationTable();
+        dropAdminTable();
+        dropCustodianTable();
+        dropEmployeeTable();
+        dropUsersTable();
     }
 
     /**
@@ -54,13 +71,6 @@ public class Database {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        dropEdgeTable();
-        dropLocationTable();
-        dropAdminTable();
-        dropCustodianTable();
-        dropEmployeeTable();
-        dropUsersTable();
 
         String usersTable = "CREATE TABLE " + Constants.USERS_TABLE +
                 "(userID INT PRIMARY KEY," +
@@ -456,8 +466,10 @@ public class Database {
                         lstLocations.get(resultSet.getString("STARTNODEID")),
                         lstLocations.get(resultSet.getString("ENDNODEID"))
                 );
+
                 returnList.add(edge);
             }
+
             return returnList;
         } catch (SQLException e) {
             System.out.println("Failed to get users!");
@@ -555,9 +567,27 @@ public class Database {
     }
 
     public static void main(String[] args) {
-        Database db = new Database();
 
-        db.createTables();
+        Database db;
+
+        if(Database.connection == null) {
+            System.out.println("our connection is fucked");
+        }
+
+        File dbDirectory = new File(Constants.DB_NAME.replaceAll("%20", " "));
+
+        if(dbDirectory.exists()) {
+            System.out.println("Exists!");
+
+            db = new Database();
+
+        } else {
+            System.out.println("Need to create the database!");
+
+            db = new Database();
+
+            db.createTables();
+        }
 
 //        HashMap<String, ArrayList<String>> builder = new HashMap<>();
 //

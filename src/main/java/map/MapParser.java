@@ -10,6 +10,10 @@ import java.util.List;
 
 public class MapParser {
 
+    /**
+     * Generates a hashmap of unlinked locations
+     * @return models.map.Map
+     */
     public static Map parse() {
         // Generates a hashmap of unlinked locations
         HashMap<String, Location> lstLocations = Database.getLocations();
@@ -19,6 +23,11 @@ public class MapParser {
         return map;
     }
 
+    /**
+     * Returns a hashmap of edges
+     * @param lstLocations
+     * @return
+     */
     private static HashMap<String, Edge> parseEdges(HashMap<String, Location> lstLocations) {
         HashMap<String, Edge> mapEdges = new HashMap<>();
         List<Edge> lstEdges = Database.getEdges(lstLocations);
