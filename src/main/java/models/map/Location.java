@@ -69,7 +69,6 @@ public class Location {
     }
 
     public String[] getStrings() {
-        System.out.println(nodeID);
         return new String[]{nodeID, Integer.toString(xCord), Integer.toString(yCord), floor, building,
             nodeType.toString(), longName, shortName};
     }
