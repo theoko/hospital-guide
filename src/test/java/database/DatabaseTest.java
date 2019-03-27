@@ -5,6 +5,7 @@ import map.CSVParser;
 import models.map.Location;
 import org.junit.Test;
 
+import java.io.File;
 import java.util.HashMap;
 
 import static helpers.Constants.NodeType.HALL;
@@ -15,11 +16,23 @@ public class DatabaseTest {
     Database db;
 
     public DatabaseTest() {
-        db = new Database();
 
         // Parse locations and edges
         // Add locations and edges to the database
+        File dbDirectory = new File(Constants.DB_NAME.replaceAll("%20", " "));
 
+        if(dbDirectory.exists()) {
+            System.out.println("Exists!");
+
+            db = new Database();
+
+        } else {
+            System.out.println("Need to create the database!");
+
+            db = new Database();
+
+            CSVParser.parse("/data/nodes.csv", "/data/edges.csv");
+        }
 
     }
 
@@ -48,14 +61,15 @@ public class DatabaseTest {
         HashMap<String, Location> locations = db.getLocations();
 
         // check that all fields are equal to the original after being added and and pulled from the database
-        assertTrue(newLoc.getBuilding() == (locations.get(newLoc.getNodeID())).getBuilding());
-        assertTrue(newLoc.getFloor() == (locations.get(newLoc.getNodeID())).getFloor());
-        assertTrue(newLoc.getShortName() == (locations.get(newLoc.getNodeID())).getShortName());
-        assertTrue(newLoc.getLongName() == (locations.get(newLoc.getNodeID())).getLongName());
+
+        assertTrue(newLoc.getBuilding().equals((locations.get(newLoc.getNodeID())).getBuilding()));
+        assertTrue(newLoc.getFloor().equals((locations.get(newLoc.getNodeID())).getFloor()));
+        assertTrue(newLoc.getShortName().equals((locations.get(newLoc.getNodeID())).getShortName()));
+        assertTrue(newLoc.getLongName().equals((locations.get(newLoc.getNodeID())).getLongName()));
         assertTrue(newLoc.getNodeType() == (locations.get(newLoc.getNodeID())).getNodeType());
         assertTrue(newLoc.getxCord() == (locations.get(newLoc.getNodeID())).getxCord());
         assertTrue(newLoc.getyCord() == (locations.get(newLoc.getNodeID())).getyCord());
-        assertTrue(newLoc.getNodeID() == (locations.get(newLoc.getNodeID())).getNodeID());
+        assertTrue(newLoc.getNodeID().equals((locations.get(newLoc.getNodeID())).getNodeID()));
 
 
 
