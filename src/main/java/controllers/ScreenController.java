@@ -36,6 +36,8 @@ public class ScreenController {
         this.addScreen("regMain","/RegMain.fxml");
         this.addScreen("login","/Login.fxml");
         this.addScreen("main","/Main.fxml");
+        this.addScreen("download", "/Download.fxml");
+        this.addScreen("downloaded", "/Downloaded.fxml");
 
     }
 

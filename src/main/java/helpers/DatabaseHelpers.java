@@ -29,8 +29,10 @@ public class DatabaseHelpers {
                 return "RETL";
             case SERV:
                 return "SERV";
-            default:
+            case STAI:
                 return "STAI";
+            default:
+                return null;
         }
     }
     /**
@@ -60,8 +62,10 @@ public class DatabaseHelpers {
                 return Constants.NodeType.RETL;
             case "SERV":
                 return Constants.NodeType.SERV;
-            default:
+            case "STAI":
                 return Constants.NodeType.STAI;
+            default:
+                return null;
         }
     }
 
