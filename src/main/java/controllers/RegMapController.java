@@ -3,18 +3,18 @@ package controllers;
 import com.jfoenix.controls.JFXButton;
 import helpers.Constants;
 import javafx.fxml.FXML;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.input.ZoomEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 import map.Map;
 import map.MapDisplay;
 import map.MapParser;
 
-public class MapController {
+public class RegMapController {
 
     /**
      * Side menu

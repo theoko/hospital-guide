@@ -39,6 +39,7 @@ public class ScreenController {
         // Initialize screen controller to switch between different scenes
         this.addScreen("logo","/Logo.fxml");
         this.addScreen("welcome","/Welcome.fxml");
+        this.addScreen("regMain","/RegMain.fxml");
         this.addScreen("login","/Login.fxml");
         this.addScreen("main","/Main.fxml");
 

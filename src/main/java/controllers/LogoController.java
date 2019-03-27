@@ -26,10 +26,10 @@ public class LogoController {
         mP = new MediaPlayer(logoMe);
         logoMv.setMediaPlayer(mP);
         mP.setAutoPlay(true);
-        DoubleProperty width = logoMv.fitWidthProperty();
+        /*DoubleProperty width = logoMv.fitWidthProperty();
         DoubleProperty height = logoMv.fitHeightProperty();
         width.bind(Bindings.selectDouble(logoMv.sceneProperty(),"width"));
-        height.bind(Bindings.selectDouble(logoMv.sceneProperty(),"height"));
+        height.bind(Bindings.selectDouble(logoMv.sceneProperty(),"height"));*/
         mP.setOnEndOfMedia(() -> {
             try {
                 ScreenController.deactivate();
