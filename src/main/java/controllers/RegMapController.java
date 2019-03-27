@@ -147,4 +147,12 @@ public class RegMapController {
         ScreenController.deactivate();
         ScreenController.activate("welcome");
     }
+
+    public void clickDownload(MouseEvent event) throws Exception {
+        event.consume();
+        ScreenController.deactivate();
+        ScreenController.activate("download");
+    }
+
+
 }
