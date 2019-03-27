@@ -14,7 +14,7 @@ public class Location {
     private Constants.NodeType nodeType;
     private String longName;
     private String shortName;
-    private ArrayList<Neighbor> lstNeighbors;
+    private ArrayList<SubPath> lstSubPaths;
 
     public Location(String nodeID, int xCord, int yCord, String floor, String building, Constants.NodeType nodeType, String longName, String shortName) {
         this.nodeID = nodeID;
@@ -25,7 +25,7 @@ public class Location {
         this.nodeType = nodeType;
         this.longName = longName;
         this.shortName = shortName;
-        this.lstNeighbors = new ArrayList<Neighbor>();
+        this.lstSubPaths = new ArrayList<>();
     }
 
     public String getNodeID() {
@@ -60,12 +60,12 @@ public class Location {
         return shortName;
     }
 
-    public void addNeighbor(Neighbor neighbor) {
-        lstNeighbors.add(neighbor);
+    public void addNeighbor(SubPath subPath) {
+        lstSubPaths.add(subPath);
     }
 
-    public ArrayList<Neighbor> getNeighbors() {
-        return lstNeighbors;
+    public ArrayList<SubPath> getNeighbors() {
+        return lstSubPaths;
     }
 
 }

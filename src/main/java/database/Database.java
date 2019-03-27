@@ -1,8 +1,9 @@
 package database;
 
 import helpers.Constants;
+import models.map.Edge;
 import models.map.Location;
-import models.map.Neighbor;
+import models.map.SubPath;
 import models.user.Admin;
 import models.user.Employee;
 import models.user.User;
@@ -35,6 +36,8 @@ public class Database {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        createTables();
 
 //        dialect = new DerbyTemplates();
 //        configuration = new Configuration(dialect);
@@ -293,7 +296,7 @@ public class Database {
 
     }
 
-    public static boolean addNeighbor(Neighbor neighbor) {
+    public static boolean addEdge(Edge edge) {
 
         try {
 
@@ -304,16 +307,16 @@ public class Database {
                             "VALUES (?, ?, ?)"
             );
 
-            statement.setString(1, neighbor.getEdgeID());
-            statement.setString(2, neighbor.getLocation().getNodeID());
-            statement.setString(3, String.valueOf(neighbor.getDist()));
+            statement.setString(1, edge.getEdgeID());
+            statement.setString(2, edge.getStart().getNodeID());
+            statement.setString(3, edge.getEnd().getNodeID());
 
             statement.execute();
 
             return true;
 
         } catch (SQLException e) {
-            System.out.println("Neighbor cannot be added!");
+            System.out.println("SubPath cannot be added!");
 
             return false;
         }

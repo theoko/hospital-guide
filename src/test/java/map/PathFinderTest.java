@@ -2,7 +2,7 @@ package map;
 
 import models.map.Location;
 import models.map.Map;
-import models.map.Neighbor;
+import models.map.SubPath;
 import org.junit.Test;
 
 import java.util.Stack;
@@ -17,11 +17,11 @@ public class PathFinderTest {
 
         Location start = map.getLocation("ADEPT00301");
         Location end = map.getLocation("DDEPT00402");
-        Stack<Neighbor> path = PathFinder.findPath(map, start, end);
+        Stack<SubPath> path = PathFinder.findPath(map, start, end);
         assertTrue(validatePath(path));
     }
 
-    private boolean validatePath(Stack<Neighbor> path) {
+    private boolean validatePath(Stack<SubPath> path) {
         return true;
     }
 }
