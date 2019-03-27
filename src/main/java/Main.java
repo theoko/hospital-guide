@@ -1,7 +1,10 @@
 import controllers.ScreenController;
 import database.Database;
+import helpers.Constants;
 import javafx.application.Application;
 import javafx.stage.Stage;
+
+import java.io.File;
 
 public class Main extends Application {
 
@@ -15,7 +18,20 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        db = new Database();
+        Database db;
+
+        File dbDirectory = new File(Constants.DB_NAME.replaceAll("%20", " "));
+
+        if(dbDirectory.exists()) {
+            System.out.println("Exists!");
+
+            db = new Database();
+
+        } else {
+            System.out.println("Need to create the database!");
+
+            db = new Database();
+        }
 
         screenController = new ScreenController(primaryStage);
 

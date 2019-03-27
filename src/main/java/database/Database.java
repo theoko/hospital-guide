@@ -8,11 +8,11 @@ import models.user.Admin;
 import models.user.Employee;
 import models.user.User;
 
-import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 
 public class Database {
 
@@ -22,7 +22,7 @@ public class Database {
 //    Configuration configuration;
 //    SQLQueryFactory sqlQueryFactory;
 
-    public Database() {
+    static {
 
         try {
             DriverManager.registerDriver(new org.apache.derby.jdbc.EmbeddedDriver());
@@ -36,11 +36,12 @@ public class Database {
 
         try {
             connection = DriverManager.getConnection("jdbc:derby:" + Constants.DB_NAME + ";create=true");
+            dropTables();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-//        createTables();
+        createTables();
 
 //        dialect = new DerbyTemplates();
 //        configuration = new Configuration(dialect);
@@ -49,7 +50,7 @@ public class Database {
     /**
      * Drops all database tables
      */
-    public void dropTables() {
+    public static void dropTables() {
         dropEdgeTable();
         dropLocationTable();
         dropAdminTable();
@@ -61,7 +62,7 @@ public class Database {
     /**
      * Creates the basic database tables
      */
-    private void createTables() {
+    private static void createTables() {
         Statement statement = null;
         try {
             statement = connection.createStatement();
@@ -125,7 +126,7 @@ public class Database {
     /**
      * Drop tables
      */
-    private boolean dropUsersTable(){
+    private static boolean dropUsersTable(){
         try {
             Statement statement;
 
@@ -140,7 +141,7 @@ public class Database {
         }
     }
 
-    private boolean dropEmployeeTable(){
+    private static boolean dropEmployeeTable(){
         try {
             Statement statement;
 
@@ -155,7 +156,7 @@ public class Database {
         }
     }
 
-    private boolean dropCustodianTable(){
+    private static boolean dropCustodianTable(){
         try {
             Statement statement;
 
@@ -170,7 +171,7 @@ public class Database {
         }
     }
 
-    private boolean dropAdminTable(){
+    private static boolean dropAdminTable(){
         try {
             Statement statement;
 
@@ -185,7 +186,7 @@ public class Database {
         }
     }
 
-    private boolean dropLocationTable(){
+    private static boolean dropLocationTable(){
         try {
             Statement statement;
 
@@ -200,7 +201,7 @@ public class Database {
         }
     }
 
-    private boolean dropEdgeTable(){
+    private static boolean dropEdgeTable(){
         try {
             Statement statement;
 
@@ -305,7 +306,7 @@ public class Database {
             statement.setInt(3, location.getyCord());
             statement.setString(4, location.getFloor());
             statement.setString(5, location.getBuilding());
-            statement.setString(6, String.valueOf(DatabaseHelpers.enumToInt(location.getNodeType())));
+            statement.setString(6, String.valueOf(DatabaseHelpers.enumToString(location.getNodeType())));
             statement.setString(7, location.getLongName());
             statement.setString(8, location.getShortName());
 
@@ -408,7 +409,7 @@ public class Database {
                         resultSet.getInt("YCOORD"),
                         resultSet.getString("FLOOR"),
                         resultSet.getString("BUILDING"),
-                        DatabaseHelpers.intToEnum(Integer.parseInt(resultSet.getString("NODETYPE"))),
+                        DatabaseHelpers.stringToEnum(resultSet.getString("NODETYPE")),
                         resultSet.getString("LONGNAME"),
                         resultSet.getString("SHORTNAME")
                 );
@@ -473,7 +474,7 @@ public class Database {
             statement.setInt(2, updatedLocation.getyCord());
             statement.setString(3, updatedLocation.getFloor());
             statement.setString(4, updatedLocation.getBuilding());
-            statement.setString(5, String.valueOf(DatabaseHelpers.enumToInt(updatedLocation.getNodeType())));
+            statement.setString(5, String.valueOf(DatabaseHelpers.enumToString(updatedLocation.getNodeType())));
             statement.setString(6, updatedLocation.getLongName());
             statement.setString(7, updatedLocation.getShortName());
 
@@ -613,26 +614,26 @@ public class Database {
 
     public static void main(String[] args) {
 
-        Database db;
-
-        if(Database.connection == null) {
-            System.out.println("our connection is fucked");
-        }
-
-        File dbDirectory = new File(Constants.DB_NAME.replaceAll("%20", " "));
-
-        if(dbDirectory.exists()) {
-            System.out.println("Exists!");
-
-            db = new Database();
-
-        } else {
-            System.out.println("Need to create the database!");
-
-            db = new Database();
-
-            db.createTables();
-        }
+//        Database db;
+//
+//        if(Database.connection == null) {
+//            System.out.println("our connection is fucked");
+//        }
+//
+//        File dbDirectory = new File(Constants.DB_NAME.replaceAll("%20", " "));
+//
+//        if(dbDirectory.exists()) {
+//            System.out.println("Exists!");
+//
+//            db = new Database();
+//
+//        } else {
+//            System.out.println("Need to create the database!");
+//
+//            db = new Database();
+//
+//            db.createTables();
+//        }
 
 //        HashMap<String, ArrayList<String>> builder = new HashMap<>();
 //
