@@ -30,7 +30,7 @@ public class DatabaseHelpers {
             case SERV:
                 return "SERV";
             default:
-                return null;
+                return "STAI";
         }
     }
     /**
@@ -61,7 +61,7 @@ public class DatabaseHelpers {
             case "SERV":
                 return Constants.NodeType.SERV;
             default:
-                return null;
+                return Constants.NodeType.STAI;
         }
     }
 

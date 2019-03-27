@@ -13,7 +13,6 @@ import java.util.List;
 public class CSVParser {
 
     public static void main(String[] args) {
-        Database db = new Database();
         parse("/data/nodes.csv", "/data/edges.csv");
         export("/data/eNodes.csv", "/data/eEdges.csv");
     }
@@ -103,11 +102,6 @@ public class CSVParser {
 
         HashMap<String, Location> lstLocations = new HashMap<>();
         File csvFile = new File(pathNodes);
-//        try {
-//            //csvFile.createNewFile();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
 
         try {
             FileWriter oFile = new FileWriter(csvFile);
@@ -131,11 +125,13 @@ public class CSVParser {
     }
 
     private static void exportEdges(String pathEdges, HashMap<String, Location> lstLocations) {
+        // edgeID,startNode,endNode
+
         File csvFile = new File(pathEdges);
         try {
             FileWriter oFile = new FileWriter(csvFile);
             CSVWriter writer = new CSVWriter(oFile);
-            String[] header = {""};
+            String[] header = {"edgeID", "startNode", "endNode"};
             writer.writeNext(header);
 
             List<Edge> lstEdges = Database.getEdges(lstLocations);
