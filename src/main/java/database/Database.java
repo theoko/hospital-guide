@@ -276,7 +276,7 @@ public class Database {
             statement.setInt(3, location.getyCord());
             statement.setString(4, location.getFloor());
             statement.setString(5, location.getBuilding());
-            statement.setString(6, location.getNodeType().toString());
+            statement.setString(6, String.valueOf(enumToInt(location.getNodeType())));
             statement.setString(7, location.getLongName());
             statement.setString(8, location.getShortName());
 
@@ -285,7 +285,7 @@ public class Database {
             return true;
 
         } catch (SQLException e) {
-            System.out.println("Location cannot be added!");
+            System.out.println("Location " + location.getNodeID() + " cannot be added!");
             e.printStackTrace();
 
             return false;
@@ -441,7 +441,7 @@ public class Database {
     /**
      * Translates data from constant.NodeType to an int to put into database
      */
-    public int enumToInto(Constants.NodeType num){
+    public static int enumToInt(Constants.NodeType num){
         switch (num) {
             case BATH:
                 return 0;
@@ -518,7 +518,7 @@ public class Database {
     public static void main(String[] args) {
         Database db = new Database();
 
-//        db.createTables();
+        db.createTables();
 
 //        HashMap<String, ArrayList<String>> builder = new HashMap<>();
 //
