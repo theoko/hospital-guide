@@ -1,24 +1,31 @@
 package map;
 
+import com.opencsv.CSVWriter;
 import database.Database;
 import helpers.Constants;
 import models.map.Edge;
 import models.map.Location;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+
+import java.io.*;
 import java.util.HashMap;
+import java.util.List;
 
 public class CSVParser {
 
     public static void main(String[] args) {
         Database db = new Database();
         parse("/data/nodes.csv", "/data/edges.csv");
+        export("/data/eNodes.csv", "/data/eEdges.csv");
     }
 
     public static void parse(String pathNodes, String pathEdges) {
         HashMap<String, Location> lstLocations = parseNodes(strToPath(pathNodes));
         parseEdges(strToPath(pathEdges), lstLocations);
+    }
+
+    public static void export(String pathNodes, String pathEdges) {
+        HashMap<String, Location> lstLocations = exportNodes(pathNodes);
+        exportEdges(pathEdges, lstLocations);
     }
 
     private static HashMap<String, Location> parseNodes(String pathNodes) {
@@ -88,6 +95,55 @@ public class CSVParser {
                     e.printStackTrace();
                 }
             }
+        }
+    }
+
+    private static HashMap<String, Location> exportNodes(String pathNodes) {
+        // nodeID,xcoord,ycoord,floor,building,nodeType,longName,shortName
+
+        HashMap<String, Location> lstLocations = new HashMap<>();
+        File csvFile = new File(pathNodes);
+
+        try {
+            FileWriter oFile = new FileWriter(csvFile);
+            CSVWriter writer = new CSVWriter(oFile);
+            String[] header = {"nodeID", "xcoord", "ycoord", "floor", "building", "nodeType", "longName", "shortName"};
+            writer.writeNext(header);
+
+            lstLocations = Database.getLocations();
+            if (lstLocations != null) {
+                for (Location loc : lstLocations.values()) {
+                    String[] data = loc.getStrings();
+                    writer.writeNext(data);
+                }
+            }
+
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return lstLocations;
+    }
+
+    private static void exportEdges(String pathEdges, HashMap<String, Location> lstLocations) {
+        File csvFile = new File(pathEdges);
+        try {
+            FileWriter oFile = new FileWriter(csvFile);
+            CSVWriter writer = new CSVWriter(oFile);
+            String[] header = {""};
+            writer.writeNext(header);
+
+            List<Edge> lstEdges = Database.getEdges(lstLocations);
+            if (lstEdges != null) {
+                for (Edge edge : lstEdges) {
+                    String[] data = edge.getStrings();
+                    writer.writeNext(data);
+                }
+            }
+
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

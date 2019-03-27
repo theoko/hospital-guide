@@ -68,4 +68,9 @@ public class Location {
         return lstSubPaths;
     }
 
+    public String[] getStrings() {
+        return new String[]{nodeID, Integer.toString(xCord), Integer.toString(yCord), floor, building,
+            nodeType.toString(), longName, shortName};
+    }
+
 }

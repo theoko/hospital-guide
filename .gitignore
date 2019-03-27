@@ -7,6 +7,8 @@ gradlew
 gradlew.bat
 derby.log
 teamF/
+src/main/resources/data/eNodes.csv
+src/main/resources/data/eEdges.csv
 *.class
 *.jar
 *.lock
