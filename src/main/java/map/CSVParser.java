@@ -24,8 +24,8 @@ public class CSVParser {
     }
 
     public static void export(String pathNodes, String pathEdges) {
-        HashMap<String, Location> lstLocations = exportNodes(pathNodes);
-        exportEdges(pathEdges, lstLocations);
+        HashMap<String, Location> lstLocations = exportNodes(strToPath(pathNodes));
+        exportEdges(strToPath(pathEdges), lstLocations);
     }
 
     private static HashMap<String, Location> parseNodes(String pathNodes) {
@@ -103,6 +103,11 @@ public class CSVParser {
 
         HashMap<String, Location> lstLocations = new HashMap<>();
         File csvFile = new File(pathNodes);
+//        try {
+//            //csvFile.createNewFile();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
         try {
             FileWriter oFile = new FileWriter(csvFile);
