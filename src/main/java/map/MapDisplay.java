@@ -23,7 +23,7 @@ public class MapDisplay {
                     double xLoc = (double) loc.getxCord() - xShift;
                     double yLoc = (double) loc.getyCord() - yShift;
                     System.out.println("(" + xLoc + ", " + yLoc + ")");
-                    Color color = nodeColor(loc);
+                    Color color = Color.GRAY;
                     Circle circle = new Circle(xLoc, yLoc, defRadius, color);
                     circle.setStroke(Color.BLACK);
                     pane.getChildren().add(circle);

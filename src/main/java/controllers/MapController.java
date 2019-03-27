@@ -1,6 +1,7 @@
 package controllers;
 
 import com.jfoenix.controls.JFXButton;
+import database.Database;
 import helpers.Constants;
 import javafx.fxml.FXML;
 import javafx.scene.control.Tooltip;
@@ -9,6 +10,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.input.ZoomEvent;
 import javafx.scene.layout.AnchorPane;
+import map.CSVParser;
 import models.map.Map;
 import map.MapDisplay;
 import map.MapParser;
@@ -51,6 +53,8 @@ public class MapController {
 //        settingsButton.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.COG));
 //        logoutButton.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.SIGN_OUT));
 
+        Database db = new Database();
+        CSVParser.parse("/data/nodes.csv", "/data/edges.csv");
         Map map = MapParser.parse();
         MapDisplay.display(map, panMap, "Tower", "1");
     }
