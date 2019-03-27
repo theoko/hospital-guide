@@ -1,6 +1,8 @@
 package database;
 
+import com.querydsl.sql.*;
 import helpers.Constants;
+import helpers.DatabaseHelpers;
 import models.map.Edge;
 import models.map.Location;
 import models.user.Admin;
@@ -40,7 +42,6 @@ public class Database {
 
 //        dialect = new DerbyTemplates();
 //        configuration = new Configuration(dialect);
-//        sqlQueryFactory = new SQLQueryFactory(configuration, dataSource);
     }
 
     /**
@@ -278,7 +279,7 @@ public class Database {
             statement.setInt(3, location.getyCord());
             statement.setString(4, location.getFloor());
             statement.setString(5, location.getBuilding());
-            statement.setString(6, String.valueOf(enumToInt(location.getNodeType())));
+            statement.setString(6, String.valueOf(DatabaseHelpers.enumToInt(location.getNodeType())));
             statement.setString(7, location.getLongName());
             statement.setString(8, location.getShortName());
 
@@ -422,7 +423,7 @@ public class Database {
                         resultSet.getInt("YCOORD"),
                         resultSet.getString("FLOOR"),
                         resultSet.getString("BUILDING"),
-                        intToEnum(Integer.parseInt(resultSet.getString("NODETYPE"))),
+                        DatabaseHelpers.intToEnum(Integer.parseInt(resultSet.getString("NODETYPE"))),
                         resultSet.getString("LONGNAME"),
                         resultSet.getString("SHORTNAME")
                 );
@@ -464,82 +465,93 @@ public class Database {
         }
     }
 
-
-    /**
-     * Translates data from constant.NodeType to an int to put into database
-     */
-    public static int enumToInt(Constants.NodeType num){
-        switch (num) {
-            case BATH:
-                return 0;
-            case CONF:
-                return 1;
-            case DEPT:
-                return 2;
-            case ELEV:
-                return 3;
-            case EXIT:
-                return 4;
-            case HALL:
-                return 5;
-            case INFO:
-                return 6;
-            case LABS:
-                return 7;
-            case REST:
-                return 8;
-            case RETL:
-                return 9;
-            case SERV:
-                return 10;
-            default:
-                return -1;
-        }
-    }
-    /**
-     * Translates data from int to an enum
-     */
-    public static Constants.NodeType intToEnum(int num){
-        switch (num) {
-            case 0:
-                return Constants.NodeType.BATH;
-            case 1:
-                return Constants.NodeType.CONF;
-            case 2:
-                return Constants.NodeType.DEPT;
-            case 3:
-                return Constants.NodeType.ELEV;
-            case 4:
-                return Constants.NodeType.EXIT;
-            case 5:
-                return Constants.NodeType.HALL;
-            case 6:
-                return Constants.NodeType.INFO;
-            case 7:
-                return Constants.NodeType.LABS;
-            case 8:
-                return Constants.NodeType.REST;
-            case 9:
-                return Constants.NodeType.RETL;
-            case 10:
-                return Constants.NodeType.SERV;
-            default:
-                return null;
-        }
-    }
-
     /**
      * Returns a list of admins
      */
     public List<Admin> getAdmins() throws Exception {
-        return new ArrayList<>();
+
+        try {
+
+            Statement statement;
+
+            statement = connection.createStatement();
+
+            String query = "SELECT * FROM " + Constants.ADMIN_TABLE;
+
+            ResultSet resultSet = statement.executeQuery(query);
+
+            ArrayList<Admin> returnList = new ArrayList<>();
+
+            while(resultSet.next()) {
+
+                User user = getUserByID(resultSet.getInt("ADMINID"));
+
+                if(user == null) {
+                    throw new Exception("Users and admin tables not correctly linked!");
+                }
+
+                Admin admin = new Admin(
+                        user.getUserID(),
+                        user.getUsername(),
+                        user.getPassword(),
+                        user.getUserType()
+                );
+
+                returnList.add(admin);
+
+            }
+
+            return returnList;
+
+        } catch (SQLException e) {
+            System.out.println("Failed to get admins!");
+
+            return null;
+        }
     }
 
     /**
      * Returns a list of employees
      */
     public List<Employee> getEmployees() throws Exception {
-        return new ArrayList<>();
+        try {
+
+            Statement statement;
+
+            statement = connection.createStatement();
+
+            String query = "SELECT * FROM " + Constants.EMPLOYEE_TABLE;
+
+            ResultSet resultSet = statement.executeQuery(query);
+
+            ArrayList<Employee> returnList = new ArrayList<>();
+
+            while(resultSet.next()) {
+
+                User user = getUserByID(resultSet.getInt("EMPLOYEEID"));
+
+                if(user == null) {
+                    throw new Exception("Users and employee tables not correctly linked!");
+                }
+
+                Employee employee = new Employee(
+                        user.getUserID(),
+                        user.getUsername(),
+                        user.getPassword(),
+                        user.getUserType()
+                );
+
+                returnList.add(employee);
+
+            }
+
+            return returnList;
+
+        } catch (SQLException e) {
+            System.out.println("Failed to get employees!");
+
+            return null;
+        }
     }
 
     public static void main(String[] args) {

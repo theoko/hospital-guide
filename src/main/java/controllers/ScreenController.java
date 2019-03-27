@@ -5,6 +5,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.net.URL;
 import java.util.HashMap;
 
 public class ScreenController {
@@ -61,7 +62,8 @@ public class ScreenController {
         stage = new Stage();
 
         // Init parent
-        Parent root = FXMLLoader.load(ScreenController.class.getResource(screenMap.get(name)));
+        URL url = new URL(ScreenController.class.getResource(screenMap.get(name)).toString().replaceAll("%20", " "));
+        Parent root = FXMLLoader.load(url);
 
         // Init scene
         Scene s = new Scene(root);
