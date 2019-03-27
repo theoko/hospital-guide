@@ -9,6 +9,7 @@ import javafx.scene.control.Tooltip;
 import com.jfoenix.controls.JFXButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import map.CSVParser;
 
 
 public class DownloadController {
@@ -28,6 +29,7 @@ public class DownloadController {
 
     public void clickButtonYes(MouseEvent event) throws Exception {
         event.consume();
+        CSVParser.export("/data/eNodes.csv", "/data/eEdges.csv");
         ScreenController.deactivate();
         ScreenController.activate("downloaded");
     }
