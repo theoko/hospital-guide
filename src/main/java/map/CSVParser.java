@@ -44,8 +44,6 @@ public class CSVParser {
 
                 lstLocations.put(locID, newLoc);
                 Database.addLocation(newLoc);
-
-                System.out.println(locID + " parsed.");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -79,8 +77,6 @@ public class CSVParser {
                 Edge newEdge = new Edge(edgeID, start, end);
 
                 Database.addEdge(newEdge);
-
-                System.out.println(edgeID + " parsed.");
             }
         } catch (IOException e) {
             e.printStackTrace();
