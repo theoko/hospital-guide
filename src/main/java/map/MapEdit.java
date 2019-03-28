@@ -5,7 +5,6 @@ import helpers.Constants;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -13,10 +12,9 @@ import models.map.Edge;
 import models.map.Location;
 import models.map.Map;
 
-import java.awt.*;
 import java.util.HashMap;
 
-public class MapDisplay {
+public class MapEdit {
 
     private final static double defRadius = 15.0;
     private final static double defWidth = 2.5;
@@ -51,6 +49,21 @@ public class MapDisplay {
                 Circle circle = new Circle(xLoc, yLoc, defRadius, color);
                 circle.setStroke(Color.BLACK);
                 circle.setStrokeWidth(defWidth / 3.0);
+
+                circle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event){
+                        circle.setFill(Color.RED);
+                        try{
+                            event.consume();
+                            ScreenController.moveTo("popUp");
+                        }
+                        catch (Exception e) {
+                            throw new UnsupportedOperationException(e);
+                        }
+                    }
+                });
+
                 pane.getChildren().add(circle);
             }
         }

@@ -11,6 +11,7 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.input.ZoomEvent;
 import javafx.scene.layout.AnchorPane;
 import map.CSVParser;
+import map.MapEdit;
 import models.map.Map;
 import javafx.stage.Stage;
 import map.MapDisplay;
@@ -34,7 +35,7 @@ public class MapController {
     ImageView floorOneMap;
 
     @FXML
-    AnchorPane panMap;
+    AnchorPane panMap1;
 
     @FXML
     JFXButton zoomIn;
@@ -57,7 +58,7 @@ public class MapController {
         Database db = new Database();
         CSVParser.parse("/data/nodes.csv", "/data/edges.csv");
         Map map = MapParser.parse();
-        MapDisplay.display(map, panMap, "Tower", "1");
+        MapEdit.display(map, panMap1, "Tower", "1");
     }
 
     public void floorOneMapOnMousePressed(MouseEvent event) {
@@ -145,6 +146,6 @@ public class MapController {
     public void logOut(MouseEvent event) throws Exception {
         event.consume();
         ScreenController.deactivate();
-        ScreenController.activate("welcome");
+        ScreenController.moveTo("welcome");
     }
 }
