@@ -29,7 +29,7 @@ public class ScreenController {
             this.initializeScreens(this.stage);
 
             // Activate logo screen
-            this.activate("logo");
+            this.activate("welcome");
         } catch (Exception e) {
             e.printStackTrace();
         }

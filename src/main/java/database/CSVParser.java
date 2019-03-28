@@ -13,9 +13,18 @@ import java.util.List;
 
 public class CSVParser {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         parse(FileHelpers.getNodesCSV(), FileHelpers.getEdgesCSV());
-        export("/data/eNodes.csv", "/data/eEdges.csv");
+
+        File data = new File("data");
+        data.mkdir();
+
+        if(FileHelpers.checkJar()) {
+            System.out.println("FUCKING JAR");
+            export("eNodes.csv", "eEdges.csv");
+        } else {
+            export("data/eNodes.csv", "data/eEdges.csv");
+        }
     }
 
     public static void parse(InputStream pathNodes, InputStream pathEdges) {
@@ -23,9 +32,16 @@ public class CSVParser {
         parseEdges(pathEdges, lstLocations);
     }
 
-    public static void export(String pathNodes, String pathEdges) {
-        HashMap<String, Location> lstLocations = exportNodes(strToPath(pathNodes));
-        exportEdges(strToPath(pathEdges), lstLocations);
+    public static void export(String pathNodes, String pathEdges) throws IOException {
+
+        if(FileHelpers.checkJar()) {
+            HashMap<String, Location> lstLocations = exportNodes(pathNodes);
+            exportEdges(pathEdges, lstLocations);
+        } else {
+            HashMap<String, Location> lstLocations = exportNodes(strToPath(pathNodes));
+            exportEdges(strToPath(pathEdges), lstLocations);
+        }
+
     }
 
     private static HashMap<String, Location> parseNodes(InputStream pathNodes) {
@@ -98,11 +114,19 @@ public class CSVParser {
         }
     }
 
-    private static HashMap<String, Location> exportNodes(String pathNodes) {
+    private static HashMap<String, Location> exportNodes(String pathNodes) throws IOException {
         // nodeID,xcoord,ycoord,floor,building,nodeType,longName,shortName
 
         HashMap<String, Location> lstLocations = new HashMap<>();
         File csvFile = new File(pathNodes);
+
+        if(!csvFile.exists())
+            csvFile.createNewFile();
+
+        if(FileHelpers.checkJar()) {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(csvFile));
+            writer.close();
+        }
 
         try {
             FileWriter oFile = new FileWriter(csvFile);
@@ -125,10 +149,19 @@ public class CSVParser {
         return lstLocations;
     }
 
-    private static void exportEdges(String pathEdges, HashMap<String, Location> lstLocations) {
+    private static void exportEdges(String pathEdges, HashMap<String, Location> lstLocations) throws IOException {
         // edgeID,startNode,endNode
 
         File csvFile = new File(pathEdges);
+
+        if(!csvFile.exists())
+            csvFile.createNewFile();
+
+        if(FileHelpers.checkJar()) {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(csvFile));
+            writer.close();
+        }
+
         try {
             FileWriter oFile = new FileWriter(csvFile);
             CSVWriter writer = new CSVWriter(oFile);

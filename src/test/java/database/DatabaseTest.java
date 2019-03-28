@@ -9,7 +9,7 @@ public class DatabaseTest {
     public DatabaseTest() {
         // Parse locations and edges
         // Add locations and edges to the database
-        CSVParser.parse("/data/nodes.csv", "/data/edges.csv");
+       // CSVParser.parse("/data/nodes.csv", "/data/edges.csv");
 
     }
 

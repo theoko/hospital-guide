@@ -1,9 +1,12 @@
 package controllers;
 
 import com.jfoenix.controls.JFXButton;
+import helpers.FileHelpers;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import database.CSVParser;
+
+import java.io.File;
 
 
 public class DownloadController {
@@ -23,7 +26,16 @@ public class DownloadController {
 
     public void clickButtonYes(MouseEvent event) throws Exception {
         event.consume();
-        CSVParser.export("/data/eNodes.csv", "/data/eEdges.csv");
+//
+//        File data = new File("data");
+//        data.mkdir();
+
+        if(FileHelpers.checkJar()) {
+            CSVParser.export("eNodes.csv", "eEdges.csv");
+        } else {
+            CSVParser.export("data/eNodes.csv", "data/eEdges.csv");
+        }
+
         ScreenController.deactivate();
         ScreenController.activate("downloaded");
     }
