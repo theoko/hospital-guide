@@ -84,29 +84,29 @@ public class RegMapController {
         ((AnchorPane) event.getSource()).setTranslateX(((AnchorPane) event.getSource()).getTranslateX() + event.getDeltaX());
         ((AnchorPane) event.getSource()).setTranslateY(((AnchorPane) event.getSource()).getTranslateY() + event.getDeltaY());
 
-        if (((AnchorPane) event.getSource()).getTranslateX() <= 0) {
-            ((AnchorPane) event.getSource()).setTranslateX(0);
+        if (((AnchorPane) event.getSource()).getTranslateX() <= -250) {
+            ((AnchorPane) event.getSource()).setTranslateX(-250);
         }
 
-        if (((AnchorPane) event.getSource()).getTranslateX() >= 0) {
-            ((AnchorPane) event.getSource()).setTranslateX(0);
+        if (((AnchorPane) event.getSource()).getTranslateX() >= 250) {
+            ((AnchorPane) event.getSource()).setTranslateX(250);
         }
 
-        if (((AnchorPane) event.getSource()).getTranslateY() <= -220) {
-            ((AnchorPane) event.getSource()).setTranslateY(-220);
+        if (((AnchorPane) event.getSource()).getTranslateY() <= -350) {
+            ((AnchorPane) event.getSource()).setTranslateY(-350);
         }
 
-        if (((AnchorPane) event.getSource()).getTranslateY() >= 220) {
-            ((AnchorPane) event.getSource()).setTranslateY(220);
+        if (((AnchorPane) event.getSource()).getTranslateY() >= 350) {
+            ((AnchorPane) event.getSource()).setTranslateY(350);
         }
     }
 
     public void floorOneMapZoom(ZoomEvent event) {
         ((AnchorPane) event.getSource()).setScaleX(((AnchorPane) event.getSource()).getScaleX() * event.getZoomFactor());
         ((AnchorPane) event.getSource()).setScaleY(((AnchorPane) event.getSource()).getScaleY() * event.getZoomFactor());
-        if(((AnchorPane) event.getSource()).getScaleX() <= 0.85 && ((AnchorPane) event.getSource()).getScaleY() <= 0.85) {
-            ((AnchorPane) event.getSource()).setScaleX(0.85);
-            ((AnchorPane) event.getSource()).setScaleY(0.85);
+        if(((AnchorPane) event.getSource()).getScaleX() <= 0.65 && ((AnchorPane) event.getSource()).getScaleY() <= 0.65) {
+            ((AnchorPane) event.getSource()).setScaleX(0.65);
+            ((AnchorPane) event.getSource()).setScaleY(0.65);
         }
         if(((AnchorPane) event.getSource()).getScaleX() >= 8 && ((AnchorPane) event.getSource()).getScaleY() >= 8) {
             ((AnchorPane) event.getSource()).setScaleX(8);
@@ -115,9 +115,9 @@ public class RegMapController {
     }
 
     public void floorOneMapZoomDone(ZoomEvent event) {
-        if(((AnchorPane) event.getSource()).getScaleX() <= 1 && ((AnchorPane) event.getSource()).getScaleY() <= 1) {
-            ((AnchorPane) event.getSource()).setScaleX(1);
-            ((AnchorPane) event.getSource()).setScaleY(1);
+        if(((AnchorPane) event.getSource()).getScaleX() <= 0.85 && ((AnchorPane) event.getSource()).getScaleY() <= 0.85) {
+            ((AnchorPane) event.getSource()).setScaleX(0.85);
+            ((AnchorPane) event.getSource()).setScaleY(0.85);
         }
         if(((AnchorPane) event.getSource()).getScaleX() >= 4 && ((AnchorPane) event.getSource()).getScaleY() >= 4) {
             ((AnchorPane) event.getSource()).setScaleX(4);
@@ -145,12 +145,4 @@ public class RegMapController {
         ScreenController.deactivate();
         ScreenController.moveTo("welcome");
     }
-
-    public void clickDownload(MouseEvent event) throws Exception {
-        event.consume();
-        ScreenController.deactivate();
-        ScreenController.activate("download");
-    }
-
-
 }

@@ -6,8 +6,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="950.0" prefWidth="1700.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DownloadedController">
+<AnchorPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DownloadedController">
    <children>
       <Label alignment="CENTER" layoutY="70.0" stylesheets="@css/colorScheme.css" text="Downloaded!" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
          <font>
@@ -16,7 +15,7 @@
       </Label>
       <HBox alignment="CENTER" layoutY="150.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <JFXButton fx:id="backDownloaded" onMouseClicked="#clickBackDownloaded" alignment="CENTER" stylesheets="@css/colorScheme.css" text="Back" textFill="WHITE" />
+            <JFXButton fx:id="backDownloaded" alignment="CENTER" onMouseClicked="#clickBackDownloaded" stylesheets="@css/colorScheme.css" text="Back" textFill="WHITE" />
          </children>
       </HBox>
    </children>
