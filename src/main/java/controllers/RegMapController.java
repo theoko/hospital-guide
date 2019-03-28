@@ -143,7 +143,7 @@ public class RegMapController {
     public void logOut(MouseEvent event) throws Exception {
         event.consume();
         ScreenController.deactivate();
-        ScreenController.activate("welcome");
+        ScreenController.moveTo("welcome");
     }
 
     public void clickDownload(MouseEvent event) throws Exception {

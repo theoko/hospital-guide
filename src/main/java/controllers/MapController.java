@@ -1,6 +1,7 @@
 package controllers;
 
 import com.jfoenix.controls.JFXButton;
+import database.Database;
 import helpers.Constants;
 import javafx.fxml.FXML;
 import javafx.scene.control.Tooltip;
@@ -9,6 +10,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.input.ZoomEvent;
 import javafx.scene.layout.AnchorPane;
+import map.CSVParser;
+import map.MapEdit;
+import models.map.Map;
+import javafx.stage.Stage;
 import map.MapDisplay;
 import map.MapParser;
 import models.map.Map;
@@ -31,7 +36,7 @@ public class MapController {
     ImageView floorOneMap;
 
     @FXML
-    AnchorPane panMap;
+    AnchorPane panMap1;
 
     @FXML
     JFXButton zoomIn;
@@ -51,8 +56,10 @@ public class MapController {
 //        settingsButton.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.COG));
 //        logoutButton.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.SIGN_OUT));
 
+        Database db = new Database();
+        CSVParser.parse("/data/nodes.csv", "/data/edges.csv");
         Map map = MapParser.parse();
-        MapDisplay.display(map, panMap, "Tower", "1");
+        MapEdit.display(map, panMap1, "Tower", "1");
     }
 
     public void floorOneMapOnMousePressed(MouseEvent event) {
@@ -140,7 +147,7 @@ public class MapController {
     public void logOut(MouseEvent event) throws Exception {
         event.consume();
         ScreenController.deactivate();
-        ScreenController.activate("welcome");
+        ScreenController.moveTo("welcome");
     }
 
     public void clickDownload(MouseEvent event) throws Exception {

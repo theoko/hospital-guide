@@ -1,10 +1,17 @@
 package controllers;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.DoubleProperty;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.net.URL;
 import java.util.HashMap;
 
@@ -36,6 +43,7 @@ public class ScreenController {
         this.addScreen("regMain","/RegMain.fxml");
         this.addScreen("login","/Login.fxml");
         this.addScreen("main","/Main.fxml");
+        this.addScreen("popUp","/PopUp.fxml");
         this.addScreen("download", "/Download.fxml");
         this.addScreen("downloaded", "/Downloaded.fxml");
 

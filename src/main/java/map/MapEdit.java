@@ -14,7 +14,7 @@ import models.map.Map;
 
 import java.util.HashMap;
 
-public class MapDisplay {
+public class MapEdit {
 
     private final static double defRadius = 15.0;
     private final static double defWidth = 2.5;
@@ -49,6 +49,21 @@ public class MapDisplay {
                 Circle circle = new Circle(xLoc, yLoc, defRadius, color);
                 circle.setStroke(Color.BLACK);
                 circle.setStrokeWidth(defWidth / 3.0);
+
+                circle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event){
+                        circle.setFill(Color.RED);
+                        try{
+                            event.consume();
+                            ScreenController.moveTo("popUp");
+                        }
+                        catch (Exception e) {
+                            throw new UnsupportedOperationException(e);
+                        }
+                    }
+                });
+
                 pane.getChildren().add(circle);
             }
         }
