@@ -1,5 +1,6 @@
 package models.map;
 
+import database.Database;
 import helpers.Constants;
 
 import java.util.ArrayList;
@@ -73,4 +74,8 @@ public class Location {
             nodeType.toString(), longName, shortName};
     }
 
+    public void setNodeType(Constants.NodeType nodeType) {
+        this.nodeType = nodeType;
+        Database.updateLocation(this);
+    }
 }

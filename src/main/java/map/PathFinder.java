@@ -1,5 +1,6 @@
 package map;
 
+import database.CSVParser;
 import database.Database;
 import helpers.FileHelpers;
 import models.map.Location;

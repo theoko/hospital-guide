@@ -1,9 +1,9 @@
-package map;
+package database;
 
 import com.opencsv.CSVWriter;
-import database.Database;
 import helpers.Constants;
 import helpers.FileHelpers;
+import map.MapParser;
 import models.map.Edge;
 import models.map.Location;
 

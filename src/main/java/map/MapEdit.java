@@ -53,10 +53,9 @@ public class MapEdit {
                 circle.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event){
-                        circle.setFill(Color.RED);
                         try{
                             event.consume();
-                            ScreenController.moveTo("popUp");
+                            ScreenController.activate("popUp", loc);
                         }
                         catch (Exception e) {
                             throw new UnsupportedOperationException(e);

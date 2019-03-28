@@ -1,7 +1,6 @@
 package controllers;
 
 import com.jfoenix.controls.JFXButton;
-import database.Database;
 import helpers.Constants;
 import javafx.fxml.FXML;
 import javafx.scene.control.Tooltip;
@@ -10,13 +9,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.input.ZoomEvent;
 import javafx.scene.layout.AnchorPane;
-import map.CSVParser;
 import map.MapEdit;
 import models.map.Map;
-import javafx.stage.Stage;
-import map.MapDisplay;
 import map.MapParser;
-import models.map.Map;
 
 public class MapController {
 

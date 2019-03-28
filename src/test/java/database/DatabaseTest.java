@@ -1,6 +1,5 @@
 package database;
 
-import map.CSVParser;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

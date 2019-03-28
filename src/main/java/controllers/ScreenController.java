@@ -10,6 +10,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
+import models.map.Location;
 
 import java.io.File;
 import java.net.URL;
@@ -77,7 +78,35 @@ public class ScreenController {
 
         // Init parent
         URL url = new URL(ScreenController.class.getResource(screenMap.get(name)).toString().replaceAll("%20", " "));
-        Parent root = FXMLLoader.load(url);
+
+        FXMLLoader loader = new FXMLLoader(url);
+        Parent root = loader.load();
+
+        // Init scene
+        Scene s = new Scene(root);
+
+        // Add CSS to scene
+        addStyles(s);
+
+        stage.setTitle(Character.toUpperCase(name.charAt(0)) + name.substring(1));
+        stage.setScene(s);
+        stage.setResizable(true);
+
+        stage.show();
+    }
+
+    public static void activate(String name, Location loc) throws Exception {
+
+        stage = new Stage();
+
+        // Init parent
+        URL url = new URL(ScreenController.class.getResource(screenMap.get(name)).toString().replaceAll("%20", " "));
+
+        FXMLLoader loader = new FXMLLoader(url);
+        Parent root = loader.load();
+
+        PopUpController pc = loader.getController();
+        pc.setLoc(loc);
 
         // Init scene
         Scene s = new Scene(root);

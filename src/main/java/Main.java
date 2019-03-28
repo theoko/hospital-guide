@@ -3,7 +3,7 @@ import helpers.Constants;
 import helpers.FileHelpers;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import map.CSVParser;
+import database.CSVParser;
 
 import java.io.File;
 
