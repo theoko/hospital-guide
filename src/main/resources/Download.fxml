@@ -6,8 +6,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="950.0" prefWidth="1700.0" stylesheets="@css/colorScheme.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DownloadController">
+<AnchorPane prefHeight="700.0" prefWidth="1200.0" stylesheets="@css/colorScheme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DownloadController">
    <children>
       <HBox alignment="CENTER" layoutY="95.0" prefHeight="100.0" prefWidth="200.0" spacing="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>

@@ -81,20 +81,20 @@ public class MapController {
         ((AnchorPane) event.getSource()).setTranslateX(((AnchorPane) event.getSource()).getTranslateX() + event.getDeltaX());
         ((AnchorPane) event.getSource()).setTranslateY(((AnchorPane) event.getSource()).getTranslateY() + event.getDeltaY());
 
-        if (((AnchorPane) event.getSource()).getTranslateX() <= 0) {
-            ((AnchorPane) event.getSource()).setTranslateX(0);
+        if (((AnchorPane) event.getSource()).getTranslateX() <= -250) {
+            ((AnchorPane) event.getSource()).setTranslateX(-250);
         }
 
-        if (((AnchorPane) event.getSource()).getTranslateX() >= 0) {
-            ((AnchorPane) event.getSource()).setTranslateX(0);
+        if (((AnchorPane) event.getSource()).getTranslateX() >= 250) {
+            ((AnchorPane) event.getSource()).setTranslateX(250);
         }
 
-        if (((AnchorPane) event.getSource()).getTranslateY() <= -220) {
-            ((AnchorPane) event.getSource()).setTranslateY(-220);
+        if (((AnchorPane) event.getSource()).getTranslateY() <= -350) {
+            ((AnchorPane) event.getSource()).setTranslateY(-350);
         }
 
-        if (((AnchorPane) event.getSource()).getTranslateY() >= 220) {
-            ((AnchorPane) event.getSource()).setTranslateY(220);
+        if (((AnchorPane) event.getSource()).getTranslateY() >= 350) {
+            ((AnchorPane) event.getSource()).setTranslateY(350);
         }
     }
 
