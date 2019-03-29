@@ -47,7 +47,44 @@ public class EditController extends PopUpController implements Initializable {
 
     public void setLoc(Location loc) {
         this.loc = loc;
-        cmbNodeType.
+        switch (loc.getNodeType()) {
+            case BATH:
+                cmbNodeType.setValue(BATH);
+                break;
+            case SERV:
+                cmbNodeType.setValue("");
+                break;
+            case RETL:
+                cmbNodeType.setValue("");
+                break;
+            case REST:
+                cmbNodeType.setValue("");
+                break;
+            case LABS:
+                cmbNodeType.setValue("");
+                break;
+            case INFO:
+                cmbNodeType.setValue("");
+                break;
+            case HALL:
+                cmbNodeType.setValue("");
+                break;
+            case EXIT:
+                cmbNodeType.setValue("");
+                break;
+            case ELEV:
+                cmbNodeType.setValue("");
+                break;
+            case DEPT:
+                cmbNodeType.setValue("");
+                break;
+            case CONF:
+                cmbNodeType.setValue("");
+                break;
+            default:
+                cmbNodeType.setValue(STAI);
+        }
+
     }
 
     @Override
