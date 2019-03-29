@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="300.0" prefWidth="200.0" stylesheets="@css/colorScheme.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PathfinderController">
+<AnchorPane prefHeight="300.0" prefWidth="200.0" style="-fx-border-color: black;" stylesheets="@css/colorScheme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.InfoController">
    <children>
       <Pane prefHeight="32.0" prefWidth="200.0" style="-fx-background-color: #022D5A#022D5A;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
@@ -55,6 +55,7 @@
             <Insets left="25.0" />
          </padding>
       </GridPane>
-      <JFXButton fx:id="btnDirections" layoutX="37.0" layoutY="244.0" prefHeight="42.0" prefWidth="127.0" stylesheets="@css/colorScheme.css" text="Directions" textFill="WHITE" />
+      <JFXButton fx:id="btnDirections" defaultButton="true" layoutX="10.0" layoutY="247.0" prefHeight="40.0" prefWidth="85.0" stylesheets="@css/colorScheme.css" text="Directions" textFill="WHITE" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
+      <JFXButton fx:id="btnCancel" layoutX="106.0" layoutY="247.0" onMouseClicked="#btnCancel_OnClick" prefHeight="40.0" prefWidth="85.0" stylesheets="@css/colorScheme.css" text="Cancel" textFill="WHITE" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
    </children>
 </AnchorPane>

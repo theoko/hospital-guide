@@ -1,18 +1,13 @@
 package controllers;
 
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.DoubleProperty;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import models.map.Location;
 
-import java.io.File;
 import java.net.URL;
 import java.util.HashMap;
 
@@ -47,6 +42,7 @@ public class ScreenController {
         this.addScreen("popUp","/PopUp.fxml");
         this.addScreen("download", "/Download.fxml");
         this.addScreen("downloaded", "/Downloaded.fxml");
+        this.addScreen("info", "/Info.fxml");
 
     }
 
@@ -63,7 +59,7 @@ public class ScreenController {
     }
 
     public static void deactivate() {
-        stage.hide();
+        stage.close();
     }
 
     private static void addStyles(Scene scene) {
@@ -104,8 +100,9 @@ public class ScreenController {
 
         FXMLLoader loader = new FXMLLoader(url);
         Parent root = loader.load();
-
+        System.out.println(loc.getNodeID());
         PopUpController pc = loader.getController();
+
         pc.setLoc(loc);
 
         // Init scene
@@ -116,8 +113,8 @@ public class ScreenController {
 
         stage.setTitle(Character.toUpperCase(name.charAt(0)) + name.substring(1));
         stage.setScene(s);
-        stage.setResizable(true);
-
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }
 }
