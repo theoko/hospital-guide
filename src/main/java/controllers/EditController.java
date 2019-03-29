@@ -52,34 +52,34 @@ public class EditController extends PopUpController implements Initializable {
                 cmbNodeType.setValue(BATH);
                 break;
             case SERV:
-                cmbNodeType.setValue("");
+                cmbNodeType.setValue(SERV);
                 break;
             case RETL:
-                cmbNodeType.setValue("");
+                cmbNodeType.setValue(RETL);
                 break;
             case REST:
-                cmbNodeType.setValue("");
+                cmbNodeType.setValue(REST);
                 break;
             case LABS:
-                cmbNodeType.setValue("");
+                cmbNodeType.setValue(LABS);
                 break;
             case INFO:
-                cmbNodeType.setValue("");
+                cmbNodeType.setValue(INFO);
                 break;
             case HALL:
-                cmbNodeType.setValue("");
+                cmbNodeType.setValue(HALL);
                 break;
             case EXIT:
-                cmbNodeType.setValue("");
+                cmbNodeType.setValue(EXIT);
                 break;
             case ELEV:
-                cmbNodeType.setValue("");
+                cmbNodeType.setValue(ELEV);
                 break;
             case DEPT:
-                cmbNodeType.setValue("");
+                cmbNodeType.setValue(DEPT);
                 break;
             case CONF:
-                cmbNodeType.setValue("");
+                cmbNodeType.setValue(CONF);
                 break;
             default:
                 cmbNodeType.setValue(STAI);
