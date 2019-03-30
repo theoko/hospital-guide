@@ -13,6 +13,9 @@ targetCompatibility = 1.8
 repositories {
     mavenCentral()
     jcenter()
+    maven {
+        url 'https://nexus.gluonhq.com/nexus/content/repositories/releases'
+    }
 }
 
 // You'll need to create an integration-test folder with the same structure as your test or main folders

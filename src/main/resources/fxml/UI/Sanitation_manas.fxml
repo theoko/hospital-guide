@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.gluonhq.charm.glisten.control.ExpansionPanel?>
-<?import com.gluonhq.charm.glisten.control.ExpansionPanel.CollapsedPanel?>
 <?import com.gluonhq.charm.glisten.control.ExpansionPanelContainer?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Label?>
