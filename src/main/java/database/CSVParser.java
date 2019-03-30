@@ -19,12 +19,12 @@ public class CSVParser {
         File data = new File("data");
         data.mkdir();
 
-        if(FileHelpers.checkJar()) {
+//        if(FileHelpers.checkJar()) {
             System.out.println("FUCKING JAR");
             export("eNodes.csv", "eEdges.csv");
-        } else {
-            export("data/eNodes.csv", "data/eEdges.csv");
-        }
+//        } else {
+//            export("data/eNodes.csv", "data/eEdges.csv");
+//        }
     }
 
     public static void parse(InputStream pathNodes, InputStream pathEdges) {
@@ -34,13 +34,13 @@ public class CSVParser {
 
     public static void export(String pathNodes, String pathEdges) throws IOException {
 
-        if(FileHelpers.checkJar()) {
+//        if(FileHelpers.checkJar()) {
             HashMap<String, Location> lstLocations = exportNodes(pathNodes);
             exportEdges(pathEdges, lstLocations);
-        } else {
-            HashMap<String, Location> lstLocations = exportNodes(strToPath(pathNodes));
-            exportEdges(strToPath(pathEdges), lstLocations);
-        }
+//        } else {
+//            HashMap<String, Location> lstLocations = exportNodes(strToPath(pathNodes));
+//            exportEdges(strToPath(pathEdges), lstLocations);
+//        }
 
     }
 

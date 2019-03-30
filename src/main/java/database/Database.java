@@ -51,14 +51,14 @@ public class Database {
      * Drops all database tables
      */
     public static void dropTables() {
+        dropBookTable();
+        dropRoomTable();
         dropEdgeTable();
         dropLocationTable();
         dropAdminTable();
         dropCustodianTable();
         dropEmployeeTable();
         dropUsersTable();
-        dropRoomTable();
-        dropBookTable();
     }
 
     /**
@@ -106,6 +106,20 @@ public class Database {
                 "CONSTRAINT startNodeID_fk FOREIGN KEY(startNodeID) REFERENCES " + Constants.NODES_TABLE + "(nodeID)," +
                 "CONSTRAINT endNodeID_fk FOREIGN KEY(endNodeID) REFERENCES " + Constants.NODES_TABLE + "(nodeID))";
 
+        String roomTable = "CREATE TABLE " + Constants.ROOM_TABLE +
+                "(roomID VARCHAR(100) PRIMARY KEY," +
+                "capacity INT," +
+                "CONSTRAINT roomID_fk FOREIGN KEY(roomID) REFERENCES " + Constants.NODES_TABLE + "(nodeID))";
+
+        String bookTable = "CREATE TABLE " + Constants.BOOK_TABLE +
+                "(bookingID INT PRIMARY KEY," +
+                "roomID VARCHAR(100)," +
+                "userID INT," +
+                "startDate DATE," +
+                "endDate DATE," +
+                "CONSTRAINT roomID2_fk FOREIGN KEY(roomID) REFERENCES " + Constants.NODES_TABLE + "(nodeID)," +
+                "CONSTRAINT userID2_fk FOREIGN KEY(userID) REFERENCES " + Constants.USERS_TABLE + "(userID))";
+
         try {
 
             boolean createUsersResult = statement.execute(usersTable);
@@ -116,26 +130,9 @@ public class Database {
             boolean createNodesResult = statement.execute(locationTable);
             boolean createEdgesTable = statement.execute(neighborTable);
 
-            HashMap<String, Location> locations = Database.getLocations();
-            if(locations == null) {
-                if (locations.isEmpty()) {
-                    String roomTable = "CREATE TABLE " + Constants.ROOM_TABLE +
-                            "(roomID VARCHAR(100) PRIMARY KEY," +
-                            "capacity INT," +
-                            "CONSTRAINT roomID_fk FOREIGN KEY(roomID) REFERENCES " + Constants.ROOM_TABLE + "(roomID))";
-                    String bookTable = "CREATE TABLE " + Constants.ROOM_TABLE +
-                            "(bookingID INT PRIMARY KEY," +
-                            "roomID VARCHAR(100)," +
-                            "userID INT," +
-                            "startDate DATE," +
-                            "endDate DATE," +
-                            "CONSTRAINT roomID2_fk FOREIGN KEY(roomID) REFERENCES " + Constants.BOOK_TABLE + "(roomID)," +
-                            "CONSTRAINT userID2_fk FOREIGN KEY(userID) REFERENCES " + Constants.USERS_TABLE + "(userID))";
+            boolean createRoomResult = statement.execute(roomTable);
+            boolean createBookResult = statement.execute(bookTable);
 
-                    boolean createRoomResult = statement.execute(roomTable);
-                    boolean createBookResult = statement.execute(bookTable);
-                }
-            }
 
         } catch (SQLException | NullPointerException e) {
             e.printStackTrace();
@@ -160,6 +157,7 @@ public class Database {
             return false;
         }
     }
+
     private static boolean dropRoomTable(){
         try{
             Statement statement;
