@@ -9,6 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.input.ZoomEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import map.MapEdit;
 import models.map.Map;
 import map.MapParser;
@@ -139,8 +140,9 @@ public class MapController {
 
     public void logOut(MouseEvent event) throws Exception {
         event.consume();
-        ScreenController.deactivate();
-        ScreenController.moveTo("welcome");
+
+        ScreenController.logOut(logoutButton);
+        ScreenController.activate("welcome");
     }
 
     public void clickDownload(MouseEvent event) throws Exception {

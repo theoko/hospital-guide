@@ -3,15 +3,20 @@ package controllers;
 import com.jfoenix.controls.JFXButton;
 import helpers.Constants;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.input.ZoomEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import map.MapDisplay;
 import map.MapParser;
 import models.map.Map;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class RegMapController {
 
@@ -141,7 +146,7 @@ public class RegMapController {
 
     public void logOut(MouseEvent event) throws Exception {
         event.consume();
-        ScreenController.deactivate();
+        ScreenController.logOut(logoutButton);
         ScreenController.moveTo("welcome");
     }
 }

@@ -42,11 +42,18 @@ public class MapEdit {
 
         HashMap<String, Location> lstLocations = map.getAllLocations();
         for (Location loc : lstLocations.values()) {
-            if (loc.getBuilding().equals(building) && loc.getFloor().equals(floor) && loc.getNodeType() != Constants.NodeType.HALL) {
+            if (loc.getBuilding().equals(building) && loc.getFloor().equals(floor)) {
                 double xLoc = (double) (loc.getxCord() - xShift)*scale;
                 double yLoc = (double) (loc.getyCord() - yShift)*scale;
-                Color color = Color.WHITE;
-                Circle circle = new Circle(xLoc, yLoc, defRadius, color);
+                Circle circle;
+                if (loc.getNodeType() != Constants.NodeType.HALL) {
+                    Color color = Color.WHITE;
+                    circle = new Circle(xLoc, yLoc, defRadius, color);
+                } else {
+                    Color color = Color.GRAY;
+                    circle = new Circle(xLoc, yLoc, defRadius / 5, color);
+                }
+
                 circle.setStroke(Color.BLACK);
                 circle.setStrokeWidth(defWidth / 3.0);
 
@@ -55,7 +62,7 @@ public class MapEdit {
                     public void handle(MouseEvent event){
                         try{
                             event.consume();
-                            ScreenController.activate("popUp", loc);
+                            ScreenController.popUp("edit", loc);
                         }
                         catch (Exception e) {
                             throw new UnsupportedOperationException(e);
@@ -65,35 +72,6 @@ public class MapEdit {
 
                 pane.getChildren().add(circle);
             }
-        }
-    }
-
-    private static Color nodeColor(Location loc) {
-        switch (loc.getNodeType()) {
-            case BATH:
-                return Color.GRAY;
-            case CONF:
-                return Color.GRAY;
-            case DEPT:
-                return Color.GRAY;
-            case ELEV:
-                return Color.YELLOW;
-            case EXIT:
-                return Color.GRAY;
-            case HALL:
-                return Color.RED;
-            case INFO:
-                return Color.GRAY;
-            case LABS:
-                return Color.GRAY;
-            case REST:
-                return Color.BLUE;
-            case RETL:
-                return Color.WHITE;
-            case SERV:
-                return Color.GRAY;
-            default:
-                return Color.YELLOW;
         }
     }
 }

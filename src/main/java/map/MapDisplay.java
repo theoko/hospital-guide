@@ -49,6 +49,17 @@ public class MapDisplay {
                 Circle circle = new Circle(xLoc, yLoc, defRadius, color);
                 circle.setStroke(Color.BLACK);
                 circle.setStrokeWidth(defWidth / 3.0);
+                circle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        try {
+                            event.consume();
+                            ScreenController.popUp("info", loc);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
                 pane.getChildren().add(circle);
             }
         }
