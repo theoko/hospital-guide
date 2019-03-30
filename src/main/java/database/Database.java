@@ -57,7 +57,8 @@ public class Database {
         dropCustodianTable();
         dropEmployeeTable();
         dropUsersTable();
-        dropScheduleTable();
+        dropRoomTable();
+        dropBookTable();
     }
 
     /**
@@ -118,15 +119,21 @@ public class Database {
             HashMap<String, Location> locations = Database.getLocations();
             if(locations == null) {
                 if (locations.isEmpty()) {
-                    String scheduleTable = "CREATE TABLE " + Constants.SCHEDULE_TABLE +
-                            "(startDate DATE," +
+                    String roomTable = "CREATE TABLE " + Constants.ROOM_TABLE +
+                            "(roomID VARCHAR(100) PRIMARY KEY," +
+                            "capacity INT," +
+                            "CONSTRAINT roomID_fk FOREIGN KEY(roomID) REFERENCES " + Constants.ROOM_TABLE + "(roomID))";
+                    String bookTable = "CREATE TABLE " + Constants.ROOM_TABLE +
+                            "(bookingID INT PRIMARY KEY," +
+                            "roomID VARCHAR(100)," +
+                            "userID INT," +
+                            "startDate DATE," +
                             "endDate DATE," +
-                            "employeeAccessID INT," +
-                            "nodeID VARCHAR(100)," +
-                            "CONSTRAINT employeeAccessID_fk FOREIGN KEY(employeeAccessID) REFERENCES " + Constants.EMPLOYEE_TABLE + "(employeeID)," +
-                            "CONSTRAINT nodeID_fk FOREIGN KEY(nodeID) REFERENCES " + Constants.NODES_TABLE + "(nodeID))";
+                            "CONSTRAINT roomID2_fk FOREIGN KEY(roomID) REFERENCES " + Constants.BOOK_TABLE + "(roomID)," +
+                            "CONSTRAINT userID2_fk FOREIGN KEY(userID) REFERENCES " + Constants.USERS_TABLE + "(userID))";
 
-                    boolean createScheduleResult = statement.execute(scheduleTable);
+                    boolean createRoomResult = statement.execute(roomTable);
+                    boolean createBookResult = statement.execute(bookTable);
                 }
             }
 
@@ -140,15 +147,28 @@ public class Database {
     /**
      * Drop tables
      */
-    private static boolean dropScheduleTable(){
+    private static boolean dropBookTable(){
         try{
             Statement statement;
 
             statement = connection.createStatement();
 
-            return statement.execute("DROP TABLE " + Constants.SCHEDULE_TABLE);
+            return statement.execute("DROP TABLE " + Constants.BOOK_TABLE);
         } catch (SQLException e) {
-            System.out.println("Table " + Constants.SCHEDULE_TABLE + " cannot be dropped");
+            System.out.println("Table " + Constants.BOOK_TABLE + " cannot be dropped");
+
+            return false;
+        }
+    }
+    private static boolean dropRoomTable(){
+        try{
+            Statement statement;
+
+            statement = connection.createStatement();
+
+            return statement.execute("DROP TABLE " + Constants.ROOM_TABLE);
+        } catch (SQLException e) {
+            System.out.println("Table " + Constants.ROOM_TABLE + " cannot be dropped");
 
             return false;
         }

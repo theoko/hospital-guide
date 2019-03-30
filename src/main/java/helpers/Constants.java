@@ -13,7 +13,8 @@ public class Constants {
     public static String ADMIN_TABLE = "ADMIN";
     public static String NODES_TABLE = "NODES";
     public static String EDGES_TABLE = "EDGES";
-    public static String SCHEDULE_TABLE = "SCHEDULE";
+    public static String ROOM_TABLE = "ROOM";
+    public static String BOOK_TABLE = "TABLE";
 
     public static String DB_PROJECTION = "projection";
     public static String DB_RELATION = "relation";

@@ -62,7 +62,11 @@ dependencies {
             [group: 'de.jensd', name: 'fontawesomefx-fontawesome', version: '4.6.1-2'],
             [group: 'com.querydsl', name: 'querydsl-sql', version: '4.2.1'],
             [group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.6.1'],
-            [group: 'com.opencsv', name: 'opencsv', version: '4.5']
+            [group: 'com.opencsv', name: 'opencsv', version: '4.5'],
+            [group: 'com.gluonhq', name: 'glisten-afterburner', version: '1.4.1'],
+            [group: 'com.gluonhq', name: 'charm-cloudlink-client', version: '4.5.2']
+
+
     )
 }
 
