@@ -14,8 +14,6 @@ public class EditController extends PopUpController implements Initializable {
 
     public JFXComboBox cmbNodeType;
 
-
-
     public String BATH;
     public String CONF;
     public String DEPT;
@@ -39,8 +37,16 @@ public class EditController extends PopUpController implements Initializable {
         ScreenController.deactivate();
     }
 
+    /**
+     * Displays a new window for the user to make booking requests
+     * for the currently selected node
+     * @param event
+     */
     public void displayBooking(MouseEvent event) {
+        String conferenceRoomName = loc.getLongName();
 
+
+        ScreenController.deactivate();
     }
 
     public void goBack(MouseEvent event) throws Exception{
@@ -49,6 +55,10 @@ public class EditController extends PopUpController implements Initializable {
         ScreenController.deactivate();
     }
 
+    /**
+     * Sets the value of the location variable to the selected location type
+     * @param loc
+     */
     public void setLoc(Location loc) {
         this.loc = loc;
         switch (loc.getNodeType()) {
@@ -84,7 +94,11 @@ public class EditController extends PopUpController implements Initializable {
                 break;
             case CONF:
                 cmbNodeType.setValue(CONF);
+
+                // Set button visibility to true since a conference room node
+                // is selected and the room can be booked
                 bookingButton.setVisible(true);
+
                 break;
             default:
                 cmbNodeType.setValue(STAI);

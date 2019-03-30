@@ -49,7 +49,7 @@
                         <Font size="24.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton fx:id="bookingButton" buttonType="RAISED" visible="false" defaultButton="true" ripplerFill="#3dff00" text="Booking" textFill="WHITE">
+                  <JFXButton fx:id="bookingButton" onMouseClicked="#displayBooking" buttonType="RAISED" visible="false" defaultButton="true" ripplerFill="#3dff00" text="Booking" textFill="WHITE">
                      <font>
                         <Font size="24.0" />
                      </font>

@@ -16,8 +16,8 @@ public class CSVParser {
     public static void main(String[] args) throws IOException {
         parse(FileHelpers.getNodesCSV(), FileHelpers.getEdgesCSV());
 
-        File data = new File("data");
-        data.mkdir();
+//        File data = new File("data");
+//        data.mkdir();
 
 //        if(FileHelpers.checkJar()) {
             System.out.println("FUCKING JAR");
@@ -118,15 +118,10 @@ public class CSVParser {
         // nodeID,xcoord,ycoord,floor,building,nodeType,longName,shortName
 
         HashMap<String, Location> lstLocations = new HashMap<>();
+
         File csvFile = new File(pathNodes);
 
-        if(!csvFile.exists())
-            csvFile.createNewFile();
-
-        if(FileHelpers.checkJar()) {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(csvFile));
-            writer.close();
-        }
+        FileHelpers.recreateFile(csvFile);
 
         try {
             FileWriter oFile = new FileWriter(csvFile);
@@ -154,13 +149,7 @@ public class CSVParser {
 
         File csvFile = new File(pathEdges);
 
-        if(!csvFile.exists())
-            csvFile.createNewFile();
-
-        if(FileHelpers.checkJar()) {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(csvFile));
-            writer.close();
-        }
+        FileHelpers.recreateFile(csvFile);
 
         try {
             FileWriter oFile = new FileWriter(csvFile);
