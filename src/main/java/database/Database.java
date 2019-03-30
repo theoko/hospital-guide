@@ -104,6 +104,8 @@ public class Database {
                 "CONSTRAINT startNodeID_fk FOREIGN KEY(startNodeID) REFERENCES " + Constants.NODES_TABLE + "(nodeID)," +
                 "CONSTRAINT endNodeID_fk FOREIGN KEY(endNodeID) REFERENCES " + Constants.NODES_TABLE + "(nodeID))";
 
+        String sanitationTable = null;
+
         try {
 
             boolean createUsersResult = statement.execute(usersTable);
