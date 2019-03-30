@@ -62,7 +62,7 @@ public class MapEdit {
                     public void handle(MouseEvent event){
                         try{
                             event.consume();
-                            ScreenController.activate("popUp", loc);
+                            ScreenController.popUp("edit", loc);
                         }
                         catch (Exception e) {
                             throw new UnsupportedOperationException(e);

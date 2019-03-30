@@ -1,6 +1,7 @@
 package controllers;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
@@ -39,7 +40,7 @@ public class ScreenController {
         this.addScreen("regMain","/RegMain.fxml");
         this.addScreen("login","/Login.fxml");
         this.addScreen("main","/Main.fxml");
-        this.addScreen("popUp", "/Edit.fxml");
+        this.addScreen("edit", "/Edit.fxml");
         this.addScreen("download", "/Download.fxml");
         this.addScreen("downloaded", "/Downloaded.fxml");
         this.addScreen("info", "/Info.fxml");
@@ -91,7 +92,7 @@ public class ScreenController {
         stage.show();
     }
 
-    public static void activate(String name, Location loc) throws Exception {
+    public static void popUp(String name, Location loc) throws Exception {
 
         stage = new Stage();
 
@@ -100,7 +101,6 @@ public class ScreenController {
 
         FXMLLoader loader = new FXMLLoader(url);
         Parent root = loader.load();
-        System.out.println(loc.getNodeID());
         PopUpController pc = loader.getController();
 
         pc.setLoc(loc);
@@ -116,5 +116,14 @@ public class ScreenController {
         stage.initStyle(StageStyle.UNDECORATED);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
+    }
+
+
+    /**
+     * Closes out of a current window with selected
+     * @param n Node from the window the logout is from
+     */
+    public static void logOut(Node n) {
+        ((Stage) n.getScene().getWindow()).close();
     }
 }

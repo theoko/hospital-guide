@@ -54,7 +54,7 @@ public class MapDisplay {
                     public void handle(MouseEvent event) {
                         try {
                             event.consume();
-                            ScreenController.activate("info", loc);
+                            ScreenController.popUp("info", loc);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

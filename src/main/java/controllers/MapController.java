@@ -140,7 +140,8 @@ public class MapController {
 
     public void logOut(MouseEvent event) throws Exception {
         event.consume();
-        ((Stage) logoutButton.getScene().getWindow()).close();
+
+        ScreenController.logOut(logoutButton);
         ScreenController.activate("welcome");
     }
 
