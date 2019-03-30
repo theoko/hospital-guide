@@ -57,6 +57,7 @@ public class Database {
         dropCustodianTable();
         dropEmployeeTable();
         dropUsersTable();
+        dropScheduleTable();
     }
 
     /**
@@ -114,9 +115,22 @@ public class Database {
             boolean createNodesResult = statement.execute(locationTable);
             boolean createEdgesTable = statement.execute(neighborTable);
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (NullPointerException e) {
+            HashMap<String, Location> locations = Database.getLocations();
+            if(locations == null) {
+                if (locations.isEmpty()) {
+                    String scheduleTable = "CREATE TABLE " + Constants.SCHEDULE_TABLE +
+                            "(startDate DATE," +
+                            "endDate DATE," +
+                            "employeeAccessID INT," +
+                            "nodeID VARCHAR(100)," +
+                            "CONSTRAINT employeeAccessID_fk FOREIGN KEY(employeeAccessID) REFERENCES " + Constants.EMPLOYEE_TABLE + "(employeeID)," +
+                            "CONSTRAINT nodeID_fk FOREIGN KEY(nodeID) REFERENCES " + Constants.NODES_TABLE + "(nodeID))";
+
+                    boolean createScheduleResult = statement.execute(scheduleTable);
+                }
+            }
+
+        } catch (SQLException | NullPointerException e) {
             e.printStackTrace();
         }
 
@@ -126,6 +140,19 @@ public class Database {
     /**
      * Drop tables
      */
+    private static boolean dropScheduleTable(){
+        try{
+            Statement statement;
+
+            statement = connection.createStatement();
+
+            return statement.execute("DROP TABLE " + Constants.SCHEDULE_TABLE);
+        } catch (SQLException e) {
+            System.out.println("Table " + Constants.SCHEDULE_TABLE + " cannot be dropped");
+
+            return false;
+        }
+    }
     private static boolean dropUsersTable(){
         try {
             Statement statement;
