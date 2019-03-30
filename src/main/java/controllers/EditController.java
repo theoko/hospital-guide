@@ -1,15 +1,10 @@
 package controllers;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import helpers.Constants;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 import models.map.Location;
 
 import java.net.URL;
@@ -18,6 +13,9 @@ import java.util.ResourceBundle;
 public class EditController extends PopUpController implements Initializable {
 
     public JFXComboBox cmbNodeType;
+
+
+
     public String BATH;
     public String CONF;
     public String DEPT;
@@ -31,12 +29,18 @@ public class EditController extends PopUpController implements Initializable {
     public String SERV;
     public String STAI;
 
+    public JFXButton bookingButton;
+
     public void updateNode(MouseEvent event) {
         event.consume();
         String value = (String) cmbNodeType.getValue();
         String nType = value.substring(0, value.indexOf(':'));
         loc.setNodeType(Constants.NodeType.valueOf(nType));
         ScreenController.deactivate();
+    }
+
+    public void displayBooking(MouseEvent event) {
+
     }
 
     public void goBack(MouseEvent event) throws Exception{
@@ -80,6 +84,7 @@ public class EditController extends PopUpController implements Initializable {
                 break;
             case CONF:
                 cmbNodeType.setValue(CONF);
+                bookingButton.setVisible(true);
                 break;
             default:
                 cmbNodeType.setValue(STAI);
