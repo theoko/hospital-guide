@@ -11,8 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="250.0" prefWidth="250.0" stylesheets="@css/colorScheme.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.InfoController">
+<AnchorPane prefHeight="250.0" prefWidth="250.0" stylesheets="@css/colorScheme.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PathfinderController">
    <children>
       <Pane prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: #022D5A#022D5A;" stylesheets="@css/colorScheme.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
@@ -25,12 +24,12 @@
       </Pane>
       <HBox alignment="CENTER" layoutX="25.0" layoutY="236.0" prefHeight="70.0" prefWidth="250.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <JFXButton fx:id="btnCancel" prefHeight="35.0" prefWidth="100.0" text="Cancel" textFill="WHITE">
+            <JFXButton fx:id="btnCancel" onMouseClicked="#btnCancel_OnClick" prefHeight="35.0" prefWidth="100.0" text="Cancel" textFill="WHITE">
                <HBox.margin>
                   <Insets />
                </HBox.margin>
             </JFXButton>
-            <JFXButton fx:id="btnGo" defaultButton="true" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="100.0" text="Go" textFill="WHITE" />
+            <JFXButton fx:id="btnGo" defaultButton="true" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#btnGo_OnClick" prefHeight="35.0" prefWidth="100.0" text="Go" textFill="WHITE" />
          </children>
       </HBox>
       <GridPane layoutX="36.0" layoutY="100.0" prefHeight="80.0" prefWidth="178.0">
