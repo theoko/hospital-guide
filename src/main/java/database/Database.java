@@ -122,7 +122,7 @@ public class Database {
                     String roomTable = "CREATE TABLE " + Constants.ROOM_TABLE +
                             "(roomID VARCHAR(100) PRIMARY KEY," +
                             "capacity INT," +
-                            "CONSTRAINT roomID_fk FOREIGN KEY(roomID) REFERENCES " + Constants.ROOM_TABLE + "(roomID))";
+                            "CONSTRAINT roomID_fk FOREIGN KEY(roomID) REFERENCES " + Constants.NODES_TABLE + "(nodeID))";
                     String bookTable = "CREATE TABLE " + Constants.ROOM_TABLE +
                             "(bookingID INT PRIMARY KEY," +
                             "roomID VARCHAR(100)," +
