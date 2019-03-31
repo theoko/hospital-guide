@@ -86,12 +86,20 @@ public class FileHelpers {
         return true;
     }
 
+    /**
+     *
+     * @return InputStream of the Nodes CSV
+     */
     public static InputStream getNodesCSV() {
         InputStream in = FileHelpers.class.getResourceAsStream(Constants.CSV_NODES);
 
         return in;
     }
 
+    /**
+     *
+     * @return InputStream of the Edges CSV
+     */
     public static InputStream getEdgesCSV() {
         InputStream in = FileHelpers.class.getResourceAsStream(Constants.CSV_EDGES);
 
