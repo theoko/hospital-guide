@@ -28,7 +28,7 @@
                <items>
                   <FXCollections fx:factory="observableArrayList">
                      <String fx:id="BATH" fx:value="BATH: Bathroom" />
-                     <String fx:id="CONF" fx:value="CONF: Conference Room" />
+                     <String fx:id="CONF" fx:value="CONF: Conference models.room.Room" />
                      <String fx:id="DEPT" fx:value="DEPT: Department" />
                      <String fx:id="ELEV" fx:value="ELEV: Elevator" />
                      <String fx:id="EXIT" fx:value="EXIT: Exit" />

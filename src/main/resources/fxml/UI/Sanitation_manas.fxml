@@ -30,7 +30,7 @@
                                 <ExpansionPanel.CollapsedPanel>
                                     <titleNodes>
                                         <Label text="Location" />
-                                        <Label text="Room 107" />
+                                        <Label text="models.room.Room 107" />
                                     </titleNodes>
                                 </ExpansionPanel.CollapsedPanel>
                             </collapsedContent>

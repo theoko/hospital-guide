@@ -4,6 +4,8 @@ import helpers.Constants;
 import helpers.DatabaseHelpers;
 import models.map.Edge;
 import models.map.Location;
+import models.room.Book;
+import models.room.Room;
 import models.user.User;
 
 import java.sql.*;
@@ -132,6 +134,59 @@ public class Database {
 
     }
 
+    /*
+     * checks if location is available
+    *
+    public static boolean checkAvailabilityTime(Date startDate, Date endDate){
+        PreparedStatement statement;
+        try {
+            statement = connection.prepareStatement(
+                    "SELECT * FROM " + Constants.BOOK_TABLE +
+                            "WHERE startDate=? AND endDate=? " +
+
+
+            );
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            return false;
+        }
+
+    }*/
+
+    /**
+     * Checks availability for the room specified based on start and end date
+     * @param room
+     * @param startTime
+     * @param endTime
+     * @return true if the room is available, false otherwise
+     */
+    public static boolean checkAvailabilityLocation(Room room, Date startTime, Date endTime){
+        PreparedStatement statement;
+
+        try {
+            statement = connection.prepareStatement(
+                    "SELECT * FROM " + Constants.BOOK_TABLE +
+                            " WHERE roomID=? AND " + endTime.toString() + " <= " + " ENDDATE" +
+                            " AND " + endTime.toString() + " >= STARTDATE" +
+                            " OR " + startTime.toString() + " >=  STARTDATE" +
+                            " AND " + startTime.toString() + " <= ENDDATE"
+            );
+
+            // Should return 0 rows
+            ResultSet resultSet = statement.executeQuery();
+
+            return resultSet.getFetchSize() == 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            return false;
+        }
+
+    }
 
     /**
      * Creates user based off of database
@@ -382,6 +437,39 @@ public class Database {
 
     }
 
+    public static ArrayList<Room> getRooms(){
+        try {
+
+            Statement statement;
+
+            statement = connection.createStatement();
+
+            String query = "SELECT * FROM " + Constants.ROOM_TABLE;
+
+            ResultSet resultSet = statement.executeQuery(query);
+
+            ArrayList<Room> returnList = new ArrayList<>();
+
+            while(resultSet.next()) {
+
+                Room room = new Room(
+                        resultSet.getString("ROOMID"),
+                        resultSet.getInt("CAPACITY")
+                );
+
+                returnList.add(room);
+
+            }
+
+            return returnList;
+
+        } catch (SQLException e) {
+            System.out.println("Failed to get users!");
+
+            return null;
+        }
+    }
+
     public static boolean addEdge(Edge edge) {
 
         try {
@@ -406,6 +494,45 @@ public class Database {
         }
 
     }
+    /**
+     * getBookings
+     */
+    public List<Book>  getBookings(){
+        try {
+
+            Statement statement;
+
+            statement = connection.createStatement();
+
+            String query = "SELECT * FROM " + Constants.BOOK_TABLE;
+
+            ResultSet resultSet = statement.executeQuery(query);
+
+            ArrayList<Book> returnList = new ArrayList<>();
+
+            while(resultSet.next()) {
+
+                Book user = new Book(
+                        resultSet.getInt("BOOKINGID"),
+                        resultSet.getString("ROOMID"),
+                        resultSet.getInt("USERID"),
+                        resultSet.getDate("STARTDATE"),
+                        resultSet.getDate("ENDDATE")
+                );
+
+                returnList.add(user);
+
+            }
+
+            return returnList;
+
+        } catch (SQLException e) {
+            System.out.println("Failed to get users!");
+
+            return null;
+        }
+    }
+
 
     /**
      * Returns a list of users
