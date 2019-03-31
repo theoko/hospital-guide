@@ -30,8 +30,8 @@ public class MapDisplay {
      */
     public static void displayUser(AnchorPane pane, String building, String floor) {
         Map map = MapParser.parse();
-        displayEdges(map, pane, building, floor);
-        displayNodes(map, pane, building, floor);
+        HashMap<String, Line> lstLines = displayEdges(map, pane, building, floor);
+        displayNodesUser(map, lstLines, pane, building, floor);
     }
 
     /**
@@ -46,8 +46,9 @@ public class MapDisplay {
         displayNodesAdmin(map, pane, building, floor);
     }
 
-    private static void displayEdges(Map map, AnchorPane pane, String building, String floor) {
+    private static HashMap<String, Line> displayEdges(Map map, AnchorPane pane, String building, String floor) {
         HashMap<String, Edge> lstEdges = map.getAllEdges();
+        HashMap<String, Line> lstLines = new HashMap<>();
         for (Edge edge : lstEdges.values()) {
             Location start = edge.getStart();
             Location end = edge.getEnd();
@@ -60,12 +61,14 @@ public class MapDisplay {
                 Line line = new Line(x1, y1, x2, y2);
                 line.setStroke(Color.BLACK);
                 line.setStrokeWidth(edgeWidth);
+                lstLines.put(edge.getEdgeID(), line);
                 pane.getChildren().add(line);
             }
         }
+        return lstLines;
     }
 
-    private static void displayNodes(Map map, AnchorPane pane, String building, String floor) {
+    private static void displayNodesUser(Map map, HashMap<String, Line> lstLines, AnchorPane pane, String building, String floor) {
         HashMap<String, Location> lstLocations = map.getAllLocations();
         for (Location loc : lstLocations.values()) {
             if (loc.getBuilding().equals(building) && loc.getFloor().equals(floor) && loc.getNodeType() != Constants.NodeType.HALL) {
@@ -78,7 +81,7 @@ public class MapDisplay {
                 circle.setOnMouseClicked(event -> {
                     try {
                         event.consume();
-                        ScreenController.popUp("info", loc);
+                        ScreenController.popUp("info", loc, map, lstLines);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
