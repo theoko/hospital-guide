@@ -1,7 +1,6 @@
 package controllers;
 
 import com.jfoenix.controls.JFXButton;
-import database.Database;
 import helpers.DatabaseHelpers;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;

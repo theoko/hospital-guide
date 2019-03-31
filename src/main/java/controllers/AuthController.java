@@ -2,44 +2,45 @@ package controllers;
 
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import helpers.Constants;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 public class AuthController {
+    public JFXTextField emailField;
+    public JFXPasswordField passwordField;
+    public Label errorMessage;
 
-    @FXML
-    JFXTextField emailField;
+    private Constants.Auth authenticate(String username, String password) {
+        String TEMP_ADMIN_USERNAME = "root";
+        String TEMP_ADMIN_PASSWORD = "";
+        String TEMP_EMPLOYEE_USERNAME = "employee";
+        String TEMP_EMPLOYEE_PASSWORD = "";
 
-    @FXML
-    JFXPasswordField passwordField;
-
-    @FXML
-    Label errorMessage;
-
-
-    final String TEMP_USERNAME = "root";
-    final String TEMP_PASSWORD = "";
-
-    private boolean authenticate(String username, String password) {
-        return username.equals(TEMP_USERNAME) && password.equals(TEMP_PASSWORD);
+        if (username.equals(TEMP_ADMIN_USERNAME) && password.equals(TEMP_ADMIN_PASSWORD)) {
+            return Constants.Auth.ADMIN;
+        } else if (username.equals(TEMP_EMPLOYEE_USERNAME) && password.equals(TEMP_EMPLOYEE_PASSWORD)) {
+            return Constants.Auth.EMPLOYEE;
+        } else {
+            return Constants.Auth.USER;
+        }
     }
 
     public void handleLogin(ActionEvent actionEvent) throws Exception {
-
-        // Button was clicked, check credentials
-        // Username: emailField.getText()
-        // Password: passwordField.getText()
-        if(authenticate(emailField.getText(), passwordField.getText())) {
+        Constants.Auth authType = authenticate(emailField.getText(), passwordField.getText());
+        if(authType == Constants.Auth.ADMIN) {
             errorMessage.setVisible(false);
             errorMessage.setManaged(false);
 
-            // Hide window
             ScreenController.deactivate();
+            ScreenController.activate("admin-map");
+        } else if (authType == Constants.Auth.EMPLOYEE) {
+            errorMessage.setVisible(false);
+            errorMessage.setManaged(false);
 
-            // Move to another scene
-            ScreenController.moveTo("main");
-
+            ScreenController.deactivate();
+            ScreenController.activate("employee-map");
         } else {
             errorMessage.setText("Invalid credentials");
             errorMessage.setManaged(true);
@@ -51,7 +52,7 @@ public class AuthController {
     public void goBack(ActionEvent actionEvent) throws Exception {
         actionEvent.consume();
         ScreenController.deactivate();
-        ScreenController.moveTo("welcome");
+        ScreenController.activate("welcome");
     }
 
 }
