@@ -6,7 +6,7 @@ import helpers.Constants;
 import javafx.scene.control.Tooltip;
 import map.MapDisplay;
 
-public class CustodianMapController {
+public class CustodianMapController extends MapController{
 
     public JFXButton btnSettings;
 
