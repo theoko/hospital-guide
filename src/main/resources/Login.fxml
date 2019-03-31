@@ -21,7 +21,14 @@
                 <Image url="@images/H_logo.png" />
             </image>
         </ImageView>
-        <GridPane alignment="center" hgap="10" layoutX="285.0" layoutY="300.0" prefHeight="167.0" prefWidth="544.0" vgap="10.0">
+
+                     <!-- Add Header Label -->
+         <Label layoutX="478.0" layoutY="288.0" text="Employee Login">
+             <font>
+                 <Font name="Trebuchet MS Bold" size="36.0" />
+             </font>
+         </Label>
+        <GridPane alignment="center" hgap="10" layoutX="303.0" layoutY="330.0" prefHeight="112.0" prefWidth="570.0" vgap="10.0">
             <columnConstraints>
                 <ColumnConstraints halignment="RIGHT" maxWidth="Infinity" minWidth="100.0" prefWidth="200.0">
                 </ColumnConstraints>
@@ -30,7 +37,7 @@
             </columnConstraints>
 
                   <!-- Add Error Label -->
-            <Label fx:id="errorMessage" managed="false" prefHeight="45.0" prefWidth="0.0" text="" textFill="RED" visible="false" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+            <Label fx:id="errorMessage" managed="false" prefHeight="45.0" prefWidth="0.0" text="" textFill="RED" visible="false" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                 <font>
                     <Font name="Arial" size="24.0" />
                 </font>
@@ -40,22 +47,23 @@
             </Label>
 
                   <!-- Add Email Label -->
-            <Label text="Email: " GridPane.rowIndex="4" />
+            <Label text="Email: " GridPane.rowIndex="5" />
             <!-- Add Email Text Field -->
-            <JFXTextField fx:id="emailField" prefHeight="59.0" prefWidth="341.0" promptText="username@email.com" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <JFXTextField fx:id="emailField" prefHeight="31.0" prefWidth="373.0" promptText="username@email.com" GridPane.columnIndex="1" GridPane.rowIndex="5" />
 
       
                   <!-- Add Password Label -->
-            <Label prefHeight="28.0" prefWidth="71.0" text="Password : " GridPane.rowIndex="5" />
+            <Label prefHeight="28.0" prefWidth="71.0" text="Password : " GridPane.rowIndex="6" />
             <!-- Add Password Field -->
-            <JFXPasswordField fx:id="passwordField" prefHeight="30" promptText="password" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <JFXPasswordField fx:id="passwordField" prefHeight="30" promptText="password" GridPane.columnIndex="1" GridPane.rowIndex="6" />
            <rowConstraints>
+              <RowConstraints />
               <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
               <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
               <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
               <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
               <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" />
-              <RowConstraints />
+            <RowConstraints />
             <RowConstraints />
            </rowConstraints>
         </GridPane>
@@ -77,12 +85,5 @@
         </Pane>
       <AnchorPane prefHeight="700.0" prefWidth="200.0" style="-fx-background-color: #022D5A;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <AnchorPane layoutX="1348.0" layoutY="-39.0" prefHeight="700.0" prefWidth="200.0" style="-fx-background-color: #022D5A;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-
-                  <!-- Add Header Label -->
-         <Label layoutX="485.0" layoutY="296.0" text="Employee Login">
-             <font>
-                 <Font name="Trebuchet MS Bold" size="36.0" />
-             </font>
-         </Label>
     </children>
 </AnchorPane>

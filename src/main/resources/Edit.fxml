@@ -2,65 +2,77 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import java.lang.String?>
 <?import javafx.collections.FXCollections?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="400.0" style="-fx-border-color: black;" stylesheets="@css/colorScheme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EditController">
    <children>
-      <VBox alignment="CENTER" layoutY="-52.0" prefHeight="452.0" prefWidth="400.0" spacing="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Pane layoutX="1.0" layoutY="1.0" prefHeight="79.0" prefWidth="398.0" style="-fx-background-color: #022D5A;">
          <children>
-            <Pane prefHeight="133.0" prefWidth="400.0" style="-fx-background-color: #022D5A;">
-               <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="66.0" layoutY="34.0" text="Node Editor" textAlignment="CENTER" textFill="WHITE">
-                     <font>
-                        <Font size="48.0" />
-                     </font>
-                  </Label>
-               </children>
-            </Pane>
-            <JFXComboBox fx:id="cmbNodeType" focusColor="#022d5a" labelFloat="true" prefHeight="27.0" prefWidth="339.0" promptText="Node Type" unFocusColor="BLACK">
-               <items>
-                  <FXCollections fx:factory="observableArrayList">
-                     <String fx:id="BATH" fx:value="BATH: Bathroom" />
-                     <String fx:id="CONF" fx:value="CONF: Conference Room" />
-                     <String fx:id="DEPT" fx:value="DEPT: Department" />
-                     <String fx:id="ELEV" fx:value="ELEV: Elevator" />
-                     <String fx:id="EXIT" fx:value="EXIT: Exit" />
-                     <String fx:id="HALL" fx:value="HALL: Hallway" />
-                     <String fx:id="INFO" fx:value="INFO: Information Desk" />
-                     <String fx:id="LABS" fx:value="LABS: Laboratory" />
-                     <String fx:id="REST" fx:value="REST: Restroom" />
-                     <String fx:id="RETL" fx:value="RETL: Retail" />
-                     <String fx:id="SERV" fx:value="SERV: Service" />
-                     <String fx:id="STAI" fx:value="STAI: Staircase" />
-                  </FXCollections>
-               </items>
-            </JFXComboBox>
-            <HBox alignment="CENTER" prefHeight="96.0" prefWidth="400.0" spacing="50.0">
-               <children>
-                  <JFXButton buttonType="RAISED" defaultButton="true" onMouseClicked="#updateNode" prefHeight="50.0" prefWidth="149.0" ripplerFill="#3dff00" text="Update" textFill="WHITE">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </JFXButton>
-                  <JFXButton buttonType="RAISED" onMouseClicked="#goBack" prefHeight="50.0" prefWidth="134.0" ripplerFill="RED" text="Cancel" textFill="WHITE">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </JFXButton>
-               </children>
-            </HBox>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="65.0" layoutY="11.0" text="Node Editor" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font size="48.0" />
+               </font>
+            </Label>
          </children>
-         <padding>
-            <Insets bottom="50.0" />
-         </padding>
-      </VBox>
+      </Pane>
+      <Pane layoutX="1.0" layoutY="98.0" prefHeight="40.0" prefWidth="398.0">
+         <children>
+            <JFXTextField layoutX="76.0" layoutY="1.0" prefHeight="27.0" prefWidth="303.0" />
+            <Label layoutX="20.0" layoutY="12.0" text="Name" />
+         </children>
+      </Pane>
+      <JFXComboBox fx:id="cmbNodeType" focusColor="#022d5a" labelFloat="true" layoutX="31.0" layoutY="162.0" prefHeight="27.0" prefWidth="339.0" promptText="Node Type" unFocusColor="BLACK">
+         <items>
+            <FXCollections fx:factory="observableArrayList">
+               <String fx:id="BATH" fx:value="BATH: Bathroom" />
+               <String fx:id="CONF" fx:value="CONF: Conference Room" />
+               <String fx:id="DEPT" fx:value="DEPT: Department" />
+               <String fx:id="ELEV" fx:value="ELEV: Elevator" />
+               <String fx:id="EXIT" fx:value="EXIT: Exit" />
+               <String fx:id="HALL" fx:value="HALL: Hallway" />
+               <String fx:id="INFO" fx:value="INFO: Information Desk" />
+               <String fx:id="LABS" fx:value="LABS: Laboratory" />
+               <String fx:id="REST" fx:value="REST: Restroom" />
+               <String fx:id="RETL" fx:value="RETL: Retail" />
+               <String fx:id="SERV" fx:value="SERV: Service" />
+               <String fx:id="STAI" fx:value="STAI: Staircase" />
+            </FXCollections>
+         </items>
+      </JFXComboBox>
+      <Pane layoutX="1.0" layoutY="208.0" prefHeight="40.0" prefWidth="398.0">
+         <children>
+            <JFXTextField layoutX="124.0" layoutY="1.0" prefHeight="27.0" prefWidth="68.0" />
+            <Label layoutX="20.0" layoutY="12.0" text="Location" />
+            <JFXTextField layoutX="275.0" layoutY="1.0" prefHeight="27.0" prefWidth="68.0" />
+            <Label layoutX="106.0" layoutY="12.0" prefHeight="17.0" prefWidth="36.0" text="X:" />
+            <Label layoutX="257.0" layoutY="12.0" prefHeight="17.0" prefWidth="36.0" text="Y:" />
+         </children>
+      </Pane>
+      <HBox alignment="CENTER" layoutX="1.0" layoutY="240.0" prefHeight="96.0" prefWidth="400.0" spacing="50.0">
+         <children>
+            <JFXButton buttonType="RAISED" defaultButton="true" onMouseClicked="#updateNode" prefHeight="50.0" prefWidth="149.0" ripplerFill="#3dff00" text="Update" textFill="WHITE">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </JFXButton>
+            <JFXButton buttonType="RAISED" onMouseClicked="#goBack" prefHeight="50.0" prefWidth="134.0" ripplerFill="RED" text="Cancel" textFill="WHITE">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </HBox>
+      <JFXButton buttonType="RAISED" defaultButton="true" layoutX="84.0" layoutY="336.0" onMouseClicked="#deleteNode" prefHeight="45.0" prefWidth="235.0" ripplerFill="#3dff00" text="Delete Node" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </JFXButton>
    </children>
 </AnchorPane>
