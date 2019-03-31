@@ -44,7 +44,9 @@ public class ScreenController {
         this.addScreen("download", "/Download.fxml");
         this.addScreen("downloaded", "/Downloaded.fxml");
         this.addScreen("info", "/Info.fxml");
+        this.addScreen("employee-info", "/EmployeeInfo.fxml");
         this.addScreen("employee-map", "/EmployeeMap.fxml");
+        this.addScreen("sanitation-request", "/SanitationRequest.fxml");
     }
 
     public static void moveTo(String name) throws Exception {

@@ -26,16 +26,16 @@
                   </Label>
                </children>
             </Pane>
-            <JFXComboBox fx:id="cmbNodeType" focusColor="#022d5a" labelFloat="true" prefHeight="27.0" prefWidth="339.0" promptText="Priority" unFocusColor="BLACK">
+            <JFXComboBox fx:id="cmbPriority" focusColor="#022d5a" labelFloat="true" prefHeight="27.0" prefWidth="339.0" promptText="Priority" unFocusColor="BLACK">
                <items>
                   <FXCollections fx:factory="observableArrayList">
-                     <String fx:id="LOW" fx:value="Low" />
-                     <String fx:id="MED" fx:value="Medium" />
-                     <String fx:id="HIGH" fx:value="High" />
+                     <String fx:id="LOW" fx:value="LOW" />
+                     <String fx:id="MEDIUM" fx:value="MEDIUM" />
+                     <String fx:id="HIGH" fx:value="HIGH" />
                   </FXCollections>
                </items>
             </JFXComboBox>
-            <JFXTextField fx:id="txtDescription" prefHeight="25.0" prefWidth="332.0" promptText="Description" onKeyReleased="keyReleased">
+            <JFXTextField fx:id="txtDescription" prefHeight="25.0" prefWidth="332.0" promptText="Description" onKeyReleased="#keyReleased">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
