@@ -83,8 +83,7 @@ public class Database {
                 "building VARCHAR(100)," +
                 "nodeType VARCHAR(100)," +
                 "longName VARCHAR(100)," +
-                "shortName VARCHAR(100)," +
-                "available BOOLEAN)";
+                "shortName VARCHAR(100))";
 
         String neighborTable = "CREATE TABLE " + Constants.EDGES_TABLE +
                 "(edgeID VARCHAR(100) PRIMARY KEY," +
@@ -107,7 +106,7 @@ public class Database {
                 "CONSTRAINT roomID2_fk FOREIGN KEY(roomID) REFERENCES " + Constants.NODES_TABLE + "(nodeID)," +
                 "CONSTRAINT userID2_fk FOREIGN KEY(userID) REFERENCES " + Constants.USERS_TABLE + "(userID))";
 
-        String deletedLocationssTable = "CREATE TABLE " + Constants.DELETED_LOCATION_TABLE +
+        String deletedLocationsTable = "CREATE TABLE " + Constants.DELETED_LOCATION_TABLE +
                 "(nodeID VARCHAR(100) PRIMARY KEY," +
                 "xCoord INT," +
                 "yCoord INT," +
@@ -115,8 +114,7 @@ public class Database {
                 "building VARCHAR(100)," +
                 "nodeType VARCHAR(100)," +
                 "longName VARCHAR(100)," +
-                "shortName VARCHAR(100)," +
-                "available BOOLEAN)";
+                "shortName VARCHAR(100))";
 
         try {
 
@@ -126,7 +124,7 @@ public class Database {
 
             statement.execute(roomTable);
             statement.execute(bookTable);
-            statement.execute(deletedLocationssTable);
+            statement.execute(deletedLocationsTable);
 
         } catch (SQLException | NullPointerException e) {
             e.printStackTrace();
@@ -330,8 +328,8 @@ public class Database {
             PreparedStatement statement;
 
             statement = connection.prepareStatement(
-                    "INSERT INTO " + Constants.NODES_TABLE + " (NODEID, XCOORD, YCOORD, FLOOR, BUILDING, NODETYPE, LONGNAME, SHORTNAME, AVAILABLE ) " +
-                            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+                    "INSERT INTO " + Constants.NODES_TABLE + " (NODEID, XCOORD, YCOORD, FLOOR, BUILDING, NODETYPE, LONGNAME, SHORTNAME ) " +
+                            "VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
             );
 
             statement.setString(1, location.getNodeID());
@@ -342,7 +340,6 @@ public class Database {
             statement.setString(6, String.valueOf(DatabaseHelpers.enumToString(location.getNodeType())));
             statement.setString(7, location.getLongName());
             statement.setString(8, location.getShortName());
-            statement.setBoolean(9, location.getAvailable());
 
             return statement.execute();
 
@@ -361,7 +358,7 @@ public class Database {
             PreparedStatement statement;
 
             statement = connection.prepareStatement(
-                    "INSERT INTO " + Constants.DELETED_LOCATION_TABLE + " (NODEID, XCOORD, YCOORD, FLOOR, BUILDING, NODETYPE, LONGNAME, SHORTNAME, AVAILABLE) " +
+                    "INSERT INTO " + Constants.DELETED_LOCATION_TABLE + " (NODEID, XCOORD, YCOORD, FLOOR, BUILDING, NODETYPE, LONGNAME, SHORTNAME) " +
                             "VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
             );
 
@@ -373,7 +370,6 @@ public class Database {
             statement.setString(6, String.valueOf(DatabaseHelpers.enumToString(location.getNodeType())));
             statement.setString(7, location.getLongName());
             statement.setString(8, location.getShortName());
-            statement.setBoolean(9, location.getAvailable());
 
             return statement.execute();
 
@@ -476,8 +472,7 @@ public class Database {
                         resultSet.getString("BUILDING"),
                         DatabaseHelpers.stringToEnum(resultSet.getString("NODETYPE")),
                         resultSet.getString("LONGNAME"),
-                        resultSet.getString("SHORTNAME"),
-                        resultSet.getBoolean("AVAILABLE")
+                        resultSet.getString("SHORTNAME")
                 );
 
                 returnList.put(nodeID, node);
@@ -520,8 +515,7 @@ public class Database {
                         resultSet.getString("BUILDING"),
                         DatabaseHelpers.stringToEnum(resultSet.getString("NODETYPE")),
                         resultSet.getString("LONGNAME"),
-                        resultSet.getString("SHORTNAME"),
-                        resultSet.getBoolean("AVAILABLE")
+                        resultSet.getString("SHORTNAME")
                 );
 
                 returnList.put(nodeID, node);
@@ -576,19 +570,18 @@ public class Database {
 
             statement = connection.prepareStatement(
                     "UPDATE " + Constants.NODES_TABLE +
-                            " SET XCOORD=?, YCOORD=?, FLOOR=?, BUILDING=?, NODETYPE=?, LONGNAME=?, SHORTNAME=?, AVAILABLE=?" +
+                            " SET XCOORD=?, YCOORD=?, FLOOR=?, BUILDING=?, NODETYPE=?, LONGNAME=?, SHORTNAME=?" +
                             " WHERE NODEID=?"
             );
 
-            statement.setBoolean(1, updatedLocation.getAvailable());
-            statement.setInt(2, updatedLocation.getxCord());
-            statement.setInt(3, updatedLocation.getyCord());
-            statement.setString(4, updatedLocation.getFloor());
-            statement.setString(5, updatedLocation.getBuilding());
-            statement.setString(6, String.valueOf(DatabaseHelpers.enumToString(updatedLocation.getNodeType())));
-            statement.setString(7, updatedLocation.getLongName());
-            statement.setString(8, updatedLocation.getShortName());
-            statement.setString(9, updatedLocation.getNodeID());
+            statement.setInt(1, updatedLocation.getxCord());
+            statement.setInt(2, updatedLocation.getyCord());
+            statement.setString(3, updatedLocation.getFloor());
+            statement.setString(4, updatedLocation.getBuilding());
+            statement.setString(5, String.valueOf(DatabaseHelpers.enumToString(updatedLocation.getNodeType())));
+            statement.setString(6, updatedLocation.getLongName());
+            statement.setString(7, updatedLocation.getShortName());
+            statement.setString(8, updatedLocation.getNodeID());
 
             return statement.execute();
 

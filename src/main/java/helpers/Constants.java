@@ -12,7 +12,7 @@ public class Constants {
     public static String EDGES_TABLE = "EDGES";
     public static String ROOM_TABLE = "ROOM";
     public static String BOOK_TABLE = "BOOK";
-    public static String DELETED_LOCATION_TABLE = "DELETED NODES";
+    public static String DELETED_LOCATION_TABLE = "DELETED_NODES";
 
     public static String DB_PROJECTION = "projection";
     public static String DB_RELATION = "relation";

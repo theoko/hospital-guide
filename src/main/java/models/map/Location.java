@@ -18,7 +18,7 @@ public class Location {
     private ArrayList<SubPath> lstSubPaths;
     private boolean available;
 
-    public Location(String nodeID, int xCord, int yCord, String floor, String building, Constants.NodeType nodeType, String longName, String shortName, boolean available) {
+    public Location(String nodeID, int xCord, int yCord, String floor, String building, Constants.NodeType nodeType, String longName, String shortName) {
         this.nodeID = nodeID;
         this.xCord = xCord;
         this.yCord = yCord;
