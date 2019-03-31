@@ -37,14 +37,14 @@ public class ScreenController {
         // Initialize screen controller to switch between different scenes
         this.addScreen("logo","/Logo.fxml");
         this.addScreen("welcome","/Welcome.fxml");
-        this.addScreen("regMain","/RegMain.fxml");
+        this.addScreen("user-map", "/UserMap.fxml");
         this.addScreen("login","/Login.fxml");
-        this.addScreen("main","/Main.fxml");
+        this.addScreen("admin-map", "/AdminMap.fxml");
         this.addScreen("edit", "/Edit.fxml");
         this.addScreen("download", "/Download.fxml");
         this.addScreen("downloaded", "/Downloaded.fxml");
         this.addScreen("info", "/Info.fxml");
-
+        this.addScreen("employee-map", "/EmployeeMap.fxml");
     }
 
     public static void moveTo(String name) throws Exception {
@@ -85,7 +85,7 @@ public class ScreenController {
         // Add CSS to scene
         addStyles(s);
 
-        stage.setTitle(Character.toUpperCase(name.charAt(0)) + name.substring(1));
+        stage.setTitle("Brigham and Women's Pathfinder Application");
         stage.setScene(s);
         stage.setResizable(true);
 

@@ -29,11 +29,16 @@ public class Constants {
      * UI
      */
     public static String SETTINGS_BUTTON_TOOLTIP = "Access user settings";
+    public static String DOWNLOAD_BUTTON_TOOLTIP = "Download the map";
     public static String LOGOUT_BUTTON_TOOLTIP = "Logout";
+    public static String EXIT_BUTTON_TOOLTIP = "Exit";
 
-    public static enum NodeType {
+
+    public enum NodeType {
         BATH, CONF, DEPT, ELEV, EXIT, HALL, INFO, LABS, REST, RETL, SERV, STAI
     }
 
-
+    public enum Auth {
+        USER, EMPLOYEE, ADMIN
+    }
 }
