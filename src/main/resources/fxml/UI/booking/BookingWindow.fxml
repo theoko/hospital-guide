@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RoomBookingController">
+   <children>
+      <AnchorPane prefHeight="43.0" prefWidth="600.0" style="-fx-background-color: #022d5e;">
+         <children>
+            <Label alignment="TOP_CENTER" prefHeight="27.0" prefWidth="600.0" text="Conference Room Booking" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <font>
+                  <Font size="31.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <VBox layoutX="14.0" layoutY="55.0" prefHeight="334.0" prefWidth="182.0" spacing="20.0">
+         <children>
+            <Label text="Start Date" />
+            <JFXDatePicker />
+            <Label text="End Date" />
+            <JFXDatePicker />
+         </children>
+      </VBox>
+      <VBox layoutX="196.0" layoutY="55.0" prefHeight="334.0" prefWidth="394.0" />
+   </children>
+</AnchorPane>
