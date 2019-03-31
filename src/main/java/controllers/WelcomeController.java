@@ -11,7 +11,7 @@ public class WelcomeController {
 
     public void welcomeLogin() throws Exception{
         ScreenController.deactivate();
-        ScreenController.activate("regMain");
+        ScreenController.activate("user-map");
     }
 
     public void employeeLogin() throws Exception{

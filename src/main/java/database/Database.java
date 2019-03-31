@@ -495,6 +495,47 @@ public class Database {
     }
 
     /**
+     * Deletes the location object specified on the database
+     * @param deleteLocation
+     * @return true if the location was deleted successfully, false otherwise
+     */
+    public static boolean deleteLocation(Location deleteLocation) {
+
+        try {
+
+            PreparedStatement statement1;
+            PreparedStatement statement2;
+
+            statement1 = connection.prepareStatement(
+                    "DELETE FROM " + Constants.EDGES_TABLE +
+                    " WHERE STARTNODEID=? OR ENDNODEID=?"
+            );
+
+            statement1.setString(1, deleteLocation.getNodeID());
+            statement1.setString(2, deleteLocation.getNodeID());
+
+            statement1.execute();
+
+            statement2 = connection.prepareStatement(
+                    "DELETE FROM " + Constants.NODES_TABLE +
+                            " WHERE NODEID=?"
+            );
+
+            statement2.setString(1, deleteLocation.getNodeID());
+
+            return statement2.execute();
+
+        } catch (SQLException e) {
+            System.out.println("Failed to update location: " + deleteLocation.getNodeID());
+            e.printStackTrace();
+
+            return false;
+        }
+
+
+    }
+
+    /**
      * Updates the edge object specified on the database
      * @param updatedEdge
      * @return true if the edge was updated successfully, false otherwise

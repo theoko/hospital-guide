@@ -78,4 +78,8 @@ public class Location {
         this.nodeType = nodeType;
         Database.updateLocation(this);
     }
+
+    public boolean deleteCurrNode() {
+        return Database.deleteLocation(this);
+    }
 }

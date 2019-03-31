@@ -1,19 +1,17 @@
 package controllers;
 
 import com.jfoenix.controls.JFXButton;
-import database.Database;
 import helpers.DatabaseHelpers;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import models.map.Location;
+import models.map.Map;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class InfoController extends PopUpController implements Initializable {
-
-
     public Label lblNodeID;
     public Label lblLocation;
     public Label lblFloor;
@@ -24,6 +22,9 @@ public class InfoController extends PopUpController implements Initializable {
 
     public JFXButton btnDirections;
     public JFXButton btnCancel;
+
+    private static boolean bolSelected = false;
+    private static Location locSelected;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -39,6 +40,21 @@ public class InfoController extends PopUpController implements Initializable {
         lblNodeType.setText(DatabaseHelpers.enumToString(loc.getNodeType()));
         lblLongName.setText(loc.getLongName());
         lblShortName.setText(loc.getShortName());
+    }
+
+    public void btnDirections_OnClick(MouseEvent event) throws Exception {
+        event.consume();
+        ScreenController.deactivate();
+        if (bolSelected) { // Two locations
+            if (!loc.equals(locSelected)) {
+                ScreenController.popUp("directions", loc, locSelected, map, lstLines);
+            }
+            locSelected = null;
+            bolSelected = false;
+        } else { // One location
+            locSelected = loc;
+            bolSelected = true;
+        }
     }
 
     public void btnCancel_OnClick(MouseEvent event) {

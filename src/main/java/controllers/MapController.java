@@ -1,62 +1,25 @@
 package controllers;
 
 import com.jfoenix.controls.JFXButton;
-import helpers.Constants;
-import javafx.fxml.FXML;
-import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.input.ZoomEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
-import map.MapEdit;
-import models.map.Map;
-import map.MapParser;
 
-public class MapController {
+public abstract class MapController {
+    public JFXButton btnReturn;
+    public ImageView floorOneMap;
+    public AnchorPane panMap;
+//    public JFXButton zoomIn;
+//    public JFXButton zoomOut;
 
-    /**
-     * Side menu
-     */
-    @FXML
-    JFXButton settingsButton;
+    private double sceneX, sceneY;
+    private double translateX, translateY;
 
-    @FXML
-    JFXButton logoutButton;
+    public abstract void initialize();
 
-    /**
-     * Map
-     */
-    @FXML
-    ImageView floorOneMap;
-
-    @FXML
-    AnchorPane panMap1;
-
-    @FXML
-    JFXButton zoomIn;
-
-    @FXML
-    JFXButton zoomOut;
-
-    double sceneX, sceneY;
-    double translateX, translateY;
-
-    public void initialize() {
-        // Set tooltip for sidemenu buttons
-        settingsButton.setTooltip(new Tooltip(Constants.SETTINGS_BUTTON_TOOLTIP));
-        logoutButton.setTooltip(new Tooltip(Constants.LOGOUT_BUTTON_TOOLTIP));
-
-        // Set icons for sidemenu buttons
-//        settingsButton.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.COG));
-//        logoutButton.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.SIGN_OUT));
-
-        Map map = MapParser.parse();
-        MapEdit.display(map, panMap1, "Tower", "1");
-    }
-
-    public void floorOneMapOnMousePressed(MouseEvent event) {
+    public final void floorOneMapOnMousePressed(MouseEvent event) {
 
         // Handle onMousePressed event
         sceneX = event.getSceneX();
@@ -66,7 +29,7 @@ public class MapController {
         translateY = ((AnchorPane) event.getSource()).getTranslateY();
     }
 
-    public void floorOneMapOnMouseDragged(MouseEvent event) {
+    public final void floorOneMapOnMouseDragged(MouseEvent event) {
 
         // Handle onMouseDragged event
         double offsetX = event.getSceneX() - sceneX;
@@ -78,7 +41,7 @@ public class MapController {
         ((AnchorPane) event.getSource()).setTranslateY(newTranslateY);
     }
 
-    public void floorOneMapScroll(ScrollEvent event) {
+    public final void floorOneMapScroll(ScrollEvent event) {
         ((AnchorPane) event.getSource()).setTranslateX(((AnchorPane) event.getSource()).getTranslateX() + event.getDeltaX());
         ((AnchorPane) event.getSource()).setTranslateY(((AnchorPane) event.getSource()).getTranslateY() + event.getDeltaY());
 
@@ -99,7 +62,7 @@ public class MapController {
         }
     }
 
-    public void floorOneMapZoom(ZoomEvent event) {
+    public final void floorOneMapZoom(ZoomEvent event) {
         ((AnchorPane) event.getSource()).setScaleX(((AnchorPane) event.getSource()).getScaleX() * event.getZoomFactor());
         ((AnchorPane) event.getSource()).setScaleY(((AnchorPane) event.getSource()).getScaleY() * event.getZoomFactor());
         if(((AnchorPane) event.getSource()).getScaleX() <= 0.85 && ((AnchorPane) event.getSource()).getScaleY() <= 0.85) {
@@ -112,7 +75,7 @@ public class MapController {
         }
     }
 
-    public void floorOneMapZoomDone(ZoomEvent event) {
+    public final void floorOneMapZoomDone(ZoomEvent event) {
         if(((AnchorPane) event.getSource()).getScaleX() <= 1 && ((AnchorPane) event.getSource()).getScaleY() <= 1) {
             ((AnchorPane) event.getSource()).setScaleX(1);
             ((AnchorPane) event.getSource()).setScaleY(1);
@@ -138,16 +101,19 @@ public class MapController {
         event.consume();
     }*/
 
-    public void logOut(MouseEvent event) throws Exception {
+    /**
+     * Logs out back to the welcome screen
+     * @param event
+     * @throws Exception
+     */
+    public final void logOut(MouseEvent event) throws Exception {
         event.consume();
-
-        ScreenController.logOut(logoutButton);
+        ScreenController.logOut(btnReturn);
         ScreenController.activate("welcome");
     }
 
-    public void clickDownload(MouseEvent event) throws Exception {
-        event.consume();
-        ScreenController.deactivate();
-        ScreenController.activate("download");
-    }
+    /**
+     * Adds the tooltips
+     */
+    abstract void toolTip();
 }
