@@ -1,13 +1,16 @@
 package controllers;
 
+import com.sun.javafx.scene.traversal.Direction;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.shape.Line;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import models.map.Location;
+import models.map.Map;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -45,6 +48,7 @@ public class ScreenController {
         this.addScreen("downloaded", "/Downloaded.fxml");
         this.addScreen("info", "/Info.fxml");
         this.addScreen("employee-map", "/EmployeeMap.fxml");
+        this.addScreen("directions", "/Directions.fxml");
     }
 
     public static void moveTo(String name) throws Exception {
@@ -104,6 +108,63 @@ public class ScreenController {
         PopUpController pc = loader.getController();
 
         pc.setLoc(loc);
+
+        // Init scene
+        Scene s = new Scene(root);
+
+        // Add CSS to scene
+        addStyles(s);
+
+        stage.setTitle(Character.toUpperCase(name.charAt(0)) + name.substring(1));
+        stage.setScene(s);
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+    }
+
+    public static void popUp(String name, Location loc, Map map, HashMap<String, Line> lstLines) throws Exception {
+
+        stage = new Stage();
+
+        // Init parent
+        URL url = new URL(ScreenController.class.getResource(screenMap.get(name)).toString().replaceAll("%20", " "));
+
+        FXMLLoader loader = new FXMLLoader(url);
+        Parent root = loader.load();
+        PopUpController pc = loader.getController();
+
+        pc.setLoc(loc);
+        pc.setMap(map);
+        pc.setLines(lstLines);
+
+        // Init scene
+        Scene s = new Scene(root);
+
+        // Add CSS to scene
+        addStyles(s);
+
+        stage.setTitle(Character.toUpperCase(name.charAt(0)) + name.substring(1));
+        stage.setScene(s);
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+    }
+
+    public static void popUp(String name, Location loc1, Location loc2, Map map, HashMap<String, Line> lstLines) throws Exception {
+
+        stage = new Stage();
+
+        // Init parent
+        URL url = new URL(ScreenController.class.getResource(screenMap.get(name)).toString().replaceAll("%20", " "));
+
+        FXMLLoader loader = new FXMLLoader(url);
+        Parent root = loader.load();
+        DirectionsController pc = loader.getController();
+
+        pc.setLoc(loc1);
+        pc.setLoc2(loc2);
+        pc.setMap(map);
+        pc.setLines(lstLines);
 
         // Init scene
         Scene s = new Scene(root);

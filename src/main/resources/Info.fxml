@@ -14,7 +14,7 @@
    <children>
       <Pane prefHeight="32.0" prefWidth="200.0" style="-fx-background-color: #022D5A#022D5A;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <Label alignment="CENTER" prefHeight="32.0" prefWidth="200.0" text="Info" textFill="WHITE">
+            <Label alignment="CENTER" prefHeight="32.0" prefWidth="348.0" text="Info" textFill="WHITE">
                <font>
                   <Font size="19.0" />
                </font>
@@ -55,7 +55,7 @@
             <Insets left="25.0" />
          </padding>
       </GridPane>
-      <JFXButton fx:id="btnDirections" defaultButton="true" layoutX="10.0" layoutY="247.0" prefHeight="40.0" prefWidth="85.0" stylesheets="@css/colorScheme.css" text="Directions" textFill="WHITE" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
+      <JFXButton fx:id="btnDirections" defaultButton="true" layoutX="10.0" layoutY="247.0" onMouseClicked="#btnDirections_OnClick" prefHeight="40.0" prefWidth="85.0" stylesheets="@css/colorScheme.css" text="Directions" textFill="WHITE" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
       <JFXButton fx:id="btnCancel" layoutX="106.0" layoutY="247.0" onMouseClicked="#btnCancel_OnClick" prefHeight="40.0" prefWidth="85.0" stylesheets="@css/colorScheme.css" text="Cancel" textFill="WHITE" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
    </children>
 </AnchorPane>
