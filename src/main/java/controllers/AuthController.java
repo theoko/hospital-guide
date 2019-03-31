@@ -18,6 +18,7 @@ public class AuthController {
         String TEMP_EMPLOYEE_USERNAME = "employee";
         String TEMP_EMPLOYEE_PASSWORD = "";
 
+
         if (username.equals(TEMP_ADMIN_USERNAME) && password.equals(TEMP_ADMIN_PASSWORD)) {
             return Constants.Auth.ADMIN;
         } else if (username.equals(TEMP_EMPLOYEE_USERNAME) && password.equals(TEMP_EMPLOYEE_PASSWORD)) {

@@ -4,6 +4,8 @@
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -85,8 +87,16 @@
 
                 </Tab>
                 <Tab style="-fx-background-color: #022D5A;" text="Sanitation Requests">
+               <content>
+                  <TableView fx:id="tblData" prefHeight="200.0" prefWidth="200.0">
+                    <columns>
+                      <TableColumn fx:id="tblLocation" prefWidth="120.0" text="Location" />
+                      <TableColumn fx:id="tblPriority" prefWidth="120.0" text="Priority" />
+                      <TableColumn fx:id="tblStatus" prefWidth="120.0" text="Status" />
 
-                </Tab>
+                    </columns>
+                  </TableView>
+               </content></Tab>
             </tabs>
         </JFXTabPane>
     </children>
