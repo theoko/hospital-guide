@@ -12,7 +12,7 @@ public class AuthController {
     public Label errorMessage;
 
     private Constants.Auth authenticate(String username, String password) {
-        if
+
         String TEMP_ADMIN_USERNAME = "root";
         String TEMP_ADMIN_PASSWORD = "";
         String TEMP_EMPLOYEE_USERNAME = "employee";
