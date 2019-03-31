@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="300.0" prefWidth="350.0" style="-fx-border-color: black;" stylesheets="@css/colorScheme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.InfoController">
+<AnchorPane prefHeight="300.0" prefWidth="350.0" style="-fx-border-color: black;" stylesheets="@css/colorScheme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EmployeeInfoController">
     <children>
         <Pane prefHeight="32.0" prefWidth="250.0" style="-fx-background-color: #022D5A#022D5A;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
             <children>
@@ -55,7 +55,7 @@
                 <Insets left="25.0" />
             </padding>
         </GridPane>
-        <JFXButton fx:id="btnRequest" defaultButton="true" layoutX="10.0" layoutY="247.0" prefHeight="40.0" prefWidth="85.0" stylesheets="@css/colorScheme.css" text="Request Spill" textFill="WHITE" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
+        <JFXButton fx:id="btnRequest" defaultButton="true" layoutX="10.0" layoutY="247.0" onMouseClicked="#btnReportSpill_OnClick" prefHeight="40.0" prefWidth="85.0" stylesheets="@css/colorScheme.css" text="Request Spill" textFill="WHITE" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
         <JFXButton fx:id="btnCancel" layoutX="106.0" layoutY="247.0" onMouseClicked="#btnCancel_OnClick" prefHeight="40.0" prefWidth="85.0" stylesheets="@css/colorScheme.css" text="Cancel" textFill="WHITE" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
     </children>
 </AnchorPane>

@@ -4,12 +4,14 @@ import helpers.Constants;
 import helpers.DatabaseHelpers;
 import models.map.Edge;
 import models.map.Location;
+import models.sanitation.SanitationRequest;
 import models.user.Admin;
 import models.user.Employee;
 import models.user.User;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -104,24 +106,25 @@ public class Database {
                 "CONSTRAINT startNodeID_fk FOREIGN KEY(startNodeID) REFERENCES " + Constants.NODES_TABLE + "(nodeID)," +
                 "CONSTRAINT endNodeID_fk FOREIGN KEY(endNodeID) REFERENCES " + Constants.NODES_TABLE + "(nodeID))";
 
-        String sanitationTable = null;
+        String createSanitationTable = "CREATE TABLE " + Constants.SANITATION_TABLE + " (" +
+                "nodeID VARCHAR(100) References " + Constants.NODES_TABLE + " (nodeID), " +
+                "priority VARCHAR(10), " +
+                "description VARCHAR(100), " +
+                "CONSTRAINT priority_enum CHECK (priority in ('LOW', 'MEDIUM', 'HIGH')))";
 
         try {
-
-            boolean createUsersResult = statement.execute(usersTable);
-            boolean createEmployeeResult = statement.execute(employeeTable);
-            boolean createCustodianResult = statement.execute(custodianTable);
-            boolean createAdminResult = statement.execute(adminTable);
-
-            boolean createNodesResult = statement.execute(locationTable);
-            boolean createEdgesTable = statement.execute(neighborTable);
-
+            statement.execute(usersTable);
+            statement.execute(employeeTable);
+            statement.execute(custodianTable);
+            statement.execute(adminTable);
+            statement.execute(locationTable);
+            statement.execute(neighborTable);
+            statement.execute(createSanitationTable);
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
-
     }
 
 
@@ -214,6 +217,20 @@ public class Database {
         } catch (SQLException e) {
             System.out.println("Table " + Constants.EDGES_TABLE + " cannot be dropped");
 
+            return false;
+        }
+    }
+
+    /**
+     * @brief Attempts to drop sanitation table.
+     * @return Boolean indicating success of table drop.
+     */
+    private static boolean dropSanitationTable() {
+        try {
+            Statement statement = connection.createStatement();
+            return statement.execute("DROP TABLE " + Constants.SANITATION_TABLE);
+        } catch (SQLException exception) {
+            System.out.println("Table " + Constants.SANITATION_TABLE + " cannot be dropped.");
             return false;
         }
     }
@@ -323,6 +340,42 @@ public class Database {
 
     }
 
+    /**
+     * @brief Returns location from database corresponding to given ID.
+     * @param id Location ID.
+     */
+    public static Location getLocationByID(String id) {
+        try {
+            // Execute query
+            String stmtString = "SELECT * FROM " + Constants.NODES_TABLE + " WHERE NODEID=?";
+            PreparedStatement statement = connection.prepareStatement(stmtString);
+            statement.setString(1, id);
+            ResultSet resultSet = statement.executeQuery();
+
+            // Process and return result
+            if(resultSet.next()) {
+                Location location = new Location(
+                        resultSet.getString("NODEID"),
+                        resultSet.getInt("XCOORD"),
+                        resultSet.getInt("YCOORD"),
+                        resultSet.getString("FLOOR"),
+                        resultSet.getString("BUILDING"),
+                        DatabaseHelpers.stringToEnum(resultSet.getString("NODETYPE")),
+                        resultSet.getString("LONGNAME"),
+                        resultSet.getString("SHORTNAME")
+                );
+                return location;
+            }
+            return null;
+
+        } catch (SQLException exception) {
+            System.out.println("Cannot get location by ID: " + id);
+            exception.printStackTrace();
+            System.out.println();
+            return null;
+        }
+    }
+
     public static boolean addEdge(Edge edge) {
 
         try {
@@ -346,6 +399,79 @@ public class Database {
             return false;
         }
 
+    }
+
+    /**
+     * @brief Attempts to add sanitation request to the database.
+     * @param request Sanitation request to add.
+     * @return Boolean indicating success of add.
+     */
+    public static boolean addSanitationRequest(SanitationRequest request) {
+        // Get data from request
+        Location location = request.getLocation();
+        SanitationRequest.Priority priority = request.getPriority();
+        String description = request.getDescription();
+
+        try {
+            // Attempt to add request to database
+            PreparedStatement statement = connection.prepareStatement(
+                    "INSERT INTO " + Constants.SANITATION_TABLE +
+                            " (NODEID, PRIORITY, DESCRIPTION)" +
+                            " VALUES (?, ?, ?)"
+            );
+            statement.setString(1, location.getNodeID());
+            statement.setString(2, priority.name());
+            statement.setString(3, description);
+            return statement.execute();
+        } catch (SQLException exception) {
+            // Print an exception message
+            System.out.println("Sanitation Request (" + description + ") could not be added.");
+            exception.printStackTrace();
+            System.out.println();
+            return false;
+        }
+    }
+
+    /**
+     * @brief Returns list of sanitation requests from the database.
+     */
+    public static ArrayList<SanitationRequest> getSanitationRequests() {
+        try {
+            // Execute query to get all sanitation requests
+            Statement statement = connection.createStatement();
+            String query = "SELECT * FROM " + Constants.SANITATION_TABLE;
+            ResultSet resultSet = statement.executeQuery(query);
+
+            // Build request list from query
+            ArrayList<SanitationRequest> sanitationRequests = new ArrayList<>();
+            while(resultSet.next()) {
+
+                // Build sanitation request fields from resultSet
+                Location location = getLocationByID(
+                        resultSet.getString("NODEID"));
+                SanitationRequest.Priority priority =
+                        SanitationRequest.Priority.valueOf(
+                                resultSet.getString("PRIORITY"));
+                String description = resultSet.getString("DESCRIPTION");
+
+                // Create and add sanitation request to list
+                SanitationRequest sanitationRequest = new SanitationRequest(
+                        location, priority, description);
+                sanitationRequests.add(sanitationRequest);
+            }
+
+            // Sort the list by priority
+            Collections.sort(sanitationRequests);
+
+            // Return the list
+            return sanitationRequests;
+
+        } catch (SQLException exception) {
+            System.out.println("Failed to get sanitation requests.");
+            exception.printStackTrace();
+            System.out.println();
+            return null;
+        }
     }
 
     /**

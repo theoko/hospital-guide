@@ -47,7 +47,9 @@ public class ScreenController {
         this.addScreen("download", "/Download.fxml");
         this.addScreen("downloaded", "/Downloaded.fxml");
         this.addScreen("info", "/Info.fxml");
+        this.addScreen("employee-info", "/EmployeeInfo.fxml");
         this.addScreen("employee-map", "/EmployeeMap.fxml");
+        this.addScreen("sanitation-request", "/SanitationRequest.fxml");
         this.addScreen("directions", "/Directions.fxml");
     }
 
