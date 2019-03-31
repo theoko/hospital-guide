@@ -34,8 +34,8 @@
       </HBox>
       <GridPane layoutX="21.0" layoutY="78.0" prefHeight="94.0" prefWidth="268.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="21.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="191.0" minWidth="10.0" prefWidth="41.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="194.0" minWidth="9.0" prefWidth="194.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="191.0" minWidth="10.0" prefWidth="41.79998779296875" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="239.20001220703125" minWidth="9.0" prefWidth="239.20001220703125" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="78.0" minHeight="10.0" prefHeight="61.0" vgrow="SOMETIMES" />

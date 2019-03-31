@@ -56,8 +56,11 @@ public class DirectionsController extends PopUpController implements Initializab
         for (SubPath sub : path) {
             String id = sub.getEdgeID();
             if (id != "") {
+                System.out.println(id);
                 Line line = lstLines.get(id);
-                line.setStroke(Color.RED);
+                if (line != null) {
+                    line.setStroke(Color.RED);
+                }
             }
         }
         ScreenController.deactivate();

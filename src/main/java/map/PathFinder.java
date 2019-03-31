@@ -64,7 +64,6 @@ public class PathFinder {
 
             // Check to see if map is our end map
             if (lNext.getNodeID().equals(end.getNodeID())) {
-                System.out.println("Found node!");
                 // Generate path from parent map and end node
                 path = genPath(parent, nNext);
                 break;
