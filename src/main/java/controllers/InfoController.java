@@ -47,7 +47,7 @@ public class InfoController extends PopUpController implements Initializable {
         ScreenController.deactivate();
         if (bolSelected) { // Two locations
             if (!loc.equals(locSelected)) {
-                ScreenController.popUp("directions", loc, locSelected, map, lstLines);
+                ScreenController.popUp("directions", loc);
             }
             locSelected = null;
             bolSelected = false;

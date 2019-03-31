@@ -1,6 +1,7 @@
 package controllers;
 
 import com.jfoenix.controls.JFXComboBox;
+import database.Database;
 import helpers.Constants;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -36,6 +37,8 @@ public class EditController extends PopUpController implements Initializable {
         String value = (String) cmbNodeType.getValue();
         String nType = value.substring(0, value.indexOf(':'));
         loc.setNodeType(Constants.NodeType.valueOf(nType));
+        if(loc.getNodeID() == null) Database.addNewLocation(loc);
+
         ScreenController.deactivate();
     }
 
@@ -47,7 +50,7 @@ public class EditController extends PopUpController implements Initializable {
 
     public void deleteNode(MouseEvent event) {
         event.consume();
-       // loc.deleteCurrNode();
+//        loc.deleteCurrNode();
         ScreenController.deactivate();
     }
 

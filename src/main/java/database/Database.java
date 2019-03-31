@@ -15,7 +15,7 @@ import java.util.List;
 
 
 public class Database {
-
+    private static String newPrefixChar = "X";
     static Connection connection;
 
 //    SQLTemplates dialect;
@@ -688,5 +688,24 @@ public class Database {
 //
 //        db.filterTable(builder);
 
+    }
+    public static void addNewLocation(Location loc) {
+                String locID = Database.generateUniqueNodeID(loc);
+        loc.setNodeID(locID);
+        loc.addCurrNode();
+    }
+    public static String generateUniqueNodeID(Location c) {
+
+        String id = newPrefixChar + c.getNodeType().toString() + "000" +
+                c.getDBFormattedFloor();
+        while(getLocations().containsKey(id)) {
+            String numericalIDStr = id.substring(id.length() - 5, id.length() - 2);
+            int numericalIDVal = Integer.parseInt(numericalIDStr);
+            numericalIDVal++;
+            numericalIDStr = String.format("%03d", numericalIDVal);
+            id = newPrefixChar + c.getNodeType().toString() + numericalIDStr +
+                    c.getDBFormattedFloor();
+        }
+        return id;
     }
 }

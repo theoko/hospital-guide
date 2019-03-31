@@ -72,8 +72,9 @@ public class MapDisplay {
         HashMap<String, Location> lstLocations = map.getAllLocations();
         for (Location loc : lstLocations.values()) {
             if (loc.getBuilding().equals(building) && loc.getFloor().equals(floor) && loc.getNodeType() != Constants.NodeType.HALL) {
-                double xLoc = (loc.getxCord() - xShift) * scale;
-                double yLoc = (loc.getyCord() - yShift) * scale;
+                boolean correctCoordinates = loc.getNodeID().substring(0, 1).equals("X");
+                double xLoc = correctCoordinates ? loc.getxCord() : (loc.getxCord() - xShift) * scale;
+                double yLoc = correctCoordinates ? loc.getyCord() : (loc.getyCord() - yShift) * scale;
                 Color color = Color.WHITE;
                 Circle circle = new Circle(xLoc, yLoc, locRadius, color);
                 circle.setStroke(Color.BLACK);
@@ -81,7 +82,7 @@ public class MapDisplay {
                 circle.setOnMouseClicked(event -> {
                     try {
                         event.consume();
-                        ScreenController.popUp("info", loc, map, lstLines);
+                        ScreenController.popUp("info", loc);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -95,8 +96,9 @@ public class MapDisplay {
         HashMap<String, Location> lstLocations = map.getAllLocations();
         for (Location loc : lstLocations.values()) {
             if (loc.getBuilding().equals(building) && loc.getFloor().equals(floor)) {
-                double xLoc = (loc.getxCord() - xShift) * scale;
-                double yLoc = (loc.getyCord() - yShift) * scale;
+                boolean correctCoordinates = loc.getNodeID().substring(0, 1).equals("X");
+                double xLoc = correctCoordinates ? loc.getxCord() : (loc.getxCord() - xShift) * scale;
+                double yLoc = correctCoordinates ? loc.getyCord() : (loc.getyCord() - yShift) * scale;
                 Circle circle;
                 if (loc.getNodeType() != Constants.NodeType.HALL) {
                     Color color = Color.WHITE;
@@ -152,4 +154,31 @@ public class MapDisplay {
 //                return Color.YELLOW;
 //        }
 //    }
+public static double getxShift() {
+    return xShift;
+}
+
+    public static double getyShift() {
+        return yShift;
+    }
+
+    public static double getScale() {
+        return scale;
+    }
+
+    public static double getLocRadius() {
+        return locRadius;
+    }
+
+    public static double getHallRadius() {
+        return hallRadius;
+    }
+
+    public static double getLocWidth() {
+        return locWidth;
+    }
+
+    public static double getEdgeWidth() {
+        return edgeWidth;
+    }
 }
