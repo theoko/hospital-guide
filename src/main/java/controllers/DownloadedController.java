@@ -17,7 +17,7 @@ public class DownloadedController {
     public void clickBackDownloaded(MouseEvent event) throws Exception {
         event.consume();
         ScreenController.deactivate();
-        ScreenController.activate("main");
+        ScreenController.activate("admin-map");
 
     }
 }
