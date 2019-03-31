@@ -4,7 +4,6 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import helpers.Constants;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 public class AuthController {
@@ -13,6 +12,7 @@ public class AuthController {
     public Label errorMessage;
 
     private Constants.Auth authenticate(String username, String password) {
+        if
         String TEMP_ADMIN_USERNAME = "root";
         String TEMP_ADMIN_PASSWORD = "";
         String TEMP_EMPLOYEE_USERNAME = "employee";

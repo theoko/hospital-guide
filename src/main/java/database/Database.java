@@ -4,8 +4,6 @@ import helpers.Constants;
 import helpers.DatabaseHelpers;
 import models.map.Edge;
 import models.map.Location;
-import models.user.Admin;
-import models.user.Employee;
 import models.user.User;
 
 import java.sql.*;
@@ -54,10 +52,8 @@ public class Database {
         dropBookTable();
         dropRoomTable();
         dropEdgeTable();
+        dropDeletedLocationTable();
         dropLocationTable();
-        dropAdminTable();
-        dropCustodianTable();
-        dropEmployeeTable();
         dropUsersTable();
     }
 
@@ -74,20 +70,10 @@ public class Database {
 
         String usersTable = "CREATE TABLE " + Constants.USERS_TABLE +
                 "(userID INT PRIMARY KEY," +
-                " username VARCHAR(20), " +
-                "password VARCHAR(32)," +
-                " userType INT)";
+                " username VARCHAR(32), " +
+                " password VARCHAR(32)," +
+                " userType VARCHAR(32))";
 
-        String employeeTable = "CREATE TABLE " + Constants.EMPLOYEE_TABLE +
-                "(employeeID INT PRIMARY KEY," +
-                " CONSTRAINT employeeID_fk FOREIGN KEY(employeeID) REFERENCES " + Constants.USERS_TABLE + "(userID))";
-
-        String custodianTable = "CREATE TABLE " + Constants.CUSTODIAN_TABLE +
-                "(employeeID INT REFERENCES " + Constants.EMPLOYEE_TABLE + "(employeeID))";
-
-        String adminTable = "CREATE TABLE " + Constants.ADMIN_TABLE +
-                "(adminID INT PRIMARY KEY," +
-                " CONSTRAINT adminID_fk FOREIGN KEY(adminID) REFERENCES " + Constants.USERS_TABLE + "(userID))";
 
         String locationTable = "CREATE TABLE " + Constants.NODES_TABLE +
                 "(nodeID VARCHAR(100) PRIMARY KEY," +
@@ -97,7 +83,8 @@ public class Database {
                 "building VARCHAR(100)," +
                 "nodeType VARCHAR(100)," +
                 "longName VARCHAR(100)," +
-                "shortName VARCHAR(100))";
+                "shortName VARCHAR(100)," +
+                "available BOOLEAN)";
 
         String neighborTable = "CREATE TABLE " + Constants.EDGES_TABLE +
                 "(edgeID VARCHAR(100) PRIMARY KEY," +
@@ -120,18 +107,26 @@ public class Database {
                 "CONSTRAINT roomID2_fk FOREIGN KEY(roomID) REFERENCES " + Constants.NODES_TABLE + "(nodeID)," +
                 "CONSTRAINT userID2_fk FOREIGN KEY(userID) REFERENCES " + Constants.USERS_TABLE + "(userID))";
 
+        String deletedLocationssTable = "CREATE TABLE " + Constants.DELETED_LOCATION_TABLE +
+                "(nodeID VARCHAR(100) PRIMARY KEY," +
+                "xCoord INT," +
+                "yCoord INT," +
+                "floor VARCHAR(100)," +
+                "building VARCHAR(100)," +
+                "nodeType VARCHAR(100)," +
+                "longName VARCHAR(100)," +
+                "shortName VARCHAR(100)," +
+                "available BOOLEAN)";
+
         try {
 
-            boolean createUsersResult = statement.execute(usersTable);
-            boolean createEmployeeResult = statement.execute(employeeTable);
-            boolean createCustodianResult = statement.execute(custodianTable);
-            boolean createAdminResult = statement.execute(adminTable);
+            statement.execute(usersTable);
+            statement.execute(locationTable);
+            statement.execute(neighborTable);
 
-            boolean createNodesResult = statement.execute(locationTable);
-            boolean createEdgesTable = statement.execute(neighborTable);
-
-            boolean createRoomResult = statement.execute(roomTable);
-            boolean createBookResult = statement.execute(bookTable);
+            statement.execute(roomTable);
+            statement.execute(bookTable);
+            statement.execute(deletedLocationssTable);
 
         } catch (SQLException | NullPointerException e) {
             e.printStackTrace();
@@ -141,8 +136,47 @@ public class Database {
 
 
     /**
+     * Creates user based off of database
+     */
+    public static boolean createUser(User user){
+        try{
+            PreparedStatement statement;
+            statement = connection.prepareStatement(
+                    "INSERT INTO " + Constants.USERS_TABLE + " (USERID, USERNAME, PASSWORD, USERTYPE) " +
+                            "VALUES (?, ?, ?, ?)"
+            );
+
+            statement.setInt(1, user.getUserID());
+            statement.setString(2, user.getUsername());
+            statement.setString(3, user.getPassword());
+            statement.setString(4, user.getUserType().name());
+            return statement.execute();
+
+        } catch(SQLException e){
+            System.out.println("Table " + Constants.USERS_TABLE + " cannot be added!");
+
+            return false;
+        }
+    }
+
+
+    /**
      * Drop tables
      */
+    private static boolean dropDeletedLocationTable(){
+        try{
+            Statement statement;
+
+            statement = connection.createStatement();
+
+            return statement.execute("DROP TABLE " + Constants.DELETED_LOCATION_TABLE);
+        }catch (SQLException e) {
+            System.out.println("Table " + Constants.DELETED_LOCATION_TABLE + " cannot be dropped");
+
+            return false;
+        }
+    }
+
     private static boolean dropBookTable(){
         try{
             Statement statement;
@@ -180,51 +214,6 @@ public class Database {
 
         } catch (SQLException e) {
             System.out.println("Table " + Constants.USERS_TABLE + " cannot be dropped");
-
-            return false;
-        }
-    }
-
-    private static boolean dropEmployeeTable(){
-        try {
-            Statement statement;
-
-            statement = connection.createStatement();
-
-            return statement.execute("DROP TABLE " + Constants.EMPLOYEE_TABLE);
-
-        } catch (SQLException e) {
-            System.out.println("Table " + Constants.EMPLOYEE_TABLE + " cannot be dropped");
-
-            return false;
-        }
-    }
-
-    private static boolean dropCustodianTable(){
-        try {
-            Statement statement;
-
-            statement = connection.createStatement();
-
-            return statement.execute("DROP TABLE " + Constants.CUSTODIAN_TABLE);
-
-        } catch (SQLException e) {
-            System.out.println("Table " + Constants.CUSTODIAN_TABLE + " cannot be dropped");
-
-            return false;
-        }
-    }
-
-    private static boolean dropAdminTable(){
-        try {
-            Statement statement;
-
-            statement = connection.createStatement();
-
-            return statement.execute("DROP TABLE " + Constants.ADMIN_TABLE);
-
-        } catch (SQLException e) {
-            System.out.println("Table " + Constants.ADMIN_TABLE + " cannot be dropped");
 
             return false;
         }
@@ -314,7 +303,7 @@ public class Database {
                     resultSet.getInt("USERID"),
                     resultSet.getString("USERNAME"),
                     resultSet.getString("PASSWORD"),
-                    resultSet.getInt("USERTYPE")
+                    Constants.Auth.valueOf(resultSet.getString("USERTYPE"))
             );
 
             return user;
@@ -326,12 +315,12 @@ public class Database {
         }
     }
 
-    public Admin getAdminByID(int adminID) {
-        return (Admin) getUserByID(adminID);
+    public User getAdminByID(int adminID) {
+        return getUserByID(adminID);
     }
 
-    public Employee getEmployeeByID(int employeeID) {
-        return (Employee) getUserByID(employeeID);
+    public User getEmployeeByID(int employeeID) {
+        return getUserByID(employeeID);
     }
 
     public static boolean addLocation(Location location) {
@@ -341,7 +330,38 @@ public class Database {
             PreparedStatement statement;
 
             statement = connection.prepareStatement(
-                    "INSERT INTO " + Constants.NODES_TABLE + " (NODEID, XCOORD, YCOORD, FLOOR, BUILDING, NODETYPE, LONGNAME, SHORTNAME) " +
+                    "INSERT INTO " + Constants.NODES_TABLE + " (NODEID, XCOORD, YCOORD, FLOOR, BUILDING, NODETYPE, LONGNAME, SHORTNAME, AVAILABLE ) " +
+                            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+            );
+
+            statement.setString(1, location.getNodeID());
+            statement.setInt(2, location.getxCord());
+            statement.setInt(3, location.getyCord());
+            statement.setString(4, location.getFloor());
+            statement.setString(5, location.getBuilding());
+            statement.setString(6, String.valueOf(DatabaseHelpers.enumToString(location.getNodeType())));
+            statement.setString(7, location.getLongName());
+            statement.setString(8, location.getShortName());
+            statement.setBoolean(9, location.getAvailable());
+
+            return statement.execute();
+
+        } catch (SQLException e) {
+            System.out.println("Location " + location.getNodeID() + " cannot be added!");
+            e.printStackTrace();
+
+            return false;
+        }
+
+    }
+    public static boolean addDeleteLocation(Location location) {
+
+        try {
+
+            PreparedStatement statement;
+
+            statement = connection.prepareStatement(
+                    "INSERT INTO " + Constants.DELETED_LOCATION_TABLE + " (NODEID, XCOORD, YCOORD, FLOOR, BUILDING, NODETYPE, LONGNAME, SHORTNAME, AVAILABLE) " +
                             "VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
             );
 
@@ -353,6 +373,7 @@ public class Database {
             statement.setString(6, String.valueOf(DatabaseHelpers.enumToString(location.getNodeType())));
             statement.setString(7, location.getLongName());
             statement.setString(8, location.getShortName());
+            statement.setBoolean(9, location.getAvailable());
 
             return statement.execute();
 
@@ -412,10 +433,54 @@ public class Database {
                         resultSet.getInt("USERID"),
                         resultSet.getString("USERNAME"),
                         resultSet.getString("PASSWORD"),
-                        resultSet.getInt("USERTYPE")
+                        Constants.Auth.valueOf(resultSet.getString("USERTYPE"))
                 );
 
                 returnList.add(user);
+
+            }
+
+            return returnList;
+
+        } catch (SQLException e) {
+            System.out.println("Failed to get users!");
+
+            return null;
+        }
+    }
+
+    /**
+     * Returns a list of nodes
+     */
+    public static HashMap<String, Location> getDeletedLocations() {
+        try {
+
+            Statement statement;
+
+            statement = connection.createStatement();
+
+            String query = "SELECT * FROM " + Constants.DELETED_LOCATION_TABLE;
+
+            ResultSet resultSet = statement.executeQuery(query);
+
+            HashMap<String, Location> returnList = new HashMap<>();
+
+            while(resultSet.next()) {
+
+                String nodeID = resultSet.getString("NODEID");
+                Location node = new Location(
+                        nodeID,
+                        resultSet.getInt("XCOORD"),
+                        resultSet.getInt("YCOORD"),
+                        resultSet.getString("FLOOR"),
+                        resultSet.getString("BUILDING"),
+                        DatabaseHelpers.stringToEnum(resultSet.getString("NODETYPE")),
+                        resultSet.getString("LONGNAME"),
+                        resultSet.getString("SHORTNAME"),
+                        resultSet.getBoolean("AVAILABLE")
+                );
+
+                returnList.put(nodeID, node);
 
             }
 
@@ -455,7 +520,8 @@ public class Database {
                         resultSet.getString("BUILDING"),
                         DatabaseHelpers.stringToEnum(resultSet.getString("NODETYPE")),
                         resultSet.getString("LONGNAME"),
-                        resultSet.getString("SHORTNAME")
+                        resultSet.getString("SHORTNAME"),
+                        resultSet.getBoolean("AVAILABLE")
                 );
 
                 returnList.put(nodeID, node);
@@ -510,24 +576,66 @@ public class Database {
 
             statement = connection.prepareStatement(
                     "UPDATE " + Constants.NODES_TABLE +
-                            " SET XCOORD=?, YCOORD=?, FLOOR=?, BUILDING=?, NODETYPE=?, LONGNAME=?, SHORTNAME=?" +
+                            " SET XCOORD=?, YCOORD=?, FLOOR=?, BUILDING=?, NODETYPE=?, LONGNAME=?, SHORTNAME=?, AVAILABLE=?" +
                             " WHERE NODEID=?"
             );
 
-            statement.setInt(1, updatedLocation.getxCord());
-            statement.setInt(2, updatedLocation.getyCord());
-            statement.setString(3, updatedLocation.getFloor());
-            statement.setString(4, updatedLocation.getBuilding());
-            statement.setString(5, String.valueOf(DatabaseHelpers.enumToString(updatedLocation.getNodeType())));
-            statement.setString(6, updatedLocation.getLongName());
-            statement.setString(7, updatedLocation.getShortName());
-
-            statement.setString(8, updatedLocation.getNodeID());
+            statement.setBoolean(1, updatedLocation.getAvailable());
+            statement.setInt(2, updatedLocation.getxCord());
+            statement.setInt(3, updatedLocation.getyCord());
+            statement.setString(4, updatedLocation.getFloor());
+            statement.setString(5, updatedLocation.getBuilding());
+            statement.setString(6, String.valueOf(DatabaseHelpers.enumToString(updatedLocation.getNodeType())));
+            statement.setString(7, updatedLocation.getLongName());
+            statement.setString(8, updatedLocation.getShortName());
+            statement.setString(9, updatedLocation.getNodeID());
 
             return statement.execute();
 
         } catch (SQLException e) {
             System.out.println("Failed to update location: " + updatedLocation.getNodeID());
+            e.printStackTrace();
+
+            return false;
+        }
+
+
+    }
+    /**
+     * Deletes the location object specified on the database
+     * @param deleteLocation
+     * @return true if the location was deleted successfully, false otherwise
+     */
+    public static boolean deleteLocation(Location deleteLocation) {
+
+        try {
+
+            PreparedStatement statement1;
+            PreparedStatement statement2;
+
+            addDeleteLocation(deleteLocation);
+
+            statement1 = connection.prepareStatement(
+                    "DELETE FROM " + Constants.EDGES_TABLE +
+                            " WHERE STARTNODEID=? OR ENDNODEID=?"
+            );
+
+            statement1.setString(1, deleteLocation.getNodeID());
+            statement1.setString(2, deleteLocation.getNodeID());
+
+            statement1.execute();
+
+            statement2 = connection.prepareStatement(
+                    "DELETE FROM " + Constants.NODES_TABLE +
+                            " WHERE NODEID=?"
+            );
+
+            statement2.setString(1, deleteLocation.getNodeID());
+
+            return statement2.execute();
+
+        } catch (SQLException e) {
+            System.out.println("Failed to update location: " + deleteLocation.getNodeID());
             e.printStackTrace();
 
             return false;
@@ -570,90 +678,16 @@ public class Database {
     /**
      * Returns a list of admins
      */
-    public List<Admin> getAdmins() throws Exception {
+    public List<User> getAdmins() throws Exception {
 
-        try {
-
-            Statement statement;
-
-            statement = connection.createStatement();
-
-            String query = "SELECT * FROM " + Constants.ADMIN_TABLE;
-
-            ResultSet resultSet = statement.executeQuery(query);
-
-            ArrayList<Admin> returnList = new ArrayList<>();
-
-            while(resultSet.next()) {
-
-                User user = getUserByID(resultSet.getInt("ADMINID"));
-
-                if(user == null) {
-                    throw new Exception("Users and admin tables not correctly linked!");
-                }
-
-                Admin admin = new Admin(
-                        user.getUserID(),
-                        user.getUsername(),
-                        user.getPassword(),
-                        user.getUserType()
-                );
-
-                returnList.add(admin);
-
-            }
-
-            return returnList;
-
-        } catch (SQLException e) {
-            System.out.println("Failed to get admins!");
-
-            return null;
-        }
+        return new ArrayList<>();
     }
 
     /**
      * Returns a list of employees
      */
-    public List<Employee> getEmployees() throws Exception {
-        try {
-
-            Statement statement;
-
-            statement = connection.createStatement();
-
-            String query = "SELECT * FROM " + Constants.EMPLOYEE_TABLE;
-
-            ResultSet resultSet = statement.executeQuery(query);
-
-            ArrayList<Employee> returnList = new ArrayList<>();
-
-            while(resultSet.next()) {
-
-                User user = getUserByID(resultSet.getInt("EMPLOYEEID"));
-
-                if(user == null) {
-                    throw new Exception("Users and employee tables not correctly linked!");
-                }
-
-                Employee employee = new Employee(
-                        user.getUserID(),
-                        user.getUsername(),
-                        user.getPassword(),
-                        user.getUserType()
-                );
-
-                returnList.add(employee);
-
-            }
-
-            return returnList;
-
-        } catch (SQLException e) {
-            System.out.println("Failed to get employees!");
-
-            return null;
-        }
+    public List<User> getEmployees() throws Exception {
+        return new ArrayList<>();
     }
 
     public static void main(String[] args) {
