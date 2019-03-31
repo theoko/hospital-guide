@@ -40,6 +40,6 @@ public class Constants {
     }
 
     public enum Auth {
-        USER, EMPLOYEE, ADMIN
+        USER, EMPLOYEE, ADMIN, CUSTODIAN
     }
 }
