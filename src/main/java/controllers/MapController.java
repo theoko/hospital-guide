@@ -11,7 +11,6 @@ public abstract class MapController {
     public JFXButton btnReturn;
     public ImageView floorOneMap;
     public AnchorPane panMap;
-    public AnchorPane panMap1;
 //    public JFXButton zoomIn;
 //    public JFXButton zoomOut;
 
@@ -109,7 +108,7 @@ public abstract class MapController {
      * @param event
      * @throws Exception
      */
-    public final void logOut(MouseEvent event) throws Exception {
+    public void logOut(MouseEvent event) throws Exception {
         event.consume();
         ScreenController.logOut(btnReturn);
         ScreenController.activate("welcome");

@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class AdminMapController extends MapController {
     public JFXButton btnDownload;
 
-    private static boolean enableAddNode = true;
+    private static boolean enableAddNode = false;
     private static boolean enableEditEdge = false;
 
     private String selectedFloor = "1", selectedBuilding = "Tower";
@@ -42,7 +42,6 @@ public class AdminMapController extends MapController {
     public void initialize() {
         toolTip();
         MapDisplay.displayAdmin(panMap, "Tower", "1");
-        MapDisplay.displayUser(panMap1, "Tower", "1");
     }
 
     void toolTip() {
@@ -73,11 +72,22 @@ public class AdminMapController extends MapController {
 
 
     }
+
+
+    @Override
+    public final void logOut(MouseEvent event) throws Exception {
+        enableAddNode = false;
+        event.consume();
+        ScreenController.logOut(btnReturn);
+        ScreenController.activate("welcome");
+    }
+
+
     @Override
     public void floorOneMapOnMousePressed(MouseEvent event)  {
         this.selectedFloor = "1";
         try {
-            if (enableAddNode && !enableEditEdge)
+            if (enableAddNode /* && !enableEditEdge*/)
                 addNode(event);
         } catch(Exception e) {
 

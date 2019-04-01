@@ -23,13 +23,13 @@ import map.MapDisplay;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class EmployeeMapController extends MapController /*implements Initializable */{
+public class EmployeeMapController extends MapController /*implements Initializable*/{
     public JFXButton btnSettings;
 
     @FXML
     private FlowPane main;
 
-  /*  @FXML
+ /*   @FXML
     private JFXTreeTableView<Room> treeView;
 
     @Override

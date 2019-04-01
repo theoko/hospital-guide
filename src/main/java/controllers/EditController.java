@@ -50,7 +50,7 @@ public class EditController extends PopUpController implements Initializable {
 
     public void deleteNode(MouseEvent event) {
         event.consume();
-//        loc.deleteCurrNode();
+        loc.deleteCurrNode();
         ScreenController.deactivate();
     }
 
