@@ -32,12 +32,31 @@ public class Constants {
     /**
      * UI
      */
+
+    /**
+     * Labels
+     */
+
+    /**
+     * Buttons
+     */
+
+    public static String DOWNLOAD_BUTTON_TEXT = "Download";
+    public static String BOOKING_BUTTON_TEXT = "Booking";
+
     public static String SETTINGS_BUTTON_TOOLTIP = "Access user settings";
     public static String DOWNLOAD_BUTTON_TOOLTIP = "Download the map";
     public static String LOGOUT_BUTTON_TOOLTIP = "Logout";
     public static String EXIT_BUTTON_TOOLTIP = "Exit";
 
+    /**
+     * Styles
+     */
+    public static String defaultButtonStyles = "-fx-text-fill: WHITE; -fx-font-size: 24px;";
 
+    /**
+     * Enums
+     */
     public enum NodeType {
         BATH, CONF, DEPT, ELEV, EXIT, HALL, INFO, LABS, REST, RETL, SERV, STAI
     }

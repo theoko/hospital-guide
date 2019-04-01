@@ -69,7 +69,7 @@
             </JFXButton>
          </children>
       </HBox>
-      <JFXButton buttonType="RAISED" defaultButton="true" layoutX="84.0" layoutY="336.0" onMouseClicked="#deleteNode" prefHeight="45.0" prefWidth="235.0" ripplerFill="#3dff00" text="Delete Node" textFill="WHITE">
+      <JFXButton buttonType="RAISED" layoutX="84.0" layoutY="336.0" onMouseClicked="#deleteNode" prefHeight="45.0" prefWidth="235.0" ripplerFill="#3dff00" text="Delete Node" textFill="WHITE">
          <font>
             <Font size="24.0" />
          </font>

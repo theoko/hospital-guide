@@ -106,8 +106,8 @@ public class Database {
                 "(bookingID INT PRIMARY KEY," +
                 "roomID VARCHAR(100)," +
                 "userID INT," +
-                "startDate DATE," +
-                "endDate DATE," +
+                "startDate TIMESTAMP," +
+                "endDate TIMESTAMP," +
                 "CONSTRAINT roomID2_fk FOREIGN KEY(roomID) REFERENCES " + Constants.NODES_TABLE + "(nodeID)," +
                 "CONSTRAINT userID2_fk FOREIGN KEY(userID) REFERENCES " + Constants.USERS_TABLE + "(userID))";
 
@@ -242,10 +242,11 @@ public class Database {
 
             statement.setString(1, room.getRoomID());
             statement.setInt(2, room.getCapacity());
+
             return statement.execute();
 
         } catch(SQLException e){
-            System.out.println("Table " + Constants.ROOM_TABLE + " cannot be added!");
+            System.out.println("Room " + room.getRoomID() + " cannot be added!");
 
             return false;
         }
@@ -533,6 +534,15 @@ public class Database {
             statement.setString(6, String.valueOf(DatabaseHelpers.enumToString(location.getNodeType())));
             statement.setString(7, location.getLongName());
             statement.setString(8, location.getShortName());
+
+            if(DatabaseHelpers.enumToString(location.getNodeType()).equals(Constants.NodeType.CONF.name())) {
+                // Populate conference room table
+
+                addRoom(new Room(
+                        location.getNodeID(),
+                        5
+                ));
+            }
 
             return statement.execute();
 

@@ -38,7 +38,10 @@ public class ScreenController {
     public void initializeScreens(Stage stage) throws Exception {
 
         // Initialize screen controller to switch between different scenes
+        // Logo displays the animated Fuchsia Fauns Logo
         this.addScreen("logo","/Logo.fxml");
+
+        // Welcome is the kiosk welcome screen
         this.addScreen("welcome","/Welcome.fxml");
         this.addScreen("user-map", "/UserMap.fxml");
         this.addScreen("login","/Login.fxml");
@@ -52,6 +55,9 @@ public class ScreenController {
         this.addScreen("sanitation-request", "/SanitationRequest.fxml");
         this.addScreen("directions", "/Directions.fxml");
         this.addScreen("custodian-map", "/CustodianMap.fxml");
+
+        // Booking window
+        this.addScreen("book-room", "/BookingWindow.fxml");
 
     }
 
