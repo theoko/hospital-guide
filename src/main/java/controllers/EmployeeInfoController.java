@@ -20,6 +20,7 @@ public class EmployeeInfoController extends PopUpController implements Initializ
     public Label lblShortName;
 
     public JFXButton btnDirections;
+    public JFXButton btnRequest;
     public JFXButton btnCancel;
 
     private static boolean bolSelected = false;
