@@ -11,11 +11,11 @@ public class WelcomeController {
 
     public void welcomeLogin() throws Exception{
         ScreenController.deactivate();
-        ScreenController.moveTo("regMain");
+        ScreenController.activate("user-map");
     }
 
     public void employeeLogin() throws Exception{
         ScreenController.deactivate();
-        ScreenController.moveTo("login");
+        ScreenController.activate("login");
     }
 }

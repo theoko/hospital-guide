@@ -5,61 +5,65 @@ public class DatabaseHelpers {
     /**
      * Translates data from constant.NodeType to an int to put into database
      */
-    public static int enumToInt(Constants.NodeType num){
-        switch (num) {
+    public static String enumToString(Constants.NodeType type){
+        switch (type) {
             case BATH:
-                return 0;
+                return "BATH";
             case CONF:
-                return 1;
+                return "CONF";
             case DEPT:
-                return 2;
+                return "DEPT";
             case ELEV:
-                return 3;
+                return "ELEV";
             case EXIT:
-                return 4;
+                return "EXIT";
             case HALL:
-                return 5;
+                return "HALL";
             case INFO:
-                return 6;
+                return "INFO";
             case LABS:
-                return 7;
+                return "LABS";
             case REST:
-                return 8;
+                return "REST";
             case RETL:
-                return 9;
+                return "RETL";
             case SERV:
-                return 10;
+                return "SERV";
+            case STAI:
+                return "STAI";
             default:
-                return -1;
+                return null;
         }
     }
     /**
      * Translates data from int to an enum
      */
-    public static Constants.NodeType intToEnum(int num){
-        switch (num) {
-            case 0:
+    public static Constants.NodeType stringToEnum(String str){
+        switch (str) {
+            case "BATH":
                 return Constants.NodeType.BATH;
-            case 1:
+            case "CONF":
                 return Constants.NodeType.CONF;
-            case 2:
+            case "DEPT":
                 return Constants.NodeType.DEPT;
-            case 3:
+            case "ELEV":
                 return Constants.NodeType.ELEV;
-            case 4:
+            case "EXIT":
                 return Constants.NodeType.EXIT;
-            case 5:
+            case "HALL":
                 return Constants.NodeType.HALL;
-            case 6:
+            case "INFO":
                 return Constants.NodeType.INFO;
-            case 7:
+            case "LABS":
                 return Constants.NodeType.LABS;
-            case 8:
+            case "REST":
                 return Constants.NodeType.REST;
-            case 9:
+            case "RETL":
                 return Constants.NodeType.RETL;
-            case 10:
+            case "SERV":
                 return Constants.NodeType.SERV;
+            case "STAI":
+                return Constants.NodeType.STAI;
             default:
                 return null;
         }

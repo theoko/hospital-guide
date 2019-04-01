@@ -22,4 +22,8 @@ public class Edge {
     public Location getEnd() {
         return end;
     }
+
+    public String[] getStrings() {
+        return new String[]{edgeID, start.getNodeID(), end.getNodeID()};
+    }
 }

@@ -1,17 +1,17 @@
 package controllers;
 
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.DoubleProperty;
-import javafx.fxml.FXML;
+import com.sun.javafx.scene.traversal.Direction;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
+import javafx.scene.shape.Line;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import models.map.Location;
+import models.map.Map;
 
-import java.io.File;
 import java.net.URL;
 import java.util.HashMap;
 
@@ -28,7 +28,7 @@ public class ScreenController {
             this.initializeScreens(this.stage);
 
             // Activate logo screen
-            this.activate("logo");
+            this.activate("welcome");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -40,10 +40,15 @@ public class ScreenController {
         // Initialize screen controller to switch between different scenes
         this.addScreen("logo","/Logo.fxml");
         this.addScreen("welcome","/Welcome.fxml");
-        this.addScreen("regMain","/RegMain.fxml");
+        this.addScreen("user-map", "/UserMap.fxml");
         this.addScreen("login","/Login.fxml");
-        this.addScreen("main","/Main.fxml");
-
+        this.addScreen("admin-map", "/AdminMap.fxml");
+        this.addScreen("edit", "/Edit.fxml");
+        this.addScreen("download", "/Download.fxml");
+        this.addScreen("downloaded", "/Downloaded.fxml");
+        this.addScreen("info", "/Info.fxml");
+        this.addScreen("employee-map", "/EmployeeMap.fxml");
+        this.addScreen("directions", "/Directions.fxml");
     }
 
     public static void moveTo(String name) throws Exception {
@@ -59,12 +64,13 @@ public class ScreenController {
     }
 
     public static void deactivate() {
-        stage.hide();
+        stage.close();
     }
 
     private static void addStyles(Scene scene) {
         scene.getStylesheets().add(ScreenController.class.getResource("/css/jfoenix-components.css").toExternalForm());
         scene.getStylesheets().add(ScreenController.class.getResource("/css/custom.css").toExternalForm());
+        scene.getStylesheets().add(ScreenController.class.getResource("/css/colorScheme.css").toExternalForm());
     }
 
     public static void activate(String name) throws Exception {
@@ -73,7 +79,35 @@ public class ScreenController {
 
         // Init parent
         URL url = new URL(ScreenController.class.getResource(screenMap.get(name)).toString().replaceAll("%20", " "));
-        Parent root = FXMLLoader.load(url);
+
+        FXMLLoader loader = new FXMLLoader(url);
+        Parent root = loader.load();
+
+        // Init scene
+        Scene s = new Scene(root);
+
+        // Add CSS to scene
+        addStyles(s);
+
+        stage.setTitle("Brigham and Women's Pathfinder Application");
+        stage.setScene(s);
+        stage.setResizable(true);
+
+        stage.show();
+    }
+
+    public static void popUp(String name, Location loc) throws Exception {
+
+        stage = new Stage();
+
+        // Init parent
+        URL url = new URL(ScreenController.class.getResource(screenMap.get(name)).toString().replaceAll("%20", " "));
+
+        FXMLLoader loader = new FXMLLoader(url);
+        Parent root = loader.load();
+        PopUpController pc = loader.getController();
+
+        pc.setLoc(loc);
 
         // Init scene
         Scene s = new Scene(root);
@@ -83,8 +117,74 @@ public class ScreenController {
 
         stage.setTitle(Character.toUpperCase(name.charAt(0)) + name.substring(1));
         stage.setScene(s);
-        stage.setResizable(true);
-
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
+    }
+
+    public static void popUp(String name, Location loc, Map map, HashMap<String, Line> lstLines) throws Exception {
+
+        stage = new Stage();
+
+        // Init parent
+        URL url = new URL(ScreenController.class.getResource(screenMap.get(name)).toString().replaceAll("%20", " "));
+
+        FXMLLoader loader = new FXMLLoader(url);
+        Parent root = loader.load();
+        PopUpController pc = loader.getController();
+
+        pc.setLoc(loc);
+        pc.setMap(map);
+        pc.setLines(lstLines);
+
+        // Init scene
+        Scene s = new Scene(root);
+
+        // Add CSS to scene
+        addStyles(s);
+
+        stage.setTitle(Character.toUpperCase(name.charAt(0)) + name.substring(1));
+        stage.setScene(s);
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+    }
+
+    public static void popUp(String name, Location loc1, Location loc2, Map map, HashMap<String, Line> lstLines) throws Exception {
+
+        stage = new Stage();
+
+        // Init parent
+        URL url = new URL(ScreenController.class.getResource(screenMap.get(name)).toString().replaceAll("%20", " "));
+
+        FXMLLoader loader = new FXMLLoader(url);
+        Parent root = loader.load();
+        DirectionsController pc = loader.getController();
+
+        pc.setLoc(loc1);
+        pc.setLoc2(loc2);
+        pc.setMap(map);
+        pc.setLines(lstLines);
+
+        // Init scene
+        Scene s = new Scene(root);
+
+        // Add CSS to scene
+        addStyles(s);
+
+        stage.setTitle(Character.toUpperCase(name.charAt(0)) + name.substring(1));
+        stage.setScene(s);
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+    }
+
+
+    /**
+     * Closes out of a current window with selected
+     * @param n Node from the window the logout is from
+     */
+    public static void logOut(Node n) {
+        ((Stage) n.getScene().getWindow()).close();
     }
 }

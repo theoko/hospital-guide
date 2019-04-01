@@ -1,11 +1,7 @@
 package database;
 
-import helpers.Constants;
-import map.CSVParser;
 import models.map.Location;
 import org.junit.Test;
-
-import java.io.File;
 import java.util.HashMap;
 
 import static helpers.Constants.NodeType.HALL;
@@ -19,22 +15,7 @@ public class DatabaseTest {
 
         // Parse locations and edges
         // Add locations and edges to the database
-        File dbDirectory = new File(Constants.DB_NAME.replaceAll("%20", " "));
 
-        if(dbDirectory.exists()) {
-            System.out.println("Exists!");
-
-            db = new Database();
-
-        } else {
-            System.out.println("Need to create the database!");
-
-            db = new Database();
-
-
-
-            CSVParser.parse("/data/nodes.csv", "/data/edges.csv");
-        }
 
     }
 
