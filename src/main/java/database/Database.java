@@ -205,6 +205,35 @@ public class Database {
         }
 
     }
+    /**
+     * checks if location is available
+     */
+    public static ArrayList<Room> checkAvailabilityTime(Date startTime, Date endTime){
+        PreparedStatement statement1;
+        ArrayList<Room> roomsAvailable = new ArrayList<>();
+        try {
+            statement1 = connection.prepareStatement(
+                    "SELECT * FROM " + Constants.ROOM_TABLE +
+                            " WHERE " + endTime.toString() + " > " + " ENDDATE" +
+                            " OR " + endTime.toString() + " < STARTDATE" +
+                            " AND " + startTime.toString() + " <  STARTDATE" +
+                            " OR " + startTime.toString() + " > ENDDATE"
+            );
+
+            ResultSet resultSet = statement1.executeQuery();
+            while(resultSet.next()){
+                Room room = getRoomByID(resultSet.getString("ROOMID"));
+                roomsAvailable.add(room);
+                roomsAvailable.addAll(getRooms());
+            }
+            return roomsAvailable;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
 
     /**
      * Creates user based off of database
