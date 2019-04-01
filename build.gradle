@@ -13,6 +13,9 @@ targetCompatibility = 1.8
 repositories {
     mavenCentral()
     jcenter()
+    maven {
+        url  "https://dl.bintray.com/jerady/maven"
+    }
 }
 
 // You'll need to create an integration-test folder with the same structure as your test or main folders
@@ -47,7 +50,7 @@ dependencies {
             [group: 'org.apache.derby', name: 'derbyclient', version: '10.11.1.1'],
             [group: 'org.apache.derby', name: 'derbytools', version: '10.11.1.1'],
             [group: 'de.jensd', name: 'fontawesomefx-commons', version: '8.11'],
-            [group: 'de.jensd', name: 'fontawesomefx-fontawesome', version: '4.6.1-2'],
+            [group: 'de.jensd', name: 'fontawesomefx-fontawesome', version: '4.7.0-11'],
             [group: 'com.querydsl', name: 'querydsl-sql', version: '4.2.1'],
             [group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.6.1'],
             [group: 'com.opencsv', name: 'opencsv', version: '4.5'],
@@ -62,7 +65,7 @@ dependencies {
             [group: 'org.apache.derby', name: 'derbyclient', version: '10.11.1.1'],
             [group: 'org.apache.derby', name: 'derbytools', version: '10.11.1.1'],
             [group: 'de.jensd', name: 'fontawesomefx-commons', version: '8.11'],
-            [group: 'de.jensd', name: 'fontawesomefx-fontawesome', version: '4.6.1-2'],
+            [group: 'de.jensd', name: 'fontawesomefx-fontawesome', version: '4.7.0-11'],
             [group: 'com.querydsl', name: 'querydsl-sql', version: '4.2.1'],
             [group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.6.1'],
             [group: 'com.opencsv', name: 'opencsv', version: '4.5'],

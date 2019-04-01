@@ -11,6 +11,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.layout.FlowPane?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" stylesheets="@css/colorScheme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EmployeeMapController">
     <children>
         <JFXTabPane prefHeight="700.0" prefWidth="1200.0" side="RIGHT" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -85,7 +87,11 @@
 
                 </Tab>
                 <Tab style="-fx-background-color: #022D5A;" text="Workspace Booking">
+                    <FlowPane fx:id="bookingPane" layoutX="0.0" layoutY="0.0" prefHeight="700.0" prefWidth="1200.0">
+                        <JFXTreeTableView>
 
+                        </JFXTreeTableView>
+                    </FlowPane>
                 </Tab>
             </tabs>
         </JFXTabPane>
