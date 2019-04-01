@@ -121,11 +121,12 @@ public class Database {
                 "longName VARCHAR(100)," +
                 "shortName VARCHAR(100))";
 
-        String sanitationTable = "CREATE TABLE " + Constants.SANITATION_TABLE + " (" +
-                "nodeID VARCHAR(100) References " + Constants.NODES_TABLE + " (nodeID), " +
+        String sanitationTable = "CREATE TABLE " + Constants.SANITATION_TABLE +
+                "(nodeID VARCHAR(100) References " + Constants.NODES_TABLE + " (nodeID), " +
                 "priority VARCHAR(10), " +
-                "description VARCHAR(100), " +
-                "CONSTRAINT priority_enum CHECK (priority in ('LOW', 'MEDIUM', 'HIGH')))";
+                "description VARCHAR(100)," +
+                "CONSTRAINT nodeIDClean_fk FOREIGN KEY(nodeID) REFERENCES " + Constants.NODES_TABLE + "(nodeID)," +
+                " priority_enum CHECK (priority in ('LOW', 'MEDIUM', 'HIGH')))";
 
         try {
 
