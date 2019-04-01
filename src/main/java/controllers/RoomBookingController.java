@@ -1,10 +1,8 @@
 package controllers;
 
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTimePicker;
 import com.jfoenix.controls.JFXTreeTableView;
-import javafx.scene.input.MouseEvent;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -52,7 +50,7 @@ public class RoomBookingController {
 
 
     public void checkDateAndTime() {
-        if(startDate != null
+        if (startDate != null
                 && endDate != null
                 && startTime != null
                 && endTime != null) {
