@@ -25,6 +25,7 @@ public class AdminMapController extends MapController {
     public void initialize() {
         toolTip();
         MapDisplay.displayAdmin(panMap, "Tower", "1");
+        MapDisplay.displayUser(panMap1, "Tower", "1");
     }
 
     void toolTip() {

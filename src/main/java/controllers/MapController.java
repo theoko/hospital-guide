@@ -11,6 +11,7 @@ public abstract class MapController {
     public JFXButton btnReturn;
     public ImageView floorOneMap;
     public AnchorPane panMap;
+    public AnchorPane panMap1;
 //    public JFXButton zoomIn;
 //    public JFXButton zoomOut;
 
