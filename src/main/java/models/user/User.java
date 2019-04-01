@@ -1,17 +1,24 @@
 package models.user;
 
+import database.Database;
+import helpers.Constants;
+
 public class User {
 
     int userID;
     String username;
     String password;
-    int userType;
+    Constants.Auth userType;
 
-    public User(int userID, String username, String password, int userType) {
+    public User(int userID, String username, String password, Constants.Auth userType) {
         this.userID = userID;
         this.username = username;
         this.password = password;
         this.userType = userType;
+        create();
+    }
+    private boolean create(){
+        return Database.createUser(this);
     }
 
     public int getUserID() {
@@ -38,11 +45,11 @@ public class User {
         this.password = password;
     }
 
-    public int getUserType() {
+    public Constants.Auth getUserType() {
         return userType;
     }
 
-    public void setUserType(int userType) {
+    public void setUserType(Constants.Auth userType) {
         this.userType = userType;
     }
 }
