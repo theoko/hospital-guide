@@ -7,6 +7,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import database.Database;
+import javafx.beans.value.ChangeListener;
 import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
 import models.map.Location;
@@ -58,18 +59,6 @@ public class SanitationController extends PopUpController {
     }
 
     /**
-     * @brief Enables 'Submit' button when all fields are filled in.
-     */
-    public void keyReleased(){
-        String des = txtDescription.getText();
-        String pri = (String)cmbPriority.getValue();
-
-        boolean isDisabled = des.isEmpty() || pri.isEmpty();
-        submitBTN.setDisable(isDisabled);
-
-    }
-
-    /**
      * @brief Sets location of sanitation request.
      * @param loc Location of request.
      */
@@ -82,6 +71,8 @@ public class SanitationController extends PopUpController {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        return;
+        cmbPriority.valueProperty().addListener(((observable, oldValue, newValue) -> {
+            submitBTN.setDisable(false);
+        }));
     }
 }

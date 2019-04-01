@@ -90,9 +90,11 @@
                <content>
                   <TableView fx:id="tblData" prefHeight="200.0" prefWidth="200.0">
                     <columns>
-                      <TableColumn fx:id="tblLocation" prefWidth="120.0" text="Location" />
-                      <TableColumn fx:id="tblPriority" prefWidth="120.0" text="Priority" />
-                      <TableColumn fx:id="tblStatus" prefWidth="120.0" text="Status" />
+                      <TableColumn fx:id="tblLocation" prefWidth="250.0" text="Location" />
+                      <TableColumn fx:id="tblPriority" prefWidth="75.0" text="Priority" />
+                      <TableColumn fx:id="tblStatus" prefWidth="100.0" text="Status" />
+                        <TableColumn fx:id="tblDescription" prefWidth="300.0" text="Description" />
+                        <TableColumn fx:id="tblUser" prefWidth="100.0" text="User" />
 
                     </columns>
                   </TableView>

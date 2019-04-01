@@ -14,6 +14,10 @@ public class SanitationRequest implements Comparable<SanitationRequest> {
         LOW, MEDIUM, HIGH
     }
 
+    public enum Status {
+        INCOMPLETE, COMPLETE
+    }
+
     /**
      * Class fields.
      */
@@ -21,6 +25,8 @@ public class SanitationRequest implements Comparable<SanitationRequest> {
     private Location location;  // Location of the spill
     private Priority priority;  // Priority of the request
     private String description; // Textual description of request
+    private Status status;
+    private String user;
 
     /**
      * @brief Constructs new sanitation request without ID
@@ -33,6 +39,8 @@ public class SanitationRequest implements Comparable<SanitationRequest> {
         this.location = location;
         this.priority = priority;
         this.description = description;
+        this.status = Status.INCOMPLETE;
+        this.user = "";
     }
 
     /**
@@ -42,11 +50,13 @@ public class SanitationRequest implements Comparable<SanitationRequest> {
      * @param priority Priority of the request
      * @param description Textual description of request
      */
-    public SanitationRequest(int requestID, Location location, Priority priority, String description) {
+    public SanitationRequest(int requestID, Location location, Priority priority, String description, Status status, String user) {
         this.requestID = requestID;
         this.location = location;
         this.priority = priority;
         this.description = description;
+        this.status = status;
+        this.user = user;
     }
 
     /**
@@ -86,11 +96,32 @@ public class SanitationRequest implements Comparable<SanitationRequest> {
     {
         return requestID;
     }
-    public Location getLocation() {
+
+    public String getLocation() {
+        return location.getLongName();
+    }
+
+    public Location getLocationObj() {
         return location;
     }
-    public Priority getPriority() { return priority; }
+
+    public String getPriority() { return priority.name(); }
+
+    public Priority getPriorityObj() { return priority; }
+
     public String getDescription() {
         return description;
+    }
+
+    public String getStatus() {
+        return status.name();
+    }
+
+    public Status getStatusObj() {
+        return status;
+    }
+
+    public String getUser() {
+        return user;
     }
 }

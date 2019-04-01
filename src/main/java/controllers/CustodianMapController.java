@@ -23,19 +23,20 @@ import java.util.ResourceBundle;
 public class CustodianMapController extends MapController {
 
     public JFXButton btnSettings;
-    public TableView<SpillModel> tblData;
-    public TableColumn<SpillModel,String> tblLocation;
-    public  TableColumn<SpillModel,String> tblPriority;
-    public TableColumn<SpillModel,String> tblStatus;
+    public TableView<SanitationRequest> tblData;
+    public TableColumn<SanitationRequest,String> tblLocation;
+    public TableColumn<SanitationRequest,String> tblPriority;
+    public TableColumn<SanitationRequest,String> tblStatus;
+    public TableColumn<SanitationRequest,String> tblUser;
+    public TableColumn<SanitationRequest,String> tblDescription;
 
-    ObservableList<SpillModel> spillModels = FXCollections.observableArrayList();
+    ObservableList<SanitationRequest> spills = FXCollections.observableArrayList();
 
     public void initialize() {
         toolTip();
-        MapDisplay.displayUser(panMap, "Tower", "1");
+        MapDisplay.displayEmployee(panMap, "Tower", "1");
         initSanitation();
         updateSanitation();
-        seedTable();
     }
 
     void toolTip() {
@@ -44,30 +45,17 @@ public class CustodianMapController extends MapController {
     }
 
     private void initSanitation(){
-        tblLocation.setCellValueFactory(new PropertyValueFactory<>("Loc"));
+        tblLocation.setCellValueFactory(new PropertyValueFactory<>("Location"));
         tblPriority.setCellValueFactory(new PropertyValueFactory<>("Priority"));
         tblStatus.setCellValueFactory(new PropertyValueFactory<>("Status"));
-        tblData.setItems(spillModels);
+        tblDescription.setCellValueFactory(new PropertyValueFactory<>("Description"));
+        tblUser.setCellValueFactory(new PropertyValueFactory<>("User"));
+        tblData.setItems(spills);
     }
 
     private void updateSanitation() {
         List<SanitationRequest> lstReqs = Database.getSanitationRequests();
-        for (SanitationRequest req : lstReqs) {
-            SpillModel sm = new SpillModel(req.getLocation().getLongName(), req.getPriority().name(), "INCOMPLETE");
-            spillModels.add(sm);
-        }
-    }
-    //TODO: Delete this
-    private void seedTable() {
-        spillModels.add(
-                new SpillModel("Loc1", "1", "INCOMPLETE")
-        );
-        spillModels.add(
-                new SpillModel("Loc2", "2", "INCOMPLETE")
-        );
-        spillModels.add(
-                new SpillModel("Loc3", "3", "INCOMPLETE")
-        );
+        spills.addAll(lstReqs);
     }
 }
 
