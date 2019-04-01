@@ -174,6 +174,33 @@ public class Database {
 
     }*/
 
+    public static Room getRoomByID(String roomID){
+        try {
+
+            PreparedStatement statement;
+
+            statement = connection.prepareStatement(
+                    "SELECT * FROM " + Constants.ROOM_TABLE + " WHERE ROOMID=?"
+            );
+
+            statement.setString(1, roomID);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            Room room = new Room(
+                    resultSet.getString("ROOMID"),
+                    resultSet.getInt("CAPACITY")
+            );
+
+            return room;
+
+        } catch (SQLException e) {
+            System.out.println("Cannot get room by ID!");
+
+            return null;
+        }
+    }
+
     /**
      * Checks availability for the room specified based on start and end date
      * @param room
