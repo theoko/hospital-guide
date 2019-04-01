@@ -59,6 +59,7 @@ public class Database {
         dropDeletedLocationTable();
         dropLocationTable();
         dropUsersTable();
+        dropSanitationTable();
     }
 
     /**
@@ -120,7 +121,7 @@ public class Database {
                 "longName VARCHAR(100)," +
                 "shortName VARCHAR(100))";
 
-        String createSanitationTable = "CREATE TABLE " + Constants.SANITATION_TABLE + " (" +
+        String sanitationTable = "CREATE TABLE " + Constants.SANITATION_TABLE + " (" +
                 "nodeID VARCHAR(100) References " + Constants.NODES_TABLE + " (nodeID), " +
                 "priority VARCHAR(10), " +
                 "description VARCHAR(100), " +
@@ -134,6 +135,7 @@ public class Database {
 
             statement.execute(roomTable);
             statement.execute(bookTable);
+            statement.execute(sanitationTable);
             statement.execute(deletedLocationsTable);
 
         } catch (SQLException | NullPointerException e) {
