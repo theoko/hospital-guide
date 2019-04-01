@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTabPane?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
@@ -91,7 +92,7 @@
                <content>
                   <VBox>
                      <children>
-                        <TableView fx:id="tblData" prefHeight="533.0" prefWidth="1163.0">
+                        <TableView fx:id="tblData" prefHeight="629.0" prefWidth="1163.0">
                           <columns>
                             <TableColumn fx:id="tblLocation" prefWidth="250.0" text="Location" />
                             <TableColumn fx:id="tblPriority" prefWidth="75.0" text="Priority" />
@@ -101,11 +102,14 @@
       
                           </columns>
                         </TableView>
-                        <ButtonBar prefHeight="40.0" prefWidth="200.0">
+                        <ButtonBar minHeight="-Infinity" prefHeight="0.0" prefWidth="1163.0" VBox.vgrow="ALWAYS">
                            <buttons>
-                              <JFXButton fx:id="btnClaim" disable="true" textFill="WHITE" text="Claim"/>
-                              <JFXButton fx:id="btnMarkDone" disable="true" textFill="WHITE" text="Mark Done" onMouseClicked="#markDone"/>
+                              <!--JFXButton fx:id="btnClaim" disable="true" text="Claim" textFill="WHITE" /-->
+                              <JFXButton fx:id="btnMarkDone" disable="true" onMouseClicked="#markDone" text="Complete" textFill="WHITE" />
                            </buttons>
+                           <padding>
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                           </padding>
                         </ButtonBar>
                      </children>
                   </VBox>
