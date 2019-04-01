@@ -121,8 +121,9 @@ public class Database {
                 "longName VARCHAR(100)," +
                 "shortName VARCHAR(100))";
 
-        String sanitationTable = "CREATE TABLE " + Constants.SANITATION_TABLE +
-                "(nodeID VARCHAR(100) References " + Constants.NODES_TABLE + " (nodeID), " +
+        String sanitationTable = "CREATE TABLE " + Constants.SANITATION_TABLE + "(" +
+                "requestID INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1)," +
+                "nodeID VARCHAR(100) References " + Constants.NODES_TABLE + " (nodeID), " +
                 "priority VARCHAR(10), " +
                 "description VARCHAR(100)," +
                 "CONSTRAINT nodeIDClean_fk FOREIGN KEY(nodeID) REFERENCES " + Constants.NODES_TABLE + "(nodeID)," +
@@ -754,6 +755,7 @@ public class Database {
             while(resultSet.next()) {
 
                 // Build sanitation request fields from resultSet
+                int sanitationID = resultSet.getInt("REQUESTID");
                 Location location = getLocationByID(
                         resultSet.getString("NODEID"));
                 SanitationRequest.Priority priority =
@@ -763,7 +765,7 @@ public class Database {
 
                 // Create and add sanitation request to list
                 SanitationRequest sanitationRequest = new SanitationRequest(
-                        location, priority, description);
+                        sanitationID, location, priority, description);
                 sanitationRequests.add(sanitationRequest);
             }
 
@@ -778,6 +780,29 @@ public class Database {
             exception.printStackTrace();
             System.out.println();
             return null;
+        }
+    }
+
+    /**
+     * @brief Removes given sanitation request from the DB.
+     * @return Boolean indicating if remove was successful
+     */
+    public static boolean removeSanitationRequest(SanitationRequest request) {
+        int requestID = request.getRequestID();
+        try {
+            // Attempt to remove request from database
+            PreparedStatement statement = connection.prepareStatement(
+                "DELETE FROM " + Constants.SANITATION_TABLE +
+                        " WHERE REQUESTID=?"
+            );
+            statement.setInt(1, requestID);
+            return statement.execute();
+        } catch (SQLException exception) {
+            // Print an exception message
+            System.out.println("Sanitation Request Removal Exception:");
+            exception.printStackTrace();
+            System.out.println();
+            return false;
         }
     }
 

@@ -12,6 +12,7 @@ import javafx.scene.input.MouseEvent;
 import models.map.Location;
 import models.sanitation.SanitationRequest;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class SanitationController extends PopUpController {
