@@ -232,6 +232,27 @@ public class Database {
         }
 
     }
+    public static boolean addRoom(Room room){
+        try{
+            PreparedStatement statement;
+            statement = connection.prepareStatement(
+                    "INSERT INTO " + Constants.ROOM_TABLE + " (ROOMID, CAPACITY) " +
+                            "VALUES (?, ?)"
+            );
+
+            statement.setString(1, room.getRoomID());
+            statement.setInt(2, room.getCapacity());
+            return statement.execute();
+
+        } catch(SQLException e){
+            System.out.println("Table " + Constants.ROOM_TABLE + " cannot be added!");
+
+            return false;
+        }
+    }
+
+
+
     /**
      * checks if location is available
      */

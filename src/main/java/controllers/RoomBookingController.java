@@ -25,6 +25,7 @@ public class RoomBookingController {
         LocalDate endDay = datEndDay.getValue();
         LocalTime startTime = datStartTime.getValue();
         LocalTime endTime = datEndTime.getValue();
+        String startTime =
 
 
         List<Room> lstRooms = Database.checkAvailabilityTime(startTime, endTime);
