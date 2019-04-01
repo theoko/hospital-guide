@@ -31,6 +31,8 @@ public class DatabaseTest {
 
             db = new Database();
 
+
+
             CSVParser.parse("/data/nodes.csv", "/data/edges.csv");
         }
 
