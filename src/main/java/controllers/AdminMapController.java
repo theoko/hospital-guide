@@ -4,22 +4,39 @@ import com.jfoenix.controls.JFXButton;
 import database.Database;
 import helpers.Constants;
 import helpers.MapHelpers;
+import helpers.UIHelpers;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import map.MapDisplay;
+import models.map.Edge;
 import models.map.Location;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class AdminMapController extends MapController {
     public JFXButton btnDownload;
 
-    private boolean enableAddNode = false;
+    private static boolean enableAddNode = true;
+    private static boolean enableEditEdge = false;
+
     private String selectedFloor = "1", selectedBuilding = "Tower";
 
-    public void enableMapEditor() {
+    private static Location selectedLocation;
+
+    public static void selectLocation(Location loc) {
+        selectedLocation = loc;
+    }
+    public static void deselectLocation() {
+        selectedLocation = null;
+    }
+    public void enableEdgeEditor() {
+        enableEditEdge = !enableEditEdge;
+    }
+    public void enableNodeCreation() {
         enableAddNode = !enableAddNode;
     }
     public void initialize() {
@@ -51,24 +68,16 @@ public class AdminMapController extends MapController {
 //        String locID = Database.generateUniqueNodeID(loc);
 //        loc.setNodeID(locID);
 //        loc.addCurrNode();
-        circ.setOnMouseClicked(evt -> {
-            try {
-                evt.consume();
-                ScreenController.popUp("edit", loc);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
+        UIHelpers.setAdminNodeClickEvent(circ, loc);
         panMap.getChildren().add(circ);
 
 
     }
-
     @Override
     public void floorOneMapOnMousePressed(MouseEvent event)  {
         this.selectedFloor = "1";
         try {
-            if (enableAddNode)
+            if (enableAddNode && !enableEditEdge)
                 addNode(event);
         } catch(Exception e) {
 
