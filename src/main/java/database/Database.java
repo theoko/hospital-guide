@@ -426,6 +426,35 @@ public class Database {
 
         return new ArrayList<>();
     }
+    public static Book getBookByRoomID(String roomID){
+        try {
+
+            PreparedStatement statement;
+
+            statement = connection.prepareStatement(
+                    "SELECT * FROM " + Constants.BOOK_TABLE + " WHERE ROOMID=?"
+            );
+            //TODO: right parameter?
+            statement.setString(1, roomID);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            Book book = new Book(
+                    resultSet.getInt("BOOKINGID"),
+                    resultSet.getString("ROOMID"),
+                    resultSet.getInt("USERID"),
+                    resultSet.getDate("STARTDATE"),
+                    resultSet.getDate("ENDDATES")
+            );
+
+            return book;
+
+        } catch (SQLException e) {
+            System.out.println("Cannot get room by ID!");
+
+            return null;
+        }
+    }
 
     public User getUserByID(int userID) {
         try {
