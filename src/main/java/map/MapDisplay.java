@@ -2,6 +2,7 @@ package map;
 
 import controllers.ScreenController;
 import helpers.Constants;
+import helpers.UIHelpers;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -79,14 +80,8 @@ public class MapDisplay {
                 Circle circle = new Circle(xLoc, yLoc, locRadius, color);
                 circle.setStroke(Color.BLACK);
                 circle.setStrokeWidth(locWidth);
-                circle.setOnMouseClicked(event -> {
-                    try {
-                        event.consume();
-                        ScreenController.popUp("info", loc);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
+                UIHelpers.setUserNodeClickEvent(circle, loc, lstLines, map);
+
                 pane.getChildren().add(circle);
             }
         }
@@ -110,16 +105,7 @@ public class MapDisplay {
 
                 circle.setStroke(Color.BLACK);
                 circle.setStrokeWidth(locWidth);
-
-                circle.setOnMouseClicked(event -> {
-                    try{
-                        event.consume();
-                        ScreenController.popUp("edit", loc);
-                    }
-                    catch (Exception e) {
-                        throw new UnsupportedOperationException(e);
-                    }
-                });
+                UIHelpers.setAdminNodeClickEvent(circle, loc);
 
                 pane.getChildren().add(circle);
             }
