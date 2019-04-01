@@ -802,6 +802,8 @@ public class Database {
                 "UPDATE " + Constants.SANITATION_TABLE + " SET STATUS = " + status + ", USERID = " + userID +
                         " WHERE REQUESTID = " + requestID + ";"
             );
+            statement.setString(1, status.name());
+            statement.setString(2, userID);
             statement.execute();
         } catch (SQLException exception) {
             // Print an exception message
