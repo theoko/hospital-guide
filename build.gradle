@@ -13,6 +13,9 @@ targetCompatibility = 1.8
 repositories {
     mavenCentral()
     jcenter()
+    maven {
+        url 'https://nexus.gluonhq.com/nexus/content/repositories/releases'
+    }
 }
 
 // You'll need to create an integration-test folder with the same structure as your test or main folders
@@ -50,10 +53,7 @@ dependencies {
             [group: 'de.jensd', name: 'fontawesomefx-fontawesome', version: '4.6.1-2'],
             [group: 'com.querydsl', name: 'querydsl-sql', version: '4.2.1'],
             [group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.6.1'],
-            [group: 'com.opencsv', name: 'opencsv', version: '4.5'],
-          //  [group: 'org.kordamp.bootstrap', name: 'bootstrapfx', version: '0.2.4'],
-            [group: 'org.kordamp.ikonli', name: 'ikonli-swing', version: '11.1.0']
-         //   [group: 'org.kordamp.jsilhouette', name: 'jsilhouette', version: '0.3.0']
+            [group: 'com.opencsv', name: 'opencsv', version: '4.5']
     )
     compile(
             [group: 'junit', name: 'junit', version: '4.12'],
@@ -66,6 +66,7 @@ dependencies {
             [group: 'com.querydsl', name: 'querydsl-sql', version: '4.2.1'],
             [group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.6.1'],
             [group: 'com.opencsv', name: 'opencsv', version: '4.5'],
+            [group: 'com.gluonhq', name: 'charm-glisten', version: '4.4.2'],
             [group: 'org.kordamp.ikonli', name: 'ikonli-swing', version: '11.1.0']
          //   [group: 'org.kordamp.bootstrap', name: 'bootstrapfx', version: '0.2.4'],
          //   [group: 'org.kordamp.jsilhouette', name: 'jsilhouette', version: '0.3.0']

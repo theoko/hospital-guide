@@ -52,7 +52,6 @@ public class ScreenController {
         this.addScreen("sanitation-request", "/SanitationRequest.fxml");
         this.addScreen("directions", "/Directions.fxml");
         this.addScreen("custodian-map", "/CustodianMap.fxml");
-
     }
 
     public static void moveTo(String name) throws Exception {
