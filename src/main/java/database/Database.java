@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-
 public class Database {
 
     static Connection connection;
@@ -22,7 +21,7 @@ public class Database {
 //    Configuration configuration;
 //    SQLQueryFactory sqlQueryFactory;
 
-    static {
+    public Database() {
 
         try {
             DriverManager.registerDriver(new org.apache.derby.jdbc.EmbeddedDriver());
@@ -30,13 +29,10 @@ public class Database {
             e.printStackTrace();
         }
 
-        System.gc();
-
         connection = null;
 
         try {
             connection = DriverManager.getConnection("jdbc:derby:" + Constants.DB_NAME + ";create=true");
-            dropTables();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -48,29 +44,22 @@ public class Database {
     }
 
     /**
-     * Drops all database tables
-     */
-    public static void dropTables() {
-        dropEdgeTable();
-        dropLocationTable();
-        dropAdminTable();
-        dropCustodianTable();
-        dropEmployeeTable();
-        dropUsersTable();
-    }
-
-
-
-    /**
      * Creates the basic database tables
      */
-    private static void createTables() {
+    private void createTables() {
         Statement statement = null;
         try {
             statement = connection.createStatement();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        dropEdgeTable();
+        dropLocationTable();
+        dropAdminTable();
+        dropCustodianTable();
+        dropEmployeeTable();
+        dropUsersTable();
 
         String usersTable = "CREATE TABLE " + Constants.USERS_TABLE +
                 "(userID INT PRIMARY KEY," +
@@ -116,6 +105,30 @@ public class Database {
             boolean createNodesResult = statement.execute(locationTable);
             boolean createEdgesTable = statement.execute(neighborTable);
 
+            if(!createUsersResult) {
+                System.out.println("Failed to create users table");
+            }
+
+            if(!createEmployeeResult) {
+                System.out.println("Failed to create employee table");
+            }
+
+            if(!createCustodianResult) {
+                System.out.println("Failed to create custodian table");
+            }
+
+            if(!createAdminResult) {
+                System.out.println("Failed to create admin table");
+            }
+
+            if(!createNodesResult) {
+                System.out.println("Failed to create nodes table");
+            }
+
+            if(!createEdgesTable) {
+                System.out.println("Failed to create edges table");
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {
@@ -142,7 +155,7 @@ public class Database {
     /**
      * Drop tables
      */
-    private static boolean dropUsersTable(){
+    private boolean dropUsersTable(){
         try {
             Statement statement;
 
@@ -157,7 +170,7 @@ public class Database {
         }
     }
 
-    private static boolean dropEmployeeTable(){
+    private boolean dropEmployeeTable(){
         try {
             Statement statement;
 
@@ -172,7 +185,7 @@ public class Database {
         }
     }
 
-    private static boolean dropCustodianTable(){
+    private boolean dropCustodianTable(){
         try {
             Statement statement;
 
@@ -187,7 +200,7 @@ public class Database {
         }
     }
 
-    private static boolean dropAdminTable(){
+    private boolean dropAdminTable(){
         try {
             Statement statement;
 
@@ -202,7 +215,7 @@ public class Database {
         }
     }
 
-    private static boolean dropLocationTable(){
+    private boolean dropLocationTable(){
         try {
             Statement statement;
 
@@ -217,7 +230,7 @@ public class Database {
         }
     }
 
-    private static boolean dropEdgeTable(){
+    private boolean dropEdgeTable(){
         try {
             Statement statement;
 
@@ -322,7 +335,7 @@ public class Database {
             statement.setInt(3, location.getyCord());
             statement.setString(4, location.getFloor());
             statement.setString(5, location.getBuilding());
-            statement.setString(6, String.valueOf(DatabaseHelpers.enumToString(location.getNodeType())));
+            statement.setString(6, String.valueOf(DatabaseHelpers.enumToInt(location.getNodeType())));
             statement.setString(7, location.getLongName());
             statement.setString(8, location.getShortName());
 
@@ -425,7 +438,7 @@ public class Database {
                         resultSet.getInt("YCOORD"),
                         resultSet.getString("FLOOR"),
                         resultSet.getString("BUILDING"),
-                        DatabaseHelpers.stringToEnum(resultSet.getString("NODETYPE")),
+                        DatabaseHelpers.intToEnum(Integer.parseInt(resultSet.getString("NODETYPE"))),
                         resultSet.getString("LONGNAME"),
                         resultSet.getString("SHORTNAME")
                 );
@@ -458,7 +471,6 @@ public class Database {
                         lstLocations.get(resultSet.getString("STARTNODEID")),
                         lstLocations.get(resultSet.getString("ENDNODEID"))
                 );
-
                 returnList.add(edge);
             }
 
@@ -490,7 +502,7 @@ public class Database {
             statement.setInt(2, updatedLocation.getyCord());
             statement.setString(3, updatedLocation.getFloor());
             statement.setString(4, updatedLocation.getBuilding());
-            statement.setString(5, String.valueOf(DatabaseHelpers.enumToString(updatedLocation.getNodeType())));
+            statement.setString(5, String.valueOf(DatabaseHelpers.enumToInt(updatedLocation.getNodeType())));
             statement.setString(6, updatedLocation.getLongName());
             statement.setString(7, updatedLocation.getShortName());
 
@@ -500,47 +512,6 @@ public class Database {
 
         } catch (SQLException e) {
             System.out.println("Failed to update location: " + updatedLocation.getNodeID());
-            e.printStackTrace();
-
-            return false;
-        }
-
-
-    }
-
-    /**
-     * Deletes the location object specified on the database
-     * @param deleteLocation
-     * @return true if the location was deleted successfully, false otherwise
-     */
-    public static boolean deleteLocation(Location deleteLocation) {
-
-        try {
-
-            PreparedStatement statement1;
-            PreparedStatement statement2;
-
-            statement1 = connection.prepareStatement(
-                    "DELETE FROM " + Constants.EDGES_TABLE +
-                    " WHERE STARTNODEID=? OR ENDNODEID=?"
-            );
-
-            statement1.setString(1, deleteLocation.getNodeID());
-            statement1.setString(2, deleteLocation.getNodeID());
-
-            statement1.execute();
-
-            statement2 = connection.prepareStatement(
-                    "DELETE FROM " + Constants.NODES_TABLE +
-                            " WHERE NODEID=?"
-            );
-
-            statement2.setString(1, deleteLocation.getNodeID());
-
-            return statement2.execute();
-
-        } catch (SQLException e) {
-            System.out.println("Failed to update location: " + deleteLocation.getNodeID());
             e.printStackTrace();
 
             return false;
