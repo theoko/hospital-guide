@@ -19,7 +19,6 @@ public class EmployeeInfoController extends PopUpController implements Initializ
     public Label lblLongName;
     public Label lblShortName;
 
-    public JFXButton btnDirections;
     public JFXButton btnRequest;
     public JFXButton btnCancel;
 
@@ -40,21 +39,6 @@ public class EmployeeInfoController extends PopUpController implements Initializ
         lblNodeType.setText(DatabaseHelpers.enumToString(loc.getNodeType()));
         lblLongName.setText(loc.getLongName());
         lblShortName.setText(loc.getShortName());
-    }
-
-    public void btnDirections_OnClick(MouseEvent event) throws Exception {
-        event.consume();
-        ScreenController.deactivate();
-        if (bolSelected) { // Two locations
-            if (!loc.equals(locSelected)) {
-                ScreenController.popUp("directions", loc, locSelected, map, lstLines);
-            }
-            locSelected = null;
-            bolSelected = false;
-        } else { // One location
-            locSelected = loc;
-            bolSelected = true;
-        }
     }
 
     public void btnCancel_OnClick(MouseEvent event) {

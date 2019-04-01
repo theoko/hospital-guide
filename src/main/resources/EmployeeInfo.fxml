@@ -55,8 +55,7 @@
                 <Insets left="25.0" />
             </padding>
         </GridPane>
-        <JFXButton fx:id="btnRequest" defaultButton="true" layoutX="133.0" layoutY="248.0" onMouseClicked="#btnReportSpill_OnClick" prefHeight="40.0" prefWidth="85.0" stylesheets="@css/colorScheme.css" text="Request Spill" textFill="WHITE" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="133.0" />
+        <JFXButton fx:id="btnRequest" defaultButton="true" layoutX="16.0" layoutY="249.0" onMouseClicked="#btnReportSpill_OnClick" prefHeight="40.0" prefWidth="186.0" stylesheets="@css/colorScheme.css" text="Request Spill" textFill="WHITE" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="15.0" />
         <JFXButton fx:id="btnCancel" layoutX="106.0" layoutY="247.0" onMouseClicked="#btnCancel_OnClick" prefHeight="40.0" prefWidth="85.0" stylesheets="@css/colorScheme.css" text="Cancel" textFill="WHITE" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
-      <JFXButton fx:id="btnDirections" defaultButton="true" layoutX="14.0" layoutY="248.0" onMouseClicked="#btnDirections_OnClick" prefHeight="40.0" prefWidth="85.0" stylesheets="@css/colorScheme.css" text="Directions" textFill="WHITE" />
     </children>
 </AnchorPane>
