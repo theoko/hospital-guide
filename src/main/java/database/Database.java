@@ -792,26 +792,22 @@ public class Database {
         }
     }
 
-    /**
-     * @brief Removes given sanitation request from the DB.
-     * @return Boolean indicating if remove was successful
-     */
-    public static boolean removeSanitationRequest(SanitationRequest request) {
+    public static void editSanitationRequest(SanitationRequest request) {
         int requestID = request.getRequestID();
+        SanitationRequest.Status status = request.getStatusObj();
+        String userID = request.getUser();
         try {
             // Attempt to remove request from database
             PreparedStatement statement = connection.prepareStatement(
-                "DELETE FROM " + Constants.SANITATION_TABLE +
-                        " WHERE REQUESTID=?"
+                "UPDATE " + Constants.SANITATION_TABLE + " SET STATUS = " + status + ", USERID = " + userID +
+                        " WHERE REQUESTID = " + requestID + ";"
             );
-            statement.setInt(1, requestID);
-            return statement.execute();
+            statement.execute();
         } catch (SQLException exception) {
             // Print an exception message
             System.out.println("Sanitation Request Removal Exception:");
             exception.printStackTrace();
             System.out.println();
-            return false;
         }
     }
 
