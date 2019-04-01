@@ -47,6 +47,8 @@ public class ScreenController {
         this.addScreen("downloaded", "/Downloaded.fxml");
         this.addScreen("info", "/Info.fxml");
         this.addScreen("employee-map", "/EmployeeMap.fxml");
+        this.addScreen("directions", "/Directions.fxml");
+
     }
 
     public static void moveTo(String name) throws Exception {
