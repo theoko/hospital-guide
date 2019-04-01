@@ -16,6 +16,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import map.MapDisplay;
 import models.sanitation.SanitationRequest;
 
+import javax.xml.crypto.Data;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -30,6 +31,9 @@ public class CustodianMapController extends MapController {
     public TableColumn<SanitationRequest,String> tblUser;
     public TableColumn<SanitationRequest,String> tblDescription;
 
+    public JFXButton btnMarkDone;
+    public JFXButton btnClaim;
+
     ObservableList<SanitationRequest> spills = FXCollections.observableArrayList();
 
     public void initialize() {
@@ -37,6 +41,12 @@ public class CustodianMapController extends MapController {
         MapDisplay.displayEmployee(panMap, "Tower", "1");
         initSanitation();
         updateSanitation();
+
+        tblData.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            btnMarkDone.setDisable(false);
+            btnClaim.setDisable(false);
+        });
+
     }
 
     void toolTip() {
@@ -55,7 +65,16 @@ public class CustodianMapController extends MapController {
 
     private void updateSanitation() {
         List<SanitationRequest> lstReqs = Database.getSanitationRequests();
-        spills.addAll(lstReqs);
+         spills.addAll(lstReqs);
+    }
+
+    public void markDone(){
+        SanitationRequest selected = tblData.getSelectionModel().getSelectedItem();
+        Database.removeSanitationRequest(selected);
+    }
+
+    public void itemSelected(){
+
     }
 }
 

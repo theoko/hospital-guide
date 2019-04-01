@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTabPane?>
+<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TableColumn?>
@@ -88,16 +89,26 @@
                 </Tab>
                 <Tab style="-fx-background-color: #022D5A;" text="Sanitation Requests">
                <content>
-                  <TableView fx:id="tblData" prefHeight="200.0" prefWidth="200.0">
-                    <columns>
-                      <TableColumn fx:id="tblLocation" prefWidth="250.0" text="Location" />
-                      <TableColumn fx:id="tblPriority" prefWidth="75.0" text="Priority" />
-                      <TableColumn fx:id="tblStatus" prefWidth="100.0" text="Status" />
-                        <TableColumn fx:id="tblDescription" prefWidth="300.0" text="Description" />
-                        <TableColumn fx:id="tblUser" prefWidth="100.0" text="User" />
-
-                    </columns>
-                  </TableView>
+                  <VBox>
+                     <children>
+                        <TableView fx:id="tblData" prefHeight="533.0" prefWidth="1163.0">
+                          <columns>
+                            <TableColumn fx:id="tblLocation" prefWidth="250.0" text="Location" />
+                            <TableColumn fx:id="tblPriority" prefWidth="75.0" text="Priority" />
+                            <TableColumn fx:id="tblStatus" prefWidth="100.0" text="Status" />
+                              <TableColumn fx:id="tblDescription" prefWidth="300.0" text="Description" />
+                              <TableColumn fx:id="tblUser" prefWidth="100.0" text="User" />
+      
+                          </columns>
+                        </TableView>
+                        <ButtonBar prefHeight="40.0" prefWidth="200.0">
+                           <buttons>
+                              <JFXButton fx:id="btnClaim" disable="true" textFill="WHITE" text="Claim"/>
+                              <JFXButton fx:id="btnMarkDone" disable="true" textFill="WHITE" text="Mark Done" onMouseClicked="#markDone"/>
+                           </buttons>
+                        </ButtonBar>
+                     </children>
+                  </VBox>
                </content></Tab>
             </tabs>
         </JFXTabPane>
