@@ -53,10 +53,10 @@ public class Database {
      * Drops all database tables
      */
     public static void dropTables() {
+        dropCustodianTable();
         dropEdgeTable();
         dropLocationTable();
         dropAdminTable();
-        dropCustodianTable();
         dropEmployeeTable();
         dropUsersTable();
     }

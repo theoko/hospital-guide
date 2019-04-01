@@ -9,7 +9,7 @@ public class SpillModel extends RecursiveTreeObject<SpillModel> {
     private SimpleStringProperty loc;
     private SimpleStringProperty priority;
     private SimpleStringProperty status;
-    private SimpleStringProperty tblBTN;
+    //private SimpleStringProperty tblBTN;
 
     public String getLoc() {
         return loc.get();
@@ -47,23 +47,22 @@ public class SpillModel extends RecursiveTreeObject<SpillModel> {
         this.status.set(status);
     }
 
-    public String getTblBTN() {
-        return tblBTN.get();
-    }
+//    public String getTblBTN() {
+//        return tblBTN.get();
+//    }
 
-    public SimpleStringProperty tblBTNProperty() {
-        return tblBTN;
-    }
+//    public SimpleStringProperty tblBTNProperty() {
+//        return tblBTN;
+//    }
 
-    public void setTblBTN(String tblBTN) {
-        this.tblBTN.set(tblBTN);
-    }
+//    public void setTblBTN(String tblBTN) {
+//        this.tblBTN.set(tblBTN);
+//    }
 
-    public SpillModel(String loc, String priority){
+    public SpillModel(String loc, String priority, String status){
         this.loc= new SimpleStringProperty(loc);
         this.priority= new SimpleStringProperty(priority);
-
-        //this.tblBTN
+        this.status = new SimpleStringProperty(status);
     }
 }
 

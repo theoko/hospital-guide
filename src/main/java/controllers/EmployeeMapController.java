@@ -30,7 +30,6 @@ public class EmployeeMapController extends MapController {
     public void initialize() {
         toolTip();
         MapDisplay.displayUser(panMap, "Tower", "1");
-
     }
 
     void toolTip() {
