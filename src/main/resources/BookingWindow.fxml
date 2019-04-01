@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTimePicker?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RoomBookingController">
+   <children>
+      <Label alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" style="-fx-background-color: midnightblue;" text="Conference Room Booking" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font size="31.0" />
+         </font>
+      </Label>
+      <SplitPane dividerPositions="0.25" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-box-border: transparent;">
+         <items>
+            <VBox spacing="20.0">
+               <children>
+                  <Label text="Start Date" />
+                  <JFXDatePicker fx:id="datStartDay" onInputMethodTextChanged="#datChanged" />
+                  <JFXTimePicker fx:id="datStartTime" onInputMethodTextChanged="#datChanged" />
+                  <Label text="End Date" />
+                  <JFXDatePicker fx:id="datEndDay" onInputMethodTextChanged="#datChanged" />
+                  <JFXTimePicker fx:id="datEndTime" onInputMethodTextChanged="#datChanged" />
+                  <Label text="Choose Room" />
+                  <JFXComboBox fx:id="cmbRoom" />
+               </children>
+            </VBox>
+            <JFXTreeTableView />
+         </items>
+         <VBox.margin>
+            <Insets bottom="80.0" left="80.0" right="80.0" top="80.0" />
+         </VBox.margin>
+      </SplitPane>
+   </children>
+</VBox>

@@ -54,12 +54,12 @@ public class Database {
      */
     public static void dropTables() {
         dropBookTable();
+        dropSanitationTable();
         dropRoomTable();
         dropEdgeTable();
         dropDeletedLocationTable();
         dropLocationTable();
         dropUsersTable();
-        dropSanitationTable();
     }
 
     /**
@@ -126,7 +126,7 @@ public class Database {
                 "priority VARCHAR(10), " +
                 "description VARCHAR(100)," +
                 "CONSTRAINT nodeIDClean_fk FOREIGN KEY(nodeID) REFERENCES " + Constants.NODES_TABLE + "(nodeID)," +
-                " priority_enum CHECK (priority in ('LOW', 'MEDIUM', 'HIGH')))";
+                "CONSTRAINT priority_enum CHECK (priority in ('LOW', 'MEDIUM', 'HIGH')))";
 
         try {
 
