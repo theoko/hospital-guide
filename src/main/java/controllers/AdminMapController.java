@@ -21,14 +21,30 @@ public class AdminMapController extends MapController {
     public JFXButton btnDownload;
 
     private static boolean enableAddNode = false;
-    private static boolean enableEditEdge = false;
+    private static boolean enableEditEdge = true;
 
     private String selectedFloor = "1", selectedBuilding = "Tower";
 
-    private static Location selectedLocation;
+    private static Location selectedLocation; // Location that is being modified or created
+    public static void locationSelectEvent(Location loc) {
+        if(enableEditEdge) {
+            if (selectedLocation != loc)
+                selectLocation(loc);
+            else deselectLocation();
+        }
+    }
 
     public static void selectLocation(Location loc) {
-        selectedLocation = loc;
+        if(selectedLocation != null) {
+            Edge edge = MapHelpers.generateEdge(selectedLocation, loc);
+            boolean edgeToggle = Database.toggleEdge(edge);
+            if(edgeToggle == Constants.SELECTED) {
+                Line line = UIHelpers.generateLineFromEdge(edge);
+            }
+        }
+        else {
+            selectedLocation = loc;
+        }
     }
     public static void deselectLocation() {
         selectedLocation = null;
@@ -42,6 +58,7 @@ public class AdminMapController extends MapController {
     public void initialize() {
         toolTip();
         MapDisplay.displayAdmin(panMap, "Tower", "1");
+        selectedLocation = null;
     }
 
     void toolTip() {
@@ -81,13 +98,11 @@ public class AdminMapController extends MapController {
         ScreenController.logOut(btnReturn);
         ScreenController.activate("welcome");
     }
-
-
     @Override
     public void floorOneMapOnMousePressed(MouseEvent event)  {
         this.selectedFloor = "1";
         try {
-            if (enableAddNode /* && !enableEditEdge*/)
+            if (enableAddNode && !enableEditEdge)
                 addNode(event);
         } catch(Exception e) {
 

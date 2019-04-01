@@ -9,6 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import map.MapDisplay;
+import models.map.Edge;
 import models.map.Location;
 
 import java.awt.*;
@@ -57,5 +58,15 @@ public class MapHelpers {
 //        });
         return circle;
     }
-
+    public static Edge generateEdge(Location loc1, Location loc2) {
+        Edge e = new Edge(null, loc1, loc2);
+        e.setEdgeID(MapHelpers.generateEdgeID(e, Constants.START_FIRST));
+        return e;
+    }
+    public static String generateEdgeID(Edge edge, boolean startFirst) {
+        String nodeID1 = edge.getStart().getNodeID();
+        String nodeID2 = edge.getEnd().getNodeID();
+        return startFirst ? nodeID1 + "_" + nodeID2
+                : nodeID2 + "_" + nodeID1;
+    }
 }

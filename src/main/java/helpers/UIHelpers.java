@@ -11,6 +11,7 @@ import models.map.Edge;
 import models.map.Location;
 import models.map.Map;
 
+import java.awt.*;
 import java.util.HashMap;
 
 public class UIHelpers {
@@ -40,7 +41,7 @@ public class UIHelpers {
         c.setOnMouseClicked(evt -> {
             try {
                 evt.consume();
-//                AdminMapController.locationForEdgeSelected(loc);
+                AdminMapController.locationSelectEvent(loc);
                 ScreenController.popUp("edit", loc);
             } catch (Exception e) {
                 throw new UnsupportedOperationException(e);
@@ -50,12 +51,23 @@ public class UIHelpers {
     public static Line generateLineFromEdge(Edge e) {
         Location start = e.getStart();
         Location end = e.getEnd();
-        Line line = new Line(start.getxCord(), start.getyCord(), end.getxCord(), end.getyCord());
+        Point startPoint = generateLocationCoordinates(start);
+        Point endPoint = generateLocationCoordinates(end);
+        Line line = new Line(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
         line.setStroke(Color.BLACK);
         line.setStrokeWidth(MapDisplay.getEdgeWidth());
 //        lstLines.put(edge.getEdgeID(), line);
         return line;
 //        pane.getChildren().add(line);
+    }
+    public static Point generateLocationCoordinates(Location loc) {
+        if(loc.getNodeID().charAt(0) == 'X') {
+            return new Point(loc.getxCord(), loc.getyCord());
+        } else {
+            double x = (loc.getxCord() - MapDisplay.getxShift()) * MapDisplay.getScale();
+            double y = (loc.getyCord() - MapDisplay.getyShift()) * MapDisplay.getScale();
+            return new Point((int) x, (int) y);
+        }
     }
 
 }

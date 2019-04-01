@@ -26,4 +26,16 @@ public class Edge {
     public String[] getStrings() {
         return new String[]{edgeID, start.getNodeID(), end.getNodeID()};
     }
+
+    public void setEdgeID(String edgeID) {
+        this.edgeID = edgeID;
+    }
+
+    public void setStart(Location start) {
+        this.start = start;
+    }
+
+    public void setEnd(Location end) {
+        this.end = end;
+    }
 }

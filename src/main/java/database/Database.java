@@ -2,6 +2,7 @@ package database;
 
 import helpers.Constants;
 import helpers.DatabaseHelpers;
+import helpers.MapHelpers;
 import models.map.Edge;
 import models.map.Location;
 import models.user.Admin;
@@ -708,5 +709,40 @@ public class Database {
         }
         return id;
 
+    }
+    public static boolean edgeExists(Edge e) {
+        return hasEdgeByID(MapHelpers.generateEdgeID(e, Constants.START_FIRST))
+                || hasEdgeByID(MapHelpers.generateEdgeID(e, Constants.END_FIRST));
+    }
+    public static void removeEdgeByID(Edge e) {
+        if(edgeExists(e)) {
+            String EdgeID = hasEdgeByID(MapHelpers.generateEdgeID(e, Constants.START_FIRST)) ?
+                    MapHelpers.generateEdgeID(e, Constants.START_FIRST)
+                    : MapHelpers.generateEdgeID(e, Constants.END_FIRST);
+            //removeEdge(EdgeID);
+        }
+    }
+    public static boolean toggleEdge(Edge e) {
+        boolean edgeExists = edgeExists(e);
+
+        if(e.getEdgeID() == null) {
+            e.setEdgeID(MapHelpers.generateEdgeID(e, Constants.START_FIRST));
+        }
+
+        if(edgeExists) {
+            removeEdgeByID(e);
+            return Constants.DESELECTED;
+        }
+        else {
+            addEdge(e);
+            return Constants.SELECTED;
+        }
+    }
+    public static boolean hasEdgeByID(String id) {
+        List<Edge> edges = getEdges(getLocations());
+        for(Edge e : edges) {
+            if(e.getEdgeID().equals(id)) return true;
+        }
+        return false;
     }
 }

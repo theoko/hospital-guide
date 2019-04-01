@@ -32,7 +32,10 @@ public class Constants {
     public static String DOWNLOAD_BUTTON_TOOLTIP = "Download the map";
     public static String LOGOUT_BUTTON_TOOLTIP = "Logout";
     public static String EXIT_BUTTON_TOOLTIP = "Exit";
-
+    public static final boolean START_FIRST = true;
+    public static final boolean END_FIRST = false;
+    public static final boolean SELECTED = true;
+    public static final boolean DESELECTED = false;
 
     public enum NodeType {
         BATH, CONF, DEPT, ELEV, EXIT, HALL, INFO, LABS, REST, RETL, SERV, STAI
