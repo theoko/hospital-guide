@@ -1,7 +1,11 @@
 package database;
 
+import helpers.FileHelpers;
 import models.map.Location;
+import org.junit.Before;
 import org.junit.Test;
+
+import javax.xml.crypto.Data;
 import java.util.HashMap;
 
 import static helpers.Constants.NodeType.HALL;
@@ -9,13 +13,16 @@ import static org.junit.Assert.*;
 
 public class DatabaseTest {
 
-    Database db;
 
-    public DatabaseTest() {
+
+    @Before
+    public void setUp() {
 
         // Parse locations and edges
         // Add locations and edges to the database
-
+        if(!Database.databaseExists()) {
+            CSVParser.parse(FileHelpers.getNodesCSV(), FileHelpers.getEdgesCSV());
+        }
 
     }
 
@@ -41,7 +48,7 @@ public class DatabaseTest {
 
 
         Location newLoc = new Location("AHALL00201",1608,2596,"1","BTM",HALL,"Hall","Hall");
-        HashMap<String, Location> locations = db.getLocations();
+        HashMap<String, Location> locations = Database.getLocations();
 
         // check that all fields are equal to the original after being added and and pulled from the database
 

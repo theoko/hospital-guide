@@ -124,6 +124,20 @@ public class Database {
 
     }
 
+    public static boolean databaseExists() {
+
+        boolean exists;
+
+        if(Database.getLocations().isEmpty()) {
+            exists = false;
+        } else {
+            exists = true;
+        }
+
+
+        return exists;
+
+    }
 
     /**
      * Drop tables
