@@ -30,7 +30,7 @@
                   <JFXButton fx:id="btnDisplay" onMouseClicked="#btnDisplay_OnClick" text="Display" />
                </children>
             </VBox>
-            <JFXTreeTableView />
+            <JFXTreeTableView fx:id="tblRooms" />
          </items>
          <VBox.margin>
             <Insets bottom="80.0" left="80.0" right="80.0" top="80.0" />
