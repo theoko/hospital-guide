@@ -1,24 +1,31 @@
 package controllers;
 
-import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTimePicker;
-import javafx.fxml.Initializable;
+import database.Database;
+import javafx.scene.input.MouseEvent;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Date;
 
-public class RoomBookingController implements Initializable {
+public class RoomBookingController {
     public JFXDatePicker datStartDay;
     public JFXDatePicker datEndDay;
     public JFXTimePicker datStartTime;
     public JFXTimePicker datEndTime;
-    public JFXComboBox cmbRoom;
+    public JFXButton btnDisplay;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        datStartDay.valueProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("DATA");
-        });
+    public void btnDisplay_OnClick(MouseEvent mouseEvent) {
+        LocalDate startDay = datStartDay.getValue();
+        LocalDate endDay = datEndDay.getValue();
+        LocalTime startTime = datStartTime.getValue();
+        LocalTime endTime = datEndTime.getValue();
+
+        Date startDate = new Date();
+        Date endDate = new Date();
+
+        Database.get
     }
 }
