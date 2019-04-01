@@ -14,12 +14,14 @@ public abstract class MapController {
 //    public JFXButton zoomIn;
 //    public JFXButton zoomOut;
 
-    private double sceneX, sceneY;
-    private double translateX, translateY;
+    protected double sceneX, sceneY;
+    protected double translateX, translateY;
+
+
 
     public abstract void initialize();
 
-    public final void floorOneMapOnMousePressed(MouseEvent event) {
+    public void floorOneMapOnMousePressed(MouseEvent event) {
 
         // Handle onMousePressed event
         sceneX = event.getSceneX();
