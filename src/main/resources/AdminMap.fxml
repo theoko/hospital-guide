@@ -147,7 +147,7 @@
                                                 </HBox>
                                             </children>
                                         </VBox>
-                                        <JFXToggleButton layoutX="67.0" layoutY="134.0" onMouseClicked= "#enableMapEditor" prefHeight="60.0" prefWidth="211.0" text="Add Node" toggleColor="#022d5a" toggleLineColor="#022d5a" />
+                                        <JFXToggleButton layoutX="67.0" layoutY="134.0" onMouseClicked= "#enableNodeCreation" prefHeight="60.0" prefWidth="211.0" text="Add Node" toggleColor="#022d5a" toggleLineColor="#022d5a" />
                                     </children>
                                 </AnchorPane>
                             </AnchorPane>
