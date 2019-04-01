@@ -30,11 +30,11 @@ public class DownloadController {
 //        File data = new File("data");
 //        data.mkdir();
 
-        if(FileHelpers.checkJar()) {
+//        if(FileHelpers.checkJar()) {
             CSVParser.export("eNodes.csv", "eEdges.csv");
-        } else {
-            CSVParser.export("data/eNodes.csv", "data/eEdges.csv");
-        }
+//        } else {
+//            CSVParser.export("data/eNodes.csv", "data/eEdges.csv");
+//        }
 
         ScreenController.deactivate();
         ScreenController.activate("downloaded");
