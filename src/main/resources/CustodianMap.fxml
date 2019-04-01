@@ -4,6 +4,8 @@
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -11,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" stylesheets="@css/colorScheme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.UserMapController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" stylesheets="@css/colorScheme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CustodianMapController">
     <children>
         <JFXTabPane prefHeight="700.0" prefWidth="1200.0" side="RIGHT" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <tabs>
@@ -79,9 +81,24 @@
                                     </children>
                                 </AnchorPane>
                             </AnchorPane>
+
                         </children>
                     </AnchorPane>
+
                 </Tab>
+                <Tab style="-fx-background-color: #022D5A;" text="Sanitation Requests">
+               <content>
+                  <TableView fx:id="tblData" prefHeight="200.0" prefWidth="200.0">
+                    <columns>
+                      <TableColumn fx:id="tblLocation" prefWidth="250.0" text="Location" />
+                      <TableColumn fx:id="tblPriority" prefWidth="75.0" text="Priority" />
+                      <TableColumn fx:id="tblStatus" prefWidth="100.0" text="Status" />
+                        <TableColumn fx:id="tblDescription" prefWidth="300.0" text="Description" />
+                        <TableColumn fx:id="tblUser" prefWidth="100.0" text="User" />
+
+                    </columns>
+                  </TableView>
+               </content></Tab>
             </tabs>
         </JFXTabPane>
     </children>

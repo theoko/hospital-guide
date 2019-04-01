@@ -5,7 +5,6 @@ import models.map.Location;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.xml.crypto.Data;
 import java.util.HashMap;
 
 import static helpers.Constants.NodeType.HALL;
@@ -69,7 +68,12 @@ public class DatabaseTest {
     public void getEdges() {
         // Get edges from the database
         // Compare edges to the ones that were retrieved from the database
-        assertTrue(true);
+
+        assertNull(Database.getRoomByID("12345678900987654321"));
+        assertTrue(Database.getRoomByID("FHALL00101").());
     }
 
+    @Test
+    public void getRoomByID() {
+    }
 }
