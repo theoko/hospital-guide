@@ -11,8 +11,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class EmployeeInfoController extends PopUpController implements Initializable {
-
-
     public Label lblNodeID;
     public Label lblLocation;
     public Label lblFloor;
@@ -23,6 +21,9 @@ public class EmployeeInfoController extends PopUpController implements Initializ
 
     public JFXButton btnDirections;
     public JFXButton btnCancel;
+
+    private static boolean bolSelected = false;
+    private static Location locSelected;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -38,6 +39,21 @@ public class EmployeeInfoController extends PopUpController implements Initializ
         lblNodeType.setText(DatabaseHelpers.enumToString(loc.getNodeType()));
         lblLongName.setText(loc.getLongName());
         lblShortName.setText(loc.getShortName());
+    }
+
+    public void btnDirections_OnClick(MouseEvent event) throws Exception {
+        event.consume();
+        ScreenController.deactivate();
+        if (bolSelected) { // Two locations
+            if (!loc.equals(locSelected)) {
+                ScreenController.popUp("directions", loc, locSelected, map, lstLines);
+            }
+            locSelected = null;
+            bolSelected = false;
+        } else { // One location
+            locSelected = loc;
+            bolSelected = true;
+        }
     }
 
     public void btnCancel_OnClick(MouseEvent event) {
