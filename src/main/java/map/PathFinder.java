@@ -61,6 +61,9 @@ public class PathFinder {
             // Poll next neighbor off the queue and get its map
             SubPath nNext = inQueue.poll();
             Location lNext = nNext.getLocation();
+            if (used.containsKey(lNext.getNodeID())) {
+                continue;
+            }
 
             // Check to see if map is our end map
             if (lNext.getNodeID().equals(end.getNodeID())) {
@@ -92,7 +95,7 @@ public class PathFinder {
                     SubPath newNeigh = new SubPath(nCurr.getEdgeID(), nCurr.getLocation(), newDist + heuristic);
                     // Add the new neighbor into the queue and add its parent into the parent map
                     inQueue.add(newNeigh);
-                    parent.put(lCurr.getNodeID(), nNext);
+                    parent.putIfAbsent(lCurr.getNodeID(), nNext);
                 }
             }
         }
@@ -121,13 +124,15 @@ public class PathFinder {
 
     /**
      * Prints out the path (represented in a stack)
-     * @param path A stack of locations containing the path
+     * @param oldPath A stack of locations containing the path
      */
-    private static void printPath(Stack<SubPath> path) {
+    private static void printPath(Stack<SubPath> oldPath) {
         // Pop thru the stack and print out each element
+        Stack<SubPath> path = oldPath;
         while (!path.isEmpty()) {
             SubPath curr = path.pop();
-            System.out.println("Location: " + curr.getLocation().getNodeID());
+            System.out.println("ID: " + curr.getEdgeID());
+            System.out.println("Location: " + curr.getLocation().getNodeID() + ", " + curr.getLocation().getFloor());
             System.out.println("Distance: " + curr.getDist());
         }
     }

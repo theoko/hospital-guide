@@ -6,7 +6,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import models.map.Location;
-import models.map.Map;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -23,8 +22,8 @@ public class InfoController extends PopUpController implements Initializable {
     public JFXButton btnDirections;
     public JFXButton btnCancel;
 
-    private static boolean bolSelected = false;
-    private static Location locSelected;
+    private static boolean bolSelectedUser = false;
+    private static Location locSelectedUser;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -45,15 +44,19 @@ public class InfoController extends PopUpController implements Initializable {
     public void btnDirections_OnClick(MouseEvent event) throws Exception {
         event.consume();
         ScreenController.deactivate();
-        if (bolSelected) { // Two locations
-            if (!loc.equals(locSelected)) {
-                ScreenController.popUp("directions", loc, locSelected, map, pane);
+        checkSelected();
+    }
+
+    private void checkSelected() throws Exception {
+        if (bolSelectedUser) { // Two locations
+            if (!loc.equals(locSelectedUser)) {
+                ScreenController.popUp("directions", loc, locSelectedUser, map, pane);
             }
-            locSelected = null;
-            bolSelected = false;
+            locSelectedUser = null;
+            bolSelectedUser = false;
         } else { // One location
-            locSelected = loc;
-            bolSelected = true;
+            locSelectedUser = loc;
+            bolSelectedUser = true;
         }
     }
 

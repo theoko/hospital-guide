@@ -20,10 +20,11 @@ public class EmployeeInfoController extends PopUpController implements Initializ
     public Label lblShortName;
 
     public JFXButton btnRequest;
+    public JFXButton btnDirections;
     public JFXButton btnCancel;
 
-    private static boolean bolSelected = false;
-    private static Location locSelected;
+    private static boolean bolSelectedEmp = false;
+    private static Location locSelectedEmp;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -54,5 +55,24 @@ public class EmployeeInfoController extends PopUpController implements Initializ
         } catch(Exception exception) {
             exception.printStackTrace();
         }
+    }
+
+    private void checkSelected() throws Exception {
+        if (bolSelectedEmp) { // Two locations
+            if (!loc.equals(locSelectedEmp)) {
+                ScreenController.popUp("directions", loc, locSelectedEmp, map, pane);
+            }
+            locSelectedEmp = null;
+            bolSelectedEmp = false;
+        } else { // One location
+            locSelectedEmp = loc;
+            bolSelectedEmp = true;
+        }
+    }
+
+    public void btnDirections_OnClick(MouseEvent mouseEvent) throws Exception {
+        mouseEvent.consume();
+        ScreenController.deactivate();
+        checkSelected();
     }
 }

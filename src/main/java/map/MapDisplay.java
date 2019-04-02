@@ -91,7 +91,7 @@ public class MapDisplay {
                 circle.setOnMouseClicked(event -> {
                     try {
                         event.consume();
-                        ScreenController.popUp("employee-info", loc);
+                        ScreenController.popUp("employee-info", loc, map, pane);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
