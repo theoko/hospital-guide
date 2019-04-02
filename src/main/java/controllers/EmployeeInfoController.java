@@ -11,8 +11,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class EmployeeInfoController extends PopUpController implements Initializable {
-
-
     public Label lblNodeID;
     public Label lblLocation;
     public Label lblFloor;
@@ -23,6 +21,12 @@ public class EmployeeInfoController extends PopUpController implements Initializ
 
     public JFXButton btnDirections;
     public JFXButton btnCancel;
+
+    public JFXButton btnRequest;
+    public JFXButton btnCancel;
+
+    private static boolean bolSelected = false;
+    private static Location locSelected;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

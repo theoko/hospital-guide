@@ -111,7 +111,7 @@ public abstract class MapController {
     public void logOut(MouseEvent event) throws Exception {
         event.consume();
         ScreenController.logOut(btnReturn);
-        ScreenController.activate("welcome");
+        ScreenController.activate("login");
     }
 
     /**

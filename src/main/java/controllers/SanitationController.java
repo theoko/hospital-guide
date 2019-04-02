@@ -7,11 +7,13 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import database.Database;
+import javafx.beans.value.ChangeListener;
 import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
 import models.map.Location;
 import models.sanitation.SanitationRequest;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class SanitationController extends PopUpController {
@@ -81,6 +83,9 @@ public class SanitationController extends PopUpController {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        cmbPriority.valueProperty().addListener(((observable, oldValue, newValue) -> {
+            submitBTN.setDisable(false);
+        }));
         return;
     }
 }

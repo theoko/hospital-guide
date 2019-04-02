@@ -124,6 +124,29 @@ public class MapDisplay {
         }
     }
 
+    private static void displayNodesEmployee(Map map, AnchorPane pane, String building, String floor) {
+        HashMap<String, Location> lstLocations = map.getAllLocations();
+        for (Location loc : lstLocations.values()) {
+            if (loc.getBuilding().equals(building) && loc.getFloor().equals(floor) && loc.getNodeType() != Constants.NodeType.HALL) {
+                double xLoc = (loc.getxCord() - xShift) * scale;
+                double yLoc = (loc.getyCord() - yShift) * scale;
+                Color color = Color.WHITE;
+                Circle circle = new Circle(xLoc, yLoc, locRadius, color);
+                circle.setStroke(Color.BLACK);
+                circle.setStrokeWidth(locWidth);
+                circle.setOnMouseClicked(event -> {
+                    try {
+                        event.consume();
+                        ScreenController.popUp("employee-info", loc);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+                pane.getChildren().add(circle);
+            }
+        }
+    }
+
     private static void displayNodesAdmin(Map map, AnchorPane pane, String building, String floor) {
         HashMap<String, Location> lstLocations = map.getAllLocations();
         for (Location loc : lstLocations.values()) {
