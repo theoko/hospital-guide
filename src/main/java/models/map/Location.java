@@ -20,6 +20,7 @@ public class Location {
     private String longName;
     private String shortName;
     private ArrayList<SubPath> lstSubPaths;
+    private boolean available;
 
     public Location(String nodeID, int xCord, int yCord, String floor, String building, Constants.NodeType nodeType, String longName, String shortName) {
         this.nodeID = nodeID;
@@ -31,6 +32,7 @@ public class Location {
         this.longName = longName;
         this.shortName = shortName;
         this.lstSubPaths = new ArrayList<>();
+        this.available = available;
     }
 
     public String getNodeID() {
@@ -103,6 +105,12 @@ public class Location {
 
     public ArrayList<SubPath> getSubPaths() {
         return lstSubPaths;
+    }
+
+    public boolean getAvailable(){ return available; }
+
+    public void setAvailable(boolean isAvailable){
+        this.available = isAvailable;
     }
 
     public String[] getStrings() {

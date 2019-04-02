@@ -1,13 +1,6 @@
 package helpers;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.Enumeration;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
+import java.io.*;
 
 public class FileHelpers {
 
@@ -59,12 +52,54 @@ public class FileHelpers {
 //        }
 //    }
 
+    /**
+     * Deletes and re-creates the specified File (if the file exists).
+     * Otherwise, it tries to create it.
+     * @param file
+     * @return
+     * @throws IOException
+     */
+    public static boolean recreateFile(File file) throws IOException {
+
+        if(!file.exists()) {
+
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+            writer.close();
+
+        } else {
+
+            if(file.delete()) {
+
+                System.out.println("File " + file.getName() + " was deleted!");
+
+                BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+                writer.close();
+
+                System.out.println("File " + file.getName() + " was created again!");
+
+            } else {
+                throw new IOException("Cannot delete file!!");
+            }
+
+        }
+
+        return true;
+    }
+
+    /**
+     *
+     * @return InputStream of the Nodes CSV
+     */
     public static InputStream getNodesCSV() {
         InputStream in = FileHelpers.class.getResourceAsStream(Constants.CSV_NODES);
 
         return in;
     }
 
+    /**
+     *
+     * @return InputStream of the Edges CSV
+     */
     public static InputStream getEdgesCSV() {
         InputStream in = FileHelpers.class.getResourceAsStream(Constants.CSV_EDGES);
 

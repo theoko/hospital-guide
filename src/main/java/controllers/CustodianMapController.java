@@ -1,9 +1,7 @@
 package controllers;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXTreeTableColumn;
-import com.jfoenix.controls.JFXTreeTableView;
-import com.jfoenix.controls.RecursiveTreeItem;
+import controllers.MapController;
 import helpers.Constants;
 import helpers.SpillModel;
 import javafx.collections.FXCollections;
@@ -12,29 +10,41 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
-import javafx.scene.control.cell.PropertyValueFactory;
 import map.MapDisplay;
-import javafx.beans.property.SimpleStringProperty;
-import helpers.SpillModel;
-import sun.security.provider.ConfigFile;
 
+public class CustodianMapController extends MapController{
 
-import javafx.collections.ObservableList;
-import javafx.scene.control.TableColumn;
-
-
-
-public class EmployeeMapController extends MapController {
     public JFXButton btnSettings;
+    @FXML
+    private TableView<SpillModel> tblData;
+    @FXML
+    private TableColumn<SpillModel,String> tblLocation;
+    @FXML
+    private  TableColumn<SpillModel,String> tblPriority;
+    @FXML
+    private TableColumn<SpillModel,String> tblStatus;
 
     public void initialize() {
         toolTip();
         MapDisplay.displayUser(panMap, "Tower", "1");
-
+        updateSanitation();
     }
 
     void toolTip() {
         btnSettings.setTooltip(new Tooltip(Constants.SETTINGS_BUTTON_TOOLTIP));
         btnReturn.setTooltip(new Tooltip(Constants.LOGOUT_BUTTON_TOOLTIP));
     }
+
+
+    public void updateSanitation(){
+
+        //tblLocation.setCellValueFactory(new PropertyValueFactory<>("location"));
+        ObservableList<SpillModel> spillModels = FXCollections.observableArrayList();
+        spillModels.add(new SpillModel("Hallway 3B", "HIGH"));
+        tblData.setItems(spillModels);
+
+
+    }
 }
+
+
