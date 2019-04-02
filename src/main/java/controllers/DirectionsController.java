@@ -60,7 +60,7 @@ public class DirectionsController extends PopUpController implements Initializab
                 Line line = lstLines.get(id);
                 if (line != null) {
                     line.setStroke(Color.RED);
-                    line.setStrokeWidth(2.5);
+                    line.setStrokeWidth(3.5);
                 }
             }
         }
