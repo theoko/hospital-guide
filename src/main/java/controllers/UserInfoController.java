@@ -10,7 +10,7 @@ import models.map.Location;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class EmployeeInfoController extends PopUpController implements Initializable {
+public class UserInfoController extends PopUpController implements Initializable {
     public Label lblNodeID;
     public Label lblLocation;
     public Label lblFloor;
@@ -19,12 +19,11 @@ public class EmployeeInfoController extends PopUpController implements Initializ
     public Label lblLongName;
     public Label lblShortName;
 
-    public JFXButton btnRequest;
     public JFXButton btnDirections;
     public JFXButton btnCancel;
 
-    private static boolean bolSelectedEmp = false;
-    private static Location locSelectedEmp;
+    private static boolean bolSelectedUser = false;
+    private static Location locSelectedUser;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -42,37 +41,27 @@ public class EmployeeInfoController extends PopUpController implements Initializ
         lblShortName.setText(loc.getShortName());
     }
 
-    public void btnCancel_OnClick(MouseEvent event) {
+    public void btnDirections_OnClick(MouseEvent event) throws Exception {
         event.consume();
         ScreenController.deactivate();
-    }
-
-    public void btnReportSpill_OnClick(MouseEvent event) {
-        event.consume();
-        ScreenController.deactivate();
-        try {
-            ScreenController.popUp("sanitation-request" , loc);
-        } catch(Exception exception) {
-            exception.printStackTrace();
-        }
+        checkSelected();
     }
 
     private void checkSelected() throws Exception {
-        if (bolSelectedEmp) { // Two locations
-            if (!loc.equals(locSelectedEmp)) {
-                ScreenController.popUp("directions", loc, locSelectedEmp, map, pane);
+        if (bolSelectedUser) { // Two locations
+            if (!loc.equals(locSelectedUser)) {
+                ScreenController.popUp("directions", loc, locSelectedUser, map, pane);
             }
-            locSelectedEmp = null;
-            bolSelectedEmp = false;
+            locSelectedUser = null;
+            bolSelectedUser = false;
         } else { // One location
-            locSelectedEmp = loc;
-            bolSelectedEmp = true;
+            locSelectedUser = loc;
+            bolSelectedUser = true;
         }
     }
 
-    public void btnDirections_OnClick(MouseEvent mouseEvent) throws Exception {
-        mouseEvent.consume();
+    public void btnCancel_OnClick(MouseEvent event) {
+        event.consume();
         ScreenController.deactivate();
-        checkSelected();
     }
 }

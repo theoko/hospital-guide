@@ -67,7 +67,7 @@
                                     <children>
                                         <VBox layoutX="4.0" layoutY="4.0" prefHeight="131.0" prefWidth="339.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
                                             <children>
-                                                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="73.0" prefWidth="339.0" text="Welcome Employee!" textAlignment="CENTER" textFill="#022D5A">
+                                                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="73.0" prefWidth="339.0" text="Welcome Custodian!" textAlignment="CENTER" textFill="#022D5A">
                                                     <font>
                                                         <Font name="Moon Bold" size="24.0" />
                                                     </font>
@@ -99,7 +99,7 @@
                             <TableColumn fx:id="tblStatus" prefWidth="100.0" text="Status" />
                               <TableColumn fx:id="tblDescription" prefWidth="300.0" text="Description" />
                               <TableColumn fx:id="tblUser" prefWidth="100.0" text="User" />
-      
+
                           </columns>
                         </TableView>
                         <ButtonBar minHeight="-Infinity" prefHeight="71.0" prefWidth="1099.0" VBox.vgrow="ALWAYS">

@@ -1,10 +1,14 @@
 package controllers;
 
 import com.jfoenix.controls.JFXButton;
+import controllers.MapController;
 import database.Database;
 import helpers.Constants;
+import helpers.SpillModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
@@ -12,7 +16,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import map.MapDisplay;
 import models.sanitation.SanitationRequest;
 
+import java.net.URL;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class CustodianMapController extends MapController {
 
@@ -30,7 +36,7 @@ public class CustodianMapController extends MapController {
 
     public void initialize() {
         toolTip();
-        MapDisplay.displayEmployee(panMap, "Tower", "1");
+        MapDisplay.displayCust(panMap, "Tower", "1");
         initSanitation();
         updateSanitation();
 
@@ -57,7 +63,7 @@ public class CustodianMapController extends MapController {
 
     private void updateSanitation() {
         List<SanitationRequest> lstReqs = Database.getSanitationRequests();
-         spills.addAll(lstReqs);
+        spills.addAll(lstReqs);
     }
 
     public void markDone(){
