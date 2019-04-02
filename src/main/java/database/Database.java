@@ -252,10 +252,13 @@ public class Database {
 
         } catch(SQLException e){
             System.out.println("Table " + Constants.ROOM_TABLE + " cannot be added!");
+>>>>>>>>> Temporary merge branch 2
 
             return false;
         }
     }
+
+
 
 
 
@@ -550,6 +553,7 @@ public class Database {
         }
 
     }
+
     public static boolean addDeleteLocation(Location location) {
 
         try {
@@ -794,26 +798,24 @@ public class Database {
         }
     }
 
-    /**
-     * @brief Removes given sanitation request from the DB.
-     * @return Boolean indicating if remove was successful
-     */
-    public static boolean removeSanitationRequest(SanitationRequest request) {
+    public static void editSanitationRequest(SanitationRequest request) {
+        SanitationRequest.Status status = request.getStatusObj();
+        String userID = request.getUser();
         int requestID = request.getRequestID();
         try {
             // Attempt to remove request from database
             PreparedStatement statement = connection.prepareStatement(
-                "DELETE FROM " + Constants.SANITATION_TABLE +
-                        " WHERE REQUESTID=?"
+                "UPDATE " + Constants.SANITATION_TABLE + " SET STATUS=?, USERID=? WHERE REQUESTID=?"
             );
-            statement.setInt(1, requestID);
-            return statement.execute();
+            statement.setString(1, status.name());
+            statement.setString(2, userID);
+            statement.setInt(3, requestID);
+            statement.execute();
         } catch (SQLException exception) {
             // Print an exception message
             System.out.println("Sanitation Request Removal Exception:");
             exception.printStackTrace();
             System.out.println();
-            return false;
         }
     }
 

@@ -10,7 +10,6 @@ import javafx.scene.shape.Line;
 import models.map.Edge;
 import models.map.Location;
 import models.map.Map;
-
 import java.util.HashMap;
 
 public class MapDisplay {
@@ -31,8 +30,7 @@ public class MapDisplay {
      */
     public static void displayUser(AnchorPane pane, String building, String floor) {
         Map map = MapParser.parse();
-        HashMap<String, Line> lstLines = displayEdges(map, pane, building, floor);
-        displayNodesUser(map, lstLines, pane, building, floor);
+        displayNodesUser(map, pane, building, floor);
     }
 
     /**
@@ -42,7 +40,17 @@ public class MapDisplay {
      * @param floor
      */
     public static void displayEmployee(AnchorPane pane, String building, String floor) {
+        Map map = MapParser.parse();
+        displayNodesEmployee(map, pane, building, floor);
+    }
 
+    /**
+     * Display the graph of a map for employees (halls, info boxes with spill reporting)
+     * @param pane
+     * @param building
+     * @param floor
+     */
+    public static void displayEmployee(AnchorPane pane, String building, String floor) {
         Map map = MapParser.parse();
         displayEdges(map, pane, building, floor);
         displayNodesEmployee(map, pane, building, floor);
@@ -60,31 +68,66 @@ public class MapDisplay {
         displayNodesAdmin(map, pane, building, floor);
     }
 
-    private static HashMap<String, Line> displayEdges(Map map, AnchorPane pane, String building, String floor) {
-        HashMap<String, Edge> lstEdges = map.getAllEdges();
-        HashMap<String, Line> lstLines = new HashMap<>();
-        for (Edge edge : lstEdges.values()) {
-            Location start = edge.getStart();
-            Location end = edge.getEnd();
-            if (start.getBuilding().equals(building) && start.getFloor().equals(floor) &&
-                    end.getBuilding().equals(building) && end.getFloor().equals(floor)) {
-//                double x1 = (start.getxCord() - xShift) * scale;
-//                double x2 = (end.getxCord() - xShift) * scale;
-//                double y1 = (start.getyCord() - yShift) * scale;
-//                double y2 = (end.getyCord() - yShift) * scale;
-//                Line line = new Line(x1, y1, x2, y2);
-                Line line = UIHelpers.generateLineFromEdge(edge);
-                line.setStroke(Color.GREY);
-                line.setStrokeWidth(edgeWidth);
-                lstLines.put(edge.getEdgeID(), line);
-                edge.setLine(line);
-                pane.getChildren().add(line);
-            }
-        }
-        return lstLines;
+    /**
+     * Display the graph on a map for the custodian (no halls)
+     * @param pane
+     * @param building
+     * @param floor
+     */
+    public static void displayCust(AnchorPane pane, String building, String floor) {
+        Map map = MapParser.parse();
+        displayNodesCust(map, pane, building, floor);
     }
 
-    private static void displayNodesUser(Map map, HashMap<String, Line> lstLines, AnchorPane pane, String building, String floor) {
+
+
+    private static void displayNodesUser(Map map, AnchorPane pane, String building, String floor) {
+        HashMap<String, Location> lstLocations = map.getAllLocations();
+        for (Location loc : lstLocations.values()) {
+            if (loc.getBuilding().equals(building) && loc.getFloor().equals(floor) && loc.getNodeType() != Constants.NodeType.HALL) {
+                double xLoc = (loc.getxCord() - xShift) * scale;
+                double yLoc = (loc.getyCord() - yShift) * scale;
+                Color color = Color.WHITE;
+                Circle circle = new Circle(xLoc, yLoc, locRadius, color);
+                circle.setStroke(Color.BLACK);
+                circle.setStrokeWidth(locWidth);
+                circle.setOnMouseClicked(event -> {
+                    try {
+                        event.consume();
+                        ScreenController.popUp("info", loc, map, pane);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+                pane.getChildren().add(circle);
+            }
+        }
+    }
+
+    private static void displayNodesCust(Map map, AnchorPane pane, String building, String floor) {
+        HashMap<String, Location> lstLocations = map.getAllLocations();
+        for (Location loc : lstLocations.values()) {
+            if (loc.getBuilding().equals(building) && loc.getFloor().equals(floor) && loc.getNodeType() != Constants.NodeType.HALL) {
+                double xLoc = (loc.getxCord() - xShift) * scale;
+                double yLoc = (loc.getyCord() - yShift) * scale;
+                Color color = Color.WHITE;
+                Circle circle = new Circle(xLoc, yLoc, locRadius, color);
+                circle.setStroke(Color.BLACK);
+                circle.setStrokeWidth(locWidth);
+                circle.setOnMouseClicked(event -> {
+                    try {
+                        event.consume();
+                        ScreenController.popUp("custodian-info", loc, map, pane);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+                pane.getChildren().add(circle);
+            }
+        }
+    }
+
+    private static void displayNodesEmployee(Map map, AnchorPane pane, String building, String floor) {
         HashMap<String, Location> lstLocations = map.getAllLocations();
         for (Location loc : lstLocations.values()) {
             if (loc.getBuilding().equals(building) && loc.getFloor().equals(floor) && loc.getNodeType() != Constants.NodeType.HALL) {
@@ -149,6 +192,33 @@ public class MapDisplay {
                 pane.getChildren().add(circle);
             }
         }
+    }
+
+    private static void displayEdges(Map map, AnchorPane pane, String building, String floor) {
+        HashMap<String, Edge> lstEdges = map.getAllEdges();
+        for (Edge edge : lstEdges.values()) {
+            Location start = edge.getStart();
+            Location end = edge.getEnd();
+            if (start.getBuilding().equals(building) && start.getFloor().equals(floor) &&
+                    end.getBuilding().equals(building) && end.getFloor().equals(floor)) {
+                double x1 = (start.getxCord() - xShift) * scale;
+                double x2 = (end.getxCord() - xShift) * scale;
+                double y1 = (start.getyCord() - yShift) * scale;
+                double y2 = (end.getyCord() - yShift) * scale;
+                Line line = new Line(x1, y1, x2, y2);
+                line.setStroke(Color.BLACK);
+                line.setStrokeWidth(edgeWidth);
+                pane.getChildren().add(line);
+            }
+        }
+    }
+
+    public static double scaleX(double x) {
+        return (x - xShift) * scale;
+    }
+
+    public static double scaleY(double y) {
+        return (y- yShift) * scale;
     }
 
 //    private static Color nodeColor(Location loc) {

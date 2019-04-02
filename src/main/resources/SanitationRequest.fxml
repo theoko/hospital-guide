@@ -35,7 +35,7 @@
                   </FXCollections>
                </items>
             </JFXComboBox>
-            <JFXTextField fx:id="txtDescription" prefHeight="25.0" prefWidth="332.0" promptText="Description" onKeyReleased="#keyReleased">
+            <JFXTextField fx:id="txtDescription" prefHeight="25.0" prefWidth="332.0" promptText="Description">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>

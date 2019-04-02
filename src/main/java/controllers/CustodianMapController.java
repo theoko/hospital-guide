@@ -30,6 +30,8 @@ public class CustodianMapController extends MapController {
     public TableColumn<SanitationRequest,String> tblUser;
     public TableColumn<SanitationRequest,String> tblDescription;
 
+    public JFXButton btnMarkDone;
+
     ObservableList<SanitationRequest> spills = FXCollections.observableArrayList();
 
     public void initialize() {
@@ -37,6 +39,12 @@ public class CustodianMapController extends MapController {
         MapDisplay.displayEmployee(panMap, "Shapiro", "1");
         initSanitation();
         updateSanitation();
+
+        tblData.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            btnMarkDone.setDisable(false);
+            updateBtn();
+        });
+
     }
 
     void toolTip() {
@@ -56,6 +64,31 @@ public class CustodianMapController extends MapController {
     private void updateSanitation() {
         List<SanitationRequest> lstReqs = Database.getSanitationRequests();
         spills.addAll(lstReqs);
+    }
+
+    public void markDone(){
+        SanitationRequest selected = tblData.getSelectionModel().getSelectedItem();
+        if (selected.getUser().equals("")) {
+            selected.setUser("user_temp");
+        } else {
+            selected.setUser("");
+        }
+        if (selected.getStatusObj() == SanitationRequest.Status.COMPLETE) {
+            selected.setStatus(SanitationRequest.Status.INCOMPLETE);
+        } else {
+            selected.setStatus(SanitationRequest.Status.COMPLETE);
+        }
+        Database.editSanitationRequest(selected);
+        tblData.refresh();
+        updateBtn();
+    }
+
+    private void updateBtn() {
+        if (tblData.getSelectionModel().getSelectedItem().getStatusObj() == SanitationRequest.Status.COMPLETE) {
+            btnMarkDone.setText("Mark Incomplete");
+        } else {
+            btnMarkDone.setText("Mark Complete");
+        }
     }
 }
 

@@ -5,8 +5,6 @@
 <?import com.jfoenix.controls.JFXToggleButton?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -90,43 +88,6 @@
                 <Tab style="-fx-background-color: #022D5A;" text="Workspace Booking">
                     <fx:include source="BookingWindow.fxml" />
                 </Tab>
-            <Tab style="-fx-background-color: #022D5A;" text="Sanitation Requests">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <!--<JFXTreeTableView fx:id="tblData" prefHeight="627.0" prefWidth="512.0">-->
-
-                            <!--<columns>-->
-                                <!--<JFXTreeTableColumn fx:id="tblLocation" prefWidth="354.0" text="Location">-->
-
-                                <!--</JFXTreeTableColumn>-->
-                                <!--<JFXTreeTableColumn fx:id="tblPriority" minWidth="0.0" prefWidth="79.0" text="Priority">-->
-
-                                <!--</JFXTreeTableColumn>-->
-                                <!--<JFXTreeTableColumn fx:id="tblStatus" minWidth="0.0" prefWidth="30.0" text="Status">-->
-
-                                <!--</JFXTreeTableColumn>-->
-                                <!--<JFXTreeTableColumn fx:id="tblBTN" prefWidth="78.0" text="Navigate">-->
-
-                                <!--</JFXTreeTableColumn>-->
-
-                            <!--</columns>-->
-
-                        <!--</JFXTreeTableView>-->
-                        <TableView layoutX="14.0" layoutY="14.0" prefHeight="599.0" prefWidth="685.0">
-                          <columns>
-                            <TableColumn fx:id="tblLocation" prefWidth="75.0" text="Location" />
-                            <TableColumn fx:id="tblPriority" prefWidth="75.0" text="Location" />
-                            <TableColumn fx:id="tblStatus" prefWidth="75.0" text="Location" />
-
-                          </columns>
-                        </TableView>
-
-
-                     </children>
-                  </AnchorPane>
-               </content>
-            </Tab>
             </tabs>
         </JFXTabPane>
     </children>

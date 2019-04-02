@@ -59,18 +59,6 @@ public class SanitationController extends PopUpController {
     }
 
     /**
-     * @brief Enables 'Submit' button when all fields are filled in.
-     */
-    public void keyReleased(){
-        String des = txtDescription.getText();
-        String pri = (String)cmbPriority.getValue();
-
-        boolean isDisabled = des.isEmpty() || pri.isEmpty();
-        submitBTN.setDisable(isDisabled);
-
-    }
-
-    /**
      * @brief Sets location of sanitation request.
      * @param loc Location of request.
      */
@@ -86,6 +74,5 @@ public class SanitationController extends PopUpController {
         cmbPriority.valueProperty().addListener(((observable, oldValue, newValue) -> {
             submitBTN.setDisable(false);
         }));
-        return;
     }
 }
