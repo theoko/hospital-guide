@@ -3,7 +3,6 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import com.jfoenix.controls.JFXToggleButton?>
-<?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TableColumn?>
@@ -11,20 +10,19 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" stylesheets="@css/colorScheme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminMapController">
     <children>
-        <JFXTabPane prefHeight="700.0" prefWidth="1200.0" side="RIGHT" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <JFXTabPane prefHeight="700.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <tabs>
                 <Tab style="-fx-background-color: #022D5A;" text="Map Editor">
                     <AnchorPane fx:id="outerTabAnchor" layoutX="0.0" layoutY="0.0" prefHeight="700.0" prefWidth="1200.0">
                         <children>
                             <AnchorPane fx:id="tabAnchor" layoutX="0.0" layoutY="0.0" prefHeight="700.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                <JFXTabPane prefHeight="700.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <JFXTabPane prefHeight="700.0" prefWidth="1200.0" side="RIGHT" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <tabs>
                                         <Tab style="-fx-background-color: #022D5A;" text="Floor 1">
                                             <content>
@@ -63,8 +61,8 @@
                                     </tabs>
                                 </JFXTabPane>
                             </AnchorPane>
-                            <AnchorPane fx:id="outerProfilePane" layoutX="260.0" layoutY="33.0" prefHeight="205.0" prefWidth="345.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="50.0">
-                                <AnchorPane fx:id="profilePane" layoutX="5.0" layoutY="14.0" prefHeight="124.0" prefWidth="345.0" style="-fx-background-color: #ffffff; -fx-background-radius: 10 10 10 10; -fx-border-width: 1px 1px 1px 1px; -fx-border-color: #022D5A; -fx-border-radius: 10;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <AnchorPane fx:id="outerProfilePane" layoutX="260.0" layoutY="15.0" prefHeight="197.0" prefWidth="341.0" AnchorPane.rightAnchor="47.0" AnchorPane.topAnchor="15.0">
+                                <AnchorPane fx:id="profilePane" layoutX="5.0" layoutY="14.0" prefHeight="124.0" prefWidth="382.0" style="-fx-background-color: #ffffff; -fx-background-radius: 10 10 10 10; -fx-border-width: 1px 1px 1px 1px; -fx-border-color: #022D5A; -fx-border-radius: 10;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <children>
                                         <VBox layoutX="4.0" layoutY="4.0" prefHeight="131.0" prefWidth="339.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
                                             <children>
@@ -81,7 +79,7 @@
                                                 </HBox>
                                             </children>
                                         </VBox>
-                              <JFXToggleButton layoutX="14.0" layoutY="135.0" prefHeight="58.0" onMouseClicked="#enableEdgeEditor" prefWidth="156.0" text="Add Edge" />
+                              <JFXToggleButton layoutX="14.0" layoutY="135.0" onMouseClicked="#enableEdgeEditor" prefHeight="58.0" prefWidth="156.0" text="Add Edge" />
                                         <JFXToggleButton layoutX="136.0" layoutY="134.0" onMouseClicked="#enableNodeCreation" prefHeight="60.0" prefWidth="211.0" text="Add Node" toggleColor="#022d5a" toggleLineColor="#022d5a" />
                                     </children>
                                 </AnchorPane>
@@ -90,7 +88,7 @@
                     </AnchorPane>
                 </Tab>
                 <Tab style="-fx-background-color: #022D5A;" text="Workspace Booking">
-                    <fx:include source="BookingWindow.fxml"/>
+                    <fx:include source="BookingWindow.fxml" />
                 </Tab>
             <Tab style="-fx-background-color: #022D5A;" text="Sanitation Requests">
                <content>
