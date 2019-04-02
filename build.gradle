@@ -14,6 +14,9 @@ repositories {
     mavenCentral()
     jcenter()
     maven {
+        url  "https://dl.bintray.com/jerady/maven"
+    }
+    maven {
         url 'https://nexus.gluonhq.com/nexus/content/repositories/releases'
     }
 }
@@ -50,10 +53,13 @@ dependencies {
             [group: 'org.apache.derby', name: 'derbyclient', version: '10.11.1.1'],
             [group: 'org.apache.derby', name: 'derbytools', version: '10.11.1.1'],
             [group: 'de.jensd', name: 'fontawesomefx-commons', version: '8.11'],
-            [group: 'de.jensd', name: 'fontawesomefx-fontawesome', version: '4.6.1-2'],
+            [group: 'de.jensd', name: 'fontawesomefx-fontawesome', version: '4.7.0-11'],
             [group: 'com.querydsl', name: 'querydsl-sql', version: '4.2.1'],
             [group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.6.1'],
-            [group: 'com.opencsv', name: 'opencsv', version: '4.5']
+            [group: 'com.opencsv', name: 'opencsv', version: '4.5'],
+          //  [group: 'org.kordamp.bootstrap', name: 'bootstrapfx', version: '0.2.4'],
+            [group: 'org.kordamp.ikonli', name: 'ikonli-swing', version: '11.1.0']
+         //   [group: 'org.kordamp.jsilhouette', name: 'jsilhouette', version: '0.3.0']
     )
     compile(
             [group: 'junit', name: 'junit', version: '4.12'],
@@ -62,7 +68,7 @@ dependencies {
             [group: 'org.apache.derby', name: 'derbyclient', version: '10.11.1.1'],
             [group: 'org.apache.derby', name: 'derbytools', version: '10.11.1.1'],
             [group: 'de.jensd', name: 'fontawesomefx-commons', version: '8.11'],
-            [group: 'de.jensd', name: 'fontawesomefx-fontawesome', version: '4.6.1-2'],
+            [group: 'de.jensd', name: 'fontawesomefx-fontawesome', version: '4.7.0-11'],
             [group: 'com.querydsl', name: 'querydsl-sql', version: '4.2.1'],
             [group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.6.1'],
             [group: 'com.opencsv', name: 'opencsv', version: '4.5'],

@@ -1,13 +1,17 @@
 package models.map;
 
+import controllers.AdminMapController;
+import controllers.VisualRealtimeController;
 import database.Database;
 import helpers.Constants;
+import javafx.scene.shape.Circle;
 
 import java.util.ArrayList;
 
 public class Location {
 
     private String nodeID;
+    private Circle nodeCircle;
     private int xCord;
     private int yCord;
     private String floor;
@@ -46,6 +50,10 @@ public class Location {
     public String getFloor() {
         return floor;
     }
+    public String getDBFormattedFloor() {
+        if(floor.length() == 1) return "0" + floor;
+        else return floor;
+    }
 
     public String getBuilding() {
         return building;
@@ -61,6 +69,34 @@ public class Location {
 
     public String getShortName() {
         return shortName;
+    }
+
+    public void setNodeID(String nodeID) {
+        this.nodeID = nodeID;
+    }
+
+    public void setxCord(int xCord) {
+        this.xCord = xCord;
+    }
+
+    public void setyCord(int yCord) {
+        this.yCord = yCord;
+    }
+
+    public void setFloor(String floor) {
+        this.floor = floor;
+    }
+
+    public void setBuilding(String building) {
+        this.building = building;
+    }
+
+    public void setLongName(String longName) {
+        this.longName = longName;
+    }
+
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
     }
 
     public void addSubPath(SubPath subPath) {
@@ -87,7 +123,20 @@ public class Location {
         Database.updateLocation(this);
     }
 
+    public boolean addCurrNode() {
+        return Database.addLocation(this);
+    }
+
     public boolean deleteCurrNode() {
+        VisualRealtimeController.removeCircle(getNodeCircle());
         return Database.deleteLocation(this);
+    }
+
+    public Circle getNodeCircle() {
+        return nodeCircle;
+    }
+
+    public void setNodeCircle(Circle nodeCircle) {
+        this.nodeCircle = nodeCircle;
     }
 }

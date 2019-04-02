@@ -2,7 +2,12 @@ package controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import database.Database;
 import helpers.Constants;
+import helpers.UIHelpers;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
 import models.map.Location;
@@ -34,6 +39,9 @@ public class EditController extends PopUpController implements Initializable {
         String value = (String) cmbNodeType.getValue();
         String nType = value.substring(0, value.indexOf(':'));
         loc.setNodeType(Constants.NodeType.valueOf(nType));
+        if(loc.getNodeID() == null) Database.addNewLocation(loc);
+        VisualRealtimeController.updateCircle(loc.getNodeCircle(),
+                UIHelpers.updateCircleForNodeType(loc));
         ScreenController.deactivate();
     }
 
@@ -52,12 +60,13 @@ public class EditController extends PopUpController implements Initializable {
     public void goBack(MouseEvent event) throws Exception{
        // ((Stage) (((Node) event.getSource()).getScene().getWindow())).close();
         event.consume();
+        //if(loc.getNodeID() == null) Database.addNewLocation(loc);
         ScreenController.deactivate();
     }
 
     public void deleteNode(MouseEvent event) {
         event.consume();
-       // loc.deleteCurrNode();
+        loc.deleteCurrNode();
         ScreenController.deactivate();
     }
 
