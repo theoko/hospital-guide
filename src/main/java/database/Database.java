@@ -119,12 +119,16 @@ public class Database {
                 "longName VARCHAR(100)," +
                 "shortName VARCHAR(100))";
 
-        String sanitationTable = "CREATE TABLE " + Constants.SANITATION_TABLE +
-                "(nodeID VARCHAR(100) References " + Constants.NODES_TABLE + " (nodeID), " +
+        String sanitationTable = "CREATE TABLE " + Constants.SANITATION_TABLE + "(" +
+                "requestID INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1)," +
+                "nodeID VARCHAR(100) References " + Constants.NODES_TABLE + " (nodeID), " +
                 "priority VARCHAR(10), " +
-                "description VARCHAR(100)," +
+                "description VARCHAR(100), " +
+                "status VARCHAR(100), " +
+                "userID VARCHAR(100), " +
                 "CONSTRAINT nodeIDClean_fk FOREIGN KEY(nodeID) REFERENCES " + Constants.NODES_TABLE + "(nodeID)," +
-                "CONSTRAINT priority_enum CHECK (priority in ('LOW', 'MEDIUM', 'HIGH')))";
+                "CONSTRAINT priority_enum CHECK (priority in ('LOW', 'MEDIUM', 'HIGH')), " +
+                "CONSTRAINT status_enum CHECK (status in ('INCOMPLETE', 'COMPLETE')))";
 
         try {
 
@@ -755,20 +759,24 @@ public class Database {
      */
     public static boolean addSanitationRequest(SanitationRequest request) {
         // Get data from request
-        Location location = request.getLocation();
-        SanitationRequest.Priority priority = request.getPriority();
+        Location location = request.getLocationObj();
+        SanitationRequest.Priority priority = request.getPriorityObj();
         String description = request.getDescription();
+        SanitationRequest.Status status = request.getStatusObj();
+        String userID = request.getUser();
 
         try {
             // Attempt to add request to database
             PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO " + Constants.SANITATION_TABLE +
-                            " (NODEID, PRIORITY, DESCRIPTION)" +
-                            " VALUES (?, ?, ?)"
+                            " (NODEID, PRIORITY, DESCRIPTION, STATUS, USERID)" +
+                            " VALUES (?, ?, ?, ?, ?)"
             );
             statement.setString(1, location.getNodeID());
             statement.setString(2, priority.name());
             statement.setString(3, description);
+            statement.setString(4, status.name());
+            statement.setString(5, userID);
             return statement.execute();
         } catch (SQLException exception) {
             // Print an exception message
@@ -794,16 +802,19 @@ public class Database {
             while (resultSet.next()) {
 
                 // Build sanitation request fields from resultSet
+                int sanitationID = resultSet.getInt("REQUESTID");
                 Location location = getLocationByID(
                         resultSet.getString("NODEID"));
                 SanitationRequest.Priority priority =
                         SanitationRequest.Priority.valueOf(
                                 resultSet.getString("PRIORITY"));
                 String description = resultSet.getString("DESCRIPTION");
+                SanitationRequest.Status status = SanitationRequest.Status.valueOf(resultSet.getString("STATUS"));
+                String userID = resultSet.getString("USERID");
 
                 // Create and add sanitation request to list
                 SanitationRequest sanitationRequest = new SanitationRequest(
-                        location, priority, description);
+                        sanitationID, location, priority, description, status, userID);
                 sanitationRequests.add(sanitationRequest);
             }
 
@@ -818,6 +829,27 @@ public class Database {
             exception.printStackTrace();
             System.out.println();
             return null;
+        }
+    }
+
+    public static void editSanitationRequest(SanitationRequest request) {
+        SanitationRequest.Status status = request.getStatusObj();
+        String userID = request.getUser();
+        int requestID = request.getRequestID();
+        try {
+            // Attempt to remove request from database
+            PreparedStatement statement = connection.prepareStatement(
+                "UPDATE " + Constants.SANITATION_TABLE + " SET STATUS=?, USERID=? WHERE REQUESTID=?"
+            );
+            statement.setString(1, status.name());
+            statement.setString(2, userID);
+            statement.setInt(3, requestID);
+            statement.execute();
+        } catch (SQLException exception) {
+            // Print an exception message
+            System.out.println("Sanitation Request Removal Exception:");
+            exception.printStackTrace();
+            System.out.println();
         }
     }
 

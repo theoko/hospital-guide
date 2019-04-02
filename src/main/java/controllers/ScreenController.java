@@ -1,17 +1,15 @@
 package controllers;
 
-import com.sun.javafx.scene.traversal.Direction;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.shape.Line;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import models.map.Location;
 import models.map.Map;
-
 import java.net.URL;
 import java.util.HashMap;
 
@@ -49,12 +47,13 @@ public class ScreenController {
         this.addScreen("edit", "/Edit.fxml");
         this.addScreen("download", "/Download.fxml");
         this.addScreen("downloaded", "/Downloaded.fxml");
-        this.addScreen("info", "/Info.fxml");
+        this.addScreen("info", "/UserInfo.fxml");
         this.addScreen("employee-info", "/EmployeeInfo.fxml");
         this.addScreen("employee-map", "/EmployeeMap.fxml");
         this.addScreen("sanitation-request", "/SanitationRequest.fxml");
         this.addScreen("directions", "/Directions.fxml");
         this.addScreen("custodian-map", "/CustodianMap.fxml");
+        this.addScreen("custodian-info", "/CustodianInfo.fxml");
 
         // Booking window
         this.addScreen("book-room", "/BookingWindow.fxml");
@@ -132,7 +131,7 @@ public class ScreenController {
         stage.show();
     }
 
-    public static void popUp(String name, Location loc, Map map, HashMap<String, Line> lstLines) throws Exception {
+    public static void popUp(String name, Location loc, Map map, AnchorPane pane) throws Exception {
 
         stage = new Stage();
 
@@ -145,7 +144,7 @@ public class ScreenController {
 
         pc.setLoc(loc);
         pc.setMap(map);
-        pc.setLines(lstLines);
+        pc.setPane(pane);
 
         // Init scene
         Scene s = new Scene(root);
@@ -160,7 +159,7 @@ public class ScreenController {
         stage.show();
     }
 
-    public static void popUp(String name, Location loc1, Location loc2, Map map, HashMap<String, Line> lstLines) throws Exception {
+    public static void popUp(String name, Location loc1, Location loc2, Map map, AnchorPane pane) throws Exception {
 
         stage = new Stage();
 
@@ -174,7 +173,7 @@ public class ScreenController {
         pc.setLoc(loc1);
         pc.setLoc2(loc2);
         pc.setMap(map);
-        pc.setLines(lstLines);
+        pc.setPane(pane);
 
         // Init scene
         Scene s = new Scene(root);

@@ -1,17 +1,15 @@
 package controllers;
 
 import javafx.fxml.Initializable;
-import javafx.scene.shape.Line;
+import javafx.scene.layout.AnchorPane;
 import models.map.Location;
 import models.map.Map;
-
-import java.util.HashMap;
 
 public abstract class PopUpController implements Initializable {
 
     protected Location loc;
     protected Map map;
-    protected HashMap<String, Line> lstLines;
+    protected AnchorPane pane;
 
     public abstract void setLoc(Location loc);
 
@@ -19,7 +17,7 @@ public abstract class PopUpController implements Initializable {
         this.map = map;
     };
 
-    public final void setLines(HashMap<String, Line> lstLines) {
-        this.lstLines = lstLines;
+    public final void setPane(AnchorPane pane) {
+        this.pane = pane;
     }
 }

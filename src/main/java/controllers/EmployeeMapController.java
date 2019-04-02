@@ -5,14 +5,12 @@ import helpers.Constants;
 import javafx.scene.control.Tooltip;
 import map.MapDisplay;
 
-
-
 public class EmployeeMapController extends MapController {
     public JFXButton btnSettings;
 
     public void initialize() {
         toolTip();
-        MapDisplay.displayUser(panMap, "Tower", "1");
+        MapDisplay.displayEmployee(panMap, "Tower", "1");
 
     }
 
