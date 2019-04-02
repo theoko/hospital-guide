@@ -10,7 +10,6 @@ import models.sanitation.SanitationRequest;
 import models.user.User;
 
 import java.sql.*;
-import java.sql.Date;
 import java.util.*;
 
 
@@ -51,11 +50,11 @@ public class Database {
      * Drops all database tables
      */
     public static void dropTables() {
-        dropBookTable();
+        dropDeletedLocationTable();
         dropSanitationTable();
+        dropBookTable();
         dropRoomTable();
         dropEdgeTable();
-        dropDeletedLocationTable();
         dropLocationTable();
         dropUsersTable();
     }
@@ -96,17 +95,18 @@ public class Database {
                 "CONSTRAINT endNodeID_fk FOREIGN KEY(endNodeID) REFERENCES " + Constants.NODES_TABLE + "(nodeID))";
 
         String roomTable = "CREATE TABLE " + Constants.ROOM_TABLE +
-                "(roomID VARCHAR(100) PRIMARY KEY," +
+                "(nodeID VARCHAR(100)," +
                 "capacity INT," +
-                "CONSTRAINT roomID_fk FOREIGN KEY(roomID) REFERENCES " + Constants.NODES_TABLE + "(nodeID))";
+                "CONSTRAINT nodeIDRoom_fk FOREIGN KEY(nodeID) REFERENCES " + Constants.NODES_TABLE + "(nodeID)" +
+                ")";
 
         String bookTable = "CREATE TABLE " + Constants.BOOK_TABLE +
                 "(bookingID INT PRIMARY KEY," +
-                "roomID VARCHAR(100)," +
+                "nodeID VARCHAR(100)," +
                 "userID INT," +
                 "startDate TIMESTAMP," +
                 "endDate TIMESTAMP," +
-                "CONSTRAINT roomID2_fk FOREIGN KEY(roomID) REFERENCES " + Constants.NODES_TABLE + "(nodeID)," +
+                "CONSTRAINT roomID2_fk FOREIGN KEY(nodeID) REFERENCES " + Constants.NODES_TABLE + "(nodeID)," +
                 "CONSTRAINT userID2_fk FOREIGN KEY(userID) REFERENCES " + Constants.USERS_TABLE + "(userID))";
 
         String deletedLocationsTable = "CREATE TABLE " + Constants.DELETED_LOCATION_TABLE +
@@ -172,51 +172,84 @@ public class Database {
 
     }*/
 
-    public static Room getRoomByID(String roomID){
+    public static Room getRoomByID(String roomID) {
         try {
 
             PreparedStatement statement;
 
             statement = connection.prepareStatement(
-                    "SELECT * FROM " + Constants.ROOM_TABLE + " WHERE ROOMID=?"
+                    "SELECT * FROM " + Constants.ROOM_TABLE + " WHERE NODEID=?"
             );
 
             statement.setString(1, roomID);
 
             ResultSet resultSet = statement.executeQuery();
 
-            Room room = new Room(
-                    resultSet.getString("ROOMID"),
-                    resultSet.getInt("CAPACITY")
-            );
+            if(resultSet.next()) {
+                Room room = new Room(
+                        resultSet.getString("NODEID"),
+                        resultSet.getInt("CAPACITY")
+                );
 
-            return room;
+                return room;
+            }
+
+            return null;
 
         } catch (SQLException e) {
             System.out.println("Cannot get room by ID!");
+            e.printStackTrace();
 
             return null;
         }
     }
 
+    public static boolean addRoom(Room room) {
+        try {
+            PreparedStatement statement;
+            statement = connection.prepareStatement(
+                    "INSERT INTO " + Constants.ROOM_TABLE + " (NODEID, CAPACITY) " +
+                            "VALUES (?, ?)"
+            );
+
+            statement.setString(1, room.getRoomID());
+            statement.setInt(2, room.getCapacity());
+
+            return statement.execute();
+
+        } catch (SQLException e) {
+            System.out.println("Room " + room.getRoomID() + " cannot be added!");
+            e.printStackTrace();
+
+            return false;
+        }
+    }
+
     /**
      * Checks availability for the room specified based on start and end date
+     *
      * @param room
      * @param startTime
      * @param endTime
      * @return true if the room is available, false otherwise
      */
-    public static boolean checkAvailabilityLocation(Room room, Date startTime, Date endTime){
+    public static boolean checkAvailabilityLocation(Room room, String startTime, String endTime) {
         PreparedStatement statement;
 
         try {
             statement = connection.prepareStatement(
                     "SELECT * FROM " + Constants.BOOK_TABLE +
-                            " WHERE roomID=? AND " + endTime.toString() + " <= " + " ENDDATE" +
-                            " AND " + endTime.toString() + " >= STARTDATE" +
-                            " OR " + startTime.toString() + " >=  STARTDATE" +
-                            " AND " + startTime.toString() + " <= ENDDATE"
+                            " WHERE nodeID=? AND ? <=  ENDDATE" +
+                            " AND ? >= STARTDATE" +
+                            " OR ? >=  STARTDATE" +
+                            " AND ? <= ENDDATE"
             );
+
+            statement.setString(1, room.getRoomID());
+            statement.setString(2, endTime);
+            statement.setString(3, endTime);
+            statement.setString(4, startTime);
+            statement.setString(5, startTime);
 
             // Should return 0 rows
             ResultSet resultSet = statement.executeQuery();
@@ -230,55 +263,39 @@ public class Database {
         }
 
     }
-    public static boolean addRoom(Room room){
-        try{
-            PreparedStatement statement;
-            statement = connection.prepareStatement(
-                    "INSERT INTO " + Constants.ROOM_TABLE + " (ROOMID, CAPACITY) " +
-                            "VALUES (?, ?)"
-            );
-
-            statement.setString(1, room.getRoomID());
-            statement.setInt(2, room.getCapacity());
-
-            return statement.execute();
-
-        } catch(SQLException e){
-            System.out.println("Room " + room.getRoomID() + " cannot be added!");
-
-            return false;
-        }
-    }
-
-
 
     /**
      * checks if location is available
      */
-    public static ArrayList<Room> checkAvailabilityTime(String startTime, String endTime){
+    public static ArrayList<Room> checkAvailabilityTime(String startTime, String endTime) {
+
         PreparedStatement statement1;
         ArrayList<Room> roomsAvailable = new ArrayList<>();
+
         try {
 
+            String unavailableRooms = "SELECT nodeID FROM " + Constants.BOOK_TABLE +
+                    " WHERE ? <=  ENDDATE" +
+                    " AND ? >= STARTDATE" +
+                    " OR ? >=  STARTDATE" +
+                    " AND ? <= ENDDATE";
+
             statement1 = connection.prepareStatement(
-                    "SELECT * FROM " + Constants.ROOM_TABLE +
-                            " WHERE ? > ENDDATE" +
-                            " OR ? < STARTDATE" +
-                            " AND ? <  STARTDATE" +
-                            " OR ? > ENDDATE"
+                    "SELECT nodeID FROM " + Constants.ROOM_TABLE +
+                            " EXCEPT (" + unavailableRooms + ")"
             );
 
-            statement1.setString(1, endTime);
-            statement1.setString(2, endTime);
-            statement1.setString(3, startTime);
-            statement1.setString(4, startTime);
+            statement1.setTimestamp(1, Timestamp.valueOf(endTime));
+            statement1.setTimestamp(2, Timestamp.valueOf(endTime));
+            statement1.setTimestamp(3, Timestamp.valueOf(startTime));
+            statement1.setTimestamp(4, Timestamp.valueOf(startTime));
 
             ResultSet resultSet = statement1.executeQuery();
 
-            while(resultSet.next()){
-                Room room = getRoomByID(resultSet.getString("ROOMID"));
+            while (resultSet.next()) {
+                Room room = getRoomByID(resultSet.getString("NODEID"));
+
                 roomsAvailable.add(room);
-                roomsAvailable.addAll(getRooms());
             }
 
             return roomsAvailable;
@@ -293,8 +310,8 @@ public class Database {
     /**
      * Creates user based off of database
      */
-    public static boolean createUser(User user){
-        try{
+    public static boolean createUser(User user) {
+        try {
             PreparedStatement statement;
             statement = connection.prepareStatement(
                     "INSERT INTO " + Constants.USERS_TABLE + " (USERID, USERNAME, PASSWORD, USERTYPE) " +
@@ -307,7 +324,7 @@ public class Database {
             statement.setString(4, user.getUserType().name());
             return statement.execute();
 
-        } catch(SQLException e){
+        } catch (SQLException e) {
             System.out.println("Table " + Constants.USERS_TABLE + " cannot be added!");
 
             return false;
@@ -318,22 +335,22 @@ public class Database {
     /**
      * Drop tables
      */
-    private static boolean dropDeletedLocationTable(){
-        try{
+    private static boolean dropDeletedLocationTable() {
+        try {
             Statement statement;
 
             statement = connection.createStatement();
 
             return statement.execute("DROP TABLE " + Constants.DELETED_LOCATION_TABLE);
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println("Table " + Constants.DELETED_LOCATION_TABLE + " cannot be dropped");
 
             return false;
         }
     }
 
-    private static boolean dropBookTable(){
-        try{
+    private static boolean dropBookTable() {
+        try {
             Statement statement;
 
             statement = connection.createStatement();
@@ -346,8 +363,8 @@ public class Database {
         }
     }
 
-    private static boolean dropRoomTable(){
-        try{
+    private static boolean dropRoomTable() {
+        try {
             Statement statement;
 
             statement = connection.createStatement();
@@ -359,7 +376,8 @@ public class Database {
             return false;
         }
     }
-    private static boolean dropUsersTable(){
+
+    private static boolean dropUsersTable() {
         try {
             Statement statement;
 
@@ -374,7 +392,7 @@ public class Database {
         }
     }
 
-    private static boolean dropLocationTable(){
+    private static boolean dropLocationTable() {
         try {
             Statement statement;
 
@@ -389,7 +407,7 @@ public class Database {
         }
     }
 
-    private static boolean dropEdgeTable(){
+    private static boolean dropEdgeTable() {
         try {
             Statement statement;
 
@@ -405,8 +423,8 @@ public class Database {
     }
 
     /**
-     * @brief Attempts to drop sanitation table.
      * @return Boolean indicating success of table drop.
+     * @brief Attempts to drop sanitation table.
      */
     private static boolean dropSanitationTable() {
         try {
@@ -420,6 +438,7 @@ public class Database {
 
     /**
      * Generalized function for filtering tables
+     *
      * @return a list of objects
      */
     public List<Object> filterTable(HashMap<String, ArrayList<String>> builder) {
@@ -451,10 +470,10 @@ public class Database {
 //        System.out.println(query);
 
 
-
         return new ArrayList<>();
     }
-    public static Book getBookByRoomID(String roomID){
+
+    public static Book getBookByRoomID(String roomID) {
         try {
 
             PreparedStatement statement;
@@ -541,6 +560,8 @@ public class Database {
             statement.setString(7, location.getLongName());
             statement.setString(8, location.getShortName());
 
+            statement.execute();
+
             if (Objects.equals(DatabaseHelpers.enumToString(location.getNodeType()), Constants.NodeType.CONF.name())) {
 
                 // Populate conference room table
@@ -551,7 +572,7 @@ public class Database {
 
             }
 
-            return statement.execute();
+            return true;
 
         } catch (SQLException e) {
             System.out.println("Location " + location.getNodeID() + " cannot be added!");
@@ -561,6 +582,7 @@ public class Database {
         }
 
     }
+
     public static boolean addDeleteLocation(Location location) {
 
         try {
@@ -593,8 +615,8 @@ public class Database {
     }
 
     /**
-     * @brief Returns location from database corresponding to given ID.
      * @param id Location ID.
+     * @brief Returns location from database corresponding to given ID.
      */
     public static Location getLocationByID(String id) {
         try {
@@ -605,7 +627,7 @@ public class Database {
             ResultSet resultSet = statement.executeQuery();
 
             // Process and return result
-            if(resultSet.next()) {
+            if (resultSet.next()) {
                 Location location = new Location(
                         resultSet.getString("NODEID"),
                         resultSet.getInt("XCOORD"),
@@ -628,7 +650,7 @@ public class Database {
         }
     }
 
-    public static ArrayList<Room> getRooms(){
+    public static ArrayList<Room> getRooms() {
         try {
 
             Statement statement;
@@ -641,7 +663,7 @@ public class Database {
 
             ArrayList<Room> returnList = new ArrayList<>();
 
-            while(resultSet.next()) {
+            while (resultSet.next()) {
 
                 Room room = new Room(
                         resultSet.getString("ROOMID"),
@@ -685,10 +707,11 @@ public class Database {
         }
 
     }
+
     /**
      * getBookings
      */
-    public List<Book>  getBookings(){
+    public List<Book> getBookings() {
         try {
 
             Statement statement;
@@ -701,7 +724,7 @@ public class Database {
 
             ArrayList<Book> returnList = new ArrayList<>();
 
-            while(resultSet.next()) {
+            while (resultSet.next()) {
 
                 Book user = new Book(
                         resultSet.getInt("BOOKINGID"),
@@ -726,9 +749,9 @@ public class Database {
 
 
     /**
-     * @brief Attempts to add sanitation request to the database.
      * @param request Sanitation request to add.
      * @return Boolean indicating success of add.
+     * @brief Attempts to add sanitation request to the database.
      */
     public static boolean addSanitationRequest(SanitationRequest request) {
         // Get data from request
@@ -768,7 +791,7 @@ public class Database {
 
             // Build request list from query
             ArrayList<SanitationRequest> sanitationRequests = new ArrayList<>();
-            while(resultSet.next()) {
+            while (resultSet.next()) {
 
                 // Build sanitation request fields from resultSet
                 Location location = getLocationByID(
@@ -814,7 +837,7 @@ public class Database {
 
             ArrayList<User> returnList = new ArrayList<>();
 
-            while(resultSet.next()) {
+            while (resultSet.next()) {
 
                 User user = new User(
                         resultSet.getInt("USERID"),
@@ -852,7 +875,7 @@ public class Database {
 
             HashMap<String, Location> returnList = new HashMap<>();
 
-            while(resultSet.next()) {
+            while (resultSet.next()) {
 
                 String nodeID = resultSet.getString("NODEID");
                 Location node = new Location(
@@ -895,7 +918,7 @@ public class Database {
 
             HashMap<String, Location> returnList = new HashMap<>();
 
-            while(resultSet.next()) {
+            while (resultSet.next()) {
 
                 String nodeID = resultSet.getString("NODEID");
                 Location node = new Location(
@@ -930,7 +953,7 @@ public class Database {
             ResultSet resultSet = statement.executeQuery(query);
             List<Edge> returnList = new ArrayList<>();
 
-            while(resultSet.next()) {
+            while (resultSet.next()) {
                 String edgeID = resultSet.getString("EDGEID");
                 Edge edge = new Edge(
                         edgeID,
@@ -951,6 +974,7 @@ public class Database {
 
     /**
      * Updates the location object specified on the database
+     *
      * @param updatedLocation
      * @return true if the location was updated successfully, false otherwise
      */
@@ -985,8 +1009,10 @@ public class Database {
 
 
     }
+
     /**
      * Deletes the location object specified on the database
+     *
      * @param deleteLocation
      * @return true if the location was deleted successfully, false otherwise
      */
@@ -1030,6 +1056,7 @@ public class Database {
 
     /**
      * Updates the edge object specified on the database
+     *
      * @param updatedEdge
      * @return true if the edge was updated successfully, false otherwise
      */

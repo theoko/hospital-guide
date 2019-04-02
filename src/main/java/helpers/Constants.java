@@ -55,6 +55,11 @@ public class Constants {
     public static String defaultButtonStyles = "-fx-text-fill: WHITE; -fx-font-size: 24px;";
 
     /**
+     * General types
+     */
+    public static String dateFormat = "yyyy-MM-dd HH:mm:ss";
+
+    /**
      * Enums
      */
     public enum NodeType {

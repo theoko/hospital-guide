@@ -4,11 +4,14 @@ import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTimePicker;
 import com.jfoenix.controls.JFXTreeTableView;
 import database.Database;
+import helpers.Constants;
+import models.room.Room;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class RoomBookingController {
@@ -56,11 +59,11 @@ public class RoomBookingController {
 
         try {
 
-            Date parsedDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(
-                    date.toString() + " " + time.toString()
+            Date parsedDate = new SimpleDateFormat(Constants.dateFormat).parse(
+                    date.toString() + " " + time.toString() + ":00"
             );
 
-            return parsedDate.toString();
+            return new SimpleDateFormat(Constants.dateFormat).format(parsedDate);
 
         } catch (ParseException e) {
             e.printStackTrace();
@@ -76,12 +79,17 @@ public class RoomBookingController {
                 && startTime != null
                 && endTime != null) {
 
-            Database.checkAvailabilityTime(
+            timePeriodSet = true;
+
+            System.out.println(getDateTime(startDate, startTime));
+            System.out.println(getDateTime(endDate, endTime));
+
+            ArrayList<Room> roomsAvailable = Database.checkAvailabilityTime(
                     getDateTime(startDate, startTime),
                     getDateTime(endDate, endTime)
             );
 
-            timePeriodSet = true;
+            System.out.println(roomsAvailable.toString());
 
         }
     }
