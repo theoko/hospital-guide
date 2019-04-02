@@ -187,9 +187,10 @@ public class Database {
                     "SELECT * FROM " + Constants.ROOM_TABLE + " WHERE ROOMID=?"
             );
 
+            ResultSet resultSet = statement.executeQuery();
+
             statement.setString(1, roomID);
 
-            ResultSet resultSet = statement.executeQuery();
 
             Room room = new Room(
                     resultSet.getString("ROOMID"),
@@ -413,6 +414,21 @@ public class Database {
             System.out.println("Table " + Constants.SANITATION_TABLE + " cannot be dropped.");
             return false;
         }
+    }
+
+    public static boolean databaseExists() {
+
+        boolean exists;
+
+        if(Database.getLocations().isEmpty()) {
+            exists = false;
+        } else {
+            exists = true;
+        }
+
+
+        return exists;
+
     }
 
     /**
