@@ -90,11 +90,7 @@
                     </AnchorPane>
                 </Tab>
                 <Tab style="-fx-background-color: #022D5A;" text="Workspace Booking">
-                    <FlowPane fx:id="bookingPane" layoutX="0.0" layoutY="0.0" prefHeight="700.0" prefWidth="1200.0">
-                        <JFXTreeTableView>
-
-                        </JFXTreeTableView>
-                    </FlowPane>
+                    <fx:include source="BookingWindow.fxml"/>
                 </Tab>
             <Tab style="-fx-background-color: #022D5A;" text="Sanitation Requests">
                <content>

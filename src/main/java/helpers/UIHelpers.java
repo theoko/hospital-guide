@@ -37,6 +37,23 @@ public class UIHelpers {
         });
     }
     public void test(){}
+    public static void setEmployeeNodeClickEvent(Circle c, Location loc) {
+
+        c.setOnMouseClicked(evt -> {
+            try {
+                evt.consume();
+
+                AdminMapController.locationSelectEvent(loc);
+                if(!AdminMapController.isEnableEditEdge())
+                    ScreenController.popUp("edit", loc);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        });
+    }
+
+
+
     public static void setAdminNodeClickEvent(Circle c, Location loc) {
 
         c.setOnMouseClicked(evt -> {
@@ -51,6 +68,8 @@ public class UIHelpers {
             }
         });
     }
+
+
     public static Line generateLineFromEdge(Edge e) {
         Location start = e.getStart();
         Location end = e.getEnd();
