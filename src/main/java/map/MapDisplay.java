@@ -5,6 +5,8 @@ import helpers.Constants;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
+import models.map.Edge;
 import models.map.Location;
 import models.map.Map;
 import java.util.HashMap;
@@ -17,6 +19,7 @@ public class MapDisplay {
     private final static double xShift = 1095.0;
     private final static double yShift = 565.0;
     private final static double scale = 1.6;
+    private final static double edgeWidth = 2.5;
 
     /**
      * Display the graph on a map for the default user (no halls, info boxes)
@@ -48,6 +51,7 @@ public class MapDisplay {
      */
     public static void displayAdmin(AnchorPane pane, String building, String floor) {
         Map map = MapParser.parse();
+        displayEdges(map, pane, building, floor);
         displayNodesAdmin(map, pane, building, floor);
     }
 
@@ -126,6 +130,25 @@ public class MapDisplay {
                 });
 
                 pane.getChildren().add(circle);
+            }
+        }
+    }
+
+    private static void displayEdges(Map map, AnchorPane pane, String building, String floor) {
+        HashMap<String, Edge> lstEdges = map.getAllEdges();
+        for (Edge edge : lstEdges.values()) {
+            Location start = edge.getStart();
+            Location end = edge.getEnd();
+            if (start.getBuilding().equals(building) && start.getFloor().equals(floor) &&
+                    end.getBuilding().equals(building) && end.getFloor().equals(floor)) {
+                double x1 = (start.getxCord() - xShift) * scale;
+                double x2 = (end.getxCord() - xShift) * scale;
+                double y1 = (start.getyCord() - yShift) * scale;
+                double y2 = (end.getyCord() - yShift) * scale;
+                Line line = new Line(x1, y1, x2, y2);
+                line.setStroke(Color.BLACK);
+                line.setStrokeWidth(edgeWidth);
+                pane.getChildren().add(line);
             }
         }
     }
