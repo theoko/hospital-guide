@@ -60,7 +60,7 @@ public class EditController extends PopUpController implements Initializable {
     public void goBack(MouseEvent event) throws Exception{
        // ((Stage) (((Node) event.getSource()).getScene().getWindow())).close();
         event.consume();
-        if(loc.getNodeID() == null) Database.addNewLocation(loc);
+        //if(loc.getNodeID() == null) Database.addNewLocation(loc);
         ScreenController.deactivate();
     }
 
