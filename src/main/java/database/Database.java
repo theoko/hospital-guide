@@ -187,9 +187,10 @@ public class Database {
                     "SELECT * FROM " + Constants.ROOM_TABLE + " WHERE ROOMID=?"
             );
 
+            ResultSet resultSet = statement.executeQuery();
+
             statement.setString(1, roomID);
 
-            ResultSet resultSet = statement.executeQuery();
 
             Room room = new Room(
                     resultSet.getString("ROOMID"),

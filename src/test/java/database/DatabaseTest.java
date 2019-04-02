@@ -2,10 +2,14 @@ package database;
 
 import helpers.FileHelpers;
 import models.map.Location;
+import models.room.Room;
+import models.sanitation.SanitationRequest;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.xml.crypto.Data;
 import java.util.HashMap;
+import java.util.List;
 
 import static helpers.Constants.NodeType.HALL;
 import static org.junit.Assert.*;
@@ -69,11 +73,127 @@ public class DatabaseTest {
         // Get edges from the database
         // Compare edges to the ones that were retrieved from the database
 
-        assertNull(Database.getRoomByID("12345678900987654321"));
-        assertTrue(Database.getRoomByID("FHALL00101").());
+
     }
 
     @Test
     public void getRoomByID() {
+        assertNull(Database.getRoomByID("12345678900987654321"));
+
+        Room room = new Room("ABC",50);
+        Database.addRoom(room);
+        Database.getRoomByID("ABC").setCapacity(5);
+        assertTrue(Database.getRoomByID("ABC").getCapacity()==5);
     }
+
+    @Test
+    public void dropTables() {
+    }
+
+    @Test
+    public void addRoom() {
+
+       // Database.dropTables();
+        Room room = new Room("RM101Z",2);
+        Database.addRoom(room);
+        assertTrue(Database.getRoomByID("RB101Z").equals(room));
+
+
+
+    }
+
+    @Test
+    public void addDeleteLocation() {
+
+
+
+        Location newLoc = new Location("AHALL00201",1608,2596,"1","BTM",HALL,"Hall","Hall");
+        HashMap<String, Location> locations = Database.getLocations();
+
+        // check that all fields are equal to the original after being added and and pulled from the database
+
+        Database.addDeleteLocation(newLoc);
+
+        assertNull(Database.getLocationByID(newLoc.getNodeID()));
+
+    }
+
+    @Test
+    public void addSanitationRequest() {
+        Location newLoc = new Location("AHALL00201",1608,2596,"1","BTM",HALL,"Hall","Hall");
+
+        SanitationRequest request = new SanitationRequest(
+                newLoc,
+                SanitationRequest.Priority.valueOf("HIGH"),
+                "DiRtY"
+        );
+
+        boolean F=false;
+        Database.addSanitationRequest(request);
+        List<SanitationRequest> lstReqs = Database.getSanitationRequests();
+        for(SanitationRequest E :lstReqs){
+            if (E.getDescription().equals(request.getDescription())){
+                F=true;
+            }
+        }
+        assertTrue(F);
+
+    }
+
+    @Test
+    public void getSanitationRequests() {
+        Location newLoc = new Location("AHALL00201",1608,2596,"1","BTM",HALL,"Hall","Hall");
+
+        SanitationRequest request = new SanitationRequest(
+                newLoc,
+                SanitationRequest.Priority.valueOf("HIGH"),
+                "DiRtY"
+        );
+
+        boolean F=false;
+        Database.addSanitationRequest(request);
+        List<SanitationRequest> lstReqs = Database.getSanitationRequests();
+        for(SanitationRequest E :lstReqs){
+            if (E.getDescription().equals(request.getDescription())){
+                F=true;
+            }
+        }
+        assertTrue(F);
+
+    }
+
+    @Test
+    public void getBookByRoomID() {
+
+        Location newLoc = new Location("AHALL00201",1608,2596,"1","BTM",HALL,"Hall","Hall");
+
+        Room newRoom = Database.getRoomByID(newLoc.getNodeID());
+
+        assertTrue(newRoom.getRoomID()==newLoc.getNodeID());
+
+
+    }
+
+//    @Test NOT BEING USED
+//    public void removeSanitationRequest() {
+//        Location newLoc = new Location("AHALL00201",1608,2596,"1","BTM",HALL,"Hall","Hall");
+//
+//        SanitationRequest request = new SanitationRequest(
+//                newLoc,
+//                SanitationRequest.Priority.valueOf("HIGH"),
+//                "DiRtY"
+//        );
+//
+//        boolean F=false;
+//        Database.addSanitationRequest(request);
+//        List<SanitationRequest> lstReqs = Database.getSanitationRequests();
+//        Database.removeSanitationRequest(request);
+//        for(SanitationRequest E :lstReqs){
+//            if (E.getDescription().equals(request.getDescription())){
+//                F=true;
+//            }
+//        }
+//        assertFalse(F);
+//
+//    }
 }
