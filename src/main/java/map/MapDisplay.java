@@ -15,13 +15,13 @@ import java.util.HashMap;
 
 public class MapDisplay {
 
-    private final static double locRadius = 15.0;
-    private final static double hallRadius = 5.0;
+    private final static double locRadius = 5.0;
+    private final static double hallRadius = 2.5;
     private final static double locWidth = 1.0;
-    private final static double edgeWidth = 2.5;
-    private final static double xShift = 1095.0;
-    private final static double yShift = 565.0;
-    private final static double scale = 1.6;
+    private final static double edgeWidth = 1.5;
+    private final static double xShift = -1890.0;
+    private final static double yShift = 805.0;
+    private final static double scale = 0.505;
 
     /**
      * Display the graph on a map for the default user (no halls, info boxes)
@@ -74,7 +74,7 @@ public class MapDisplay {
 //                double y2 = (end.getyCord() - yShift) * scale;
 //                Line line = new Line(x1, y1, x2, y2);
                 Line line = UIHelpers.generateLineFromEdge(edge);
-                line.setStroke(Color.BLACK);
+                line.setStroke(Color.GREY);
                 line.setStrokeWidth(edgeWidth);
                 lstLines.put(edge.getEdgeID(), line);
                 edge.setLine(line);

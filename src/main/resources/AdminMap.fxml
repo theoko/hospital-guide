@@ -29,9 +29,9 @@
                                                 <AnchorPane fx:id="outerMap" prefHeight="400.0" prefWidth="700.0">
                                                     <children>
                                                         <AnchorPane fx:id="panMap" onMouseDragged="#floorOneMapOnMouseDragged" onMousePressed="#floorOneMapOnMousePressed" onScroll="#floorOneMapScroll" onZoom="#floorOneMapZoom" onZoomFinished="#floorOneMapZoomDone" prefHeight="896.0" prefWidth="1115.0">
-                                                            <ImageView fx:id="floorOneMap" blendMode="MULTIPLY" fitHeight="1354.0" fitWidth="1705.0" layoutX="-4.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                                            <ImageView fx:id="floorOneMap" blendMode="MULTIPLY" fitHeight="1620.0" fitWidth="2581.0" layoutX="1000.0" layoutY="-350.0" pickOnBounds="true" preserveRatio="true">
                                                                 <image>
-                                                                    <Image url="@images/our_map.png" />
+                                                                    <Image url="@images/Original/01_thefirstfloor.png" />
                                                                 </image>
                                                             </ImageView>
                                                         </AnchorPane>

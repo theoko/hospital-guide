@@ -49,7 +49,7 @@ public class DirectionsController extends PopUpController implements Initializab
         event.consume();
 
         for (Line line : lstLines.values()) {
-            line.setStroke(Color.BLACK);
+            line.setStroke(Color.GREY);
         }
 
         Stack<SubPath> path = PathFinder.findPath(map, loc, loc2);
@@ -60,6 +60,7 @@ public class DirectionsController extends PopUpController implements Initializab
                 Line line = lstLines.get(id);
                 if (line != null) {
                     line.setStroke(Color.RED);
+                    line.setStrokeWidth(2.5);
                 }
             }
         }

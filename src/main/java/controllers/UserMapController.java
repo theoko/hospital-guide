@@ -11,7 +11,7 @@ public class UserMapController extends MapController {
 
     public void initialize() {
         toolTip();
-        MapDisplay.displayUser(panMap, "Tower", "1");
+        MapDisplay.displayUser(panMap, "Shapiro", "1");
     }
 
     @Override

@@ -24,7 +24,7 @@ public class AdminMapController extends MapController {
     private static boolean enableAddNode = false;
     private static boolean enableEditEdge = false;
 
-    private String selectedFloor = "1", selectedBuilding = "Tower";
+    private String selectedFloor = "1", selectedBuilding = "Shapiro";
 
     private static Location selectedLocation; // Location that is being modified or created
     public static void locationSelectEvent(Location loc) {
@@ -84,7 +84,7 @@ public class AdminMapController extends MapController {
     }
     public void initialize() {
         toolTip();
-        MapDisplay.displayAdmin(panMap, "Tower", "1");
+        MapDisplay.displayAdmin(panMap, "Shapiro", "1");
         VisualRealtimeController.setPanMap(panMap);
         selectedLocation = null;
     }
