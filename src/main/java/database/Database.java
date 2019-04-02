@@ -10,10 +10,8 @@ import models.sanitation.SanitationRequest;
 import models.user.User;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.sql.Date;
+import java.util.*;
 
 
 public class Database {
@@ -257,24 +255,32 @@ public class Database {
     /**
      * checks if location is available
      */
-    public static ArrayList<Room> checkAvailabilityTime(Date startTime, Date endTime){
+    public static ArrayList<Room> checkAvailabilityTime(String startTime, String endTime){
         PreparedStatement statement1;
         ArrayList<Room> roomsAvailable = new ArrayList<>();
         try {
+
             statement1 = connection.prepareStatement(
                     "SELECT * FROM " + Constants.ROOM_TABLE +
-                            " WHERE " + endTime.toString() + " > " + " ENDDATE" +
-                            " OR " + endTime.toString() + " < STARTDATE" +
-                            " AND " + startTime.toString() + " <  STARTDATE" +
-                            " OR " + startTime.toString() + " > ENDDATE"
+                            " WHERE ? > ENDDATE" +
+                            " OR ? < STARTDATE" +
+                            " AND ? <  STARTDATE" +
+                            " OR ? > ENDDATE"
             );
 
+            statement1.setString(1, endTime);
+            statement1.setString(2, endTime);
+            statement1.setString(3, startTime);
+            statement1.setString(4, startTime);
+
             ResultSet resultSet = statement1.executeQuery();
+
             while(resultSet.next()){
                 Room room = getRoomByID(resultSet.getString("ROOMID"));
                 roomsAvailable.add(room);
                 roomsAvailable.addAll(getRooms());
             }
+
             return roomsAvailable;
 
         } catch (SQLException e) {
@@ -535,13 +541,14 @@ public class Database {
             statement.setString(7, location.getLongName());
             statement.setString(8, location.getShortName());
 
-            if(DatabaseHelpers.enumToString(location.getNodeType()).equals(Constants.NodeType.CONF.name())) {
-                // Populate conference room table
+            if (Objects.equals(DatabaseHelpers.enumToString(location.getNodeType()), Constants.NodeType.CONF.name())) {
 
+                // Populate conference room table
                 addRoom(new Room(
                         location.getNodeID(),
                         5
                 ));
+
             }
 
             return statement.execute();

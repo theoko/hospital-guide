@@ -3,9 +3,13 @@ package controllers;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTimePicker;
 import com.jfoenix.controls.JFXTreeTableView;
+import database.Database;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Date;
 
 public class RoomBookingController {
 
@@ -48,6 +52,23 @@ public class RoomBookingController {
 
     }
 
+    public String getDateTime(LocalDate date, LocalTime time) {
+
+        try {
+
+            Date parsedDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(
+                    date.toString() + " " + time.toString()
+            );
+
+            return parsedDate.toString();
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+
+            return null;
+        }
+
+    }
 
     public void checkDateAndTime() {
         if (startDate != null
@@ -55,7 +76,10 @@ public class RoomBookingController {
                 && startTime != null
                 && endTime != null) {
 
-            System.out.println(startDate.toString() + " " + startTime.toString());
+            Database.checkAvailabilityTime(
+                    getDateTime(startDate, startTime),
+                    getDateTime(endDate, endTime)
+            );
 
             timePeriodSet = true;
 
