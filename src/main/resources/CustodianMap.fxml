@@ -105,10 +105,13 @@
                         <ButtonBar minHeight="-Infinity" prefHeight="71.0" prefWidth="1099.0" VBox.vgrow="ALWAYS">
                            <buttons>
                               <!--JFXButton fx:id="btnClaim" disable="true" text="Claim" textFill="WHITE" /-->
-                              <JFXButton fx:id="btnMarkDone" disable="true" onMouseClicked="#markDone" prefWidth="125.0" scaleX="2.0" scaleY="2.0" text="Mark Complete" textFill="WHITE" />
+                              <JFXButton fx:id="btnMarkDone" disable="true" onMouseClicked="#markDone" prefWidth="200.0" text="Mark Complete" textFill="WHITE">
+                                 <font>
+                                    <Font size="22.0" />
+                                 </font></JFXButton>
                            </buttons>
                            <padding>
-                              <Insets bottom="20.0" left="20.0" right="80.0" top="20.0" />
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                            </padding>
                         </ButtonBar>
                      </children>

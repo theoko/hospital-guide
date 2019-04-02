@@ -793,17 +793,17 @@ public class Database {
     }
 
     public static void editSanitationRequest(SanitationRequest request) {
-        int requestID = request.getRequestID();
         SanitationRequest.Status status = request.getStatusObj();
         String userID = request.getUser();
+        int requestID = request.getRequestID();
         try {
             // Attempt to remove request from database
             PreparedStatement statement = connection.prepareStatement(
-                "UPDATE " + Constants.SANITATION_TABLE + " SET STATUS = " + status + ", USERID = " + userID +
-                        " WHERE REQUESTID = " + requestID + ";"
+                "UPDATE " + Constants.SANITATION_TABLE + " SET STATUS=?, USERID=? WHERE REQUESTID=?"
             );
             statement.setString(1, status.name());
             statement.setString(2, userID);
+            statement.setInt(3, requestID);
             statement.execute();
         } catch (SQLException exception) {
             // Print an exception message

@@ -124,4 +124,12 @@ public class SanitationRequest implements Comparable<SanitationRequest> {
     public String getUser() {
         return user;
     }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
 }
