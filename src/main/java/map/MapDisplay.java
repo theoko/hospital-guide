@@ -55,6 +55,19 @@ public class MapDisplay {
         displayNodesAdmin(map, pane, building, floor);
     }
 
+    /**
+     * Display the graph on a map for the custodian (no halls)
+     * @param pane
+     * @param building
+     * @param floor
+     */
+    public static void displayCust(AnchorPane pane, String building, String floor) {
+        Map map = MapParser.parse();
+        displayNodesCust(map, pane, building, floor);
+    }
+
+
+
     private static void displayNodesUser(Map map, AnchorPane pane, String building, String floor) {
         HashMap<String, Location> lstLocations = map.getAllLocations();
         for (Location loc : lstLocations.values()) {
@@ -69,6 +82,29 @@ public class MapDisplay {
                     try {
                         event.consume();
                         ScreenController.popUp("info", loc, map, pane);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+                pane.getChildren().add(circle);
+            }
+        }
+    }
+
+    private static void displayNodesCust(Map map, AnchorPane pane, String building, String floor) {
+        HashMap<String, Location> lstLocations = map.getAllLocations();
+        for (Location loc : lstLocations.values()) {
+            if (loc.getBuilding().equals(building) && loc.getFloor().equals(floor) && loc.getNodeType() != Constants.NodeType.HALL) {
+                double xLoc = (loc.getxCord() - xShift) * scale;
+                double yLoc = (loc.getyCord() - yShift) * scale;
+                Color color = Color.WHITE;
+                Circle circle = new Circle(xLoc, yLoc, locRadius, color);
+                circle.setStroke(Color.BLACK);
+                circle.setStrokeWidth(locWidth);
+                circle.setOnMouseClicked(event -> {
+                    try {
+                        event.consume();
+                        ScreenController.popUp("custodian-info", loc, map, pane);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

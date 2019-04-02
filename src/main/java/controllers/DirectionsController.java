@@ -72,7 +72,7 @@ public class DirectionsController extends PopUpController implements Initializab
                 Line line = new Line(MapDisplay.scaleX(loc1.getxCord()), MapDisplay.scaleY(loc1.getyCord()), MapDisplay.scaleX(loc2.getxCord()), MapDisplay.scaleY(loc2.getyCord()));
                 line.setStroke(Color.RED);
                 line.setStrokeWidth(5.0);
-                pane.getChildren().add(line);
+                pane.getChildren().add(1, line);
             }
         }
         ScreenController.deactivate();

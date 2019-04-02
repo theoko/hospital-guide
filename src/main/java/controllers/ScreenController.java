@@ -44,12 +44,14 @@ public class ScreenController {
         this.addScreen("edit", "/Edit.fxml");
         this.addScreen("download", "/Download.fxml");
         this.addScreen("downloaded", "/Downloaded.fxml");
-        this.addScreen("info", "/Info.fxml");
+        this.addScreen("info", "/UserInfo.fxml");
         this.addScreen("employee-info", "/EmployeeInfo.fxml");
         this.addScreen("employee-map", "/EmployeeMap.fxml");
         this.addScreen("sanitation-request", "/SanitationRequest.fxml");
         this.addScreen("directions", "/Directions.fxml");
         this.addScreen("custodian-map", "/CustodianMap.fxml");
+        this.addScreen("custodian-info", "/CustodianInfo.fxml");
+
     }
 
     public static void moveTo(String name) throws Exception {

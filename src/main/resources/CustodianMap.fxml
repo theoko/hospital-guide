@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" stylesheets="@css/colorScheme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CustodianMapController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" stylesheets="@css/colorScheme.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CustodianMapController">
     <children>
         <JFXTabPane prefHeight="700.0" prefWidth="1200.0" side="RIGHT" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <tabs>
@@ -65,7 +65,7 @@
                                     <children>
                                         <VBox layoutX="4.0" layoutY="4.0" prefHeight="131.0" prefWidth="339.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
                                             <children>
-                                                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="73.0" prefWidth="339.0" text="Welcome Employee!" textAlignment="CENTER" textFill="#022D5A">
+                                                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="73.0" prefWidth="339.0" text="Welcome Custodian!" textAlignment="CENTER" textFill="#022D5A">
                                                     <font>
                                                         <Font name="Moon Bold" size="24.0" />
                                                     </font>

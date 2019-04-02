@@ -10,7 +10,7 @@ import models.map.Location;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class InfoController extends PopUpController implements Initializable {
+public class CustodianInfoController extends PopUpController implements Initializable {
     public Label lblNodeID;
     public Label lblLocation;
     public Label lblFloor;
@@ -22,8 +22,8 @@ public class InfoController extends PopUpController implements Initializable {
     public JFXButton btnDirections;
     public JFXButton btnCancel;
 
-    private static boolean bolSelectedUser = false;
-    private static Location locSelectedUser;
+    private static boolean bolSelectedCust = false;
+    private static Location locSelectedCust;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -48,15 +48,15 @@ public class InfoController extends PopUpController implements Initializable {
     }
 
     private void checkSelected() throws Exception {
-        if (bolSelectedUser) { // Two locations
-            if (!loc.equals(locSelectedUser)) {
-                ScreenController.popUp("directions", loc, locSelectedUser, map, pane);
+        if (bolSelectedCust) { // Two locations
+            if (!loc.equals(locSelectedCust)) {
+                ScreenController.popUp("directions", loc, locSelectedCust, map, pane);
             }
-            locSelectedUser = null;
-            bolSelectedUser = false;
+            locSelectedCust = null;
+            bolSelectedCust = false;
         } else { // One location
-            locSelectedUser = loc;
-            bolSelectedUser = true;
+            locSelectedCust = loc;
+            bolSelectedCust = true;
         }
     }
 
