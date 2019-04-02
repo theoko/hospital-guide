@@ -1,13 +1,17 @@
 package models.map;
 
+import controllers.AdminMapController;
+import controllers.VisualRealtimeController;
 import database.Database;
 import helpers.Constants;
+import javafx.scene.shape.Circle;
 
 import java.util.ArrayList;
 
 public class Location {
 
     private String nodeID;
+    private Circle nodeCircle;
     private int xCord;
     private int yCord;
     private String floor;
@@ -116,6 +120,15 @@ public class Location {
     }
 
     public boolean deleteCurrNode() {
+        VisualRealtimeController.removeCircle(getNodeCircle());
         return Database.deleteLocation(this);
+    }
+
+    public Circle getNodeCircle() {
+        return nodeCircle;
+    }
+
+    public void setNodeCircle(Circle nodeCircle) {
+        this.nodeCircle = nodeCircle;
     }
 }

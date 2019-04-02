@@ -1,5 +1,6 @@
 package database;
 
+import controllers.VisualRealtimeController;
 import helpers.Constants;
 import helpers.DatabaseHelpers;
 import helpers.MapHelpers;
@@ -719,6 +720,8 @@ public class Database {
             String EdgeID = hasEdgeByID(MapHelpers.generateEdgeID(e, Constants.START_FIRST)) ?
                     MapHelpers.generateEdgeID(e, Constants.START_FIRST)
                     : MapHelpers.generateEdgeID(e, Constants.END_FIRST);
+//            Edge e = getEdges(getLocations()).get(EdgeID);
+//            VisualRealtimeController.removeLine();
             //removeEdge(EdgeID);
         }
     }

@@ -55,14 +55,16 @@ public class MapDisplay {
             Location end = edge.getEnd();
             if (start.getBuilding().equals(building) && start.getFloor().equals(floor) &&
                     end.getBuilding().equals(building) && end.getFloor().equals(floor)) {
-                double x1 = (start.getxCord() - xShift) * scale;
-                double x2 = (end.getxCord() - xShift) * scale;
-                double y1 = (start.getyCord() - yShift) * scale;
-                double y2 = (end.getyCord() - yShift) * scale;
-                Line line = new Line(x1, y1, x2, y2);
+//                double x1 = (start.getxCord() - xShift) * scale;
+//                double x2 = (end.getxCord() - xShift) * scale;
+//                double y1 = (start.getyCord() - yShift) * scale;
+//                double y2 = (end.getyCord() - yShift) * scale;
+//                Line line = new Line(x1, y1, x2, y2);
+                Line line = UIHelpers.generateLineFromEdge(edge);
                 line.setStroke(Color.BLACK);
                 line.setStrokeWidth(edgeWidth);
                 lstLines.put(edge.getEdgeID(), line);
+                edge.setLine(line);
                 pane.getChildren().add(line);
             }
         }
@@ -106,7 +108,7 @@ public class MapDisplay {
                 circle.setStroke(Color.BLACK);
                 circle.setStrokeWidth(locWidth);
                 UIHelpers.setAdminNodeClickEvent(circle, loc);
-
+                loc.setNodeCircle(circle);
                 pane.getChildren().add(circle);
             }
         }

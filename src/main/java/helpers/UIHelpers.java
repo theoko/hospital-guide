@@ -36,13 +36,16 @@ public class UIHelpers {
             }
         });
     }
+    public void test(){}
     public static void setAdminNodeClickEvent(Circle c, Location loc) {
 
         c.setOnMouseClicked(evt -> {
             try {
                 evt.consume();
+
                 AdminMapController.locationSelectEvent(loc);
-                ScreenController.popUp("edit", loc);
+                if(!AdminMapController.isEnableEditEdge())
+                    ScreenController.popUp("edit", loc);
             } catch (Exception e) {
                 throw new UnsupportedOperationException(e);
             }
@@ -68,6 +71,19 @@ public class UIHelpers {
             double y = (loc.getyCord() - MapDisplay.getyShift()) * MapDisplay.getScale();
             return new Point((int) x, (int) y);
         }
+    }
+    public static Circle updateCircleForNodeType(Location loc) {
+        Circle c = loc.getNodeCircle();
+        if(loc.getNodeType() == Constants.NodeType.HALL) {
+            c.setRadius(MapDisplay.getHallRadius());
+            c.setFill(Color.GRAY);
+        } else {
+            c.setRadius(MapDisplay.getLocRadius());
+            c.setFill(Color.WHITE);
+        }
+
+
+        return c;
     }
 
 }

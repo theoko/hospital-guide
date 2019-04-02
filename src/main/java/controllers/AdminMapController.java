@@ -16,22 +16,36 @@ import models.map.Location;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class AdminMapController extends MapController {
     public JFXButton btnDownload;
 
     private static boolean enableAddNode = false;
-    private static boolean enableEditEdge = true;
+    private static boolean enableEditEdge = false;
 
     private String selectedFloor = "1", selectedBuilding = "Tower";
 
     private static Location selectedLocation; // Location that is being modified or created
     public static void locationSelectEvent(Location loc) {
         if(enableEditEdge) {
-            if (selectedLocation != loc)
+            if (selectedLocation != loc) {
                 selectLocation(loc);
-            else deselectLocation();
+
+            }
+            else {
+                deselectLocation();
+                VisualRealtimeController.visuallyDeselectCircle(loc);
+            }
         }
+    }
+
+    public static boolean isEnableAddNode() {
+        return enableAddNode;
+    }
+
+    public static boolean isEnableEditEdge() {
+        return enableEditEdge;
     }
 
     public static void selectLocation(Location loc) {
@@ -40,16 +54,29 @@ public class AdminMapController extends MapController {
             boolean edgeToggle = Database.toggleEdge(edge);
             if(edgeToggle == Constants.SELECTED) {
                 Line line = UIHelpers.generateLineFromEdge(edge);
+                edge.setLine(line);
+                VisualRealtimeController.addLine(line);
+            } else {
+                VisualRealtimeController.removeLine(edge.getLine());
             }
         }
         else {
             selectedLocation = loc;
+            VisualRealtimeController.visuallySelectCircle(loc);
         }
     }
     public static void deselectLocation() {
         selectedLocation = null;
     }
     public void enableEdgeEditor() {
+        try {
+            VisualRealtimeController.visuallyDeselectCircle(selectedLocation);
+        } catch(Exception e) {
+            // Circle is null
+        }
+
+        selectedLocation = null;
+
         enableEditEdge = !enableEditEdge;
     }
     public void enableNodeCreation() {
@@ -58,6 +85,7 @@ public class AdminMapController extends MapController {
     public void initialize() {
         toolTip();
         MapDisplay.displayAdmin(panMap, "Tower", "1");
+        VisualRealtimeController.setPanMap(panMap);
         selectedLocation = null;
     }
 
@@ -85,10 +113,15 @@ public class AdminMapController extends MapController {
 //        loc.setNodeID(locID);
 //        loc.addCurrNode();
         UIHelpers.setAdminNodeClickEvent(circ, loc);
+        loc.setNodeCircle(circ);
         panMap.getChildren().add(circ);
 
 
     }
+//    public static void removeCircle(Circle c) {
+//        panMap.getChildren().remove(c);
+//
+//    }
 
 
     @Override
