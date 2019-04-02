@@ -18,16 +18,6 @@ public class SanitationRequest implements Comparable<SanitationRequest> {
         INCOMPLETE, COMPLETE
     }
 
-    /**
-     * Class fields.
-     */
-    private Location location;  // Location of the spill
-    private Priority priority;  // Priority of the request
-    private String description; // Textual description of request
-
-    /**
-     * @brief Constructs new sanitation request.
-
 
     /**
      * Class fields.

@@ -127,6 +127,7 @@ public class AdminMapController extends MapController {
     @Override
     public final void logOut(MouseEvent event) throws Exception {
         enableAddNode = false;
+        enableEditEdge = false;
         event.consume();
         ScreenController.logOut(btnReturn);
         ScreenController.activate("welcome");
@@ -148,5 +149,7 @@ public class AdminMapController extends MapController {
         translateX = ((AnchorPane) event.getSource()).getTranslateX();
         translateY = ((AnchorPane) event.getSource()).getTranslateY();
     }
+
+
 
 }
