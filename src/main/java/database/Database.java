@@ -267,7 +267,7 @@ public class Database {
     /**
      * checks if location is available
      */
-    public static ArrayList<Room> checkAvailabilityTime(String startTime, String endTime) {
+    public static List<Room> checkAvailabilityTime(String startTime, String endTime) {
 
         PreparedStatement statement1;
         ArrayList<Room> roomsAvailable = new ArrayList<>();

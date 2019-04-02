@@ -2,25 +2,40 @@ package controllers;
 
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTimePicker;
-import com.jfoenix.controls.JFXTreeTableView;
 import database.Database;
 import helpers.Constants;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import models.room.Room;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class RoomBookingController {
 
+    /**
+     * FXML
+     */
     public JFXDatePicker datStartDay;
     public JFXDatePicker datEndDay;
     public JFXTimePicker datStartTime;
     public JFXTimePicker datEndTime;
-    public JFXTreeTableView tblRooms;
+
+    // Table that displays available rooms
+    public TableView tblRooms;
+
+    // Columns
+    public TableColumn<Room, String> tblRoomID;
+    public TableColumn<Room, String> tblRoomCapacity;
+
+    ObservableList<Room> rooms = FXCollections.observableArrayList();
 
     LocalDate startDate;
     LocalDate endDate;
@@ -53,6 +68,17 @@ public class RoomBookingController {
             checkDateAndTime();
         });
 
+
+        initBooking();
+    }
+
+    private void initBooking() {
+
+        // Initialize table
+        tblRoomID.setCellValueFactory(new PropertyValueFactory<>("RoomID"));
+        tblRoomCapacity.setCellValueFactory(new PropertyValueFactory<>("Capacity"));
+        tblRooms.setItems(rooms);
+
     }
 
     public String getDateTime(LocalDate date, LocalTime time) {
@@ -81,19 +107,22 @@ public class RoomBookingController {
 
             timePeriodSet = true;
 
-            System.out.println(getDateTime(startDate, startTime));
-            System.out.println(getDateTime(endDate, endTime));
-
-            ArrayList<Room> roomsAvailable = Database.checkAvailabilityTime(
+            List<Room> roomsAvailable = Database.checkAvailabilityTime(
                     getDateTime(startDate, startTime),
                     getDateTime(endDate, endTime)
             );
 
-            System.out.println(roomsAvailable.toString());
+            populateRoomBookingTable(roomsAvailable);
 
         }
     }
 
+    private void populateRoomBookingTable(List<Room> roomsAvailable) {
 
+        rooms.addAll(roomsAvailable);
+
+        tblRooms.refresh();
+
+    }
 
 }
