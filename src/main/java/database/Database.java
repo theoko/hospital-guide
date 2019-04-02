@@ -187,10 +187,9 @@ public class Database {
                     "SELECT * FROM " + Constants.ROOM_TABLE + " WHERE ROOMID=?"
             );
 
-            ResultSet resultSet = statement.executeQuery();
-
             statement.setString(1, roomID);
 
+            ResultSet resultSet = statement.executeQuery();
 
             Room room = new Room(
                     resultSet.getString("ROOMID"),
@@ -414,21 +413,6 @@ public class Database {
             System.out.println("Table " + Constants.SANITATION_TABLE + " cannot be dropped.");
             return false;
         }
-    }
-
-    public static boolean databaseExists() {
-
-        boolean exists;
-
-        if(Database.getLocations().isEmpty()) {
-            exists = false;
-        } else {
-            exists = true;
-        }
-
-
-        return exists;
-
     }
 
     /**
@@ -808,26 +792,24 @@ public class Database {
         }
     }
 
-    /**
-     * @brief Removes given sanitation request from the DB.
-     * @return Boolean indicating if remove was successful
-     */
-    public static boolean removeSanitationRequest(SanitationRequest request) {
+    public static void editSanitationRequest(SanitationRequest request) {
+        SanitationRequest.Status status = request.getStatusObj();
+        String userID = request.getUser();
         int requestID = request.getRequestID();
         try {
             // Attempt to remove request from database
             PreparedStatement statement = connection.prepareStatement(
-                "DELETE FROM " + Constants.SANITATION_TABLE +
-                        " WHERE REQUESTID=?"
+                "UPDATE " + Constants.SANITATION_TABLE + " SET STATUS=?, USERID=? WHERE REQUESTID=?"
             );
-            statement.setInt(1, requestID);
-            return statement.execute();
+            statement.setString(1, status.name());
+            statement.setString(2, userID);
+            statement.setInt(3, requestID);
+            statement.execute();
         } catch (SQLException exception) {
             // Print an exception message
             System.out.println("Sanitation Request Removal Exception:");
             exception.printStackTrace();
             System.out.println();
-            return false;
         }
     }
 

@@ -2,6 +2,8 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTabPane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TableColumn?>
@@ -13,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" stylesheets="@css/colorScheme.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CustodianMapController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" stylesheets="@css/colorScheme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CustodianMapController">
     <children>
         <JFXTabPane prefHeight="700.0" prefWidth="1200.0" side="RIGHT" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <tabs>
@@ -88,16 +90,32 @@
                 </Tab>
                 <Tab style="-fx-background-color: #022D5A;" text="Sanitation Requests">
                <content>
-                  <TableView fx:id="tblData" prefHeight="200.0" prefWidth="200.0">
-                    <columns>
-                      <TableColumn fx:id="tblLocation" prefWidth="250.0" text="Location" />
-                      <TableColumn fx:id="tblPriority" prefWidth="75.0" text="Priority" />
-                      <TableColumn fx:id="tblStatus" prefWidth="100.0" text="Status" />
-                        <TableColumn fx:id="tblDescription" prefWidth="300.0" text="Description" />
-                        <TableColumn fx:id="tblUser" prefWidth="100.0" text="User" />
+                  <VBox>
+                     <children>
+                        <TableView fx:id="tblData" prefHeight="629.0" prefWidth="1163.0">
+                          <columns>
+                            <TableColumn fx:id="tblLocation" prefWidth="250.0" text="Location" />
+                            <TableColumn fx:id="tblPriority" prefWidth="75.0" text="Priority" />
+                            <TableColumn fx:id="tblStatus" prefWidth="100.0" text="Status" />
+                              <TableColumn fx:id="tblDescription" prefWidth="300.0" text="Description" />
+                              <TableColumn fx:id="tblUser" prefWidth="100.0" text="User" />
 
-                    </columns>
-                  </TableView>
+                          </columns>
+                        </TableView>
+                        <ButtonBar minHeight="-Infinity" prefHeight="71.0" prefWidth="1099.0" VBox.vgrow="ALWAYS">
+                           <buttons>
+                              <!--JFXButton fx:id="btnClaim" disable="true" text="Claim" textFill="WHITE" /-->
+                              <JFXButton fx:id="btnMarkDone" disable="true" onMouseClicked="#markDone" prefWidth="200.0" text="Mark Complete" textFill="WHITE">
+                                 <font>
+                                    <Font size="22.0" />
+                                 </font></JFXButton>
+                           </buttons>
+                           <padding>
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                           </padding>
+                        </ButtonBar>
+                     </children>
+                  </VBox>
                </content></Tab>
             </tabs>
         </JFXTabPane>

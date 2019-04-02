@@ -44,6 +44,18 @@ public class MapDisplay {
     }
 
     /**
+     * Display the graph of a map for employees (halls, info boxes with spill reporting)
+     * @param pane
+     * @param building
+     * @param floor
+     */
+    public static void displayEmployee(AnchorPane pane, String building, String floor) {
+        Map map = MapParser.parse();
+        displayEdges(map, pane, building, floor);
+        displayNodesEmployee(map, pane, building, floor);
+    }
+
+    /**
      * Display the graph on a map for the admin (halls, edit boxes)
      * @param pane
      * @param building
@@ -128,6 +140,29 @@ public class MapDisplay {
                     try {
                         event.consume();
                         ScreenController.popUp("employee-info", loc, map, pane);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+                pane.getChildren().add(circle);
+            }
+        }
+    }
+
+    private static void displayNodesEmployee(Map map, AnchorPane pane, String building, String floor) {
+        HashMap<String, Location> lstLocations = map.getAllLocations();
+        for (Location loc : lstLocations.values()) {
+            if (loc.getBuilding().equals(building) && loc.getFloor().equals(floor) && loc.getNodeType() != Constants.NodeType.HALL) {
+                double xLoc = (loc.getxCord() - xShift) * scale;
+                double yLoc = (loc.getyCord() - yShift) * scale;
+                Color color = Color.WHITE;
+                Circle circle = new Circle(xLoc, yLoc, locRadius, color);
+                circle.setStroke(Color.BLACK);
+                circle.setStrokeWidth(locWidth);
+                circle.setOnMouseClicked(event -> {
+                    try {
+                        event.consume();
+                        ScreenController.popUp("employee-info", loc);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
