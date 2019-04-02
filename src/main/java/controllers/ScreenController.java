@@ -1,17 +1,15 @@
 package controllers;
 
-import com.sun.javafx.scene.traversal.Direction;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.shape.Line;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import models.map.Location;
 import models.map.Map;
-
 import java.net.URL;
 import java.util.HashMap;
 
@@ -125,7 +123,7 @@ public class ScreenController {
         stage.show();
     }
 
-    public static void popUp(String name, Location loc, Map map, HashMap<String, Line> lstLines) throws Exception {
+    public static void popUp(String name, Location loc, Map map, AnchorPane pane) throws Exception {
 
         stage = new Stage();
 
@@ -138,7 +136,7 @@ public class ScreenController {
 
         pc.setLoc(loc);
         pc.setMap(map);
-        pc.setLines(lstLines);
+        pc.setPane(pane);
 
         // Init scene
         Scene s = new Scene(root);
@@ -153,7 +151,7 @@ public class ScreenController {
         stage.show();
     }
 
-    public static void popUp(String name, Location loc1, Location loc2, Map map, HashMap<String, Line> lstLines) throws Exception {
+    public static void popUp(String name, Location loc1, Location loc2, Map map, AnchorPane pane) throws Exception {
 
         stage = new Stage();
 
@@ -167,7 +165,7 @@ public class ScreenController {
         pc.setLoc(loc1);
         pc.setLoc2(loc2);
         pc.setMap(map);
-        pc.setLines(lstLines);
+        pc.setPane(pane);
 
         // Init scene
         Scene s = new Scene(root);
