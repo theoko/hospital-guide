@@ -213,6 +213,8 @@ public class DatabaseTest {
 //        assertEquals(newLoc.getNodeID(), locations.get(newLoc.getNodeID()).getNodeID());
 //        assertEquals(newLoc.getNodeID(), locations.get(newLoc.getNodeID()).getNodeID());
 //        assertEquals(newLoc.getNodeID(), locations.get(newLoc.getNodeID()).getNodeID());
+
+        //todo @MAX finish addLoc test that got messed up in the merge
     }
 
 //    @Test
