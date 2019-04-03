@@ -11,6 +11,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -26,7 +27,7 @@
             <Tab style="-fx-background-color: #022D5A;" text="Reserve Rooms">
                <VBox layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
                   <children>
-                     <SplitPane dividerPositions="0.25" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="619.0" prefWidth="1180.0" style="-fx-box-border: transparent;">
+                     <SplitPane dividerPositions="0.25" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="613.0" prefWidth="1200.0" style="-fx-box-border: transparent;">
                         <items>
                            <VBox spacing="20.0">
                               <children>
@@ -39,7 +40,7 @@
                                     </VBox.margin></Label>
                                  <JFXDatePicker fx:id="datStartDay" defaultColor="#022d5a" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="300.0" promptText="Start Date">
                                     <VBox.margin>
-                                       <Insets left="20.0" right="20.0" top="20.0" />
+                                       <Insets left="20.0" right="20.0" top="10.0" />
                                     </VBox.margin></JFXDatePicker>
                                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="135.0" style="-fx-background-color: #022D5A;" text="Start Time" textFill="WHITE">
                                     <font>
@@ -51,7 +52,7 @@
                                  </Label>
                                  <JFXTimePicker fx:id="datStartTime" defaultColor="#022d5a" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="300.0" promptText="Start Time">
                                     <VBox.margin>
-                                       <Insets left="20.0" right="20.0" top="20.0" />
+                                       <Insets left="20.0" right="20.0" top="10.0" />
                                     </VBox.margin></JFXTimePicker>
                                  <Label alignment="CENTER" prefHeight="30.0" prefWidth="135.0" style="-fx-background-color: #022D5A;" text="End Date" textFill="WHITE">
                                     <font>
@@ -62,7 +63,7 @@
                                     </VBox.margin></Label>
                                  <JFXDatePicker fx:id="datEndDay" defaultColor="#022d5a" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="300.0" promptText="End Date">
                                     <VBox.margin>
-                                       <Insets left="20.0" right="20.0" top="20.0" />
+                                       <Insets left="20.0" right="20.0" top="10.0" />
                                     </VBox.margin></JFXDatePicker>
                                  <Label alignment="CENTER" prefHeight="30.0" prefWidth="135.0" style="-fx-background-color: #022D5A;" text="End Time" textFill="WHITE">
                                     <font>
@@ -72,13 +73,19 @@
                                        <Insets left="10.0" top="20.0" />
                                     </VBox.margin>
                                  </Label>
-                                 <JFXTimePicker fx:id="datEndTime" defaultColor="#022d5a" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="300.0">
+                                 <JFXTimePicker fx:id="datEndTime" defaultColor="#022d5a" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="300.0" promptText="End Time">
                                     <VBox.margin>
-                                       <Insets left="20.0" right="20.0" top="20.0" />
+                                       <Insets left="20.0" right="20.0" top="10.0" />
                                     </VBox.margin></JFXTimePicker>
+                                 <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                                    <children>
+                                       <JFXButton fx:id="btnCancel1" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" prefHeight="42.0" prefWidth="165.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Book Room" textAlignment="CENTER" />
+                                       <JFXButton fx:id="btnReturn1" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" onMouseClicked="#logOut" prefHeight="11.0" prefWidth="140.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Logout" textAlignment="CENTER" />
+                                    </children>
+                                 </HBox>
                               </children>
                            </VBox>
-                           <TableView fx:id="tblRooms" prefWidth="830.0">
+                           <TableView fx:id="tblRooms" prefHeight="643.0" prefWidth="850.0">
                               <columns>
                                  <TableColumn fx:id="tblRoomID" prefWidth="247.0" text="Room ID" />
                                  <TableColumn fx:id="tblRoomCapacity" prefWidth="240.0" text="Capacity" />
@@ -95,7 +102,7 @@
             <Tab style="-fx-background-color: #022D5A;" text="My Bookings">
                <VBox layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
                   <children>
-                     <SplitPane dividerPositions="0.7787979966611018" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="619.0" prefWidth="1180.0" style="-fx-box-border: transparent;">
+                     <SplitPane dividerPositions="0.7787979966611018" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="612.0" prefWidth="1200.0" style="-fx-box-border: transparent;">
                         <items>
                            <TableView fx:id="tblRoomsBooked" prefHeight="617.0" prefWidth="665.0">
                               <columns>
