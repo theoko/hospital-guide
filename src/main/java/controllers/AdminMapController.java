@@ -125,8 +125,6 @@ public class AdminMapController extends MapController {
         UIHelpers.setAdminNodeClickEvent(circ, loc);
         loc.setNodeCircle(circ);
         panMap.getChildren().add(circ);
-
-
     }
 //    public static void removeCircle(Circle c) {
 //        panMap.getChildren().remove(c);
@@ -149,7 +147,7 @@ public class AdminMapController extends MapController {
             if (enableAddNode && !enableEditEdge)
                 addNode(event);
         } catch(Exception e) {
-
+            e.printStackTrace();
         }
 
         // Handle onMousePressed event

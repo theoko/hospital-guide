@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.layout.HBox?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" stylesheets="@css/colorScheme.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminMapController">
     <children>
         <JFXTabPane prefHeight="700.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -89,28 +90,5 @@
                 </Tab>
             </tabs>
         </JFXTabPane>
-        <AnchorPane fx:id="outerProfilePane" layoutX="260.0" layoutY="33.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="50.0">
-            <AnchorPane fx:id="profilePane" layoutX="130.0" layoutY="14.0" prefHeight="316.0" prefWidth="215.0" style="-fx-background-color: #ffffff; -fx-background-radius: 10 10 10 10; -fx-border-width: 1px 1px 1px 1px; -fx-border-color: #022D5A; -fx-border-radius: 10;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                <children>
-                    <VBox layoutX="127.0" layoutY="4.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="1.0">
-                        <children>
-                            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="73.0" prefWidth="339.0" text="Welcome Admin!" textAlignment="CENTER" textFill="#022D5A">
-                                <font>
-                                    <Font name="Moon Bold" size="24.0" />
-                                </font>
-                            </Label>
-                            <VBox alignment="TOP_CENTER" prefHeight="34.0" prefWidth="341.0" spacing="15.0">
-                                <children>
-                                    <JFXButton fx:id="btnBooking" buttonType="RAISED" onMouseClicked="#displayBooking" prefHeight="60.0" prefWidth="150.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Booking..." />
-                                    <JFXButton fx:id="btnDownload" buttonType="RAISED" onMouseClicked="#clickDownload" prefHeight="60.0" prefWidth="150.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Download" />
-                                    <JFXButton fx:id="btnReturn" buttonType="RAISED" onMouseClicked="#logOut" prefHeight="60.0" prefWidth="150.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Logout" />
-                           <JFXToggleButton prefHeight="60.0" prefWidth="211.0" text="Add Node" toggleColor="#022d5a" toggleLineColor="#022d5a" />
-                                </children>
-                            </VBox>
-                        </children>
-                    </VBox>
-                </children>
-            </AnchorPane>
-        </AnchorPane>
     </children>
 </AnchorPane>

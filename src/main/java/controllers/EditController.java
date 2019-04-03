@@ -39,7 +39,9 @@ public class EditController extends PopUpController implements Initializable {
         String value = (String) cmbNodeType.getValue();
         String nType = value.substring(0, value.indexOf(':'));
         loc.setNodeType(Constants.NodeType.valueOf(nType));
-        if(loc.getNodeID() == null) Database.addNewLocation(loc);
+        if (loc.getNodeID() == null) {
+            Database.addNewLocation(loc);
+        }
         VisualRealtimeController.updateCircle(loc.getNodeCircle(),
                 UIHelpers.updateCircleForNodeType(loc));
         ScreenController.deactivate();
