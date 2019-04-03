@@ -29,6 +29,7 @@ public class AdminMapController extends MapController {
     private String selectedFloor = "1", selectedBuilding = "Shapiro";
 
     private static Location selectedLocation; // Location that is being modified or created
+
     public static void locationSelectEvent(Location loc) {
         if(enableEditEdge) {
             if (selectedLocation != loc) {
@@ -67,9 +68,11 @@ public class AdminMapController extends MapController {
             VisualRealtimeController.visuallySelectCircle(loc);
         }
     }
+
     public static void deselectLocation() {
         selectedLocation = null;
     }
+
     public void enableEdgeEditor() {
         try {
             VisualRealtimeController.visuallyDeselectCircle(selectedLocation);
@@ -84,6 +87,7 @@ public class AdminMapController extends MapController {
     public void enableNodeCreation() {
         enableAddNode = !enableAddNode;
     }
+
     public void initialize() {
         // Set tooltip
         toolTip();

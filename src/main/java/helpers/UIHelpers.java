@@ -54,13 +54,9 @@ public class UIHelpers {
 //        pane.getChildren().add(line);
     }
     public static Point generateLocationCoordinates(Location loc) {
-        if(loc.getNodeID().charAt(0) == 'X') {
-            return new Point(loc.getxCord(), loc.getyCord());
-        } else {
-            double x = (loc.getxCord() - MapDisplay.getxShift()) * MapDisplay.getScale();
-            double y = (loc.getyCord() - MapDisplay.getyShift()) * MapDisplay.getScale();
-            return new Point((int) x, (int) y);
-        }
+        double x = (loc.getxCord() - MapDisplay.getxShift()) * MapDisplay.getScale();
+        double y = (loc.getyCord() - MapDisplay.getyShift()) * MapDisplay.getScale();
+        return new Point((int) x, (int) y);
     }
     public static Circle updateCircleForNodeType(Location loc) {
         Circle c = loc.getNodeCircle();
