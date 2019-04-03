@@ -100,8 +100,8 @@ public class Database {
                 "CONSTRAINT nodeIDRoom_fk FOREIGN KEY(nodeID) REFERENCES " + Constants.NODES_TABLE + "(nodeID)" +
                 ")";
 
-        String bookTable = "CREATE TABLE " + Constants.BOOK_TABLE +
-                "(bookingID INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1)," +
+        String bookTable = "CREATE TABLE " + Constants.BOOK_TABLE + "(" +
+                "bookingID INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1)," +
                 "nodeID VARCHAR(100)," +
                 "userID INT," +
                 "startDate TIMESTAMP," +
@@ -109,8 +109,8 @@ public class Database {
                 "CONSTRAINT roomID2_fk FOREIGN KEY(nodeID) REFERENCES " + Constants.NODES_TABLE + "(nodeID)," +
                 "CONSTRAINT userID2_fk FOREIGN KEY(userID) REFERENCES " + Constants.USERS_TABLE + "(userID))";
 
-        String deletedLocationsTable = "CREATE TABLE " + Constants.DELETED_LOCATION_TABLE +
-                "(nodeID VARCHAR(100) PRIMARY KEY," +
+        String deletedLocationsTable = "CREATE TABLE " + Constants.DELETED_LOCATION_TABLE + "(" +
+                "nodeID VARCHAR(100) PRIMARY KEY," +
                 "xCoord INT," +
                 "yCoord INT," +
                 "floor VARCHAR(100)," +
@@ -487,15 +487,20 @@ public class Database {
 
         boolean exists;
 
-        if(Database.getLocations().isEmpty()) {
-            exists = false;
+        HashMap<String, Location> locations = Database.getLocations();
+
+        if(locations != null) {
+            if(locations.isEmpty()) {
+                exists = false;
+            } else {
+                exists = true;
+            }
         } else {
-            exists = true;
+            exists = false;
         }
 
 
         return exists;
-
     }
 
     /**
@@ -1075,7 +1080,7 @@ public class Database {
             return returnList;
 
         } catch (SQLException e) {
-            System.out.println("Failed to get users!");
+            System.out.println("Failed to get deleted locations!");
 
             return null;
         }
@@ -1118,7 +1123,7 @@ public class Database {
             return returnList;
 
         } catch (SQLException e) {
-            System.out.println("Failed to get users!");
+            System.out.println("Failed to get locations!");
 
             return null;
         }
@@ -1146,7 +1151,7 @@ public class Database {
             return returnList;
 
         } catch (SQLException e) {
-            System.out.println("Failed to get users!");
+            System.out.println("Failed to get edges!");
             return null;
         }
     }

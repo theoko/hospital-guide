@@ -148,11 +148,12 @@ public class RoomBookingController extends EmployeeMapController{
 
     /**
      * Populates the rooms available table
-     * @param roomsAvailable
+     * @param roomsA
      */
-    private void populateRoomBookingTable(List<Room> roomsAvailable) {
+    private void populateRoomBookingTable(List<Room> roomsA) {
 
-        rooms.addAll(roomsAvailable);
+        rooms.clear();
+        rooms.addAll(roomsA);
 
         tblRooms.refresh();
 
@@ -164,6 +165,7 @@ public class RoomBookingController extends EmployeeMapController{
      */
     private void populateRoomBookedTable(List<Room> roomsB) {
 
+        roomsBooked.clear();
         roomsBooked.addAll(roomsB);
 
         tblRoomsBooked.refresh();
@@ -189,7 +191,8 @@ public class RoomBookingController extends EmployeeMapController{
         User currentUser = UserHelpers.getCurrentUser();
 
         // Add booking to the database
-        Book book = new Book(totalBookings,
+        Book book = new Book(
+                totalBookings,
                 selected.getRoomID(),
                 currentUser,
                 DatabaseHelpers.getDateTime(startDate, startTime),
@@ -198,20 +201,24 @@ public class RoomBookingController extends EmployeeMapController{
 
         boolean booked = Database.createBooking(book);
 
-        if(booked) {
+//        System.out.println(booked);
+//
+//        if(booked) {
 
             // Add to rooms booked table
             Room roomD = Database.getRoomByID(book.getRoomID());
+            roomsAvailable.remove(roomD);
             roomDetails.add(roomD);
 
+            populateRoomBookingTable(roomsAvailable);
             populateRoomBookedTable(roomDetails);
 
-        } else {
-
-            // Show error
-            System.out.println("failed!!");
-
-        }
+//        } else {
+//
+//            // Show error
+//            System.out.println("failed!!");
+//
+//        }
 
     }
 
@@ -225,8 +232,10 @@ public class RoomBookingController extends EmployeeMapController{
 
             // Check if we have available rooms
             if(roomsAvailable != null) {
-                if(roomsAvailable.size() > 0) {
+                if(roomsAvailable.size() > 0 && tblRooms.getSelectionModel().getSelectedItem() != null) {
                     btnBookSelected.setVisible(true);
+                } else {
+                    btnBookSelected.setVisible(false);
                 }
             }
 
@@ -241,9 +250,7 @@ public class RoomBookingController extends EmployeeMapController{
     public void handleBooking(MouseEvent event) {
 
         event.consume();
-
-        if(tblRooms.getSelectionModel().getSelectedItem() != null)
-            reserveRoom();
+        reserveRoom();
 
     }
 
