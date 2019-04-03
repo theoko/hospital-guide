@@ -33,14 +33,14 @@ public class Database {
 
         try {
             connection = DriverManager.getConnection("jdbc:derby:" + Constants.DB_NAME + ";create=true");
-            dropTables();
+//            dropTables();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-//        if(!databaseExists()) {
+        if(!Database.databaseExists()) {
             createTables();
-//        }
+        }
 
 //        dialect = new DerbyTemplates();
 //        configuration = new Configuration(dialect);
