@@ -26,6 +26,8 @@ public class DirectionsController extends PopUpController implements Initializab
 
     private Location loc2;
 
+    private final double lineWidth = 2.5;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -71,7 +73,7 @@ public class DirectionsController extends PopUpController implements Initializab
                 Location loc2 = lstLocations.get(locID2);
                 Line line = new Line(MapDisplay.scaleX(loc1.getxCord()), MapDisplay.scaleY(loc1.getyCord()), MapDisplay.scaleX(loc2.getxCord()), MapDisplay.scaleY(loc2.getyCord()));
                 line.setStroke(Color.RED);
-                line.setStrokeWidth(5.0);
+                line.setStrokeWidth(lineWidth);
                 pane.getChildren().add(1, line);
             }
         }

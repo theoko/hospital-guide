@@ -30,7 +30,7 @@ public class MapDisplay {
      */
     public static void displayUser(AnchorPane pane, String building, String floor) {
         Map map = MapParser.parse();
-        displayNodesUser(map, pane, building, floor);
+        displayNodesUser(map, pane, floor);
     }
 
     /**
@@ -41,7 +41,7 @@ public class MapDisplay {
      */
     public static void displayEmployee(AnchorPane pane, String building, String floor) {
         Map map = MapParser.parse();
-        displayNodesEmployee(map, pane, building, floor);
+        displayNodesEmployee(map, pane, floor);
     }
 
     /**
@@ -53,7 +53,7 @@ public class MapDisplay {
     public static void displayAdmin(AnchorPane pane, String building, String floor) {
         Map map = MapParser.parse();
         displayEdges(map, pane, building, floor);
-        displayNodesAdmin(map, pane, building, floor);
+        displayNodesAdmin(map, pane, floor);
     }
 
     /**
@@ -64,15 +64,15 @@ public class MapDisplay {
      */
     public static void displayCust(AnchorPane pane, String building, String floor) {
         Map map = MapParser.parse();
-        displayNodesCust(map, pane, building, floor);
+        displayNodesCust(map, pane, floor);
     }
 
 
 
-    private static void displayNodesUser(Map map, AnchorPane pane, String building, String floor) {
+    private static void displayNodesUser(Map map, AnchorPane pane, String floor) {
         HashMap<String, Location> lstLocations = map.getAllLocations();
         for (Location loc : lstLocations.values()) {
-            if (loc.getBuilding().equals(building) && loc.getFloor().equals(floor) && loc.getNodeType() != Constants.NodeType.HALL) {
+            if (loc.getFloor().equals(floor) && loc.getNodeType() != Constants.NodeType.HALL) {
                 double xLoc = (loc.getxCord() - xShift) * scale;
                 double yLoc = (loc.getyCord() - yShift) * scale;
                 Color color = Color.WHITE;
@@ -92,10 +92,10 @@ public class MapDisplay {
         }
     }
 
-    private static void displayNodesCust(Map map, AnchorPane pane, String building, String floor) {
+    private static void displayNodesCust(Map map, AnchorPane pane, String floor) {
         HashMap<String, Location> lstLocations = map.getAllLocations();
         for (Location loc : lstLocations.values()) {
-            if (loc.getBuilding().equals(building) && loc.getFloor().equals(floor) && loc.getNodeType() != Constants.NodeType.HALL) {
+            if (loc.getFloor().equals(floor) && loc.getNodeType() != Constants.NodeType.HALL) {
                 boolean correctCoordinates = loc.getNodeID().substring(0,1).equals("X");
                 double xLoc = (loc.getxCord() - xShift) * scale;
                 double yLoc = (loc.getyCord() - yShift) * scale;
@@ -116,10 +116,10 @@ public class MapDisplay {
         }
     }
 
-    private static void displayNodesEmployee(Map map, AnchorPane pane, String building, String floor) {
+    private static void displayNodesEmployee(Map map, AnchorPane pane, String floor) {
         HashMap<String, Location> lstLocations = map.getAllLocations();
         for (Location loc : lstLocations.values()) {
-            if (loc.getBuilding().equals(building) && loc.getFloor().equals(floor) && loc.getNodeType() != Constants.NodeType.HALL) {
+            if (loc.getFloor().equals(floor) && loc.getNodeType() != Constants.NodeType.HALL) {
                 double xLoc = (loc.getxCord() - xShift) * scale;
                 double yLoc = (loc.getyCord() - yShift) * scale;
                 Color color = Color.WHITE;
@@ -139,10 +139,10 @@ public class MapDisplay {
         }
     }
 
-    private static void displayNodesAdmin(Map map, AnchorPane pane, String building, String floor) {
+    private static void displayNodesAdmin(Map map, AnchorPane pane, String floor) {
         HashMap<String, Location> lstLocations = map.getAllLocations();
         for (Location loc : lstLocations.values()) {
-            if (loc.getBuilding().equals(building) && loc.getFloor().equals(floor)) {
+            if (loc.getFloor().equals(floor)) {
                 boolean correctCoordinates = loc.getNodeID().substring(0, 1).equals("X");
                 double xLoc = (loc.getxCord() - xShift) * scale;
                 double yLoc = (loc.getyCord() - yShift) * scale;
@@ -169,8 +169,7 @@ public class MapDisplay {
         for (Edge edge : lstEdges.values()) {
             Location start = edge.getStart();
             Location end = edge.getEnd();
-            if (start.getBuilding().equals(building) && start.getFloor().equals(floor) &&
-                    end.getBuilding().equals(building) && end.getFloor().equals(floor)) {
+            if (start.getFloor().equals(floor) && end.getFloor().equals(floor)) {
                 double x1 = (start.getxCord() - xShift) * scale;
                 double x2 = (end.getxCord() - xShift) * scale;
                 double y1 = (start.getyCord() - yShift) * scale;
