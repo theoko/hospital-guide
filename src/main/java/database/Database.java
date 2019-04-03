@@ -1252,29 +1252,29 @@ public class Database {
 
         try {
 
-            PreparedStatement statement1;
+//            PreparedStatement statement1;
             PreparedStatement statement2;
             PreparedStatement statement3;
 
-            String sQuery = "SELECT * FROM " + Constants.EDGES_TABLE +
-                    " WHERE STARTNODEID=? OR ENDNODEID=?";
-
-            statement1 = connection.prepareStatement(
-                    sQuery
-            );
-
-            statement1.setString(1, deleteLocation.getNodeID());
-            statement1.setString(2, deleteLocation.getNodeID());
-
-            ResultSet delEdges = statement1.executeQuery();
-
-            while (delEdges.next()) {
-                addDeleteEdge(new Edge(
-                        delEdges.getString("EDGEID"),
-                        getLocationByID(delEdges.getString("STARTNODEID")),
-                        getLocationByID(delEdges.getString("ENDNODEID"))
-                ));
-            }
+//            String sQuery = "SELECT * FROM " + Constants.EDGES_TABLE +
+//                    " WHERE STARTNODEID=? OR ENDNODEID=?";
+//
+//            statement1 = connection.prepareStatement(
+//                    sQuery
+//            );
+//
+//            statement1.setString(1, deleteLocation.getNodeID());
+//            statement1.setString(2, deleteLocation.getNodeID());
+//
+//            ResultSet delEdges = statement1.executeQuery();
+//
+//            while (delEdges.next()) {
+//                addDeleteEdge(new Edge(
+//                        delEdges.getString("EDGEID"),
+//                        getLocationByID(delEdges.getString("STARTNODEID")),
+//                        getLocationByID(delEdges.getString("ENDNODEID"))
+//                ));
+//            }
 
             statement2 = connection.prepareStatement(
                     "DELETE FROM " + Constants.EDGES_TABLE +
@@ -1287,7 +1287,7 @@ public class Database {
             statement2.execute();
 
             // Add location to deleted locations table
-            addDeleteLocation(deleteLocation);
+//            addDeleteLocation(deleteLocation);
 
             statement3 = connection.prepareStatement(
                     "DELETE FROM " + Constants.NODES_TABLE +
