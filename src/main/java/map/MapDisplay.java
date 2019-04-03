@@ -18,9 +18,9 @@ public class MapDisplay {
     private final static double hallRadius = 2.5;
     private final static double locWidth = 2.0;
     private final static double edgeWidth = 1.5;
-    private final static double xShift = -1890.0;
-    private final static double yShift = 805.0;
-    private final static double scale = 0.505;
+    private final static double xShift = -2110.0;
+    private final static double yShift = 730.0;
+    private final static double scale = 0.475;
     private final static Color nodeFill = Color.WHITE;
     private final static Color hallFill = Color.GRAY;
     private final static Color nodeOutline = Color.BLACK;
