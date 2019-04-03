@@ -1,7 +1,9 @@
 package database;
 
+import controllers.VisualRealtimeController;
 import helpers.Constants;
 import helpers.DatabaseHelpers;
+import helpers.MapHelpers;
 import models.map.Edge;
 import models.map.Location;
 import models.room.Book;
@@ -14,7 +16,7 @@ import java.util.*;
 
 
 public class Database {
-
+    private static String newPrefixChar = "X";
     static Connection connection;
 
 //    SQLTemplates dialect;
@@ -267,6 +269,25 @@ public class Database {
         }
 
     }
+    public static boolean addRoom(Room room){
+        try{
+            PreparedStatement statement;
+            statement = connection.prepareStatement(
+                    "INSERT INTO " + Constants.ROOM_TABLE + " (ROOMID, CAPACITY) " +
+                            "VALUES (?, ?)"
+            );
+
+            statement.setString(1, room.getRoomID());
+            statement.setInt(2, room.getCapacity());
+            return statement.execute();
+
+        } catch(SQLException e){
+            System.out.println("Table " + Constants.ROOM_TABLE + " cannot be added!");
+
+            return false;
+        }
+    }
+
 
     /**
      * checks if location is available
@@ -1168,5 +1189,62 @@ public class Database {
 //
 //        db.filterTable(builder);
 
+    }
+    public static void addNewLocation(Location loc) {
+                String locID = Database.generateUniqueNodeID(loc);
+        loc.setNodeID(locID);
+        loc.addCurrNode();
+    }
+    public static String generateUniqueNodeID(Location c) {
+
+        String id = newPrefixChar + c.getNodeType().toString() + "000" +
+                c.getDBFormattedFloor();
+        while(getLocations().containsKey(id)) {
+            String numericalIDStr = id.substring(id.length() - 5, id.length() - 2);
+            int numericalIDVal = Integer.parseInt(numericalIDStr);
+            numericalIDVal++;
+            numericalIDStr = String.format("%03d", numericalIDVal);
+            id = newPrefixChar + c.getNodeType().toString() + numericalIDStr +
+                    c.getDBFormattedFloor();
+        }
+        return id;
+
+    }
+    public static boolean edgeExists(Edge e) {
+        return hasEdgeByID(MapHelpers.generateEdgeID(e, Constants.START_FIRST))
+                || hasEdgeByID(MapHelpers.generateEdgeID(e, Constants.END_FIRST));
+    }
+    public static void removeEdgeByID(Edge e) {
+        if(edgeExists(e)) {
+            String EdgeID = hasEdgeByID(MapHelpers.generateEdgeID(e, Constants.START_FIRST)) ?
+                    MapHelpers.generateEdgeID(e, Constants.START_FIRST)
+                    : MapHelpers.generateEdgeID(e, Constants.END_FIRST);
+//            Edge e = getEdges(getLocations()).get(EdgeID);
+//            VisualRealtimeController.removeLine();
+            //removeEdge(EdgeID);
+        }
+    }
+    public static boolean toggleEdge(Edge e) {
+        boolean edgeExists = edgeExists(e);
+
+        if(e.getEdgeID() == null) {
+            e.setEdgeID(MapHelpers.generateEdgeID(e, Constants.START_FIRST));
+        }
+
+        if(edgeExists) {
+            removeEdgeByID(e);
+            return Constants.DESELECTED;
+        }
+        else {
+            addEdge(e);
+            return Constants.SELECTED;
+        }
+    }
+    public static boolean hasEdgeByID(String id) {
+        List<Edge> edges = getEdges(getLocations());
+        for(Edge e : edges) {
+            if(e.getEdgeID().equals(id)) return true;
+        }
+        return false;
     }
 }

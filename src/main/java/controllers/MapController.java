@@ -14,12 +14,14 @@ public abstract class MapController {
 //    public JFXButton zoomIn;
 //    public JFXButton zoomOut;
 
-    private double sceneX, sceneY;
-    private double translateX, translateY;
+    protected double sceneX, sceneY;
+    protected double translateX, translateY;
+
+
 
     public abstract void initialize();
 
-    public final void floorOneMapOnMousePressed(MouseEvent event) {
+    public void floorOneMapOnMousePressed(MouseEvent event) {
 
         // Handle onMousePressed event
         sceneX = event.getSceneX();
@@ -45,29 +47,29 @@ public abstract class MapController {
         ((AnchorPane) event.getSource()).setTranslateX(((AnchorPane) event.getSource()).getTranslateX() + event.getDeltaX());
         ((AnchorPane) event.getSource()).setTranslateY(((AnchorPane) event.getSource()).getTranslateY() + event.getDeltaY());
 
-        if (((AnchorPane) event.getSource()).getTranslateX() <= -250) {
-            ((AnchorPane) event.getSource()).setTranslateX(-250);
+        if (((AnchorPane) event.getSource()).getTranslateX() <= -861) {
+            ((AnchorPane) event.getSource()).setTranslateX(-861);
         }
 
-        if (((AnchorPane) event.getSource()).getTranslateX() >= 250) {
-            ((AnchorPane) event.getSource()).setTranslateX(250);
+        if (((AnchorPane) event.getSource()).getTranslateX() >= 10) {
+            ((AnchorPane) event.getSource()).setTranslateX(10);
         }
 
-        if (((AnchorPane) event.getSource()).getTranslateY() <= -350) {
-            ((AnchorPane) event.getSource()).setTranslateY(-350);
+        if (((AnchorPane) event.getSource()).getTranslateY() <= -210) {
+            ((AnchorPane) event.getSource()).setTranslateY(-210);
         }
 
-        if (((AnchorPane) event.getSource()).getTranslateY() >= 350) {
-            ((AnchorPane) event.getSource()).setTranslateY(350);
+        if (((AnchorPane) event.getSource()).getTranslateY() >= 510) {
+            ((AnchorPane) event.getSource()).setTranslateY(510);
         }
     }
 
     public final void floorOneMapZoom(ZoomEvent event) {
         ((AnchorPane) event.getSource()).setScaleX(((AnchorPane) event.getSource()).getScaleX() * event.getZoomFactor());
         ((AnchorPane) event.getSource()).setScaleY(((AnchorPane) event.getSource()).getScaleY() * event.getZoomFactor());
-        if(((AnchorPane) event.getSource()).getScaleX() <= 0.85 && ((AnchorPane) event.getSource()).getScaleY() <= 0.85) {
-            ((AnchorPane) event.getSource()).setScaleX(0.85);
-            ((AnchorPane) event.getSource()).setScaleY(0.85);
+        if(((AnchorPane) event.getSource()).getScaleX() <= 0.65 && ((AnchorPane) event.getSource()).getScaleY() <= 0.65) {
+            ((AnchorPane) event.getSource()).setScaleX(0.65);
+            ((AnchorPane) event.getSource()).setScaleY(0.65);
         }
         if(((AnchorPane) event.getSource()).getScaleX() >= 8 && ((AnchorPane) event.getSource()).getScaleY() >= 8) {
             ((AnchorPane) event.getSource()).setScaleX(8);
@@ -76,9 +78,9 @@ public abstract class MapController {
     }
 
     public final void floorOneMapZoomDone(ZoomEvent event) {
-        if(((AnchorPane) event.getSource()).getScaleX() <= 1 && ((AnchorPane) event.getSource()).getScaleY() <= 1) {
-            ((AnchorPane) event.getSource()).setScaleX(1);
-            ((AnchorPane) event.getSource()).setScaleY(1);
+        if(((AnchorPane) event.getSource()).getScaleX() <= 0.85 && ((AnchorPane) event.getSource()).getScaleY() <= 0.85) {
+            ((AnchorPane) event.getSource()).setScaleX(0.85);
+            ((AnchorPane) event.getSource()).setScaleY(0.85);
         }
         if(((AnchorPane) event.getSource()).getScaleX() >= 4 && ((AnchorPane) event.getSource()).getScaleY() >= 4) {
             ((AnchorPane) event.getSource()).setScaleX(4);

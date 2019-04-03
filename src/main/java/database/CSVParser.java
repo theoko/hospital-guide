@@ -20,7 +20,6 @@ public class CSVParser {
 //        data.mkdir();
 
 //        if(FileHelpers.checkJar()) {
-            System.out.println("FUCKING JAR");
             export("eNodes.csv", "eEdges.csv");
 //        } else {
 //            export("data/eNodes.csv", "data/eEdges.csv");

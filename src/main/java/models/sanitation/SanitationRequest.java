@@ -18,6 +18,7 @@ public class SanitationRequest implements Comparable<SanitationRequest> {
         INCOMPLETE, COMPLETE
     }
 
+
     /**
      * Class fields.
      */

@@ -36,7 +36,7 @@ public class CustodianMapController extends MapController {
 
     public void initialize() {
         toolTip();
-        MapDisplay.displayCust(panMap, "Tower", "1");
+        MapDisplay.displayEmployee(panMap, "Shapiro", "1");
         initSanitation();
         updateSanitation();
 
