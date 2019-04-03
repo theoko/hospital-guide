@@ -1,5 +1,6 @@
 package controllers;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTimePicker;
 import database.Database;
@@ -10,6 +11,8 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import models.room.Book;
 import models.room.Room;
 import models.user.User;
@@ -28,6 +31,8 @@ public class RoomBookingController extends EmployeeMapController{
     public JFXDatePicker datEndDay;
     public JFXTimePicker datStartTime;
     public JFXTimePicker datEndTime;
+
+    public JFXButton btnBookSelected;
 
     // Table that displays available rooms
     public TableView<Room> tblRooms;
@@ -54,6 +59,8 @@ public class RoomBookingController extends EmployeeMapController{
     private int totalBookings = 0;
 
     public void initialize() {
+
+        btnBookSelected.setVisible(false);
 
         // Add listeners for date and time pickers
         datStartDay.valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -90,6 +97,8 @@ public class RoomBookingController extends EmployeeMapController{
         tblRoomCapacity.setCellValueFactory(new PropertyValueFactory<>("Capacity"));
         tblRooms.setItems(rooms);
 
+        tblRoomIDBooked.setCellValueFactory(new PropertyValueFactory<>("RoomID"));
+        tblRoomCapacityBooked.setCellValueFactory(new PropertyValueFactory<>("Capacity"));
         tblRoomsBooked.setItems(roomsBooked);
 
     }
@@ -109,6 +118,10 @@ public class RoomBookingController extends EmployeeMapController{
         populateRoomBookedTable(roomDetails);
     }
 
+    /**
+     * Checks if start date/time and end date/time are set
+     */
+    List<Room> roomsAvailable;
     public void checkDateAndTime() {
         if (startDate != null
                 && endDate != null
@@ -117,7 +130,7 @@ public class RoomBookingController extends EmployeeMapController{
 
             timePeriodSet = true;
 
-            List<Room> roomsAvailable = Database.checkAvailabilityTime(
+            roomsAvailable = Database.checkAvailabilityTime(
                     DatabaseHelpers.getDateTime(startDate, startTime),
                     DatabaseHelpers.getDateTime(endDate, endTime)
             );
@@ -127,6 +140,10 @@ public class RoomBookingController extends EmployeeMapController{
         }
     }
 
+    /**
+     * Populates the rooms available table
+     * @param roomsAvailable
+     */
     private void populateRoomBookingTable(List<Room> roomsAvailable) {
 
         rooms.addAll(roomsAvailable);
@@ -135,6 +152,10 @@ public class RoomBookingController extends EmployeeMapController{
 
     }
 
+    /**
+     * Populates the booked rooms table
+     * @param roomsBooked
+     */
     private void populateRoomBookedTable(List<Room> roomsBooked) {
 
         roomsBooked.addAll(roomsBooked);
@@ -162,7 +183,7 @@ public class RoomBookingController extends EmployeeMapController{
         // Add booking to the database
         Book book = new Book(totalBookings,
                 selected.getRoomID(),
-                currentUser.getUserID(),
+                currentUser,
                 DatabaseHelpers.getDateTime(startDate, startTime),
                 DatabaseHelpers.getDateTime(endDate, endTime)
         );
@@ -183,6 +204,33 @@ public class RoomBookingController extends EmployeeMapController{
             System.out.println("failed!!");
 
         }
+
+    }
+
+    /**
+     * Method to handle selected room
+     * @param event
+     */
+    public void handleBookingSelection(MouseEvent event) {
+
+        if(event.getButton().equals(MouseButton.PRIMARY)) {
+
+            // Check if we have available rooms
+            if(roomsAvailable != null) {
+                if(roomsAvailable.size() > 0) {
+                    btnBookSelected.setVisible(true);
+                }
+            }
+
+        }
+
+    }
+
+    public void handleBooking(MouseEvent event) {
+
+        event.consume();
+        assert tblRooms.getSelectionModel().getSelectedItem() != null;
+        reserveRoom();
 
     }
 

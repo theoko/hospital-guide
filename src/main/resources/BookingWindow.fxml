@@ -79,13 +79,13 @@
                                     </VBox.margin></JFXTimePicker>
                                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                                     <children>
-                                       <JFXButton fx:id="btnCancel1" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" prefHeight="42.0" prefWidth="165.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Book Room" textAlignment="CENTER" />
+                                       <JFXButton fx:id="btnBookSelected" onMouseClicked="#handleBooking" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" prefHeight="42.0" prefWidth="165.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Book Room" textAlignment="CENTER" />
                                        <JFXButton fx:id="btnReturn1" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" onMouseClicked="#logOut" prefHeight="11.0" prefWidth="140.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Logout" textAlignment="CENTER" />
                                     </children>
                                  </HBox>
                               </children>
                            </VBox>
-                           <TableView fx:id="tblRooms" prefHeight="643.0" prefWidth="850.0">
+                           <TableView fx:id="tblRooms" prefHeight="643.0" prefWidth="850.0" onMouseClicked="#handleBookingSelection">
                               <columns>
                                  <TableColumn fx:id="tblRoomID" prefWidth="247.0" text="Room ID" />
                                  <TableColumn fx:id="tblRoomCapacity" prefWidth="240.0" text="Capacity" />

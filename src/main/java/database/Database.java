@@ -38,7 +38,9 @@ public class Database {
             e.printStackTrace();
         }
 
-        createTables();
+//        if(!databaseExists()) {
+            createTables();
+//        }
 
 //        dialect = new DerbyTemplates();
 //        configuration = new Configuration(dialect);
@@ -319,12 +321,12 @@ public class Database {
 
             PreparedStatement statement;
             statement = connection.prepareStatement(
-                    "INSERT INTO " + Constants.BOOK_TABLE + " (ROOMID, USERID, STARTDATE, ENDDATE) " +
+                    "INSERT INTO " + Constants.BOOK_TABLE + " (NODEID, USERID, STARTDATE, ENDDATE) " +
                             "VALUES (?, ?, ?, ?)"
             );
 
             statement.setString(1, book.getRoomID());
-            statement.setInt(2, book.getUserID());
+            statement.setInt(2, getUserByUsername(book.getUser().getUsername()).getUserID());
             statement.setTimestamp(3, Timestamp.valueOf(book.getStartDate()));
             statement.setTimestamp(4, Timestamp.valueOf(book.getEndDate()));
 
@@ -551,7 +553,7 @@ public class Database {
                 Book book = new Book(
                         resultSet.getInt("BOOKINGID"),
                         resultSet.getString("ROOMID"),
-                        resultSet.getInt("USERID"),
+                        getUserByID(resultSet.getInt("USERID")),
                         resultSet.getString("STARTDATE"),
                         resultSet.getString("ENDDATES")
                 );
@@ -589,7 +591,7 @@ public class Database {
                 Book book = new Book(
                         resultSet.getInt("BOOKINGID"),
                         resultSet.getString("ROOMID"),
-                        resultSet.getInt("USERID"),
+                        getUserByID(resultSet.getInt("USERID")),
                         resultSet.getString("STARTDATE"),
                         resultSet.getString("ENDDATES")
                 );
@@ -870,7 +872,7 @@ public class Database {
                 Book user = new Book(
                         resultSet.getInt("BOOKINGID"),
                         resultSet.getString("ROOMID"),
-                        resultSet.getInt("USERID"),
+                        getUserByID(resultSet.getInt("USERID")),
                         resultSet.getString("STARTDATE"),
                         resultSet.getString("ENDDATE")
                 );
