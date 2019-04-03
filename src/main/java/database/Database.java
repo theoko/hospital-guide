@@ -319,15 +319,14 @@ public class Database {
 
             PreparedStatement statement;
             statement = connection.prepareStatement(
-                    "INSERT INTO " + Constants.BOOK_TABLE + " (BOOKINGID, ROOMID, USERID, STARTDATE, ENDDATE) " +
-                            "VALUES (?, ?, ?, ?, ?)"
+                    "INSERT INTO " + Constants.BOOK_TABLE + " (ROOMID, USERID, STARTDATE, ENDDATE) " +
+                            "VALUES (?, ?, ?, ?)"
             );
 
-            statement.setInt(1, book.getBookingID());
-            statement.setString(2, book.getRoomID());
-            statement.setInt(3, book.getUserID());
-            statement.setTimestamp(4, Timestamp.valueOf(book.getStartDate()));
-            statement.setTimestamp(5, Timestamp.valueOf(book.getEndDate()));
+            statement.setString(1, book.getRoomID());
+            statement.setInt(2, book.getUserID());
+            statement.setTimestamp(3, Timestamp.valueOf(book.getStartDate()));
+            statement.setTimestamp(4, Timestamp.valueOf(book.getEndDate()));
 
             return statement.execute();
 
@@ -542,23 +541,67 @@ public class Database {
             statement = connection.prepareStatement(
                     "SELECT * FROM " + Constants.BOOK_TABLE + " WHERE ROOMID=?"
             );
-            //TODO: right parameter?
+
             statement.setString(1, roomID);
 
             ResultSet resultSet = statement.executeQuery();
 
-            Book book = new Book(
-                    resultSet.getInt("BOOKINGID"),
-                    resultSet.getString("ROOMID"),
-                    resultSet.getInt("USERID"),
-                    resultSet.getString("STARTDATE"),
-                    resultSet.getString("ENDDATES")
-            );
+            if(resultSet.next()) {
 
-            return book;
+                Book book = new Book(
+                        resultSet.getInt("BOOKINGID"),
+                        resultSet.getString("ROOMID"),
+                        resultSet.getInt("USERID"),
+                        resultSet.getString("STARTDATE"),
+                        resultSet.getString("ENDDATES")
+                );
+
+                return book;
+
+            }
+
+            return null;
 
         } catch (SQLException e) {
             System.out.println("Cannot get room by ID!");
+
+            return null;
+        }
+    }
+
+    public static List<Book> getBookingsForUser(User user) {
+        try {
+
+            PreparedStatement statement;
+
+            statement = connection.prepareStatement(
+                    "SELECT * FROM " + Constants.BOOK_TABLE + " WHERE USERID=?"
+            );
+
+            statement.setInt(1, user.getUserID());
+
+            ResultSet resultSet = statement.executeQuery();
+
+            List<Book> bookings = new ArrayList<>();
+
+            while(resultSet.next()) {
+
+                Book book = new Book(
+                        resultSet.getInt("BOOKINGID"),
+                        resultSet.getString("ROOMID"),
+                        resultSet.getInt("USERID"),
+                        resultSet.getString("STARTDATE"),
+                        resultSet.getString("ENDDATES")
+                );
+
+                bookings.add(book);
+
+            }
+
+            return bookings;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
 
             return null;
         }

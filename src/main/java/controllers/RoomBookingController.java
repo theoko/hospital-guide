@@ -16,6 +16,7 @@ import models.user.User;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RoomBookingController extends EmployeeMapController{
@@ -30,12 +31,17 @@ public class RoomBookingController extends EmployeeMapController{
 
     // Table that displays available rooms
     public TableView<Room> tblRooms;
+    public TableView<Room> tblRoomsBooked;
 
     // Columns
     public TableColumn<Room, String> tblRoomID;
     public TableColumn<Room, String> tblRoomCapacity;
 
+    public TableColumn<Room, String> tblRoomIDBooked;
+    public TableColumn<Room, String> tblRoomCapacityBooked;
+
     ObservableList<Room> rooms = FXCollections.observableArrayList();
+    ObservableList<Room> roomsBooked = FXCollections.observableArrayList();
 
     LocalDate startDate;
     LocalDate endDate;
@@ -44,6 +50,8 @@ public class RoomBookingController extends EmployeeMapController{
     LocalTime endTime;
 
     boolean timePeriodSet = false;
+
+    private int totalBookings = 0;
 
     public void initialize() {
 
@@ -70,6 +78,8 @@ public class RoomBookingController extends EmployeeMapController{
 
 
         initBooking();
+        initBooked();
+
     }
 
     private void initBooking() {
@@ -80,6 +90,23 @@ public class RoomBookingController extends EmployeeMapController{
         tblRoomCapacity.setCellValueFactory(new PropertyValueFactory<>("Capacity"));
         tblRooms.setItems(rooms);
 
+        tblRoomsBooked.setItems(roomsBooked);
+
+    }
+
+    List<Room> roomDetails = new ArrayList<>();
+    private void initBooked() {
+        User currentUser = UserHelpers.getCurrentUser();
+
+        List<Book> roomsBooked = Database.getBookingsForUser(currentUser);
+
+        for(Book booking : roomsBooked) {
+            Room currRoom = Database.getRoomByID(booking.getRoomID());
+
+            roomDetails.add(currRoom);
+        }
+
+        populateRoomBookedTable(roomDetails);
     }
 
     public void checkDateAndTime() {
@@ -108,10 +135,23 @@ public class RoomBookingController extends EmployeeMapController{
 
     }
 
+    private void populateRoomBookedTable(List<Room> roomsBooked) {
+
+        roomsBooked.addAll(roomsBooked);
+
+        tblRoomsBooked.refresh();
+
+    }
+
     /**
      * Called on when user clicks on the book button
      */
     private void reserveRoom() {
+
+        assert startDate != null;
+        assert startTime != null;
+        assert endDate != null;
+        assert endTime != null;
 
         // Get selected room
         Room selected = tblRooms.getSelectionModel().getSelectedItem();
@@ -120,9 +160,29 @@ public class RoomBookingController extends EmployeeMapController{
         User currentUser = UserHelpers.getCurrentUser();
 
         // Add booking to the database
-//        Book book = new Book()
-//        Database.createBooking()
+        Book book = new Book(totalBookings,
+                selected.getRoomID(),
+                currentUser.getUserID(),
+                DatabaseHelpers.getDateTime(startDate, startTime),
+                DatabaseHelpers.getDateTime(endDate, endTime)
+        );
 
+        boolean booked = Database.createBooking(book);
+
+        if(booked) {
+
+            // Add to rooms booked table
+            Room roomD = Database.getRoomByID(book.getRoomID());
+            roomDetails.add(roomD);
+
+            populateRoomBookedTable(roomDetails);
+
+        } else {
+
+            // Show error
+            System.out.println("failed!!");
+
+        }
 
     }
 
