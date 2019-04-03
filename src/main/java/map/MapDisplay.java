@@ -96,7 +96,6 @@ public class MapDisplay {
         HashMap<String, Location> lstLocations = map.getAllLocations();
         for (Location loc : lstLocations.values()) {
             if (loc.getFloor().equals(floor) && loc.getNodeType() != Constants.NodeType.HALL) {
-                boolean correctCoordinates = loc.getNodeID().substring(0,1).equals("X");
                 double xLoc = (loc.getxCord() - xShift) * scale;
                 double yLoc = (loc.getyCord() - yShift) * scale;
                 Color color = nodeFill;
@@ -143,9 +142,8 @@ public class MapDisplay {
         HashMap<String, Location> lstLocations = map.getAllLocations();
         for (Location loc : lstLocations.values()) {
             if (loc.getFloor().equals(floor)) {
-                boolean correctCoordinates = loc.getNodeID().substring(0, 1).equals("X");
-                double xLoc = correctCoordinates ? loc.getxCord() : (loc.getxCord() - xShift) * scale;
-                double yLoc = correctCoordinates ? loc.getyCord() : (loc.getyCord() - yShift) * scale;
+                double xLoc = (loc.getxCord() - xShift) * scale;
+                double yLoc = (loc.getyCord() - yShift) * scale;
                 Circle circle;
                 if (loc.getNodeType() != Constants.NodeType.HALL) {
                     Color color = nodeFill;

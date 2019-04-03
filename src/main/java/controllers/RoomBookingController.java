@@ -207,11 +207,18 @@ public class RoomBookingController extends EmployeeMapController{
 
             // Add to rooms booked table
             Room roomD = Database.getRoomByID(book.getRoomID());
-            roomsAvailable.remove(roomD);
+//            roomsAvailable.remove(roomD);
+
+            for(int i=0; i<roomsAvailable.size(); i++) {
+                if(roomsAvailable.get(i).getRoomID().equals(roomD.getRoomID())) {
+                    roomsAvailable.remove(i);
+                }
+            }
+
             roomDetails.add(roomD);
 
-            populateRoomBookingTable(roomsAvailable);
             populateRoomBookedTable(roomDetails);
+            populateRoomBookingTable(roomsAvailable);
 
 //        } else {
 //

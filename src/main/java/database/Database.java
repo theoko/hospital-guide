@@ -50,6 +50,7 @@ public class Database {
      * Drops all database tables
      */
     public static void dropTables() {
+        dropDeletedEdgesTable();
         dropDeletedLocationTable();
         dropSanitationTable();
         dropBookTable();
@@ -119,6 +120,13 @@ public class Database {
                 "longName VARCHAR(100)," +
                 "shortName VARCHAR(100))";
 
+        String deletedEdgesTable = "CREATE TABLE " + Constants.DELETED_EDGES_TABLE +
+                "(edgeID VARCHAR(100) PRIMARY KEY," +
+                "startNodeID VARCHAR(100)," +
+                "endNodeID VARCHAR(100)," +
+                "CONSTRAINT startNodeIDdel_fk FOREIGN KEY(startNodeID) REFERENCES " + Constants.DELETED_LOCATION_TABLE + "(nodeID)," +
+                "CONSTRAINT endNodeIDdel_fk FOREIGN KEY(endNodeID) REFERENCES " + Constants.DELETED_LOCATION_TABLE + "(nodeID))";
+
         String sanitationTable = "CREATE TABLE " + Constants.SANITATION_TABLE + "(" +
                 "requestID INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1)," +
                 "nodeID VARCHAR(100) References " + Constants.NODES_TABLE + " (nodeID), " +
@@ -140,6 +148,7 @@ public class Database {
             statement.execute(bookTable);
             statement.execute(sanitationTable);
             statement.execute(deletedLocationsTable);
+            statement.execute(deletedEdgesTable);
 
         } catch (SQLException | NullPointerException e) {
             e.printStackTrace();
@@ -378,6 +387,20 @@ public class Database {
     /**
      * Drop tables
      */
+    private static boolean dropDeletedEdgesTable() {
+        try {
+            Statement statement;
+
+            statement = connection.createStatement();
+
+            return statement.execute("DROP TABLE " + Constants.DELETED_EDGES_TABLE);
+        } catch (SQLException e) {
+            System.out.println("Table " + Constants.DELETED_EDGES_TABLE + " cannot be dropped");
+
+            return false;
+        }
+    }
+
     private static boolean dropDeletedLocationTable() {
         try {
             Statement statement;
@@ -755,7 +778,7 @@ public class Database {
             statement.setInt(3, location.getyCord());
             statement.setString(4, location.getFloor());
             statement.setString(5, location.getBuilding());
-            statement.setString(6, String.valueOf(DatabaseHelpers.enumToString(location.getNodeType())));
+            statement.setString(6, location.getNodeType().name());
             statement.setString(7, location.getLongName());
             statement.setString(8, location.getShortName());
 
@@ -764,6 +787,31 @@ public class Database {
         } catch (SQLException e) {
             System.out.println("Location " + location.getNodeID() + " cannot be added!");
             e.printStackTrace();
+
+            return false;
+        }
+
+    }
+
+    public static boolean addDeleteEdge(Edge edge) {
+
+        try {
+
+            PreparedStatement statement;
+
+            statement = connection.prepareStatement(
+                    "INSERT INTO " + Constants.DELETED_EDGES_TABLE + " (EDGEID, STARTNODEID, ENDNODEID) " +
+                            "VALUES (?, ?, ?)"
+            );
+
+            statement.setString(1, edge.getEdgeID());
+            statement.setString(2, edge.getStart().getNodeID());
+            statement.setString(3, edge.getEnd().getNodeID());
+
+            return statement.execute();
+
+        } catch (SQLException e) {
+            System.out.println("SubPath cannot be added to deleted edges table!");
 
             return false;
         }
@@ -790,7 +838,7 @@ public class Database {
                         resultSet.getInt("YCOORD"),
                         resultSet.getString("FLOOR"),
                         resultSet.getString("BUILDING"),
-                        DatabaseHelpers.stringToEnum(resultSet.getString("NODETYPE")),
+                        Constants.NodeType.valueOf(resultSet.getString("NODETYPE")),
                         resultSet.getString("LONGNAME"),
                         resultSet.getString("SHORTNAME")
                 );
@@ -1206,27 +1254,49 @@ public class Database {
 
             PreparedStatement statement1;
             PreparedStatement statement2;
+            PreparedStatement statement3;
 
-            addDeleteLocation(deleteLocation);
+            String sQuery = "SELECT * FROM " + Constants.EDGES_TABLE +
+                    " WHERE STARTNODEID=? OR ENDNODEID=?";
 
             statement1 = connection.prepareStatement(
-                    "DELETE FROM " + Constants.EDGES_TABLE +
-                            " WHERE STARTNODEID=? OR ENDNODEID=?"
+                    sQuery
             );
 
             statement1.setString(1, deleteLocation.getNodeID());
             statement1.setString(2, deleteLocation.getNodeID());
 
-            statement1.execute();
+            ResultSet delEdges = statement1.executeQuery();
+
+            while (delEdges.next()) {
+                addDeleteEdge(new Edge(
+                        delEdges.getString("EDGEID"),
+                        getLocationByID(delEdges.getString("STARTNODEID")),
+                        getLocationByID(delEdges.getString("ENDNODEID"))
+                ));
+            }
 
             statement2 = connection.prepareStatement(
+                    "DELETE FROM " + Constants.EDGES_TABLE +
+                            " WHERE STARTNODEID=? OR ENDNODEID=?"
+            );
+
+            statement2.setString(1, deleteLocation.getNodeID());
+            statement2.setString(2, deleteLocation.getNodeID());
+
+            statement2.execute();
+
+            // Add location to deleted locations table
+            addDeleteLocation(deleteLocation);
+
+            statement3 = connection.prepareStatement(
                     "DELETE FROM " + Constants.NODES_TABLE +
                             " WHERE NODEID=?"
             );
 
-            statement2.setString(1, deleteLocation.getNodeID());
+            statement3.setString(1, deleteLocation.getNodeID());
 
-            return statement2.execute();
+            return statement3.execute();
 
         } catch (SQLException e) {
             System.out.println("Failed to update location: " + deleteLocation.getNodeID());
@@ -1321,10 +1391,11 @@ public class Database {
 //        db.filterTable(builder);
 
     }
-    public static void addNewLocation(Location loc) {
+    public static String addNewLocation(Location loc) {
                 String locID = Database.generateUniqueNodeID(loc);
         loc.setNodeID(locID);
         loc.addCurrNode();
+        return locID;
     }
 
     public static String generateUniqueNodeID(Location c) {
