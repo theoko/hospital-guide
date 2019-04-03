@@ -14,21 +14,24 @@ import java.util.HashMap;
 
 public class MapDisplay {
 
-    private final static double locRadius = 5.0;
+    private final static double locRadius = 7.5;
     private final static double hallRadius = 2.5;
-    private final static double locWidth = 1.0;
+    private final static double locWidth = 2.0;
     private final static double edgeWidth = 1.5;
     private final static double xShift = -2110.0;
     private final static double yShift = 730.0;
     private final static double scale = 0.475;
+    private final static Color nodeFill = Color.WHITE;
+    private final static Color hallFill = Color.GRAY;
+    private final static Color nodeOutline = Color.BLACK;
+    private final static Color edgeFill = Color.BLACK;
 
     /**
      * Display the graph on a map for the default user (no halls, info boxes)
      * @param pane
-     * @param building
      * @param floor
      */
-    public static void displayUser(AnchorPane pane, String building, String floor) {
+    public static void displayUser(AnchorPane pane, String floor) {
         Map map = MapParser.parse();
         displayNodesUser(map, pane, floor);
     }
@@ -36,10 +39,9 @@ public class MapDisplay {
     /**
      * Display the graph of a map for employees (halls, info boxes with spill reporting)
      * @param pane
-     * @param building
      * @param floor
      */
-    public static void displayEmployee(AnchorPane pane, String building, String floor) {
+    public static void displayEmployee(AnchorPane pane, String floor) {
         Map map = MapParser.parse();
         displayNodesEmployee(map, pane, floor);
     }
@@ -47,22 +49,20 @@ public class MapDisplay {
     /**
      * Display the graph on a map for the admin (halls, edit boxes)
      * @param pane
-     * @param building
      * @param floor
      */
-    public static void displayAdmin(AnchorPane pane, String building, String floor) {
+    public static void displayAdmin(AnchorPane pane, String floor) {
         Map map = MapParser.parse();
-        displayEdges(map, pane, building, floor);
+        displayEdges(map, pane, floor);
         displayNodesAdmin(map, pane, floor);
     }
 
     /**
      * Display the graph on a map for the custodian (no halls)
      * @param pane
-     * @param building
      * @param floor
      */
-    public static void displayCust(AnchorPane pane, String building, String floor) {
+    public static void displayCust(AnchorPane pane, String floor) {
         Map map = MapParser.parse();
         displayNodesCust(map, pane, floor);
     }
@@ -75,9 +75,9 @@ public class MapDisplay {
             if (loc.getFloor().equals(floor) && loc.getNodeType() != Constants.NodeType.HALL) {
                 double xLoc = (loc.getxCord() - xShift) * scale;
                 double yLoc = (loc.getyCord() - yShift) * scale;
-                Color color = Color.WHITE;
+                Color color = nodeFill;
                 Circle circle = new Circle(xLoc, yLoc, locRadius, color);
-                circle.setStroke(Color.BLACK);
+                circle.setStroke(nodeOutline);
                 circle.setStrokeWidth(locWidth);
                 circle.setOnMouseClicked(event -> {
                     try {
@@ -99,9 +99,9 @@ public class MapDisplay {
                 boolean correctCoordinates = loc.getNodeID().substring(0,1).equals("X");
                 double xLoc = (loc.getxCord() - xShift) * scale;
                 double yLoc = (loc.getyCord() - yShift) * scale;
-                Color color = Color.WHITE;
+                Color color = nodeFill;
                 Circle circle = new Circle(xLoc, yLoc, locRadius, color);
-                circle.setStroke(Color.BLACK);
+                circle.setStroke(nodeOutline);
                 circle.setStrokeWidth(locWidth);
                 circle.setOnMouseClicked(event -> {
                     try {
@@ -122,9 +122,9 @@ public class MapDisplay {
             if (loc.getFloor().equals(floor) && loc.getNodeType() != Constants.NodeType.HALL) {
                 double xLoc = (loc.getxCord() - xShift) * scale;
                 double yLoc = (loc.getyCord() - yShift) * scale;
-                Color color = Color.WHITE;
+                Color color = nodeFill;
                 Circle circle = new Circle(xLoc, yLoc, locRadius, color);
-                circle.setStroke(Color.BLACK);
+                circle.setStroke(nodeOutline);
                 circle.setStrokeWidth(locWidth);
                 circle.setOnMouseClicked(event -> {
                     try {
@@ -148,14 +148,14 @@ public class MapDisplay {
                 double yLoc = correctCoordinates ? loc.getyCord() : (loc.getyCord() - yShift) * scale;
                 Circle circle;
                 if (loc.getNodeType() != Constants.NodeType.HALL) {
-                    Color color = Color.WHITE;
+                    Color color = nodeFill;
                     circle = new Circle(xLoc, yLoc, locRadius, color);
                 } else {
-                    Color color = Color.GRAY;
+                    Color color = hallFill;
                     circle = new Circle(xLoc, yLoc, hallRadius, color);
                 }
 
-                circle.setStroke(Color.BLACK);
+                circle.setStroke(nodeOutline);
                 circle.setStrokeWidth(locWidth);
                 UIHelpers.setAdminNodeClickEvent(circle, loc);
                 loc.setNodeCircle(circle);
@@ -164,7 +164,7 @@ public class MapDisplay {
         }
     }
 
-    private static void displayEdges(Map map, AnchorPane pane, String building, String floor) {
+    private static void displayEdges(Map map, AnchorPane pane, String floor) {
         HashMap<String, Edge> lstEdges = map.getAllEdges();
         for (Edge edge : lstEdges.values()) {
             Location start = edge.getStart();
@@ -175,7 +175,7 @@ public class MapDisplay {
                 double y1 = (start.getyCord() - yShift) * scale;
                 double y2 = (end.getyCord() - yShift) * scale;
                 Line line = new Line(x1, y1, x2, y2);
-                line.setStroke(Color.BLACK);
+                line.setStroke(edgeFill);
                 line.setStrokeWidth(edgeWidth);
                 pane.getChildren().add(line);
             }
