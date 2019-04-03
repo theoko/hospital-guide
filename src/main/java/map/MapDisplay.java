@@ -18,9 +18,9 @@ public class MapDisplay {
     private final static double hallRadius = 2.5;
     private final static double locWidth = 1.0;
     private final static double edgeWidth = 1.5;
-    private final static double xShift = -1890.0;
-    private final static double yShift = 805.0;
-    private final static double scale = 0.505;
+    private final static double xShift = -2110.0;
+    private final static double yShift = 730.0;
+    private final static double scale = 0.475;
 
     /**
      * Display the graph on a map for the default user (no halls, info boxes)
