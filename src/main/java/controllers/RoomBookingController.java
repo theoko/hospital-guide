@@ -109,13 +109,19 @@ public class RoomBookingController extends EmployeeMapController{
 
         List<Book> roomsBooked = Database.getBookingsForUser(currentUser);
 
-        for(Book booking : roomsBooked) {
-            Room currRoom = Database.getRoomByID(booking.getRoomID());
+        if(roomsBooked != null) {
 
-            roomDetails.add(currRoom);
+            System.out.println(roomsBooked.toString());
+
+            for (Book booking : roomsBooked) {
+                Room currRoom = Database.getRoomByID(booking.getRoomID());
+
+                roomDetails.add(currRoom);
+            }
+
+            populateRoomBookedTable(roomDetails);
         }
 
-        populateRoomBookedTable(roomDetails);
     }
 
     /**
@@ -154,11 +160,11 @@ public class RoomBookingController extends EmployeeMapController{
 
     /**
      * Populates the booked rooms table
-     * @param roomsBooked
+     * @param roomsB
      */
-    private void populateRoomBookedTable(List<Room> roomsBooked) {
+    private void populateRoomBookedTable(List<Room> roomsB) {
 
-        roomsBooked.addAll(roomsBooked);
+        roomsBooked.addAll(roomsB);
 
         tblRoomsBooked.refresh();
 
@@ -169,10 +175,12 @@ public class RoomBookingController extends EmployeeMapController{
      */
     private void reserveRoom() {
 
-        assert startDate != null;
-        assert startTime != null;
-        assert endDate != null;
-        assert endTime != null;
+        if (startDate == null ||
+            startTime == null ||
+            endDate == null ||
+            endTime == null) {
+                return;
+        }
 
         // Get selected room
         Room selected = tblRooms.getSelectionModel().getSelectedItem();
@@ -226,11 +234,16 @@ public class RoomBookingController extends EmployeeMapController{
 
     }
 
+    /**
+     * Method to handle the book room button on click event
+     * @param event
+     */
     public void handleBooking(MouseEvent event) {
 
         event.consume();
-        assert tblRooms.getSelectionModel().getSelectedItem() != null;
-        reserveRoom();
+
+        if(tblRooms.getSelectionModel().getSelectedItem() != null)
+            reserveRoom();
 
     }
 

@@ -574,13 +574,21 @@ public class Database {
     public static List<Book> getBookingsForUser(User user) {
         try {
 
+            User userByUsername = getUserByUsername(user.getUsername());
+
+            if(userByUsername == null) {
+                return null;
+            }
+
+            int userID = userByUsername.getUserID();
+
             PreparedStatement statement;
 
             statement = connection.prepareStatement(
                     "SELECT * FROM " + Constants.BOOK_TABLE + " WHERE USERID=?"
             );
 
-            statement.setInt(1, user.getUserID());
+            statement.setInt(1, userID);
 
             ResultSet resultSet = statement.executeQuery();
 
@@ -590,10 +598,10 @@ public class Database {
 
                 Book book = new Book(
                         resultSet.getInt("BOOKINGID"),
-                        resultSet.getString("ROOMID"),
+                        resultSet.getString("NODEID"),
                         getUserByID(resultSet.getInt("USERID")),
                         resultSet.getString("STARTDATE"),
-                        resultSet.getString("ENDDATES")
+                        resultSet.getString("ENDDATE")
                 );
 
                 bookings.add(book);
