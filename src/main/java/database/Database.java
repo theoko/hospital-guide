@@ -1,6 +1,5 @@
 package database;
 
-import controllers.VisualRealtimeController;
 import helpers.Constants;
 import helpers.DatabaseHelpers;
 import helpers.MapHelpers;
@@ -16,12 +15,9 @@ import java.util.*;
 
 
 public class Database {
+
     private static String newPrefixChar = "X";
     static Connection connection;
-
-//    SQLTemplates dialect;
-//    Configuration configuration;
-//    SQLQueryFactory sqlQueryFactory;
 
     static {
 
@@ -73,7 +69,7 @@ public class Database {
         }
 
         String usersTable = "CREATE TABLE " + Constants.USERS_TABLE +
-                "(userID INT PRIMARY KEY," +
+                "(userID INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1)," +
                 " username VARCHAR(32), " +
                 " password VARCHAR(32)," +
                 " userType VARCHAR(32))";
@@ -103,7 +99,7 @@ public class Database {
                 ")";
 
         String bookTable = "CREATE TABLE " + Constants.BOOK_TABLE +
-                "(bookingID INT PRIMARY KEY," +
+                "(bookingID INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1)," +
                 "nodeID VARCHAR(100)," +
                 "userID INT," +
                 "startDate TIMESTAMP," +
@@ -271,7 +267,7 @@ public class Database {
     }
 
     /**
-     * checks if location is available
+     * Checks if location is available
      */
     public static List<Room> checkAvailabilityTime(String startTime, String endTime) {
 
@@ -314,24 +310,64 @@ public class Database {
     }
 
     /**
-     * Creates user based off of database
+     * Create a booking for a room
+     * @param book
      */
-    public static boolean createUser(User user) {
+    public static boolean createBooking(Book book) {
+
         try {
+
             PreparedStatement statement;
             statement = connection.prepareStatement(
-                    "INSERT INTO " + Constants.USERS_TABLE + " (USERID, USERNAME, PASSWORD, USERTYPE) " +
-                            "VALUES (?, ?, ?, ?)"
+                    "INSERT INTO " + Constants.BOOK_TABLE + " (BOOKINGID, ROOMID, USERID, STARTDATE, ENDDATE) " +
+                            "VALUES (?, ?, ?, ?, ?)"
             );
 
-            statement.setInt(1, user.getUserID());
-            statement.setString(2, user.getUsername());
-            statement.setString(3, user.getPassword());
-            statement.setString(4, user.getUserType().name());
+            statement.setInt(1, book.getBookingID());
+            statement.setString(2, book.getRoomID());
+            statement.setInt(3, book.getUserID());
+            statement.setTimestamp(4, Timestamp.valueOf(book.getStartDate()));
+            statement.setTimestamp(5, Timestamp.valueOf(book.getEndDate()));
+
             return statement.execute();
 
         } catch (SQLException e) {
-            System.out.println("Table " + Constants.USERS_TABLE + " cannot be added!");
+            e.printStackTrace();
+
+            return false;
+        }
+
+    }
+
+    /**
+     * Creates user based off of database
+     */
+    public static boolean createUser(User user) {
+
+        try {
+
+            User checkUser = Database.getUserByUsername(user.getUsername());
+
+            // We need to create the user
+            if(checkUser == null) {
+
+                PreparedStatement statement;
+                statement = connection.prepareStatement(
+                        "INSERT INTO " + Constants.USERS_TABLE + " (USERNAME, PASSWORD, USERTYPE) " +
+                                "VALUES (?, ?, ?)"
+                );
+
+                statement.setString(1, user.getUsername());
+                statement.setString(2, user.getPassword());
+                statement.setString(3, user.getUserType().name());
+                return statement.execute();
+
+            } else {
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
 
             return false;
         }
@@ -443,6 +479,25 @@ public class Database {
     }
 
     /**
+     * Checks if the database exists locally
+     * @return true if the database exists, false otherwise
+     */
+    public static boolean databaseExists() {
+
+        boolean exists;
+
+        if(Database.getLocations().isEmpty()) {
+            exists = false;
+        } else {
+            exists = true;
+        }
+
+
+        return exists;
+
+    }
+
+    /**
      * Generalized function for filtering tables
      *
      * @return a list of objects
@@ -496,8 +551,8 @@ public class Database {
                     resultSet.getInt("BOOKINGID"),
                     resultSet.getString("ROOMID"),
                     resultSet.getInt("USERID"),
-                    resultSet.getDate("STARTDATE"),
-                    resultSet.getDate("ENDDATES")
+                    resultSet.getString("STARTDATE"),
+                    resultSet.getString("ENDDATES")
             );
 
             return book;
@@ -509,7 +564,7 @@ public class Database {
         }
     }
 
-    public User getUserByID(int userID) {
+    public static User getUserByID(int userID) {
         try {
 
             PreparedStatement statement;
@@ -522,17 +577,54 @@ public class Database {
 
             ResultSet resultSet = statement.executeQuery();
 
-            User user = new User(
-                    resultSet.getInt("USERID"),
-                    resultSet.getString("USERNAME"),
-                    resultSet.getString("PASSWORD"),
-                    Constants.Auth.valueOf(resultSet.getString("USERTYPE"))
-            );
+            if(resultSet.next()) {
+                User user = new User(
+                        resultSet.getInt("USERID"),
+                        resultSet.getString("USERNAME"),
+                        resultSet.getString("PASSWORD"),
+                        Constants.Auth.valueOf(resultSet.getString("USERTYPE"))
+                );
 
-            return user;
+                return user;
+            }
+
+            return null;
 
         } catch (SQLException e) {
             System.out.println("Cannot get user by ID!");
+
+            return null;
+        }
+    }
+
+    public static User getUserByUsername(String username) {
+        try {
+
+            PreparedStatement statement;
+
+            statement = connection.prepareStatement(
+                    "SELECT * FROM " + Constants.USERS_TABLE + " WHERE USERNAME=?"
+            );
+
+            statement.setString(1, username);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if(resultSet.next()) {
+                User user = new User(
+                        resultSet.getInt("USERID"),
+                        resultSet.getString("USERNAME"),
+                        resultSet.getString("PASSWORD"),
+                        Constants.Auth.valueOf(resultSet.getString("USERTYPE"))
+                );
+
+                return user;
+            }
+
+            return null;
+
+        } catch (SQLException e) {
+            System.out.println("Cannot get user by username!");
 
             return null;
         }
@@ -736,8 +828,8 @@ public class Database {
                         resultSet.getInt("BOOKINGID"),
                         resultSet.getString("ROOMID"),
                         resultSet.getInt("USERID"),
-                        resultSet.getDate("STARTDATE"),
-                        resultSet.getDate("ENDDATE")
+                        resultSet.getString("STARTDATE"),
+                        resultSet.getString("ENDDATE")
                 );
 
                 returnList.add(user);

@@ -15,9 +15,9 @@ public class User {
         this.username = username;
         this.password = password;
         this.userType = userType;
-        create();
     }
-    private boolean create(){
+
+    public boolean create(){
         return Database.createUser(this);
     }
 

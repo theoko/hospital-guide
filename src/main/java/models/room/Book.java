@@ -6,10 +6,10 @@ public class Book {
     private int bookingID;
     private String roomID;
     private int userID;
-    private Date startDate;
-    private Date endDate;
+    private String startDate;
+    private String endDate;
 
-    public Book(int bookingID, String roomID, int userID, Date startDate, Date endDate) {
+    public Book(int bookingID, String roomID, int userID, String startDate, String endDate) {
         this.bookingID = bookingID;
         this.roomID = roomID;
         this.userID = userID;
@@ -41,19 +41,19 @@ public class Book {
         this.userID = userID;
     }
 
-    public Date getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 }

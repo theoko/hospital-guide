@@ -3,19 +3,19 @@ package controllers;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTimePicker;
 import database.Database;
-import helpers.Constants;
+import helpers.DatabaseHelpers;
+import helpers.UserHelpers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import models.room.Book;
 import models.room.Room;
+import models.user.User;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
 import java.util.List;
 
 public class RoomBookingController {
@@ -29,7 +29,7 @@ public class RoomBookingController {
     public JFXTimePicker datEndTime;
 
     // Table that displays available rooms
-    public TableView tblRooms;
+    public TableView<Room> tblRooms;
 
     // Columns
     public TableColumn<Room, String> tblRoomID;
@@ -75,27 +75,10 @@ public class RoomBookingController {
     private void initBooking() {
 
         // Initialize table
+        // Column names SHOULD be EXACTLY EQUAL to the ObservableList attributes
         tblRoomID.setCellValueFactory(new PropertyValueFactory<>("RoomID"));
         tblRoomCapacity.setCellValueFactory(new PropertyValueFactory<>("Capacity"));
         tblRooms.setItems(rooms);
-
-    }
-
-    public String getDateTime(LocalDate date, LocalTime time) {
-
-        try {
-
-            Date parsedDate = new SimpleDateFormat(Constants.dateFormat).parse(
-                    date.toString() + " " + time.toString() + ":00"
-            );
-
-            return new SimpleDateFormat(Constants.dateFormat).format(parsedDate);
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-
-            return null;
-        }
 
     }
 
@@ -108,8 +91,8 @@ public class RoomBookingController {
             timePeriodSet = true;
 
             List<Room> roomsAvailable = Database.checkAvailabilityTime(
-                    getDateTime(startDate, startTime),
-                    getDateTime(endDate, endTime)
+                    DatabaseHelpers.getDateTime(startDate, startTime),
+                    DatabaseHelpers.getDateTime(endDate, endTime)
             );
 
             populateRoomBookingTable(roomsAvailable);
@@ -122,6 +105,24 @@ public class RoomBookingController {
         rooms.addAll(roomsAvailable);
 
         tblRooms.refresh();
+
+    }
+
+    /**
+     * Called on when user clicks on the book button
+     */
+    private void reserveRoom() {
+
+        // Get selected room
+        Room selected = tblRooms.getSelectionModel().getSelectedItem();
+
+        // Get currently authenticated user
+        User currentUser = UserHelpers.getCurrentUser();
+
+        // Add booking to the database
+//        Book book = new Book()
+//        Database.createBooking()
+
 
     }
 
