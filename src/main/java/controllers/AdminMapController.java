@@ -1,6 +1,7 @@
 package controllers;
 
 import com.jfoenix.controls.JFXButton;
+import com.querydsl.core.types.Constant;
 import database.Database;
 import helpers.Constants;
 import helpers.MapHelpers;
@@ -20,6 +21,7 @@ import java.util.HashMap;
 
 public class AdminMapController extends MapController {
     public JFXButton btnDownload;
+    public JFXButton btnBooking;
 
     private static boolean enableAddNode = false;
     private static boolean enableEditEdge = false;
@@ -83,7 +85,9 @@ public class AdminMapController extends MapController {
         enableAddNode = !enableAddNode;
     }
     public void initialize() {
+        // Set tooltip
         toolTip();
+
         MapDisplay.displayAdmin(panMap, "Shapiro", "1");
         VisualRealtimeController.setPanMap(panMap);
         selectedLocation = null;
@@ -98,6 +102,12 @@ public class AdminMapController extends MapController {
         event.consume();
         ScreenController.deactivate();
         ScreenController.activate("download");
+    }
+
+    public void displayBooking(MouseEvent event) throws Exception {
+        event.consume();
+        ScreenController.deactivate();
+        ScreenController.activate("book-room");
     }
     public void addNode(MouseEvent event) throws Exception {
         Point selectedPoint = new Point((int)event.getX(), (int)event.getY());
@@ -149,7 +159,4 @@ public class AdminMapController extends MapController {
         translateX = ((AnchorPane) event.getSource()).getTranslateX();
         translateY = ((AnchorPane) event.getSource()).getTranslateY();
     }
-
-
-
 }

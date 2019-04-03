@@ -32,7 +32,7 @@ public class EditController extends PopUpController implements Initializable {
     public String SERV;
     public String STAI;
 
-    public JFXButton bookingButton;
+//    public JFXButton bookingButton;
 
     public void updateNode(MouseEvent event) {
         event.consume();
@@ -112,7 +112,7 @@ public class EditController extends PopUpController implements Initializable {
 
                 // Set button visibility to true since a conference room node
                 // is selected and the room can be booked
-                bookingButton.setVisible(true);
+//                bookingButton.setVisible(true);
 
                 break;
             default:
@@ -123,6 +123,6 @@ public class EditController extends PopUpController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+//        bookingButton.setText(Constants.BOOKING_BUTTON_TEXT);
     }
 }

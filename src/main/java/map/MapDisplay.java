@@ -45,18 +45,6 @@ public class MapDisplay {
     }
 
     /**
-     * Display the graph of a map for employees (halls, info boxes with spill reporting)
-     * @param pane
-     * @param building
-     * @param floor
-     */
-    public static void displayEmployee(AnchorPane pane, String building, String floor) {
-        Map map = MapParser.parse();
-        displayEdges(map, pane, building, floor);
-        displayNodesEmployee(map, pane, building, floor);
-    }
-
-    /**
      * Display the graph on a map for the admin (halls, edit boxes)
      * @param pane
      * @param building
@@ -144,6 +132,7 @@ public class MapDisplay {
             }
         }
     }
+
 
     private static void displayNodesEmployee(Map map, AnchorPane pane, String building, String floor) {
         HashMap<String, Location> lstLocations = map.getAllLocations();
