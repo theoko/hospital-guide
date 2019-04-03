@@ -1,7 +1,6 @@
 package controllers;
 
 import com.jfoenix.controls.JFXButton;
-import com.querydsl.core.types.Constant;
 import database.Database;
 import helpers.Constants;
 import helpers.MapHelpers;
@@ -16,8 +15,6 @@ import models.map.Edge;
 import models.map.Location;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class AdminMapController extends MapController {
     public JFXButton btnDownload;
