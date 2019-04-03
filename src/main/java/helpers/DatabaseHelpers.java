@@ -1,5 +1,11 @@
 package helpers;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Date;
+
 public class DatabaseHelpers {
 
     /**
@@ -67,6 +73,31 @@ public class DatabaseHelpers {
             default:
                 return null;
         }
+    }
+
+    /**
+     * Constructs a SimpleDateFormat object by concatenating the LocalDate and LocalTime objects
+     * passed as arguments
+     * @param date
+     * @param time
+     * @return
+     */
+    public static String getDateTime(LocalDate date, LocalTime time) {
+
+        try {
+
+            Date parsedDate = new SimpleDateFormat(Constants.dateFormat).parse(
+                    date.toString() + " " + time.toString() + ":00"
+            );
+
+            return new SimpleDateFormat(Constants.dateFormat).format(parsedDate);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+
+            return null;
+        }
+
     }
 
 }

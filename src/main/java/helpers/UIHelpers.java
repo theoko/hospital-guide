@@ -26,36 +26,8 @@ public class UIHelpers {
     public static double getScreenHeight() {
         return Screen.getPrimary().getBounds().getHeight();
     }
-    public static void setUserNodeClickEvent(Circle c, Location loc, HashMap<String, Line> lstLines, Map map) {
-        c.setOnMouseClicked(event -> {
-            try {
-                event.consume();
-                ScreenController.popUp("info", loc, map, lstLines);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-    }
-    public void test(){}
-    public static void setEmployeeNodeClickEvent(Circle c, Location loc) {
-
-        c.setOnMouseClicked(evt -> {
-            try {
-                evt.consume();
-
-                AdminMapController.locationSelectEvent(loc);
-                if(!AdminMapController.isEnableEditEdge())
-                    ScreenController.popUp("edit", loc);
-            } catch (Exception e) {
-                throw new UnsupportedOperationException(e);
-            }
-        });
-    }
-
-
 
     public static void setAdminNodeClickEvent(Circle c, Location loc) {
-
         c.setOnMouseClicked(evt -> {
             try {
                 evt.consume();
@@ -68,7 +40,6 @@ public class UIHelpers {
             }
         });
     }
-
 
     public static Line generateLineFromEdge(Edge e) {
         Location start = e.getStart();
@@ -83,13 +54,9 @@ public class UIHelpers {
 //        pane.getChildren().add(line);
     }
     public static Point generateLocationCoordinates(Location loc) {
-        if(loc.getNodeID().charAt(0) == 'X') {
-            return new Point(loc.getxCord(), loc.getyCord());
-        } else {
-            double x = (loc.getxCord() - MapDisplay.getxShift()) * MapDisplay.getScale();
-            double y = (loc.getyCord() - MapDisplay.getyShift()) * MapDisplay.getScale();
-            return new Point((int) x, (int) y);
-        }
+        double x = (loc.getxCord() - MapDisplay.getxShift()) * MapDisplay.getScale();
+        double y = (loc.getyCord() - MapDisplay.getyShift()) * MapDisplay.getScale();
+        return new Point((int) x, (int) y);
     }
     public static Circle updateCircleForNodeType(Location loc) {
         Circle c = loc.getNodeCircle();

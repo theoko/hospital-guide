@@ -1,7 +1,6 @@
 package controllers;
 
 import com.jfoenix.controls.JFXButton;
-import com.querydsl.core.types.Constant;
 import database.Database;
 import helpers.Constants;
 import helpers.MapHelpers;
@@ -16,8 +15,6 @@ import models.map.Edge;
 import models.map.Location;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class AdminMapController extends MapController {
     public JFXButton btnDownload;
@@ -29,6 +26,7 @@ public class AdminMapController extends MapController {
     private String selectedFloor = "1", selectedBuilding = "Shapiro";
 
     private static Location selectedLocation; // Location that is being modified or created
+
     public static void locationSelectEvent(Location loc) {
         if(enableEditEdge) {
             if (selectedLocation != loc) {
@@ -67,9 +65,11 @@ public class AdminMapController extends MapController {
             VisualRealtimeController.visuallySelectCircle(loc);
         }
     }
+
     public static void deselectLocation() {
         selectedLocation = null;
     }
+
     public void enableEdgeEditor() {
         try {
             VisualRealtimeController.visuallyDeselectCircle(selectedLocation);
@@ -84,11 +84,12 @@ public class AdminMapController extends MapController {
     public void enableNodeCreation() {
         enableAddNode = !enableAddNode;
     }
+
     public void initialize() {
         // Set tooltip
         toolTip();
 
-        MapDisplay.displayAdmin(panMap, "Shapiro", "1");
+        MapDisplay.displayAdmin(panMap, "1");
         VisualRealtimeController.setPanMap(panMap);
         selectedLocation = null;
     }
@@ -125,8 +126,6 @@ public class AdminMapController extends MapController {
         UIHelpers.setAdminNodeClickEvent(circ, loc);
         loc.setNodeCircle(circ);
         panMap.getChildren().add(circ);
-
-
     }
 //    public static void removeCircle(Circle c) {
 //        panMap.getChildren().remove(c);
@@ -149,7 +148,7 @@ public class AdminMapController extends MapController {
             if (enableAddNode && !enableEditEdge)
                 addNode(event);
         } catch(Exception e) {
-
+            e.printStackTrace();
         }
 
         // Handle onMousePressed event

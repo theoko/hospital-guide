@@ -1,7 +1,7 @@
 nodeID,xcoord,ycoord,floor,building,nodeType,longName,shortName
 ACONF00102,1580,2538,2,BTM,HALL,Hall,Hall
 ACONF00103,1648,2968,3,BTM,CONF,BTM Conference Center,BTM Conference
-ADEPT00101,1401,2628,1,BTM,DEPT,Neuroscience Waiting models.room.Room,Neuro Waiting models.room.Room
+ADEPT00101,1401,2628,1,BTM,DEPT,Neuroscience Waiting Room,Neuro Waiting Room
 ADEPT00102,1395,2674,2,BTM,DEPT,Orthopedics and Rhemutalogy,Orthopedics and Rhemutalogy
 ADEPT00201,1720,2847,1,BTM,DEPT,MS Waiting,MS Waiting
 ADEPT00301,986,2852,1,BTM,DEPT,CART Waiting,CART Waiting
@@ -45,7 +45,7 @@ AREST00103,1552,2854,3,BTM,REST,Restroom BTM conference center 3rd floor,Restroo
 ARETL00101,1619,2522,1,BTM,RETL,Cafe,Cafe
 ASTAI00101,1642,2596,1,BTM,STAI,Cafe Stairs,Cafe Staris
 ASTAI00102,1650,2602,2,BTM,STAI,Stairs Floor 2,Stairs Floor 2
-BCONF00102,2150,1025,2,45 Francis,CONF,Duncan Reid Conference models.room.Room,Conf B0102
+BCONF00102,2150,1025,2,45 Francis,CONF,Duncan Reid Conference Room,Conf B0102
 BHALL03802,2279,786,2,45 Francis,HALL,Hallway Intersection 38 Level 2,Hallway B3802
 BDEPT00202,2166,1039,2,45 Francis,DEPT,Oral Medicine and Dentistry,DEPT B0202
 BDEPT00302,2385,753,2,45 Francis,DEPT,Lee Bell Breast Center,DEPT B0302
@@ -116,8 +116,8 @@ BHALL04202,2761,1067,2,45 Francis,HALL,Hallway Intersection 42 Level 2,Hallway B
 BHALL04302,2782,1067,2,45 Francis,HALL,Hallway Intersection 43 level 2,Hallway B04302
 BHALL04402,3063,963,2,45 Francis,HALL,Hallway Intersection 44 Level 2,Hallway B4402
 CCONF001L1,2255,849,L1,45 Francis,CONF,Anesthesia Conf Floor L1,Conf C001L1
-CCONF002L1,2665,1043,L1,45 Francis,CONF,Medical Records Conference models.room.Room Floor L1,Conf C002L1
-CCONF003L1,2445,1245,L1,45 Francis,CONF,Abrams Conference models.room.Room,Conf C003L1
+CCONF002L1,2665,1043,L1,45 Francis,CONF,Medical Records Conference Room Floor L1,Conf C002L1
+CCONF003L1,2445,1245,L1,45 Francis,CONF,Abrams Conference Room,Conf C003L1
 CDEPT002L1,1980,844,L1,Tower,DEPT,Day Surgery Family Waiting Floor L1,Department C002L1
 CDEPT003L1,1845,844,L1,Tower,DEPT,Day Surgery Family Waiting Exit Floor L1,Department C003L1
 CDEPT004L1,2310,1043,L1,45 Francis,DEPT,Medical Records Film Library Floor L1,Department C004L1
@@ -175,7 +175,7 @@ DINFO00202,3490,825,2,15 Francis,INFO,Security Desk Thorn Floor 2,Security Desk
 DDEPT00102,4330,700,2,15 Francis,DEPT,Chest Diseases Floor 2,Chest Diseases
 DDEPT00202,4240,730,2,15 Francis,DEPT,Thoracic Surgery Clinic Floor 2,Thoracic Surgery Clinic
 DDEPT00302,3900,640,2,15 Francis,DEPT,Brigham Health Floor 2,Brigham Health
-DDEPT00402,3425,870,2,15 Francis,DEPT,Waiting models.room.Room Floor 2,Waiting models.room.Room
+DDEPT00402,3425,870,2,15 Francis,DEPT,Waiting Room Floor 2,Waiting Room
 DLABS00102,3830,775,2,15 Francis,LABS,MRI Associates Floor 2,MRI Associates
 DCONF00102,4595,550,2,15 Francis,CONF,Carrie M. Hall Conference Center Floor 2,Conference Center
 DRETL00102,4270,480,2,15 Francis,RETL,Pats Place Floor 2,Pats Place
@@ -257,7 +257,7 @@ EEXIT00101,2275,785,1,45 Francis,EXIT,Ambulance Parking Exit Floor 1,AmbExit 1
 EHALL00501,2290,910,1,45 Francis,HALL,Hallway Node 3 Floor 1,HallE03
 EHALL00601,2385,910,1,45 Francis,HALL,Hallway Node 4 Floor 1,HallE04
 EHALL00701,2385,860,1,45 Francis,HALL,Hallway Node 5 Floor 1,HallE05
-EDEPT00101,2335,860,1,45 Francis,DEPT,Waiting models.room.Room 1 Floor 1,Wait 1
+EDEPT00101,2335,860,1,45 Francis,DEPT,Waiting Room 1 Floor 1,Wait 1
 EHALL00801,2460,910,1,45 Francis,HALL,Hallway Node 6 Floor 1,HallE06
 EINFO00101,2460,850,1,45 Francis,INFO,Connors Center Security Desk Floor 1,Security 1
 EHALL00901,2585,910,1,45 Francis,HALL,Hallway Node 7 Floor 1,HallE07
@@ -354,8 +354,8 @@ FEXIT00301,2099,1357,1,Tower,EXIT,Emergency Department Entrance,Emergency Entran
 FHALL03201,1758,1029,1,Tower,HALL,Tower Hallway 13,Hallway F03201
 FDEPT00601,1780,1029,1,Tower,DEPT,International Patient Center,IPC
 FHALL03301,2066,1282,1,Tower,HALL,Emergency Hallway,Hallway F03301
-GCONF02001,1493,2117,1,Shapiro,CONF,Shapiro Board models.room.Room MapNode 20 Floor 1,Shapiro Board models.room.Room
-GDEPT01901,1566,2139,1,Shapiro,DEPT,Zinner Breakout models.room.Room MapNode 19 Floor 1,Zinner Breakout models.room.Room
+GCONF02001,1493,2117,1,Shapiro,CONF,Shapiro Board Room MapNode 20 Floor 1,Shapiro Board Room
+GDEPT01901,1566,2139,1,Shapiro,DEPT,Zinner Breakout Room MapNode 19 Floor 1,Zinner Breakout Room
 GELEV00N01,1647,1930,1,Shapiro,ELEV,Elevator N MapNode 26 Floor 1,Hall
 GELEV00Q01,1648,2161,1,Shapiro,ELEV,Elevator Q MapNode 18 Floor 1,Elevator Q Floor 1
 GEXIT00101,1751,1825,1,Shapiro,EXIT,Francis Street Exit MapNode 1 Floor 1,Francis Street Exit Floor 1
@@ -380,7 +380,7 @@ GHALL03101,1227,1859,1,Shapiro,HALL,Hallway MapNode 31 Floor 1,Hall
 GHALL03301,1255,1872,1,Shapiro,HALL,Hallway MapNode 33 Floor 1,Hall
 GHALL03401,1284,1872,1,Shapiro,HALL,Hallway MapNode 34 Floor 1,Hall
 GREST01201,1671,2015,1,Shapiro,REST,Bathroom MapNode 12 Floor 1,Restroom Shapiro Floor 1
-GRETL03501,1284,1884,1,Shapiro,REST,Random models.room.Room MapNode 35 Floor 1,Secret models.room.Room Floor 1
+GRETL03501,1284,1884,1,Shapiro,REST,Random Room MapNode 35 Floor 1,Secret Room Floor 1
 GSERV02301,1600,1895,1,Shapiro,SERV,ATM MapNode 23 Floor 1,ATM Floor 1
 GSTAI00501,1707,1992,1,Shapiro,STAI,Stairway MapNode 5 Floor 1,Northbound Stairs Floor 2
 GSTAI01301,1750,2014,1,Shapiro,STAI,Staircase MapNode 13 Floor 1,Southbound Stairs Floor 1
@@ -488,14 +488,14 @@ HLABS00103,1235,865,3,Tower,LABS,Reproductive Endocrine Labs,Reproductive Endocr
 HHALL00103,1325,655,3,Tower,HALL,Hallway Connector 1 Floor 3,Hallway H00103
 HHALL00603,1735,925,3,Tower,HALL,Hallway Connector 6 Floor 3,Hallway H00603
 HHALL00703,1735,900,3,Tower,HALL,Hallway Connector 7 Floor 3,Hallway H00703
-HDEPT00103,1725,900,3,Tower,DEPT,Dialysis Waiting models.room.Room,Dialysis WR
+HDEPT00103,1725,900,3,Tower,DEPT,Dialysis Waiting Room,Dialysis WR
 HHALL00803,1735,865,3,Tower,HALL,Hallway Connector 8 Floor 3,Hallway H00803
-HSERV00103,1750,865,3,Tower,SERV,Nursing models.room.Room,Nursing models.room.Room
+HSERV00103,1750,865,3,Tower,SERV,Nursing Room,Nursing Room
 HHALL00903,1735,820,3,Tower,HALL,Hallway Connector 9 Floor 3,Hallway H00903
 HHALL01003,1785,820,3,Tower,HALL,Hallway Connector 10 Floor 3,Hallway H01003
 HBATH00103,1785,830,3,Tower,BATH,Bathroom 1 Tower Floor 3,Bathroom 0103
 HHALL01103,1690,820,3,Tower,HALL,Hallway Connector 11 Floor 3,Hallway H01103
-HDEPT00203,1690,830,3,Tower,DEPT,MICU 3BC Waiting models.room.Room,MICU 3BC WR
+HDEPT00203,1690,830,3,Tower,DEPT,MICU 3BC Waiting Room,MICU 3BC WR
 HHALL01203,1600,820,3,Tower,HALL,Hallway Connector 12 Floor 3,Hallway H01203
 HHALL01303,1600,1030,3,Tower,HALL,Hallway Connector 13 Floor 3,Hallway H01303
 HHALL01403,1735,1030,3,Tower,HALL,Hallway Connector 14 Floor 3,Hallway H01403

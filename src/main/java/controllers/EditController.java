@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
 import models.map.Location;
+import org.omg.DynamicAny.DynArray;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -39,7 +40,10 @@ public class EditController extends PopUpController implements Initializable {
         String value = (String) cmbNodeType.getValue();
         String nType = value.substring(0, value.indexOf(':'));
         loc.setNodeType(Constants.NodeType.valueOf(nType));
-        if(loc.getNodeID() == null) Database.addNewLocation(loc);
+        if (loc.getNodeID() == null) {
+            loc.setNodeID(Database.addNewLocation(loc));
+            System.out.println(loc.getNodeID());
+        }
         VisualRealtimeController.updateCircle(loc.getNodeCircle(),
                 UIHelpers.updateCircleForNodeType(loc));
         ScreenController.deactivate();

@@ -1,4 +1,5 @@
 import controllers.ScreenController;
+import database.Database;
 import helpers.Constants;
 import helpers.FileHelpers;
 import javafx.application.Application;
@@ -17,15 +18,9 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        File dbDirectory = new File(Constants.DB_NAME.replaceAll("%20", " "));
-
-        if(dbDirectory.exists()) {
-            System.out.println("Exists!");
-        } else {
-            System.out.println("Need to create the database!");
+        if(!Database.databaseExists()) {
+            CSVParser.parse(FileHelpers.getNodesCSV(), FileHelpers.getEdgesCSV());
         }
-
-        CSVParser.parse(FileHelpers.getNodesCSV(), FileHelpers.getEdgesCSV());
 
         screenController = new ScreenController(primaryStage);
 

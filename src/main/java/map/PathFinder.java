@@ -87,9 +87,9 @@ public class PathFinder {
                     double newDist = currDist + nCurr.getDist();
                     // Calculate the heuristic based on distance to end map
                     //TODO: Create a more accurate heuristic for nodes on different floors
-                    double heuristic = calcDist(lCurr.getxCord(), lCurr.getyCord(), end.getxCord(), end.getyCord());
+                    double heuristic = 1.0 * calcDist(lCurr.getxCord(), lCurr.getyCord(), end.getxCord(), end.getyCord());
                     if (!lCurr.getFloor().equals(end.getFloor())) {
-                        heuristic += 999999999;
+                        heuristic = Integer.MAX_VALUE;
                     }
                     // Create a new neighbor with updated distance value
                     SubPath newNeigh = new SubPath(nCurr.getEdgeID(), nCurr.getLocation(), newDist + heuristic);
