@@ -35,14 +35,17 @@ public class MapHelpers {
     }
 
     public static Point mapPointToMapCoordinates(Point p) {
-//        Point out = new Point(0, 0);
-//        out.x = (int)((p.x + 0*MapDisplay.getxShift())*MapDisplay.getScale());
-//        out.y = (int)((p.y + 0*MapDisplay.getyShift())*MapDisplay.getScale());
-        return p;
+
+        Point n = new Point(
+                (int) ((p.x / MapDisplay.getScale()) + MapDisplay.getxShift()),
+                (int) ((p.y / MapDisplay.getScale() + MapDisplay.getyShift()))
+        );
+        return n;
     }
     public static Circle generateNode(Point target) {
-        System.out.println(target.x + ", " + target.y);
-        Circle circle = new Circle(target.x, target.y, MapDisplay.getLocRadius(), Color.WHITE);
+        Circle circle = new Circle((target.x - MapDisplay.getxShift()) * MapDisplay.getScale(),
+                (target.y - MapDisplay.getyShift()) * MapDisplay.getScale()
+                , MapDisplay.getLocRadius(), Color.WHITE);
         circle.setStroke(Color.BLACK);
         circle.setStrokeWidth(MapDisplay.getLocWidth());
 //        circle.setOnMouseClicked(new EventHandler<MouseEvent>() {
