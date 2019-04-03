@@ -18,7 +18,7 @@ import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
-public class RoomBookingController {
+public class RoomBookingController extends EmployeeMapController{
 
     /**
      * FXML
