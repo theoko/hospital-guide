@@ -1252,29 +1252,27 @@ public class Database {
 
         try {
 
-//            PreparedStatement statement1;
+            // We need to check if a ROOM is to be removed
+            // In that case, the room should first be removed from the rooms table
+            // since in the constraints defined
+            if(deleteLocation.getNodeType() == Constants.NodeType.CONF) {
+
+                System.out.println("Conference room with ID: " + deleteLocation.getNodeID());
+
+                PreparedStatement statement1;
+                statement1 = connection.prepareStatement(
+                    "DELETE FROM " + Constants.ROOM_TABLE +
+                    " WHERE NODEID=?"
+                );
+
+                statement1.setString(1, deleteLocation.getNodeID());
+
+                statement1.execute();
+
+            }
+
             PreparedStatement statement2;
             PreparedStatement statement3;
-
-//            String sQuery = "SELECT * FROM " + Constants.EDGES_TABLE +
-//                    " WHERE STARTNODEID=? OR ENDNODEID=?";
-//
-//            statement1 = connection.prepareStatement(
-//                    sQuery
-//            );
-//
-//            statement1.setString(1, deleteLocation.getNodeID());
-//            statement1.setString(2, deleteLocation.getNodeID());
-//
-//            ResultSet delEdges = statement1.executeQuery();
-//
-//            while (delEdges.next()) {
-//                addDeleteEdge(new Edge(
-//                        delEdges.getString("EDGEID"),
-//                        getLocationByID(delEdges.getString("STARTNODEID")),
-//                        getLocationByID(delEdges.getString("ENDNODEID"))
-//                ));
-//            }
 
             statement2 = connection.prepareStatement(
                     "DELETE FROM " + Constants.EDGES_TABLE +
@@ -1287,7 +1285,6 @@ public class Database {
             statement2.execute();
 
             // Add location to deleted locations table
-//            addDeleteLocation(deleteLocation);
 
             statement3 = connection.prepareStatement(
                     "DELETE FROM " + Constants.NODES_TABLE +
@@ -1299,7 +1296,7 @@ public class Database {
             return statement3.execute();
 
         } catch (SQLException e) {
-            System.out.println("Failed to update location: " + deleteLocation.getNodeID());
+            System.out.println("Failed to delete location: " + deleteLocation.getNodeID());
             e.printStackTrace();
 
             return false;
