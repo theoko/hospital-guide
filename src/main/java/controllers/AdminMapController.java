@@ -102,13 +102,13 @@ public class AdminMapController extends MapController {
     public void clickDownload(MouseEvent event) throws Exception {
         event.consume();
         ScreenController.deactivate();
-        ScreenController.activate("download");
+        ScreenController.activate(Constants.Routes.DOWNLOAD);
     }
 
     public void displayBooking(MouseEvent event) throws Exception {
         event.consume();
         ScreenController.deactivate();
-        ScreenController.activate("book-room");
+        ScreenController.activate(Constants.Routes.BOOKING_WINDOW);
     }
     public void addNode(MouseEvent event) throws Exception {
         Point selectedPoint = new Point((int)event.getX(), (int)event.getY());
