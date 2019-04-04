@@ -18,6 +18,7 @@ public class Constants {
     public static String DELETED_LOCATION_TABLE = "DELETED_NODES";
     public static String DELETED_EDGES_TABLE = "DELETED_EDGES";
     public static String SANITATION_TABLE = "SANITATION";
+    public static String KIOSK_TABLE = "KIOSK";
 
     public static String DB_PROJECTION = "projection";
     public static String DB_RELATION = "relation";

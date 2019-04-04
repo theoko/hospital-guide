@@ -71,6 +71,9 @@ public class Database {
             e.printStackTrace();
         }
 
+        String kioskTable = "CREATE TABLE" + Constants.KIOSK_TABLE +
+                "(kioskID INT PRIMARY KEY )"
+
         String usersTable = "CREATE TABLE " + Constants.USERS_TABLE +
                 "(userID INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1)," +
                 " username VARCHAR(32), " +
