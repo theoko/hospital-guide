@@ -24,9 +24,9 @@ public class DatabaseTest {
 
         // Parse locations and edges
         // Add locations and edges to the database
-        if(!Database.databaseExists()) {
-            CSVParser.parse(FileHelpers.getNodesCSV(), FileHelpers.getEdgesCSV());
-        }
+//        if(!Database.databaseExists()) {
+//            CSVParser.parse(FileHelpers.getNodesCSV(), FileHelpers.getEdgesCSV());
+//        }
 
     }
 

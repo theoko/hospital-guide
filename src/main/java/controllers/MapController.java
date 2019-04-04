@@ -9,8 +9,11 @@ import javafx.scene.layout.AnchorPane;
 
 public abstract class MapController {
     public JFXButton btnReturn;
-    public ImageView floorOneMap;
-    public AnchorPane panMap;
+    public AnchorPane panFloor3;
+    public AnchorPane panFloor2;
+    public AnchorPane panFloor1;
+    public AnchorPane panFloorL1;
+    public AnchorPane panFloorL2;
 //    public JFXButton zoomIn;
 //    public JFXButton zoomOut;
 

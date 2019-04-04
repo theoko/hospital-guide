@@ -6,7 +6,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import models.map.Location;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -50,7 +49,7 @@ public class UserInfoController extends PopUpController implements Initializable
     private void checkSelected() throws Exception {
         if (bolSelectedUser) { // Two locations
             if (!loc.equals(locSelectedUser)) {
-                ScreenController.popUp("directions", loc, locSelectedUser, map, pane);
+                ScreenController.popUp("directions", loc, locSelectedUser, map, panes);
             }
             locSelectedUser = null;
             bolSelectedUser = false;

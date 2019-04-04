@@ -13,7 +13,6 @@ import javafx.scene.shape.Line;
 import map.MapDisplay;
 import models.map.Edge;
 import models.map.Location;
-
 import java.awt.*;
 
 public class AdminMapController extends MapController {
@@ -89,8 +88,8 @@ public class AdminMapController extends MapController {
         // Set tooltip
         toolTip();
 
-        MapDisplay.displayAdmin(panMap, "1");
-        VisualRealtimeController.setPanMap(panMap);
+        MapDisplay.displayAdmin(panFloor1, "1");
+        VisualRealtimeController.setPanMap(panFloor1);
         selectedLocation = null;
     }
 
@@ -125,7 +124,7 @@ public class AdminMapController extends MapController {
 //        loc.addCurrNode();
         UIHelpers.setAdminNodeClickEvent(circ, loc);
         loc.setNodeCircle(circ);
-        panMap.getChildren().add(circ);
+        panFloor1.getChildren().add(circ);
     }
 //    public static void removeCircle(Circle c) {
 //        panMap.getChildren().remove(c);

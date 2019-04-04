@@ -28,18 +28,16 @@ public class MapDisplay {
 
     /**
      * Display the graph on a map for the default user (no halls, info boxes)
-     * @param pane
-     * @param floor
+     * @param panes
      */
-    public static void displayUser(AnchorPane pane, String floor) {
+    public static void displayUser(AnchorPane[] panes) {
         Map map = MapParser.parse();
-        displayNodesUser(map, pane, floor);
+        displayNodesUser(map, panes);
     }
 
     /**
      * Display the graph of a map for employees (halls, info boxes with spill reporting)
      * @param pane
-     * @param floor
      */
     public static void displayEmployee(AnchorPane pane, String floor) {
         Map map = MapParser.parse();
@@ -49,7 +47,6 @@ public class MapDisplay {
     /**
      * Display the graph on a map for the admin (halls, edit boxes)
      * @param pane
-     * @param floor
      */
     public static void displayAdmin(AnchorPane pane, String floor) {
         Map map = MapParser.parse();
@@ -60,7 +57,6 @@ public class MapDisplay {
     /**
      * Display the graph on a map for the custodian (no halls)
      * @param pane
-     * @param floor
      */
     public static void displayCust(AnchorPane pane, String floor) {
         Map map = MapParser.parse();
@@ -69,26 +65,24 @@ public class MapDisplay {
 
 
 
-    private static void displayNodesUser(Map map, AnchorPane pane, String floor) {
+    private static void displayNodesUser(Map map, AnchorPane[] panes) {
         HashMap<String, Location> lstLocations = map.getAllLocations();
         for (Location loc : lstLocations.values()) {
-            if (loc.getFloor().equals(floor) && loc.getNodeType() != Constants.NodeType.HALL) {
-                double xLoc = (loc.getxCord() - xShift) * scale;
-                double yLoc = (loc.getyCord() - yShift) * scale;
-                Color color = nodeFill;
-                Circle circle = new Circle(xLoc, yLoc, locRadius, color);
-                circle.setStroke(nodeOutline);
-                circle.setStrokeWidth(locWidth);
-                circle.setOnMouseClicked(event -> {
-                    try {
-                        event.consume();
-                        ScreenController.popUp("info", loc, map, pane);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
-                pane.getChildren().add(circle);
-            }
+            double xLoc = (loc.getxCord() - xShift) * scale;
+            double yLoc = (loc.getyCord() - yShift) * scale;
+            Color color = nodeFill;
+            Circle circle = new Circle(xLoc, yLoc, locRadius, color);
+            circle.setStroke(nodeOutline);
+            circle.setStrokeWidth(locWidth);
+            circle.setOnMouseClicked(event -> {
+                try {
+                    event.consume();
+                    ScreenController.popUp("info", loc, map, panes);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+            findPane(panes, loc.getFloor()).getChildren().add(circle);
         }
     }
 
@@ -179,6 +173,21 @@ public class MapDisplay {
                 line.setStrokeWidth(edgeWidth);
                 pane.getChildren().add(line);
             }
+        }
+    }
+
+    private static AnchorPane findPane(AnchorPane[] panes, String floor) {
+        switch (floor) {
+            case "L2":
+                return panes[0];
+            case "L1":
+                return panes[1];
+            case "1":
+                return panes[2];
+            case "2":
+                return panes[3];
+            default:
+                return panes[4];
         }
     }
 

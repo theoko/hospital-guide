@@ -10,7 +10,7 @@ public class EmployeeMapController extends MapController {
 
     public void initialize() {
         toolTip();
-        MapDisplay.displayEmployee(panMap, "1");
+        MapDisplay.displayEmployee(panFloor1, "1");
 
     }
 

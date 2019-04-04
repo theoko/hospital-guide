@@ -5,7 +5,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.shape.Line;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -132,6 +131,34 @@ public class ScreenController {
         stage.show();
     }
 
+    public static void popUp(String name, Location loc, Map map, AnchorPane[] panes) throws Exception {
+
+        stage = new Stage();
+
+        // Init parent
+        URL url = new URL(ScreenController.class.getResource(screenMap.get(name)).toString().replaceAll("%20", " "));
+
+        FXMLLoader loader = new FXMLLoader(url);
+        Parent root = loader.load();
+        PopUpController pc = loader.getController();
+
+        pc.setLoc(loc);
+        pc.setMap(map);
+        pc.setPanes(panes);
+
+        // Init scene
+        Scene s = new Scene(root);
+
+        // Add CSS to scene
+        addStyles(s);
+
+        stage.setTitle(Character.toUpperCase(name.charAt(0)) + name.substring(1));
+        stage.setScene(s);
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+    }
+
     public static void popUp(String name, Location loc, Map map, AnchorPane pane) throws Exception {
 
         stage = new Stage();
@@ -146,6 +173,35 @@ public class ScreenController {
         pc.setLoc(loc);
         pc.setMap(map);
         pc.setPane(pane);
+
+        // Init scene
+        Scene s = new Scene(root);
+
+        // Add CSS to scene
+        addStyles(s);
+
+        stage.setTitle(Character.toUpperCase(name.charAt(0)) + name.substring(1));
+        stage.setScene(s);
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+    }
+
+    public static void popUp(String name, Location loc1, Location loc2, Map map, AnchorPane[] panes) throws Exception {
+
+        stage = new Stage();
+
+        // Init parent
+        URL url = new URL(ScreenController.class.getResource(screenMap.get(name)).toString().replaceAll("%20", " "));
+
+        FXMLLoader loader = new FXMLLoader(url);
+        Parent root = loader.load();
+        DirectionsController pc = loader.getController();
+
+        pc.setLoc(loc1);
+        pc.setLoc2(loc2);
+        pc.setMap(map);
+        pc.setPanes(panes);
 
         // Init scene
         Scene s = new Scene(root);

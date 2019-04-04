@@ -1,12 +1,7 @@
 package map;
 
-import database.CSVParser;
-import database.Database;
-import helpers.FileHelpers;
 import models.map.Location;
-import models.map.Map;
 import models.map.SubPath;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -14,35 +9,13 @@ import java.util.Stack;
 
 public class PathFinder {
 
-    public static void main(String[] args) {
-        Database db = new Database();
-        CSVParser.parse(FileHelpers.getNodesCSV(), FileHelpers.getEdgesCSV());
-
-        // Create map
-        Map map = MapParser.parse();
-        // Start and end locations
-        Location start = map.getLocation("ADEPT00301");
-        Location end = map.getLocation("DDEPT00402");
-
-        // Timer for findPath
-        long startTime = System.currentTimeMillis();
-        // Finds the path from start to end
-        Stack<SubPath> path = findPath(map, start, end);
-        long endTime = System.currentTimeMillis();
-        long totalTime = endTime - startTime;
-        // Prints out path and time
-        printPath(path);
-        System.out.println("Time taken: " + totalTime);
-    }
-
     /**
      * Finds a path from the start map to the end map using a*
-     * @param map The map of the hospital
      * @param start The start map
      * @param end The end map
      * @return A stack of locations that contains the path
      */
-    public static Stack<SubPath> findPath(Map map, Location start, Location end) {
+    public static Stack<SubPath> findPath(Location start, Location end) {
         // Create a new stack to hold the path from start to end
         Stack<SubPath> path = new Stack<>();
 
