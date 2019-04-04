@@ -11,14 +11,11 @@ public class Constants {
     public static String EMPLOYEE_TABLE = "EMPLOYEE";
     public static String CUSTODIAN_TABLE = "CUSTODIAN";
     public static String ADMIN_TABLE = "ADMIN";
-    public static String NODES_TABLE = "NODES";
+    public static String LOCATION_TABLE = "LOCATION";
     public static String EDGES_TABLE = "EDGES";
     public static String ROOM_TABLE = "ROOM";
     public static String BOOK_TABLE = "BOOKING";
-    public static String DELETED_LOCATION_TABLE = "DELETED_NODES";
-    public static String DELETED_EDGES_TABLE = "DELETED_EDGES";
     public static String SANITATION_TABLE = "SANITATION";
-    public static String KIOSK_TABLE = "KIOSK";
 
     public static String DB_PROJECTION = "projection";
     public static String DB_RELATION = "relation";

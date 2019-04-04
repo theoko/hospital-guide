@@ -1,6 +1,7 @@
 package models.user;
 
 import database.Database;
+import database.UserTable;
 import helpers.Constants;
 
 public class User {
@@ -18,7 +19,7 @@ public class User {
     }
 
     public boolean create(){
-        return Database.createUser(this);
+        return UserTable.createUser(this);
     }
 
     public int getUserID() {

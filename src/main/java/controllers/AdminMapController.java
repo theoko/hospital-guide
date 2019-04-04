@@ -2,6 +2,7 @@ package controllers;
 
 import com.jfoenix.controls.JFXButton;
 import database.Database;
+import database.EdgeTable;
 import helpers.Constants;
 import helpers.MapHelpers;
 import helpers.UIHelpers;
@@ -51,7 +52,7 @@ public class AdminMapController extends MapController {
     public static void selectLocation(Location loc) {
         if(selectedLocation != null) {
             Edge edge = MapHelpers.generateEdge(selectedLocation, loc);
-            boolean edgeToggle = Database.toggleEdge(edge);
+            boolean edgeToggle = EdgeTable.toggleEdge(edge);
             if(edgeToggle == Constants.SELECTED) {
                 Line line = UIHelpers.generateLineFromEdge(edge);
                 edge.setLine(line);

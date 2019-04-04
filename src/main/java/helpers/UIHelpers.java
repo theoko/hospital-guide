@@ -9,10 +9,8 @@ import javafx.stage.Screen;
 import map.MapDisplay;
 import models.map.Edge;
 import models.map.Location;
-import models.map.Map;
 
 import java.awt.*;
-import java.util.HashMap;
 
 public class UIHelpers {
 
