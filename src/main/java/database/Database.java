@@ -58,6 +58,8 @@ public class Database {
         dropEdgeTable();
         dropLocationTable();
         dropUsersTable();
+        //TODO: fix kiosk drop table order
+        dropKioskTable();
     }
 
     /**
@@ -71,8 +73,9 @@ public class Database {
             e.printStackTrace();
         }
 
-        String kioskTable = "CREATE TABLE" + Constants.KIOSK_TABLE +
-                "(kioskID INT PRIMARY KEY )"
+        String kioskTable = "CREATE TABLE " + Constants.KIOSK_TABLE +
+                "(kioskID INT PRIMARY KEY," +
+            "CONSTRAINT kioskID_fk FOREIGN KEY(kioskID) REFERENCES " + Constants.NODES_TABLE + "(nodeID))";
 
         String usersTable = "CREATE TABLE " + Constants.USERS_TABLE +
                 "(userID INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1)," +
@@ -144,9 +147,9 @@ public class Database {
         try {
 
             statement.execute(usersTable);
+            statement.execute(kioskTable);
             statement.execute(locationTable);
             statement.execute(neighborTable);
-
             statement.execute(roomTable);
             statement.execute(bookTable);
             statement.execute(sanitationTable);
@@ -390,6 +393,20 @@ public class Database {
     /**
      * Drop tables
      */
+    private static boolean dropKioskTable(){
+        try {
+            Statement statement;
+
+            statement = connection.createStatement();
+
+            return statement.execute("DROP TABLE " + Constants.KIOSK_TABLE);
+        } catch (SQLException e) {
+            System.out.println("Table " + Constants.KIOSK_TABLE + " cannot be dropped");
+
+            return false;
+        }
+    }
+
     private static boolean dropDeletedEdgesTable() {
         try {
             Statement statement;
