@@ -57,70 +57,18 @@ public class DirectionsController extends PopUpController implements Initializab
     public void btnGo_OnClick(MouseEvent event) {
         event.consume();
 
-        List<Node> lstNodes1 = new ArrayList<>();
-        for (Node n : pane1.getChildren()) {
-            if (n instanceof Line) {
-                lstNodes1.add(n);
+        for (AnchorPane pane : panes) {
+            List<Node> lstNodes1 = new ArrayList<>();
+            for (Node n : pane.getChildren()) {
+                if (n instanceof Line) {
+                    lstNodes1.add(n);
+                }
+            }
+            for (Node n : lstNodes1) {
+                pane.getChildren().remove(n);
             }
         }
-        for (Node n : lstNodes1) {
-            pane1.getChildren().remove(n);
-        }
 
-        List<Node> lstNodes2 = new ArrayList<>();
-        for (Node n : pane2.getChildren()) {
-            if (n instanceof Line) {
-                lstNodes2.add(n);
-            }
-        }
-        for (Node n : lstNodes2) {
-            pane2.getChildren().remove(n);
-        }
-
-        List<Node> lstNodes3 = new ArrayList<>();
-        for (Node n : pane3.getChildren()) {
-            if (n instanceof Line) {
-                lstNodes3.add(n);
-            }
-        }
-        for (Node n : lstNodes3) {
-            pane3.getChildren().remove(n);
-        }
-
-        List<Node> lstNodes4 = new ArrayList<>();
-        for (Node n : pane4.getChildren()) {
-            if (n instanceof Line) {
-                lstNodes4.add(n);
-            }
-        }
-        for (Node n : lstNodes4) {
-            pane4.getChildren().remove(n);
-        }
-
-        List<Node> lstNodes5 = new ArrayList<>();
-        for (Node n : pane5.getChildren()) {
-            if (n instanceof Line) {
-                lstNodes5.add(n);
-            }
-        }
-        for (Node n : lstNodes5) {
-            pane5.getChildren().remove(n);
-        }
-
-//        ObservableList<Node> lstNodes = pane1.getChildren();
-//        lstNodes.addAll(pane2.getChildren());
-//        lstNodes.addAll(pane3.getChildren());
-//        lstNodes.addAll(pane4.getChildren());
-//        lstNodes.addAll(pane5.getChildren());
-//        List<Node> lstLines = new ArrayList<>();
-//        for (Node n : lstNodes) {
-//            if (n instanceof Line) {
-//                lstLines.add(n);
-//            }
-//        }
-//        for (Node l : lstLines) {
-//            lstNodes.remove(l);
-//        }
         Stack<SubPath> path = PathFinder.findPath(loc, loc2);
         HashMap<String, Location> lstLocations = map.getAllLocations();
         for (SubPath sub : path) {
@@ -174,15 +122,15 @@ public class DirectionsController extends PopUpController implements Initializab
                 timeline.setCycleCount(Timeline.INDEFINITE);
                 timeline.play();
                 if (loc1.getFloor().equals("L2") && loc2.getFloor().equals("L2")) {
-                    pane1.getChildren().add(1, line);
+                    panes[0].getChildren().add(1, line);
                 } else if (loc1.getFloor().equals("L1") && loc2.getFloor().equals("L1")) {
-                    pane2.getChildren().add(1, line);
+                    panes[1].getChildren().add(1, line);
                 } else if (loc1.getFloor().equals("1") && loc2.getFloor().equals("1")) {
-                    pane3.getChildren().add(1, line);
+                    panes[2].getChildren().add(1, line);
                 } else if (loc1.getFloor().equals("2") && loc2.getFloor().equals("2")) {
-                    pane4.getChildren().add(1, line);
+                    panes[3].getChildren().add(1, line);
                 } else {
-                    pane5.getChildren().add(1, line);
+                    panes[4].getChildren().add(1, line);
                 }
             }
         }

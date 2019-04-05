@@ -29,64 +29,66 @@ public class MapDisplay {
     /**
      * Display the graph on a map for the default user (no halls, info boxes)
      */
-    public static void displayUser(AnchorPane pane1, AnchorPane pane2, AnchorPane pane3, AnchorPane pane4, AnchorPane pane5) {
+    public static void displayUser(AnchorPane[] panes) {
         Map map = MapParser.parse();
-        displayNodesUser(map, pane1, pane2, pane3, pane4, pane5);
+        displayNodesUser(map, panes);
     }
 
     /**
      * Display the graph of a map for employees (halls, info boxes with spill reporting)
-     * @param pane
+     * @param panes
      */
-    public static void displayEmployee(AnchorPane pane, String floor) {
+    public static void displayEmployee(AnchorPane[] panes) {
         Map map = MapParser.parse();
-        displayNodesEmployee(map, pane, floor);
+        displayNodesEmployee(map, panes);
     }
 
     /**
      * Display the graph on a map for the admin (halls, edit boxes)
-     * @param pane
+     * @param panes
      */
-    public static void displayAdmin(AnchorPane pane, String floor) {
+    public static void displayAdmin(AnchorPane[] panes) {
         Map map = MapParser.parse();
-        displayEdges(map, pane, floor);
-        displayNodesAdmin(map, pane, floor);
+        displayEdges(map, panes);
+        displayNodesAdmin(map, panes);
     }
 
     /**
      * Display the graph on a map for the custodian (no halls)
-     * @param pane
+     * @param panes
      */
-    public static void displayCust(AnchorPane pane, String floor) {
+    public static void displayCust(AnchorPane[] panes) {
         Map map = MapParser.parse();
-        displayNodesCust(map, pane, floor);
+        displayNodesCust(map, panes);
     }
 
-    private static void displayNodesUser(Map map, AnchorPane pane1,AnchorPane pane2, AnchorPane pane3, AnchorPane pane4, AnchorPane pane5) {
+    private static void displayNodesUser(Map map, AnchorPane[] panes) {
         HashMap<String, Location> lstLocations = map.getAllLocations();
         for (Location loc : lstLocations.values()) {
-            double xLoc = (loc.getxCord() - xShift) * scale;
-            double yLoc = (loc.getyCord() - yShift) * scale;
-            Color color = nodeFill;
-            Circle circle = new Circle(xLoc, yLoc, locRadius, color);
-            circle.setStroke(nodeOutline);
-            circle.setStrokeWidth(locWidth);
-            circle.setOnMouseClicked(event -> {
-                try {
-                    event.consume();
-                    ScreenController.popUp("info", loc, map, pane1, pane2, pane3, pane4, pane5);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            });
-            findPane(pane1, pane2, pane3, pane4, pane5, loc.getFloor()).getChildren().add(circle);
+            if (loc.getNodeType() != Constants.NodeType.HALL) {
+                double xLoc = (loc.getxCord() - xShift) * scale;
+                double yLoc = (loc.getyCord() - yShift) * scale;
+                Color color = nodeFill;
+                Circle circle = new Circle(xLoc, yLoc, locRadius, color);
+                circle.setStroke(nodeOutline);
+                circle.setStrokeWidth(locWidth);
+                circle.setOnMouseClicked(event -> {
+                    try {
+                        event.consume();
+                        ScreenController.popUp("info", loc, map, panes);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+                findPane(panes, loc.getFloor()).getChildren().add(circle);
+            }
         }
     }
 
-    private static void displayNodesCust(Map map, AnchorPane pane, String floor) {
+    private static void displayNodesCust(Map map, AnchorPane[] panes) {
         HashMap<String, Location> lstLocations = map.getAllLocations();
         for (Location loc : lstLocations.values()) {
-            if (loc.getFloor().equals(floor) && loc.getNodeType() != Constants.NodeType.HALL) {
+            if (loc.getNodeType() != Constants.NodeType.HALL) {
                 boolean correctCoordinates = loc.getNodeID().substring(0,1).equals("X");
                 double xLoc = (loc.getxCord() - xShift) * scale;
                 double yLoc = (loc.getyCord() - yShift) * scale;
@@ -97,20 +99,20 @@ public class MapDisplay {
                 circle.setOnMouseClicked(event -> {
                     try {
                         event.consume();
-                        ScreenController.popUp("custodian-info", loc, map, pane);
+                        ScreenController.popUp("custodian-info", loc, map, panes);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 });
-                pane.getChildren().add(circle);
+                findPane(panes, loc.getFloor()).getChildren().add(circle);
             }
         }
     }
 
-    private static void displayNodesEmployee(Map map, AnchorPane pane, String floor) {
+    private static void displayNodesEmployee(Map map, AnchorPane[] panes) {
         HashMap<String, Location> lstLocations = map.getAllLocations();
         for (Location loc : lstLocations.values()) {
-            if (loc.getFloor().equals(floor) && loc.getNodeType() != Constants.NodeType.HALL) {
+            if (loc.getNodeType() != Constants.NodeType.HALL) {
                 double xLoc = (loc.getxCord() - xShift) * scale;
                 double yLoc = (loc.getyCord() - yShift) * scale;
                 Color color = nodeFill;
@@ -120,47 +122,45 @@ public class MapDisplay {
                 circle.setOnMouseClicked(event -> {
                     try {
                         event.consume();
-                        ScreenController.popUp("employee-info", loc, map, pane);
+                        ScreenController.popUp("employee-info", loc, map, panes);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 });
-                pane.getChildren().add(circle);
+                findPane(panes, loc.getFloor()).getChildren().add(circle);
             }
         }
     }
 
-    private static void displayNodesAdmin(Map map, AnchorPane pane, String floor) {
+    private static void displayNodesAdmin(Map map, AnchorPane[] panes) {
         HashMap<String, Location> lstLocations = map.getAllLocations();
         for (Location loc : lstLocations.values()) {
-            if (loc.getFloor().equals(floor)) {
-                boolean correctCoordinates = loc.getNodeID().substring(0, 1).equals("X");
-                double xLoc = correctCoordinates ? loc.getxCord() : (loc.getxCord() - xShift) * scale;
-                double yLoc = correctCoordinates ? loc.getyCord() : (loc.getyCord() - yShift) * scale;
-                Circle circle;
-                if (loc.getNodeType() != Constants.NodeType.HALL) {
-                    Color color = nodeFill;
-                    circle = new Circle(xLoc, yLoc, locRadius, color);
-                } else {
-                    Color color = hallFill;
-                    circle = new Circle(xLoc, yLoc, hallRadius, color);
-                }
-
-                circle.setStroke(nodeOutline);
-                circle.setStrokeWidth(locWidth);
-                UIHelpers.setAdminNodeClickEvent(circle, loc);
-                loc.setNodeCircle(circle);
-                pane.getChildren().add(circle);
+            boolean correctCoordinates = loc.getNodeID().substring(0, 1).equals("X");
+            double xLoc = correctCoordinates ? loc.getxCord() : (loc.getxCord() - xShift) * scale;
+            double yLoc = correctCoordinates ? loc.getyCord() : (loc.getyCord() - yShift) * scale;
+            Circle circle;
+            if (loc.getNodeType() != Constants.NodeType.HALL) {
+                Color color = nodeFill;
+                circle = new Circle(xLoc, yLoc, locRadius, color);
+            } else {
+                Color color = hallFill;
+                circle = new Circle(xLoc, yLoc, hallRadius, color);
             }
+
+            circle.setStroke(nodeOutline);
+            circle.setStrokeWidth(locWidth);
+            UIHelpers.setAdminNodeClickEvent(circle, loc);
+            loc.setNodeCircle(circle);
+            findPane(panes, loc.getFloor()).getChildren().add(circle);
         }
     }
 
-    private static void displayEdges(Map map, AnchorPane pane, String floor) {
+    private static void displayEdges(Map map, AnchorPane[] panes) {
         HashMap<String, Edge> lstEdges = map.getAllEdges();
         for (Edge edge : lstEdges.values()) {
             Location start = edge.getStart();
             Location end = edge.getEnd();
-            if (start.getFloor().equals(floor) && end.getFloor().equals(floor)) {
+            if (start.getFloor().equals(end.getFloor())) {
                 double x1 = (start.getxCord() - xShift) * scale;
                 double x2 = (end.getxCord() - xShift) * scale;
                 double y1 = (start.getyCord() - yShift) * scale;
@@ -168,23 +168,23 @@ public class MapDisplay {
                 Line line = new Line(x1, y1, x2, y2);
                 line.setStroke(edgeFill);
                 line.setStrokeWidth(edgeWidth);
-                pane.getChildren().add(line);
+                findPane(panes, start.getFloor()).getChildren().add(line);
             }
         }
     }
 
-    private static AnchorPane findPane(AnchorPane pane1,AnchorPane pane2, AnchorPane pane3, AnchorPane pane4, AnchorPane pane5, String floor) {
+    private static AnchorPane findPane(AnchorPane[] panes, String floor) {
         switch (floor) {
             case "L2":
-                return pane1;
+                return panes[0];
             case "L1":
-                return pane2;
+                return panes[1];
             case "1":
-                return pane3;
+                return panes[2];
             case "2":
-                return pane4;
+                return panes[3];
             default:
-                return pane5;
+                return panes[4];
         }
     }
 

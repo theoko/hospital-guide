@@ -13,6 +13,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import map.MapDisplay;
 import models.sanitation.SanitationRequest;
 
@@ -36,7 +37,7 @@ public class CustodianMapController extends MapController {
 
     public void initialize() {
         toolTip();
-        MapDisplay.displayCust(panFloor1, "1");
+        MapDisplay.displayCust(new AnchorPane[] {panFloorL2, panFloorL1, panFloor1, panFloor2, panFloor3});
         initSanitation();
         updateSanitation();
 

@@ -50,7 +50,7 @@ public class CustodianInfoController extends PopUpController implements Initiali
     private void checkSelected() throws Exception {
         if (bolSelectedCust) { // Two locations
             if (!loc.equals(locSelectedCust)) {
-                ScreenController.popUp("directions", loc, locSelectedCust, map, pane1, pane2, pane3, pane4, pane5);
+                ScreenController.popUp("directions", loc, locSelectedCust, map, panes);
             }
             locSelectedCust = null;
             bolSelectedCust = false;

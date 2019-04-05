@@ -12,7 +12,7 @@ public class UserMapController extends MapController {
 
     public void initialize() {
         toolTip();
-        MapDisplay.displayUser(panFloorL2, panFloorL1, panFloor1, panFloor2, panFloor3);
+        MapDisplay.displayUser(new AnchorPane[] {panFloorL2, panFloorL1, panFloor1, panFloor2, panFloor3});
     }
 
     @Override

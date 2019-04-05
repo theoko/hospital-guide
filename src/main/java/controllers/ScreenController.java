@@ -131,7 +131,7 @@ public class ScreenController {
         stage.show();
     }
 
-    public static void popUp(String name, Location loc, Map map, AnchorPane pane1, AnchorPane pane2, AnchorPane pane3, AnchorPane pane4, AnchorPane pane5) throws Exception {
+    public static void popUp(String name, Location loc, Map map, AnchorPane[] panes) throws Exception {
 
         stage = new Stage();
 
@@ -144,11 +144,7 @@ public class ScreenController {
 
         pc.setLoc(loc);
         pc.setMap(map);
-        pc.setPane1(pane1);
-        pc.setPane2(pane2);
-        pc.setPane3(pane3);
-        pc.setPane4(pane4);
-        pc.setPane5(pane5);
+        pc.setPanes(panes);
 
         // Init scene
         Scene s = new Scene(root);
@@ -163,35 +159,7 @@ public class ScreenController {
         stage.show();
     }
 
-    public static void popUp(String name, Location loc, Map map, AnchorPane pane1) throws Exception {
-
-        stage = new Stage();
-
-        // Init parent
-        URL url = new URL(ScreenController.class.getResource(screenMap.get(name)).toString().replaceAll("%20", " "));
-
-        FXMLLoader loader = new FXMLLoader(url);
-        Parent root = loader.load();
-        PopUpController pc = loader.getController();
-
-        pc.setLoc(loc);
-        pc.setMap(map);
-        pc.setPane1(pane1);
-
-        // Init scene
-        Scene s = new Scene(root);
-
-        // Add CSS to scene
-        addStyles(s);
-
-        stage.setTitle(Character.toUpperCase(name.charAt(0)) + name.substring(1));
-        stage.setScene(s);
-        stage.initStyle(StageStyle.UNDECORATED);
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.show();
-    }
-
-    public static void popUp(String name, Location loc1, Location loc2, Map map, AnchorPane pane1,AnchorPane pane2, AnchorPane pane3, AnchorPane pane4, AnchorPane pane5) throws Exception {
+    public static void popUp(String name, Location loc1, Location loc2, Map map, AnchorPane[] panes) throws Exception {
 
         stage = new Stage();
 
@@ -205,11 +173,7 @@ public class ScreenController {
         pc.setLoc(loc1);
         pc.setLoc2(loc2);
         pc.setMap(map);
-        pc.setPane1(pane1);
-        pc.setPane2(pane2);
-        pc.setPane3(pane3);
-        pc.setPane4(pane4);
-        pc.setPane5(pane5);
+        pc.setPanes(panes);
 
         // Init scene
         Scene s = new Scene(root);
@@ -223,36 +187,6 @@ public class ScreenController {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }
-
-    public static void popUp(String name, Location loc1, Location loc2, Map map, AnchorPane pane1) throws Exception {
-
-        stage = new Stage();
-
-        // Init parent
-        URL url = new URL(ScreenController.class.getResource(screenMap.get(name)).toString().replaceAll("%20", " "));
-
-        FXMLLoader loader = new FXMLLoader(url);
-        Parent root = loader.load();
-        DirectionsController pc = loader.getController();
-
-        pc.setLoc(loc1);
-        pc.setLoc2(loc2);
-        pc.setMap(map);
-        pc.setPane1(pane1);
-
-        // Init scene
-        Scene s = new Scene(root);
-
-        // Add CSS to scene
-        addStyles(s);
-
-        stage.setTitle(Character.toUpperCase(name.charAt(0)) + name.substring(1));
-        stage.setScene(s);
-        stage.initStyle(StageStyle.UNDECORATED);
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.show();
-    }
-
 
     /**
      * Closes out of a current window with selected

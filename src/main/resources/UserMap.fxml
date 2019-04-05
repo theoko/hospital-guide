@@ -24,33 +24,33 @@
                                         <Tab style="-fx-background-color: #022D5A;" text="Floor 3">
                                             <content>
                                                 <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                                       <children>
-                                          <AnchorPane fx:id="panFloor3" onMouseDragged="#floorOneMapOnMouseDragged" onMousePressed="#floorOneMapOnMousePressed" onScroll="#floorOneMapScroll" onZoom="#floorOneMapZoom" onZoomFinished="#floorOneMapZoomDone"  prefHeight="200.0" prefWidth="200.0">
-                                             <children>
-                                                <ImageView fitHeight="1620.0" fitWidth="2581.0" layoutX="1000.0" layoutY="-350.0" pickOnBounds="true" preserveRatio="true">
-                                                   <image>
-                                                      <Image url="@images/Original/03_thethirdfloor.png" />
-                                                   </image>
-                                                </ImageView>
-                                             </children>
-                                          </AnchorPane>
-                                       </children></AnchorPane>
+                                                    <children>
+                                                        <AnchorPane fx:id="panFloor3" onMouseDragged="#floorOneMapOnMouseDragged" onMousePressed="#floorOneMapOnMousePressed" onScroll="#floorOneMapScroll" onZoom="#floorOneMapZoom" onZoomFinished="#floorOneMapZoomDone"  prefHeight="200.0" prefWidth="200.0">
+                                                            <children>
+                                                                <ImageView fitHeight="1620.0" fitWidth="2581.0" layoutX="1000.0" layoutY="-350.0" pickOnBounds="true" preserveRatio="true">
+                                                                    <image>
+                                                                        <Image url="@images/Original/03_thethirdfloor.png" />
+                                                                    </image>
+                                                                </ImageView>
+                                                            </children>
+                                                        </AnchorPane>
+                                                    </children></AnchorPane>
                                             </content>
                                         </Tab>
                                         <Tab style="-fx-background-color: #022D5A;" text="Floor 2">
                                             <content>
                                                 <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                                       <children>
-                                          <AnchorPane fx:id="panFloor2" onMouseDragged="#floorOneMapOnMouseDragged" onMousePressed="#floorOneMapOnMousePressed" onScroll="#floorOneMapScroll" onZoom="#floorOneMapZoom" onZoomFinished="#floorOneMapZoomDone"  prefHeight="200.0" prefWidth="200.0">
-                                             <children>
-                                                <ImageView fitHeight="1620.0" fitWidth="2581.0" layoutX="1000.0" layoutY="-350.0" pickOnBounds="true" preserveRatio="true">
-                                                   <image>
-                                                      <Image url="@images/Original/02_thesecondfloor.png" />
-                                                   </image>
-                                                </ImageView>
-                                             </children>
-                                          </AnchorPane>
-                                       </children></AnchorPane>
+                                                    <children>
+                                                        <AnchorPane fx:id="panFloor2" onMouseDragged="#floorOneMapOnMouseDragged" onMousePressed="#floorOneMapOnMousePressed" onScroll="#floorOneMapScroll" onZoom="#floorOneMapZoom" onZoomFinished="#floorOneMapZoomDone"  prefHeight="200.0" prefWidth="200.0">
+                                                            <children>
+                                                                <ImageView fitHeight="1620.0" fitWidth="2581.0" layoutX="1000.0" layoutY="-350.0" pickOnBounds="true" preserveRatio="true">
+                                                                    <image>
+                                                                        <Image url="@images/Original/02_thesecondfloor.png" />
+                                                                    </image>
+                                                                </ImageView>
+                                                            </children>
+                                                        </AnchorPane>
+                                                    </children></AnchorPane>
                                             </content></Tab>
                                         <Tab style="-fx-background-color: #022D5A;" text="Floor 1">
                                             <content>

@@ -49,7 +49,7 @@ public class UserInfoController extends PopUpController implements Initializable
     private void checkSelected() throws Exception {
         if (bolSelectedUser) { // Two locations
             if (!loc.equals(locSelectedUser)) {
-                ScreenController.popUp("directions", loc, locSelectedUser, map, pane1, pane2, pane3, pane4, pane5);
+                ScreenController.popUp("directions", loc, locSelectedUser, map, panes);
             }
             locSelectedUser = null;
             bolSelectedUser = false;

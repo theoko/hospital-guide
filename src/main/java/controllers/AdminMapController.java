@@ -88,7 +88,7 @@ public class AdminMapController extends MapController {
         // Set tooltip
         toolTip();
 
-        MapDisplay.displayAdmin(panFloor1, "1");
+        MapDisplay.displayAdmin(new AnchorPane[] {panFloorL2, panFloorL1, panFloor1, panFloor2, panFloor3});
         VisualRealtimeController.setPanMap(panFloor1);
         selectedLocation = null;
     }
