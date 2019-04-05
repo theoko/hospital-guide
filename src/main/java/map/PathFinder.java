@@ -60,12 +60,12 @@ public class PathFinder {
                     double newDist = currDist + nCurr.getDist();
                     // Calculate the heuristic based on distance to end map
                     //TODO: Create a more accurate heuristic for nodes on different floors
-                    double heuristic = 1.0 * calcDist(lCurr.getxCord(), lCurr.getyCord(), end.getxCord(), end.getyCord());
+                    double heuristic = calcDist(lCurr.getxCord(), lCurr.getyCord(), end.getxCord(), end.getyCord());
                     if (!lCurr.getFloor().equals(end.getFloor())) {
                         heuristic = Integer.MAX_VALUE;
                     }
                     // Create a new neighbor with updated distance value
-                    SubPath newNeigh = new SubPath(nCurr.getEdgeID(), nCurr.getLocation(), newDist + heuristic);
+                    SubPath newNeigh = new SubPath(nCurr.getEdgeID(), nCurr.getLocation(), newDist, heuristic);
                     // Add the new neighbor into the queue and add its parent into the parent map
                     inQueue.add(newNeigh);
                     parent.putIfAbsent(lCurr.getNodeID(), nNext);
@@ -93,21 +93,6 @@ public class PathFinder {
             prev = parent.get(prev.getLocation().getNodeID());
         }
         return path;
-    }
-
-    /**
-     * Prints out the path (represented in a stack)
-     * @param oldPath A stack of locations containing the path
-     */
-    private static void printPath(Stack<SubPath> oldPath) {
-        // Pop thru the stack and print out each element
-        Stack<SubPath> path = oldPath;
-        while (!path.isEmpty()) {
-            SubPath curr = path.pop();
-            System.out.println("ID: " + curr.getEdgeID());
-            System.out.println("Location: " + curr.getLocation().getNodeID() + ", " + curr.getLocation().getFloor());
-            System.out.println("Distance: " + curr.getDist());
-        }
     }
 
     /**
