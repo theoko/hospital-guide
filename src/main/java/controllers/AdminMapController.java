@@ -101,13 +101,13 @@ public class AdminMapController extends MapController {
     public void clickDownload(MouseEvent event) throws Exception {
         event.consume();
         ScreenController.deactivate();
-        ScreenController.activate("download");
+        ScreenController.activate(Constants.Routes.DOWNLOAD);
     }
 
     public void displayBooking(MouseEvent event) throws Exception {
         event.consume();
         ScreenController.deactivate();
-        ScreenController.activate("book-room");
+        ScreenController.activate(Constants.Routes.BOOKING_WINDOW);
     }
     public void addNode(MouseEvent event) throws Exception {
         Point selectedPoint = new Point((int)event.getX(), (int)event.getY());
@@ -118,7 +118,7 @@ public class AdminMapController extends MapController {
                 this.selectedFloor, this.selectedBuilding, Constants.NodeType.HALL,
                 "RECENT_ADDITION", "RECENT_ADDITION");
 
-        ScreenController.popUp("edit", loc);
+        ScreenController.popUp(Constants.Routes.EDIT_LOCATION, loc);
 //        String locID = Database.generateUniqueNodeID(loc);
 //        loc.setNodeID(locID);
 //        loc.addCurrNode();
@@ -138,7 +138,7 @@ public class AdminMapController extends MapController {
         enableEditEdge = false;
         event.consume();
         ScreenController.logOut(btnReturn);
-        ScreenController.activate("welcome");
+        ScreenController.activate(Constants.Routes.WELCOME);
     }
     @Override
     public void floorOneMapOnMousePressed(MouseEvent event)  {

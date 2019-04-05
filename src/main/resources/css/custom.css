@@ -17,13 +17,13 @@
     -fx-table-color: rgba(82, 100, 174, 0.4);
     -fx-table-rippler-color: rgba(82, 100, 174, 0.6);
 }
-:focused {
-    -fx-background-color: -fx-table-color, -fx-box-border, -fx-control-inner-background;
-    -fx-background-insets: -1.4, 0, 1;
-    -fx-background-radius: 1.4, 0, 0;
-    /*....*/
-    -fx-padding: 1; /* 0.083333em; */
-}
+/*:focused {*/
+/*    -fx-background-color: -fx-table-color, -fx-box-border, -fx-control-inner-background;*/
+/*    -fx-background-insets: -1.4, 0, 1;*/
+/*    -fx-background-radius: 1.4, 0, 0;*/
+/*    !*....*!*/
+/*    -fx-padding: 1; !* 0.083333em; *!*/
+/*}*/
 
 .table-view:focused .table-row-cell:selected{
     -fx-background-color: -fx-table-color;
@@ -83,6 +83,7 @@
     -fx-background-color: -fx-text-fill;
     -fx-padding: 0.333333em 0.229em 0.333333em 0.229em; /* 4 */
     -fx-shape: "M 0 -3.5 L 4 0 L 0 3.5 z";
+    -fx-fill: white;
 }
 
 .table-row-cell .jfx-text-field {
@@ -108,10 +109,10 @@
     -fx-background-color: rgb(230, 230, 230);
 }
 
-.table-view .menu-item:focused {
-    -fx-background-color: -fx-table-color;
+/*.table-view .menu-item:focused {*/
+/*    -fx-background-color: -fx-table-color;*/
 
-}
+/*}*/
 
 .table-view .menu-item .label {
     -fx-padding: 5 0 5 0;

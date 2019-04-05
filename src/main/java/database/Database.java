@@ -1,6 +1,5 @@
 package database;
 
-import controllers.VisualRealtimeController;
 import helpers.Constants;
 import helpers.DatabaseHelpers;
 import helpers.MapHelpers;
@@ -16,12 +15,9 @@ import java.util.*;
 
 
 public class Database {
+
     private static String newPrefixChar = "X";
     static Connection connection;
-
-//    SQLTemplates dialect;
-//    Configuration configuration;
-//    SQLQueryFactory sqlQueryFactory;
 
     static {
 
@@ -37,12 +33,14 @@ public class Database {
 
         try {
             connection = DriverManager.getConnection("jdbc:derby:" + Constants.DB_NAME + ";create=true");
-            dropTables();
+//            dropTables();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        createTables();
+        if(!Database.databaseExists()) {
+            createTables();
+        }
 
 //        dialect = new DerbyTemplates();
 //        configuration = new Configuration(dialect);
@@ -52,6 +50,7 @@ public class Database {
      * Drops all database tables
      */
     public static void dropTables() {
+        dropDeletedEdgesTable();
         dropDeletedLocationTable();
         dropSanitationTable();
         dropBookTable();
@@ -59,6 +58,8 @@ public class Database {
         dropEdgeTable();
         dropLocationTable();
         dropUsersTable();
+        //TODO: fix kiosk drop table order
+        dropKioskTable();
     }
 
     /**
@@ -72,8 +73,12 @@ public class Database {
             e.printStackTrace();
         }
 
+        String kioskTable = "CREATE TABLE " + Constants.KIOSK_TABLE +
+                "(kioskID INT PRIMARY KEY," +
+            "CONSTRAINT kioskID_fk FOREIGN KEY(kioskID) REFERENCES " + Constants.NODES_TABLE + "(nodeID))";
+
         String usersTable = "CREATE TABLE " + Constants.USERS_TABLE +
-                "(userID INT PRIMARY KEY," +
+                "(userID INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1)," +
                 " username VARCHAR(32), " +
                 " password VARCHAR(32)," +
                 " userType VARCHAR(32))";
@@ -102,8 +107,8 @@ public class Database {
                 "CONSTRAINT nodeIDRoom_fk FOREIGN KEY(nodeID) REFERENCES " + Constants.NODES_TABLE + "(nodeID)" +
                 ")";
 
-        String bookTable = "CREATE TABLE " + Constants.BOOK_TABLE +
-                "(bookingID INT PRIMARY KEY," +
+        String bookTable = "CREATE TABLE " + Constants.BOOK_TABLE + "(" +
+                "bookingID INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1)," +
                 "nodeID VARCHAR(100)," +
                 "userID INT," +
                 "startDate TIMESTAMP," +
@@ -111,8 +116,8 @@ public class Database {
                 "CONSTRAINT roomID2_fk FOREIGN KEY(nodeID) REFERENCES " + Constants.NODES_TABLE + "(nodeID)," +
                 "CONSTRAINT userID2_fk FOREIGN KEY(userID) REFERENCES " + Constants.USERS_TABLE + "(userID))";
 
-        String deletedLocationsTable = "CREATE TABLE " + Constants.DELETED_LOCATION_TABLE +
-                "(nodeID VARCHAR(100) PRIMARY KEY," +
+        String deletedLocationsTable = "CREATE TABLE " + Constants.DELETED_LOCATION_TABLE + "(" +
+                "nodeID VARCHAR(100) PRIMARY KEY," +
                 "xCoord INT," +
                 "yCoord INT," +
                 "floor VARCHAR(100)," +
@@ -120,6 +125,13 @@ public class Database {
                 "nodeType VARCHAR(100)," +
                 "longName VARCHAR(100)," +
                 "shortName VARCHAR(100))";
+
+        String deletedEdgesTable = "CREATE TABLE " + Constants.DELETED_EDGES_TABLE +
+                "(edgeID VARCHAR(100) PRIMARY KEY," +
+                "startNodeID VARCHAR(100)," +
+                "endNodeID VARCHAR(100)," +
+                "CONSTRAINT startNodeIDdel_fk FOREIGN KEY(startNodeID) REFERENCES " + Constants.DELETED_LOCATION_TABLE + "(nodeID)," +
+                "CONSTRAINT endNodeIDdel_fk FOREIGN KEY(endNodeID) REFERENCES " + Constants.DELETED_LOCATION_TABLE + "(nodeID))";
 
         String sanitationTable = "CREATE TABLE " + Constants.SANITATION_TABLE + "(" +
                 "requestID INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1)," +
@@ -135,13 +147,14 @@ public class Database {
         try {
 
             statement.execute(usersTable);
+            statement.execute(kioskTable);
             statement.execute(locationTable);
             statement.execute(neighborTable);
-
             statement.execute(roomTable);
             statement.execute(bookTable);
             statement.execute(sanitationTable);
             statement.execute(deletedLocationsTable);
+            statement.execute(deletedEdgesTable);
 
         } catch (SQLException | NullPointerException e) {
             e.printStackTrace();
@@ -271,7 +284,7 @@ public class Database {
     }
 
     /**
-     * checks if location is available
+     * Checks if location is available
      */
     public static List<Room> checkAvailabilityTime(String startTime, String endTime) {
 
@@ -314,24 +327,63 @@ public class Database {
     }
 
     /**
-     * Creates user based off of database
+     * Create a booking for a room
+     * @param book
      */
-    public static boolean createUser(User user) {
+    public static boolean createBooking(Book book) {
+
         try {
+
             PreparedStatement statement;
             statement = connection.prepareStatement(
-                    "INSERT INTO " + Constants.USERS_TABLE + " (USERID, USERNAME, PASSWORD, USERTYPE) " +
+                    "INSERT INTO " + Constants.BOOK_TABLE + " (NODEID, USERID, STARTDATE, ENDDATE) " +
                             "VALUES (?, ?, ?, ?)"
             );
 
-            statement.setInt(1, user.getUserID());
-            statement.setString(2, user.getUsername());
-            statement.setString(3, user.getPassword());
-            statement.setString(4, user.getUserType().name());
+            statement.setString(1, book.getRoomID());
+            statement.setInt(2, getUserByUsername(book.getUser().getUsername()).getUserID());
+            statement.setTimestamp(3, Timestamp.valueOf(book.getStartDate()));
+            statement.setTimestamp(4, Timestamp.valueOf(book.getEndDate()));
+
             return statement.execute();
 
         } catch (SQLException e) {
-            System.out.println("Table " + Constants.USERS_TABLE + " cannot be added!");
+            e.printStackTrace();
+
+            return false;
+        }
+
+    }
+
+    /**
+     * Creates user based off of database
+     */
+    public static boolean createUser(User user) {
+
+        try {
+
+            User checkUser = Database.getUserByUsername(user.getUsername());
+
+            // We need to create the user
+            if(checkUser == null) {
+
+                PreparedStatement statement;
+                statement = connection.prepareStatement(
+                        "INSERT INTO " + Constants.USERS_TABLE + " (USERNAME, PASSWORD, USERTYPE) " +
+                                "VALUES (?, ?, ?)"
+                );
+
+                statement.setString(1, user.getUsername());
+                statement.setString(2, user.getPassword());
+                statement.setString(3, user.getUserType().name());
+                return statement.execute();
+
+            } else {
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
 
             return false;
         }
@@ -341,6 +393,34 @@ public class Database {
     /**
      * Drop tables
      */
+    private static boolean dropKioskTable(){
+        try {
+            Statement statement;
+
+            statement = connection.createStatement();
+
+            return statement.execute("DROP TABLE " + Constants.KIOSK_TABLE);
+        } catch (SQLException e) {
+            System.out.println("Table " + Constants.KIOSK_TABLE + " cannot be dropped");
+
+            return false;
+        }
+    }
+
+    private static boolean dropDeletedEdgesTable() {
+        try {
+            Statement statement;
+
+            statement = connection.createStatement();
+
+            return statement.execute("DROP TABLE " + Constants.DELETED_EDGES_TABLE);
+        } catch (SQLException e) {
+            System.out.println("Table " + Constants.DELETED_EDGES_TABLE + " cannot be dropped");
+
+            return false;
+        }
+    }
+
     private static boolean dropDeletedLocationTable() {
         try {
             Statement statement;
@@ -443,6 +523,30 @@ public class Database {
     }
 
     /**
+     * Checks if the database exists locally
+     * @return true if the database exists, false otherwise
+     */
+    public static boolean databaseExists() {
+
+        boolean exists;
+
+        HashMap<String, Location> locations = Database.getLocations();
+
+        if(locations != null) {
+            if(locations.isEmpty()) {
+                exists = false;
+            } else {
+                exists = true;
+            }
+        } else {
+            exists = false;
+        }
+
+
+        return exists;
+    }
+
+    /**
      * Generalized function for filtering tables
      *
      * @return a list of objects
@@ -487,20 +591,26 @@ public class Database {
             statement = connection.prepareStatement(
                     "SELECT * FROM " + Constants.BOOK_TABLE + " WHERE ROOMID=?"
             );
-            //TODO: right parameter?
+
             statement.setString(1, roomID);
 
             ResultSet resultSet = statement.executeQuery();
 
-            Book book = new Book(
-                    resultSet.getInt("BOOKINGID"),
-                    resultSet.getString("ROOMID"),
-                    resultSet.getInt("USERID"),
-                    resultSet.getDate("STARTDATE"),
-                    resultSet.getDate("ENDDATES")
-            );
+            if(resultSet.next()) {
 
-            return book;
+                Book book = new Book(
+                        resultSet.getInt("BOOKINGID"),
+                        resultSet.getString("ROOMID"),
+                        getUserByID(resultSet.getInt("USERID")),
+                        resultSet.getString("STARTDATE"),
+                        resultSet.getString("ENDDATES")
+                );
+
+                return book;
+
+            }
+
+            return null;
 
         } catch (SQLException e) {
             System.out.println("Cannot get room by ID!");
@@ -509,7 +619,53 @@ public class Database {
         }
     }
 
-    public User getUserByID(int userID) {
+    public static List<Book> getBookingsForUser(User user) {
+        try {
+
+            User userByUsername = getUserByUsername(user.getUsername());
+
+            if(userByUsername == null) {
+                return null;
+            }
+
+            int userID = userByUsername.getUserID();
+
+            PreparedStatement statement;
+
+            statement = connection.prepareStatement(
+                    "SELECT * FROM " + Constants.BOOK_TABLE + " WHERE USERID=?"
+            );
+
+            statement.setInt(1, userID);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            List<Book> bookings = new ArrayList<>();
+
+            while(resultSet.next()) {
+
+                Book book = new Book(
+                        resultSet.getInt("BOOKINGID"),
+                        resultSet.getString("NODEID"),
+                        getUserByID(resultSet.getInt("USERID")),
+                        resultSet.getString("STARTDATE"),
+                        resultSet.getString("ENDDATE")
+                );
+
+                bookings.add(book);
+
+            }
+
+            return bookings;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            return null;
+        }
+    }
+
+    public static User getUserByID(int userID) {
         try {
 
             PreparedStatement statement;
@@ -522,17 +678,54 @@ public class Database {
 
             ResultSet resultSet = statement.executeQuery();
 
-            User user = new User(
-                    resultSet.getInt("USERID"),
-                    resultSet.getString("USERNAME"),
-                    resultSet.getString("PASSWORD"),
-                    Constants.Auth.valueOf(resultSet.getString("USERTYPE"))
-            );
+            if(resultSet.next()) {
+                User user = new User(
+                        resultSet.getInt("USERID"),
+                        resultSet.getString("USERNAME"),
+                        resultSet.getString("PASSWORD"),
+                        Constants.Auth.valueOf(resultSet.getString("USERTYPE"))
+                );
 
-            return user;
+                return user;
+            }
+
+            return null;
 
         } catch (SQLException e) {
             System.out.println("Cannot get user by ID!");
+
+            return null;
+        }
+    }
+
+    public static User getUserByUsername(String username) {
+        try {
+
+            PreparedStatement statement;
+
+            statement = connection.prepareStatement(
+                    "SELECT * FROM " + Constants.USERS_TABLE + " WHERE USERNAME=?"
+            );
+
+            statement.setString(1, username);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if(resultSet.next()) {
+                User user = new User(
+                        resultSet.getInt("USERID"),
+                        resultSet.getString("USERNAME"),
+                        resultSet.getString("PASSWORD"),
+                        Constants.Auth.valueOf(resultSet.getString("USERTYPE"))
+                );
+
+                return user;
+            }
+
+            return null;
+
+        } catch (SQLException e) {
+            System.out.println("Cannot get user by username!");
 
             return null;
         }
@@ -605,7 +798,7 @@ public class Database {
             statement.setInt(3, location.getyCord());
             statement.setString(4, location.getFloor());
             statement.setString(5, location.getBuilding());
-            statement.setString(6, String.valueOf(DatabaseHelpers.enumToString(location.getNodeType())));
+            statement.setString(6, location.getNodeType().name());
             statement.setString(7, location.getLongName());
             statement.setString(8, location.getShortName());
 
@@ -614,6 +807,31 @@ public class Database {
         } catch (SQLException e) {
             System.out.println("Location " + location.getNodeID() + " cannot be added!");
             e.printStackTrace();
+
+            return false;
+        }
+
+    }
+
+    public static boolean addDeleteEdge(Edge edge) {
+
+        try {
+
+            PreparedStatement statement;
+
+            statement = connection.prepareStatement(
+                    "INSERT INTO " + Constants.DELETED_EDGES_TABLE + " (EDGEID, STARTNODEID, ENDNODEID) " +
+                            "VALUES (?, ?, ?)"
+            );
+
+            statement.setString(1, edge.getEdgeID());
+            statement.setString(2, edge.getStart().getNodeID());
+            statement.setString(3, edge.getEnd().getNodeID());
+
+            return statement.execute();
+
+        } catch (SQLException e) {
+            System.out.println("SubPath cannot be added to deleted edges table!");
 
             return false;
         }
@@ -640,7 +858,7 @@ public class Database {
                         resultSet.getInt("YCOORD"),
                         resultSet.getString("FLOOR"),
                         resultSet.getString("BUILDING"),
-                        DatabaseHelpers.stringToEnum(resultSet.getString("NODETYPE")),
+                        Constants.NodeType.valueOf(resultSet.getString("NODETYPE")),
                         resultSet.getString("LONGNAME"),
                         resultSet.getString("SHORTNAME")
                 );
@@ -735,9 +953,9 @@ public class Database {
                 Book user = new Book(
                         resultSet.getInt("BOOKINGID"),
                         resultSet.getString("ROOMID"),
-                        resultSet.getInt("USERID"),
-                        resultSet.getDate("STARTDATE"),
-                        resultSet.getDate("ENDDATE")
+                        getUserByID(resultSet.getInt("USERID")),
+                        resultSet.getString("STARTDATE"),
+                        resultSet.getString("ENDDATE")
                 );
 
                 returnList.add(user);
@@ -930,7 +1148,7 @@ public class Database {
             return returnList;
 
         } catch (SQLException e) {
-            System.out.println("Failed to get users!");
+            System.out.println("Failed to get deleted locations!");
 
             return null;
         }
@@ -973,7 +1191,7 @@ public class Database {
             return returnList;
 
         } catch (SQLException e) {
-            System.out.println("Failed to get users!");
+            System.out.println("Failed to get locations!");
 
             return null;
         }
@@ -1001,7 +1219,7 @@ public class Database {
             return returnList;
 
         } catch (SQLException e) {
-            System.out.println("Failed to get users!");
+            System.out.println("Failed to get edges!");
             return null;
         }
     }
@@ -1054,32 +1272,51 @@ public class Database {
 
         try {
 
-            PreparedStatement statement1;
+            // We need to check if a ROOM is to be removed
+            // In that case, the room should first be removed from the rooms table
+            // since in the constraints defined
+            if(deleteLocation.getNodeType() == Constants.NodeType.CONF) {
+
+                System.out.println("Conference room with ID: " + deleteLocation.getNodeID());
+
+                PreparedStatement statement1;
+                statement1 = connection.prepareStatement(
+                    "DELETE FROM " + Constants.ROOM_TABLE +
+                    " WHERE NODEID=?"
+                );
+
+                statement1.setString(1, deleteLocation.getNodeID());
+
+                statement1.execute();
+
+            }
+
             PreparedStatement statement2;
+            PreparedStatement statement3;
 
-            addDeleteLocation(deleteLocation);
-
-            statement1 = connection.prepareStatement(
+            statement2 = connection.prepareStatement(
                     "DELETE FROM " + Constants.EDGES_TABLE +
                             " WHERE STARTNODEID=? OR ENDNODEID=?"
             );
 
-            statement1.setString(1, deleteLocation.getNodeID());
-            statement1.setString(2, deleteLocation.getNodeID());
+            statement2.setString(1, deleteLocation.getNodeID());
+            statement2.setString(2, deleteLocation.getNodeID());
 
-            statement1.execute();
+            statement2.execute();
 
-            statement2 = connection.prepareStatement(
+            // Add location to deleted locations table
+
+            statement3 = connection.prepareStatement(
                     "DELETE FROM " + Constants.NODES_TABLE +
                             " WHERE NODEID=?"
             );
 
-            statement2.setString(1, deleteLocation.getNodeID());
+            statement3.setString(1, deleteLocation.getNodeID());
 
-            return statement2.execute();
+            return statement3.execute();
 
         } catch (SQLException e) {
-            System.out.println("Failed to update location: " + deleteLocation.getNodeID());
+            System.out.println("Failed to delete location: " + deleteLocation.getNodeID());
             e.printStackTrace();
 
             return false;
@@ -1171,10 +1408,11 @@ public class Database {
 //        db.filterTable(builder);
 
     }
-    public static void addNewLocation(Location loc) {
+    public static String addNewLocation(Location loc) {
                 String locID = Database.generateUniqueNodeID(loc);
         loc.setNodeID(locID);
         loc.addCurrNode();
+        return locID;
     }
 
     public static String generateUniqueNodeID(Location c) {
