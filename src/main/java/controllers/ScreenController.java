@@ -11,7 +11,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import models.map.Location;
 import models.map.Map;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
@@ -72,31 +71,21 @@ public class ScreenController {
 
     public static void activate(Constants.Routes route) throws Exception {
         stage = new Stage();
-
-        // Init parent
-        URL url = new URL(ScreenController.class.getResource(screenMap.get(route.name())).toString().replaceAll("%20", " "));
+        URL url = routeToURL(route);
 
         FXMLLoader loader = new FXMLLoader(url);
         Parent root = loader.load();
 
-        // Init scene
         Scene s = new Scene(root);
-
-        // Add CSS to scene
         addStyles(s);
-
         stage.setTitle("Brigham and Women's Pathfinder Application");
         stage.setScene(s);
         stage.setResizable(true);
-
         stage.show();
     }
 
     public static void popUp(Constants.Routes route, Location loc) throws Exception {
-
         stage = new Stage();
-
-        // Init parent
         URL url = routeToURL(route);
 
         FXMLLoader loader = new FXMLLoader(url);

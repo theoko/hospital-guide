@@ -35,17 +35,12 @@ public class MapHelpers {
     }
 
     public static Point mapPointToMapCoordinates(Point p) {
-
-        Point n = new Point(
-                (int) ((p.x / MapDisplay.getScale()) + MapDisplay.getxShift()),
-                (int) ((p.y / MapDisplay.getScale() + MapDisplay.getyShift()))
-        );
-        return n;
+        return new Point((int) MapDisplay.revScaleX(p.x), (int) MapDisplay.revScaleY(p.y));
     }
+
     public static Circle generateNode(Point target) {
-        Circle circle = new Circle((target.x - MapDisplay.getxShift()) * MapDisplay.getScale(),
-                (target.y - MapDisplay.getyShift()) * MapDisplay.getScale()
-                , MapDisplay.getLocRadius(), Color.WHITE);
+        Circle circle = new Circle(MapDisplay.scaleX(target.x), MapDisplay.scaleY(target.y),
+                MapDisplay.getLocRadius(), Color.WHITE);
         circle.setStroke(Color.BLACK);
         circle.setStrokeWidth(MapDisplay.getLocWidth());
 //        circle.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -53,7 +48,7 @@ public class MapHelpers {
 //            public void handle(MouseEvent event) {
 //                try {
 //                    event.consume();
-//                    ScreenController.popUp("info", loc);
+//                    ScreenController.popUp(Constants.Routes.USER_INFO, loc);
 //                } catch (Exception e) {
 //                    e.printStackTrace();
 //                }
@@ -61,11 +56,13 @@ public class MapHelpers {
 //        });
         return circle;
     }
+
     public static Edge generateEdge(Location loc1, Location loc2) {
         Edge e = new Edge(null, loc1, loc2);
         e.setEdgeID(MapHelpers.generateEdgeID(e, Constants.START_FIRST));
         return e;
     }
+
     public static String generateEdgeID(Edge edge, boolean startFirst) {
         String nodeID1 = edge.getStart().getNodeID();
         String nodeID2 = edge.getEnd().getNodeID();

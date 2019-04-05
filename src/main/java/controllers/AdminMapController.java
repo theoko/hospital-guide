@@ -13,7 +13,6 @@ import javafx.scene.shape.Line;
 import map.MapDisplay;
 import models.map.Edge;
 import models.map.Location;
-
 import java.awt.*;
 
 public class AdminMapController extends MapController {
@@ -119,7 +118,7 @@ public class AdminMapController extends MapController {
                 this.selectedFloor, this.selectedBuilding, Constants.NodeType.HALL,
                 "RECENT_ADDITION", "RECENT_ADDITION");
 
-        ScreenController.popUp("edit", loc);
+        ScreenController.popUp(Constants.Routes.EDIT_LOCATION, loc);
 //        String locID = Database.generateUniqueNodeID(loc);
 //        loc.setNodeID(locID);
 //        loc.addCurrNode();
@@ -139,7 +138,7 @@ public class AdminMapController extends MapController {
         enableEditEdge = false;
         event.consume();
         ScreenController.logOut(btnReturn);
-        ScreenController.activate("welcome");
+        ScreenController.activate(Constants.Routes.WELCOME);
     }
     @Override
     public void floorOneMapOnMousePressed(MouseEvent event)  {

@@ -18,7 +18,7 @@ public class UserMapController extends MapController {
     public void logOut(MouseEvent event) throws Exception {
         event.consume();
         ScreenController.logOut(btnReturn);
-        ScreenController.activate("welcome");
+        ScreenController.activate(Constants.Routes.WELCOME);
     }
 
     void toolTip() {

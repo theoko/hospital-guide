@@ -1,12 +1,12 @@
 package controllers;
 
 import com.jfoenix.controls.JFXButton;
+import helpers.Constants;
 import helpers.DatabaseHelpers;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import models.map.Location;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -18,7 +18,6 @@ public class EmployeeInfoController extends PopUpController implements Initializ
     public Label lblNodeType;
     public Label lblLongName;
     public Label lblShortName;
-
     public JFXButton btnRequest;
     public JFXButton btnDirections;
     public JFXButton btnCancel;
@@ -51,7 +50,7 @@ public class EmployeeInfoController extends PopUpController implements Initializ
         event.consume();
         ScreenController.deactivate();
         try {
-            ScreenController.popUp("sanitation-request" , loc);
+            ScreenController.popUp(Constants.Routes.SANITATION_REQUEST , loc);
         } catch(Exception exception) {
             exception.printStackTrace();
         }
@@ -60,7 +59,7 @@ public class EmployeeInfoController extends PopUpController implements Initializ
     private void checkSelected() throws Exception {
         if (bolSelectedEmp) { // Two locations
             if (!loc.equals(locSelectedEmp)) {
-                ScreenController.popUp("directions", loc, locSelectedEmp, map, pane);
+                ScreenController.popUp(Constants.Routes.DIRECTIONS, loc, locSelectedEmp, map, pane);
             }
             locSelectedEmp = null;
             bolSelectedEmp = false;

@@ -1,5 +1,6 @@
 package controllers;
 
+import helpers.Constants;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
@@ -11,11 +12,11 @@ public class WelcomeController {
 
     public void welcomeLogin() throws Exception{
         ScreenController.deactivate();
-        ScreenController.activate("user-map");
+        ScreenController.activate(Constants.Routes.USER_MAP);
     }
 
     public void employeeLogin() throws Exception{
         ScreenController.deactivate();
-        ScreenController.activate("login");
+        ScreenController.activate(Constants.Routes.LOGIN);
     }
 }

@@ -13,7 +13,6 @@ import models.map.Map;
 import java.util.HashMap;
 
 public class MapDisplay {
-
     private final static double locRadius = 7.5;
     private final static double hallRadius = 2.5;
     private final static double locWidth = 2.0;
@@ -67,22 +66,19 @@ public class MapDisplay {
         displayNodesCust(map, pane, floor);
     }
 
-
-
     private static void displayNodesUser(Map map, AnchorPane pane, String floor) {
         HashMap<String, Location> lstLocations = map.getAllLocations();
         for (Location loc : lstLocations.values()) {
             if (loc.getFloor().equals(floor) && loc.getNodeType() != Constants.NodeType.HALL) {
-                double xLoc = (loc.getxCord() - xShift) * scale;
-                double yLoc = (loc.getyCord() - yShift) * scale;
-                Color color = nodeFill;
-                Circle circle = new Circle(xLoc, yLoc, locRadius, color);
+                double xLoc = scaleX(loc.getxCord());
+                double yLoc = scaleY(loc.getyCord());
+                Circle circle = new Circle(xLoc, yLoc, locRadius, nodeFill);
                 circle.setStroke(nodeOutline);
                 circle.setStrokeWidth(locWidth);
                 circle.setOnMouseClicked(event -> {
                     try {
                         event.consume();
-                        ScreenController.popUp("info", loc, map, pane);
+                        ScreenController.popUp(Constants.Routes.USER_INFO, loc, map, pane);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -96,16 +92,15 @@ public class MapDisplay {
         HashMap<String, Location> lstLocations = map.getAllLocations();
         for (Location loc : lstLocations.values()) {
             if (loc.getFloor().equals(floor) && loc.getNodeType() != Constants.NodeType.HALL) {
-                double xLoc = (loc.getxCord() - xShift) * scale;
-                double yLoc = (loc.getyCord() - yShift) * scale;
-                Color color = nodeFill;
-                Circle circle = new Circle(xLoc, yLoc, locRadius, color);
+                double xLoc = scaleX(loc.getxCord());
+                double yLoc = scaleY(loc.getyCord());
+                Circle circle = new Circle(xLoc, yLoc, locRadius, nodeFill);
                 circle.setStroke(nodeOutline);
                 circle.setStrokeWidth(locWidth);
                 circle.setOnMouseClicked(event -> {
                     try {
                         event.consume();
-                        ScreenController.popUp("custodian-info", loc, map, pane);
+                        ScreenController.popUp(Constants.Routes.CUSTODIAN_INFO, loc, map, pane);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -119,16 +114,15 @@ public class MapDisplay {
         HashMap<String, Location> lstLocations = map.getAllLocations();
         for (Location loc : lstLocations.values()) {
             if (loc.getFloor().equals(floor) && loc.getNodeType() != Constants.NodeType.HALL) {
-                double xLoc = (loc.getxCord() - xShift) * scale;
-                double yLoc = (loc.getyCord() - yShift) * scale;
-                Color color = nodeFill;
-                Circle circle = new Circle(xLoc, yLoc, locRadius, color);
+                double xLoc = scaleX(loc.getxCord());
+                double yLoc = scaleY(loc.getyCord());
+                Circle circle = new Circle(xLoc, yLoc, locRadius, nodeFill);
                 circle.setStroke(nodeOutline);
                 circle.setStrokeWidth(locWidth);
                 circle.setOnMouseClicked(event -> {
                     try {
                         event.consume();
-                        ScreenController.popUp("employee-info", loc, map, pane);
+                        ScreenController.popUp(Constants.Routes.EMPLOYEE_INFO, loc, map, pane);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -142,17 +136,14 @@ public class MapDisplay {
         HashMap<String, Location> lstLocations = map.getAllLocations();
         for (Location loc : lstLocations.values()) {
             if (loc.getFloor().equals(floor)) {
-                double xLoc = (loc.getxCord() - xShift) * scale;
-                double yLoc = (loc.getyCord() - yShift) * scale;
+                double xLoc = scaleX(loc.getxCord());
+                double yLoc = scaleY(loc.getyCord());
                 Circle circle;
                 if (loc.getNodeType() != Constants.NodeType.HALL) {
-                    Color color = nodeFill;
-                    circle = new Circle(xLoc, yLoc, locRadius, color);
+                    circle = new Circle(xLoc, yLoc, locRadius, nodeFill);
                 } else {
-                    Color color = hallFill;
-                    circle = new Circle(xLoc, yLoc, hallRadius, color);
+                    circle = new Circle(xLoc, yLoc, hallRadius, hallFill);
                 }
-
                 circle.setStroke(nodeOutline);
                 circle.setStrokeWidth(locWidth);
                 UIHelpers.setAdminNodeClickEvent(circle, loc);
@@ -168,10 +159,10 @@ public class MapDisplay {
             Location start = edge.getStart();
             Location end = edge.getEnd();
             if (start.getFloor().equals(floor) && end.getFloor().equals(floor)) {
-                double x1 = (start.getxCord() - xShift) * scale;
-                double x2 = (end.getxCord() - xShift) * scale;
-                double y1 = (start.getyCord() - yShift) * scale;
-                double y2 = (end.getyCord() - yShift) * scale;
+                double x1 = scaleX(start.getxCord());
+                double x2 = scaleX(end.getxCord());
+                double y1 = scaleY(start.getyCord());
+                double y2 = scaleY(end.getyCord());
                 Line line = new Line(x1, y1, x2, y2);
                 line.setStroke(edgeFill);
                 line.setStrokeWidth(edgeWidth);
@@ -185,47 +176,15 @@ public class MapDisplay {
     }
 
     public static double scaleY(double y) {
-        return (y- yShift) * scale;
+        return (y - yShift) * scale;
     }
 
-//    private static Color nodeColor(Location loc) {
-//        switch (loc.getNodeType()) {
-//            case BATH:
-//                return Color.GRAY;
-//            case CONF:
-//                return Color.GRAY;
-//            case DEPT:
-//                return Color.GRAY;
-//            case ELEV:
-//                return Color.YELLOW;
-//            case EXIT:
-//                return Color.GRAY;
-//            case HALL:
-//                return Color.RED;
-//            case INFO:
-//                return Color.GRAY;
-//            case LABS:
-//                return Color.GRAY;
-//            case REST:
-//                return Color.BLUE;
-//            case RETL:
-//                return Color.WHITE;
-//            case SERV:
-//                return Color.GRAY;
-//            default:
-//                return Color.YELLOW;
-//        }
-//    }
-public static double getxShift() {
-    return xShift;
-}
-
-    public static double getyShift() {
-        return yShift;
+    public static double revScaleX(double x) {
+        return x / scale + xShift;
     }
 
-    public static double getScale() {
-        return scale;
+    public static double revScaleY(double y) {
+        return y / scale + yShift;
     }
 
     public static double getLocRadius() {
