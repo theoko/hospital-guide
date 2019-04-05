@@ -11,12 +11,13 @@ import java.util.HashMap;
 import java.util.List;
 
 public class EdgeTable {
-    private static Connection connection;
 
-    private static void EdgeTable(){
+    private static void EdgeTable(){ }
+
+    public static void createTable(){
         Statement statement = null;
         try {
-            statement = connection.createStatement();
+            statement = Database.getConnection().createStatement();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -32,14 +33,13 @@ public class EdgeTable {
         } catch (SQLException | NullPointerException e) {
             e.printStackTrace();
         }
-
     }
 
     public static boolean dropEdgeTable() {
         try {
             Statement statement;
 
-            statement = connection.createStatement();
+            statement = Database.getConnection().createStatement();
 
             return statement.execute("DROP TABLE " + Constants.EDGES_TABLE);
 
@@ -61,7 +61,7 @@ public class EdgeTable {
     public static List<Edge> getEdges(HashMap<String, Location> lstLocations) {
         try {
             Statement statement;
-            statement = connection.createStatement();
+            statement = Database.getConnection().createStatement();
             String query = "SELECT * FROM " + Constants.EDGES_TABLE;
             ResultSet resultSet = statement.executeQuery(query);
             List<Edge> returnList = new ArrayList<>();
@@ -96,7 +96,7 @@ public class EdgeTable {
         try {
             PreparedStatement statement;
 
-            statement = connection.prepareStatement(
+            statement = Database.getConnection().prepareStatement(
                     "UPDATE " + Constants.EDGES_TABLE +
                             " SET STARTNODEID=?, ENDNODEID=?" +
                             " WHERE EDGEID=?"
@@ -151,7 +151,7 @@ public class EdgeTable {
         try {
             PreparedStatement statement;
 
-            statement = connection.prepareStatement(
+            statement = Database.getConnection().prepareStatement(
                     "INSERT INTO " + Constants.EDGES_TABLE + " (EDGEID, STARTNODEID, ENDNODEID) " +
                             "VALUES (?, ?, ?)"
             );

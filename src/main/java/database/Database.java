@@ -52,8 +52,21 @@ public class Database {
      * Creates the basic database tables
      */
     private static void createTables() {
+        UserTable.createTable();
+        LocationTable.createtable();
+        EdgeTable.createTable();
+        RoomTable.createTable();
+        BookTable.createTable();
+        SanitationTable.createTable();
 
+    }
 
+    public static Connection getConnection() {
+        return connection;
+    }
+
+    public static void setConnection(Connection connection) {
+        Database.connection = connection;
     }
 
     /**

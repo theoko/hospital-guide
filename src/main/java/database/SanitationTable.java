@@ -9,12 +9,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class SanitationTable {
-    private static Connection connection;
 
-    private static void SanitationTable() {
+    private static void SanitationTable() {}
+
+    public static void createTable(){
         Statement statement = null;
         try {
-            statement = connection.createStatement();
+            statement = Database.getConnection().createStatement();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -34,7 +35,6 @@ public class SanitationTable {
         } catch (SQLException | NullPointerException e) {
             e.printStackTrace();
         }
-
     }
 
     /**
@@ -52,7 +52,7 @@ public class SanitationTable {
 
         try {
             // Attempt to add request to database
-            PreparedStatement statement = connection.prepareStatement(
+            PreparedStatement statement = Database.getConnection().prepareStatement(
                     "INSERT INTO " + Constants.SANITATION_TABLE +
                             " (NODEID, PRIORITY, DESCRIPTION, STATUS, USERID)" +
                             " VALUES (?, ?, ?, ?, ?)"
@@ -78,7 +78,7 @@ public class SanitationTable {
      */
     public static boolean dropSanitationTable() {
         try {
-            Statement statement = connection.createStatement();
+            Statement statement = Database.getConnection().createStatement();
             return statement.execute("DROP TABLE " + Constants.SANITATION_TABLE);
         } catch (SQLException exception) {
             System.out.println("Table " + Constants.SANITATION_TABLE + " cannot be dropped.");
@@ -92,7 +92,7 @@ public class SanitationTable {
     public static ArrayList<SanitationRequest> getSanitationRequests() {
         try {
             // Execute query to get all sanitation requests
-            Statement statement = connection.createStatement();
+            Statement statement = Database.getConnection().createStatement();
             String query = "SELECT * FROM " + Constants.SANITATION_TABLE;
             ResultSet resultSet = statement.executeQuery(query);
 
@@ -137,7 +137,7 @@ public class SanitationTable {
         int requestID = request.getRequestID();
         try {
             // Attempt to remove request from database
-            PreparedStatement statement = connection.prepareStatement(
+            PreparedStatement statement = Database.getConnection().prepareStatement(
                     "UPDATE " + Constants.SANITATION_TABLE + " SET STATUS=?, USERID=? WHERE REQUESTID=?"
             );
             statement.setString(1, status.name());

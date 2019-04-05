@@ -8,12 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserTable {
-    private static Connection connection;
 
-    private static void createUserTable() {
+    private static void createUserTable() {}
+
+    public static void createTable(){
         Statement statement = null;
         try {
-            statement = connection.createStatement();
+            statement = Database.getConnection().createStatement();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -43,7 +44,7 @@ public class UserTable {
             if (checkUser == null) {
 
                 PreparedStatement statement;
-                statement = connection.prepareStatement(
+                statement = Database.getConnection().prepareStatement(
                         "INSERT INTO " + Constants.USERS_TABLE + " (USERNAME, PASSWORD, USERTYPE) " +
                                 "VALUES (?, ?, ?)"
                 );
@@ -68,7 +69,7 @@ public class UserTable {
         try {
             Statement statement;
 
-            statement = connection.createStatement();
+            statement = Database.getConnection().createStatement();
 
             return statement.execute("DROP TABLE " + Constants.USERS_TABLE);
 
@@ -83,7 +84,7 @@ public class UserTable {
 
             PreparedStatement statement;
 
-            statement = connection.prepareStatement(
+            statement = Database.getConnection().prepareStatement(
                     "SELECT * FROM " + Constants.USERS_TABLE + " WHERE USERNAME=?"
             );
 
@@ -116,7 +117,7 @@ public class UserTable {
 
             PreparedStatement statement;
 
-            statement = connection.prepareStatement(
+            statement = Database.getConnection().prepareStatement(
                     "SELECT * FROM " + Constants.USERS_TABLE + " WHERE USERID=?"
             );
 
@@ -152,7 +153,7 @@ public class UserTable {
 
             Statement statement;
 
-            statement = connection.createStatement();
+            statement = Database.getConnection().createStatement();
 
             String query = "SELECT * FROM " + Constants.USERS_TABLE;
 
