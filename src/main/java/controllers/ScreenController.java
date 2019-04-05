@@ -131,7 +131,7 @@ public class ScreenController {
         stage.show();
     }
 
-    public static void popUp(String name, Location loc, Map map, AnchorPane[] panes) throws Exception {
+    public static void popUp(String name, Location loc, Map map, AnchorPane pane1, AnchorPane pane2, AnchorPane pane3, AnchorPane pane4, AnchorPane pane5) throws Exception {
 
         stage = new Stage();
 
@@ -144,7 +144,11 @@ public class ScreenController {
 
         pc.setLoc(loc);
         pc.setMap(map);
-        pc.setPanes(panes);
+        pc.setPane1(pane1);
+        pc.setPane2(pane2);
+        pc.setPane3(pane3);
+        pc.setPane4(pane4);
+        pc.setPane5(pane5);
 
         // Init scene
         Scene s = new Scene(root);
@@ -159,7 +163,7 @@ public class ScreenController {
         stage.show();
     }
 
-    public static void popUp(String name, Location loc, Map map, AnchorPane pane) throws Exception {
+    public static void popUp(String name, Location loc, Map map, AnchorPane pane1) throws Exception {
 
         stage = new Stage();
 
@@ -172,7 +176,7 @@ public class ScreenController {
 
         pc.setLoc(loc);
         pc.setMap(map);
-        pc.setPane(pane);
+        pc.setPane1(pane1);
 
         // Init scene
         Scene s = new Scene(root);
@@ -187,7 +191,7 @@ public class ScreenController {
         stage.show();
     }
 
-    public static void popUp(String name, Location loc1, Location loc2, Map map, AnchorPane[] panes) throws Exception {
+    public static void popUp(String name, Location loc1, Location loc2, Map map, AnchorPane pane1,AnchorPane pane2, AnchorPane pane3, AnchorPane pane4, AnchorPane pane5) throws Exception {
 
         stage = new Stage();
 
@@ -201,7 +205,11 @@ public class ScreenController {
         pc.setLoc(loc1);
         pc.setLoc2(loc2);
         pc.setMap(map);
-        pc.setPanes(panes);
+        pc.setPane1(pane1);
+        pc.setPane2(pane2);
+        pc.setPane3(pane3);
+        pc.setPane4(pane4);
+        pc.setPane5(pane5);
 
         // Init scene
         Scene s = new Scene(root);
@@ -216,7 +224,7 @@ public class ScreenController {
         stage.show();
     }
 
-    public static void popUp(String name, Location loc1, Location loc2, Map map, AnchorPane pane) throws Exception {
+    public static void popUp(String name, Location loc1, Location loc2, Map map, AnchorPane pane1) throws Exception {
 
         stage = new Stage();
 
@@ -230,7 +238,7 @@ public class ScreenController {
         pc.setLoc(loc1);
         pc.setLoc2(loc2);
         pc.setMap(map);
-        pc.setPane(pane);
+        pc.setPane1(pane1);
 
         // Init scene
         Scene s = new Scene(root);

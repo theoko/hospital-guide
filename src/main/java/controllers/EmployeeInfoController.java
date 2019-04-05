@@ -60,7 +60,7 @@ public class EmployeeInfoController extends PopUpController implements Initializ
     private void checkSelected() throws Exception {
         if (bolSelectedEmp) { // Two locations
             if (!loc.equals(locSelectedEmp)) {
-                ScreenController.popUp("directions", loc, locSelectedEmp, map, pane);
+                ScreenController.popUp("directions", loc, locSelectedEmp, map, pane1, pane2, pane3, pane4, pane5);
             }
             locSelectedEmp = null;
             bolSelectedEmp = false;

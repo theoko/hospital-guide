@@ -19,6 +19,7 @@ import models.map.SubPath;
 import javafx.animation.*;
 import javafx.util.Duration;
 import java.net.URL;
+import java.sql.SQLOutput;
 import java.util.*;
 
 public class DirectionsController extends PopUpController implements Initializable {
@@ -55,19 +56,71 @@ public class DirectionsController extends PopUpController implements Initializab
 
     public void btnGo_OnClick(MouseEvent event) {
         event.consume();
-        ObservableList<Node> lstNodes = panes[0].getChildren();
-        for (int i = 1; i < panes.length; i++) {
-            lstNodes.addAll(panes[i].getChildren());
-        }
-        List<Node> lstLines = new ArrayList<>();
-        for (Node n : lstNodes) {
+
+        List<Node> lstNodes1 = new ArrayList<>();
+        for (Node n : pane1.getChildren()) {
             if (n instanceof Line) {
-                lstLines.add(n);
+                lstNodes1.add(n);
             }
         }
-        for (Node l : lstLines) {
-            lstNodes.remove(l);
+        for (Node n : lstNodes1) {
+            pane1.getChildren().remove(n);
         }
+
+        List<Node> lstNodes2 = new ArrayList<>();
+        for (Node n : pane2.getChildren()) {
+            if (n instanceof Line) {
+                lstNodes2.add(n);
+            }
+        }
+        for (Node n : lstNodes2) {
+            pane2.getChildren().remove(n);
+        }
+
+        List<Node> lstNodes3 = new ArrayList<>();
+        for (Node n : pane3.getChildren()) {
+            if (n instanceof Line) {
+                lstNodes3.add(n);
+            }
+        }
+        for (Node n : lstNodes3) {
+            pane3.getChildren().remove(n);
+        }
+
+        List<Node> lstNodes4 = new ArrayList<>();
+        for (Node n : pane4.getChildren()) {
+            if (n instanceof Line) {
+                lstNodes4.add(n);
+            }
+        }
+        for (Node n : lstNodes4) {
+            pane4.getChildren().remove(n);
+        }
+
+        List<Node> lstNodes5 = new ArrayList<>();
+        for (Node n : pane5.getChildren()) {
+            if (n instanceof Line) {
+                lstNodes5.add(n);
+            }
+        }
+        for (Node n : lstNodes5) {
+            pane5.getChildren().remove(n);
+        }
+
+//        ObservableList<Node> lstNodes = pane1.getChildren();
+//        lstNodes.addAll(pane2.getChildren());
+//        lstNodes.addAll(pane3.getChildren());
+//        lstNodes.addAll(pane4.getChildren());
+//        lstNodes.addAll(pane5.getChildren());
+//        List<Node> lstLines = new ArrayList<>();
+//        for (Node n : lstNodes) {
+//            if (n instanceof Line) {
+//                lstLines.add(n);
+//            }
+//        }
+//        for (Node l : lstLines) {
+//            lstNodes.remove(l);
+//        }
         Stack<SubPath> path = PathFinder.findPath(loc, loc2);
         HashMap<String, Location> lstLocations = map.getAllLocations();
         for (SubPath sub : path) {
@@ -89,12 +142,10 @@ public class DirectionsController extends PopUpController implements Initializab
                 Location loc2 = lstLocations.get(end);
                 Line line = new Line(MapDisplay.scaleX(loc1.getxCord()), MapDisplay.scaleY(loc1.getyCord()), MapDisplay.scaleX(loc2.getxCord()), MapDisplay.scaleY(loc2.getyCord()));
                 line.setStroke(Color.BLACK);
-
                 line.getStrokeDashArray().setAll(lineLength, lineGap);
                 line.setStrokeWidth(lineWidth);
                 line.setStrokeLineCap(StrokeLineCap.ROUND);
                 line.setStrokeLineJoin(StrokeLineJoin.ROUND);
-
                 final double maxOffset =
                         line.getStrokeDashArray().stream()
                                 .reduce(
@@ -123,20 +174,15 @@ public class DirectionsController extends PopUpController implements Initializab
                 timeline.setCycleCount(Timeline.INDEFINITE);
                 timeline.play();
                 if (loc1.getFloor().equals("L2") && loc2.getFloor().equals("L2")) {
-                    System.out.println(panes[0].getId());
-                    panes[0].getChildren().add(line);
+                    pane1.getChildren().add(1, line);
                 } else if (loc1.getFloor().equals("L1") && loc2.getFloor().equals("L1")) {
-                    System.out.println(panes[1].getId());
-                    panes[1].getChildren().add(line);
+                    pane2.getChildren().add(1, line);
                 } else if (loc1.getFloor().equals("1") && loc2.getFloor().equals("1")) {
-                    System.out.println(panes[2].getChildren().size());
-                    panes[2].getChildren().add(1, line);
+                    pane3.getChildren().add(1, line);
                 } else if (loc1.getFloor().equals("2") && loc2.getFloor().equals("2")) {
-                    System.out.println(panes[3].getId());
-                    panes[3].getChildren().add(line);
+                    pane4.getChildren().add(1, line);
                 } else {
-                    System.out.println(panes[4].getId());
-                    panes[4].getChildren().add(line);
+                    pane5.getChildren().add(1, line);
                 }
             }
         }

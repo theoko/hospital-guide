@@ -28,11 +28,10 @@ public class MapDisplay {
 
     /**
      * Display the graph on a map for the default user (no halls, info boxes)
-     * @param panes
      */
-    public static void displayUser(AnchorPane[] panes) {
+    public static void displayUser(AnchorPane pane1, AnchorPane pane2, AnchorPane pane3, AnchorPane pane4, AnchorPane pane5) {
         Map map = MapParser.parse();
-        displayNodesUser(map, panes);
+        displayNodesUser(map, pane1, pane2, pane3, pane4, pane5);
     }
 
     /**
@@ -63,9 +62,7 @@ public class MapDisplay {
         displayNodesCust(map, pane, floor);
     }
 
-
-
-    private static void displayNodesUser(Map map, AnchorPane[] panes) {
+    private static void displayNodesUser(Map map, AnchorPane pane1,AnchorPane pane2, AnchorPane pane3, AnchorPane pane4, AnchorPane pane5) {
         HashMap<String, Location> lstLocations = map.getAllLocations();
         for (Location loc : lstLocations.values()) {
             double xLoc = (loc.getxCord() - xShift) * scale;
@@ -77,12 +74,12 @@ public class MapDisplay {
             circle.setOnMouseClicked(event -> {
                 try {
                     event.consume();
-                    ScreenController.popUp("info", loc, map, panes);
+                    ScreenController.popUp("info", loc, map, pane1, pane2, pane3, pane4, pane5);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             });
-            findPane(panes, loc.getFloor()).getChildren().add(circle);
+            findPane(pane1, pane2, pane3, pane4, pane5, loc.getFloor()).getChildren().add(circle);
         }
     }
 
@@ -176,18 +173,18 @@ public class MapDisplay {
         }
     }
 
-    private static AnchorPane findPane(AnchorPane[] panes, String floor) {
+    private static AnchorPane findPane(AnchorPane pane1,AnchorPane pane2, AnchorPane pane3, AnchorPane pane4, AnchorPane pane5, String floor) {
         switch (floor) {
             case "L2":
-                return panes[0];
+                return pane1;
             case "L1":
-                return panes[1];
+                return pane2;
             case "1":
-                return panes[2];
+                return pane3;
             case "2":
-                return panes[3];
+                return pane4;
             default:
-                return panes[4];
+                return pane5;
         }
     }
 
