@@ -29,10 +29,9 @@ public class UIHelpers {
         c.setOnMouseClicked(evt -> {
             try {
                 evt.consume();
-
                 AdminMapController.locationSelectEvent(loc);
                 if(!AdminMapController.isEnableEditEdge())
-                    ScreenController.popUp("edit", loc);
+                    ScreenController.popUp(Constants.Routes.EDIT_LOCATION, loc);
             } catch (Exception e) {
                 throw new UnsupportedOperationException(e);
             }
@@ -51,11 +50,13 @@ public class UIHelpers {
         return line;
 //        pane.getChildren().add(line);
     }
+
     public static Point generateLocationCoordinates(Location loc) {
-        double x = (loc.getxCord() - MapDisplay.getxShift()) * MapDisplay.getScale();
-        double y = (loc.getyCord() - MapDisplay.getyShift()) * MapDisplay.getScale();
+        double x = MapDisplay.scaleX(loc.getxCord());
+        double y = MapDisplay.scaleY(loc.getyCord());
         return new Point((int) x, (int) y);
     }
+
     public static Circle updateCircleForNodeType(Location loc) {
         Circle c = loc.getNodeCircle();
         if(loc.getNodeType() == Constants.NodeType.HALL) {
@@ -65,8 +66,6 @@ public class UIHelpers {
             c.setRadius(MapDisplay.getLocRadius());
             c.setFill(Color.WHITE);
         }
-
-
         return c;
     }
 

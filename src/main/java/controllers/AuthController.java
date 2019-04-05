@@ -57,19 +57,19 @@ public class AuthController {
             errorMessage.setManaged(false);
 
             ScreenController.deactivate();
-            ScreenController.activate("admin-map");
+            ScreenController.activate(Constants.Routes.ADMIN_MAP);
         } else if (authType == Constants.Auth.EMPLOYEE) {
             errorMessage.setVisible(false);
             errorMessage.setManaged(false);
 
             ScreenController.deactivate();
-            ScreenController.activate("employee-map");
+            ScreenController.activate(Constants.Routes.EMPLOYEE_MAP);
         } else if (authType == Constants.Auth.CUSTODIAN) {
             errorMessage.setVisible(false);
             errorMessage.setManaged(false);
 
             ScreenController.deactivate();
-            ScreenController.activate("custodian-map");
+            ScreenController.activate(Constants.Routes.CUSTODIAN_MAP);
 
         }else {
             errorMessage.setText("Invalid credentials");
@@ -82,7 +82,7 @@ public class AuthController {
     public void goBack(ActionEvent actionEvent) throws Exception {
         actionEvent.consume();
         ScreenController.deactivate();
-        ScreenController.activate("welcome");
+        ScreenController.activate(Constants.Routes.WELCOME);
     }
 
 }

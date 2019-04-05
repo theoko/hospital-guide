@@ -1,6 +1,7 @@
 package controllers;
 
 import com.jfoenix.controls.JFXButton;
+import helpers.Constants;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
@@ -9,8 +10,11 @@ import javafx.scene.layout.AnchorPane;
 
 public abstract class MapController {
     public JFXButton btnReturn;
-    public ImageView floorOneMap;
-    public AnchorPane panMap;
+    public AnchorPane panFloor3;
+    public AnchorPane panFloor2;
+    public AnchorPane panFloor1;
+    public AnchorPane panFloorL1;
+    public AnchorPane panFloorL2;
 //    public JFXButton zoomIn;
 //    public JFXButton zoomOut;
 
@@ -111,7 +115,7 @@ public abstract class MapController {
     public void logOut(MouseEvent event) throws Exception {
         event.consume();
         ScreenController.logOut(btnReturn);
-        ScreenController.activate("login");
+        ScreenController.activate(Constants.Routes.LOGIN);
     }
 
     /**

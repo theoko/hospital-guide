@@ -11,7 +11,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import models.map.Location;
 import models.map.Map;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
@@ -72,31 +71,21 @@ public class ScreenController {
 
     public static void activate(Constants.Routes route) throws Exception {
         stage = new Stage();
-
-        // Init parent
-        URL url = new URL(ScreenController.class.getResource(screenMap.get(route.name())).toString().replaceAll("%20", " "));
+        URL url = routeToURL(route);
 
         FXMLLoader loader = new FXMLLoader(url);
         Parent root = loader.load();
 
-        // Init scene
         Scene s = new Scene(root);
-
-        // Add CSS to scene
         addStyles(s);
-
         stage.setTitle("Brigham and Women's Pathfinder Application");
         stage.setScene(s);
         stage.setResizable(true);
-
         stage.show();
     }
 
     public static void popUp(Constants.Routes route, Location loc) throws Exception {
-
         stage = new Stage();
-
-        // Init parent
         URL url = routeToURL(route);
 
         FXMLLoader loader = new FXMLLoader(url);
@@ -108,7 +97,7 @@ public class ScreenController {
         displayPopUp(root);
     }
 
-    public static void popUp(Constants.Routes route, Location loc, Map map, AnchorPane pane) throws Exception {
+    public static void popUp(Constants.Routes route, Location loc, Map map, AnchorPane[] panes) throws Exception {
         stage = new Stage();
         URL url = routeToURL(route);
 
@@ -118,12 +107,12 @@ public class ScreenController {
 
         pc.setLoc(loc);
         pc.setMap(map);
-        pc.setPane(pane);
+        pc.setPanes(panes);
 
         displayPopUp(root);
     }
 
-    public static void popUp(Constants.Routes route, Location loc1, Location loc2, Map map, AnchorPane pane) throws Exception {
+    public static void popUp(Constants.Routes route, Location loc1, Location loc2, Map map, AnchorPane[] panes) throws Exception {
         stage = new Stage();
         URL url = routeToURL(route);
 
@@ -134,7 +123,7 @@ public class ScreenController {
         pc.setLoc(loc1);
         pc.setLoc2(loc2);
         pc.setMap(map);
-        pc.setPane(pane);
+        pc.setPanes(panes);
 
         displayPopUp(root);
     }
@@ -147,7 +136,6 @@ public class ScreenController {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }
-
 
     /**
      * Closes out of a current window with selected
