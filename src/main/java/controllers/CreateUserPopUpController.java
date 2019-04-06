@@ -23,8 +23,9 @@ public class CreateUserPopUpController {
     public void updateUser(MouseEvent event) {
         event.consume();
         Constants.Auth uType = Constants.Auth.valueOf(cmbUserType.getValue().toString().toUpperCase());
-        User user = new User(Integer.parseInt(UserID.getText()),UserName.getText(),Password.getText(), uType);
+        User user = new User(0,UserName.getText(),Password.getText(), uType);
         UserTable.createUser(user);
+        user.setUserID(UserTable.getUserByUsername(user.getUsername()).getUserID());
         ScreenController.deactivate();
     }
 }
