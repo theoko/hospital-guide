@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import com.jfoenix.controls.JFXToggleButton?>
@@ -129,7 +130,7 @@
                 <Tab style="-fx-background-color: #022D5A;" text="Workspace Booking">
                     <fx:include source="BookingWindow.fxml" />
                 </Tab>
-                <Tab style="-fx-background-color: #022D5A;" text="Create New User">
+                <Tab style="-fx-background-color: #022D5A;" text="Create User">
                     <fx:include source="CreateUser.fxml" />
                 </Tab>
             </tabs>
