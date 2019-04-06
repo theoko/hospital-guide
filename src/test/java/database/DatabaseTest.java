@@ -11,6 +11,7 @@ import org.junit.Test;
 import javax.xml.crypto.Data;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import static helpers.Constants.NodeType.HALL;
 import static org.junit.Assert.*;
@@ -114,9 +115,7 @@ public class DatabaseTest {
        // Database.dropTables();
         Room room = new Room("RM101Z",2);
         Database.addRoom(room);
-        assertTrue(Database.getRoomByID("RB101Z").equals(room));
-
-
+        assertTrue(Objects.equals(Database.getRoomByID("RM101Z"), room));
 
     }
 
@@ -131,6 +130,7 @@ public class DatabaseTest {
         // check that all fields are equal to the original after being added and and pulled from the database
 
         Database.addDeleteLocation(newLoc);
+        Database.deleteLocation(newLoc);
 
         assertNull(Database.getLocationByID(newLoc.getNodeID()));
 
