@@ -9,11 +9,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="700.0" minWidth="1200.0" prefHeight="777.0" prefWidth="1253.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CreateUserController">
     <children>
@@ -28,20 +23,21 @@
                     <items>
                         <TableView fx:id="tblUsers" prefHeight="423.0" prefWidth="970.0">
                             <columns>
-                                <TableColumn fx:id="tblUserID" prefWidth="247.0" text="UserID" />
-                                <TableColumn fx:id="tblUserName" prefWidth="240.0" text="Username" />
-                                <TableColumn fx:id="tblUserPassword" prefWidth="240.0" text="Password" />
-                                <TableColumn fx:id="tblUserType" prefWidth="240.0" text="User Type" />
+                                <TableColumn fx:id="tblUserID" prefWidth="247.0" text="USERID" />
+                                <TableColumn fx:id="tblUserName" prefWidth="240.0" text="USERNAME" />
+                                <TableColumn fx:id="tblUserPassword" prefWidth="240.0" text="PASSWORD" />
+                                <TableColumn fx:id="tblUserType" prefWidth="240.0" text="USERTYPE" />
                             </columns>
                         </TableView>
                         <VBox alignment="CENTER" prefHeight="610.0" prefWidth="173.0" spacing="10.0">
                             <children>
-                                <JFXButton fx:id="btnUpdate" onMouseClicked="#updateUser" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" prefHeight="51.0" prefWidth="120.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Update" textAlignment="CENTER">
+                                <JFXButton fx:id="btnAdd" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" onMouseClicked="#addUser" prefHeight="51.0" prefWidth="120.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Add" textAlignment="CENTER">
                                     <VBox.margin>
                                         <Insets top="10.0" />
                                     </VBox.margin>
                                 </JFXButton>
-                                <JFXButton fx:id="btnRefresh" onMouseClicked="#refreshTable" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" prefHeight="51.0" prefWidth="120.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Refresh" textAlignment="CENTER">
+                        <JFXButton fx:id="btnUpdate" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" onMouseClicked="#updateUser" prefHeight="51.0" prefWidth="120.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Update" textAlignment="CENTER" />
+                                <JFXButton fx:id="btnRefresh" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" onMouseClicked="#refreshTable" prefHeight="51.0" prefWidth="120.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Refresh" textAlignment="CENTER">
                                     <VBox.margin>
                                         <Insets top="10.0" />
                                     </VBox.margin>

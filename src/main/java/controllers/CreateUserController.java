@@ -34,16 +34,17 @@ public class CreateUserController extends AdminMapController{
     }
 
     List<User> currUsers;
-
     public void initUsers() {
-        tblUserID.setCellValueFactory(new PropertyValueFactory<>("User ID"));
-        tblUserName.setCellValueFactory(new PropertyValueFactory<>("User Name"));
-        tblUserPassword.setCellValueFactory(new PropertyValueFactory<>("User Password"));
-        tblUserType.setCellValueFactory(new PropertyValueFactory<>("User Type"));
+
+        tblUserID.setCellValueFactory(new PropertyValueFactory<>("userID"));
+        tblUserName.setCellValueFactory(new PropertyValueFactory<>("username"));
+        tblUserPassword.setCellValueFactory(new PropertyValueFactory<>("password"));
+        tblUserType.setCellValueFactory(new PropertyValueFactory<>("userType"));
         tblUsers.setItems(users);
         currUsers = UserTable.getUsers();
         populateUserTable(currUsers);
     }
+
     /**
      * Populates the users table
      * @param usersA
@@ -57,6 +58,16 @@ public class CreateUserController extends AdminMapController{
     public void refreshTable(MouseEvent event) {
         event.consume();
         tblUsers.refresh();
+    }
+
+    public void addUser(MouseEvent event) {
+        event.consume();
+        try {
+            ScreenController.popUp(Constants.Routes.USER_POPUP);
+        } catch(Exception exception) {
+            exception.printStackTrace();
+        }
+
     }
 
     public void updateUser(MouseEvent event) {
