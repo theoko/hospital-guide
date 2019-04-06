@@ -42,7 +42,7 @@
                                         <Insets top="10.0" />
                                     </VBox.margin>
                                 </JFXButton>
-                        <JFXButton fx:id="btnRemove" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" prefHeight="51.0" prefWidth="120.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Remove" textAlignment="CENTER">
+                        <JFXButton fx:id="btnRemove" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" onMouseClicked="#deleteUser" prefHeight="51.0" prefWidth="120.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Remove" textAlignment="CENTER">
                            <VBox.margin>
                               <Insets top="10.0" />
                            </VBox.margin>
