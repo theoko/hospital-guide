@@ -54,6 +54,7 @@ public class ScreenController {
         this.addScreen(Constants.Routes.CUSTODIAN_INFO, "/CustodianInfo.fxml");
         this.addScreen(Constants.Routes.BOOKING_WINDOW, "/BookingWindow.fxml");
         this.addScreen(Constants.Routes.CREATE_USER, "/CreateUser.fxml");
+        this.addScreen(Constants.Routes.USER_POPUP, "/CreateUserPopUp.fxml");
     }
 
     public void addScreen(Constants.Routes route, String layout) {
@@ -83,6 +84,16 @@ public class ScreenController {
         stage.setScene(s);
         stage.setResizable(true);
         stage.show();
+    }
+
+    public static void popUp(Constants.Routes route) throws Exception {
+        stage = new Stage();
+        URL url = routeToURL(route);
+
+        FXMLLoader loader = new FXMLLoader(url);
+        Parent root = loader.load();
+        //PopUpController pc = loader.getController();
+        displayPopUp(root);
     }
 
     public static void popUp(Constants.Routes route, Location loc) throws Exception {

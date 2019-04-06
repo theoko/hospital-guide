@@ -2,11 +2,13 @@ package controllers;
 
 import com.jfoenix.controls.JFXButton;
 import database.UserTable;
+import helpers.Constants;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import models.user.User;
 
 import java.util.List;
@@ -50,5 +52,20 @@ public class CreateUserController extends AdminMapController{
         users.clear();
         users.addAll(usersA);
         tblUsers.refresh();
+    }
+
+    public void refreshTable(MouseEvent event) {
+        event.consume();
+        tblUsers.refresh();
+    }
+
+    public void updateUser(MouseEvent event) {
+        event.consume();
+        try {
+            ScreenController.popUp(Constants.Routes.USER_POPUP);
+        } catch(Exception exception) {
+            exception.printStackTrace();
+        }
+
     }
 }

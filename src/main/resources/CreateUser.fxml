@@ -36,12 +36,12 @@
                         </TableView>
                         <VBox alignment="CENTER" prefHeight="610.0" prefWidth="173.0" spacing="10.0">
                             <children>
-                                <JFXButton fx:id="btnUpdate" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" prefHeight="51.0" prefWidth="120.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Update" textAlignment="CENTER">
+                                <JFXButton fx:id="btnUpdate" onMouseClicked="#updateUser" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" prefHeight="51.0" prefWidth="120.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Update" textAlignment="CENTER">
                                     <VBox.margin>
                                         <Insets top="10.0" />
                                     </VBox.margin>
                                 </JFXButton>
-                                <JFXButton fx:id="btnRefresh" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" prefHeight="51.0" prefWidth="120.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Refresh" textAlignment="CENTER">
+                                <JFXButton fx:id="btnRefresh" onMouseClicked="#refreshTable" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" prefHeight="51.0" prefWidth="120.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Refresh" textAlignment="CENTER">
                                     <VBox.margin>
                                         <Insets top="10.0" />
                                     </VBox.margin>
