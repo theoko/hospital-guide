@@ -21,6 +21,7 @@ public class CreateUserController extends AdminMapController{
     // Columns
     public TableColumn<User, String> tblUserID;
     public TableColumn<User, String> tblUserName;
+    public TableColumn<User, String> tblUserPassword;
     public TableColumn<User, String> tblUserType;
 
     ObservableList<User> users = FXCollections.observableArrayList();
@@ -35,6 +36,7 @@ public class CreateUserController extends AdminMapController{
     public void initUsers() {
         tblUserID.setCellValueFactory(new PropertyValueFactory<>("User ID"));
         tblUserName.setCellValueFactory(new PropertyValueFactory<>("User Name"));
+        tblUserPassword.setCellValueFactory(new PropertyValueFactory<>("User Password"));
         tblUserType.setCellValueFactory(new PropertyValueFactory<>("User Type"));
         tblUsers.setItems(users);
         currUsers = UserTable.getUsers();
