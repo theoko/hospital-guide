@@ -128,7 +128,7 @@
                     </AnchorPane>
                 </Tab>
                 <Tab style="-fx-background-color: #022D5A;" text="Workspace Booking">
-                    <fx:include source="BookingWindow.fxml" />
+                    <fx:include source="ConferenceRoomWindow.fxml" />
                 </Tab>
                 <Tab style="-fx-background-color: #022D5A;" text="Create User">
                     <fx:include source="CreateUser.fxml" />

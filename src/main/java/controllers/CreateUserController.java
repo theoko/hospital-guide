@@ -79,4 +79,12 @@ public class CreateUserController extends AdminMapController{
         }
 
     }
+
+    public void deleteUser(MouseEvent event) {
+        event.consume();
+        User selected = tblUsers.getSelectionModel().getSelectedItem();
+        System.out.println(selected.toString());
+        UserTable.deleteUser(selected);
+        tblUsers.refresh();
+    }
 }

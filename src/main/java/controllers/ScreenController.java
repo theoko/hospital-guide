@@ -52,7 +52,7 @@ public class ScreenController {
         this.addScreen(Constants.Routes.DIRECTIONS, "/Directions.fxml");
         this.addScreen(Constants.Routes.CUSTODIAN_MAP, "/CustodianMap.fxml");
         this.addScreen(Constants.Routes.CUSTODIAN_INFO, "/CustodianInfo.fxml");
-        this.addScreen(Constants.Routes.BOOKING_WINDOW, "/BookingWindow.fxml");
+        this.addScreen(Constants.Routes.BOOKING_WINDOW, "/ConferenceRoomWindow.fxml");
         this.addScreen(Constants.Routes.CREATE_USER, "/CreateUser.fxml");
         this.addScreen(Constants.Routes.USER_POPUP, "/CreateUserPopUp.fxml");
     }
