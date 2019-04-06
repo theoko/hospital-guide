@@ -57,6 +57,10 @@ public class CreateUserController extends AdminMapController{
 
     public void refreshTable(MouseEvent event) {
         event.consume();
+        users.clear();
+        List<User> usersA = UserTable.getUsers();
+        if(usersA != null)
+            users.addAll(usersA);
         tblUsers.refresh();
     }
 
