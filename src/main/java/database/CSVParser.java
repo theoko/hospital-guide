@@ -92,13 +92,15 @@ public class CSVParser {
             br = new BufferedReader(new InputStreamReader(pathEdges));
             br.readLine();
             while ((line = br.readLine()) != null) {
+
                 String[] splitLine = line.split(splitter);
                 String edgeID = splitLine[0];
                 Location start = lstLocations.get(splitLine[1]);
                 Location end = lstLocations.get(splitLine[2]);
                 Edge newEdge = new Edge(edgeID, start, end);
 
-                EdgeTable.addEdge(newEdge);
+                if(start != null && end != null)
+                    EdgeTable.addEdge(newEdge);
             }
         } catch (IOException e) {
             e.printStackTrace();
