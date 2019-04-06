@@ -1,5 +1,6 @@
 package database;
 
+import com.sun.tools.javac.code.Attribute;
 import helpers.Constants;
 import models.user.User;
 
@@ -180,6 +181,24 @@ public class UserTable {
             System.out.println("Failed to get users!");
 
             return null;
+        }
+    }
+
+    /**
+     * Returns a true if user deleted
+     */
+    public static boolean deleteUser(User user) {
+        try {
+            PreparedStatement statement;
+            statement = Database.getConnection().prepareStatement(
+                    "DELETE FROM " + Constants.USERS_TABLE + " WHERE USERID=?"
+            );
+            statement.setInt(1,user.getUserID());
+            statement.execute();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 }
