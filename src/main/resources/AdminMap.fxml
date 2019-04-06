@@ -8,11 +8,11 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.layout.HBox?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" stylesheets="@css/colorScheme.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminMapController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" stylesheets="@css/colorScheme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminMapController">
     <children>
         <JFXTabPane prefHeight="700.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <tabs>
@@ -26,7 +26,7 @@
                                             <content>
                                                 <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                                     <children>
-                                                        <AnchorPane fx:id="panFloor3" onMouseDragged="#floorOneMapOnMouseDragged" onMousePressed="#floorOneMapOnMousePressed" onScroll="#floorOneMapScroll" onZoom="#floorOneMapZoom" onZoomFinished="#floorOneMapZoomDone"  prefHeight="200.0" prefWidth="200.0">
+                                                        <AnchorPane fx:id="panFloor3" onMouseDragged="#floorOneMapOnMouseDragged" onMousePressed="#floorOneMapOnMousePressed" onScroll="#floorOneMapScroll" onZoom="#floorOneMapZoom" onZoomFinished="#floorOneMapZoomDone" prefHeight="200.0" prefWidth="200.0">
                                                             <children>
                                                                 <ImageView fitHeight="1620.0" fitWidth="2581.0" layoutX="1000.0" layoutY="-350.0" pickOnBounds="true" preserveRatio="true">
                                                                     <image>
@@ -42,7 +42,7 @@
                                             <content>
                                                 <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                                     <children>
-                                                        <AnchorPane fx:id="panFloor2" onMouseDragged="#floorOneMapOnMouseDragged" onMousePressed="#floorOneMapOnMousePressed" onScroll="#floorOneMapScroll" onZoom="#floorOneMapZoom" onZoomFinished="#floorOneMapZoomDone"  prefHeight="200.0" prefWidth="200.0">
+                                                        <AnchorPane fx:id="panFloor2" onMouseDragged="#floorOneMapOnMouseDragged" onMousePressed="#floorOneMapOnMousePressed" onScroll="#floorOneMapScroll" onZoom="#floorOneMapZoom" onZoomFinished="#floorOneMapZoomDone" prefHeight="200.0" prefWidth="200.0">
                                                             <children>
                                                                 <ImageView fitHeight="1620.0" fitWidth="2581.0" layoutX="1000.0" layoutY="-350.0" pickOnBounds="true" preserveRatio="true">
                                                                     <image>
@@ -130,6 +130,10 @@
                 <Tab style="-fx-background-color: #022D5A;" text="Workspace Booking">
                     <fx:include source="BookingWindow.fxml" />
                 </Tab>
+                <Tab style="-fx-background-color: #022D5A;" text="Create New User">
+                    <fx:include source="CreateUser.fxml" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </Tab>
             </tabs>
         </JFXTabPane>
     </children>
