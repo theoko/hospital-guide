@@ -184,7 +184,7 @@ public class AdminMapController extends MapController {
 
 
     @Override
-    public final void logOut(MouseEvent event) throws Exception {
+    public void logOut(MouseEvent event) throws Exception {
         enableAddNode = false;
         enableEditEdge = false;
         event.consume();

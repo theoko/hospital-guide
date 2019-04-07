@@ -43,4 +43,9 @@ public class EditUserPopUpController extends PopUpControllerUser implements Init
         userM.setUserType(uType);
         ScreenController.deactivate();
     }
+
+    public void cancelScreen(MouseEvent event) {
+        event.consume();
+        ScreenController.deactivate();
+    }
 }
