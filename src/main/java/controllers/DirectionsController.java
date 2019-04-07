@@ -69,26 +69,14 @@ public class DirectionsController extends PopUpController implements Initializab
             }
         }
 
-        Stack<SubPath> path = PathFinder.findPath(loc, loc2);
+        Stack<Location> path = PathFinder.findPath(loc, loc2);
+        PathFinder.txtDirections((Stack<Location>) path.clone());
         HashMap<String, Location> lstLocations = map.getAllLocations();
-        for (SubPath sub : path) {
-            String id = sub.getEdgeID();
-            if (!id.equals("")) {
-                String locID1 = id.substring(0, id.indexOf("_"));
-                String locID2 = id.substring(id.indexOf("_") + 1);
-                String endLoc = sub.getLocation().getNodeID();
-                String start;
-                String end;
-                if (locID1.equals(endLoc)) {
-                    start = locID2;
-                    end = locID1;
-                } else {
-                    start = locID1;
-                    end = locID2;
-                }
-                Location loc1 = lstLocations.get(start);
-                Location loc2 = lstLocations.get(end);
-                Line line = new Line(MapDisplay.scaleX(loc1.getxCord()), MapDisplay.scaleY(loc1.getyCord()), MapDisplay.scaleX(loc2.getxCord()), MapDisplay.scaleY(loc2.getyCord()));
+        Location prev = null;
+        while (!path.isEmpty()) {
+            Location curr = path.pop();
+            if (prev != null) {
+                Line line = new Line(MapDisplay.scaleX(prev.getxCord()), MapDisplay.scaleY(prev.getyCord()), MapDisplay.scaleX(curr.getxCord()), MapDisplay.scaleY(curr.getyCord()));
                 line.setStroke(Color.BLACK);
                 line.getStrokeDashArray().setAll(lineLength, lineGap);
                 line.setStrokeWidth(lineWidth);
@@ -98,7 +86,7 @@ public class DirectionsController extends PopUpController implements Initializab
                         line.getStrokeDashArray().stream()
                                 .reduce(
                                         0d,
-                                        (a, b) -> a + b
+                                        (a, b) -> a - b
                                 );
 
                 Timeline timeline = new Timeline(
@@ -111,7 +99,7 @@ public class DirectionsController extends PopUpController implements Initializab
                                 )
                         ),
                         new KeyFrame(
-                                Duration.seconds(2),
+                                Duration.seconds(3),
                                 new KeyValue(
                                         line.strokeDashOffsetProperty(),
                                         maxOffset,
@@ -121,18 +109,19 @@ public class DirectionsController extends PopUpController implements Initializab
                 );
                 timeline.setCycleCount(Timeline.INDEFINITE);
                 timeline.play();
-                if (loc1.getFloor().equals("L2") && loc2.getFloor().equals("L2")) {
+                if (curr.getFloor().equals("L2") && prev.getFloor().equals("L2")) {
                     panes[0].getChildren().add(1, line);
-                } else if (loc1.getFloor().equals("L1") && loc2.getFloor().equals("L1")) {
+                } else if (curr.getFloor().equals("L1") && prev.getFloor().equals("L1")) {
                     panes[1].getChildren().add(1, line);
-                } else if (loc1.getFloor().equals("1") && loc2.getFloor().equals("1")) {
+                } else if (curr.getFloor().equals("1") && prev.getFloor().equals("1")) {
                     panes[2].getChildren().add(1, line);
-                } else if (loc1.getFloor().equals("2") && loc2.getFloor().equals("2")) {
+                } else if (curr.getFloor().equals("2") && prev.getFloor().equals("2")) {
                     panes[3].getChildren().add(1, line);
                 } else {
                     panes[4].getChildren().add(1, line);
                 }
             }
+            prev = curr;
         }
         ScreenController.deactivate();
     }
