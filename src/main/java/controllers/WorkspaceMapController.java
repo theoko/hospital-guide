@@ -1,5 +1,7 @@
 package controllers;
 
-public class WorkspaceMapController extends AdminMapController {
+public class WorkspaceMapController  {
+
+
 
 }

@@ -131,7 +131,7 @@ public abstract class MapController {
             case "L2":
                 return panFloorL2;
         }
-        return panFloor3;
+        return panFloor1;
     }
 
     /**
