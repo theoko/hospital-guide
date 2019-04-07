@@ -133,7 +133,7 @@ public class CSVParser {
             lstLocations = LocationTable.getLocations();
             if (lstLocations != null) {
                 for (Location loc : lstLocations.values()) {
-                    String[] data = loc.getStrings();
+                    String[] data = loc.getStringsLocation();
                     writer.writeNext(data);
                 }
             }

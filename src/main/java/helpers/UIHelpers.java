@@ -2,6 +2,8 @@ package helpers;
 
 import controllers.AdminMapController;
 import controllers.ScreenController;
+import controllers.VisualRealtimeController;
+import database.LocationTable;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -26,6 +28,21 @@ public class UIHelpers {
     }
 
     public static void setAdminNodeClickEvent(Circle c, Location loc) {
+//        c.setOnMouseDragged(evt -> {
+//            try {
+//                evt.consume();
+//                if(!AdminMapController.isEnableAddNode() && !AdminMapController.isEnableEditEdge()) {
+//                    c.setCenterX(evt.getX());
+//
+//                    loc.setxCord((int)MapDisplay.revScaleX(evt.getX()));
+//                    loc.setyCord((int)MapDisplay.revScaleY(evt.getY()));
+//                    LocationTable.updateLocation(loc);
+//                    c.setCenterY(evt.getY());
+//                }
+//            } catch (Exception e) {
+//                throw new UnsupportedOperationException(e);
+//            }
+//        });
         c.setOnMouseClicked(evt -> {
             try {
                 evt.consume();

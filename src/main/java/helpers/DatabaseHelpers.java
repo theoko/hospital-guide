@@ -11,7 +11,7 @@ public class DatabaseHelpers {
     /**
      * Translates data from constant.NodeType to an int to put into database
      */
-    public static String enumToString(Constants.NodeType type){
+    public static String enumToString(Constants.NodeType type) {
         switch (type) {
             case BATH:
                 return "BATH";
@@ -37,14 +37,19 @@ public class DatabaseHelpers {
                 return "SERV";
             case STAI:
                 return "STAI";
+            case WORK:
+                return "WORK";
+            case WRKT:
+                return "WRKT";
             default:
                 return null;
         }
     }
+
     /**
      * Translates data from int to an enum
      */
-    public static Constants.NodeType stringToEnum(String str){
+    public static Constants.NodeType stringToEnum(String str) {
         switch (str) {
             case "BATH":
                 return Constants.NodeType.BATH;
@@ -70,6 +75,10 @@ public class DatabaseHelpers {
                 return Constants.NodeType.SERV;
             case "STAI":
                 return Constants.NodeType.STAI;
+            case "WORK":
+                return Constants.NodeType.WORK;
+            case "WRKT":
+                return Constants.NodeType.WRKT;
             default:
                 return null;
         }
@@ -78,6 +87,7 @@ public class DatabaseHelpers {
     /**
      * Constructs a SimpleDateFormat object by concatenating the LocalDate and LocalTime objects
      * passed as arguments
+     *
      * @param date
      * @param time
      * @return
@@ -99,7 +109,6 @@ public class DatabaseHelpers {
         }
 
     }
-
 
 
 }

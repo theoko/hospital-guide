@@ -117,6 +117,17 @@ public class EdgeTable {
 
     }
 
+    public static boolean deleteEdge(Edge edge){
+        try {
+            String statement = "DELETE FROM " + Constants.ROOM_TABLE + " WHERE EDGEID=?";
+            PreparedStatement preparedStatement = Database.getConnection().prepareStatement(statement);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public static boolean edgeExists(Edge e) {
         return hasEdgeByID(MapHelpers.generateEdgeID(e, Constants.START_FIRST))
                 || hasEdgeByID(MapHelpers.generateEdgeID(e, Constants.END_FIRST));
