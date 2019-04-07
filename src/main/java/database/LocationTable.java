@@ -13,7 +13,7 @@ import java.util.Objects;
 
 public class LocationTable {
 
-    private static void createLocationTable() {}
+    private static void LocationTable() {}
 
     public static void createtable(){
         Statement statement = null;
@@ -111,7 +111,6 @@ public class LocationTable {
 
             statement.execute();
 
-            // TODO: what the fuck is add room
             if (Objects.equals(DatabaseHelpers.enumToString(location.getNodeType()), Constants.NodeType.CONF.name())) {
 
                 // Populate conference room table
@@ -130,6 +129,7 @@ public class LocationTable {
             return false;
         }
     }
+
     /**
      * Checks availability for the room specified based on start and end date
      *
@@ -138,7 +138,7 @@ public class LocationTable {
      * @param endTime
      * @return true if the room is available, false otherwise
      */
-    public static boolean checkAvailabilityLocation(Room room, String startTime, String endTime) {
+    public static boolean checkAvailabilityByLocation(Room room, String startTime, String endTime) {
         PreparedStatement statement;
 
         try {
@@ -171,7 +171,7 @@ public class LocationTable {
     /**
      * Checks if location is available
      */
-    public static List<Room> checkAvailabilityTime(String startTime, String endTime) {
+    public static List<Room> checkAvailabilityByTime(String startTime, String endTime) {
 
         PreparedStatement statement1;
         ArrayList<Room> roomsAvailable = new ArrayList<>();

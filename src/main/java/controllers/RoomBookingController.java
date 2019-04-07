@@ -139,7 +139,7 @@ public class RoomBookingController extends EmployeeMapController{
 
             timePeriodSet = true;
 
-            roomsAvailable = LocationTable.checkAvailabilityTime(
+            roomsAvailable = LocationTable.checkAvailabilityByTime(
                     DatabaseHelpers.getDateTime(startDate, startTime),
                     DatabaseHelpers.getDateTime(endDate, endTime)
             );
