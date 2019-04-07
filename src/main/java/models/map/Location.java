@@ -125,10 +125,6 @@ public class Location {
         LocationTable.updateLocation(this);
     }
 
-    public boolean addCurrNode() {
-        return LocationTable.addLocation(this);
-    }
-
     public boolean deleteCurrNode() {
         VisualRealtimeController.removeCircle(this);
         return LocationTable.deleteLocation(this);

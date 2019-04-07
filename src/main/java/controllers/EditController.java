@@ -2,6 +2,7 @@ package controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXTextField;
 import database.Database;
 import database.LocationTable;
 import helpers.Constants;
@@ -36,17 +37,22 @@ public class EditController extends PopUpController implements Initializable {
     public String WORK;
     public String WRKT;
 
+    public JFXTextField longName;
+
 //    public JFXButton bookingButton;
 
     public void updateNode(MouseEvent event) {
         event.consume();
         String value = (String) cmbNodeType.getValue();
         String nType = value.substring(0, value.indexOf(':'));
+        String name = longName.getText();
         loc.setNodeType(Constants.NodeType.valueOf(nType));
         if (loc.getNodeID() == null) {
-            loc.setNodeID(LocationTable.addNewLocation(loc));
+            loc.setNodeID(Database.generateUniqueNodeID(loc));
             System.out.println(loc.getNodeID());
         }
+        loc.setLongName(name);
+        LocationTable.updateLocation(loc);
 //        VisualRealtimeController.updateCircle(loc.getNodeCircle(),
 //                UIHelpers.updateCircleForNodeType(loc));
         loc.setNodeCircle(UIHelpers.updateCircleForNodeType(loc));
@@ -64,7 +70,6 @@ public class EditController extends PopUpController implements Initializable {
 
         ScreenController.deactivate();
     }
-
     public void goBack(MouseEvent event) throws Exception{
        // ((Stage) (((Node) event.getSource()).getScene().getWindow())).close();
         event.consume();
@@ -136,6 +141,7 @@ public class EditController extends PopUpController implements Initializable {
             default:
                 cmbNodeType.setValue(STAI);
         }
+
 
     }
 
