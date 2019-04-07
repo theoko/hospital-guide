@@ -71,7 +71,6 @@ public class CreateUserController extends AdminMapController{
         } catch(Exception exception) {
             exception.printStackTrace();
         }
-
     }
 
     public void updateUser(MouseEvent event) {
@@ -82,7 +81,6 @@ public class CreateUserController extends AdminMapController{
         } catch(Exception exception) {
             exception.printStackTrace();
         }
-
     }
 
     public void deleteUser(MouseEvent event) {
@@ -90,6 +88,10 @@ public class CreateUserController extends AdminMapController{
         User selected = tblUsers.getSelectionModel().getSelectedItem();
         System.out.println(selected.toString());
         UserTable.deleteUser(selected);
+        users.clear();
+        List<User> usersA = UserTable.getUsers();
+        if(usersA != null)
+            users.addAll(usersA);
         tblUsers.refresh();
     }
 }
