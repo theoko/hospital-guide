@@ -37,10 +37,15 @@ public class EditUserPopUpController extends PopUpControllerUser implements Init
 
     public void updateUser(MouseEvent event) {
         event.consume();
-        Constants.Auth uType = Constants.Auth.valueOf(cmbUserType.getValue().toString().toUpperCase());
-        userM.setPassword(Password.getText());
-        userM.setUsername(UserName.getText());
-        userM.setUserType(uType);
+        if(cmbUserType.getValue()!=null) {
+            Constants.Auth uType = Constants.Auth.valueOf(cmbUserType.getValue().toString().toUpperCase());
+            userM.setUserType(uType);
+        }
+        if(Password.getText() != null)
+            userM.setPassword(Password.getText());
+        if(UserName.getText() != null)
+            userM.setUsername(UserName.getText());
+
         ScreenController.deactivate();
     }
 

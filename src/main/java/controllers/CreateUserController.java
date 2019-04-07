@@ -96,7 +96,7 @@ public class CreateUserController extends AdminMapController{
         tblUsers.refresh();
     }
 
-/*    @Override
+ /*   @Override
     public final void logOut(MouseEvent event) throws Exception{
         event.consume();
         ScreenController.logOut(btnReturn);
