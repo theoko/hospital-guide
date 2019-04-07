@@ -9,6 +9,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import models.user.User;
 
 import java.util.List;
@@ -94,4 +95,11 @@ public class CreateUserController extends AdminMapController{
             users.addAll(usersA);
         tblUsers.refresh();
     }
+
+ /*   @Override
+    public final void logOut(MouseEvent event) throws Exception{
+        event.consume();
+        ScreenController.logOut(btnReturn);
+        ScreenController.activate(Constants.Routes.WELCOME);
+    }*/
 }

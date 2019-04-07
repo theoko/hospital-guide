@@ -36,22 +36,22 @@
                                         <Insets top="10.0" />
                                     </VBox.margin>
                                 </JFXButton>
-                        <JFXButton fx:id="btnUpdate" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" onMouseClicked="#updateUser" prefHeight="51.0" prefWidth="120.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Update" textAlignment="CENTER" />
+                                <JFXButton fx:id="btnUpdate" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" onMouseClicked="#updateUser" prefHeight="51.0" prefWidth="120.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Update" textAlignment="CENTER" />
                                 <JFXButton fx:id="btnRefresh" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" onMouseClicked="#refreshTable" prefHeight="51.0" prefWidth="120.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Refresh" textAlignment="CENTER">
                                     <VBox.margin>
                                         <Insets top="10.0" />
                                     </VBox.margin>
                                 </JFXButton>
-                        <JFXButton fx:id="btnRemove" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" onMouseClicked="#deleteUser" prefHeight="51.0" prefWidth="120.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Remove" textAlignment="CENTER">
-                           <VBox.margin>
-                              <Insets top="10.0" />
-                           </VBox.margin>
-                        </JFXButton>
-                        <JFXButton fx:id="btnLogout" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" prefHeight="51.0" prefWidth="120.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Logout" textAlignment="CENTER">
-                           <VBox.margin>
-                              <Insets top="10.0" />
-                           </VBox.margin>
-                        </JFXButton>
+                                <JFXButton fx:id="btnRemove" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" onMouseClicked="#deleteUser" prefHeight="51.0" prefWidth="120.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Remove" textAlignment="CENTER">
+                                    <VBox.margin>
+                                        <Insets top="10.0" />
+                                    </VBox.margin>
+                                </JFXButton>
+                                <JFXButton fx:id="btnLogout" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" onMouseClicked="#logOut" prefHeight="51.0" prefWidth="120.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Logout" textAlignment="CENTER">
+                                    <VBox.margin>
+                                        <Insets top="10.0" />
+                                    </VBox.margin>
+                                </JFXButton>
                             </children>
                         </VBox>
                     </items>
