@@ -9,7 +9,7 @@ import edu.smu.tspell.wordnet.*;
 public class SearchKeywords {
 
     // Main map
-    public static HashMap<String, List<String>> keys = new HashMap<>();
+    private HashMap<String, List<String>> keys = new HashMap<>();
 
     // Categories:
 
@@ -212,7 +212,7 @@ public class SearchKeywords {
 
     }
 
-    public static HashMap<String, List<String>> getKeys() {
+    public HashMap<String, List<String>> getKeys() {
         return keys;
     }
 
@@ -230,6 +230,12 @@ public class SearchKeywords {
             {
                 String[] wordForms = synsets[i].getWordForms();
 
+//                String[] usage = synsets[i].getUsageExamples();
+//
+//                for (int j = 0; j < usage.length; j++) {
+//                    System.out.println(usage[j]);
+//                }
+
                 for (int j = 0; j < wordForms.length; j++)
                 {
                     String genWord = wordForms[j];
@@ -246,22 +252,9 @@ public class SearchKeywords {
         }
         else
         {
-            System.err.println("No synsets exist that contain " +
-                    "the word form '" + wordForm + "'");
+//            System.err.println("No synsets exist that contain " +
+//                    "the word form '" + wordForm + "'");
         }
-
-    }
-
-    public static void main(String[] args)
-    {
-
-
-        SearchKeywords searchKeywords = new SearchKeywords();
-
-        for(String f : searchKeywords.food) {
-            System.out.println(f);
-        }
-
 
     }
 

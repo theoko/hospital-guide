@@ -129,7 +129,7 @@ public class Location {
     }
 
     public boolean deleteCurrNode() {
-        VisualRealtimeController.removeCircle(getNodeCircle());
+        VisualRealtimeController.removeCircle(this);
         return LocationTable.deleteLocation(this);
     }
 
