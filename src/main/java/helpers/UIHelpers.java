@@ -2,6 +2,7 @@ package helpers;
 
 import controllers.AdminMapController;
 import controllers.ScreenController;
+import controllers.VisualRealtimeController;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;

@@ -2,6 +2,7 @@ package controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXToggleButton;
 import database.Database;
 import database.EdgeTable;
 import helpers.Constants;
@@ -9,6 +10,7 @@ import helpers.MapHelpers;
 import helpers.UIHelpers;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
+import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyEvent;
@@ -24,6 +26,8 @@ import java.awt.*;
 public class AdminMapController extends MapController {
     public JFXButton btnDownload;
     public JFXButton btnBooking;
+    @FXML
+    private JFXToggleButton enableEdge, enableNode;
 
     private static boolean enableAddNode = false;
     private static boolean enableEditEdge = false;
@@ -61,12 +65,20 @@ public class AdminMapController extends MapController {
         if(selectedLocation != null) {
             Edge edge = MapHelpers.generateEdge(selectedLocation, loc);
             boolean edgeToggle = EdgeTable.toggleEdge(edge);
-            if(edgeToggle == Constants.SELECTED &&
-                    edge.getStart().getFloor().equals(edge.getEnd().getFloor())) {
-                Line line = UIHelpers.generateLineFromEdge(edge);
-                edge.setLine(line);
-                VisualRealtimeController.addLine(line);
-            } else {
+            if(edgeToggle == Constants.SELECTED) {
+                if(edge.getStart().getFloor().equals(edge.getEnd().getFloor())) {
+                    Line line = UIHelpers.generateLineFromEdge(edge);
+                    edge.setLine(line);
+                    VisualRealtimeController.addLine(line);
+
+                    VisualRealtimeController.pushCircleToFront(edge.getStart());
+
+                    VisualRealtimeController.pushCircleToFront(edge.getEnd());
+                    VisualRealtimeController.visuallySelectCircle(edge.getEnd());
+                } else {
+                    VisualRealtimeController.visuallySelectCircle(edge.getEnd());
+                }
+            } else if(edgeToggle == Constants.DESELECTED){
                 VisualRealtimeController.removeLine(edge.getLine());
             }
         }
@@ -86,12 +98,20 @@ public class AdminMapController extends MapController {
         } catch(Exception e) {
             // Circle is null
         }
-
+        if(enableAddNode) {
+            enableNode.setSelected(false);
+            enableNodeCreation();
+        }
+        VisualRealtimeController.visuallyDeselectAll();
         selectedLocation = null;
 
         enableEditEdge = !enableEditEdge;
     }
     public void enableNodeCreation() {
+        if(enableEditEdge) {
+            enableEdge.setSelected(false);
+            enableEdgeEditor();
+        }
         enableAddNode = !enableAddNode;
     }
 
@@ -100,6 +120,7 @@ public class AdminMapController extends MapController {
         toolTip();
 
         MapDisplay.displayAdmin(new AnchorPane[] {panFloorL2, panFloorL1, panFloor1, panFloor2, panFloor3});
+        configVisualRealtimeController();
         VisualRealtimeController.setPanMap(panFloor1);
         selectedLocation = null;
 
@@ -153,24 +174,7 @@ public class AdminMapController extends MapController {
 //        loc.addCurrNode();
         UIHelpers.setAdminNodeClickEvent(circ, loc);
         loc.setNodeCircle(circ);
-        AnchorPane addToPane = panFloor1;
-        switch(loc.getFloor()) {
-            case "1":
-                addToPane = panFloor1;
-                break;
-            case "2":
-                addToPane = panFloor2;
-                break;
-            case "3":
-                addToPane = panFloor3;
-                break;
-            case "L1":
-                addToPane = panFloorL1;
-                break;
-            case "L2":
-                addToPane = panFloorL2;
-                break;
-        }
+        AnchorPane addToPane = determinePanMapFromFloor(loc.getFloor());
         addToPane.getChildren().add(circ);
     }
 //    public static void removeCircle(Circle c) {
@@ -228,5 +232,18 @@ public class AdminMapController extends MapController {
 
         translateX = ((AnchorPane) event.getSource()).getTranslateX();
         translateY = ((AnchorPane) event.getSource()).getTranslateY();
+    }
+    public void configVisualRealtimeController() {
+        panFloor1.setId("1");
+        panFloor2.setId("2");
+        panFloor3.setId("3");
+        panFloorL1.setId("L1");
+        panFloorL2.setId("L2");
+        VisualRealtimeController.addPanMap(panFloor1);
+        VisualRealtimeController.addPanMap(panFloor2);
+        VisualRealtimeController.addPanMap(panFloor3);
+        VisualRealtimeController.addPanMap(panFloorL1);
+        VisualRealtimeController.addPanMap(panFloorL2);
+
     }
 }

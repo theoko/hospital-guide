@@ -10,11 +10,11 @@ import javafx.scene.layout.AnchorPane;
 
 public abstract class MapController {
     public JFXButton btnReturn;
-    public AnchorPane panFloor3;
-    public AnchorPane panFloor2;
-    public AnchorPane panFloor1;
-    public AnchorPane panFloorL1;
-    public AnchorPane panFloorL2;
+    public  AnchorPane panFloor3;
+    public  AnchorPane panFloor2;
+    public  AnchorPane panFloor1;
+    public  AnchorPane panFloorL1;
+    public  AnchorPane panFloorL2;
 //    public JFXButton zoomIn;
 //    public JFXButton zoomOut;
 
@@ -116,6 +116,22 @@ public abstract class MapController {
         event.consume();
         ScreenController.logOut(btnReturn);
         ScreenController.activate(Constants.Routes.LOGIN);
+    }
+    public AnchorPane determinePanMapFromFloor(String floor) {
+
+        switch(floor) {
+            case "1":
+                return panFloor1;
+            case "2":
+                return panFloor2;
+            case "3":
+                return panFloor3;
+            case "L1":
+                return panFloorL1;
+            case "L2":
+                return panFloorL2;
+        }
+        return panFloor3;
     }
 
     /**

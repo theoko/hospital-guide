@@ -119,8 +119,8 @@
                                                 </HBox>
                                             </children>
                                         </VBox>
-                                        <JFXToggleButton layoutX="14.0" layoutY="135.0" onMouseClicked="#enableEdgeEditor" prefHeight="58.0" prefWidth="156.0" text="Add Edge" />
-                                        <JFXToggleButton layoutX="136.0" layoutY="134.0" onMouseClicked="#enableNodeCreation" prefHeight="60.0" prefWidth="211.0" text="Add Node" toggleColor="#022d5a" toggleLineColor="#022d5a" />
+                                        <JFXToggleButton fx:id="enableEdge" layoutX="14.0" layoutY="135.0" onMouseClicked="#enableEdgeEditor" prefHeight="58.0" prefWidth="156.0" text="Add Edge" />
+                                        <JFXToggleButton fx:id="enableNode" layoutX="136.0" layoutY="134.0" onMouseClicked="#enableNodeCreation" prefHeight="60.0" prefWidth="211.0" text="Add Node" toggleColor="#022d5a" toggleLineColor="#022d5a" />
                                     </children>
                                 </AnchorPane>
                             </AnchorPane>
