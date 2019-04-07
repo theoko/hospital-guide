@@ -4,12 +4,14 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import database.UserTable;
 import helpers.Constants;
-import helpers.UIHelpers;
 import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
 import models.user.User;
 
-public class CreateUserPopUpController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class EditUserPopUpController extends PopUpControllerUser implements Initializable {
 
     public JFXComboBox cmbUserType;
 
@@ -21,12 +23,22 @@ public class CreateUserPopUpController {
     public JFXTextField UserName;
     public JFXTextField Password;
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+    }
+
+    public void setUser(User user){
+        this.userM = user;
+    }
+
     public void updateUser(MouseEvent event) {
         event.consume();
+
         Constants.Auth uType = Constants.Auth.valueOf(cmbUserType.getValue().toString().toUpperCase());
-        User user = new User(0,UserName.getText(),Password.getText(), uType);
-        UserTable.createUser(user);
-        user.setUserID(UserTable.getUserByUsername(user.getUsername()).getUserID());
+        userM.setPassword(Password.getText());
+        userM.setUsername(UserName.getText());
+        userM.setUserType(uType);
         ScreenController.deactivate();
     }
 }

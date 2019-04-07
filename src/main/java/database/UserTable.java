@@ -66,6 +66,33 @@ public class UserTable {
         }
     }
 
+    /**
+     * updates user in database
+     */
+    public static boolean updateUser(User user) {
+
+        try {
+
+            PreparedStatement statement;
+            statement = Database.getConnection().prepareStatement(
+                    "UPDATE " + Constants.USERS_TABLE + " SET USERNAME=?, PASSWORD=?, USERTYPE=?" +
+                            " WHERE USERID=?"
+            );
+
+            statement.setString(1, user.getUsername());
+            statement.setString(2, user.getPassword());
+            statement.setString(3, user.getUserType().name());
+            statement.setInt(4, user.getUserID());
+
+            return statement.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            return false;
+        }
+    }
+
     public static boolean dropUsersTable() {
         try {
             Statement statement;

@@ -76,8 +76,9 @@ public class CreateUserController extends AdminMapController{
 
     public void updateUser(MouseEvent event) {
         event.consume();
+        User selected = tblUsers.getSelectionModel().getSelectedItem();
         try {
-            ScreenController.popUp(Constants.Routes.USER_POPUP);
+            ScreenController.popUpUser(Constants.Routes.EDIT_POPUP, selected);
         } catch(Exception exception) {
             exception.printStackTrace();
         }
