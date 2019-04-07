@@ -1,6 +1,7 @@
 package controllers;
 
 import com.jfoenix.controls.JFXButton;
+import helpers.Constants;
 import helpers.FileHelpers;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
@@ -20,7 +21,7 @@ public class DownloadController {
     public void clickButtonNo(MouseEvent event) throws Exception {
         event.consume();
         ScreenController.deactivate();
-        ScreenController.activate("main");
+        ScreenController.activate(Constants.Routes.ADMIN_MAP);
 
     }
 
@@ -37,7 +38,7 @@ public class DownloadController {
 //        }
 
         ScreenController.deactivate();
-        ScreenController.activate("downloaded");
+        ScreenController.activate(Constants.Routes.DOWNLOADED);
     }
 
 }

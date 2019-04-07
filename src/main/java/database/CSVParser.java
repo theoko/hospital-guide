@@ -65,7 +65,7 @@ public class CSVParser {
                 Location newLoc = new Location(locID, Integer.parseInt(splitLine[1]), Integer.parseInt(splitLine[2]), splitLine[3], splitLine[4], Constants.NodeType.valueOf(splitLine[5]), splitLine[6], splitLine[7]);
 
                 lstLocations.put(locID, newLoc);
-                Database.addLocation(newLoc);
+                LocationTable.addLocation(newLoc);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -92,13 +92,15 @@ public class CSVParser {
             br = new BufferedReader(new InputStreamReader(pathEdges));
             br.readLine();
             while ((line = br.readLine()) != null) {
+
                 String[] splitLine = line.split(splitter);
                 String edgeID = splitLine[0];
                 Location start = lstLocations.get(splitLine[1]);
                 Location end = lstLocations.get(splitLine[2]);
                 Edge newEdge = new Edge(edgeID, start, end);
 
-                Database.addEdge(newEdge);
+                if(start != null && end != null)
+                    EdgeTable.addEdge(newEdge);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -128,7 +130,7 @@ public class CSVParser {
             String[] header = {"nodeID", "xcoord", "ycoord", "floor", "building", "nodeType", "longName", "shortName"};
             writer.writeNext(header);
 
-            lstLocations = Database.getLocations();
+            lstLocations = LocationTable.getLocations();
             if (lstLocations != null) {
                 for (Location loc : lstLocations.values()) {
                     String[] data = loc.getStrings();
@@ -156,7 +158,7 @@ public class CSVParser {
             String[] header = {"edgeID", "startNode", "endNode"};
             writer.writeNext(header);
 
-            List<Edge> lstEdges = Database.getEdges(lstLocations);
+            List<Edge> lstEdges = EdgeTable.getEdges(lstLocations);
             if (lstEdges != null) {
                 for (Edge edge : lstEdges) {
                     String[] data = edge.getStrings();

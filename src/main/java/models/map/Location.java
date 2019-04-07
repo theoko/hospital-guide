@@ -3,6 +3,7 @@ package models.map;
 import controllers.AdminMapController;
 import controllers.VisualRealtimeController;
 import database.Database;
+import database.LocationTable;
 import helpers.Constants;
 import javafx.scene.shape.Circle;
 
@@ -120,16 +121,16 @@ public class Location {
 
     public void setNodeType(Constants.NodeType nodeType) {
         this.nodeType = nodeType;
-        Database.updateLocation(this);
+        LocationTable.updateLocation(this);
     }
 
     public boolean addCurrNode() {
-        return Database.addLocation(this);
+        return LocationTable.addLocation(this);
     }
 
     public boolean deleteCurrNode() {
         VisualRealtimeController.removeCircle(getNodeCircle());
-        return Database.deleteLocation(this);
+        return LocationTable.deleteLocation(this);
     }
 
     public Circle getNodeCircle() {

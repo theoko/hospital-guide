@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import helpers.Constants;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import map.MapDisplay;
 
 public class UserMapController extends MapController {
@@ -11,14 +12,14 @@ public class UserMapController extends MapController {
 
     public void initialize() {
         toolTip();
-        MapDisplay.displayUser(panMap, "1");
+        MapDisplay.displayUser(new AnchorPane[] {panFloorL2, panFloorL1, panFloor1, panFloor2, panFloor3});
     }
 
     @Override
     public void logOut(MouseEvent event) throws Exception {
         event.consume();
         ScreenController.logOut(btnReturn);
-        ScreenController.activate("welcome");
+        ScreenController.activate(Constants.Routes.WELCOME);
     }
 
     void toolTip() {

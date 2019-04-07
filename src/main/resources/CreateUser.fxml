@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="700.0" minWidth="1200.0" prefHeight="777.0" prefWidth="1253.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CreateUserController">
+    <children>
+        <Label alignment="CENTER" layoutX="-4.0" layoutY="13.0" maxWidth="1.7976931348623157E308" prefHeight="42.0" prefWidth="1261.0" style="-fx-background-color: #022D5A;" text="User Dashboard" textAlignment="CENTER" textFill="WHITE">
+            <font>
+                <Font size="31.0" />
+            </font>
+        </Label>
+        <VBox alignment="TOP_CENTER" layoutY="57.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="722.0" prefWidth="1253.0" AnchorPane.bottomAnchor="-2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="57.0">
+            <children>
+                <SplitPane dividerPositions="0.7785771382893685" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="618.0" prefWidth="1253.0" style="-fx-box-border: transparent;">
+                    <items>
+                        <TableView fx:id="tblUsers" prefHeight="423.0" prefWidth="970.0">
+                            <columns>
+                                <TableColumn fx:id="tblUserID" prefWidth="247.0" text="USERID" />
+                                <TableColumn fx:id="tblUserName" prefWidth="240.0" text="USERNAME" />
+                                <TableColumn fx:id="tblUserPassword" prefWidth="240.0" text="PASSWORD" />
+                                <TableColumn fx:id="tblUserType" prefWidth="240.0" text="USERTYPE" />
+                            </columns>
+                        </TableView>
+                        <VBox alignment="CENTER" prefHeight="610.0" prefWidth="173.0" spacing="10.0">
+                            <children>
+                                <JFXButton fx:id="btnAdd" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" onMouseClicked="#addUser" prefHeight="51.0" prefWidth="120.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Add" textAlignment="CENTER">
+                                    <VBox.margin>
+                                        <Insets top="10.0" />
+                                    </VBox.margin>
+                                </JFXButton>
+                        <JFXButton fx:id="btnUpdate" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" onMouseClicked="#updateUser" prefHeight="51.0" prefWidth="120.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Update" textAlignment="CENTER" />
+                                <JFXButton fx:id="btnRefresh" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" onMouseClicked="#refreshTable" prefHeight="51.0" prefWidth="120.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Refresh" textAlignment="CENTER">
+                                    <VBox.margin>
+                                        <Insets top="10.0" />
+                                    </VBox.margin>
+                                </JFXButton>
+                        <JFXButton fx:id="btnRemove" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" onMouseClicked="#deleteUser" prefHeight="51.0" prefWidth="120.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Remove" textAlignment="CENTER">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </JFXButton>
+                        <JFXButton fx:id="btnLogout" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" prefHeight="51.0" prefWidth="120.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Logout" textAlignment="CENTER">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </JFXButton>
+                            </children>
+                        </VBox>
+                    </items>
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+                </SplitPane>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

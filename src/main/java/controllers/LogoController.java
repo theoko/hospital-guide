@@ -1,5 +1,6 @@
 package controllers;
 
+import helpers.Constants;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.event.ActionEvent;
@@ -9,7 +10,6 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.WindowEvent;
-
 import java.io.File;
 
 public class LogoController {
@@ -33,7 +33,7 @@ public class LogoController {
         mP.setOnEndOfMedia(() -> {
             try {
                 ScreenController.deactivate();
-                ScreenController.moveTo("welcome");
+                ScreenController.activate(Constants.Routes.WELCOME);
             }
             catch (Exception e) {
                 throw new UnsupportedOperationException(e);

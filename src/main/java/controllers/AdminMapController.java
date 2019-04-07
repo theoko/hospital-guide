@@ -2,6 +2,7 @@ package controllers;
 
 import com.jfoenix.controls.JFXButton;
 import database.Database;
+import database.EdgeTable;
 import helpers.Constants;
 import helpers.MapHelpers;
 import helpers.UIHelpers;
@@ -13,7 +14,6 @@ import javafx.scene.shape.Line;
 import map.MapDisplay;
 import models.map.Edge;
 import models.map.Location;
-
 import java.awt.*;
 
 public class AdminMapController extends MapController {
@@ -51,7 +51,7 @@ public class AdminMapController extends MapController {
     public static void selectLocation(Location loc) {
         if(selectedLocation != null) {
             Edge edge = MapHelpers.generateEdge(selectedLocation, loc);
-            boolean edgeToggle = Database.toggleEdge(edge);
+            boolean edgeToggle = EdgeTable.toggleEdge(edge);
             if(edgeToggle == Constants.SELECTED) {
                 Line line = UIHelpers.generateLineFromEdge(edge);
                 edge.setLine(line);
@@ -89,8 +89,8 @@ public class AdminMapController extends MapController {
         // Set tooltip
         toolTip();
 
-        MapDisplay.displayAdmin(panMap, "1");
-        VisualRealtimeController.setPanMap(panMap);
+        MapDisplay.displayAdmin(new AnchorPane[] {panFloorL2, panFloorL1, panFloor1, panFloor2, panFloor3});
+        VisualRealtimeController.setPanMap(panFloor1);
         selectedLocation = null;
     }
 
@@ -102,13 +102,13 @@ public class AdminMapController extends MapController {
     public void clickDownload(MouseEvent event) throws Exception {
         event.consume();
         ScreenController.deactivate();
-        ScreenController.activate("download");
+        ScreenController.activate(Constants.Routes.DOWNLOAD);
     }
 
     public void displayBooking(MouseEvent event) throws Exception {
         event.consume();
         ScreenController.deactivate();
-        ScreenController.activate("book-room");
+        ScreenController.activate(Constants.Routes.BOOKING_WINDOW);
     }
     public void addNode(MouseEvent event) throws Exception {
         Point selectedPoint = new Point((int)event.getX(), (int)event.getY());
@@ -119,13 +119,13 @@ public class AdminMapController extends MapController {
                 this.selectedFloor, this.selectedBuilding, Constants.NodeType.HALL,
                 "RECENT_ADDITION", "RECENT_ADDITION");
 
-        ScreenController.popUp("edit", loc);
+        ScreenController.popUp(Constants.Routes.EDIT_LOCATION, loc);
 //        String locID = Database.generateUniqueNodeID(loc);
 //        loc.setNodeID(locID);
 //        loc.addCurrNode();
         UIHelpers.setAdminNodeClickEvent(circ, loc);
         loc.setNodeCircle(circ);
-        panMap.getChildren().add(circ);
+        panFloor1.getChildren().add(circ);
     }
 //    public static void removeCircle(Circle c) {
 //        panMap.getChildren().remove(c);
@@ -139,7 +139,7 @@ public class AdminMapController extends MapController {
         enableEditEdge = false;
         event.consume();
         ScreenController.logOut(btnReturn);
-        ScreenController.activate("welcome");
+        ScreenController.activate(Constants.Routes.WELCOME);
     }
     @Override
     public void floorOneMapOnMousePressed(MouseEvent event)  {

@@ -1,12 +1,7 @@
 package map;
 
-import database.CSVParser;
-import database.Database;
-import helpers.FileHelpers;
 import models.map.Location;
-import models.map.Map;
 import models.map.SubPath;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -14,35 +9,13 @@ import java.util.Stack;
 
 public class PathFinder {
 
-    public static void main(String[] args) {
-        Database db = new Database();
-        CSVParser.parse(FileHelpers.getNodesCSV(), FileHelpers.getEdgesCSV());
-
-        // Create map
-        Map map = MapParser.parse();
-        // Start and end locations
-        Location start = map.getLocation("ADEPT00301");
-        Location end = map.getLocation("DDEPT00402");
-
-        // Timer for findPath
-        long startTime = System.currentTimeMillis();
-        // Finds the path from start to end
-        Stack<SubPath> path = findPath(map, start, end);
-        long endTime = System.currentTimeMillis();
-        long totalTime = endTime - startTime;
-        // Prints out path and time
-        printPath(path);
-        System.out.println("Time taken: " + totalTime);
-    }
-
     /**
      * Finds a path from the start map to the end map using a*
-     * @param map The map of the hospital
      * @param start The start map
      * @param end The end map
      * @return A stack of locations that contains the path
      */
-    public static Stack<SubPath> findPath(Map map, Location start, Location end) {
+    public static Stack<SubPath> findPath(Location start, Location end) {
         // Create a new stack to hold the path from start to end
         Stack<SubPath> path = new Stack<>();
 
@@ -87,12 +60,12 @@ public class PathFinder {
                     double newDist = currDist + nCurr.getDist();
                     // Calculate the heuristic based on distance to end map
                     //TODO: Create a more accurate heuristic for nodes on different floors
-                    double heuristic = 1.0 * calcDist(lCurr.getxCord(), lCurr.getyCord(), end.getxCord(), end.getyCord());
+                    double heuristic = calcDist(lCurr.getxCord(), lCurr.getyCord(), end.getxCord(), end.getyCord());
                     if (!lCurr.getFloor().equals(end.getFloor())) {
                         heuristic = Integer.MAX_VALUE;
                     }
                     // Create a new neighbor with updated distance value
-                    SubPath newNeigh = new SubPath(nCurr.getEdgeID(), nCurr.getLocation(), newDist + heuristic);
+                    SubPath newNeigh = new SubPath(nCurr.getEdgeID(), nCurr.getLocation(), newDist, heuristic);
                     // Add the new neighbor into the queue and add its parent into the parent map
                     inQueue.add(newNeigh);
                     parent.putIfAbsent(lCurr.getNodeID(), nNext);
@@ -120,21 +93,6 @@ public class PathFinder {
             prev = parent.get(prev.getLocation().getNodeID());
         }
         return path;
-    }
-
-    /**
-     * Prints out the path (represented in a stack)
-     * @param oldPath A stack of locations containing the path
-     */
-    private static void printPath(Stack<SubPath> oldPath) {
-        // Pop thru the stack and print out each element
-        Stack<SubPath> path = oldPath;
-        while (!path.isEmpty()) {
-            SubPath curr = path.pop();
-            System.out.println("ID: " + curr.getEdgeID());
-            System.out.println("Location: " + curr.getLocation().getNodeID() + ", " + curr.getLocation().getFloor());
-            System.out.println("Distance: " + curr.getDist());
-        }
     }
 
     /**
