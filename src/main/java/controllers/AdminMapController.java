@@ -1,12 +1,17 @@
 package controllers;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
 import database.Database;
 import database.EdgeTable;
 import helpers.Constants;
 import helpers.MapHelpers;
 import helpers.UIHelpers;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
+import javafx.geometry.Insets;
 import javafx.scene.control.Tooltip;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
@@ -22,6 +27,9 @@ public class AdminMapController extends MapController {
 
     private static boolean enableAddNode = false;
     private static boolean enableEditEdge = false;
+
+    public AnchorPane outerTabAnchor;
+    public JFXTextField searchBox;
 
     private String selectedFloor = "1", selectedBuilding = "Shapiro";
 
@@ -92,6 +100,24 @@ public class AdminMapController extends MapController {
         MapDisplay.displayAdmin(new AnchorPane[] {panFloorL2, panFloorL1, panFloor1, panFloor2, panFloor3});
         VisualRealtimeController.setPanMap(panFloor1);
         selectedLocation = null;
+
+        // Initialize search box
+        searchBox = new JFXTextField();
+        searchBox.setMaxWidth(UIHelpers.getScreenWidth());
+        searchBox.setPadding(new Insets(5));
+
+        // Add search box to layout
+        outerTabAnchor.getChildren().add(searchBox);
+
+        // Add event listener for search box
+        searchBox.addEventFilter(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+
+
+
+            }
+        });
     }
 
     void toolTip() {
