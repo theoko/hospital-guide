@@ -38,6 +38,7 @@ public class SearchEngine {
             if(currDist < minDistance) {
                 minDistance = currDist;
                 closestCategory = category;
+                System.out.println("currCategory: " + closestCategory);
             }
 
 
@@ -49,6 +50,7 @@ public class SearchEngine {
                 if(currDistKeyword < minDistanceKeyword) {
                     minDistanceKeyword = currDistKeyword;
                     closestKeyword = k;
+                    System.out.println("currKeyword: " + closestKeyword);
                 }
             }
 
@@ -73,7 +75,7 @@ public class SearchEngine {
     public static void main(String[] args)
     {
 
-        SearchEngine searchEngine = new SearchEngine("coffee shop");
+        SearchEngine searchEngine = new SearchEngine("hola");
 
     }
 
