@@ -1,10 +1,12 @@
 package database;
 
-import com.sun.tools.javac.code.Attribute;
 import helpers.Constants;
 import models.user.User;
 
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 

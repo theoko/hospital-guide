@@ -7,7 +7,9 @@ import javafx.scene.layout.AnchorPane;
 import map.MapDisplay;
 
 public class EmployeeMapController extends MapController {
-    public JFXButton btnSettings;
+
+//    public JFXButton btnSettings;
+//    public JFXButton btnReturn;
 
     public void initialize() {
         toolTip();
