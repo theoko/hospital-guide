@@ -8,9 +8,6 @@ public class Constants {
     public static String DB_NAME = "teamF";
 
     public static String USERS_TABLE = "USERS";
-    public static String EMPLOYEE_TABLE = "EMPLOYEE";
-    public static String CUSTODIAN_TABLE = "CUSTODIAN";
-    public static String ADMIN_TABLE = "ADMIN";
     public static String LOCATION_TABLE = "LOCATION";
     public static String EDGES_TABLE = "EDGES";
     public static String ROOM_TABLE = "ROOM";
@@ -75,6 +72,7 @@ public class Constants {
 
     public enum Routes {
         LOGO, WELCOME, LOGIN, USER_MAP, EMPLOYEE_MAP, CUSTODIAN_MAP, ADMIN_MAP, USER_INFO, EMPLOYEE_INFO,
-        CUSTODIAN_INFO, EDIT_LOCATION, SANITATION_REQUEST, DIRECTIONS, BOOKING_WINDOW, DOWNLOAD, DOWNLOADED
+        CUSTODIAN_INFO, EDIT_LOCATION, SANITATION_REQUEST, DIRECTIONS, BOOKING_WINDOW, DOWNLOAD, DOWNLOADED,
+        CREATE_USER, USER_POPUP, EDIT_POPUP
     }
 }

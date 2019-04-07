@@ -11,6 +11,8 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import models.map.Location;
 import models.map.Map;
+import models.user.User;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
@@ -52,7 +54,10 @@ public class ScreenController {
         this.addScreen(Constants.Routes.DIRECTIONS, "/Directions.fxml");
         this.addScreen(Constants.Routes.CUSTODIAN_MAP, "/CustodianMap.fxml");
         this.addScreen(Constants.Routes.CUSTODIAN_INFO, "/CustodianInfo.fxml");
-        this.addScreen(Constants.Routes.BOOKING_WINDOW, "/BookingWindow.fxml");
+        this.addScreen(Constants.Routes.BOOKING_WINDOW, "/ConferenceRoomWindow.fxml");
+        this.addScreen(Constants.Routes.CREATE_USER, "/CreateUser.fxml");
+        this.addScreen(Constants.Routes.USER_POPUP, "/CreateUserPopUp.fxml");
+        this.addScreen(Constants.Routes.EDIT_POPUP, "/EditUserPopUp.fxml");
     }
 
     public void addScreen(Constants.Routes route, String layout) {
@@ -82,6 +87,25 @@ public class ScreenController {
         stage.setScene(s);
         stage.setResizable(true);
         stage.show();
+    }
+
+    public static void popUp(Constants.Routes route) throws Exception {
+        stage = new Stage();
+        URL url = routeToURL(route);
+
+        FXMLLoader loader = new FXMLLoader(url);
+        Parent root = loader.load();
+        displayPopUp(root);
+    }
+
+    public static void popUpUser(Constants.Routes route, User user) throws Exception {
+        stage = new Stage();
+        URL url = routeToURL(route);
+        FXMLLoader loader = new FXMLLoader(url);
+        Parent root = loader.load();
+        PopUpControllerUser pcu = loader.getController();
+        pcu.setUser(user);
+        displayPopUp(root);
     }
 
     public static void popUp(Constants.Routes route, Location loc) throws Exception {

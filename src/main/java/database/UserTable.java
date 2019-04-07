@@ -3,7 +3,10 @@ package database;
 import helpers.Constants;
 import models.user.User;
 
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,6 +60,33 @@ public class UserTable {
             } else {
                 return false;
             }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            return false;
+        }
+    }
+
+    /**
+     * updates user in database
+     */
+    public static boolean updateUser(User user) {
+
+        try {
+
+            PreparedStatement statement;
+            statement = Database.getConnection().prepareStatement(
+                    "UPDATE " + Constants.USERS_TABLE + " SET USERNAME=?, PASSWORD=?, USERTYPE=?" +
+                            " WHERE USERID=?"
+            );
+
+            statement.setString(1, user.getUsername());
+            statement.setString(2, user.getPassword());
+            statement.setString(3, user.getUserType().name());
+            statement.setInt(4, user.getUserID());
+
+            return statement.execute();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -148,7 +178,7 @@ public class UserTable {
     /**
      * Returns a list of users
      */
-    public List<User> getUsers() {
+    public static List<User> getUsers() {
         try {
 
             Statement statement;
@@ -180,6 +210,24 @@ public class UserTable {
             System.out.println("Failed to get users!");
 
             return null;
+        }
+    }
+
+    /**
+     * Returns a true if user deleted
+     */
+    public static boolean deleteUser(User user) {
+        try {
+            PreparedStatement statement;
+            statement = Database.getConnection().prepareStatement(
+                    "DELETE FROM " + Constants.USERS_TABLE + " WHERE USERID=?"
+            );
+            statement.setInt(1,user.getUserID());
+            statement.execute();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 }
