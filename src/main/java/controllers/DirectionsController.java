@@ -12,8 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeLineJoin;
-import map.MapDisplay;
-import map.PathFinder;
+import map.*;
 import models.map.Location;
 import models.map.SubPath;
 import javafx.animation.*;
@@ -69,8 +68,9 @@ public class DirectionsController extends PopUpController implements Initializab
             }
         }
 
-        Stack<Location> path = PathFinder.findPath(loc, loc2);
-        String directions = PathFinder.txtDirections((Stack<Location>) path.clone());
+        PathContext context = new PathContext(new AStar(loc, loc2));
+        Stack<Location> path = context.findPath();
+        String directions = context.txtDirections((Stack<Location>) path.clone());
         HashMap<String, Location> lstLocations = map.getAllLocations();
         Location prev = null;
         while (!path.isEmpty()) {
