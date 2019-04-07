@@ -129,7 +129,7 @@ public class DirectionsController extends PopUpController implements Initializab
                     panes[2].getChildren().add(1, line);
                 } else if (loc1.getFloor().equals("2") && loc2.getFloor().equals("2")) {
                     panes[3].getChildren().add(1, line);
-                } else {
+                } else if(loc1.getFloor().equals("3") && loc2.getFloor().equals("3")){
                     panes[4].getChildren().add(1, line);
                 }
             }

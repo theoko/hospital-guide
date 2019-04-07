@@ -13,28 +13,29 @@ public class VisualRealtimeController {
     public static void setPanMap(AnchorPane panMap) {
         VisualRealtimeController.panMap = panMap;
     }
-    public static void removeCircle(Circle c) {
-        panMap.getChildren().remove(c);
+    public static void removeCircle(Location c) {
+
+        panMap.getChildren().remove(c.getNodeCircle());
 
     }
     public static void addCircle(Circle c) {
         panMap.getChildren().add(c);
 
     }
-    public static void updateCircle(Circle oldCirc, Circle newCirc) {
-        removeCircle(oldCirc);
-        addCircle(newCirc);
-    }
+//    public static void updateCircle(Circle oldCirc, Circle newCirc) {
+//        removeCircle(oldCirc);
+//        addCircle(newCirc);
+//    }
     public static void visuallyDeselectCircle(Location c) {
         UIHelpers.updateCircleForNodeType(c);
     }
     public static void visuallySelectCircle(Location c) {
-        changeCircleColor(c.getNodeCircle(), Color.RED);
+        changeCircleColor(c, Color.RED);
     }
-    public static void changeCircleColor(Circle circ, Color color) {
-        removeCircle(circ);
-        circ.setFill(Color.RED);
-        addCircle(circ);
+    public static void changeCircleColor(Location c, Color color) {
+//        removeCircle(c);
+        c.getNodeCircle().setFill(Color.RED);
+//        addCircle(circ);
     }
     public static void addLine(Line l) {
         l.toBack();

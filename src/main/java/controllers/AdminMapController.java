@@ -31,11 +31,12 @@ public class AdminMapController extends MapController {
     public AnchorPane outerTabAnchor;
     public JFXTextField searchBox;
 
-    private String selectedFloor = "1", selectedBuilding = "Shapiro";
+    public static String selectedFloor = "1", selectedBuilding = "Shapiro";
 
     private static Location selectedLocation; // Location that is being modified or created
 
     public static void locationSelectEvent(Location loc) {
+
         if(enableEditEdge) {
             if (selectedLocation != loc) {
                 selectLocation(loc);
@@ -60,7 +61,8 @@ public class AdminMapController extends MapController {
         if(selectedLocation != null) {
             Edge edge = MapHelpers.generateEdge(selectedLocation, loc);
             boolean edgeToggle = EdgeTable.toggleEdge(edge);
-            if(edgeToggle == Constants.SELECTED) {
+            if(edgeToggle == Constants.SELECTED &&
+                    edge.getStart().getFloor().equals(edge.getEnd().getFloor())) {
                 Line line = UIHelpers.generateLineFromEdge(edge);
                 edge.setLine(line);
                 VisualRealtimeController.addLine(line);
@@ -151,7 +153,25 @@ public class AdminMapController extends MapController {
 //        loc.addCurrNode();
         UIHelpers.setAdminNodeClickEvent(circ, loc);
         loc.setNodeCircle(circ);
-        panFloor1.getChildren().add(circ);
+        AnchorPane addToPane = panFloor1;
+        switch(loc.getFloor()) {
+            case "1":
+                addToPane = panFloor1;
+                break;
+            case "2":
+                addToPane = panFloor2;
+                break;
+            case "3":
+                addToPane = panFloor3;
+                break;
+            case "L1":
+                addToPane = panFloorL1;
+                break;
+            case "L2":
+                addToPane = panFloorL2;
+                break;
+        }
+        addToPane.getChildren().add(circ);
     }
 //    public static void removeCircle(Circle c) {
 //        panMap.getChildren().remove(c);
@@ -167,9 +187,34 @@ public class AdminMapController extends MapController {
         ScreenController.logOut(btnReturn);
         ScreenController.activate(Constants.Routes.WELCOME);
     }
+    public void floorL2MapOnMousePressed(MouseEvent event)  {
+        this.selectedFloor = "L2";
+        VisualRealtimeController.setPanMap(panFloorL2);
+        mapOnMousePressed(event);
+    }
+    public void floorL1MapOnMousePressed(MouseEvent event)  {
+        this.selectedFloor = "L1";
+        VisualRealtimeController.setPanMap(panFloorL1);
+        mapOnMousePressed(event);
+    }
+    public void floorThreeMapOnMousePressed(MouseEvent event)  {
+        VisualRealtimeController.setPanMap(panFloor3);
+        this.selectedFloor = "3";
+        mapOnMousePressed(event);
+    }
+    public void floorTwoMapOnMousePressed(MouseEvent event)  {
+        VisualRealtimeController.setPanMap(panFloor2);
+        this.selectedFloor = "2";
+        mapOnMousePressed(event);
+    }
     @Override
     public void floorOneMapOnMousePressed(MouseEvent event)  {
+        VisualRealtimeController.setPanMap(panFloor1);
         this.selectedFloor = "1";
+        mapOnMousePressed(event);
+    }
+    public void mapOnMousePressed(MouseEvent event)  {
+//        this.selectedFloor = "1";
         try {
             if (enableAddNode && !enableEditEdge)
                 addNode(event);
