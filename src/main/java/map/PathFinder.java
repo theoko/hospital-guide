@@ -65,7 +65,7 @@ public class PathFinder {
                     // Add the node's value to the current value
                     double newDist = currDist + nCurr.getDist();
                     // Calculate the heuristic based on distance to end map
-                    //TODO: Create a more accurate heuristic for nodes on different floors
+                    //TODO: Incentive to not get off the elevator
                     double heuristic = calcDist(lCurr.getxCord(), lCurr.getyCord(), end.getxCord(), end.getyCord());
                     heuristic += FLOOR_HEURISTIC * Math.abs(floorToInt(lCurr.getFloor()) - floorToInt(end.getFloor()));
                     // Create a new neighbor with updated distance value
@@ -160,7 +160,6 @@ public class PathFinder {
             loc1 = loc2;
             loc2 = loc3;
         }
-        System.out.println(directions);
         return directions;
     }
 

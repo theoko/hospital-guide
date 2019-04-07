@@ -70,7 +70,7 @@ public class DirectionsController extends PopUpController implements Initializab
         }
 
         Stack<Location> path = PathFinder.findPath(loc, loc2);
-        PathFinder.txtDirections((Stack<Location>) path.clone());
+        String directions = PathFinder.txtDirections((Stack<Location>) path.clone());
         HashMap<String, Location> lstLocations = map.getAllLocations();
         Location prev = null;
         while (!path.isEmpty()) {
