@@ -13,7 +13,6 @@ public class Constants {
     public static String ROOM_TABLE = "ROOM";
     public static String BOOK_TABLE = "BOOKING";
     public static String SANITATION_TABLE = "SANITATION";
-    public static String WORKSPACE_TABLE = "WORKSPACE";
 
     public static String DB_PROJECTION = "projection";
     public static String DB_RELATION = "relation";
@@ -64,7 +63,7 @@ public class Constants {
      * Enums
      */
     public enum NodeType {
-        BATH, CONF, DEPT, ELEV, EXIT, HALL, INFO, LABS, REST, RETL, SERV, STAI, WORK
+        BATH, CONF, DEPT, ELEV, EXIT, HALL, INFO, LABS, REST, RETL, SERV, STAI, WORK, WRKT
     }
 
     public enum Auth {

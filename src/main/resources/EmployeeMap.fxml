@@ -179,7 +179,7 @@
                         </children>
                     </AnchorPane>
                 </Tab>
-                <Tab style="-fx-background-color: #022D5A;" text="Workspaces">
+                <Tab style="-fx-background-color: #022D5A;" text="Workspaces" >
                     <content>
                         <AnchorPane prefHeight="400.0" prefWidth="700.0">
                             <children>

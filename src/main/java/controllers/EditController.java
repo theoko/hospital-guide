@@ -33,6 +33,8 @@ public class EditController extends PopUpController implements Initializable {
     public String RETL;
     public String SERV;
     public String STAI;
+    public String WORK;
+    public String WRKT;
 
 //    public JFXButton bookingButton;
 
@@ -114,6 +116,12 @@ public class EditController extends PopUpController implements Initializable {
                 break;
             case CONF:
                 cmbNodeType.setValue(CONF);
+                break;
+            case WORK:
+                cmbNodeType.setValue(WORK);
+                break;
+            case WRKT:
+                cmbNodeType.setValue(WRKT);
 
                 // Set button visibility to true since a conference room node
                 // is selected and the room can be booked
