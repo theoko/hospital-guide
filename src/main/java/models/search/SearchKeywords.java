@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import edu.smu.tspell.wordnet.*;
+
 public class SearchKeywords {
 
     // Main map
-    public static HashMap<String, List<String>> keys;
+    public static HashMap<String, List<String>> keys = new HashMap<>();
 
     // Categories:
 
@@ -68,73 +70,95 @@ public class SearchKeywords {
 
     public SearchKeywords() {
 
+        System.setProperty("wordnet.database.dir", SearchKeywords.class.getResource("/data/dictionary").getFile());
+
         food.add("au bon pain");
         food.add("restaurant");
         food.add("drinks");
         food.add("cafe");
         food.add("beverage");
+        addSynonyms("food", food);
 
         drinks.add("au bon pain");
         drinks.add("restaurant");
         drinks.add("food");
         drinks.add("cafe");
         drinks.add("beverage");
+        addSynonyms("drinks", drinks);
 
         cafe.add("au bon pain");
         cafe.add("restaurant");
         cafe.add("drinks");
         cafe.add("food");
         cafe.add("beverage");
+        addSynonyms("cafe", cafe);
 
         beverage.add("au bon pain");
         beverage.add("restaurant");
         beverage.add("drinks");
         beverage.add("cafe");
         beverage.add("food");
+        addSynonyms("beverage", beverage);
 
         lab.add("laboratory");
         laboratory.add("lab");
+        addSynonyms("lab", lab);
+
+        addSynonyms("mri", mri);
 
         catScan.add("ct scan");
         catScan.add("computer tomography");
+        addSynonyms("cat scan", catScan);
 
         ctScan.add("ct scan");
         ctScan.add("cat scan");
+        addSynonyms("ct scan", ctScan);
 
         legDoctor.add("podiatrist");
+        addSynonyms("podiatrist", legDoctor);
 
         childDoctor.add("pediatrist");
         childDoctor.add("pediatrics");
+        addSynonyms("pediatrics", childDoctor);
 
         police.add("security");
         police.add("safety");
+        addSynonyms("police", police);
 
         security.add("police");
         security.add("safety");
+        addSynonyms("security", security);
 
         safety.add("security");
         safety.add("police");
+        addSynonyms("safety", safety);
 
         garage.add("parking");
         garage.add("parking garage");
+        addSynonyms("garage", garage);
 
         parking.add("garage");
         parking.add("parking garage");
+        addSynonyms("parking", parking);
 
         wc.add("bathroom");
         wc.add("restroom");
+        addSynonyms("wc", wc);
 
         bathroom.add("wc");
         bathroom.add("restroom");
+        addSynonyms("bathroom", bathroom);
 
         restroom.add("bathroom");
         restroom.add("wc");
+        addSynonyms("restroom", restroom);
 
         atm.add("atm");
         atm.add("money");
         atm.add("cash");
         atm.add("hard cash");
         atm.add("deep pockets");
+        addSynonyms("atm", atm);
 
         exit.add("gate");
         exit.add("egress");
@@ -145,6 +169,7 @@ public class SearchKeywords {
         exit.add("vent");
         exit.add("departure");
         exit.add("evacuation");
+        addSynonyms("exit", exit);
 
         entrance.add("ingress");
         entrance.add("access");
@@ -155,6 +180,7 @@ public class SearchKeywords {
         entrance.add("gate");
         entrance.add("lobby");
         entrance.add("entryway");
+        addSynonyms("entrance", entrance);
 
         international.add("salida");
         international.add("ingles");
@@ -189,4 +215,54 @@ public class SearchKeywords {
     public static HashMap<String, List<String>> getKeys() {
         return keys;
     }
+
+    private void addSynonyms(String wordForm, List<String> keywords) {
+
+        //  Get the synsets containing the word form
+        WordNetDatabase database = WordNetDatabase.getFileInstance();
+        Synset[] synsets = database.getSynsets(wordForm);
+
+        //  Display the word forms and definitions for synsets retrieved
+        if (synsets.length > 0)
+        {
+
+            for (int i = 0; i < synsets.length; i++)
+            {
+                String[] wordForms = synsets[i].getWordForms();
+
+                for (int j = 0; j < wordForms.length; j++)
+                {
+                    String genWord = wordForms[j];
+
+//                    System.out.println(genWord);
+
+                    if(!keywords.contains(genWord)) {
+                        keywords.add(genWord);
+                    }
+
+                }
+            }
+
+        }
+        else
+        {
+            System.err.println("No synsets exist that contain " +
+                    "the word form '" + wordForm + "'");
+        }
+
+    }
+
+    public static void main(String[] args)
+    {
+
+
+        SearchKeywords searchKeywords = new SearchKeywords();
+
+        for(String f : searchKeywords.food) {
+            System.out.println(f);
+        }
+
+
+    }
+
 }
