@@ -22,10 +22,13 @@
             </Label>
          </children>
       </Pane>
-      <Pane layoutX="1.0" layoutY="115.0" prefHeight="40.0" prefWidth="398.0">
+      <Pane layoutX="1.0" layoutY="80.0" prefHeight="40.0" prefWidth="398.0">
          <children>
-            <JFXTextField layoutX="81.0" layoutY="7.0" prefHeight="27.0" prefWidth="303.0" />
-            <Label layoutX="20.0" layoutY="12.0" text="Name" />
+            <JFXTextField fx:id="NameField" layoutX="81.0" layoutY="7.0" prefHeight="27.0" prefWidth="303.0" />
+            <Label layoutX="20.0" layoutY="12.0" text="Name">
+               <font>
+                  <Font size="16.0" />
+               </font></Label>
          </children>
       </Pane>
       <JFXComboBox fx:id="cmbNodeType" focusColor="#022d5a" labelFloat="true" layoutX="32.0" layoutY="194.0" prefHeight="27.0" prefWidth="339.0" promptText="Node Type" unFocusColor="BLACK">
@@ -43,6 +46,17 @@
                <String fx:id="RETL" fx:value="RETL: Retail" />
                <String fx:id="SERV" fx:value="SERV: Service" />
                <String fx:id="STAI" fx:value="STAI: Staircase" />
+            </FXCollections>
+         </items>
+      </JFXComboBox>
+      <JFXComboBox fx:id="cmbNodeType1" focusColor="#022d5a" labelFloat="true" layoutX="31.0" layoutY="143.0" prefHeight="27.0" prefWidth="339.0" promptText="Building" unFocusColor="BLACK">
+         <items>
+            <FXCollections fx:factory="observableArrayList">
+               <String fx:id="BTM" fx:value="BTM" />
+               <String fx:id="45Francis" fx:value="45 Francis" />
+               <String fx:id="Tower" fx:value="Tower" />
+               <String fx:id="15Francis" fx:value="15 Francis" />
+               <String fx:id="Shapiro" fx:value="Shapiro" />
             </FXCollections>
          </items>
       </JFXComboBox>

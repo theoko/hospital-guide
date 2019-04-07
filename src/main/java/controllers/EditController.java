@@ -2,6 +2,7 @@ package controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXTextField;
 import database.Database;
 import database.LocationTable;
 import helpers.Constants;
@@ -19,7 +20,8 @@ import java.util.ResourceBundle;
 
 public class EditController extends PopUpController implements Initializable {
 
-    public JFXComboBox cmbNodeType;
+    public JFXComboBox cmbNodeType, cmbNodeType1;
+    public JFXTextField NameField;
 
     public String BATH;
     public String CONF;
@@ -38,7 +40,16 @@ public class EditController extends PopUpController implements Initializable {
 
     public void updateNode(MouseEvent event) {
         event.consume();
+        try {
+            String name = (String) NameField.getText();
+            loc.setLongName(name);
+            loc.setShortName(name);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
         String value = (String) cmbNodeType.getValue();
+        String building = (String) cmbNodeType1.getValue();
+        loc.setBuilding(building);
         String nType = value.substring(0, value.indexOf(':'));
         loc.setNodeType(Constants.NodeType.valueOf(nType));
         if (loc.getNodeID() == null) {
@@ -86,6 +97,8 @@ public class EditController extends PopUpController implements Initializable {
      */
     public void setLoc(Location loc) {
         this.loc = loc;
+        cmbNodeType1.setValue(loc.getBuilding());
+        NameField.setText(loc.getShortName());
         switch (loc.getNodeType()) {
             case BATH:
                 cmbNodeType.setValue(BATH);
