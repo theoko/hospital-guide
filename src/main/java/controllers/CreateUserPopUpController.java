@@ -29,4 +29,9 @@ public class CreateUserPopUpController {
         user.setUserID(UserTable.getUserByUsername(user.getUsername()).getUserID());
         ScreenController.deactivate();
     }
+
+    public void cancelScreen(MouseEvent event) {
+        event.consume();
+        ScreenController.deactivate();
+    }
 }

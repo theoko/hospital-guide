@@ -47,7 +47,7 @@
                               <Insets top="10.0" />
                            </VBox.margin>
                         </JFXButton>
-                        <JFXButton fx:id="btnLogout" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" prefHeight="51.0" prefWidth="120.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Logout" textAlignment="CENTER">
+                        <JFXButton fx:id="btnLogout" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" onMouseClicked="#logOut" prefHeight="51.0" prefWidth="120.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Logout" textAlignment="CENTER">
                            <VBox.margin>
                               <Insets top="10.0" />
                            </VBox.margin>
