@@ -63,7 +63,7 @@ public class Constants {
      * Enums
      */
     public enum NodeType {
-        BATH, CONF, DEPT, ELEV, EXIT, HALL, INFO, LABS, REST, RETL, SERV, STAI
+        BATH, CONF, DEPT, ELEV, EXIT, HALL, INFO, LABS, REST, RETL, SERV, STAI, WORK, WRKT
     }
 
     public enum Auth {

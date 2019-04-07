@@ -46,6 +46,8 @@
                <String fx:id="RETL" fx:value="RETL: Retail" />
                <String fx:id="SERV" fx:value="SERV: Service" />
                <String fx:id="STAI" fx:value="STAI: Staircase" />
+               <String fx:id="WORK" fx:value="WORK: Workspace Zone" />
+               <String fx:id="WRKT" fx:value="WRKT: Workspace Table" />
             </FXCollections>
          </items>
       </JFXComboBox>

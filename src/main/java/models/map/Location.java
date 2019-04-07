@@ -51,6 +51,7 @@ public class Location {
     public String getFloor() {
         return floor;
     }
+
     public String getDBFormattedFloor() {
         if(floor.length() == 1) return "0" + floor;
         else return floor;
@@ -114,7 +115,7 @@ public class Location {
         this.available = isAvailable;
     }
 
-    public String[] getStrings() {
+    public String[] getStringsLocation() {
         return new String[]{nodeID, Integer.toString(xCord), Integer.toString(yCord), floor, building,
             nodeType.toString(), longName, shortName};
     }

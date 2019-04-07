@@ -30,7 +30,7 @@
                                                             <children>
                                                                 <ImageView fitHeight="1620.0" fitWidth="2581.0" layoutX="1000.0" layoutY="-350.0" pickOnBounds="true" preserveRatio="true">
                                                                     <image>
-                                                                        <Image url="@images/Original/03_thethirdfloor.png" />
+                                                                        <Image url="@images/Original/workspace.jpg" />
                                                                     </image>
                                                                 </ImageView>
                                                             </children>
@@ -128,7 +128,7 @@
                     </AnchorPane>
                 </Tab>
                 <Tab style="-fx-background-color: #022D5A;" text="Workspace Booking">
-                    <fx:include source="ConferenceRoomWindow.fxml" />
+                    <fx:include source="RoomBookingWindow.fxml" />
                 </Tab>
                 <Tab style="-fx-background-color: #022D5A;" text="User Dashboard">
                     <fx:include source="CreateUser.fxml" />
