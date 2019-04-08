@@ -2,6 +2,7 @@ package database;
 
 import helpers.Constants;
 import models.map.Location;
+import sun.java2d.opengl.WGLSurfaceData;
 
 import java.sql.*;
 import java.util.*;
@@ -44,6 +45,7 @@ public class Database {
         BookTable.dropBookTable();
         RoomTable.dropRoomTable();
         EdgeTable.dropEdgeTable();
+        WorkspaceTable.dropWorkspaceTable();
         LocationTable.dropLocationTable();
         UserTable.dropUsersTable();
     }
@@ -54,6 +56,7 @@ public class Database {
     private static void createTables() {
         UserTable.createTable();
         LocationTable.createtable();
+        WorkspaceTable.createtable();
         EdgeTable.createTable();
         RoomTable.createTable();
         BookTable.createTable();
