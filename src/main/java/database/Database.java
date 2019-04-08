@@ -2,7 +2,6 @@ package database;
 
 import helpers.Constants;
 import models.map.Location;
-import sun.java2d.opengl.WGLSurfaceData;
 
 import java.sql.*;
 import java.util.*;

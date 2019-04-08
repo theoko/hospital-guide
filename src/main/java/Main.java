@@ -19,7 +19,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
 
         if(!Database.databaseExists()) {
-            CSVParser.parse(FileHelpers.getNodesCSV(), FileHelpers.getEdgesCSV());
+            CSVParser.parse(FileHelpers.getNodesCSV(), FileHelpers.getEdgesCSV(), FileHelpers.getWorkspacesCSV());
         }
 
         screenController = new ScreenController(primaryStage);

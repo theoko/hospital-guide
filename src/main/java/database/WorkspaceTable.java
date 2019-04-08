@@ -84,33 +84,33 @@ public class WorkspaceTable {
         }
     }
 
-    public static boolean addLocation(Workspace workspace) {
+    public static boolean addWorkspace(Workspace workspace) {
 
         try {
 
             PreparedStatement statement;
 
             statement = Database.getConnection().prepareStatement(
-                    "INSERT INTO " + Constants.LOCATION_TABLE + " (NODEID, XCOORD, YCOORD, NODETYPE, LONGNAME) " +
-                            "VALUES (?, ?, ?, ?, ?)"
+                    "INSERT INTO " + Constants.WORKSPACE_TABLE + " (NODEID, XCOORD, YCOORD, NODETYPE, LONGNAME) " +
+                            " VALUES (?, ?, ?, ?, ?)"
             );
 
             statement.setString(1, workspace.getNodeID());
             statement.setInt(2, workspace.getxCord());
             statement.setInt(3, workspace.getyCord());
-            statement.setString(6, String.valueOf(DatabaseHelpers.enumToString(workspace.getNodeType())));
-            statement.setString(7, workspace.getLongName());
+            statement.setString(4, String.valueOf(DatabaseHelpers.enumToString(workspace.getNodeType())));
+            statement.setString(5, workspace.getLongName());
 
             statement.execute();
 
-            if (Objects.equals(DatabaseHelpers.enumToString(workspace.getNodeType()), Constants.NodeType.CONF.name())) {
+         /*   if (Objects.equals(DatabaseHelpers.enumToString(workspace.getNodeType()), Constants.NodeType.CONF.name())) {
 
                 // Populate conference room table
                 RoomTable.addRoom(new Room(
                         workspace.getNodeID(),
                         5
                 ));
-            }
+            }*/
 
             return true;
 

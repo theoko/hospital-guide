@@ -24,6 +24,7 @@ public class Constants {
      */
     public static String CSV_NODES = "/data/nodes.csv";
     public static String CSV_EDGES = "/data/edges.csv";
+    public static String CSV_WORKSPACES = "/data/workspaceZone3.csv";
 
 
     /**
