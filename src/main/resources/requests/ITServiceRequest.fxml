@@ -69,7 +69,7 @@
                                  <Font size="24.0" />
                               </font>
                            </Label>
-                           <JFXTextField prefHeight="27.0" prefWidth="677.0" promptText="Description" />
+                           <JFXTextField fx:id="txtDesc" prefHeight="27.0" prefWidth="677.0" promptText="Description" />
                         </children>
                      </HBox>
                      <HBox alignment="CENTER" layoutX="10.0" layoutY="20.0" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
@@ -83,10 +83,10 @@
                               <items>
                                  <FXCollections fx:factory="observableArrayList">
                                      <String fx:id="BTM" fx:value="BTM" />
-                                     <String fx:id="45Francis" fx:value="45 Francis" />
-                                     <String fx:id="Tower" fx:value="Tower" />
-                                     <String fx:id="15Francis" fx:value="15 Francis" />
-                                     <String fx:id="Shapiro" fx:value="Shapiro" />
+                                     <String fx:id="FRAN45" fx:value="45 Francis" />
+                                     <String fx:id="TOWER" fx:value="Tower" />
+                                     <String fx:id="FRAN15" fx:value="15 Francis" />
+                                     <String fx:id="SHAPIRO" fx:value="Shapiro" />
                                  </FXCollections>
                               </items>
                            </JFXComboBox>
@@ -121,7 +121,7 @@
                                        <Font size="24.0" />
                                     </font>
                                  </Label>
-                                 <JFXComboBox fx:id="cmbTime" focusColor="#022d5a" labelFloat="true" prefHeight="27.0" prefWidth="339.0" promptText="Request Time" unFocusColor="BLACK">
+                                 <JFXComboBox fx:id="cmbTime" focusColor="#022d5a" labelFloat="true" onAction="#setReqTime" prefHeight="27.0" prefWidth="339.0" promptText="Request Time" unFocusColor="BLACK">
                                     <items>
                                        <FXCollections fx:factory="observableArrayList">
                                           <String fx:id="ASAP" fx:value="ASAP" />
@@ -133,7 +133,7 @@
                            </HBox>
                            <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                               <children>
-                                            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="38.0" prefWidth="105.0" style="-fx-background-color: #022D5A;" text="Time" textFill="WHITE">
+                                            <Label fx:id="lblTime" alignment="CENTER" contentDisplay="CENTER" prefHeight="38.0" prefWidth="105.0" style="-fx-background-color: #022D5A;" text="Time" textFill="WHITE">
                                                 <font>
                                                     <Font size="24.0" />
                                                 </font>
@@ -145,8 +145,8 @@
                      </VBox>
                                 <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                                     <children>
-                                        <JFXButton fx:id="btnSendRequest" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" prefHeight="45.0" prefWidth="205.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Send Request" textAlignment="CENTER" />
-                                        <JFXButton fx:id="btnReturn1" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" prefHeight="11.0" prefWidth="140.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Cancel" textAlignment="CENTER" />
+                                        <JFXButton fx:id="btnSendRequest" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" onMouseClicked="#sendRequest" prefHeight="45.0" prefWidth="205.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Send Request" textAlignment="CENTER" />
+                                        <JFXButton fx:id="btnCancel" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" onMouseClicked="#cancelScr" prefHeight="11.0" prefWidth="140.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Cancel" textAlignment="CENTER" />
                                     </children>
                                 </HBox>
                         </children>
@@ -159,12 +159,12 @@
                     </VBox>
                 </Tab>
                 <Tab style="-fx-background-color: #022D5A;" text="IT Requests">
-                    <AnchorPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                              <JFXButton fx:id="btnComplete" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" layoutX="822.0" layoutY="618.0" prefHeight="45.0" prefWidth="208.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Mark Complete" textAlignment="CENTER" />
-                              <JFXButton fx:id="btnReturn" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" layoutX="1044.0" layoutY="618.0" prefHeight="45.0" prefWidth="147.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Go Back" textAlignment="CENTER" />
+                    <AnchorPane prefWidth="1240.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <JFXButton fx:id="btnComplete" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" layoutX="845.0" layoutY="617.0" onMouseClicked="#completeReq" prefHeight="35.0" prefWidth="177.0" ripplerFill="#00ff51" style="-fx-text-fill: WHITE; -fx-font-size: 18px;" text="Mark Complete" textAlignment="CENTER" />
+                              <JFXButton fx:id="btnReturn" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" layoutX="1036.0" layoutY="617.0" onMouseClicked="#cancelScr" prefHeight="35.0" prefWidth="111.0" ripplerFill="RED" style="-fx-text-fill: WHITE; -fx-font-size: 18px;" text="Go Back" textAlignment="CENTER" />
                         <VBox layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="607.0" prefWidth="1200.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
                             <children>
-                                  <TableView fx:id="tblIT" prefHeight="617.0" prefWidth="665.0">
+                                  <TableView fx:id="tblIT" prefHeight="593.0" prefWidth="1200.0">
                                       <columns>
                                           <TableColumn fx:id="tblRequestID" prefWidth="100.0" text="Request ID" />
                                           <TableColumn fx:id="tblRequestPrior" prefWidth="100.0" text="Priority" />
@@ -178,6 +178,9 @@
                                   </TableView>
                             </children>
                         </VBox>
+                  <padding>
+                     <Insets bottom="10.0" />
+                  </padding>
                     </AnchorPane>
                 </Tab>
             </tabs>
