@@ -1,83 +1,49 @@
 package map;
 
 import helpers.Constants;
+import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.scene.Node;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.StrokeLineCap;
+import javafx.scene.shape.StrokeLineJoin;
+import javafx.util.Duration;
 import models.map.Location;
+import models.map.Map;
 import models.map.SubPath;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.PriorityQueue;
 import java.util.Stack;
 
-public class PathFinder {
+public abstract class PathFinder {
 
-    private static double FLOOR_HEURISTIC = 100000;
-    private static double STRAIGHT_ANGLE = 90.0;
-    private static double TURN_SENSITIVITY = 45.0;
-    private static double PIXEL_TO_METERS = 0.1;
+    protected final double FLOOR_HEURISTIC = 100000;
+    protected final double STRAIGHT_ANGLE = 90.0;
+    protected final double TURN_SENSITIVITY = 45.0;
+    protected final double PIXEL_TO_METERS = 0.1;
+    private static double LINE_WIDTH = 3.5;
+    private static double LINE_LENGTH = 5.0;
+    private static double LINE_GAP = 10.0;
+
+    protected Location start;
+    protected Location end;
+
+    public PathFinder(Location start, Location end) {
+        this.start = start;
+        this.end = end;
+    }
 
     /**
      * Finds a path from the start map to the end map using a*
-     * @param start The start map
-     * @param end The end map
      * @return A stack of locations that contains the path
      */
-    public static Stack<Location> findPath(Location start, Location end) {
-        // Create a new stack to hold the path from start to end
-        Stack<Location> path = new Stack<>();
-
-        // Create priority queue and hashmaps
-        PriorityQueue<SubPath> inQueue = new PriorityQueue<>();
-        HashMap<String, SubPath> parent = new HashMap<>();
-        HashMap<String, SubPath> used = new HashMap<>();
-
-        // Initialize values
-        SubPath sNeigh = new SubPath("", start, 0.0);
-        inQueue.add(sNeigh);
-        parent.put(start.getNodeID(), null);
-
-        // Loop while queue isn't empty or end map is found
-        while (!inQueue.isEmpty()) {
-            // Poll next neighbor off the queue and get its map
-            SubPath nNext = inQueue.poll();
-            Location lNext = nNext.getLocation();
-            if (used.containsKey(lNext.getNodeID())) {
-                continue;
-            }
-
-            // Check to see if map is our end map
-            if (lNext.getNodeID().equals(end.getNodeID())) {
-                // Generate path from parent map and end node
-                path = genPath(parent, nNext);
-                break;
-            }
-
-            // Get the node's value and add it to the used map
-            double currDist = nNext.getDist();
-            used.put(lNext.getNodeID(), nNext);
-
-            // Gets the node's neighbors and loop thru them all
-            List<SubPath> lstSubPaths = lNext.getSubPaths();
-            for (SubPath nCurr : lstSubPaths) {
-                // Get the real map from the neighbor
-                Location lCurr = nCurr.getLocation();
-                // Check duplicate
-                if (!used.containsKey(lCurr.getNodeID())) {
-                    // Add the node's value to the current value
-                    double newDist = currDist + nCurr.getDist();
-                    // Calculate the heuristic based on distance to end map
-                    //TODO: Incentive to not get off the elevator
-                    double heuristic = calcDist(lCurr.getxCord(), lCurr.getyCord(), end.getxCord(), end.getyCord());
-                    heuristic += FLOOR_HEURISTIC * Math.abs(floorToInt(lCurr.getFloor()) - floorToInt(end.getFloor()));
-                    // Create a new neighbor with updated distance value
-                    SubPath newNeigh = new SubPath(nCurr.getEdgeID(), nCurr.getLocation(), newDist, heuristic);
-                    // Add the new neighbor into the queue and add its parent into the parent map
-                    inQueue.add(newNeigh);
-                    parent.putIfAbsent(lCurr.getNodeID(), nNext);
-                }
-            }
-        }
-        return path;
-    }
+    public abstract Stack<Location> findPath();
 
     /**
      * Generates a path from the given parent map and end map
@@ -85,7 +51,7 @@ public class PathFinder {
      * @param end The end map
      * @return A stack of locations containing the path
      */
-    private static Stack<Location> genPath(HashMap<String, SubPath> parent, SubPath end) {
+    protected final Stack<Location> genPath(HashMap<String, SubPath> parent, SubPath end) {
         // Create an empty stack of locations
         Stack<Location> path = new Stack<>();
         // Start at the last node (end)
@@ -99,7 +65,7 @@ public class PathFinder {
         return path;
     }
 
-    public static String txtDirections(Stack<Location> path) {
+    public final String txtDirections(Stack<Location> path) {
         String directions = "";
 
         Location loc1 = null;
@@ -136,8 +102,6 @@ public class PathFinder {
                     double cross = vX * uY - vY * uX;
 
                     totDist += a;
-                    System.out.println(loc2.getShortName());
-                    System.out.println(a);
                     if (angle > STRAIGHT_ANGLE - TURN_SENSITIVITY && angle < STRAIGHT_ANGLE + TURN_SENSITIVITY) {
                         directions += "Turn ";
                         if (cross > 0) { // Right
@@ -163,6 +127,76 @@ public class PathFinder {
         return directions;
     }
 
+    public static void printPath(AnchorPane[] panes, Map map, Location loc1, Location loc2) {
+        for (AnchorPane pane : panes) {
+            List<Node> lstNodes1 = new ArrayList<>();
+            for (Node n : pane.getChildren()) {
+                if (n instanceof Line) {
+                    lstNodes1.add(n);
+                }
+            }
+            for (Node n : lstNodes1) {
+                pane.getChildren().remove(n);
+            }
+        }
+
+        PathContext context = new PathContext(new AStar(loc1, loc2));
+        Stack<Location> path = context.findPath();
+        String directions = context.txtDirections((Stack<Location>) path.clone());
+        HashMap<String, Location> lstLocations = map.getAllLocations();
+        Location prev = null;
+        while (!path.isEmpty()) {
+            Location curr = path.pop();
+            if (prev != null) {
+                Line line = new Line(MapDisplay.scaleX(prev.getxCord()), MapDisplay.scaleY(prev.getyCord()), MapDisplay.scaleX(curr.getxCord()), MapDisplay.scaleY(curr.getyCord()));
+                line.setStroke(Color.BLACK);
+                line.getStrokeDashArray().setAll(LINE_LENGTH, LINE_GAP);
+                line.setStrokeWidth(LINE_WIDTH);
+                line.setStrokeLineCap(StrokeLineCap.ROUND);
+                line.setStrokeLineJoin(StrokeLineJoin.ROUND);
+                final double maxOffset =
+                        line.getStrokeDashArray().stream()
+                                .reduce(
+                                        0d,
+                                        (a, b) -> a - b
+                                );
+
+                Timeline timeline = new Timeline(
+                        new KeyFrame(
+                                Duration.ZERO,
+                                new KeyValue(
+                                        line.strokeDashOffsetProperty(),
+                                        0,
+                                        Interpolator.LINEAR
+                                )
+                        ),
+                        new KeyFrame(
+                                Duration.seconds(3),
+                                new KeyValue(
+                                        line.strokeDashOffsetProperty(),
+                                        maxOffset,
+                                        Interpolator.LINEAR
+                                )
+                        )
+                );
+                timeline.setCycleCount(Timeline.INDEFINITE);
+                timeline.play();
+                if (curr.getFloor().equals("L2") && prev.getFloor().equals("L2")) {
+                    panes[0].getChildren().add(1, line);
+                } else if (curr.getFloor().equals("L1") && prev.getFloor().equals("L1")) {
+                    panes[1].getChildren().add(1, line);
+                } else if (curr.getFloor().equals("1") && prev.getFloor().equals("1")) {
+                    panes[2].getChildren().add(1, line);
+                } else if (curr.getFloor().equals("2") && prev.getFloor().equals("2")) {
+                    panes[3].getChildren().add(1, line);
+                } else {
+                    panes[4].getChildren().add(1, line);
+                }
+            }
+            prev = curr;
+        }
+    }
+
     /**
      * Equation to calculate the distance between two points
      * @param x1 X-Location of point 1
@@ -171,11 +205,11 @@ public class PathFinder {
      * @param y2 Y-Location of point 2
      * @return The distance as a double
      */
-    public static double calcDist(int x1, int y1, int x2, int y2) {
+    static double calcDist(int x1, int y1, int x2, int y2) {
         return Math.pow((Math.pow(x1 - x2, 2.0) + (Math.pow(y1 - y2, 2.0))), 0.5);
     }
 
-    private static int floorToInt(String floor) {
+    protected final int floorToInt(String floor) {
         switch (floor) {
             case "L2":
                 return 0;

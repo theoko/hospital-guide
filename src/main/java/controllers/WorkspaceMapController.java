@@ -13,7 +13,7 @@ import models.map.Workspace;
 
 import java.util.HashMap;
 
-public class WorkspaceMapController extends EmployeeMapController{
+public class WorkspaceMapController {
 
     private final static double xShift = -60;
     private final static double yShift = 595;

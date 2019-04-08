@@ -21,6 +21,7 @@ public class Location {
     private String longName;
     private String shortName;
     private ArrayList<SubPath> lstSubPaths;
+    private Location parent;
     private boolean available;
 
     public Location(String nodeID, int xCord, int yCord, String floor, String building, Constants.NodeType nodeType, String longName, String shortName) {
@@ -33,6 +34,7 @@ public class Location {
         this.longName = longName;
         this.shortName = shortName;
         this.lstSubPaths = new ArrayList<>();
+        this.parent = null;
         this.available = available;
     }
 
@@ -107,6 +109,14 @@ public class Location {
 
     public ArrayList<SubPath> getSubPaths() {
         return lstSubPaths;
+    }
+
+    public Location getParent() {
+        return parent;
+    }
+
+    public void setParent(Location parent) {
+        this.parent = parent;
     }
 
     public boolean getAvailable(){ return available; }

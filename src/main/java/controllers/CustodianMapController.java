@@ -14,6 +14,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import map.MapDisplay;
 import models.sanitation.SanitationRequest;
@@ -36,9 +37,10 @@ public class CustodianMapController extends MapController {
 
     ObservableList<SanitationRequest> spills = FXCollections.observableArrayList();
 
-    public void initialize() {
-        toolTip();
-        MapDisplay.displayCust(new AnchorPane[] {panFloorL2, panFloorL1, panFloor1, panFloor2, panFloor3});
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        super.initialize(location, resources);
+        MapDisplay.displayCust(panes);
         initSanitation();
         updateSanitation();
 
@@ -46,12 +48,6 @@ public class CustodianMapController extends MapController {
             btnMarkDone.setDisable(false);
             updateBtn();
         });
-
-    }
-
-    void toolTip() {
-        btnSettings.setTooltip(new Tooltip(Constants.SETTINGS_BUTTON_TOOLTIP));
-        btnReturn.setTooltip(new Tooltip(Constants.LOGOUT_BUTTON_TOOLTIP));
     }
 
     private void initSanitation(){

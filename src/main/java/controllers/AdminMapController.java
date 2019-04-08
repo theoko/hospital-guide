@@ -24,6 +24,8 @@ import models.map.Location;
 import models.search.SearchEngine;
 
 import java.awt.*;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class AdminMapController extends MapController {
     public JFXButton btnDownload;
@@ -117,11 +119,11 @@ public class AdminMapController extends MapController {
         enableAddNode = !enableAddNode;
     }
 
-    public void initialize() {
-        // Set tooltip
-        toolTip();
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        super.initialize(location, resources);
 
-        MapDisplay.displayAdmin(new AnchorPane[] {panFloorL2, panFloorL1, panFloor1, panFloor2, panFloor3});
+        MapDisplay.displayAdmin(panes);
         configVisualRealtimeController();
         VisualRealtimeController.setPanMap(panFloor1);
         selectedLocation = null;
@@ -143,11 +145,6 @@ public class AdminMapController extends MapController {
 
             }
         });
-    }
-
-    void toolTip() {
-        btnDownload.setTooltip(new Tooltip(Constants.DOWNLOAD_BUTTON_TOOLTIP));
-        btnReturn.setTooltip(new Tooltip(Constants.LOGOUT_BUTTON_TOOLTIP));
     }
 
     public void clickDownload(MouseEvent event) throws Exception {
@@ -184,15 +181,19 @@ public class AdminMapController extends MapController {
 //
 //    }
 
-
     @Override
-    public void logOut(MouseEvent event) throws Exception {
+    public void logOut(MouseEvent event) {
         enableAddNode = false;
         enableEditEdge = false;
         event.consume();
         ScreenController.logOut(btnReturn);
-        ScreenController.activate(Constants.Routes.WELCOME);
+        try {
+            ScreenController.activate(Constants.Routes.WELCOME);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
     public void floorL2MapOnMousePressed(MouseEvent event)  {
         this.selectedFloor = "L2";
         VisualRealtimeController.setPanMap(panFloorL2);
