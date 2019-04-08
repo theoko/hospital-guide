@@ -59,6 +59,16 @@ public class ScreenController {
         this.addScreen(Constants.Routes.USER_POPUP, "/CreateUserPopUp.fxml");
         this.addScreen(Constants.Routes.EDIT_POPUP, "/EditUserPopUp.fxml");
         this.addScreen(Constants.Routes.WORKSPACE, "/Workspace.fxml");
+        this.addScreen(Constants.Routes.IT, "/requests/IT.fxml");
+        this.addScreen(Constants.Routes.PERSCRIPTION, "/requests/Perscription.fxml");
+        this.addScreen(Constants.Routes.INTERPRETER, "/requests/Interpreter.fxml");
+        this.addScreen(Constants.Routes.INTERNAL_TRANS, "/requests/InternalTrans.fxml");
+        this.addScreen(Constants.Routes.GIFT_STORE, "/requests/GiftStore.fxml");
+        this.addScreen(Constants.Routes.FLOURIST, "/requests/Flourist.fxml");
+        this.addScreen(Constants.Routes.SECURITY, "/requests/Security.fxml");
+        this.addScreen(Constants.Routes.VISUAL_AUDIO, "/requests/VisualAudio.fxml");
+        this.addScreen(Constants.Routes.EXTERNAL_TRANS, "/requests/ExternalTrans.fxml");
+        this.addScreen(Constants.Routes.PATIENT_INFO, "/requests/PatientInfo.fxml");
     }
 
     public void addScreen(Constants.Routes route, String layout) {
