@@ -15,10 +15,10 @@ import java.util.HashMap;
 
 public class WorkspaceMapController extends EmployeeMapController{
 
-    private final static double xShift = 0;
-    private final static double yShift = 0;
-    private final static double scale = 1;
-    private final static double locRadius = 7.5;
+    private final static double xShift = -60;
+    private final static double yShift = 595;
+    private final static double scale = 0.44;
+    private final static double locRadius = 5.5;
     private final static Color nodeFill = Color.WHITE;
     private final static Color nodeOutline = Color.BLACK;
     private final static double locWidth = 2.0;
