@@ -141,4 +141,5 @@ public class Location {
     public void setNodeCircle(Circle nodeCircle) {
         this.nodeCircle = nodeCircle;
     }
+
 }

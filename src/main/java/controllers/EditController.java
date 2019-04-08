@@ -55,7 +55,7 @@ public class EditController extends PopUpController implements Initializable {
         String nType = value.substring(0, value.indexOf(':'));
         loc.setNodeType(Constants.NodeType.valueOf(nType));
         if (loc.getNodeID() == null) {
-            loc.setNodeID(LocationTable.addNewLocation(loc));
+            loc.setNodeID(LocationTable.uniqueID(loc));
             System.out.println(loc.getNodeID());
         }
 //        VisualRealtimeController.updateCircle(loc.getNodeCircle(),

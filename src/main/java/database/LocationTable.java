@@ -344,10 +344,25 @@ public class LocationTable {
         }
     }
 
-    public static String addNewLocation(Location loc) {
-        String locID = Database.generateUniqueNodeID(loc);
+    public static String uniqueID(Location loc) {
+        String locID = generateUniqueNodeID(loc);
         loc.setNodeID(locID);
         loc.addCurrNode();
         return locID;
+    }
+
+    public static String generateUniqueNodeID(Location c) {
+
+        String id = Database.getNewPrefixChar() + c.getNodeType().toString() + "000" +
+                c.getDBFormattedFloor();
+        while(LocationTable.getLocations().containsKey(id)) {
+            String numericalIDStr = id.substring(id.length() - 5, id.length() - 2);
+            int numericalIDVal = Integer.parseInt(numericalIDStr);
+            numericalIDVal++;
+            numericalIDStr = String.format("%03d", numericalIDVal);
+            id = Database.getNewPrefixChar() + c.getNodeType().toString() + numericalIDStr +
+                    c.getDBFormattedFloor();
+        }
+        return id;
     }
 }
