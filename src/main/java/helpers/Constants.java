@@ -13,6 +13,7 @@ public class Constants {
     public static String ROOM_TABLE = "ROOM";
     public static String BOOK_TABLE = "BOOKING";
     public static String SANITATION_TABLE = "SANITATION";
+    public static String WORKSPACE_TABLE = "WORKSPACE";
 
     public static String DB_PROJECTION = "projection";
     public static String DB_RELATION = "relation";
@@ -23,6 +24,7 @@ public class Constants {
      */
     public static String CSV_NODES = "/data/nodes.csv";
     public static String CSV_EDGES = "/data/edges.csv";
+    public static String CSV_WORKSPACES = "/data/workspaceZone3.csv";
 
 
     /**
@@ -73,6 +75,6 @@ public class Constants {
     public enum Routes {
         LOGO, WELCOME, LOGIN, USER_MAP, EMPLOYEE_MAP, CUSTODIAN_MAP, ADMIN_MAP, USER_INFO, EMPLOYEE_INFO,
         CUSTODIAN_INFO, EDIT_LOCATION, SANITATION_REQUEST, DIRECTIONS, BOOKING_WINDOW, DOWNLOAD, DOWNLOADED,
-        CREATE_USER, USER_POPUP, EDIT_POPUP
+        CREATE_USER, USER_POPUP, EDIT_POPUP, WORKSPACE
     }
 }

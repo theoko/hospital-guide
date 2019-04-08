@@ -58,6 +58,7 @@ public class ScreenController {
         this.addScreen(Constants.Routes.CREATE_USER, "/CreateUser.fxml");
         this.addScreen(Constants.Routes.USER_POPUP, "/CreateUserPopUp.fxml");
         this.addScreen(Constants.Routes.EDIT_POPUP, "/EditUserPopUp.fxml");
+        this.addScreen(Constants.Routes.WORKSPACE, "/Workspace.fxml");
     }
 
     public void addScreen(Constants.Routes route, String layout) {

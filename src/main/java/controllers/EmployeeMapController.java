@@ -8,8 +8,8 @@ import map.MapDisplay;
 
 public class EmployeeMapController extends MapController {
 
-//    public JFXButton btnSettings;
-//    public JFXButton btnReturn;
+    public JFXButton btnSettings;
+    public JFXButton btnReturn;
 
     public void initialize() {
         toolTip();
@@ -18,7 +18,7 @@ public class EmployeeMapController extends MapController {
     }
 
     void toolTip() {
-        //btnSettings.setTooltip(new Tooltip(Constants.SETTINGS_BUTTON_TOOLTIP));
-       // btnReturn.setTooltip(new Tooltip(Constants.LOGOUT_BUTTON_TOOLTIP));
+        btnSettings.setTooltip(new Tooltip(Constants.SETTINGS_BUTTON_TOOLTIP));
+        btnReturn.setTooltip(new Tooltip(Constants.LOGOUT_BUTTON_TOOLTIP));
     }
 }

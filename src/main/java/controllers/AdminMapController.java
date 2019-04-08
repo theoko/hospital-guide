@@ -21,6 +21,8 @@ import javafx.scene.shape.Line;
 import map.MapDisplay;
 import models.map.Edge;
 import models.map.Location;
+import models.search.SearchEngine;
+
 import java.awt.*;
 
 public class AdminMapController extends MapController {
@@ -137,7 +139,7 @@ public class AdminMapController extends MapController {
             @Override
             public void handle(KeyEvent event) {
 
-
+                SearchEngine searchEngine = new SearchEngine(searchBox.getText());
 
             }
         });
@@ -184,7 +186,7 @@ public class AdminMapController extends MapController {
 
 
     @Override
-    public final void logOut(MouseEvent event) throws Exception {
+    public void logOut(MouseEvent event) throws Exception {
         enableAddNode = false;
         enableEditEdge = false;
         event.consume();

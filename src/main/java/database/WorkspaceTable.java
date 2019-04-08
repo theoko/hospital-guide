@@ -3,6 +3,7 @@ package database;
 import helpers.Constants;
 import helpers.DatabaseHelpers;
 import models.map.Location;
+import models.map.Workspace;
 import models.room.Room;
 
 import java.sql.*;
@@ -11,9 +12,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-public class LocationTable {
+public class WorkspaceTable {
 
-    private static void LocationTable() {}
+    private static void WorkspaceTable() {}
 
     public static void createtable(){
         Statement statement = null;
@@ -22,32 +23,29 @@ public class LocationTable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        String locationTable = "CREATE TABLE " + Constants.LOCATION_TABLE +
+        String workspaceTable = "CREATE TABLE " + Constants.WORKSPACE_TABLE +
                 "(nodeID VARCHAR(100) PRIMARY KEY," +
                 "xCoord INT," +
                 "yCoord INT," +
-                "floor VARCHAR(100)," +
-                "building VARCHAR(100)," +
                 "nodeType VARCHAR(100)," +
-                "longName VARCHAR(100)," +
-                "shortName VARCHAR(100))";
+                "longName VARCHAR(100))";
         try {
-            statement.execute(locationTable);
+            statement.execute(workspaceTable);
         } catch (SQLException | NullPointerException e) {
             e.printStackTrace();
         }
     }
 
-    public static boolean dropLocationTable() {
+    public static boolean dropWorkspaceTable() {
         try {
             Statement statement;
 
             statement = Database.getConnection().createStatement();
 
-            return statement.execute("DROP TABLE " + Constants.LOCATION_TABLE);
+            return statement.execute("DROP TABLE " + Constants.WORKSPACE_TABLE);
 
         } catch (SQLException e) {
-            System.out.println("Table " + Constants.LOCATION_TABLE + " cannot be dropped");
+            System.out.println("Table " + Constants.WORKSPACE_TABLE + " cannot be dropped");
 
             return false;
         }
@@ -57,27 +55,24 @@ public class LocationTable {
      * @param id Location ID.
      * @brief Returns location from database corresponding to given ID.
      */
-    public static Location getLocationByID(String id) {
+    public static Workspace getWorkspaceByID(String id) {
         try {
             // Execute query
-            String stmtString = "SELECT * FROM " + Constants.LOCATION_TABLE + " WHERE NODEID=?";
+            String stmtString = "SELECT * FROM " + Constants.WORKSPACE_TABLE + " WHERE NODEID=?";
             PreparedStatement statement = Database.getConnection().prepareStatement(stmtString);
             statement.setString(1, id);
             ResultSet resultSet = statement.executeQuery();
 
             // Process and return result
             if (resultSet.next()) {
-                Location location = new Location(
+                Workspace workspace = new Workspace(
                         resultSet.getString("NODEID"),
                         resultSet.getInt("XCOORD"),
                         resultSet.getInt("YCOORD"),
-                        resultSet.getString("FLOOR"),
-                        resultSet.getString("BUILDING"),
                         Constants.NodeType.valueOf(resultSet.getString("NODETYPE")),
-                        resultSet.getString("LONGNAME"),
-                        resultSet.getString("SHORTNAME")
+                        resultSet.getString("LONGNAME")
                 );
-                return location;
+                return workspace;
             }
             return null;
 
@@ -89,41 +84,38 @@ public class LocationTable {
         }
     }
 
-    public static boolean addLocation(Location location) {
+    public static boolean addWorkspace(Workspace workspace) {
 
         try {
 
             PreparedStatement statement;
 
             statement = Database.getConnection().prepareStatement(
-                    "INSERT INTO " + Constants.LOCATION_TABLE + " (NODEID, XCOORD, YCOORD, FLOOR, BUILDING, NODETYPE, LONGNAME, SHORTNAME ) " +
-                            "VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+                    "INSERT INTO " + Constants.WORKSPACE_TABLE + " (NODEID, XCOORD, YCOORD, NODETYPE, LONGNAME)" +
+                            " VALUES (?, ?, ?, ?, ?)"
             );
 
-            statement.setString(1, location.getNodeID());
-            statement.setInt(2, location.getxCord());
-            statement.setInt(3, location.getyCord());
-            statement.setString(4, location.getFloor());
-            statement.setString(5, location.getBuilding());
-            statement.setString(6, String.valueOf(DatabaseHelpers.enumToString(location.getNodeType())));
-            statement.setString(7, location.getLongName());
-            statement.setString(8, location.getShortName());
+            statement.setString(1, workspace.getNodeID());
+            statement.setInt(2, workspace.getxCord());
+            statement.setInt(3, workspace.getyCord());
+            statement.setString(4, String.valueOf(DatabaseHelpers.enumToString(workspace.getNodeType())));
+            statement.setString(5, workspace.getLongName());
 
             statement.execute();
 
-            if (Objects.equals(DatabaseHelpers.enumToString(location.getNodeType()), Constants.NodeType.CONF.name())) {
+         /*   if (Objects.equals(DatabaseHelpers.enumToString(workspace.getNodeType()), Constants.NodeType.CONF.name())) {
 
                 // Populate conference room table
                 RoomTable.addRoom(new Room(
-                        location.getNodeID(),
+                        workspace.getNodeID(),
                         5
                 ));
-            }
+            }*/
 
             return true;
 
         } catch (SQLException e) {
-            System.out.println("Location " + location.getNodeID() + " cannot be added!");
+            System.out.println("Workspace " + workspace.getNodeID() + " cannot be added!");
             e.printStackTrace();
 
             return false;
@@ -213,37 +205,34 @@ public class LocationTable {
     /**
      * Returns a list of nodes
      */
-    public static HashMap<String, Location> getLocations() {
+    public static HashMap<String, Workspace> getWorkspaces() {
         try {
 
             Statement statement;
 
             statement = Database.getConnection().createStatement();
 
-            String query = "SELECT * FROM " + Constants.LOCATION_TABLE;
+            String query = "SELECT * FROM " + Constants.WORKSPACE_TABLE;
 
             ResultSet resultSet = statement.executeQuery(query);
 
-            HashMap<String, Location> returnList = new HashMap<>();
+            HashMap<String, Workspace> returnList = new HashMap<>();
 
             while (resultSet.next()) {
 
                 String nodeID = resultSet.getString("NODEID");
-                Location node = new Location(
+                Workspace node = new Workspace(
                         nodeID,
                         resultSet.getInt("XCOORD"),
                         resultSet.getInt("YCOORD"),
-                        resultSet.getString("FLOOR"),
-                        resultSet.getString("BUILDING"),
                         DatabaseHelpers.stringToEnum(resultSet.getString("NODETYPE")),
-                        resultSet.getString("LONGNAME"),
-                        resultSet.getString("SHORTNAME")
+                        resultSet.getString("LONGNAME")
                 );
                 returnList.put(nodeID, node);
             }
             return returnList;
         } catch (SQLException e) {
-            System.out.println("Failed to get locations!");
+            System.out.println("Failed to get workspaces!");
 
             return null;
         }
@@ -252,33 +241,30 @@ public class LocationTable {
     /**
      * Updates the location object specified on the database
      *
-     * @param updatedLocation
+     * @param updatedWorkspace
      * @return true if the location was updated successfully, false otherwise
      */
-    public static boolean updateLocation(Location updatedLocation) {
+    public static boolean updateWorkspace(Workspace updatedWorkspace) {
 
         try {
             PreparedStatement statement;
 
             statement = Database.getConnection().prepareStatement(
-                    "UPDATE " + Constants.LOCATION_TABLE +
-                            " SET XCOORD=?, YCOORD=?, FLOOR=?, BUILDING=?, NODETYPE=?, LONGNAME=?, SHORTNAME=?" +
+                    "UPDATE " + Constants.WORKSPACE_TABLE +
+                            " SET XCOORD=?, YCOORD=?, NODETYPE=?, LONGNAME=?" +
                             " WHERE NODEID=?"
             );
 
-            statement.setInt(1, updatedLocation.getxCord());
-            statement.setInt(2, updatedLocation.getyCord());
-            statement.setString(3, updatedLocation.getFloor());
-            statement.setString(4, updatedLocation.getBuilding());
-            statement.setString(5, String.valueOf(DatabaseHelpers.enumToString(updatedLocation.getNodeType())));
-            statement.setString(6, updatedLocation.getLongName());
-            statement.setString(7, updatedLocation.getShortName());
-            statement.setString(8, updatedLocation.getNodeID());
+            statement.setInt(1, updatedWorkspace.getxCord());
+            statement.setInt(2, updatedWorkspace.getyCord());
+            statement.setString(3, String.valueOf(DatabaseHelpers.enumToString(updatedWorkspace.getNodeType())));
+            statement.setString(4, updatedWorkspace.getLongName());
+            statement.setString(5, updatedWorkspace.getNodeID());
 
             return statement.execute();
 
         } catch (SQLException e) {
-            System.out.println("Failed to update location: " + updatedLocation.getNodeID());
+            System.out.println("Failed to update workspace: " + updatedWorkspace.getNodeID());
             e.printStackTrace();
 
             return false;
@@ -288,81 +274,29 @@ public class LocationTable {
     /**
      * Deletes the location object specified on the database
      *
-     * @param deleteLocation
+     * @param deleteWorkspace
      * @return true if the location was deleted successfully, false otherwise
      */
-    public static boolean deleteLocation(Location deleteLocation) {
+    public static boolean deleteWorkspace(Workspace deleteWorkspace) {
 
         try {
-
-            // We need to check if a ROOM is to be removed
-            // In that case, the room should first be removed from the rooms table
-            // since in the constraints defined
-            if(deleteLocation.getNodeType() == Constants.NodeType.CONF) {
-
-                System.out.println("Conference room with ID: " + deleteLocation.getNodeID());
-
-                PreparedStatement statement1;
-                statement1 = Database.getConnection().prepareStatement(
-                        "DELETE FROM " + Constants.ROOM_TABLE +
-                                " WHERE NODEID=?"
-                );
-
-                statement1.setString(1, deleteLocation.getNodeID());
-                statement1.execute();
-            }
-
-            PreparedStatement statement2;
-            PreparedStatement statement3;
-
-            statement2 = Database.getConnection().prepareStatement(
-                    "DELETE FROM " + Constants.EDGES_TABLE +
-                            " WHERE STARTNODEID=? OR ENDNODEID=?"
-            );
-
-            statement2.setString(1, deleteLocation.getNodeID());
-            statement2.setString(2, deleteLocation.getNodeID());
-
-            statement2.execute();
-
             // Add location to deleted locations table
 
+            PreparedStatement statement3;
             statement3 = Database.getConnection().prepareStatement(
-                    "DELETE FROM " + Constants.LOCATION_TABLE +
+                    "DELETE FROM " + Constants.WORKSPACE_TABLE +
                             " WHERE NODEID=?"
             );
 
-            statement3.setString(1, deleteLocation.getNodeID());
+            statement3.setString(1, deleteWorkspace.getNodeID());
 
             return statement3.execute();
 
         } catch (SQLException e) {
-            System.out.println("Failed to delete location: " + deleteLocation.getNodeID());
+            System.out.println("Failed to delete location: " + deleteWorkspace.getNodeID());
             e.printStackTrace();
 
             return false;
         }
-    }
-
-    public static String uniqueID(Location loc) {
-        String locID = generateUniqueNodeID(loc);
-        loc.setNodeID(locID);
-        loc.addCurrNode();
-        return locID;
-    }
-
-    public static String generateUniqueNodeID(Location c) {
-
-        String id = Database.getNewPrefixChar() + c.getNodeType().toString() + "000" +
-                c.getDBFormattedFloor();
-        while(LocationTable.getLocations().containsKey(id)) {
-            String numericalIDStr = id.substring(id.length() - 5, id.length() - 2);
-            int numericalIDVal = Integer.parseInt(numericalIDStr);
-            numericalIDVal++;
-            numericalIDStr = String.format("%03d", numericalIDVal);
-            id = Database.getNewPrefixChar() + c.getNodeType().toString() + numericalIDStr +
-                    c.getDBFormattedFloor();
-        }
-        return id;
     }
 }

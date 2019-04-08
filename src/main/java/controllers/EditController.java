@@ -20,7 +20,8 @@ import java.util.ResourceBundle;
 
 public class EditController extends PopUpController implements Initializable {
 
-    public JFXComboBox cmbNodeType;
+    public JFXComboBox cmbNodeType, cmbNodeType1;
+    public JFXTextField NameField;
 
     public String BATH;
     public String CONF;
@@ -34,25 +35,29 @@ public class EditController extends PopUpController implements Initializable {
     public String RETL;
     public String SERV;
     public String STAI;
-    public String WORK;
-    public String WRKT;
-
-    public JFXTextField longName;
+    //public String WORK;
+   // public String WRKT;
 
 //    public JFXButton bookingButton;
 
     public void updateNode(MouseEvent event) {
         event.consume();
+        try {
+            String name = (String) NameField.getText();
+            loc.setLongName(name);
+            loc.setShortName(name);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
         String value = (String) cmbNodeType.getValue();
+        String building = (String) cmbNodeType1.getValue();
+        loc.setBuilding(building);
         String nType = value.substring(0, value.indexOf(':'));
-        String name = longName.getText();
         loc.setNodeType(Constants.NodeType.valueOf(nType));
         if (loc.getNodeID() == null) {
-            loc.setNodeID(Database.generateUniqueNodeID(loc));
+            loc.setNodeID(LocationTable.uniqueID(loc));
             System.out.println(loc.getNodeID());
         }
-        loc.setLongName(name);
-        LocationTable.updateLocation(loc);
 //        VisualRealtimeController.updateCircle(loc.getNodeCircle(),
 //                UIHelpers.updateCircleForNodeType(loc));
         loc.setNodeCircle(UIHelpers.updateCircleForNodeType(loc));
@@ -93,6 +98,8 @@ public class EditController extends PopUpController implements Initializable {
      */
     public void setLoc(Location loc) {
         this.loc = loc;
+        cmbNodeType1.setValue(loc.getBuilding());
+        NameField.setText(loc.getShortName());
         switch (loc.getNodeType()) {
             case BATH:
                 cmbNodeType.setValue(BATH);
@@ -127,17 +134,17 @@ public class EditController extends PopUpController implements Initializable {
             case CONF:
                 cmbNodeType.setValue(CONF);
                 break;
-            case WORK:
-                cmbNodeType.setValue(WORK);
-                break;
-            case WRKT:
-                cmbNodeType.setValue(WRKT);
+          //  case WORK:
+            //    cmbNodeType.setValue(WORK);
+           //     break;
+         //  case WRKT:
+         //       cmbNodeType.setValue(WRKT);
 
                 // Set button visibility to true since a conference room node
                 // is selected and the room can be booked
 //                bookingButton.setVisible(true);
 
-                break;
+               // break;
             default:
                 cmbNodeType.setValue(STAI);
         }

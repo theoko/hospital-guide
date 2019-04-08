@@ -44,6 +44,7 @@ public class Database {
         BookTable.dropBookTable();
         RoomTable.dropRoomTable();
         EdgeTable.dropEdgeTable();
+        WorkspaceTable.dropWorkspaceTable();
         LocationTable.dropLocationTable();
         UserTable.dropUsersTable();
     }
@@ -54,6 +55,7 @@ public class Database {
     private static void createTables() {
         UserTable.createTable();
         LocationTable.createtable();
+        WorkspaceTable.createtable();
         EdgeTable.createTable();
         RoomTable.createTable();
         BookTable.createTable();
@@ -93,18 +95,11 @@ public class Database {
         return exists;
     }
 
-    public static String generateUniqueNodeID(Location c) {
+    public static String getNewPrefixChar() {
+        return newPrefixChar;
+    }
 
-        String id = newPrefixChar + c.getNodeType().toString() + "000" +
-                c.getDBFormattedFloor();
-        while(LocationTable.getLocations().containsKey(id)) {
-            String numericalIDStr = id.substring(id.length() - 5, id.length() - 2);
-            int numericalIDVal = Integer.parseInt(numericalIDStr);
-            numericalIDVal++;
-            numericalIDStr = String.format("%03d", numericalIDVal);
-            id = newPrefixChar + c.getNodeType().toString() + numericalIDStr +
-                    c.getDBFormattedFloor();
-        }
-        return id;
+    public static void setNewPrefixChar(String newPrefixChar) {
+        Database.newPrefixChar = newPrefixChar;
     }
 }

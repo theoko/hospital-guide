@@ -106,4 +106,14 @@ public class FileHelpers {
         return in;
     }
 
+    /**
+     *
+     * @return InputStream of the Workspaces CSV
+     */
+    public static InputStream getWorkspacesCSV() {
+        InputStream in = FileHelpers.class.getResourceAsStream(Constants.CSV_WORKSPACES);
+
+        return in;
+    }
+
 }

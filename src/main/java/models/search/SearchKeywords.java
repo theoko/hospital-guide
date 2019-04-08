@@ -184,6 +184,10 @@ public class SearchKeywords {
 
         international.add("salida");
         international.add("ingles");
+        international.add("hola");
+        international.add("domingo");
+        international.add("zapato");
+        international.add("mano");
 
 
         // Add to main map
@@ -195,6 +199,7 @@ public class SearchKeywords {
         keys.put("laboratory", laboratory);
         keys.put("cat scan", catScan);
         keys.put("ct scan", ctScan);
+        keys.put("mri", mri);
         keys.put("leg doctor", legDoctor);
         keys.put("child doctor", childDoctor);
         keys.put("police", police);
