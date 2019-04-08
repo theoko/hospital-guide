@@ -185,6 +185,9 @@
                 <Tab style="-fx-background-color: #022D5A;" text="Workspaces" >
                     <fx:include source="Workspace.fxml"/>
                 </Tab>
+                <Tab style="-fx-background-color: #022D5A;" text="Requests" >
+                    <fx:include source="requests/Requests.fxml"/>
+                </Tab>
             </tabs>
         </JFXTabPane>
     </children>
