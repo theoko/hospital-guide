@@ -91,7 +91,7 @@ public class WorkspaceTable {
             PreparedStatement statement;
 
             statement = Database.getConnection().prepareStatement(
-                    "INSERT INTO " + Constants.WORKSPACE_TABLE + " (NODEID, XCOORD, YCOORD, NODETYPE, LONGNAME) " +
+                    "INSERT INTO " + Constants.WORKSPACE_TABLE + " (NODEID, XCOORD, YCOORD, NODETYPE, LONGNAME)" +
                             " VALUES (?, ?, ?, ?, ?)"
             );
 

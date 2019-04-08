@@ -15,7 +15,13 @@ import java.util.List;
 public class CSVParser {
 
     public static void main(String[] args) throws IOException {
-        parse(FileHelpers.getNodesCSV(), FileHelpers.getEdgesCSV(), FileHelpers.getWorkspacesCSV());
+        if(!Database.databaseExists()) {
+            parse(FileHelpers.getNodesCSV(), FileHelpers.getEdgesCSV(), FileHelpers.getWorkspacesCSV());
+            System.out.println("Parsed");
+        } else {
+            System.out.println("Already here.");
+        }
+
 
 //        File data = new File("data");
 //        data.mkdir();
