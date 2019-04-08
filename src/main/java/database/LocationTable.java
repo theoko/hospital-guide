@@ -367,7 +367,7 @@ public class LocationTable {
         return id;
     }
 
-    public static Edge getEdgesByID(String locationID) {
+    public static ArrayList<Edge> getEdgesByID(String locationID) {
         try {
 
             PreparedStatement statement;
@@ -381,17 +381,19 @@ public class LocationTable {
 
             ResultSet resultSet = statement.executeQuery();
 
-            if(resultSet.next()) {
-                Edge user = new Edge(
+            ArrayList<Edge> returnList = new ArrayList<>();
+
+            while(resultSet.next()) {
+                Edge edge = new Edge(
                         resultSet.getString("EDGEID"),
                         getLocationByID(resultSet.getString("STARTNODEID")),
                         getLocationByID(resultSet.getString("ENDNODEID"))
                 );
 
-                return user;
+                returnList.add(edge);
             }
 
-            return null;
+            return returnList;
 
         } catch (SQLException e) {
             System.out.println("Cannot get edges of location by locationID!");
