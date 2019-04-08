@@ -25,9 +25,9 @@ public class DatabaseTest {
 
         // Parse locations and edges
         // Add locations and edges to the database
-        if(!Database.databaseExists()) {
-            CSVParser.parse(FileHelpers.getNodesCSV(), FileHelpers.getEdgesCSV());
-        }
+//        if(!Database.databaseExists()) {
+//            CSVParser.parse(FileHelpers.getNodesCSV(), FileHelpers.getEdgesCSV());
+//        }
 
     }
 
@@ -53,7 +53,7 @@ public class DatabaseTest {
 
 
         Location newLoc = new Location("AHALL00201",1608,2596,"1","BTM",HALL,"Hall","Hall");
-        HashMap<String, Location> locations = Database.getLocations();
+        HashMap<String, Location> locations = LocationTable.getLocations();
 
 
         // check that all fields are equal to the original after being added and and pulled from the database
@@ -78,8 +78,8 @@ public class DatabaseTest {
         Location AHALL00202 = new Location("AHALL00202",1590,2604,"2","BTM",HALL,"Hall","Hall");
         Location AHALL00302 = new Location("AHALL00302",1590,2745,"2","BTM",HALL,"Hall","Hall");
         Edge newEdg = new Edge("AHALL00202_AHALL00302", AHALL00302, AHALL00202);
-        HashMap<String, Location> locations = Database.getLocations();
-        List<Edge> edges = Database.getEdges(locations);
+        HashMap<String, Location> locations = LocationTable.getLocations();
+        List<Edge> edges = EdgeTable.getEdges(locations);
         Edge testEdge = null;
         Location testStart = null;
         Location testEnd = null;
@@ -99,12 +99,12 @@ public class DatabaseTest {
 
     @Test
     public void getRoomByID() {
-        assertNull(Database.getRoomByID("12345678900987654321"));
+        assertNull(RoomTable.getRoomByID("12345678900987654321"));
 
         Room room = new Room("ABC",50);
-        Database.addRoom(room);
-        Database.getRoomByID("ABC").setCapacity(5);
-        assertTrue(Database.getRoomByID("ABC").getCapacity()==5);
+        RoomTable.addRoom(room);
+        RoomTable.getRoomByID("ABC").setCapacity(5);
+        assertTrue(RoomTable.getRoomByID("ABC").getCapacity()==5);
     }
 
 
@@ -114,8 +114,8 @@ public class DatabaseTest {
 
        // Database.dropTables();
         Room room = new Room("RM101Z",2);
-        Database.addRoom(room);
-        assertTrue(Objects.equals(Database.getRoomByID("RM101Z"), room));
+        RoomTable.addRoom(room);
+        assertTrue(RoomTable.getRoomByID("RB101Z").equals(room));
 
     }
 
@@ -125,14 +125,11 @@ public class DatabaseTest {
 
 
         Location newLoc = new Location("AHALL00201",1608,2596,"1","BTM",HALL,"Hall","Hall");
-        HashMap<String, Location> locations = Database.getLocations();
+        HashMap<String, Location> locations = LocationTable.getLocations();
 
         // check that all fields are equal to the original after being added and and pulled from the database
 
-        Database.addDeleteLocation(newLoc);
-        Database.deleteLocation(newLoc);
-
-        assertNull(Database.getLocationByID(newLoc.getNodeID()));
+        assertNull(LocationTable.getLocationByID(newLoc.getNodeID()));
 
     }
 
@@ -147,8 +144,8 @@ public class DatabaseTest {
         );
 
         boolean F=false;
-        Database.addSanitationRequest(request);
-        List<SanitationRequest> lstReqs = Database.getSanitationRequests();
+        SanitationTable.addSanitationRequest(request);
+        List<SanitationRequest> lstReqs = SanitationTable.getSanitationRequests();
         for(SanitationRequest E :lstReqs){
             if (E.getDescription().equals(request.getDescription())){
                 F=true;
@@ -169,8 +166,8 @@ public class DatabaseTest {
         );
 
         boolean F = false;
-        Database.addSanitationRequest(request);
-        List<SanitationRequest> lstReqs = Database.getSanitationRequests();
+        SanitationTable.addSanitationRequest(request);
+        List<SanitationRequest> lstReqs = SanitationTable.getSanitationRequests();
         for (SanitationRequest E : lstReqs) {
             if (E.getDescription().equals(request.getDescription())) {
                 F = true;
@@ -184,9 +181,9 @@ public class DatabaseTest {
         Location AHALL00202 = new Location("AHALL00202", 1590, 2604, "2", "BTM", HALL, "Hall", "Hall");
         Location AHALL00302 = new Location("AHALL00302", 1590, 2745, "2", "BTM", HALL, "Hall", "Hall");
         Edge newEdg = new Edge("AHALLTEST", AHALL00302, AHALL00202);
-        Database.addEdge(newEdg);
-        HashMap<String, Location> locations = Database.getLocations();
-        List<Edge> edges = Database.getEdges(locations);
+        EdgeTable.addEdge(newEdg);
+        HashMap<String, Location> locations = LocationTable.getLocations();
+        List<Edge> edges = EdgeTable.getEdges(locations);
         Edge testEdge = null;
         for (Edge e : edges) {
             if (e.getEdgeID().equals(newEdg.getEdgeID())) {
@@ -200,8 +197,8 @@ public class DatabaseTest {
     public void addLocation() {
         Location newLoc = new Location("AHALL00202", 1590, 2604, "2", "BTM", HALL, "Hall", "Hall");
 
-        Database.addLocation(newLoc);
-        HashMap<String, Location> locations = Database.getLocations();
+        LocationTable.addLocation(newLoc);
+        HashMap<String, Location> locations = LocationTable.getLocations();
         Edge testLoc = null;
 
         assertEquals(newLoc.getNodeID(), locations.get(newLoc.getNodeID()).getNodeID());
@@ -232,7 +229,7 @@ public class DatabaseTest {
 
         Location newLoc = new Location("AHALL00201",1608,2596,"1","BTM",HALL,"Hall","Hall");
 
-        Room newRoom = Database.getRoomByID(newLoc.getNodeID());
+        Room newRoom = RoomTable.getRoomByID(newLoc.getNodeID());
 
         assertTrue(newRoom.getRoomID()==newLoc.getNodeID());
 

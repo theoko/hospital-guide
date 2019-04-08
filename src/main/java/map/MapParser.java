@@ -1,6 +1,8 @@
 package map;
 
 import database.Database;
+import database.EdgeTable;
+import database.LocationTable;
 import models.map.Edge;
 import models.map.Location;
 import models.map.Map;
@@ -16,7 +18,7 @@ public class MapParser {
      */
     public static Map parse() {
         // Generates a hashmap of unlinked locations
-        HashMap<String, Location> lstLocations = Database.getLocations();
+        HashMap<String, Location> lstLocations = LocationTable.getLocations();
         // Links the locations
         HashMap<String, Edge> lstEdges = parseEdges(lstLocations);
         Map map = new Map(lstLocations, lstEdges);
@@ -30,7 +32,7 @@ public class MapParser {
      */
     private static HashMap<String, Edge> parseEdges(HashMap<String, Location> lstLocations) {
         HashMap<String, Edge> mapEdges = new HashMap<>();
-        List<Edge> lstEdges = Database.getEdges(lstLocations);
+        List<Edge> lstEdges = EdgeTable.getEdges(lstLocations);
         for (Edge edge : lstEdges) {
             String edgeID = edge.getEdgeID();
             Location start = lstLocations.get(edge.getStart().getNodeID());

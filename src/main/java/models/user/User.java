@@ -1,6 +1,7 @@
 package models.user;
 
 import database.Database;
+import database.UserTable;
 import helpers.Constants;
 
 public class User {
@@ -18,7 +19,7 @@ public class User {
     }
 
     public boolean create(){
-        return Database.createUser(this);
+        return UserTable.createUser(this);
     }
 
     public int getUserID() {
@@ -27,6 +28,7 @@ public class User {
 
     public void setUserID(int userID) {
         this.userID = userID;
+        UserTable.updateUser(this);
     }
 
     public String getUsername() {
@@ -35,6 +37,7 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+        UserTable.updateUser(this);
     }
 
     public String getPassword() {
@@ -43,6 +46,7 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+        UserTable.updateUser(this);
     }
 
     public Constants.Auth getUserType() {
@@ -51,5 +55,6 @@ public class User {
 
     public void setUserType(Constants.Auth userType) {
         this.userType = userType;
+        UserTable.updateUser(this);
     }
 }

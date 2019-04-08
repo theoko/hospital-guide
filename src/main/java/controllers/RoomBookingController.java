@@ -3,7 +3,11 @@ package controllers;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTimePicker;
+import database.BookTable;
 import database.Database;
+import database.LocationTable;
+import database.RoomTable;
+import helpers.Constants;
 import helpers.DatabaseHelpers;
 import helpers.UserHelpers;
 import javafx.collections.FXCollections;
@@ -22,7 +26,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoomBookingController extends EmployeeMapController{
+public class RoomBookingController {
 
     /**
      * FXML
@@ -44,6 +48,7 @@ public class RoomBookingController extends EmployeeMapController{
 
     public TableColumn<Room, String> tblRoomIDBooked;
     public TableColumn<Room, String> tblRoomCapacityBooked;
+    public JFXButton btnReturn1;
 
     ObservableList<Room> rooms = FXCollections.observableArrayList();
     ObservableList<Room> roomsBooked = FXCollections.observableArrayList();
@@ -107,14 +112,14 @@ public class RoomBookingController extends EmployeeMapController{
     private void initBooked() {
         User currentUser = UserHelpers.getCurrentUser();
 
-        List<Book> roomsBooked = Database.getBookingsForUser(currentUser);
+        List<Book> roomsBooked = BookTable.getBookingsForUser(currentUser);
 
         if(roomsBooked != null) {
 
             System.out.println(roomsBooked.toString());
 
             for (Book booking : roomsBooked) {
-                Room currRoom = Database.getRoomByID(booking.getRoomID());
+                Room currRoom = RoomTable.getRoomByID(booking.getRoomID());
 
                 roomDetails.add(currRoom);
             }
@@ -122,6 +127,16 @@ public class RoomBookingController extends EmployeeMapController{
             populateRoomBookedTable(roomDetails);
         }
 
+    }
+
+    public void logOut(MouseEvent event) {
+        event.consume();
+        ScreenController.logOut(btnReturn1);
+        try {
+            ScreenController.activate(Constants.Routes.LOGIN);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -136,7 +151,7 @@ public class RoomBookingController extends EmployeeMapController{
 
             timePeriodSet = true;
 
-            roomsAvailable = Database.checkAvailabilityTime(
+            roomsAvailable = LocationTable.checkAvailabilityByTime(
                     DatabaseHelpers.getDateTime(startDate, startTime),
                     DatabaseHelpers.getDateTime(endDate, endTime)
             );
@@ -199,14 +214,9 @@ public class RoomBookingController extends EmployeeMapController{
                 DatabaseHelpers.getDateTime(endDate, endTime)
         );
 
-        boolean booked = Database.createBooking(book);
-
-//        System.out.println(booked);
-//
-//        if(booked) {
-
+        boolean booked = BookTable.createBooking(book);
             // Add to rooms booked table
-            Room roomD = Database.getRoomByID(book.getRoomID());
+            Room roomD = RoomTable.getRoomByID(book.getRoomID());
 //            roomsAvailable.remove(roomD);
 
             for(int i=0; i<roomsAvailable.size(); i++) {

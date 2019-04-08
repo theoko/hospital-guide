@@ -1,6 +1,7 @@
 package controllers;
 
 import com.jfoenix.controls.JFXButton;
+import helpers.Constants;
 import helpers.DatabaseHelpers;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -51,7 +52,7 @@ public class EmployeeInfoController extends PopUpController implements Initializ
         event.consume();
         ScreenController.deactivate();
         try {
-            ScreenController.popUp("sanitation-request" , loc);
+            ScreenController.popUp(Constants.Routes.SANITATION_REQUEST , loc);
         } catch(Exception exception) {
             exception.printStackTrace();
         }
@@ -60,7 +61,7 @@ public class EmployeeInfoController extends PopUpController implements Initializ
     private void checkSelected() throws Exception {
         if (bolSelectedEmp) { // Two locations
             if (!loc.equals(locSelectedEmp)) {
-                ScreenController.popUp("directions", loc, locSelectedEmp, map, pane);
+                ScreenController.popUp(Constants.Routes.DIRECTIONS, loc, locSelectedEmp, map, panes);
             }
             locSelectedEmp = null;
             bolSelectedEmp = false;

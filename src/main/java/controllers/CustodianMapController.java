@@ -3,6 +3,7 @@ package controllers;
 import com.jfoenix.controls.JFXButton;
 import controllers.MapController;
 import database.Database;
+import database.SanitationTable;
 import helpers.Constants;
 import helpers.SpillModel;
 import javafx.collections.FXCollections;
@@ -13,6 +14,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import map.MapDisplay;
 import models.sanitation.SanitationRequest;
 
@@ -34,9 +37,10 @@ public class CustodianMapController extends MapController {
 
     ObservableList<SanitationRequest> spills = FXCollections.observableArrayList();
 
-    public void initialize() {
-        toolTip();
-        MapDisplay.displayCust(panMap, "1");
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        super.initialize(location, resources);
+        MapDisplay.displayCust(panes);
         initSanitation();
         updateSanitation();
 
@@ -44,12 +48,6 @@ public class CustodianMapController extends MapController {
             btnMarkDone.setDisable(false);
             updateBtn();
         });
-
-    }
-
-    void toolTip() {
-        btnSettings.setTooltip(new Tooltip(Constants.SETTINGS_BUTTON_TOOLTIP));
-        btnReturn.setTooltip(new Tooltip(Constants.LOGOUT_BUTTON_TOOLTIP));
     }
 
     private void initSanitation(){
@@ -62,7 +60,7 @@ public class CustodianMapController extends MapController {
     }
 
     private void updateSanitation() {
-        List<SanitationRequest> lstReqs = Database.getSanitationRequests();
+        List<SanitationRequest> lstReqs = SanitationTable.getSanitationRequests();
         spills.addAll(lstReqs);
     }
 
@@ -78,7 +76,7 @@ public class CustodianMapController extends MapController {
         } else {
             selected.setStatus(SanitationRequest.Status.COMPLETE);
         }
-        Database.editSanitationRequest(selected);
+        SanitationTable.editSanitationRequest(selected);
         tblData.refresh();
         updateBtn();
     }

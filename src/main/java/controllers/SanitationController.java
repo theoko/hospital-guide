@@ -7,6 +7,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import database.Database;
+import database.SanitationTable;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
@@ -42,7 +43,7 @@ public class SanitationController extends PopUpController {
                 SanitationRequest.Priority.valueOf(priority),
                 description
         );
-        Database.addSanitationRequest(request);
+        SanitationTable.addSanitationRequest(request);
 
         // Deactivate popup
         ScreenController.deactivate();

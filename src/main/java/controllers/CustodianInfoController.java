@@ -1,6 +1,7 @@
 package controllers;
 
 import com.jfoenix.controls.JFXButton;
+import helpers.Constants;
 import helpers.DatabaseHelpers;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -50,7 +51,7 @@ public class CustodianInfoController extends PopUpController implements Initiali
     private void checkSelected() throws Exception {
         if (bolSelectedCust) { // Two locations
             if (!loc.equals(locSelectedCust)) {
-                ScreenController.popUp("directions", loc, locSelectedCust, map, pane);
+                ScreenController.popUp(Constants.Routes.DIRECTIONS, loc, locSelectedCust, map, panes);
             }
             locSelectedCust = null;
             bolSelectedCust = false;

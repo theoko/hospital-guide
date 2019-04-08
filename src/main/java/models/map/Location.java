@@ -3,6 +3,7 @@ package models.map;
 import controllers.AdminMapController;
 import controllers.VisualRealtimeController;
 import database.Database;
+import database.LocationTable;
 import helpers.Constants;
 import javafx.scene.shape.Circle;
 
@@ -20,6 +21,7 @@ public class Location {
     private String longName;
     private String shortName;
     private ArrayList<SubPath> lstSubPaths;
+    private Location parent;
     private boolean available;
 
     public Location(String nodeID, int xCord, int yCord, String floor, String building, Constants.NodeType nodeType, String longName, String shortName) {
@@ -32,6 +34,7 @@ public class Location {
         this.longName = longName;
         this.shortName = shortName;
         this.lstSubPaths = new ArrayList<>();
+        this.parent = null;
         this.available = available;
     }
 
@@ -50,6 +53,7 @@ public class Location {
     public String getFloor() {
         return floor;
     }
+
     public String getDBFormattedFloor() {
         if(floor.length() == 1) return "0" + floor;
         else return floor;
@@ -107,29 +111,33 @@ public class Location {
         return lstSubPaths;
     }
 
+    public Location getParent() {
+        return parent;
+    }
+
+    public void setParent(Location parent) {
+        this.parent = parent;
+    }
+
     public boolean getAvailable(){ return available; }
 
     public void setAvailable(boolean isAvailable){
         this.available = isAvailable;
     }
 
-    public String[] getStrings() {
+    public String[] getStringsLocation() {
         return new String[]{nodeID, Integer.toString(xCord), Integer.toString(yCord), floor, building,
             nodeType.toString(), longName, shortName};
     }
 
     public void setNodeType(Constants.NodeType nodeType) {
         this.nodeType = nodeType;
-        Database.updateLocation(this);
-    }
-
-    public boolean addCurrNode() {
-        return Database.addLocation(this);
+        LocationTable.updateLocation(this);
     }
 
     public boolean deleteCurrNode() {
-        VisualRealtimeController.removeCircle(getNodeCircle());
-        return Database.deleteLocation(this);
+        VisualRealtimeController.removeCircle(this);
+        return LocationTable.deleteLocation(this);
     }
 
     public Circle getNodeCircle() {
@@ -139,4 +147,5 @@ public class Location {
     public void setNodeCircle(Circle nodeCircle) {
         this.nodeCircle = nodeCircle;
     }
+
 }

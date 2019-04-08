@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.requests.RequestsController">
+   <children>
+      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" stylesheets="@../css/colorScheme.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <AnchorPane prefHeight="150.0" prefWidth="600.0" style="-fx-background-color: #022D5A;">
+               <children>
+                  <Label alignment="CENTER" prefHeight="54.0" prefWidth="278.0" text="Service Requests" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <font>
+                        <Font size="52.0" />
+                     </font>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="75.0" />
+               </VBox.margin>
+            </AnchorPane>
+            <GridPane alignment="CENTER" prefHeight="312.0" prefWidth="450.0">
+              <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <JFXButton fx:id="btnIT" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#btnIT_Click" prefHeight="50.0" prefWidth="175.0" text="IT">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton fx:id="btnInterpreter" onMouseClicked="#btnInterpreter_Click" prefHeight="50.0" prefWidth="175.0" text="Interpreter" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton fx:id="btnPerscription" onMouseClicked="#btnPerscription" prefHeight="50.0" prefWidth="175.0" text="Perscription" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton fx:id="btnInternalTrans" onMouseClicked="#btnInternalTrans" prefHeight="50.0" prefWidth="175.0" text="Internal Trans." GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton fx:id="btnGiftStore" onMouseClicked="#btnGiftStore_Click" prefHeight="50.0" prefWidth="175.0" text="Gift Store" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton fx:id="btnFlourist" onMouseClicked="#btnFlourist_Click" prefHeight="50.0" prefWidth="175.0" text="Flourist" GridPane.columnIndex="1" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton fx:id="btnSecurity" onMouseClicked="#btnSecurity_Click" prefHeight="50.0" prefWidth="175.0" text="Security" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton fx:id="btnVisualAudio" onMouseClicked="#btnAudioVisual_Click" prefHeight="50.0" prefWidth="175.0" text="Audio/Visual" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton fx:id="btnExternalTrans" onMouseClicked="#btnExternalTrans" prefHeight="50.0" prefWidth="175.0" text="External Trans." GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton fx:id="btnPatientInfo" onMouseClicked="#btnPatientInfo_Click" prefHeight="50.0" prefWidth="175.0" text="Patient Info" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </JFXButton>
+               </children>
+               <VBox.margin>
+                  <Insets left="50.0" right="50.0" />
+               </VBox.margin>
+            </GridPane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

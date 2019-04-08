@@ -1,10 +1,12 @@
 package controllers;
 
 import com.jfoenix.controls.JFXButton;
+import helpers.Constants;
 import helpers.DatabaseHelpers;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import map.PathFinder;
 import models.map.Location;
 
 import java.net.URL;
@@ -43,21 +45,8 @@ public class UserInfoController extends PopUpController implements Initializable
 
     public void btnDirections_OnClick(MouseEvent event) throws Exception {
         event.consume();
+        PathFinder.printPath(panes, map, defLocation, loc);
         ScreenController.deactivate();
-        checkSelected();
-    }
-
-    private void checkSelected() throws Exception {
-        if (bolSelectedUser) { // Two locations
-            if (!loc.equals(locSelectedUser)) {
-                ScreenController.popUp("directions", loc, locSelectedUser, map, pane);
-            }
-            locSelectedUser = null;
-            bolSelectedUser = false;
-        } else { // One location
-            locSelectedUser = loc;
-            bolSelectedUser = true;
-        }
     }
 
     public void btnCancel_OnClick(MouseEvent event) {
