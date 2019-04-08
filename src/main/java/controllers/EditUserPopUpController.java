@@ -30,7 +30,7 @@ public class EditUserPopUpController extends PopUpControllerUser implements Init
         UserName.setText(this.userM.getUsername());
         Password.setText(this.userM.getPassword());*/
     }
-    
+
     public void setUser(User user){
         this.userM = user;
     }

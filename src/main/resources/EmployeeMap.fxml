@@ -179,32 +179,11 @@
                         </children>
                     </AnchorPane>
                 </Tab>
-                <Tab style="-fx-background-color: #022D5A;" text="Workspaces" >
-                    <content>
-                        <AnchorPane prefHeight="400.0" prefWidth="700.0">
-                            <children>
-                                <AnchorPane fx:id="workspace"
-                                            onMouseDragged="#floorOneMapOnMouseDragged"
-                                            onMousePressed="#floorOneMapOnMousePressed"
-                                            onScroll="#floorOneMapScroll"
-                                            onZoom="#floorOneMapZoom"
-                                            onZoomFinished="#floorOneMapZoomDone"
-                                            prefHeight="896.0" prefWidth="1115.0">
-                                    <ImageView blendMode="MULTIPLY" fitHeight="1620.0"
-                                               fitWidth="2581.0" layoutX="1000.0"
-                                               layoutY="-350.0" pickOnBounds="true"
-                                               preserveRatio="true">
-                                        <image>
-                                            <Image url="@images/Original/workspace.jpg"/>
-                                        </image>
-                                    </ImageView>
-                                </AnchorPane>
-                            </children>
-                        </AnchorPane>
-                    </content>
-                </Tab>
                 <Tab style="-fx-background-color: #022D5A;" text="Room Booking">
                     <fx:include source="RoomBookingWindow.fxml"/>
+                </Tab>
+                <Tab style="-fx-background-color: #022D5A;" text="Workspaces" >
+                    <fx:include source="Workspace.fxml"/>
                 </Tab>
             </tabs>
         </JFXTabPane>
