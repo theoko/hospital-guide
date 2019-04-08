@@ -347,7 +347,7 @@ public class LocationTable {
     public static String uniqueID(Location loc) {
         String locID = generateUniqueNodeID(loc);
         loc.setNodeID(locID);
-        loc.addCurrNode();
+        LocationTable.addLocation(loc);
         return locID;
     }
 
