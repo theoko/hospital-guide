@@ -19,7 +19,7 @@ public class WorkspaceTable {
     public static void createtable(){
         Statement statement = null;
         try {
-            statement = Database.getConnection().createStatement();
+            statement = Database.getDatabase().getConnection().createStatement();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -40,7 +40,7 @@ public class WorkspaceTable {
         try {
             Statement statement;
 
-            statement = Database.getConnection().createStatement();
+            statement = Database.getDatabase().getConnection().createStatement();
 
             return statement.execute("DROP TABLE " + Constants.WORKSPACE_TABLE);
 
@@ -59,7 +59,7 @@ public class WorkspaceTable {
         try {
             // Execute query
             String stmtString = "SELECT * FROM " + Constants.WORKSPACE_TABLE + " WHERE NODEID=?";
-            PreparedStatement statement = Database.getConnection().prepareStatement(stmtString);
+            PreparedStatement statement = Database.getDatabase().getConnection().prepareStatement(stmtString);
             statement.setString(1, id);
             ResultSet resultSet = statement.executeQuery();
 
@@ -90,7 +90,7 @@ public class WorkspaceTable {
 
             PreparedStatement statement;
 
-            statement = Database.getConnection().prepareStatement(
+            statement = Database.getDatabase().getConnection().prepareStatement(
                     "INSERT INTO " + Constants.WORKSPACE_TABLE + " (NODEID, XCOORD, YCOORD, NODETYPE, LONGNAME)" +
                             " VALUES (?, ?, ?, ?, ?)"
             );
@@ -134,7 +134,7 @@ public class WorkspaceTable {
         PreparedStatement statement;
 
         try {
-            statement = Database.getConnection().prepareStatement(
+            statement = Database.getDatabase().getConnection().prepareStatement(
                     "SELECT * FROM " + Constants.BOOK_TABLE +
                             " WHERE nodeID=? AND ? <=  ENDDATE" +
                             " AND ? >= STARTDATE" +
@@ -176,7 +176,8 @@ public class WorkspaceTable {
                     " OR ? >=  STARTDATE" +
                     " AND ? <= ENDDATE";
 
-            statement1 = Database.getConnection().prepareStatement(
+
+            statement1 = Database.getDatabase().getConnection().prepareStatement(
                     "SELECT nodeID FROM " + Constants.WORKSPACE_TABLE +
                             " EXCEPT (" + unavailableRooms + ")"
             );
@@ -210,7 +211,7 @@ public class WorkspaceTable {
 
             Statement statement;
 
-            statement = Database.getConnection().createStatement();
+            statement = Database.getDatabase().getConnection().createStatement();
 
             String query = "SELECT * FROM " + Constants.WORKSPACE_TABLE;
 
@@ -249,7 +250,7 @@ public class WorkspaceTable {
         try {
             PreparedStatement statement;
 
-            statement = Database.getConnection().prepareStatement(
+            statement = Database.getDatabase().getConnection().prepareStatement(
                     "UPDATE " + Constants.WORKSPACE_TABLE +
                             " SET XCOORD=?, YCOORD=?, NODETYPE=?, LONGNAME=?" +
                             " WHERE NODEID=?"
@@ -283,7 +284,7 @@ public class WorkspaceTable {
             // Add location to deleted locations table
 
             PreparedStatement statement3;
-            statement3 = Database.getConnection().prepareStatement(
+            statement3 = Database.getDatabase().getConnection().prepareStatement(
                     "DELETE FROM " + Constants.WORKSPACE_TABLE +
                             " WHERE NODEID=?"
             );
