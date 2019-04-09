@@ -1,5 +1,6 @@
 package controllers;
 
+import com.jfoenix.controls.JFXAutoCompletePopup;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXToggleButton;
@@ -26,6 +27,7 @@ import models.search.SearchEngine;
 import java.awt.*;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 public class AdminMapController extends MapController {
     public JFXButton btnDownload;
@@ -133,6 +135,9 @@ public class AdminMapController extends MapController {
         searchBox.setMaxWidth(UIHelpers.getScreenWidth());
         searchBox.setPadding(new Insets(5));
 
+        JFXAutoCompletePopup<String> autoCompletePopup = new JFXAutoCompletePopup<>();
+
+
         // Add search box to layout
         outerTabAnchor.getChildren().add(searchBox);
 
@@ -141,7 +146,27 @@ public class AdminMapController extends MapController {
             @Override
             public void handle(KeyEvent event) {
 
+                // Get results
                 SearchEngine searchEngine = new SearchEngine(searchBox.getText());
+
+                Set<String> results = searchEngine.getResults();
+
+                if(results.size() > 0) {
+
+                    for(String word : results) {
+
+                        autoCompletePopup.getSuggestions().add(word);
+//                        searchBox.get
+
+                    }
+
+                    autoCompletePopup.show(searchBox.getClip());
+
+                } else {
+
+                    autoCompletePopup.hide();
+
+                }
 
             }
         });

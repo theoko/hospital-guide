@@ -1,12 +1,11 @@
 package models.search;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SearchEngine {
 
     String term;
+    Set<String> results = new HashSet<>();
 
     public SearchEngine(String term) {
         this.term = term;
@@ -68,8 +67,15 @@ public class SearchEngine {
             System.out.println("Search term: " + this.term);
             System.out.println("Closest category: " + closestCategory);
             System.out.println("Closest keyword: " + closestKeyword);
+
+            results.add(closestCategory);
+            results.add(closestKeyword);
         }
 
+    }
+
+    public Set<String> getResults() {
+        return results;
     }
 
     public static void main(String[] args)
