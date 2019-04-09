@@ -4,10 +4,10 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" minHeight="700.0" minWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.WorkspaceMapController">
-    <AnchorPane fx:id="workS" prefHeight="400.0" prefWidth="700.0">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="700.0" minWidth="1200.0" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.WorkspaceMapController">
+    <AnchorPane fx:id="workS" layoutX="-225.0" layoutY="-313.0" onMouseDragged="#floorOneMapOnMouseDragged" onMousePressed="#floorOneMapOnMousePressed" onScroll="#floorOneMapScroll" onZoom="#floorOneMapZoom" onZoomFinished="#floorOneMapZoomDone" prefHeight="400.0" prefWidth="700.0">
             <AnchorPane prefHeight="896.0" prefWidth="1115.0">
-                <ImageView blendMode="MULTIPLY" fitHeight="1620.0" fitWidth="2581.0" layoutY="-350.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView blendMode="MULTIPLY" fitHeight="1620.0" fitWidth="2581.0" layoutX="-36.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@images/Original/workspace.jpg" />
                     </image>
