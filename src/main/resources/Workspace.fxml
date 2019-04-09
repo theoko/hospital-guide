@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTimePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -38,6 +40,21 @@
                             </HBox>
                         </children>
                     </VBox>
+               <JFXDatePicker fx:id="datStartDay" layoutX="77.0" layoutY="237.0" />
+               <JFXDatePicker fx:id="datEndDay" layoutX="77.0" layoutY="447.0" />
+               <JFXTimePicker fx:id="datStartTime" layoutX="78.0" layoutY="300.0" />
+               <JFXTimePicker fx:id="datEndTime" layoutX="77.0" layoutY="506.0" />
+               <JFXButton fx:id="btnSearch" onMouseClicked="#btnSearch" buttonType="RAISED" layoutX="96.0" layoutY="561.0" prefHeight="52.0" prefWidth="150.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Search" />
+               <Label alignment="CENTER" contentDisplay="CENTER" layoutX="36.0" layoutY="162.0" prefHeight="45.0" prefWidth="270.0" style="-fx-background-color: #022D5A;" text="Start Date and Time" textAlignment="CENTER" textFill="WHITE">
+                  <font>
+                     <Font size="24.0" />
+                  </font>
+               </Label>
+               <Label alignment="CENTER" contentDisplay="CENTER" layoutX="36.0" layoutY="366.0" prefHeight="45.0" prefWidth="270.0" style="-fx-background-color: #022D5A;" text="End Date and Time" textAlignment="CENTER" textFill="WHITE">
+                  <font>
+                     <Font size="24.0" />
+                  </font>
+               </Label>
                 </children>
             </AnchorPane>
         </AnchorPane>

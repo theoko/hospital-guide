@@ -130,7 +130,7 @@ public class WorkspaceTable {
      * @param endTime
      * @return true if the room is available, false otherwise
      */
-    public static boolean checkAvailabilityByLocation(Room room, String startTime, String endTime) {
+    public static boolean checkAvailabilityByLocation(Workspace workspace, String startTime, String endTime) {
         PreparedStatement statement;
 
         try {
@@ -142,7 +142,7 @@ public class WorkspaceTable {
                             " AND ? <= ENDDATE"
             );
 
-            statement.setString(1, room.getRoomID());
+            statement.setString(1, workspace.getNodeID());
             statement.setString(2, endTime);
             statement.setString(3, endTime);
             statement.setString(4, startTime);
@@ -163,10 +163,10 @@ public class WorkspaceTable {
     /**
      * Checks if location is available
      */
-    public static List<Room> checkAvailabilityByTime(String startTime, String endTime) {
+    public static List<Workspace> checkAvailabilityByTime(String startTime, String endTime) {
 
         PreparedStatement statement1;
-        ArrayList<Room> roomsAvailable = new ArrayList<>();
+        ArrayList<Workspace> roomsAvailable = new ArrayList<>();
 
         try {
 
@@ -177,7 +177,7 @@ public class WorkspaceTable {
                     " AND ? <= ENDDATE";
 
             statement1 = Database.getConnection().prepareStatement(
-                    "SELECT nodeID FROM " + Constants.ROOM_TABLE +
+                    "SELECT nodeID FROM " + Constants.WORKSPACE_TABLE +
                             " EXCEPT (" + unavailableRooms + ")"
             );
 
@@ -189,9 +189,9 @@ public class WorkspaceTable {
             ResultSet resultSet = statement1.executeQuery();
 
             while (resultSet.next()) {
-                Room room = RoomTable.getRoomByID(resultSet.getString("NODEID"));
+                Workspace workspace = WorkspaceTable.getWorkspaceByID(resultSet.getString("NODEID"));
 
-                roomsAvailable.add(room);
+                roomsAvailable.add(workspace);
             }
 
             return roomsAvailable;

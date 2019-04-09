@@ -1,9 +1,12 @@
 package controllers;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXTimePicker;
 import database.LocationTable;
 import database.WorkspaceTable;
 import helpers.Constants;
+import helpers.DatabaseHelpers;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
@@ -14,9 +17,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import models.map.Location;
 import models.map.Workspace;
+import models.room.Room;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class WorkspaceMapController {
@@ -31,7 +39,20 @@ public class WorkspaceMapController {
     protected double sceneX, sceneY;
     protected double translateX, translateY;
 
+    public JFXDatePicker datStartDay;
+    public JFXDatePicker datEndDay;
+    public JFXTimePicker datStartTime;
+    public JFXTimePicker datEndTime;
+
     public JFXButton btnReturn;
+
+    LocalDate startDate;
+    LocalDate endDate;
+
+    LocalTime startTime;
+    LocalTime endTime;
+
+    ArrayList<Circle> themCircles = new ArrayList<>();
 
     @FXML
     AnchorPane workS;
@@ -56,6 +77,7 @@ public class WorkspaceMapController {
                         }
                     });
                     workS.getChildren().add(circle);
+                    themCircles.add(circle);
                 }
             }
         }
@@ -134,6 +156,39 @@ public class WorkspaceMapController {
 
     public static double scaleY(double y) {
         return (y - yShift) * scale;
+    }
+
+    List<Workspace> workspacesAvailable;
+    public void btnSearch(MouseEvent event) {
+        event.consume();
+        if(datStartDay != null && datEndDay != null && datStartTime != null && datEndTime != null) {
+            startDate = datStartDay.getValue();
+            endDate = datEndDay.getValue();
+            startTime = datStartTime.getValue();
+            endTime = datEndTime.getValue();
+
+            workspacesAvailable = WorkspaceTable.checkAvailabilityByTime(
+                    DatabaseHelpers.getDateTime(startDate, startTime),
+                    DatabaseHelpers.getDateTime(endDate, endTime)
+            );
+
+            for (Workspace ws : workspacesAvailable) {
+                if (ws.getNodeType() != null) {
+                    double xLoc = scaleX(ws.getxCord());
+                    double yLoc = scaleY(ws.getyCord());
+                    for (Circle c : themCircles) {
+                        if (c.getCenterX() == xLoc && c.getCenterY() == yLoc) {
+                            c.setFill(Color.YELLOW);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void bookWS(MouseEvent event) {
+        event.consume();
     }
 
     public void logOut(MouseEvent event) {
