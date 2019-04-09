@@ -37,7 +37,7 @@
                                             <Font size="24.0" />
                                         </font>
                                     </Label>
-                                    <JFXTextField prefHeight="27.0" prefWidth="677.0" promptText="Description" text="Recipient Name" />
+                                    <JFXTextField fx:id="txtRecipientName" prefHeight="27.0" prefWidth="677.0" promptText="Description" text="Recipient Name" />
                                 </children>
                             </HBox>
                             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
@@ -47,12 +47,12 @@
                                             <Font size="24.0" />
                                         </font>
                                     </Label>
-                                    <JFXComboBox fx:id="cmbType" focusColor="#022d5a" labelFloat="true" prefHeight="27.0" prefWidth="339.0" promptText="Flower Type" unFocusColor="BLACK">
+                                    <JFXComboBox fx:id="cmbFlowerType" focusColor="#022d5a" labelFloat="true" prefHeight="27.0" prefWidth="339.0" promptText="Flower Type" unFocusColor="BLACK">
                                         <items>
                                             <FXCollections fx:factory="observableArrayList">
-                                                <String fx:id="SOFTWARE" fx:value="SOFTWARE" />
-                                                <String fx:id="HARDWARE" fx:value="HARDWARE" />
-                                                <String fx:id="NETWORK" fx:value="NETWORK" />
+                                                <String fx:id="ROSE" fx:value="ROSE" />
+                                                <String fx:id="TULIP" fx:value="TULIP" />
+                                                <String fx:id="HYDRANGEA" fx:value="HYDRANGEA" />
                                                 <String fx:id="OTHER" fx:value="OTHER" />
                                             </FXCollections>
                                         </items>
@@ -66,19 +66,19 @@
                                  <Font size="24.0" />
                               </font>
                            </Label>
-                           <JFXTextField prefHeight="27.0" prefWidth="677.0" promptText="Insert Message" text="Insert Message" />
+                           <JFXTextField fx:id="txtMessage" prefHeight="27.0" prefWidth="677.0" promptText="Insert Message" text="Insert Message" />
                         </children>
                             </HBox>
                             <VBox prefHeight="200.0" prefWidth="100.0">
                                 <children>
                                     <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                                         <children>
-                                            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="200.0" style="-fx-background-color: #022D5A;" text="Request Date" textFill="WHITE">
+                                            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="200.0" style="-fx-background-color: #022D5A;" text="Delivery Date" textFill="WHITE">
                                                 <font>
                                                     <Font size="24.0" />
                                                 </font>
                                             </Label>
-                                 <JFXDatePicker promptText="Select Date" />
+                                 <JFXDatePicker fx:id="datDeliveryDate" promptText="Select Date" />
                                         </children>
                                     </HBox>
                                     <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
@@ -110,19 +110,17 @@
                 </Tab>
                 <Tab style="-fx-background-color: #022D5A;" text="View Requests">
                     <AnchorPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                        <JFXButton fx:id="btnReturn" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" layoutX="1044.0" layoutY="618.0" prefHeight="45.0" prefWidth="147.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Go Back" textAlignment="CENTER" />
+                        <JFXButton fx:id="btnReturn" onMouseClicked="#cancelScr" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" layoutX="1044.0" layoutY="618.0" prefHeight="45.0" prefWidth="147.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Go Back" textAlignment="CENTER" />
                         <VBox layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="607.0" prefWidth="1200.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
                             <children>
                                 <TableView fx:id="tblIT" prefHeight="617.0" prefWidth="665.0">
                                     <columns>
-                                        <TableColumn fx:id="tblRequestID" prefWidth="100.0" text="Request ID" />
-                                        <TableColumn fx:id="tblRequestPrior" prefWidth="100.0" text="Priority" />
-                                        <TableColumn fx:id="tblRequestType" prefWidth="140.0" text="Type" />
-                                        <TableColumn fx:id="tblRequestDesc" prefWidth="300.0" text="Description" />
-                                        <TableColumn fx:id="tblRequestBuild" prefWidth="140.0" text="Building" />
-                                        <TableColumn fx:id="tblRequestRoom" prefWidth="140.0" text="Room" />
-                                        <TableColumn fx:id="tblRequestTime" prefWidth="140.0" text="Time" />
-                                        <TableColumn fx:id="tblRequestUser" prefWidth="140.0" text="Requester" />
+                                        <TableColumn fx:id="tblRecipientName" prefWidth="100.0" text="Recipient Name" />
+                                        <TableColumn fx:id="tblRFlowerType" prefWidth="100.0" text="Flower Type" />
+                                        <TableColumn fx:id="Message" prefWidth="140.0" text="Message" />
+                                        <TableColumn fx:id="tblDate" prefWidth="300.0" text="Date" />
+                                        <TableColumn fx:id="tblTime" prefWidth="140.0" text="Time" />
+
                                     </columns>
                                 </TableView>
                             </children>
