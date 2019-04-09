@@ -26,6 +26,13 @@ public class AuthController {
         String TEMP_CUSTODIAN_USERNAME = "custodian";
         String TEMP_CUSTODIAN_PASSWORD = "";
 
+        String STAFF_EMPLOYEE = "staff-employee";
+        String STAFF_EMPLOYEE_PASSWORD = "staff";
+        String STAFF_ADMIN = "staff-admin";
+        String STAFF_ADMIN_PASSWORD = "staff";
+        String STAFF_CUSTODIAN = "staff-custodian";
+        String STAFF_CUSTODIAN_PASSWORD = "staff";
+
         String TEMP_USER_USERNAME = "user";
         String TEMP_USER_PASSWORD = "";
 
@@ -39,6 +46,12 @@ public class AuthController {
             return Constants.Auth.CUSTODIAN;
         } else if (username.equals(TEMP_USER_USERNAME) && password.equals(TEMP_USER_PASSWORD)) {
             return Constants.Auth.USER;
+        } else if (username.equals(STAFF_EMPLOYEE) && password.equals(STAFF_EMPLOYEE_PASSWORD)) {
+            return Constants.Auth.EMPLOYEE;
+        } else if (username.equals(STAFF_ADMIN) && password.equals(STAFF_ADMIN_PASSWORD)) {
+            return Constants.Auth.ADMIN;
+        } else if (username.equals(STAFF_CUSTODIAN) && password.equals(STAFF_CUSTODIAN_PASSWORD)) {
+            return Constants.Auth.CUSTODIAN;
         }
 
         // Created users
