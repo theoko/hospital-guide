@@ -39,7 +39,7 @@ public abstract class MapController implements Initializable {
         }
     }
 
-    public final void floorOneMapOnMouseDragged(MouseEvent event) {
+    public void floorOneMapOnMouseDragged(MouseEvent event) {
         double offsetX = event.getSceneX() - sceneX;
         double offsetY = event.getSceneY() - sceneY;
         double newTranslateX = translateX + offsetX;

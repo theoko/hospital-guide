@@ -164,7 +164,6 @@ public class ITController {
                     room = "WZC";
                     break;
             }
-            System.out.println(UserHelpers.getCurrentUser().toString());
             IT req = new IT(requestID++, IT.Priority.valueOf(priority), IT.Type.valueOf(type), desc, IT.Building.valueOf(build), IT.Room.valueOf(room), reqTime, UserHelpers.getCurrentUser().toString());
             ITDetails.add(req);
           //  ITreqs.clear();
