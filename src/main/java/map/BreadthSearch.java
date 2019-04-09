@@ -1,5 +1,6 @@
 package map;
 
+import helpers.MapHelpers;
 import models.map.Location;
 import models.map.SubPath;
 
@@ -7,12 +8,8 @@ import java.util.*;
 
 public class BreadthSearch extends PathFinder {
 
-    public BreadthSearch(Location start, Location end) {
-        super(start, end);
-    }
-
     @Override
-    public Stack<Location> findPath() {
+    public Stack<Location> findPath(Location start, Location end) {
         Stack<Location> path = new Stack<>();
 
         Queue<SubPath> queue = new LinkedList<>();
@@ -47,5 +44,10 @@ public class BreadthSearch extends PathFinder {
             }
         }
         return path;
+    }
+
+    @Override
+    public MapHelpers.Algorithm getAlg() {
+        return MapHelpers.Algorithm.BFS;
     }
 }
