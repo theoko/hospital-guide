@@ -1,5 +1,6 @@
 package map;
 
+import helpers.MapHelpers;
 import models.map.Location;
 import models.map.SubPath;
 
@@ -9,12 +10,8 @@ import java.util.Stack;
 
 public class DepthSearch extends PathFinder {
 
-    public DepthSearch(Location start, Location end) {
-        super(start, end);
-    }
-
     @Override
-    public Stack<Location> findPath() {
+    public Stack<Location> findPath(Location start, Location end) {
         Stack<Location> path = new Stack<>();
 
         Stack<SubPath> stack = new Stack<>();
@@ -49,5 +46,10 @@ public class DepthSearch extends PathFinder {
             }
         }
         return path;
+    }
+
+    @Override
+    public MapHelpers.Algorithm getAlg() {
+        return MapHelpers.Algorithm.DFS;
     }
 }

@@ -16,6 +16,10 @@ import java.awt.*;
 
 public class MapHelpers {
 
+    public enum Algorithm {
+        ASTAR, DFS, BFS
+    }
+
     public static double clamp(double value, double min, double max) {
         if (value < min)
             return min;

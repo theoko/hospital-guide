@@ -133,6 +133,9 @@
                 <Tab style="-fx-background-color: #022D5A;" text="User Dashboard">
                     <fx:include source="CreateUser.fxml" />
                 </Tab>
+                <Tab style="-fx-background-color: #022D5A;" text="Settings">
+                    <fx:include source="SettingsScreen.fxml" />
+                </Tab>
             </tabs>
         </JFXTabPane>
     </children>

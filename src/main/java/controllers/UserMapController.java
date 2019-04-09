@@ -6,6 +6,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import map.MapDisplay;
+import map.PathFinder;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -22,6 +23,7 @@ public class UserMapController extends MapController {
     @Override
     public void logOut(MouseEvent event) {
         event.consume();
+        tempStart = PathFinder.getDefLocation();
         ScreenController.logOut(btnReturn);
         try {
             ScreenController.activate(Constants.Routes.WELCOME);
