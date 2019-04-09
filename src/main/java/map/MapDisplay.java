@@ -1,5 +1,6 @@
 package map;
 
+import controllers.MapController;
 import controllers.ScreenController;
 import helpers.Constants;
 import helpers.UIHelpers;
@@ -56,8 +57,9 @@ public class MapDisplay {
      * Display the graph on a map for the custodian (no halls)
      * @param panes
      */
-    public static void displayCust(AnchorPane[] panes) {
+    public static void displayCust(MapController mc, AnchorPane[] panes) {
         Map map = MapParser.parse();
+        mc.setMap(map);
         displayNodesCust(map, panes);
     }
 

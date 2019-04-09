@@ -57,4 +57,17 @@ public class User {
         this.userType = userType;
         UserTable.updateUser(this);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof User) {
+            if(((User) obj).getUserID()==(this.getUserID())){
+                return true;
+            }else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
 }
