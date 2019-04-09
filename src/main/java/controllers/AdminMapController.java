@@ -137,6 +137,9 @@ public class AdminMapController extends MapController {
 
         JFXAutoCompletePopup<String> autoCompletePopup = new JFXAutoCompletePopup<>();
 
+        autoCompletePopup.setSelectionHandler(event -> {
+            searchBox.setText(event.getObject());
+        });
 
         // Add search box to layout
         outerTabAnchor.getChildren().add(searchBox);
@@ -153,17 +156,16 @@ public class AdminMapController extends MapController {
 
                 if(results.size() > 0) {
 
+                    autoCompletePopup.getSuggestions().clear();
                     for(String word : results) {
-
                         autoCompletePopup.getSuggestions().add(word);
-//                        searchBox.get
-
                     }
 
-                    autoCompletePopup.show(searchBox.getClip());
+                    autoCompletePopup.show(searchBox);
 
                 } else {
 
+                    autoCompletePopup.getSuggestions().clear();
                     autoCompletePopup.hide();
 
                 }
