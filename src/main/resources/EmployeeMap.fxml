@@ -1,52 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTabPane?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.text.Font?>
 <?import javafx.scene.layout.HBox?>
-<?import com.jfoenix.controls.JFXButton?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0"
-            prefWidth="1200.0" stylesheets="@css/colorScheme.css" xmlns="http://javafx.com/javafx/8.0.171"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EmployeeMapController">
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" stylesheets="@css/colorScheme.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EmployeeMapController">
     <children>
-        <JFXTabPane prefHeight="700.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0"
-                    AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <JFXTabPane prefHeight="700.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <tabs>
                 <Tab style="-fx-background-color: #022D5A;" text="Pathfinder">
-                    <AnchorPane fx:id="outerTabAnchor" layoutX="0.0" layoutY="0.0" prefHeight="700.0"
-                                prefWidth="1200.0">
+                    <AnchorPane fx:id="outerTabAnchor" layoutX="0.0" layoutY="0.0" prefHeight="700.0" prefWidth="1200.0">
                         <children>
-                            <AnchorPane fx:id="tabAnchor" layoutX="0.0" layoutY="0.0" prefHeight="700.0"
-                                        prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                        AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                <JFXTabPane prefHeight="700.0" prefWidth="1200.0" side="RIGHT"
-                                            tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0"
-                                            AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                                            AnchorPane.topAnchor="0.0">
+                            <AnchorPane fx:id="tabAnchor" layoutX="0.0" layoutY="0.0" prefHeight="700.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <JFXTabPane prefHeight="700.0" prefWidth="1200.0" side="RIGHT" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <tabs>
                                         <Tab style="-fx-background-color: #022D5A;" text="Floor 3">
                                             <content>
                                                 <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                                     <children>
-                                                        <AnchorPane fx:id="panFloor3"
-                                                                    onMouseDragged="#floorOneMapOnMouseDragged"
-                                                                    onMousePressed="#floorOneMapOnMousePressed"
-                                                                    onScroll="#floorOneMapScroll"
-                                                                    onZoom="#floorOneMapZoom"
-                                                                    onZoomFinished="#floorOneMapZoomDone"
-                                                                    prefHeight="200.0" prefWidth="200.0">
+                                                        <AnchorPane fx:id="panFloor3" onMouseDragged="#floorOneMapOnMouseDragged" onMousePressed="#floorOneMapOnMousePressed" onScroll="#floorOneMapScroll" onZoom="#floorOneMapZoom" onZoomFinished="#floorOneMapZoomDone" prefHeight="200.0" prefWidth="200.0">
                                                             <children>
-                                                                <ImageView fitHeight="1620.0" fitWidth="2581.0"
-                                                                           layoutX="1000.0" layoutY="-350.0"
-                                                                           pickOnBounds="true" preserveRatio="true">
+                                                                <ImageView fitHeight="1620.0" fitWidth="2581.0" layoutX="1000.0" layoutY="-350.0" pickOnBounds="true" preserveRatio="true">
                                                                     <image>
-                                                                        <Image url="@images/Original/03_thethirdfloor.png"/>
+                                                                        <Image url="@images/Original/03_thethirdfloor.png" />
                                                                     </image>
                                                                 </ImageView>
                                                             </children>
@@ -59,19 +42,11 @@
                                             <content>
                                                 <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                                     <children>
-                                                        <AnchorPane fx:id="panFloor2"
-                                                                    onMouseDragged="#floorOneMapOnMouseDragged"
-                                                                    onMousePressed="#floorOneMapOnMousePressed"
-                                                                    onScroll="#floorOneMapScroll"
-                                                                    onZoom="#floorOneMapZoom"
-                                                                    onZoomFinished="#floorOneMapZoomDone"
-                                                                    prefHeight="200.0" prefWidth="200.0">
+                                                        <AnchorPane fx:id="panFloor2" onMouseDragged="#floorOneMapOnMouseDragged" onMousePressed="#floorOneMapOnMousePressed" onScroll="#floorOneMapScroll" onZoom="#floorOneMapZoom" onZoomFinished="#floorOneMapZoomDone" prefHeight="200.0" prefWidth="200.0">
                                                             <children>
-                                                                <ImageView fitHeight="1620.0" fitWidth="2581.0"
-                                                                           layoutX="1000.0" layoutY="-350.0"
-                                                                           pickOnBounds="true" preserveRatio="true">
+                                                                <ImageView fitHeight="1620.0" fitWidth="2581.0" layoutX="1000.0" layoutY="-350.0" pickOnBounds="true" preserveRatio="true">
                                                                     <image>
-                                                                        <Image url="@images/Original/02_thesecondfloor.png"/>
+                                                                        <Image url="@images/Original/02_thesecondfloor.png" />
                                                                     </image>
                                                                 </ImageView>
                                                             </children>
@@ -84,19 +59,10 @@
                                             <content>
                                                 <AnchorPane prefHeight="400.0" prefWidth="700.0">
                                                     <children>
-                                                        <AnchorPane fx:id="panFloor1"
-                                                                    onMouseDragged="#floorOneMapOnMouseDragged"
-                                                                    onMousePressed="#floorOneMapOnMousePressed"
-                                                                    onScroll="#floorOneMapScroll"
-                                                                    onZoom="#floorOneMapZoom"
-                                                                    onZoomFinished="#floorOneMapZoomDone"
-                                                                    prefHeight="896.0" prefWidth="1115.0">
-                                                            <ImageView blendMode="MULTIPLY" fitHeight="1620.0"
-                                                                       fitWidth="2581.0" layoutX="1000.0"
-                                                                       layoutY="-350.0" pickOnBounds="true"
-                                                                       preserveRatio="true">
+                                                        <AnchorPane fx:id="panFloor1" onMouseDragged="#floorOneMapOnMouseDragged" onMousePressed="#floorOneMapOnMousePressed" onScroll="#floorOneMapScroll" onZoom="#floorOneMapZoom" onZoomFinished="#floorOneMapZoomDone" prefHeight="896.0" prefWidth="1115.0">
+                                                            <ImageView blendMode="MULTIPLY" fitHeight="1620.0" fitWidth="2581.0" layoutX="1000.0" layoutY="-350.0" pickOnBounds="true" preserveRatio="true">
                                                                 <image>
-                                                                    <Image url="@images/Original/01_thefirstfloor.png"/>
+                                                                    <Image url="@images/Original/01_thefirstfloor.png" />
                                                                 </image>
                                                             </ImageView>
                                                         </AnchorPane>
@@ -108,19 +74,10 @@
                                             <content>
                                                 <AnchorPane prefHeight="400.0" prefWidth="700.0">
                                                     <children>
-                                                        <AnchorPane fx:id="panFloorL1"
-                                                                    onMouseDragged="#floorOneMapOnMouseDragged"
-                                                                    onMousePressed="#floorOneMapOnMousePressed"
-                                                                    onScroll="#floorOneMapScroll"
-                                                                    onZoom="#floorOneMapZoom"
-                                                                    onZoomFinished="#floorOneMapZoomDone"
-                                                                    prefHeight="896.0" prefWidth="1115.0">
-                                                            <ImageView blendMode="MULTIPLY" fitHeight="1620.0"
-                                                                       fitWidth="2581.0" layoutX="1000.0"
-                                                                       layoutY="-350.0" pickOnBounds="true"
-                                                                       preserveRatio="true">
+                                                        <AnchorPane fx:id="panFloorL1" onMouseDragged="#floorOneMapOnMouseDragged" onMousePressed="#floorOneMapOnMousePressed" onScroll="#floorOneMapScroll" onZoom="#floorOneMapZoom" onZoomFinished="#floorOneMapZoomDone" prefHeight="896.0" prefWidth="1115.0">
+                                                            <ImageView blendMode="MULTIPLY" fitHeight="1620.0" fitWidth="2581.0" layoutX="1000.0" layoutY="-350.0" pickOnBounds="true" preserveRatio="true">
                                                                 <image>
-                                                                    <Image url="@images/Original/00_thelowerlevel1.png"/>
+                                                                    <Image url="@images/Original/00_thelowerlevel1.png" />
                                                                 </image>
                                                             </ImageView>
                                                         </AnchorPane>
@@ -132,19 +89,10 @@
                                             <content>
                                                 <AnchorPane prefHeight="400.0" prefWidth="700.0">
                                                     <children>
-                                                        <AnchorPane fx:id="panFloorL2"
-                                                                    onMouseDragged="#floorOneMapOnMouseDragged"
-                                                                    onMousePressed="#floorOneMapOnMousePressed"
-                                                                    onScroll="#floorOneMapScroll"
-                                                                    onZoom="#floorOneMapZoom"
-                                                                    onZoomFinished="#floorOneMapZoomDone"
-                                                                    prefHeight="896.0" prefWidth="1115.0">
-                                                            <ImageView blendMode="MULTIPLY" fitHeight="1620.0"
-                                                                       fitWidth="2581.0" layoutX="1000.0"
-                                                                       layoutY="-350.0" pickOnBounds="true"
-                                                                       preserveRatio="true">
+                                                        <AnchorPane fx:id="panFloorL2" onMouseDragged="#floorOneMapOnMouseDragged" onMousePressed="#floorOneMapOnMousePressed" onScroll="#floorOneMapScroll" onZoom="#floorOneMapZoom" onZoomFinished="#floorOneMapZoomDone" prefHeight="896.0" prefWidth="1115.0">
+                                                            <ImageView blendMode="MULTIPLY" fitHeight="1620.0" fitWidth="2581.0" layoutX="1000.0" layoutY="-350.0" pickOnBounds="true" preserveRatio="true">
                                                                 <image>
-                                                                    <Image url="@images/Original/00_thelowerlevel2.png"/>
+                                                                    <Image url="@images/Original/00_thelowerlevel2.png" />
                                                                 </image>
                                                             </ImageView>
                                                         </AnchorPane>
@@ -167,7 +115,6 @@
                                                 </Label>
                                                 <HBox alignment="TOP_CENTER" prefHeight="34.0" prefWidth="341.0" spacing="15.0">
                                                     <children>
-                                                        <JFXButton fx:id="btnSettings" buttonType="RAISED" prefHeight="60.0" prefWidth="150.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Settings" />
                                                         <JFXButton fx:id="btnReturn" buttonType="RAISED" onMouseClicked="#logOut" prefHeight="60.0" prefWidth="150.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Logout" />
                                                     </children>
                                                 </HBox>
@@ -180,13 +127,13 @@
                     </AnchorPane>
                 </Tab>
                 <Tab style="-fx-background-color: #022D5A;" text="Room Booking">
-                    <fx:include source="RoomBookingWindow.fxml"/>
+                    <fx:include source="RoomBookingWindow.fxml" />
                 </Tab>
-                <Tab style="-fx-background-color: #022D5A;" text="Workspaces" >
-                    <fx:include source="Workspace.fxml"/>
+                <Tab style="-fx-background-color: #022D5A;" text="Workspaces">
+                    <fx:include source="Workspace.fxml" />
                 </Tab>
-                <Tab style="-fx-background-color: #022D5A;" text="Requests" >
-                    <fx:include source="requests/Requests.fxml"/>
+                <Tab style="-fx-background-color: #022D5A;" text="Requests">
+                    <fx:include source="requests/Requests.fxml" />
                 </Tab>
             </tabs>
         </JFXTabPane>
