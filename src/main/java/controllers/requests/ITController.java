@@ -78,11 +78,6 @@ public class ITController {
 
     }
 
-    public void btnEnable(Event event) {
-
-
-    }
-
     public void setReqTime(ActionEvent event) {
         event.consume();
         if(cmbTime.getValue() == LATER)
@@ -99,11 +94,11 @@ public class ITController {
         tblRequestID.setCellValueFactory(new PropertyValueFactory<>("RequestID"));
         tblRequestPrior.setCellValueFactory(new PropertyValueFactory<>("Priority"));
         tblRequestType.setCellValueFactory(new PropertyValueFactory<>("Type"));
-        tblRequestDesc.setCellValueFactory(new PropertyValueFactory<>("Description"));
-        tblRequestBuild.setCellValueFactory(new PropertyValueFactory<>("Building"));
+        tblRequestDesc.setCellValueFactory(new PropertyValueFactory<>("Desc"));
+        tblRequestBuild.setCellValueFactory(new PropertyValueFactory<>("Build"));
         tblRequestRoom.setCellValueFactory(new PropertyValueFactory<>("Room"));
         tblRequestTime.setCellValueFactory(new PropertyValueFactory<>("Time"));
-        tblRequestUser.setCellValueFactory(new PropertyValueFactory<>("Requester"));
+        tblRequestUser.setCellValueFactory(new PropertyValueFactory<>("User"));
         tblIT.setItems(ITreqs);
         if(ITDetails != null) {
             ITreqs.clear();
@@ -116,8 +111,7 @@ public class ITController {
         event.consume();
 
         if(txtDesc != null && cmbType.getValue() != null && cmbPriority.getValue() != null && cmbBuilding.getValue() != null && cmbBuilding.getValue() != null) {
-            //String desc = txtDesc.getText();
-            String desc = "TEST";
+            String desc = txtDesc.getText();
             String priority = (String) cmbPriority.getValue();
             String type = (String) cmbType.getValue();
             String buildcmb = (String) cmbBuilding.getValue();
@@ -170,9 +164,10 @@ public class ITController {
                     room = "WZC";
                     break;
             }
+            System.out.println(UserHelpers.getCurrentUser().toString());
             IT req = new IT(requestID++, IT.Priority.valueOf(priority), IT.Type.valueOf(type), desc, IT.Building.valueOf(build), IT.Room.valueOf(room), reqTime, UserHelpers.getCurrentUser().toString());
             ITDetails.add(req);
-            ITreqs.clear();
+          //  ITreqs.clear();
             ITreqs.addAll(ITDetails);
             tblIT.refresh();
         }
