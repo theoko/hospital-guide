@@ -10,6 +10,7 @@ import helpers.UserHelpers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -93,11 +94,11 @@ public class ITController {
         tblRequestID.setCellValueFactory(new PropertyValueFactory<>("RequestID"));
         tblRequestPrior.setCellValueFactory(new PropertyValueFactory<>("Priority"));
         tblRequestType.setCellValueFactory(new PropertyValueFactory<>("Type"));
-        tblRequestDesc.setCellValueFactory(new PropertyValueFactory<>("Description"));
-        tblRequestBuild.setCellValueFactory(new PropertyValueFactory<>("Building"));
+        tblRequestDesc.setCellValueFactory(new PropertyValueFactory<>("Desc"));
+        tblRequestBuild.setCellValueFactory(new PropertyValueFactory<>("Build"));
         tblRequestRoom.setCellValueFactory(new PropertyValueFactory<>("Room"));
         tblRequestTime.setCellValueFactory(new PropertyValueFactory<>("Time"));
-        tblRequestUser.setCellValueFactory(new PropertyValueFactory<>("Requester"));
+        tblRequestUser.setCellValueFactory(new PropertyValueFactory<>("User"));
         tblIT.setItems(ITreqs);
         if(ITDetails != null) {
             ITreqs.clear();
@@ -108,71 +109,74 @@ public class ITController {
 
     public void sendRequest(MouseEvent event) {
         event.consume();
-        String desc = txtDesc.getText();
-        String priority = (String) cmbPriority.getValue();
-        String type = (String) cmbType.getValue();
-        String buildcmb = (String) cmbBuilding.getValue();
-        String build = "";
-        switch (buildcmb) {
-            case "BTM":
-                build = "BTM";
-                break;
-            case "45 Francis":
-                build = "FRAN45";
-                break;
-            case "Tower":
-                build = "TOWER";
-                break;
-            case "15 Francis":
-                build = "FRAN15";
-                break;
-            case "Shapiro":
-                build = "SHAPIRO";
-                break;
+
+        if(txtDesc != null && cmbType.getValue() != null && cmbPriority.getValue() != null && cmbBuilding.getValue() != null && cmbBuilding.getValue() != null) {
+            String desc = txtDesc.getText();
+            String priority = (String) cmbPriority.getValue();
+            String type = (String) cmbType.getValue();
+            String buildcmb = (String) cmbBuilding.getValue();
+            String build = "";
+            switch (buildcmb) {
+                case "BTM":
+                    build = "BTM";
+                    break;
+                case "45 Francis":
+                    build = "FRAN45";
+                    break;
+                case "Tower":
+                    build = "TOWER";
+                    break;
+                case "15 Francis":
+                    build = "FRAN15";
+                    break;
+                case "Shapiro":
+                    build = "SHAPIRO";
+                    break;
+            }
+            String roomcmb = (String) cmbRoom.getValue();
+            String room = "";
+            switch (roomcmb) {
+                case "Conference Room A":
+                    room = "CONFA";
+                    break;
+                case "Classroom A":
+                    room = "CLASSA";
+                    break;
+                case "Work Zone A":
+                    room = "WZA";
+                    break;
+                case "Conference Room B":
+                    room = "CONFB";
+                    break;
+                case "Classroom B":
+                    room = "CLASSB";
+                    break;
+                case "Work Zone B":
+                    room = "WZB";
+                    break;
+                case "Conference Room C":
+                    room = "CONFC";
+                    break;
+                case "Classroom C":
+                    room = "CLASSC";
+                    break;
+                case "Work Zone C":
+                    room = "WZC";
+                    break;
+            }
+            System.out.println(UserHelpers.getCurrentUser().toString());
+            IT req = new IT(requestID++, IT.Priority.valueOf(priority), IT.Type.valueOf(type), desc, IT.Building.valueOf(build), IT.Room.valueOf(room), reqTime, UserHelpers.getCurrentUser().toString());
+            ITDetails.add(req);
+          //  ITreqs.clear();
+            ITreqs.addAll(ITDetails);
+            tblIT.refresh();
         }
-        String roomcmb = (String) cmbRoom.getValue();
-        String room = "";
-        switch (roomcmb) {
-            case "Conference Room A":
-                room = "CONFA";
-                break;
-            case "Classroom A":
-                room = "CLASSA";
-                break;
-            case "Work Zone A":
-                room = "WZA";
-                break;
-            case "Conference Room B":
-                room = "CONFB";
-                break;
-            case "Classroom B":
-                room = "CLASSB";
-                break;
-            case "Work Zone B":
-                room = "WZB";
-                break;
-            case "Conference Room C":
-                room = "CONFC";
-                break;
-            case "Classroom C":
-                room = "CLASSC";
-                break;
-            case "Work Zone C":
-                room = "WZC";
-                break;
-        }
-        IT req = new IT(requestID++, IT.Priority.valueOf(priority), IT.Type.valueOf(type), desc, IT.Building.valueOf(build), IT.Room.valueOf(room), reqTime, UserHelpers.getCurrentUser().toString());
-        ITDetails.add(req);
-        ITreqs.clear();
-        ITreqs.addAll(ITDetails);
-        tblIT.refresh();
+
     }
 
     public void completeReq(MouseEvent event) {
         event.consume();
-        event.consume();
         IT selected = tblIT.getSelectionModel().getSelectedItem();
-        System.out.println(selected.toString());
         ITDetails.remove(selected);
         ITreqs.clear();
         ITreqs.addAll(ITDetails);
