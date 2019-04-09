@@ -3,6 +3,7 @@ package database;
 import helpers.Constants;
 import models.map.Location;
 import models.sanitation.SanitationRequest;
+import models.user.User;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -10,9 +11,12 @@ import java.util.Collections;
 
 public class SanitationTable {
 
-    private static void SanitationTable() {}
+    /**
+     * Creates empty sanitation table
+     */
+    public static void createTable() {
 
-    public static void createTable(){
+        // Create statement
         Statement statement = null;
         try {
             statement = Database.getConnection().createStatement();
@@ -20,18 +24,23 @@ public class SanitationTable {
             e.printStackTrace();
         }
 
-        String sanitationTable = "CREATE TABLE " + Constants.SANITATION_TABLE + "(" +
-                "requestID INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1)," +
-                "nodeID VARCHAR(100) References " + Constants.LOCATION_TABLE + " (nodeID), " +
-                "priority VARCHAR(10), " +
-                "description VARCHAR(100), " +
-                "status VARCHAR(100), " +
-                "userID VARCHAR(100), " +
-                "CONSTRAINT nodeIDClean_fk FOREIGN KEY(nodeID) REFERENCES " + Constants.LOCATION_TABLE + "(nodeID)," +
-                "CONSTRAINT priority_enum CHECK (priority in ('LOW', 'MEDIUM', 'HIGH')), " +
-                "CONSTRAINT status_enum CHECK (status in ('INCOMPLETE', 'COMPLETE')))";
+        // Attempt to create table
         try {
-            statement.execute(sanitationTable);
+            statement.execute(
+                    "CREATE TABLE " + Constants.SANITATION_TABLE + "(" +
+                            "requestID INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1)," +
+                            "nodeID VARCHAR(100) References " + Constants.LOCATION_TABLE + " (nodeID), " +
+                            "priority VARCHAR(10), " +
+                            "status VARCHAR(100), " +
+                            "description VARCHAR(100), " +
+                            "requesterID INT REFERENCES " + Constants.USERS_TABLE + "(userID), " +
+                            "requestTime TIMESTAMP, " +
+                            "servicerID INT REFERENCES " + Constants.USERS_TABLE + "(userID), " +
+                            "claimedTime TIMESTAMP, " +
+                            "completedTime TIMESTAMP, " +
+                            "CONSTRAINT priority_enum CHECK (priority in ('LOW', 'MEDIUM', 'HIGH')), " +
+                            "CONSTRAINT status_enum CHECK (status in ('INCOMPLETE', 'COMPLETE')))"
+            );
         } catch (SQLException | NullPointerException e) {
             e.printStackTrace();
         }
@@ -40,30 +49,37 @@ public class SanitationTable {
     /**
      * @param request Sanitation request to add.
      * @return Boolean indicating success of add.
-     * @brief Attempts to add sanitation request to the database.
+     * @brief Attempts to add NEW sanitation request to the database.
+     * NOTE: Expects servicer and servicer timestamps to be NULL because it is a NEW request.
      */
     public static boolean addSanitationRequest(SanitationRequest request) {
+
         // Get data from request
-        Location location = request.getLocationObj();
-        SanitationRequest.Priority priority = request.getPriorityObj();
+        String nodeID = request.getLocation().getNodeID();
+        String priority = request.getPriority().name();
+        String status = request.getStatus().name();
         String description = request.getDescription();
-        SanitationRequest.Status status = request.getStatusObj();
-        String userID = request.getUser();
+        int requesterID = request.getRequester().getUserID();
+        Timestamp requestTime = request.getRequestTime();
+        User requester = request.getRequester();
 
         try {
             // Attempt to add request to database
             PreparedStatement statement = Database.getConnection().prepareStatement(
                     "INSERT INTO " + Constants.SANITATION_TABLE +
-                            " (NODEID, PRIORITY, DESCRIPTION, STATUS, USERID)" +
-                            " VALUES (?, ?, ?, ?, ?)"
+                            " (nodeID, priority, status, description, requesterID, requestTime)" +
+                            " VALUES (?, ?, ?, ?, ?, ?)"
             );
-            statement.setString(1, location.getNodeID());
-            statement.setString(2, priority.name());
-            statement.setString(3, description);
-            statement.setString(4, status.name());
-            statement.setString(5, userID);
+            statement.setString(1, nodeID);
+            statement.setString(2, priority);
+            statement.setString(3, status);
+            statement.setString(4, description);
+            statement.setInt(5, requesterID);
+            statement.setTimestamp(6, requestTime);
             return statement.execute();
+
         } catch (SQLException exception) {
+
             // Print an exception message
             System.out.println("Sanitation Request (" + description + ") could not be added.");
             exception.printStackTrace();
@@ -73,8 +89,26 @@ public class SanitationTable {
     }
 
     /**
-     * @return Boolean indicating success of table drop.
+     * Deletes sanitation request with same ID as given request.
+     * @return Boolean indicating if request was deleted.
+     */
+    public static boolean deleteSanitationRequest(SanitationRequest request) {
+        int requestID = request.getRequestID();
+        try {
+            PreparedStatement statement = Database.getConnection().prepareStatement(
+                    "DELETE FROM " + Constants.SANITATION_TABLE + " WHERE requestID=?");
+            statement.setInt(1, requestID);
+            return statement.execute();
+        } catch (SQLException exception) {
+            System.out.println("Failed to delete sanitation request with ID: " + requestID);
+            exception.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
      * @brief Attempts to drop sanitation table.
+     * @return Boolean indicating success of table drop.
      */
     public static boolean dropSanitationTable() {
         try {
@@ -101,19 +135,28 @@ public class SanitationTable {
             while (resultSet.next()) {
 
                 // Build sanitation request fields from resultSet
-                int sanitationID = resultSet.getInt("REQUESTID");
+                int sanitationID = resultSet.getInt("requestID");
                 Location location = LocationTable.getLocationByID(
-                        resultSet.getString("NODEID"));
+                        resultSet.getString("nodeID"));
                 SanitationRequest.Priority priority =
                         SanitationRequest.Priority.valueOf(
-                                resultSet.getString("PRIORITY"));
-                String description = resultSet.getString("DESCRIPTION");
-                SanitationRequest.Status status = SanitationRequest.Status.valueOf(resultSet.getString("STATUS"));
-                String userID = resultSet.getString("USERID");
+                                resultSet.getString("priority"));
+                SanitationRequest.Status status =
+                        SanitationRequest.Status.valueOf(
+                                resultSet.getString("status"));
+                String description = resultSet.getString("description");
+                User requester = UserTable.getUserByID(
+                        resultSet.getInt("requesterID"));
+                Timestamp requestTime = resultSet.getTimestamp("requestTime");
+                User servicer = UserTable.getUserByID(
+                        resultSet.getInt("servicerID"));
+                Timestamp claimedTime = resultSet.getTimestamp("claimedTime");
+                Timestamp completedTime = resultSet.getTimestamp("completedTime");
 
                 // Create and add sanitation request to list
                 SanitationRequest sanitationRequest = new SanitationRequest(
-                        sanitationID, location, priority, description, status, userID);
+                        sanitationID, location, priority, status, description,
+                        requester, requestTime, servicer, claimedTime, completedTime);
                 sanitationRequests.add(sanitationRequest);
             }
 
@@ -131,24 +174,42 @@ public class SanitationTable {
         }
     }
 
+    /**
+     * Updates sanitation request with same ID as given request with:
+     * Only changes status, servicerID, claimedTime, and completedTime.
+     * @param request Updated sanitation request.
+     */
     public static void editSanitationRequest(SanitationRequest request) {
-        SanitationRequest.Status status = request.getStatusObj();
-        String userID = request.getUser();
+
+        // Get updated data from request
         int requestID = request.getRequestID();
+        String status = request.getStatus().name();
+        User servicer = request.getServicer();
+        Timestamp claimedTime = request.getClaimedTime();
+        Timestamp completedTime = request.getCompletedTime();
+
         try {
+
             // Attempt to remove request from database
             PreparedStatement statement = Database.getConnection().prepareStatement(
-                    "UPDATE " + Constants.SANITATION_TABLE + " SET STATUS=?, USERID=? WHERE REQUESTID=?"
+                    "UPDATE " + Constants.SANITATION_TABLE +
+                            " SET status=?, servicerID=?, claimedTime=?, completedTime=? WHERE requestID=?"
             );
-            statement.setString(1, status.name());
-            statement.setString(2, userID);
-            statement.setInt(3, requestID);
+            statement.setString(1, status);
+            if (servicer == null) statement.setNull(2, java.sql.Types.INTEGER);
+            else statement.setInt(2, servicer.getUserID());
+            statement.setTimestamp(3, claimedTime);
+            statement.setTimestamp(4, completedTime);
+            statement.setInt(5, requestID);
             statement.execute();
+
         } catch (SQLException exception) {
+
             // Print an exception message
             System.out.println("Sanitation Request Removal Exception:");
             exception.printStackTrace();
             System.out.println();
+
         }
     }
 }

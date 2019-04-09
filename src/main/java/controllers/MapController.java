@@ -10,6 +10,7 @@ import javafx.scene.input.ZoomEvent;
 import javafx.scene.layout.AnchorPane;
 import map.PathFinder;
 import models.map.Location;
+import models.map.Map;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -24,7 +25,7 @@ public abstract class MapController implements Initializable {
     protected AnchorPane[] panes;
     protected double sceneX, sceneY;
     protected double translateX, translateY;
-
+    protected Map map;
     protected static String tempStart;
 
     @Override
@@ -116,6 +117,10 @@ public abstract class MapController implements Initializable {
 
     public static void setTempStart(String tempStart) {
         MapController.tempStart = tempStart;
+    }
+
+    public void setMap(Map map) {
+        this.map = map;
     }
 
     public AnchorPane determinePanMapFromFloor(String floor) {

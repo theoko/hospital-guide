@@ -24,6 +24,7 @@ public class Location {
     private Location parent;
     private boolean available;
 
+
     public Location(String nodeID, int xCord, int yCord, String floor, String building, Constants.NodeType nodeType, String longName, String shortName) {
         this.nodeID = nodeID;
         this.xCord = xCord;

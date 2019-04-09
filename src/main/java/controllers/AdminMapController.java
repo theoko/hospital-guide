@@ -5,14 +5,20 @@ import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXToggleButton;
 import database.Database;
 import database.EdgeTable;
+import database.SanitationTable;
 import helpers.Constants;
 import helpers.MapHelpers;
 import helpers.UIHelpers;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -21,9 +27,12 @@ import javafx.scene.shape.Line;
 import map.MapDisplay;
 import models.map.Edge;
 import models.map.Location;
+import models.sanitation.SanitationRequest;
+
 import models.search.SearchEngine;
 
 import java.awt.*;
+import java.util.List;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -32,6 +41,23 @@ public class AdminMapController extends MapController {
     public JFXButton btnBooking;
     @FXML
     private JFXToggleButton enableEdge, enableNode;
+
+
+    public TableView<SanitationRequest> tblData;
+    public TableColumn<SanitationRequest,String> tblLocation;
+    public TableColumn<SanitationRequest,String> tblPriority;
+    public TableColumn<SanitationRequest,String> tblStatus;
+    public TableColumn<SanitationRequest,String> tblDescription;
+    public TableColumn<SanitationRequest,String> tblRequester;
+    public TableColumn<SanitationRequest,String> tblClaimTime;
+    public TableColumn<SanitationRequest,String> tblServicer;
+    public TableColumn<SanitationRequest,String> tblServiceTime;
+
+    ObservableList<SanitationRequest> spills = FXCollections.observableArrayList();
+
+    public JFXButton btnDelete;
+
+
 
     private static boolean enableAddNode = false;
     private static boolean enableEditEdge = false;
@@ -122,6 +148,10 @@ public class AdminMapController extends MapController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
+        // Set tooltip
+
+        initSanitation();
+        updateSanitation();
 
         MapDisplay.displayAdmin(panes);
         configVisualRealtimeController();
@@ -145,6 +175,12 @@ public class AdminMapController extends MapController {
 
             }
         });
+
+        tblData.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {// only enable btns if item selected
+            btnDelete.setDisable(false);
+
+        });
+
     }
 
     public void clickDownload(MouseEvent event) throws Exception {
@@ -180,6 +216,14 @@ public class AdminMapController extends MapController {
 //        panMap.getChildren().remove(c);
 //
 //    }
+
+    public void deleteSanitationRequest(){
+        SanitationRequest selected = tblData.getSelectionModel().getSelectedItem();
+        SanitationTable.deleteSanitationRequest(selected);
+        updateSanitation();
+        tblData.refresh();
+    }
+
 
     @Override
     public void logOut(MouseEvent event) {
@@ -249,4 +293,26 @@ public class AdminMapController extends MapController {
         VisualRealtimeController.addPanMap(panFloorL2);
 
     }
+
+    private void initSanitation(){
+        tblLocation.setCellValueFactory(new PropertyValueFactory<>("LocationShortName"));
+        tblPriority.setCellValueFactory(new PropertyValueFactory<>("Priority"));
+        tblStatus.setCellValueFactory(new PropertyValueFactory<>("Status"));
+        tblDescription.setCellValueFactory(new PropertyValueFactory<>("Description"));
+        //tblUser.setCellValueFactory(new PropertyValueFactory<>("User"));
+        tblRequester.setCellValueFactory(new PropertyValueFactory<>("RequesterUserName"));
+        tblClaimTime.setCellValueFactory(new PropertyValueFactory<>("ClaimedTime"));
+        tblServiceTime.setCellValueFactory(new PropertyValueFactory<>("CompletedTime"));
+        tblServicer.setCellValueFactory(new PropertyValueFactory<>("ServicerUserName"));
+        System.out.println(spills.toString());
+        tblData.setItems(spills);
+    }
+
+    private void updateSanitation() {
+        List<SanitationRequest> lstReqs = SanitationTable.getSanitationRequests();
+        if(lstReqs != null) {
+            spills.setAll(lstReqs);
+        }
+    }
 }
+

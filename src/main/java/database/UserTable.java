@@ -23,7 +23,7 @@ public class UserTable {
         }
         String usersTable = "CREATE TABLE " + Constants.USERS_TABLE +
                 "(userID INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1)," +
-                " username VARCHAR(32), " +
+                " username VARCHAR(32)," +
                 " password VARCHAR(32)," +
                 " userType VARCHAR(32))";
 
