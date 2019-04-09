@@ -78,7 +78,7 @@
                                                     <Font size="24.0" />
                                                 </font>
                                             </Label>
-                                 <JFXDatePicker fx:id="datDeliveryDate" promptText="Select Date" />
+                                            <JFXDatePicker fx:id="datDeliveryDate" promptText="Select Date" />
                                         </children>
                                     </HBox>
                                     <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
@@ -95,8 +95,8 @@
                             </VBox>
                             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                                 <children>
-                                    <JFXButton fx:id="btnSendRequest" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" prefHeight="45.0" prefWidth="205.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Send Request" textAlignment="CENTER" />
-                                    <JFXButton fx:id="btnReturn1" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" prefHeight="11.0" prefWidth="140.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Cancel" textAlignment="CENTER" />
+                                    <JFXButton fx:id="btnSendRequest" onMouseClicked="#sendRequest" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" prefHeight="45.0" prefWidth="205.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Send Request" textAlignment="CENTER" />
+                                    <JFXButton fx:id="btnReturn1" onMouseClicked="#cancelScr" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" prefHeight="11.0" prefWidth="140.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Cancel" textAlignment="CENTER" />
                                 </children>
                             </HBox>
                         </children>
@@ -113,14 +113,14 @@
                         <JFXButton fx:id="btnReturn" onMouseClicked="#cancelScr" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" layoutX="1044.0" layoutY="618.0" prefHeight="45.0" prefWidth="147.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Go Back" textAlignment="CENTER" />
                         <VBox layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="607.0" prefWidth="1200.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
                             <children>
-                                <TableView fx:id="tblIT" prefHeight="617.0" prefWidth="665.0">
+                                <TableView fx:id="tblFlorist" prefHeight="617.0" prefWidth="665.0">
                                     <columns>
-                                        <TableColumn fx:id="tblRecipientName" prefWidth="100.0" text="Recipient Name" />
-                                        <TableColumn fx:id="tblRFlowerType" prefWidth="100.0" text="Flower Type" />
-                                        <TableColumn fx:id="Message" prefWidth="140.0" text="Message" />
-                                        <TableColumn fx:id="tblDate" prefWidth="300.0" text="Date" />
+                                        <TableColumn fx:id="tblRecipientName" prefWidth="200.0" text="RecipientName" />
+                                        <TableColumn fx:id="tblRFlowerType" prefWidth="100.0" text="FlowerType" />
+                                        <TableColumn fx:id="tblMessage" prefWidth="140.0" text="Message" />
                                         <TableColumn fx:id="tblTime" prefWidth="140.0" text="Time" />
-
+                                        <TableColumn fx:id="tblDeliveryDate" prefWidth="300.0" text="DeliveryDate" />
+                                        <TableColumn fx:id="tblUser" prefWidth="200.0" text="User" />
                                     </columns>
                                 </TableView>
                             </children>

@@ -14,15 +14,15 @@ public class Florist {
 
     private String Message;
     private String Time;
-    private String Date;
+    private String DeliveryDate;
     private String user;
 
     public Florist(String recipientName, FlowerType flowerType, String message, String time, String date, String user) {
-        RecipientName = recipientName;
+        this.RecipientName = recipientName;
         this.flowerType = flowerType;
-        Message = message;
-        Time = time;
-        Date = date;
+        this.Message = message;
+        this.Time = time;
+        this.DeliveryDate = date;
         this.user = user;
     }
 
@@ -59,11 +59,11 @@ public class Florist {
     }
 
     public String getDate() {
-        return Date;
+        return DeliveryDate;
     }
 
     public void setDate(String date) {
-        Date = date;
+        DeliveryDate = date;
     }
 
     public String getUser() {

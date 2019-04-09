@@ -43,6 +43,7 @@ public class FlouristController {
     public TableColumn<Florist, String> tblMessage;
     public TableColumn<Florist, String> tblDeliveryDate;
     public TableColumn<Florist, String> tblTime;
+    public TableColumn<Florist, String> tblUser;
     public JFXButton btnReturn;
     public String reqTime;
     public String reqDate;
@@ -58,20 +59,9 @@ public class FlouristController {
     }
 
     public void laterTime() {
-
-        // Add listeners for date and time pickers
-        datTime.valueProperty().addListener((observable, oldValue, newValue) -> {
-            time = newValue;
-            reqTime = time.toString();
-        });
-
-        datDeliveryDate.valueProperty().addListener((observable, oldValue, newValue) -> {
-            Deliverydate = newValue;
-            reqDate = Deliverydate.toString();
-        });
-
+        reqDate = datDeliveryDate.getValue().toString();
+        reqTime = datTime.getValue().toString();
     }
-
 
     List<Florist> FloristDetails = new ArrayList<>();
 
@@ -79,8 +69,9 @@ public class FlouristController {
         tblRecipientName.setCellValueFactory(new PropertyValueFactory<>("RecipientName"));
         tblRFlowerType.setCellValueFactory(new PropertyValueFactory<>("FlowerType"));
         tblMessage.setCellValueFactory(new PropertyValueFactory<>("Message"));
-        tblDeliveryDate.setCellValueFactory(new PropertyValueFactory<>("Delivery Date"));
         tblTime.setCellValueFactory(new PropertyValueFactory<>("Time"));
+        tblDeliveryDate.setCellValueFactory(new PropertyValueFactory<>("DeliveryDate"));
+        tblUser.setCellValueFactory(new PropertyValueFactory<>("User"));
         tblFlorist.setItems(Floristreqs);
         if (FloristDetails != null) {
             Floristreqs.clear();
@@ -91,20 +82,18 @@ public class FlouristController {
 
     public void sendRequest(MouseEvent event) {
         event.consume();
-
-        if (txtRecipientName != null && cmbFlowerType.getValue() != null && txtMessage != null && reqDate !=null && reqTime !=null) {
-            laterTime();
+        laterTime();
+        if (txtRecipientName != null && cmbFlowerType.getValue() != null && txtMessage != null && reqTime != null && reqDate != null) {
+            System.out.println(reqDate);
             String RecipientNametxt = txtRecipientName.getText();
             String FlowerTypecmb = (String) cmbFlowerType.getValue();
             String Messagetxt = txtMessage.getText();
             String currUser = UserHelpers.getCurrentUser().toString();
             Florist req = new Florist(RecipientNametxt, Florist.FlowerType.valueOf(FlowerTypecmb), Messagetxt, reqTime, reqDate, currUser);
             FloristDetails.add(req);
-            //  ITreqs.clear();
             Floristreqs.addAll(FloristDetails);
             tblFlorist.refresh();
         }
-
     }
 
     public void cancelScr(MouseEvent event) {
