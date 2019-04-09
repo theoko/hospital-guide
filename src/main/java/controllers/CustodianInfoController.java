@@ -6,6 +6,7 @@ import helpers.DatabaseHelpers;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import map.PathFinder;
 import models.map.Location;
 
 import java.net.URL;
@@ -22,9 +23,7 @@ public class CustodianInfoController extends PopUpController implements Initiali
 
     public JFXButton btnDirections;
     public JFXButton btnCancel;
-
-    private static boolean bolSelectedCust = false;
-    private static Location locSelectedCust;
+    public JFXButton btnStartHere;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -44,25 +43,18 @@ public class CustodianInfoController extends PopUpController implements Initiali
 
     public void btnDirections_OnClick(MouseEvent event) throws Exception {
         event.consume();
+        PathFinder.printPath(panes, map, kiosk, loc);
         ScreenController.deactivate();
-        checkSelected();
-    }
-
-    private void checkSelected() throws Exception {
-        if (bolSelectedCust) { // Two locations
-            if (!loc.equals(locSelectedCust)) {
-                ScreenController.popUp(Constants.Routes.DIRECTIONS, loc, locSelectedCust, map, panes);
-            }
-            locSelectedCust = null;
-            bolSelectedCust = false;
-        } else { // One location
-            locSelectedCust = loc;
-            bolSelectedCust = true;
-        }
     }
 
     public void btnCancel_OnClick(MouseEvent event) {
         event.consume();
+        ScreenController.deactivate();
+    }
+
+    public void btnStartHere_OnClick(MouseEvent mouseEvent) {
+        MapController.setTempStart(loc.getNodeID());
+        System.out.println("Hi");
         ScreenController.deactivate();
     }
 }

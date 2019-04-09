@@ -1,5 +1,6 @@
 package map;
 
+import helpers.MapHelpers;
 import models.map.Location;
 import models.map.SubPath;
 
@@ -10,12 +11,8 @@ import java.util.Stack;
 
 public class AStar extends PathFinder {
 
-    public AStar(Location start, Location end) {
-        super(start, end);
-    }
-
     @Override
-    public Stack<Location> findPath() {
+    public Stack<Location> findPath(Location start, Location end) {
         // Create a new stack to hold the path from start to end
         Stack<Location> path = new Stack<>();
 
@@ -71,5 +68,10 @@ public class AStar extends PathFinder {
             }
         }
         return path;
+    }
+
+    @Override
+    public MapHelpers.Algorithm getAlg() {
+        return MapHelpers.Algorithm.ASTAR;
     }
 }

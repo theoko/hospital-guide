@@ -26,7 +26,7 @@ public class RequestsController {
         ScreenController.activate(Constants.Routes.INTERPRETER);
     }
 
-    public void btnPerscription(MouseEvent mouseEvent) throws Exception {
+    public void btnPrescription(MouseEvent mouseEvent) throws Exception {
         ScreenController.activate(Constants.Routes.PERSCRIPTION);
     }
 

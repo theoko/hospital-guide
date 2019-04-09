@@ -50,7 +50,7 @@
                         <Font size="17.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton fx:id="btnPerscription" onMouseClicked="#btnPerscription" prefHeight="50.0" prefWidth="175.0" text="Perscription" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                  <JFXButton fx:id="btnPerscription" onMouseClicked="#btnPrescription" prefHeight="50.0" prefWidth="175.0" text="Prescription" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <font>
                         <Font size="17.0" />
                      </font>

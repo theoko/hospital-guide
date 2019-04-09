@@ -12,6 +12,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
+import map.PathFinder;
 import models.map.Location;
 import org.omg.DynamicAny.DynArray;
 
@@ -35,6 +36,7 @@ public class EditController extends PopUpController implements Initializable {
     public String RETL;
     public String SERV;
     public String STAI;
+    public JFXButton btnDefault;
     //public String WORK;
    // public String WRKT;
 
@@ -155,5 +157,10 @@ public class EditController extends PopUpController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 //        bookingButton.setText(Constants.BOOKING_BUTTON_TEXT);
+    }
+
+    public void btnDefault_Click(MouseEvent mouseEvent) {
+        PathFinder.setDefLocation(loc.getNodeID());
+        ScreenController.deactivate();
     }
 }

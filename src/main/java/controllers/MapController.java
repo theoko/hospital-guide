@@ -8,6 +8,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.input.ZoomEvent;
 import javafx.scene.layout.AnchorPane;
+import map.PathFinder;
 import models.map.Location;
 
 import java.net.URL;
@@ -24,6 +25,8 @@ public abstract class MapController implements Initializable {
     protected double sceneX, sceneY;
     protected double translateX, translateY;
 
+    protected static String tempStart;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         panes = new AnchorPane[] {panFloorL2, panFloorL1, panFloor1, panFloor2, panFloor3};
@@ -39,7 +42,7 @@ public abstract class MapController implements Initializable {
         }
     }
 
-    public final void floorOneMapOnMouseDragged(MouseEvent event) {
+    public void floorOneMapOnMouseDragged(MouseEvent event) {
         double offsetX = event.getSceneX() - sceneX;
         double offsetY = event.getSceneY() - sceneY;
         double newTranslateX = translateX + offsetX;
@@ -98,12 +101,21 @@ public abstract class MapController implements Initializable {
 
     public void logOut(MouseEvent event) {
         event.consume();
+        tempStart = PathFinder.getDefLocation();
         ScreenController.logOut(btnReturn);
         try {
             ScreenController.activate(Constants.Routes.LOGIN);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static String getTempStart() {
+        return tempStart;
+    }
+
+    public static void setTempStart(String tempStart) {
+        MapController.tempStart = tempStart;
     }
 
     public AnchorPane determinePanMapFromFloor(String floor) {
