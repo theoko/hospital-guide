@@ -18,7 +18,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        if(!Database.databaseExists()) {
+        if(!Database.getDatabase().databaseExists()) {
             CSVParser.parse(FileHelpers.getNodesCSV(), FileHelpers.getEdgesCSV(), FileHelpers.getWorkspacesCSV());
         }
 

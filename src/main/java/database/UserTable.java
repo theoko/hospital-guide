@@ -17,7 +17,7 @@ public class UserTable {
     public static void createTable(){
         Statement statement = null;
         try {
-            statement = Database.getConnection().createStatement();
+            statement = Database.getDatabase().getConnection().createStatement();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -47,7 +47,7 @@ public class UserTable {
             if (checkUser == null) {
 
                 PreparedStatement statement;
-                statement = Database.getConnection().prepareStatement(
+                statement = Database.getDatabase().getConnection().prepareStatement(
                         "INSERT INTO " + Constants.USERS_TABLE + " (USERNAME, PASSWORD, USERTYPE) " +
                                 "VALUES (?, ?, ?)"
                 );
@@ -76,7 +76,7 @@ public class UserTable {
         try {
 
             PreparedStatement statement;
-            statement = Database.getConnection().prepareStatement(
+            statement = Database.getDatabase().getConnection().prepareStatement(
                     "UPDATE " + Constants.USERS_TABLE + " SET USERNAME=?, PASSWORD=?, USERTYPE=?" +
                             " WHERE USERID=?"
             );
@@ -99,7 +99,7 @@ public class UserTable {
         try {
             Statement statement;
 
-            statement = Database.getConnection().createStatement();
+            statement = Database.getDatabase().getConnection().createStatement();
 
             return statement.execute("DROP TABLE " + Constants.USERS_TABLE);
 
@@ -114,7 +114,7 @@ public class UserTable {
 
             PreparedStatement statement;
 
-            statement = Database.getConnection().prepareStatement(
+            statement = Database.getDatabase().getConnection().prepareStatement(
                     "SELECT * FROM " + Constants.USERS_TABLE + " WHERE USERNAME=?"
             );
 
@@ -147,7 +147,7 @@ public class UserTable {
 
             PreparedStatement statement;
 
-            statement = Database.getConnection().prepareStatement(
+            statement = Database.getDatabase().getConnection().prepareStatement(
                     "SELECT * FROM " + Constants.USERS_TABLE + " WHERE USERID=?"
             );
 
@@ -183,7 +183,7 @@ public class UserTable {
 
             Statement statement;
 
-            statement = Database.getConnection().createStatement();
+            statement = Database.getDatabase().getConnection().createStatement();
 
             String query = "SELECT * FROM " + Constants.USERS_TABLE;
 
@@ -219,7 +219,7 @@ public class UserTable {
     public static boolean deleteUser(User user) {
         try {
             PreparedStatement statement;
-            statement = Database.getConnection().prepareStatement(
+            statement = Database.getDatabase().getConnection().prepareStatement(
                     "DELETE FROM " + Constants.USERS_TABLE + " WHERE USERID=?"
             );
             statement.setInt(1,user.getUserID());
