@@ -7,6 +7,7 @@ public class SearchEngine {
     String term;
     Set<String> results = new HashSet<>();
     Stack<String> neighbors = new Stack<>();
+    Set<String> uniqueNeighbors = new HashSet<>();
 
     public SearchEngine(String term) {
         this.term = term;
@@ -80,7 +81,15 @@ public class SearchEngine {
     public Set<String> getResults() {
 
         while(!neighbors.isEmpty()) {
-            results.add(neighbors.pop());
+
+            String key = neighbors.pop();
+
+            uniqueNeighbors.add(key);
+
+        }
+
+        for(String key : uniqueNeighbors) {
+            results.add(key);
         }
 
         return results;
