@@ -248,6 +248,11 @@ public class AdminMapController extends MapController {
         VisualRealtimeController.setPanMap(panFloorL1);
         mapOnMousePressed(event);
     }
+    public void floorGMapOnMousePressed(MouseEvent mouseEvent) {
+        VisualRealtimeController.setPanMap(panFloorG);
+        this.selectedFloor = "G";
+        mapOnMousePressed(mouseEvent);
+    }
     public void floorThreeMapOnMousePressed(MouseEvent event)  {
         VisualRealtimeController.setPanMap(panFloor3);
         this.selectedFloor = "3";
@@ -284,11 +289,13 @@ public class AdminMapController extends MapController {
         panFloor1.setId("1");
         panFloor2.setId("2");
         panFloor3.setId("3");
+        panFloorG.setId("G");
         panFloorL1.setId("L1");
         panFloorL2.setId("L2");
         VisualRealtimeController.addPanMap(panFloor1);
         VisualRealtimeController.addPanMap(panFloor2);
         VisualRealtimeController.addPanMap(panFloor3);
+        VisualRealtimeController.addPanMap(panFloorG);
         VisualRealtimeController.addPanMap(panFloorL1);
         VisualRealtimeController.addPanMap(panFloorL2);
 

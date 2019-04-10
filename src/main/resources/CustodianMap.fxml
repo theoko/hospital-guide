@@ -116,6 +116,21 @@
                                                 </AnchorPane>
                                             </content>
                                         </Tab>
+                                        <Tab style="-fx-background-color: #022D5A;" text="Floor G">
+                                            <content>
+                                                <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                                    <children>
+                                                        <AnchorPane fx:id="panFloorG" onMouseDragged="#floorOneMapOnMouseDragged" onMousePressed="#floorOneMapOnMousePressed" onScroll="#floorOneMapScroll" onZoom="#floorOneMapZoom" onZoomFinished="#floorOneMapZoomDone" prefHeight="200.0" prefWidth="200.0">
+                                                            <children>
+                                                                <ImageView fitHeight="1620.0" fitWidth="2581.0" layoutX="1000.0" layoutY="-350.0" pickOnBounds="true" preserveRatio="true">
+                                                                    <image>
+                                                                        <Image url="@images/Original/00_thegroundfloor.png" />
+                                                                    </image>
+                                                                </ImageView>
+                                                            </children>
+                                                        </AnchorPane>
+                                                    </children></AnchorPane>
+                                            </content></Tab>
                                         <Tab style="-fx-background-color: #022D5A;" text="Floor L1">
                                             <content>
                                                 <AnchorPane prefHeight="400.0" prefWidth="700.0">
@@ -190,44 +205,12 @@
                         </children>
                     </AnchorPane>
                 </Tab>
-                <!--<Tab style="-fx-background-color: #022D5A;" text="Workspaces">-->
-                    <!--<content>-->
-                        <!--<AnchorPane prefHeight="400.0" prefWidth="700.0">-->
-                            <!--<children>-->
-                                <!--<AnchorPane fx:id="workspace"-->
-                                            <!--onMouseDragged="#floorOneMapOnMouseDragged"-->
-                                            <!--onMousePressed="#floorOneMapOnMousePressed"-->
-                                            <!--onScroll="#floorOneMapScroll"-->
-                                            <!--onZoom="#floorOneMapZoom"-->
-                                            <!--onZoomFinished="#floorOneMapZoomDone"-->
-                                            <!--prefHeight="896.0" prefWidth="1115.0">-->
-                                    <!--<ImageView blendMode="MULTIPLY" fitHeight="1620.0"-->
-                                               <!--fitWidth="2581.0" layoutX="1000.0"-->
-                                               <!--layoutY="-350.0" pickOnBounds="true"-->
-                                               <!--preserveRatio="true">-->
-                                        <!--<image>-->
-                                            <!--<Image url="@images/Original/workspace.jpg"/>-->
-                                        <!--</image>-->
-                                    <!--</ImageView>-->
-                                <!--</AnchorPane>-->
-                            <!--</children>-->
-                        <!--</AnchorPane>-->
-                    <!--</content>-->
-                <!--</Tab>-->
-                <!--<Tab style="-fx-background-color: #022D5A;" text="Conference Room Booking">-->
-                    <!--<fx:include source="ConferenceRoomWindow.fxml"/>-->
-                <!--</Tab>-->
-                <!--<Tab style="-fx-background-color: #022D5A;" text="Workspace Booking">-->
-                    <!--<fx:include source="WorkspaceWindow.fxml"/>-->
-                <!--</Tab>-->
-
                 <Tab style="-fx-background-color: #022D5A;" text="Sanitation Requests">
                     <content>
                         <VBox>
                             <children>
                                 <TableView fx:id="tblData" prefHeight="629.0" onMouseClicked="#tblClick" prefWidth="1163.0">
                                     <columns>
-                                        <!--<TableColumn fx:id="tblRequestID" prefWidth="50.0" text="Request ID" />-->
                                         <TableColumn fx:id="tblLocation" prefWidth="100.0" text="Location" />
                                         <TableColumn fx:id="tblPriority" prefWidth="75.0" text="Priority" />
                                         <TableColumn fx:id="tblStatus" prefWidth="100.0" text="Status" />
@@ -258,12 +241,6 @@
                                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                     </padding>
                                 </ButtonBar>
-                                <!--<SplitMenuButton mnemonicParsing="false" text="SplitMenuButton">-->
-                                <!--<items>-->
-                                <!--<MenuItem mnemonicParsing="false" text="Action 1" />-->
-                                <!--<MenuItem mnemonicParsing="false" text="Action 2" />-->
-                                <!--</items>-->
-                                <!--</SplitMenuButton>-->
                             </children>
                         </VBox>
                     </content></Tab>

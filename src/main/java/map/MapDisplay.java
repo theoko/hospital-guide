@@ -199,12 +199,14 @@ public class MapDisplay {
                 return panes[0];
             case "L1":
                 return panes[1];
-            case "1":
+            case "G":
                 return panes[2];
-            case "2":
+            case "1":
                 return panes[3];
-            default:
+            case "2":
                 return panes[4];
+            default:
+                return panes[5];
         }
     }
 
