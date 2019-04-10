@@ -1,10 +1,20 @@
 package models.search;
 
+import edu.smu.tspell.wordnet.Synset;
+import edu.smu.tspell.wordnet.WordNetDatabase;
+import helpers.FileHelpers;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import edu.smu.tspell.wordnet.*;
+import java.util.Map;
 
 public class SearchKeywords {
 
@@ -70,7 +80,23 @@ public class SearchKeywords {
 
     public SearchKeywords() {
 
-        System.setProperty("wordnet.database.dir", SearchKeywords.class.getResource("/data/dictionary").getFile());
+        // Path to dictionary directory
+        final String pathToWordnet = "/data/dictionary.zip";
+
+        try {
+
+            // Copy files to filesystem if necessary
+            String dictionary;
+            dictionary = FileHelpers.extractFolder(pathToWordnet, "dictionary.zip");
+
+            String dictionaryPath = FileHelpers.unzipFile(dictionary, "dictionary");
+
+            // Point to dictionary location
+            System.setProperty("wordnet.database.dir", dictionaryPath);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         food.add("au bon pain");
         food.add("restaurant");

@@ -36,7 +36,9 @@ public class RoomBookingController {
     public JFXTimePicker datStartTime;
     public JFXTimePicker datEndTime;
 
+    // Buttons for booking and cancelling bookings
     public JFXButton btnBookSelected;
+    public JFXButton btnCancel;
 
     // Table that displays available rooms
     public TableView<Room> tblRooms;
@@ -268,6 +270,51 @@ public class RoomBookingController {
 
         event.consume();
         reserveRoom();
+
+    }
+
+    /**
+     * Called when user clicks on the cancel booking button
+     */
+    public void cancelReservation() {
+
+        // Get selected room
+        Room selected = tblRoomsBooked.getSelectionModel().getSelectedItem();
+
+        // Get currently authenticated user
+        User currentUser = UserHelpers.getCurrentUser();
+
+    }
+
+    /**
+     * Method to handle selected booking
+     * @param event
+     */
+    public void handleBookingCancellationSelection(MouseEvent event) {
+
+        if(event.getButton().equals(MouseButton.PRIMARY)) {
+
+            // Check if we have bookings
+            if(roomDetails != null) {
+                if(roomDetails.size() > 0 && tblRoomsBooked.getSelectionModel().getSelectedItem() != null) {
+                    btnCancel.setVisible(true);
+                } else {
+                    btnCancel.setVisible(false);
+                }
+            }
+
+        }
+
+    }
+
+    /**
+     * Method to handle the cancel booking button on click event
+     * @param event
+     */
+    public void handleBookingCancellation(MouseEvent event) {
+
+        event.consume();
+        cancelReservation();
 
     }
 

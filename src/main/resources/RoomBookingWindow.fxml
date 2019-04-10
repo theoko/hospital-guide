@@ -104,7 +104,7 @@
                   <children>
                      <SplitPane dividerPositions="0.7787979966611018" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="612.0" prefWidth="1200.0" style="-fx-box-border: transparent;">
                         <items>
-                           <TableView fx:id="tblRoomsBooked" prefHeight="617.0" prefWidth="665.0">
+                           <TableView fx:id="tblRoomsBooked" onMouseClicked="#handleBookingCancellationSelection" prefHeight="617.0" prefWidth="665.0">
                               <columns>
                                  <TableColumn fx:id="tblRoomIDBooked" prefWidth="247.0" text="Room ID" />
                                  <TableColumn fx:id="tblRoomCapacityBooked" prefWidth="240.0" text="Capacity" />
@@ -112,7 +112,7 @@
                            </TableView>
                            <VBox alignment="CENTER" spacing="10.0">
                               <children>
-                                 <JFXButton fx:id="btnCancel" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" prefHeight="60.0" prefWidth="211.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Cancel Booking" textAlignment="CENTER">
+                                 <JFXButton fx:id="btnCancel" onMouseClicked="#handleBookingCancellation" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" prefHeight="60.0" prefWidth="211.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Cancel Booking" textAlignment="CENTER">
                                     <VBox.margin>
                                        <Insets top="10.0" />
                                     </VBox.margin>
