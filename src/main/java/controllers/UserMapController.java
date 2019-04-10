@@ -1,6 +1,7 @@
 package controllers;
 
 import helpers.Constants;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import map.MapDisplay;
 import map.PathFinder;
@@ -12,7 +13,7 @@ public class UserMapController extends MapController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
-        MapDisplay.displayUser(panes);
+        MapDisplay.displayUser(panes, TextPane);
     }
 
     @Override

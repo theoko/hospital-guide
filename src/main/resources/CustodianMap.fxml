@@ -23,6 +23,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.ScrollPane?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0"
             prefWidth="1200.0" stylesheets="@css/colorScheme.css" xmlns="http://javafx.com/javafx/8.0.171"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CustodianMapController">
@@ -182,25 +184,35 @@
                                     </tabs>
                                 </JFXTabPane>
                             </AnchorPane>
-                            <AnchorPane fx:id="outerProfilePane" layoutX="260.0" layoutY="15.0" prefHeight="160.0" prefWidth="341.0" AnchorPane.rightAnchor="47.0" AnchorPane.topAnchor="15.0">
-                                <AnchorPane fx:id="profilePane" layoutX="5.0" layoutY="14.0" prefHeight="124.0" prefWidth="345.0" style="-fx-background-color: #ffffff; -fx-background-radius: 10 10 10 10; -fx-border-width: 1px 1px 1px 1px; -fx-border-color: #022D5A; -fx-border-radius: 10;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                    <children>
-                                        <VBox layoutX="4.0" layoutY="4.0" prefHeight="131.0" prefWidth="339.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
-                                            <children>
-                                                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="73.0" prefWidth="339.0" text="Welcome Custodian!" textAlignment="CENTER" textFill="#022D5A">
-                                                    <font>
-                                                        <Font name="Moon Bold" size="24.0" />
-                                                    </font>
-                                                </Label>
-                                                <HBox alignment="TOP_CENTER" prefHeight="34.0" prefWidth="341.0" spacing="15.0">
-                                                    <children>
-                                                        <JFXButton fx:id="btnReturn" buttonType="RAISED" onMouseClicked="#logOut" prefHeight="60.0" prefWidth="150.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Logout" />
-                                                    </children>
-                                                </HBox>
-                                            </children>
-                                        </VBox>
-                                    </children>
+                            <AnchorPane layoutX="260.0" layoutY="15.0" prefHeight="645.0" prefWidth="241.0" AnchorPane.rightAnchor="47.0" AnchorPane.topAnchor="15.0">
+                                <AnchorPane fx:id="outerProfilePane" layoutX="260.0" layoutY="15.0" prefHeight="160.0" prefWidth="241.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <AnchorPane fx:id="profilePane" layoutX="5.0" layoutY="14.0" prefHeight="124.0" prefWidth="345.0" style="-fx-background-color: #ffffff; -fx-background-radius: 10 10 10 10; -fx-border-width: 2px 2px 2px 2px; -fx-border-color: #022D5A; -fx-border-radius: 10;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                        <children>
+                                            <VBox layoutX="4.0" layoutY="4.0" prefHeight="131.0" prefWidth="339.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
+                                                <children>
+                                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="73.0" prefWidth="339.0" text="Welcome User!" textAlignment="CENTER" textFill="#022D5A">
+                                                        <font>
+                                                            <Font name="Moon Bold" size="24.0" />
+                                                        </font>
+                                                    </Label>
+                                                    <HBox alignment="TOP_CENTER" prefHeight="34.0" prefWidth="341.0" spacing="15.0">
+                                                        <children>
+                                                            <JFXButton fx:id="btnReturn" buttonType="RAISED" onMouseClicked="#logOut" prefHeight="60.0" prefWidth="150.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Exit" />
+                                                        </children>
+                                                    </HBox>
+                                                </children>
+                                            </VBox>
+                                        </children>
+                                    </AnchorPane>
                                 </AnchorPane>
+                                <TitledPane alignment="CENTER" expanded="false" prefHeight="0.0" prefWidth="341.0" text="Text Directions" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="170.0">
+                                    <content>
+                                        <ScrollPane fx:id="TextPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="339.0" />
+                                    </content>
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                </TitledPane>
                             </AnchorPane>
                         </children>
                     </AnchorPane>

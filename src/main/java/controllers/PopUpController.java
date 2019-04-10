@@ -1,6 +1,7 @@
 package controllers;
 
 import javafx.fxml.Initializable;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
 import models.map.Location;
@@ -14,6 +15,7 @@ public abstract class PopUpController implements Initializable {
     protected Location loc;
     protected Map map;
     protected AnchorPane[] panes;
+    public ScrollPane TextPane;
     protected Circle circle;
     protected Location kiosk;
     protected Workspace ws;
@@ -35,6 +37,10 @@ public abstract class PopUpController implements Initializable {
 
     public void setPanes(AnchorPane[] panes) {
         this.panes = panes;
+    }
+
+    public void setTextPane(ScrollPane textPane) {
+        TextPane = textPane;
     }
 
     public void setWorkspace(Workspace ws) {

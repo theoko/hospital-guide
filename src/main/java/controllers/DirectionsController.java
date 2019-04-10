@@ -51,7 +51,7 @@ public class DirectionsController extends PopUpController implements Initializab
 
     public void btnGo_OnClick(MouseEvent event) {
         event.consume();
-        PathFinder.printPath(panes, map, loc, loc2);
+        PathFinder.printPath(panes, TextPane, map, loc, loc2);
         ScreenController.deactivate();
     }
 }

@@ -8,14 +8,21 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeLineJoin;
+import javafx.scene.text.Font;
 import javafx.util.Duration;
 import models.map.Location;
 import models.map.Map;
@@ -31,10 +38,12 @@ public abstract class PathFinder {
     protected final double FLOOR_HEURISTIC = 100000;
     protected final double STRAIGHT_ANGLE = 90.0;
     protected final double TURN_SENSITIVITY = 45.0;
-    protected final double PIXEL_TO_METERS = 0.1;
+    protected final double PIXEL_TO_METERS = 0.03;
     private static double LINE_WIDTH = 3.5;
     private static double LINE_LENGTH = 5.0;
     private static double LINE_GAP = 10.0;
+    private static double SPEED = 1.4;
+    private static double FLOOR_TIME = 0.5;
 
     public static String defLocation;
 
@@ -69,19 +78,24 @@ public abstract class PathFinder {
 
     public final String txtDirections(Stack<Location> path) {
         String directions = "";
+        Location start = null;
 
         Location loc1 = null;
         Location loc2 = null;
-        Location loc3;
+        Location loc3 = null;
 
+        double distance = 0.0;
         double totDist = 0.0;
         while (!path.isEmpty()) {
             loc3 = path.pop();
+            if (loc2 == null) {
+                start = loc3;
+            }
             if (loc1 != null && loc2 != null) {
                 if (loc2.getNodeType() == Constants.NodeType.ELEV && loc3.getNodeType() == Constants.NodeType.ELEV) { // On and off the elevator
-                    directions += "Take the elevator from floor " + loc2.getFloor() + " to floor " + loc3.getFloor() + ".\n";
+                    directions += "Take the elevator from FL " + loc2.getFloor() + " to FL " + loc3.getFloor() + "\n";
                 } else if (loc2.getNodeType() == Constants.NodeType.STAI && loc3.getNodeType() == Constants.NodeType.STAI) { // On and off the stairs
-                    directions += "Take the stairs from " + loc2.getFloor() + " to floor " + loc3.getFloor() + ".\n";
+                    directions += "Take the stairs from FL " + loc2.getFloor() + " to FL " + loc3.getFloor() + "\n";
                 } else {
                     int x1 = loc1.getxCord();
                     int y1 = -1 * loc1.getyCord();
@@ -93,6 +107,7 @@ public abstract class PathFinder {
                     int y3 = -1 * loc3.getyCord();
 
                     double a = calcDist(x1, y1, x2, y2); // 1 <-> 2
+                    distance += a;
                     double b = calcDist(x2, y2, x3, y3); // 2 <-> 3
                     double c = calcDist(x1, y1, x3, y3); // 1 <-> 3
 
@@ -113,9 +128,9 @@ public abstract class PathFinder {
                         }
                         int displayDist = (int) (totDist * PIXEL_TO_METERS);
                         if (displayDist != 1) {
-                            directions += " in " + displayDist + " meters.\n";
+                            directions += " in " + displayDist + " meters\n";
                         } else {
-                            directions += " in " + displayDist + " meter.\n";
+                            directions += " in " + displayDist + " meter\n";
                         }
                         totDist = 0.0;
                     }
@@ -126,10 +141,43 @@ public abstract class PathFinder {
             loc1 = loc2;
             loc2 = loc3;
         }
+        Location end = loc3;
+        int numFloors;
+        if (start != null && end != null) {
+            numFloors = Math.abs(floorToInt(start.getFloor()) - floorToInt(end.getFloor()));
+        } else {
+            numFloors = 0;
+        }
+
+        distance = distance * PIXEL_TO_METERS;
+        directions += "Distance: " + (int) distance + " meters\n";
+        int time = (int) (distance / SPEED + numFloors * FLOOR_TIME);
+        int minutes = time / 60;
+        int seconds = time - minutes * 60;
+        directions += "Time: ";
+        if (minutes != 0) {
+            directions += minutes;
+            if (minutes != 1) {
+                directions += " minutes";
+            } else {
+                directions += " minute";
+            }
+        }
+        if (seconds != 0) {
+            if (minutes != 0) {
+                directions += " and ";
+            }
+            if (seconds != 1) {
+                directions += seconds;
+                directions += " seconds";
+            } else {
+                directions += " second";
+            }
+        }
         return directions;
     }
 
-    public static void printPath(AnchorPane[] panes, Map map, Location loc1, Location loc2) {
+    public static void printPath(AnchorPane[] panes, ScrollPane TextPane, Map map, Location loc1, Location loc2) {
         for (AnchorPane pane : panes) {
             List<Node> lstNodes1 = new ArrayList<>();
             for (Node n : pane.getChildren()) {
@@ -153,6 +201,7 @@ public abstract class PathFinder {
         PathContext context = SettingsController.getAlgType();
         Stack<Location> path = context.findPath(loc1, loc2);
         String directions = context.txtDirections((Stack<Location>) path.clone());
+        addDirections(TextPane, directions);
         HashMap<String, Location> lstLocations = map.getAllLocations();
         Location prev = null;
         while (!path.isEmpty()) {
@@ -247,5 +296,23 @@ public abstract class PathFinder {
             default:
                 return 5;
         }
+    }
+
+    private static void addDirections(ScrollPane TextPane, String directions) {
+        VBox vbox = new VBox();
+        vbox.setPadding(new Insets(10,4,10,4));
+        vbox.setSpacing(5);
+        String[] arrDirections = directions.split("\n");
+        for (String direction : arrDirections) {
+            Label lbl = new Label(direction);
+            lbl.setFont(new Font(11.9));
+            lbl.setTextFill(Color.WHITE);
+            lbl.setPrefWidth(210);
+            lbl.setStyle("-fx-background-color: #022D5A;");
+            lbl.setAlignment(Pos.CENTER);
+            lbl.setPadding(new Insets(5,4,4,5));
+            vbox.getChildren().add(lbl);
+        }
+        TextPane.setContent(vbox);
     }
 }

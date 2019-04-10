@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
@@ -184,6 +185,23 @@ public class ScreenController {
         pc.setMap(map);
         pc.setPanes(panes);
         pc.setCircle(circle);
+
+        displayPopUp(root);
+    }
+
+    public static void popUp(Constants.Routes route, Location loc, Map map, AnchorPane[] panes, Circle circle, ScrollPane TextPane) throws Exception {
+        stage = new Stage();
+        URL url = routeToURL(route);
+
+        FXMLLoader loader = new FXMLLoader(url);
+        Parent root = loader.load();
+        PopUpController pc = loader.getController();
+
+        pc.setLoc(loc);
+        pc.setMap(map);
+        pc.setPanes(panes);
+        pc.setCircle(circle);
+        pc.setTextPane(TextPane);
 
         displayPopUp(root);
     }

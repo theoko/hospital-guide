@@ -56,7 +56,7 @@ public class CustodianMapController extends MapController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
-        MapDisplay.displayCust(this, panes);
+        MapDisplay.displayCust(this, panes, TextPane);
         VisualRealtimeController.setPanMap(panFloor1);
         initSanitation();
         updateSanitation();
@@ -99,7 +99,7 @@ public class CustodianMapController extends MapController {
         Location start = map.getLocation(MapController.getTempStart());
         Location end = tblData.getSelectionModel().getSelectedItem().getLocation();
 
-        PathFinder.printPath(panes, map, start, end);
+        PathFinder.printPath(panes, TextPane, map, start, end);
 
         String floor = start.getFloor();
         int floorIndex;

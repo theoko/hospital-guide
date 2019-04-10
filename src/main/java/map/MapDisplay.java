@@ -4,6 +4,7 @@ import controllers.MapController;
 import controllers.ScreenController;
 import helpers.Constants;
 import helpers.UIHelpers;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -31,18 +32,18 @@ public class MapDisplay {
     /**
      * Display the graph on a map for the default user (no halls, info boxes)
      */
-    public static void displayUser(AnchorPane[] panes) {
+    public static void displayUser(AnchorPane[] panes, ScrollPane TextPane) {
         Map map = MapParser.parse();
-        displayNodesUser(map, panes);
+        displayNodesUser(map, panes, TextPane);
     }
 
     /**
      * Display the graph of a map for employees (halls, info boxes with spill reporting)
      * @param panes
      */
-    public static void displayEmployee(AnchorPane[] panes) {
+    public static void displayEmployee(AnchorPane[] panes, ScrollPane TextPane) {
         Map map = MapParser.parse();
-        displayNodesEmployee(map, panes);
+        displayNodesEmployee(map, panes, TextPane);
     }
 
     /**
@@ -59,13 +60,13 @@ public class MapDisplay {
      * Display the graph on a map for the custodian (no halls)
      * @param panes
      */
-    public static void displayCust(MapController mc, AnchorPane[] panes) {
+    public static void displayCust(MapController mc, AnchorPane[] panes, ScrollPane TextPane) {
         Map map = MapParser.parse();
         mc.setMap(map);
-        displayNodesCust(map, panes);
+        displayNodesCust(map, panes, TextPane);
     }
 
-    private static void displayNodesUser(Map map, AnchorPane[] panes) {
+    private static void displayNodesUser(Map map, AnchorPane[] panes, ScrollPane TextPane) {
         HashMap<String, Location> lstLocations = map.getAllLocations();
         for (Location loc : lstLocations.values()) {
             if (loc.getNodeType() != Constants.NodeType.HALL) {
@@ -83,7 +84,7 @@ public class MapDisplay {
                 circle.setOnMouseClicked(event -> {
                     try {
                         event.consume();
-                        ScreenController.popUp(Constants.Routes.USER_INFO, loc, map, panes, circle);
+                        ScreenController.popUp(Constants.Routes.USER_INFO, loc, map, panes, circle, TextPane);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -94,7 +95,7 @@ public class MapDisplay {
         }
     }
 
-    private static void displayNodesCust(Map map, AnchorPane[] panes) {
+    private static void displayNodesCust(Map map, AnchorPane[] panes, ScrollPane TextPane) {
         HashMap<String, Location> lstLocations = map.getAllLocations();
         for (Location loc : lstLocations.values()) {
             if (loc.getNodeType() != Constants.NodeType.HALL) {
@@ -113,7 +114,7 @@ public class MapDisplay {
                 circle.setOnMouseClicked(event -> {
                     try {
                         event.consume();
-                        ScreenController.popUp(Constants.Routes.CUSTODIAN_INFO, loc, map, panes, circle);
+                        ScreenController.popUp(Constants.Routes.CUSTODIAN_INFO, loc, map, panes, circle, TextPane);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -124,7 +125,7 @@ public class MapDisplay {
         }
     }
 
-    private static void displayNodesEmployee(Map map, AnchorPane[] panes) {
+    private static void displayNodesEmployee(Map map, AnchorPane[] panes, ScrollPane TextPane) {
         HashMap<String, Location> lstLocations = map.getAllLocations();
         for (Location loc : lstLocations.values()) {
             if (loc.getNodeType() != Constants.NodeType.HALL) {
@@ -143,7 +144,7 @@ public class MapDisplay {
                 circle.setOnMouseClicked(event -> {
                     try {
                         event.consume();
-                        ScreenController.popUp(Constants.Routes.EMPLOYEE_INFO, loc, map, panes, circle);
+                        ScreenController.popUp(Constants.Routes.EMPLOYEE_INFO, loc, map, panes, circle, TextPane);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

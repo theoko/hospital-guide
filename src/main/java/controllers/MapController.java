@@ -3,6 +3,7 @@ package controllers;
 import com.jfoenix.controls.JFXButton;
 import helpers.Constants;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.input.ZoomEvent;
@@ -21,6 +22,7 @@ public abstract class MapController implements Initializable {
     public AnchorPane panFloorG;
     public  AnchorPane panFloorL1;
     public  AnchorPane panFloorL2;
+    public ScrollPane TextPane;
     protected AnchorPane[] panes;
     protected double sceneX, sceneY;
     protected double translateX, translateY;

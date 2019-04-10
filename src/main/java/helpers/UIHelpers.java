@@ -4,6 +4,7 @@ import controllers.AdminMapController;
 import controllers.ScreenController;
 import controllers.VisualRealtimeController;
 import database.LocationTable;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -14,7 +15,7 @@ import models.map.Edge;
 import models.map.Location;
 import models.map.Map;
 
-import java.awt.*;
+import java.awt.Point;
 
 public class UIHelpers {
 
