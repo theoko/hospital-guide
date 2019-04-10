@@ -2,6 +2,7 @@ package database;
 
 import helpers.Constants;
 import models.map.Location;
+import models.room.Book;
 
 import java.sql.*;
 import java.util.*;
@@ -55,7 +56,8 @@ public class Database {
      */
     public static void dropTables() {
         SanitationTable.dropSanitationTable();
-        BookTable.dropBookTable();
+        BookLocationTable.dropBookLocationTable();
+        BookWorkspaceTable.dropBookWorkspaceTable();
         RoomTable.dropRoomTable();
         EdgeTable.dropEdgeTable();
         WorkspaceTable.dropWorkspaceTable();
@@ -72,7 +74,8 @@ public class Database {
         WorkspaceTable.createtable();
         EdgeTable.createTable();
         RoomTable.createTable();
-        BookTable.createTable();
+        BookLocationTable.createTable();
+        BookWorkspaceTable.createTable();
         SanitationTable.createTable();
 
     }

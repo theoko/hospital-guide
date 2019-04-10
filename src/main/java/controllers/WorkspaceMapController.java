@@ -18,6 +18,8 @@ import javafx.scene.shape.Circle;
 import models.map.Location;
 import models.map.Workspace;
 import models.room.Room;
+import javafx.geometry.Point2D;
+import java.awt.*;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -159,6 +161,8 @@ public class WorkspaceMapController {
     }
 
     List<Workspace> workspacesAvailable;
+    ArrayList<Workspace> workspacesBooked = new ArrayList<>();
+    HashMap<String, Workspace> workspaces;
     public void btnSearch(MouseEvent event) {
         event.consume();
         if(datStartDay != null && datEndDay != null && datStartTime != null && datEndTime != null) {
@@ -172,6 +176,34 @@ public class WorkspaceMapController {
                     DatabaseHelpers.getDateTime(endDate, endTime)
             );
 
+            workspaces = WorkspaceTable.getWorkspaces();
+
+            for(Workspace ws : workspaces.values()) {
+                boolean isBooked = true;
+                for(Workspace ws1 : workspacesAvailable) {
+                    if(ws1 == ws) {
+                        isBooked = false;
+                        break;
+                    }
+                }
+                if(isBooked) {
+                    workspacesBooked.add(ws);
+                }
+            }
+
+            for (Workspace ws : workspacesBooked) {
+                if (ws.getNodeType() != null) {
+                    double xLoc = scaleX(ws.getxCord());
+                    double yLoc = scaleY(ws.getyCord());
+                    for (Circle c : themCircles) {
+                        if (c.getCenterX() == xLoc && c.getCenterY() == yLoc) {
+                            c.setFill(Color.RED);
+                            break;
+                        }
+                    }
+                }
+            }
+
             for (Workspace ws : workspacesAvailable) {
                 if (ws.getNodeType() != null) {
                     double xLoc = scaleX(ws.getxCord());
@@ -179,16 +211,21 @@ public class WorkspaceMapController {
                     for (Circle c : themCircles) {
                         if (c.getCenterX() == xLoc && c.getCenterY() == yLoc) {
                             c.setFill(Color.YELLOW);
+                            c.setOnMouseClicked(Event -> {
+                                try {
+                                    Event.consume();
+                                    c.setFill(Color.ORANGE);
+                                    ScreenController.popUp(Constants.Routes.WORKSPACE_POPUP, workspacesAvailable, c, startTime, startDate, endTime, endDate);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            });
                             break;
                         }
                     }
                 }
             }
         }
-    }
-
-    public void bookWS(MouseEvent event) {
-        event.consume();
     }
 
     public void logOut(MouseEvent event) {

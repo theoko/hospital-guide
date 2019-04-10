@@ -135,7 +135,7 @@ public class WorkspaceTable {
 
         try {
             statement = Database.getDatabase().getConnection().prepareStatement(
-                    "SELECT * FROM " + Constants.BOOK_TABLE +
+                    "SELECT * FROM " + Constants.BOOK_WORKSPACE_TABLE +
                             " WHERE nodeID=? AND ? <=  ENDDATE" +
                             " AND ? >= STARTDATE" +
                             " OR ? >=  STARTDATE" +
@@ -170,7 +170,7 @@ public class WorkspaceTable {
 
         try {
 
-            String unavailableRooms = "SELECT nodeID FROM " + Constants.BOOK_TABLE +
+            String unavailableRooms = "SELECT nodeID FROM " + Constants.BOOK_WORKSPACE_TABLE +
                     " WHERE ? <=  ENDDATE" +
                     " AND ? >= STARTDATE" +
                     " OR ? >=  STARTDATE" +

@@ -8,28 +8,26 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookTable {
-
-    private static void BookTable() { }
+public class BookWorkspaceTable {
 
     public static void createTable(){
-        Statement statement = null;
+        Statement statement1 = null;
         try {
-            statement = Database.getDatabase().getConnection().createStatement();
+            statement1 = Database.getDatabase().getConnection().createStatement();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        String bookTable = "CREATE TABLE " + Constants.BOOK_TABLE + "(" +
+        String bookWorkspaceTable = "CREATE TABLE " + Constants.BOOK_WORKSPACE_TABLE + "(" +
                 "bookingID INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1)," +
                 "nodeID VARCHAR(100)," +
                 "userID INT," +
                 "startDate TIMESTAMP," +
                 "endDate TIMESTAMP," +
-                "CONSTRAINT roomID2_fk FOREIGN KEY(nodeID) REFERENCES " + Constants.LOCATION_TABLE + "(nodeID)," +
-                "CONSTRAINT userID2_fk FOREIGN KEY(userID) REFERENCES " + Constants.USERS_TABLE + "(userID))";
+                "CONSTRAINT roomID3_fk FOREIGN KEY(nodeID) REFERENCES " + Constants.WORKSPACE_TABLE+ "(nodeID)," +
+                "CONSTRAINT userID3_fk FOREIGN KEY(userID) REFERENCES " + Constants.USERS_TABLE + "(userID))";
         try {
-            statement.execute(bookTable);
+            statement1.execute(bookWorkspaceTable);
         } catch (SQLException | NullPointerException e) {
             e.printStackTrace();
         }
@@ -45,7 +43,7 @@ public class BookTable {
 
             PreparedStatement statement;
             statement = Database.getDatabase().getConnection().prepareStatement(
-                    "INSERT INTO " + Constants.BOOK_TABLE + " (NODEID, USERID, STARTDATE, ENDDATE) " +
+                    "INSERT INTO " + Constants.BOOK_WORKSPACE_TABLE + " (NODEID, USERID, STARTDATE, ENDDATE) " +
                             "VALUES (?, ?, ?, ?)"
             );
 
@@ -64,15 +62,15 @@ public class BookTable {
 
     }
 
-    public static boolean dropBookTable() {
+    public static boolean dropBookWorkspaceTable() {
         try {
             Statement statement;
 
             statement = Database.getDatabase().getConnection().createStatement();
 
-            return statement.execute("DROP TABLE " + Constants.BOOK_TABLE);
+            return statement.execute("DROP TABLE " + Constants.BOOK_WORKSPACE_TABLE);
         } catch (SQLException e) {
-            System.out.println("Table " + Constants.BOOK_TABLE + " cannot be dropped");
+            System.out.println("Table " + Constants.BOOK_WORKSPACE_TABLE + " cannot be dropped");
 
             return false;
         }
@@ -82,7 +80,7 @@ public class BookTable {
         try {
             PreparedStatement statement;
             statement = Database.getDatabase().getConnection().prepareStatement(
-                    "SELECT * FROM " + Constants.BOOK_TABLE + " WHERE ROOMID=?"
+                    "SELECT * FROM " + Constants.BOOK_WORKSPACE_TABLE + " WHERE ROOMID=?"
             );
             statement.setString(1, roomID);
 
@@ -119,7 +117,7 @@ public class BookTable {
             PreparedStatement statement;
 
             statement = Database.getDatabase().getConnection().prepareStatement(
-                    "SELECT * FROM " + Constants.BOOK_TABLE + " WHERE USERID=?"
+                    "SELECT * FROM " + Constants.BOOK_WORKSPACE_TABLE + " WHERE USERID=?"
             );
 
             statement.setInt(1, userID);
@@ -155,7 +153,7 @@ public class BookTable {
 
             statement = Database.getDatabase().getConnection().createStatement();
 
-            String query = "SELECT * FROM " + Constants.BOOK_TABLE;
+            String query = "SELECT * FROM " + Constants.BOOK_WORKSPACE_TABLE;
 
             ResultSet resultSet = statement.executeQuery(query);
 
