@@ -58,7 +58,7 @@ public class Florist {
         Time = time;
     }
 
-    public String getDate() {
+    public String getDeliveryDate() {
         return DeliveryDate;
     }
 

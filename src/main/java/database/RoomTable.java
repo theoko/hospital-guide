@@ -13,7 +13,7 @@ public class RoomTable {
     public static void createTable(){
         Statement statement = null;
         try {
-            statement = Database.getConnection().createStatement();
+            statement = Database.getDatabase().getConnection().createStatement();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -33,7 +33,7 @@ public class RoomTable {
 
             PreparedStatement statement;
 
-            statement = Database.getConnection().prepareStatement(
+            statement = Database.getDatabase().getConnection().prepareStatement(
                     "SELECT * FROM " + Constants.ROOM_TABLE + " WHERE NODEID=?"
             );
 
@@ -60,7 +60,7 @@ public class RoomTable {
     public static boolean addRoom(Room room) {
         try {
             PreparedStatement statement;
-            statement = Database.getConnection().prepareStatement(
+            statement = Database.getDatabase().getConnection().prepareStatement(
                     "INSERT INTO " + Constants.ROOM_TABLE + " (NODEID, CAPACITY) " +
                             "VALUES (?, ?)"
             );
@@ -78,11 +78,11 @@ public class RoomTable {
         }
     }
 
-    public static boolean dropRoomTable() {
+    public static boolean dropTable() {
         try {
             Statement statement;
 
-            statement = Database.getConnection().createStatement();
+            statement = Database.getDatabase().getConnection().createStatement();
 
             return statement.execute("DROP TABLE " + Constants.ROOM_TABLE);
         } catch (SQLException e) {
@@ -96,7 +96,7 @@ public class RoomTable {
         try {
             Statement statement;
 
-            statement = Database.getConnection().createStatement();
+            statement = Database.getDatabase().getConnection().createStatement();
 
             String query = "SELECT * FROM " + Constants.ROOM_TABLE;
 

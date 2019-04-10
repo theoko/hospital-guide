@@ -5,17 +5,23 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import models.map.Location;
 import models.map.Map;
+import models.map.Workspace;
 import models.user.User;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.HashMap;
+import java.util.List;
 
 public class ScreenController {
 
@@ -59,6 +65,7 @@ public class ScreenController {
         this.addScreen(Constants.Routes.USER_POPUP, "/CreateUserPopUp.fxml");
         this.addScreen(Constants.Routes.EDIT_POPUP, "/EditUserPopUp.fxml");
         this.addScreen(Constants.Routes.WORKSPACE, "/Workspace.fxml");
+        this.addScreen(Constants.Routes.WORKSPACE_POPUP, "/WorkspacePopUp.fxml");
         this.addScreen(Constants.Routes.REQUESTS, "/requests/Requests.fxml");
         this.addScreen(Constants.Routes.IT, "/requests/ITServiceRequest.fxml");
         this.addScreen(Constants.Routes.PERSCRIPTION, "/requests/Prescription.fxml");
@@ -134,6 +141,23 @@ public class ScreenController {
         displayPopUp(root);
     }
 
+    public static void popUp(Constants.Routes route, Workspace ws, Circle circle, LocalTime StartTime, LocalDate StartDate, LocalTime EndTime, LocalDate EndDate) throws Exception {
+        stage = new Stage();
+        URL url = routeToURL(route);
+
+        FXMLLoader loader = new FXMLLoader(url);
+        Parent root = loader.load();
+        PopUpController pc = loader.getController();
+
+        pc.setCircle(circle);
+        pc.setWorkspace(ws);
+        pc.setStartDate(StartDate);
+        pc.setStartTime(StartTime);
+        pc.setEndDate(EndDate);
+        pc.setEndTime(EndTime);
+        displayPopUp(root);
+    }
+
     public static void popUp(Constants.Routes route, Location loc, Map map, AnchorPane[] panes) throws Exception {
         stage = new Stage();
         URL url = routeToURL(route);
@@ -145,6 +169,39 @@ public class ScreenController {
         pc.setLoc(loc);
         pc.setMap(map);
         pc.setPanes(panes);
+
+        displayPopUp(root);
+    }
+
+    public static void popUp(Constants.Routes route, Location loc, Map map, AnchorPane[] panes, Circle circle) throws Exception {
+        stage = new Stage();
+        URL url = routeToURL(route);
+
+        FXMLLoader loader = new FXMLLoader(url);
+        Parent root = loader.load();
+        PopUpController pc = loader.getController();
+
+        pc.setLoc(loc);
+        pc.setMap(map);
+        pc.setPanes(panes);
+        pc.setCircle(circle);
+
+        displayPopUp(root);
+    }
+
+    public static void popUp(Constants.Routes route, Location loc, Map map, AnchorPane[] panes, Circle circle, ScrollPane TextPane) throws Exception {
+        stage = new Stage();
+        URL url = routeToURL(route);
+
+        FXMLLoader loader = new FXMLLoader(url);
+        Parent root = loader.load();
+        PopUpController pc = loader.getController();
+
+        pc.setLoc(loc);
+        pc.setMap(map);
+        pc.setPanes(panes);
+        pc.setCircle(circle);
+        pc.setTextPane(TextPane);
 
         displayPopUp(root);
     }

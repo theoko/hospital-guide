@@ -8,30 +8,31 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookTable {
+public class BookLocationTable {
 
-    private static void BookTable() { }
+    private static void BookLocationTable() { }
 
     public static void createTable(){
-        Statement statement = null;
+        Statement statement1 = null;
         try {
-            statement = Database.getConnection().createStatement();
+            statement1 = Database.getDatabase().getConnection().createStatement();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        String bookTable = "CREATE TABLE " + Constants.BOOK_TABLE + "(" +
+        String bookLocationTable = "CREATE TABLE " + Constants.BOOK_LOCATION_TABLE + "(" +
                 "bookingID INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1)," +
                 "nodeID VARCHAR(100)," +
                 "userID INT," +
                 "startDate TIMESTAMP," +
                 "endDate TIMESTAMP," +
-                "CONSTRAINT roomID2_fk FOREIGN KEY(nodeID) REFERENCES " + Constants.LOCATION_TABLE + "(nodeID)," +
+                "CONSTRAINT roomID2_fk FOREIGN KEY(nodeID) REFERENCES " + Constants.LOCATION_TABLE+ "(nodeID)," +
                 "CONSTRAINT userID2_fk FOREIGN KEY(userID) REFERENCES " + Constants.USERS_TABLE + "(userID))";
+
         try {
-            statement.execute(bookTable);
-        } catch (SQLException | NullPointerException e) {
-            e.printStackTrace();
+            statement1.execute(bookLocationTable);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -44,8 +45,8 @@ public class BookTable {
         try {
 
             PreparedStatement statement;
-            statement = Database.getConnection().prepareStatement(
-                    "INSERT INTO " + Constants.BOOK_TABLE + " (NODEID, USERID, STARTDATE, ENDDATE) " +
+            statement = Database.getDatabase().getConnection().prepareStatement(
+                    "INSERT INTO " + Constants.BOOK_LOCATION_TABLE + " (NODEID, USERID, STARTDATE, ENDDATE) " +
                             "VALUES (?, ?, ?, ?)"
             );
 
@@ -64,15 +65,15 @@ public class BookTable {
 
     }
 
-    public static boolean dropBookTable() {
+    public static boolean dropTable() {
         try {
             Statement statement;
 
-            statement = Database.getConnection().createStatement();
+            statement = Database.getDatabase().getConnection().createStatement();
 
-            return statement.execute("DROP TABLE " + Constants.BOOK_TABLE);
+            return statement.execute("DROP TABLE " + Constants.BOOK_LOCATION_TABLE);
         } catch (SQLException e) {
-            System.out.println("Table " + Constants.BOOK_TABLE + " cannot be dropped");
+            System.out.println("Table " + Constants.BOOK_LOCATION_TABLE + " cannot be dropped");
 
             return false;
         }
@@ -81,8 +82,8 @@ public class BookTable {
     public static Book getBookByRoomID(String roomID) {
         try {
             PreparedStatement statement;
-            statement = Database.getConnection().prepareStatement(
-                    "SELECT * FROM " + Constants.BOOK_TABLE + " WHERE ROOMID=?"
+            statement = Database.getDatabase().getConnection().prepareStatement(
+                    "SELECT * FROM " + Constants.BOOK_LOCATION_TABLE + " WHERE ROOMID=?"
             );
             statement.setString(1, roomID);
 
@@ -118,8 +119,8 @@ public class BookTable {
 
             PreparedStatement statement;
 
-            statement = Database.getConnection().prepareStatement(
-                    "SELECT * FROM " + Constants.BOOK_TABLE + " WHERE USERID=?"
+            statement = Database.getDatabase().getConnection().prepareStatement(
+                    "SELECT * FROM " + Constants.BOOK_LOCATION_TABLE + " WHERE USERID=?"
             );
 
             statement.setInt(1, userID);
@@ -153,9 +154,9 @@ public class BookTable {
         try {
             Statement statement;
 
-            statement = Database.getConnection().createStatement();
+            statement = Database.getDatabase().getConnection().createStatement();
 
-            String query = "SELECT * FROM " + Constants.BOOK_TABLE;
+            String query = "SELECT * FROM " + Constants.BOOK_LOCATION_TABLE;
 
             ResultSet resultSet = statement.executeQuery(query);
 

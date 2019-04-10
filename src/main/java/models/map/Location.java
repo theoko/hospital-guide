@@ -26,6 +26,7 @@ public class Location {
 
     public Location(String nodeID, int xCord, int yCord, String floor, String building, Constants.NodeType nodeType, String longName, String shortName) {
         this.nodeID = nodeID;
+        this.nodeCircle = null;
         this.xCord = xCord;
         this.yCord = yCord;
         this.floor = floor;
@@ -146,6 +147,20 @@ public class Location {
 
     public void setNodeCircle(Circle nodeCircle) {
         this.nodeCircle = nodeCircle;
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Location) {
+            if(((Location) obj).getNodeID().equals(this.getNodeID())){
+                return true;
+            }else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 
 }

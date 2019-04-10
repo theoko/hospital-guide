@@ -19,7 +19,7 @@ public class LocationTable {
     public static void createtable(){
         Statement statement = null;
         try {
-            statement = Database.getConnection().createStatement();
+            statement = Database.getDatabase().getConnection().createStatement();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -39,11 +39,11 @@ public class LocationTable {
         }
     }
 
-    public static boolean dropLocationTable() {
+    public static boolean dropTable() {
         try {
             Statement statement;
 
-            statement = Database.getConnection().createStatement();
+            statement = Database.getDatabase().getConnection().createStatement();
 
             return statement.execute("DROP TABLE " + Constants.LOCATION_TABLE);
 
@@ -62,7 +62,7 @@ public class LocationTable {
         try {
             // Execute query
             String stmtString = "SELECT * FROM " + Constants.LOCATION_TABLE + " WHERE NODEID=?";
-            PreparedStatement statement = Database.getConnection().prepareStatement(stmtString);
+            PreparedStatement statement = Database.getDatabase().getConnection().prepareStatement(stmtString);
             statement.setString(1, id);
             ResultSet resultSet = statement.executeQuery();
 
@@ -96,7 +96,7 @@ public class LocationTable {
 
             PreparedStatement statement;
 
-            statement = Database.getConnection().prepareStatement(
+            statement = Database.getDatabase().getConnection().prepareStatement(
                     "INSERT INTO " + Constants.LOCATION_TABLE + " (NODEID, XCOORD, YCOORD, FLOOR, BUILDING, NODETYPE, LONGNAME, SHORTNAME ) " +
                             "VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
             );
@@ -143,8 +143,8 @@ public class LocationTable {
         PreparedStatement statement;
 
         try {
-            statement = Database.getConnection().prepareStatement(
-                    "SELECT * FROM " + Constants.BOOK_TABLE +
+            statement = Database.getDatabase().getConnection().prepareStatement(
+                    "SELECT * FROM " + Constants.BOOK_LOCATION_TABLE +
                             " WHERE nodeID=? AND ? <=  ENDDATE" +
                             " AND ? >= STARTDATE" +
                             " OR ? >=  STARTDATE" +
@@ -179,13 +179,13 @@ public class LocationTable {
 
         try {
 
-            String unavailableRooms = "SELECT nodeID FROM " + Constants.BOOK_TABLE +
+            String unavailableRooms = "SELECT nodeID FROM " + Constants.BOOK_LOCATION_TABLE +
                     " WHERE ? <=  ENDDATE" +
                     " AND ? >= STARTDATE" +
                     " OR ? >=  STARTDATE" +
                     " AND ? <= ENDDATE";
 
-            statement1 = Database.getConnection().prepareStatement(
+            statement1 = Database.getDatabase().getConnection().prepareStatement(
                     "SELECT nodeID FROM " + Constants.ROOM_TABLE +
                             " EXCEPT (" + unavailableRooms + ")"
             );
@@ -219,7 +219,7 @@ public class LocationTable {
 
             Statement statement;
 
-            statement = Database.getConnection().createStatement();
+            statement = Database.getDatabase().getConnection().createStatement();
 
             String query = "SELECT * FROM " + Constants.LOCATION_TABLE;
 
@@ -261,7 +261,7 @@ public class LocationTable {
         try {
             PreparedStatement statement;
 
-            statement = Database.getConnection().prepareStatement(
+            statement = Database.getDatabase().getConnection().prepareStatement(
                     "UPDATE " + Constants.LOCATION_TABLE +
                             " SET XCOORD=?, YCOORD=?, FLOOR=?, BUILDING=?, NODETYPE=?, LONGNAME=?, SHORTNAME=?" +
                             " WHERE NODEID=?"
@@ -304,7 +304,7 @@ public class LocationTable {
                 System.out.println("Conference room with ID: " + deleteLocation.getNodeID());
 
                 PreparedStatement statement1;
-                statement1 = Database.getConnection().prepareStatement(
+                statement1 = Database.getDatabase().getConnection().prepareStatement(
                         "DELETE FROM " + Constants.ROOM_TABLE +
                                 " WHERE NODEID=?"
                 );
@@ -316,7 +316,7 @@ public class LocationTable {
             PreparedStatement statement2;
             PreparedStatement statement3;
 
-            statement2 = Database.getConnection().prepareStatement(
+            statement2 = Database.getDatabase().getConnection().prepareStatement(
                     "DELETE FROM " + Constants.EDGES_TABLE +
                             " WHERE STARTNODEID=? OR ENDNODEID=?"
             );
@@ -328,7 +328,7 @@ public class LocationTable {
 
             // Add location to deleted locations table
 
-            statement3 = Database.getConnection().prepareStatement(
+            statement3 = Database.getDatabase().getConnection().prepareStatement(
                     "DELETE FROM " + Constants.LOCATION_TABLE +
                             " WHERE NODEID=?"
             );
@@ -354,14 +354,14 @@ public class LocationTable {
 
     public static String generateUniqueNodeID(Location c) {
 
-        String id = Database.getNewPrefixChar() + c.getNodeType().toString() + "000" +
+        String id = Database.getDatabase().getNewPrefixChar() + c.getNodeType().toString() + "000" +
                 c.getDBFormattedFloor();
         while(LocationTable.getLocations().containsKey(id)) {
             String numericalIDStr = id.substring(id.length() - 5, id.length() - 2);
             int numericalIDVal = Integer.parseInt(numericalIDStr);
             numericalIDVal++;
             numericalIDStr = String.format("%03d", numericalIDVal);
-            id = Database.getNewPrefixChar() + c.getNodeType().toString() + numericalIDStr +
+            id = Database.getDatabase().getNewPrefixChar() + c.getNodeType().toString() + numericalIDStr +
                     c.getDBFormattedFloor();
         }
         return id;
@@ -372,7 +372,7 @@ public class LocationTable {
 
             PreparedStatement statement;
 
-            statement = Database.getConnection().prepareStatement(
+            statement = Database.getDatabase().getConnection().prepareStatement(
                     "SELECT * FROM " + Constants.EDGES_TABLE + " WHERE STARTNODEID=? OR ENDNODEID=?"
             );
 
