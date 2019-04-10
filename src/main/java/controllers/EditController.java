@@ -11,12 +11,19 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
+import map.MapDisplay;
 import map.PathFinder;
 import models.map.Location;
 import org.omg.DynamicAny.DynArray;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class EditController extends PopUpController implements Initializable {
@@ -161,6 +168,18 @@ public class EditController extends PopUpController implements Initializable {
 
     public void btnDefault_Click(MouseEvent mouseEvent) {
         PathFinder.setDefLocation(loc.getNodeID());
+        for (AnchorPane pane : panes) {
+            List<Node> lstNodes1 = new ArrayList<>();
+            for (Node n : pane.getChildren()) {
+                if (n instanceof Circle) {
+                    Circle circle = (Circle) n;
+                    if (circle.getFill().equals(MapDisplay.nodeStart)) {
+                        circle.setFill(MapDisplay.nodeFill);
+                    }
+                }
+            }
+        }
+        circle.setFill(MapDisplay.nodeStart);
         ScreenController.deactivate();
     }
 }

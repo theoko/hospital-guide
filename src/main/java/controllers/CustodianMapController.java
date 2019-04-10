@@ -96,8 +96,9 @@ public class CustodianMapController extends MapController {
     }
 
     public void navigateTo(){
-        Location start = map.getLocation(PathFinder.getDefLocation());
+        Location start = map.getLocation(MapController.getTempStart());
         Location end = tblData.getSelectionModel().getSelectedItem().getLocation();
+
         PathFinder.printPath(panes, map, start, end);
 
         String floor = start.getFloor();

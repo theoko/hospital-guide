@@ -207,7 +207,7 @@ public class AdminMapController extends MapController {
 //        String locID = Database.generateUniqueNodeID(loc);
 //        loc.setNodeID(locID);
 //        loc.addCurrNode();
-        UIHelpers.setAdminNodeClickEvent(circ, loc);
+        UIHelpers.setAdminNodeClickEvent(map, panes, loc, circ);
         loc.setNodeCircle(circ);
         AnchorPane addToPane = determinePanMapFromFloor(loc.getFloor());
         addToPane.getChildren().add(circ);
