@@ -2,6 +2,7 @@ package controllers;
 
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXToggleButton;
 import database.UserTable;
 import helpers.Constants;
 import javafx.event.ActionEvent;
@@ -14,6 +15,11 @@ public class AuthController {
     public Label errorMessage;
 
     public static User currentUser;
+    public JFXToggleButton togScanner;
+    public JFXPasswordField cardPassword;
+    public Label passText;
+    public Label emailText;
+    public Label cardScanText;
 
     private int currentlyAuthenticatedUsers = 0;
 
@@ -70,8 +76,13 @@ public class AuthController {
     }
 
     public void handleLogin(ActionEvent actionEvent) throws Exception {
-
-        Constants.Auth authType = authenticate(emailField.getText(), passwordField.getText());
+        Constants.Auth authType;
+        System.out.println(togScanner.isSelected());
+        if (!togScanner.isSelected()) {
+            authType = authenticate(emailField.getText(), passwordField.getText());
+        } else {
+            authType = authenticate(cardPassword.getText(), "");
+        }
 
         if(authType == Constants.Auth.ADMIN) {
 
@@ -131,4 +142,25 @@ public class AuthController {
         ScreenController.activate(Constants.Routes.WELCOME);
     }
 
+    public void cardScanner(ActionEvent actionEvent) {
+        actionEvent.consume();
+        if(togScanner.isSelected()){
+            cardPassword.setVisible(true);
+            emailField.setVisible(false);
+            passwordField.setVisible(false);
+            passText.setVisible(false);
+            cardScanText.setVisible(true);
+            emailText.setVisible(false);
+            cardPassword.requestFocus();
+
+        } else{
+            cardPassword.setVisible(false);
+            emailField.setVisible(true);
+            passwordField.setVisible(true);
+            passText.setVisible(true);
+            cardScanText.setVisible(false);
+            emailText.setVisible(true);
+            emailField.requestFocus();
+        }
+    }
 }
