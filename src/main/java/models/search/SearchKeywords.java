@@ -78,8 +78,7 @@ public class SearchKeywords {
     // International
     List<String> international = new ArrayList<>();
 
-    public SearchKeywords() {
-
+    public static void intialize() {
         // Path to dictionary directory
         final String pathToWordnet = "/data/dictionary.zip";
 
@@ -97,6 +96,9 @@ public class SearchKeywords {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public SearchKeywords() {
 
         food.add("au bon pain");
         food.add("restaurant");

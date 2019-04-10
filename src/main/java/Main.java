@@ -11,6 +11,7 @@ import map.AStar;
 import map.BreadthSearch;
 import map.PathContext;
 import map.PathFinder;
+import models.search.SearchKeywords;
 
 import java.io.File;
 
@@ -24,10 +25,15 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
 
+        // Initialize database
         if(!Database.databaseExists()) {
             CSVParser.parse(FileHelpers.getNodesCSV(), FileHelpers.getEdgesCSV(), FileHelpers.getWorkspacesCSV());
         }
 
+        // Initialize keywords for search engine
+        SearchKeywords.intialize();
+
+        // Initialize screen controller
         screenController = new ScreenController(primaryStage);
 
         PathFinder.setDefLocation("HLABS00103");
