@@ -119,24 +119,6 @@ public class DatabaseTest {
         Room room = new Room(loc.getNodeID(), 2);
 
         RoomTable.addRoom(room);
-<<<<<<< HEAD
-        assertTrue(RoomTable.getRoomByID("RB101Z").equals(room));
-
-    }
-
-    @Test
-    public void addDeleteLocation() {
-
-
-
-        Location newLoc = new Location("AHALL00201",1608,2596,"1","BTM",HALL,"Hall","Hall");
-        HashMap<String, Location> locations = LocationTable.getLocations();
-
-        // check that all fields are equal to the original after being added and and pulled from the database
-
-        assertNull(LocationTable.getLocationByID(newLoc.getNodeID()));
-
-=======
 
         System.out.println(room.toString());
         System.out.println("\n");
@@ -156,7 +138,6 @@ public class DatabaseTest {
             }
         }
         assertTrue(F);
->>>>>>> 05e799291c45990c304da6d3531b842fa37ff344
     }
 
     @Test
