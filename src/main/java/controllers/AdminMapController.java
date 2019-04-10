@@ -139,6 +139,11 @@ public class AdminMapController extends MapController {
 
         autoCompletePopup.setSelectionHandler(event -> {
             searchBox.setText(event.getObject());
+
+            // Focus on node if keyword
+
+            // Display options for category
+
         });
 
         // Add search box to layout

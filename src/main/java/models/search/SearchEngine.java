@@ -6,6 +6,7 @@ public class SearchEngine {
 
     String term;
     Set<String> results = new HashSet<>();
+    Stack<String> neighbors = new Stack<>();
 
     public SearchEngine(String term) {
         this.term = term;
@@ -50,6 +51,8 @@ public class SearchEngine {
                     minDistanceKeyword = currDistKeyword;
                     closestKeyword = k;
                     System.out.println("currKeyword: " + closestKeyword);
+
+                    neighbors.push(closestKeyword);
                 }
             }
 
@@ -75,6 +78,11 @@ public class SearchEngine {
     }
 
     public Set<String> getResults() {
+
+        while(!neighbors.isEmpty()) {
+            results.add(neighbors.pop());
+        }
+
         return results;
     }
 
