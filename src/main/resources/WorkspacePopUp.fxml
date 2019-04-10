@@ -46,9 +46,10 @@
             <Insets left="25.0" />
          </padding>
       </GridPane>
-      <HBox alignment="CENTER" layoutX="87.0" layoutY="216.0" prefHeight="70.0" prefWidth="200.0" spacing="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <HBox alignment="CENTER" layoutX="87.0" layoutY="216.0" prefHeight="70.0" prefWidth="200.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <JFXButton fx:id="btnBook" defaultButton="true" onMouseClicked="#bookWorkspace" prefHeight="40.0" prefWidth="115.0" stylesheets="@css/colorScheme.css" text="Book" textFill="WHITE" />
+            <JFXButton fx:id="btnRemove" onMouseClicked="#removeBooking" prefHeight="40.0" prefWidth="115.0" stylesheets="@css/colorScheme.css" text="Remove" textFill="WHITE" />
             <JFXButton fx:id="btnCancel" onMouseClicked="#goBack" prefHeight="40.0" prefWidth="115.0" stylesheets="@css/colorScheme.css" text="Cancel" textFill="WHITE" />
          </children>
       </HBox>

@@ -21,7 +21,7 @@ public abstract class PopUpController implements Initializable {
     protected AnchorPane[] panes;
     protected Location kiosk;
     protected Circle circle;
-    protected List<Workspace> ws;
+    protected Workspace ws;
     protected LocalDate StartDate;
     protected LocalTime StartTime;
     protected LocalDate EndDate;
@@ -42,7 +42,7 @@ public abstract class PopUpController implements Initializable {
         this.circle = circle;
     }
 
-    public void setWorkspace(List<Workspace> ws) {
+    public void setWorkspace(Workspace ws) {
         this.ws = ws;
     }
 

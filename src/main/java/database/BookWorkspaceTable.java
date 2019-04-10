@@ -80,7 +80,7 @@ public class BookWorkspaceTable {
         try {
             PreparedStatement statement;
             statement = Database.getDatabase().getConnection().prepareStatement(
-                    "SELECT * FROM " + Constants.BOOK_WORKSPACE_TABLE + " WHERE ROOMID=?"
+                    "SELECT * FROM " + Constants.BOOK_WORKSPACE_TABLE + " WHERE NODEID=?"
             );
             statement.setString(1, roomID);
 
@@ -90,16 +90,17 @@ public class BookWorkspaceTable {
 
                 Book book = new Book(
                         resultSet.getInt("BOOKINGID"),
-                        resultSet.getString("ROOMID"),
+                        resultSet.getString("NODEID"),
                         UserTable.getUserByID(resultSet.getInt("USERID")),
                         resultSet.getString("STARTDATE"),
-                        resultSet.getString("ENDDATES")
+                        resultSet.getString("ENDDATE")
                 );
                 return book;
             }
             return null;
         } catch (SQLException e) {
-            System.out.println("Cannot get room by ID!");
+            System.out.println("Cannot get workspace by ID!");
+            e.printStackTrace();
             return null;
         }
     }
@@ -163,7 +164,7 @@ public class BookWorkspaceTable {
 
                 Book user = new Book(
                         resultSet.getInt("BOOKINGID"),
-                        resultSet.getString("ROOMID"),
+                        resultSet.getString("NODEID"),
                         UserTable.getUserByID(resultSet.getInt("USERID")),
                         resultSet.getString("STARTDATE"),
                         resultSet.getString("ENDDATE")
@@ -178,5 +179,21 @@ public class BookWorkspaceTable {
 
             return null;
         }
+    }
+
+    public static void deleteWorkspaceBook(Book book){
+        PreparedStatement statement;
+        try {
+            statement = Database.getDatabase().getConnection().prepareStatement(
+                    "DELETE FROM " + Constants.BOOK_WORKSPACE_TABLE +
+                            " WHERE BOOKINGID=?"
+            );
+            statement.setInt(1, book.getBookingID());
+
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 }

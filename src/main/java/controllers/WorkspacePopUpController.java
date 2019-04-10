@@ -29,7 +29,7 @@ import java.util.ResourceBundle;
 public class WorkspacePopUpController extends PopUpController implements Initializable {
 
     Circle circle;
-    List<Workspace> ws;
+    Workspace ws;
     Workspace booking;
     Workspace enter;
     int a = 0;
@@ -48,48 +48,44 @@ public class WorkspacePopUpController extends PopUpController implements Initial
 
     public void bookWorkspace(MouseEvent event) {
         event.consume();
-        for(Workspace ws1 : ws) {
-            if(scaleX(ws1.getxCord()) == circle.getCenterX() && scaleY(ws1.getyCord()) == circle.getCenterY()) {
-                booking = ws1;
-                break;
-            }
-        }
         Book book = new Book(
                 a,
-                booking.getNodeID(),
+                ws.getNodeID(),
                 UserHelpers.getCurrentUser(),
                 DatabaseHelpers.getDateTime(StartDate, StartTime),
                 DatabaseHelpers.getDateTime(EndDate, EndTime)
         );
        BookWorkspaceTable.createBooking(book);
-       circle.setFill(Color.RED);
+       circle.setFill(Color.ORANGE);
        ScreenController.deactivate();
-     }
+    }
+
+    public void removeBooking(MouseEvent event) {
+        event.consume();
+        Book remove = BookWorkspaceTable.getBookByRoomID(ws.getNodeID());
+        BookWorkspaceTable.deleteWorkspaceBook(remove);
+        circle.setFill(Color.YELLOW);
+        ScreenController.deactivate();
+    }
 
     public void goBack(MouseEvent event) {
         event.consume();
-        circle.setFill(Color.YELLOW);
         ScreenController.deactivate();
     }
 
     public void setLoc(Location loc) {
     }
 
-    public void setWorkspace(List<Workspace> ws) {
+    public void setWorkspace(Workspace ws) {
         this.ws = ws;
+        lblNodeID.setText(ws.getNodeID());
+        lblLocation.setText("(" + ws.getxCord() + ", " + ws.getyCord() + ")");
+        lblLongName.setText(ws.getLongName());
     }
 
     public void setCircle(Circle circle) {
         this.circle = circle;
-        for(Workspace ws1 : ws) {
-            if(scaleX(ws1.getxCord()) == circle.getCenterX() && scaleY(ws1.getyCord()) == circle.getCenterY()) {
-                enter = ws1;
-                break;
-            }
-        }
-        lblNodeID.setText(enter.getNodeID());
-        lblLocation.setText("(" + enter.getxCord() + ", " + enter.getyCord() + ")");
-        lblLongName.setText(enter.getLongName());
+
     }
 
     public void setStartDate(LocalDate StartDate) {

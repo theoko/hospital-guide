@@ -140,7 +140,7 @@ public class ScreenController {
         displayPopUp(root);
     }
 
-    public static void popUp(Constants.Routes route, List<Workspace> ws, Circle circle, LocalTime StartTime, LocalDate StartDate, LocalTime EndTime, LocalDate EndDate) throws Exception {
+    public static void popUp(Constants.Routes route, Workspace ws, Circle circle, LocalTime StartTime, LocalDate StartDate, LocalTime EndTime, LocalDate EndDate) throws Exception {
         stage = new Stage();
         URL url = routeToURL(route);
 
