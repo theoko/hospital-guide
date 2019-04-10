@@ -2,6 +2,7 @@ package database;
 
 import helpers.Constants;
 import models.map.Location;
+import models.room.Book;
 
 import java.sql.*;
 import java.util.*;
@@ -11,6 +12,14 @@ public class Database {
 
     private static String newPrefixChar = "X";
     private static Connection connection;
+
+    private Database(){}
+
+    private static Database makeDatabase;
+
+    private static class DatabaseHelper{
+        private static final Database makeDatabase = new Database();
+    }
 
     static {
 
@@ -31,9 +40,15 @@ public class Database {
             e.printStackTrace();
         }
 
-        if(!Database.databaseExists()) {
+        if(!Database.getDatabase().databaseExists()) {
             createTables();
         }
+
+
+    }
+
+    public static Database getDatabase(){
+        return DatabaseHelper.makeDatabase;
     }
 
     /**
@@ -41,7 +56,8 @@ public class Database {
      */
     public static void dropTables() {
         SanitationTable.dropTable();
-        BookTable.dropTable();
+        BookLocationTable.dropTable();
+        BookWorkspaceTable.dropTable();
         RoomTable.dropTable();
         EdgeTable.dropTable();
         WorkspaceTable.dropTable();
@@ -58,16 +74,17 @@ public class Database {
         WorkspaceTable.createtable();
         EdgeTable.createTable();
         RoomTable.createTable();
-        BookTable.createTable();
+        BookLocationTable.createTable();
+        BookWorkspaceTable.createTable();
         SanitationTable.createTable();
 
     }
 
-    public static Connection getConnection() {
+    public Connection getConnection() {
         return connection;
     }
 
-    public static void setConnection(Connection connection) {
+    public void setConnection(Connection connection) {
         Database.connection = connection;
     }
 
@@ -75,7 +92,7 @@ public class Database {
      * Checks if the database exists locally
      * @return true if the database exists, false otherwise
      */
-    public static boolean databaseExists() {
+    public boolean databaseExists() {
 
         boolean exists;
 
@@ -95,7 +112,7 @@ public class Database {
         return exists;
     }
 
-    public static String getNewPrefixChar() {
+    public String getNewPrefixChar() {
         return newPrefixChar;
     }
 

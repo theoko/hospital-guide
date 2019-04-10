@@ -19,7 +19,7 @@ public class SanitationTable {
         // Create statement
         Statement statement = null;
         try {
-            statement = Database.getConnection().createStatement();
+            statement = Database.getDatabase().getConnection().createStatement();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -65,7 +65,7 @@ public class SanitationTable {
 
         try {
             // Attempt to add request to database
-            PreparedStatement statement = Database.getConnection().prepareStatement(
+            PreparedStatement statement = Database.getDatabase().getConnection().prepareStatement(
                     "INSERT INTO " + Constants.SANITATION_TABLE +
                             " (nodeID, priority, status, description, requesterID, requestTime)" +
                             " VALUES (?, ?, ?, ?, ?, ?)"
@@ -95,7 +95,7 @@ public class SanitationTable {
     public static boolean deleteSanitationRequest(SanitationRequest request) {
         int requestID = request.getRequestID();
         try {
-            PreparedStatement statement = Database.getConnection().prepareStatement(
+            PreparedStatement statement = Database.getDatabase().getConnection().prepareStatement(
                     "DELETE FROM " + Constants.SANITATION_TABLE + " WHERE requestID=?");
             statement.setInt(1, requestID);
             return statement.execute();
@@ -112,7 +112,7 @@ public class SanitationTable {
      */
     public static boolean dropTable() {
         try {
-            Statement statement = Database.getConnection().createStatement();
+            Statement statement = Database.getDatabase().getConnection().createStatement();
             return statement.execute("DROP TABLE " + Constants.SANITATION_TABLE);
         } catch (SQLException exception) {
             System.out.println("Table " + Constants.SANITATION_TABLE + " cannot be dropped.");
@@ -126,7 +126,7 @@ public class SanitationTable {
     public static ArrayList<SanitationRequest> getSanitationRequests() {
         try {
             // Execute query to get all sanitation requests
-            Statement statement = Database.getConnection().createStatement();
+            Statement statement = Database.getDatabase().getConnection().createStatement();
             String query = "SELECT * FROM " + Constants.SANITATION_TABLE;
             ResultSet resultSet = statement.executeQuery(query);
 
@@ -191,7 +191,7 @@ public class SanitationTable {
         try {
 
             // Attempt to remove request from database
-            PreparedStatement statement = Database.getConnection().prepareStatement(
+            PreparedStatement statement = Database.getDatabase().getConnection().prepareStatement(
                     "UPDATE " + Constants.SANITATION_TABLE +
                             " SET status=?, servicerID=?, claimedTime=?, completedTime=? WHERE requestID=?"
             );

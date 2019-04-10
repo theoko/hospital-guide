@@ -148,6 +148,7 @@ public class SanitationRequest implements Comparable<SanitationRequest> {
         if (servicer == null) return null;
         return servicer.getUsername();
     }
+
     public Timestamp getRequestTime() {
         return requestTime;
     }
