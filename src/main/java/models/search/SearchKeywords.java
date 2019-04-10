@@ -5,16 +5,9 @@ import edu.smu.tspell.wordnet.WordNetDatabase;
 import helpers.FileHelpers;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class SearchKeywords {
 
@@ -78,24 +71,35 @@ public class SearchKeywords {
     // International
     List<String> international = new ArrayList<>();
 
-    public static void intialize() {
-        // Path to dictionary directory
-        final String pathToWordnet = "/data/dictionary.zip";
+    public static void initialize() {
 
-        try {
+        if (FileHelpers.checkJar()) {
 
-            // Copy files to filesystem if necessary
-            String dictionary;
-            dictionary = FileHelpers.extractFolder(pathToWordnet, "dictionary.zip");
+            // Path to dictionary directory
+            String pathToWordnet = "/data/dictionary.zip";
 
-            String dictionaryPath = FileHelpers.unzipFile(dictionary, "dictionary");
+            try {
+
+                // Copy files to filesystem if necessary
+                String dictionary;
+                dictionary = FileHelpers.extractFolder(pathToWordnet, "dictionary.zip");
+
+                String dictionaryPath = FileHelpers.unzipFile(dictionary, "dictionary");
+
+                // Point to dictionary location
+                System.setProperty("wordnet.database.dir", dictionaryPath);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        } else {
 
             // Point to dictionary location
-            System.setProperty("wordnet.database.dir", dictionaryPath);
+            System.setProperty("wordnet.database.dir", SearchKeywords.class.getResource("/data/dictionary").getFile());
 
-        } catch (IOException e) {
-            e.printStackTrace();
         }
+
     }
 
     public SearchKeywords() {
@@ -239,6 +243,7 @@ public class SearchKeywords {
         keys.put("restroom", restroom);
         keys.put("bathroom", bathroom);
         keys.put("atm", atm);
+        keys.put("cash", atm);
         keys.put("exit", exit);
         keys.put("entrance", entrance);
         keys.put("international", international);

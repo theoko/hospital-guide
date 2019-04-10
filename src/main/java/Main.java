@@ -26,7 +26,7 @@ public class Main extends Application {
         }
 
         // Initialize keywords for search engine
-        SearchKeywords.intialize();
+        SearchKeywords.initialize();
 
         // Initialize screen controller
         screenController = new ScreenController(primaryStage);
