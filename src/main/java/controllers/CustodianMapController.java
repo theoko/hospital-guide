@@ -76,7 +76,7 @@ public class CustodianMapController extends MapController {
     }
 
     private void initSanitation(){
-        tblRequestID.setCellValueFactory(new PropertyValueFactory<>("RequestID"));
+//        tblRequestID.setCellValueFactory(new PropertyValueFactory<>("RequestID"));
         tblLocation.setCellValueFactory(new PropertyValueFactory<>("LocationShortName"));
         tblPriority.setCellValueFactory(new PropertyValueFactory<>("Priority"));
         tblStatus.setCellValueFactory(new PropertyValueFactory<>("Status"));
