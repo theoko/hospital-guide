@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" stylesheets="@css/colorScheme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.UserMapController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" stylesheets="@css/colorScheme.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.UserMapController">
     <children>
         <JFXTabPane prefHeight="700.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <tabs>
@@ -25,7 +25,7 @@
                                             <content>
                                                 <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                                     <children>
-                                                        <AnchorPane fx:id="panFloor3" onMouseDragged="#floorOneMapOnMouseDragged" onMousePressed="#floorOneMapOnMousePressed" onScroll="#floorOneMapScroll" onZoom="#floorOneMapZoom" onZoomFinished="#floorOneMapZoomDone"  prefHeight="200.0" prefWidth="200.0">
+                                                        <AnchorPane fx:id="panFloor3" onMouseDragged="#floorOneMapOnMouseDragged" onMousePressed="#floorOneMapOnMousePressed" onScroll="#floorOneMapScroll" onZoom="#floorOneMapZoom" onZoomFinished="#floorOneMapZoomDone" prefHeight="200.0" prefWidth="200.0">
                                                             <children>
                                                                 <ImageView fitHeight="1620.0" fitWidth="2581.0" layoutX="1000.0" layoutY="-350.0" pickOnBounds="true" preserveRatio="true">
                                                                     <image>
@@ -41,7 +41,7 @@
                                             <content>
                                                 <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                                     <children>
-                                                        <AnchorPane fx:id="panFloor2" onMouseDragged="#floorOneMapOnMouseDragged" onMousePressed="#floorOneMapOnMousePressed" onScroll="#floorOneMapScroll" onZoom="#floorOneMapZoom" onZoomFinished="#floorOneMapZoomDone"  prefHeight="200.0" prefWidth="200.0">
+                                                        <AnchorPane fx:id="panFloor2" onMouseDragged="#floorOneMapOnMouseDragged" onMousePressed="#floorOneMapOnMousePressed" onScroll="#floorOneMapScroll" onZoom="#floorOneMapZoom" onZoomFinished="#floorOneMapZoomDone" prefHeight="200.0" prefWidth="200.0">
                                                             <children>
                                                                 <ImageView fitHeight="1620.0" fitWidth="2581.0" layoutX="1000.0" layoutY="-350.0" pickOnBounds="true" preserveRatio="true">
                                                                     <image>
@@ -112,7 +112,6 @@
                                                 </Label>
                                                 <HBox alignment="TOP_CENTER" prefHeight="34.0" prefWidth="341.0" spacing="15.0">
                                                     <children>
-                                                        <JFXButton fx:id="btnSettings" buttonType="RAISED" prefHeight="60.0" prefWidth="150.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Settings" />
                                                         <JFXButton fx:id="btnReturn" buttonType="RAISED" onMouseClicked="#logOut" prefHeight="60.0" prefWidth="150.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Exit" />
                                                     </children>
                                                 </HBox>

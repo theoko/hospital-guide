@@ -179,7 +179,6 @@
                                                 </Label>
                                                 <HBox alignment="TOP_CENTER" prefHeight="34.0" prefWidth="341.0" spacing="15.0">
                                                     <children>
-                                                        <JFXButton fx:id="btnSettings" buttonType="RAISED" prefHeight="60.0" prefWidth="150.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Settings" />
                                                         <JFXButton fx:id="btnReturn" buttonType="RAISED" onMouseClicked="#logOut" prefHeight="60.0" prefWidth="150.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Logout" />
                                                     </children>
                                                 </HBox>
@@ -228,15 +227,15 @@
                             <children>
                                 <TableView fx:id="tblData" prefHeight="629.0" onMouseClicked="#tblClick" prefWidth="1163.0">
                                     <columns>
-                                        <TableColumn fx:id="tblRequestID" prefWidth="50.0" text="Request ID" />
-                                        <TableColumn fx:id="tblLocation" prefWidth="250.0" text="Location" />
+                                        <!--<TableColumn fx:id="tblRequestID" prefWidth="50.0" text="Request ID" />-->
+                                        <TableColumn fx:id="tblLocation" prefWidth="100.0" text="Location" />
                                         <TableColumn fx:id="tblPriority" prefWidth="75.0" text="Priority" />
                                         <TableColumn fx:id="tblStatus" prefWidth="100.0" text="Status" />
-                                        <TableColumn fx:id="tblDescription" prefWidth="350.0" text="Description" />
+                                        <TableColumn fx:id="tblDescription" prefWidth="250.0" text="Description" />
                                         <TableColumn fx:id="tblRequester" prefWidth="100.0" text="Requester" />
-                                        <TableColumn fx:id="tblClaimTime" prefWidth="100.0" text="Time Claimed" />
+                                        <TableColumn fx:id="tblClaimTime" prefWidth="150.0" text="Time Claimed" />
                                         <TableColumn fx:id="tblServicer" prefWidth="100.0" text="Servicer" />
-                                        <TableColumn fx:id="tblServiceTime" prefWidth="100.0" text="Service Time" />
+                                        <TableColumn fx:id="tblServiceTime" prefWidth="150.0" text="Service Time" />
                                     </columns>
                                 </TableView>
                                 <ButtonBar minHeight="-Infinity" prefHeight="71.0" prefWidth="1099.0" VBox.vgrow="ALWAYS">

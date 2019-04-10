@@ -168,4 +168,18 @@ public class SanitationRequest implements Comparable<SanitationRequest> {
     }
     public void setClaimedTime(Timestamp serviceTime) { this.claimedTime = serviceTime; }
     public void setCompletedTime(Timestamp completedTime) { this.completedTime = completedTime; }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof SanitationRequest) {
+            if (((SanitationRequest) obj).getRequestID() == (this.getRequestID())) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
 }

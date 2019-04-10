@@ -21,7 +21,9 @@ public class MapDisplay {
     private final static double xShift = -2110.0;
     private final static double yShift = 730.0;
     private final static double scale = 0.475;
-    private final static Color nodeFill = Color.WHITE;
+    public final static Color nodeFill = Color.WHITE;
+    public final static Color nodeStart = Color.GREEN;
+    public final static Color nodeEnd = Color.RED;
     private final static Color hallFill = Color.GRAY;
     private final static Color nodeOutline = Color.BLACK;
     private final static Color edgeFill = Color.BLACK;
@@ -69,17 +71,24 @@ public class MapDisplay {
             if (loc.getNodeType() != Constants.NodeType.HALL) {
                 double xLoc = scaleX(loc.getxCord());
                 double yLoc = scaleY(loc.getyCord());
-                Circle circle = new Circle(xLoc, yLoc, locRadius, nodeFill);
+                Circle circle = new Circle(xLoc, yLoc, locRadius);
+                if (!loc.getNodeID().equals(MapController.getTempStart())) {
+                    circle.setFill(nodeFill);
+                } else {
+                    circle.setFill(nodeStart);
+                }
                 circle.setStroke(nodeOutline);
                 circle.setStrokeWidth(locWidth);
+                circle.setId(loc.getNodeID());
                 circle.setOnMouseClicked(event -> {
                     try {
                         event.consume();
-                        ScreenController.popUp(Constants.Routes.USER_INFO, loc, map, panes);
+                        ScreenController.popUp(Constants.Routes.USER_INFO, loc, map, panes, circle);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 });
+                loc.setNodeCircle(circle);
                 findPane(panes, loc.getFloor()).getChildren().add(circle);
             }
         }
@@ -91,17 +100,25 @@ public class MapDisplay {
             if (loc.getNodeType() != Constants.NodeType.HALL) {
                 double xLoc = scaleX(loc.getxCord());
                 double yLoc = scaleY(loc.getyCord());
-                Circle circle = new Circle(xLoc, yLoc, locRadius, nodeFill);
+                Circle circle = new Circle(xLoc, yLoc, locRadius);
+                if (!loc.getNodeID().equals(MapController.getTempStart())) {
+                    circle.setFill(nodeFill);
+                } else {
+                    circle.setFill(nodeStart);
+                }
+                circle.setStroke(nodeOutline);
                 circle.setStroke(nodeOutline);
                 circle.setStrokeWidth(locWidth);
+                circle.setId(loc.getNodeID());
                 circle.setOnMouseClicked(event -> {
                     try {
                         event.consume();
-                        ScreenController.popUp(Constants.Routes.CUSTODIAN_INFO, loc, map, panes);
+                        ScreenController.popUp(Constants.Routes.CUSTODIAN_INFO, loc, map, panes, circle);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 });
+                loc.setNodeCircle(circle);
                 findPane(panes, loc.getFloor()).getChildren().add(circle);
             }
         }
@@ -113,17 +130,25 @@ public class MapDisplay {
             if (loc.getNodeType() != Constants.NodeType.HALL) {
                 double xLoc = scaleX(loc.getxCord());
                 double yLoc = scaleY(loc.getyCord());
-                Circle circle = new Circle(xLoc, yLoc, locRadius, nodeFill);
+                Circle circle = new Circle(xLoc, yLoc, locRadius);
+                if (!loc.getNodeID().equals(MapController.getTempStart())) {
+                    circle.setFill(nodeFill);
+                } else {
+                    circle.setFill(nodeStart);
+                }
+                circle.setStroke(nodeOutline);
                 circle.setStroke(nodeOutline);
                 circle.setStrokeWidth(locWidth);
+                circle.setId(loc.getNodeID());
                 circle.setOnMouseClicked(event -> {
                     try {
                         event.consume();
-                        ScreenController.popUp(Constants.Routes.EMPLOYEE_INFO, loc, map, panes);
+                        ScreenController.popUp(Constants.Routes.EMPLOYEE_INFO, loc, map, panes, circle);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 });
+                loc.setNodeCircle(circle);
                 findPane(panes, loc.getFloor()).getChildren().add(circle);
             }
         }
@@ -135,14 +160,16 @@ public class MapDisplay {
             double xLoc = scaleX(loc.getxCord());
             double yLoc = scaleY(loc.getyCord());
             Circle circle;
-            if (loc.getNodeType() != Constants.NodeType.HALL) {
+            if (loc.getNodeID().equals(MapController.getTempStart())) {
+                circle = new Circle(xLoc, yLoc, locRadius, nodeStart);
+            } else if (loc.getNodeType() != Constants.NodeType.HALL) {
                 circle = new Circle(xLoc, yLoc, locRadius, nodeFill);
             } else {
                 circle = new Circle(xLoc, yLoc, hallRadius, hallFill);
             }
             circle.setStroke(nodeOutline);
             circle.setStrokeWidth(locWidth);
-            UIHelpers.setAdminNodeClickEvent(circle, loc);
+            UIHelpers.setAdminNodeClickEvent(map, panes, loc, circle);
             loc.setNodeCircle(circle);
             findPane(panes, loc.getFloor()).getChildren().add(circle);
         }

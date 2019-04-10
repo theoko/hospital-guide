@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -145,6 +146,22 @@ public class ScreenController {
         pc.setLoc(loc);
         pc.setMap(map);
         pc.setPanes(panes);
+
+        displayPopUp(root);
+    }
+
+    public static void popUp(Constants.Routes route, Location loc, Map map, AnchorPane[] panes, Circle circle) throws Exception {
+        stage = new Stage();
+        URL url = routeToURL(route);
+
+        FXMLLoader loader = new FXMLLoader(url);
+        Parent root = loader.load();
+        PopUpController pc = loader.getController();
+
+        pc.setLoc(loc);
+        pc.setMap(map);
+        pc.setPanes(panes);
+        pc.setCircle(circle);
 
         displayPopUp(root);
     }
