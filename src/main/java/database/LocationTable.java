@@ -39,7 +39,7 @@ public class LocationTable {
         }
     }
 
-    public static boolean dropLocationTable() {
+    public static boolean dropTable() {
         try {
             Statement statement;
 

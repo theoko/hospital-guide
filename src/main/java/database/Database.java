@@ -55,14 +55,14 @@ public class Database {
      * Drops all database tables
      */
     public static void dropTables() {
-        SanitationTable.dropSanitationTable();
-        BookLocationTable.dropBookLocationTable();
-        BookWorkspaceTable.dropBookWorkspaceTable();
-        RoomTable.dropRoomTable();
-        EdgeTable.dropEdgeTable();
-        WorkspaceTable.dropWorkspaceTable();
-        LocationTable.dropLocationTable();
-        UserTable.dropUsersTable();
+        SanitationTable.dropTable();
+        BookLocationTable.dropTable();
+        BookWorkspaceTable.dropTable();
+        RoomTable.dropTable();
+        EdgeTable.dropTable();
+        WorkspaceTable.dropTable();
+        LocationTable.dropTable();
+        UserTable.dropTable();
     }
 
     /**

@@ -172,6 +172,22 @@ public class ScreenController {
         displayPopUp(root);
     }
 
+    public static void popUp(Constants.Routes route, Location loc, Map map, AnchorPane[] panes, Circle circle) throws Exception {
+        stage = new Stage();
+        URL url = routeToURL(route);
+
+        FXMLLoader loader = new FXMLLoader(url);
+        Parent root = loader.load();
+        PopUpController pc = loader.getController();
+
+        pc.setLoc(loc);
+        pc.setMap(map);
+        pc.setPanes(panes);
+        pc.setCircle(circle);
+
+        displayPopUp(root);
+    }
+
     public static void popUp(Constants.Routes route, Location loc1, Location loc2, Map map, AnchorPane[] panes) throws Exception {
         stage = new Stage();
         URL url = routeToURL(route);

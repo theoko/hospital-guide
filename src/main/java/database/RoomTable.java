@@ -78,7 +78,7 @@ public class RoomTable {
         }
     }
 
-    public static boolean dropRoomTable() {
+    public static boolean dropTable() {
         try {
             Statement statement;
 

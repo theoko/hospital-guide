@@ -11,6 +11,8 @@ import javafx.animation.Timeline;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeLineJoin;
@@ -133,6 +135,14 @@ public abstract class PathFinder {
             for (Node n : pane.getChildren()) {
                 if (n instanceof Line) {
                     lstNodes1.add(n);
+                } else if (n instanceof Circle) {
+                    Circle circle = (Circle) n;
+                    if (circle.getFill().equals(MapDisplay.nodeEnd)) {
+                        circle.setFill(MapDisplay.nodeFill);
+                    }
+                    if (circle.getId().equals(loc2.getNodeID())) {
+                        circle.setFill(MapDisplay.nodeEnd);
+                    }
                 }
             }
             for (Node n : lstNodes1) {
@@ -185,12 +195,14 @@ public abstract class PathFinder {
                     panes[0].getChildren().add(1, line);
                 } else if (curr.getFloor().equals("L1") && prev.getFloor().equals("L1")) {
                     panes[1].getChildren().add(1, line);
-                } else if (curr.getFloor().equals("1") && prev.getFloor().equals("1")) {
+                } else if (curr.getFloor().equals("G") && prev.getFloor().equals("G")) {
                     panes[2].getChildren().add(1, line);
-                } else if (curr.getFloor().equals("2") && prev.getFloor().equals("2")) {
+                } else if (curr.getFloor().equals("1") && prev.getFloor().equals("1")) {
                     panes[3].getChildren().add(1, line);
-                } else {
+                } else if (curr.getFloor().equals("2") && prev.getFloor().equals("2")) {
                     panes[4].getChildren().add(1, line);
+                } else {
+                    panes[5].getChildren().add(1, line);
                 }
             }
             prev = curr;
@@ -226,12 +238,14 @@ public abstract class PathFinder {
                 return 0;
             case "L1":
                 return 1;
-            case "1":
+            case "G":
                 return 2;
-            case "2":
+            case "1":
                 return 3;
-            default:
+            case "2":
                 return 4;
+            default:
+                return 5;
         }
     }
 }

@@ -2,6 +2,7 @@ package controllers;
 
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXToggleButton;
 import database.UserTable;
 import helpers.Constants;
 import javafx.event.ActionEvent;
@@ -14,6 +15,11 @@ public class AuthController {
     public Label errorMessage;
 
     public static User currentUser;
+    public JFXToggleButton togScanner;
+    public JFXPasswordField cardPassword;
+    public Label passText;
+    public Label emailText;
+    public Label cardScanText;
 
     private int currentlyAuthenticatedUsers = 0;
 
@@ -25,6 +31,13 @@ public class AuthController {
         String TEMP_EMPLOYEE_PASSWORD = "";
         String TEMP_CUSTODIAN_USERNAME = "custodian";
         String TEMP_CUSTODIAN_PASSWORD = "";
+
+        String STAFF_EMPLOYEE = "staff-employee";
+        String STAFF_EMPLOYEE_PASSWORD = "staff";
+        String STAFF_ADMIN = "staff-admin";
+        String STAFF_ADMIN_PASSWORD = "staff";
+        String STAFF_CUSTODIAN = "staff-custodian";
+        String STAFF_CUSTODIAN_PASSWORD = "staff";
 
         String TEMP_USER_USERNAME = "user";
         String TEMP_USER_PASSWORD = "";
@@ -39,6 +52,12 @@ public class AuthController {
             return Constants.Auth.CUSTODIAN;
         } else if (username.equals(TEMP_USER_USERNAME) && password.equals(TEMP_USER_PASSWORD)) {
             return Constants.Auth.USER;
+        } else if (username.equals(STAFF_EMPLOYEE) && password.equals(STAFF_EMPLOYEE_PASSWORD)) {
+            return Constants.Auth.EMPLOYEE;
+        } else if (username.equals(STAFF_ADMIN) && password.equals(STAFF_ADMIN_PASSWORD)) {
+            return Constants.Auth.ADMIN;
+        } else if (username.equals(STAFF_CUSTODIAN) && password.equals(STAFF_CUSTODIAN_PASSWORD)) {
+            return Constants.Auth.CUSTODIAN;
         }
 
         // Created users
@@ -57,8 +76,13 @@ public class AuthController {
     }
 
     public void handleLogin(ActionEvent actionEvent) throws Exception {
-
-        Constants.Auth authType = authenticate(emailField.getText(), passwordField.getText());
+        Constants.Auth authType;
+        System.out.println(togScanner.isSelected());
+        if (!togScanner.isSelected()) {
+            authType = authenticate(emailField.getText(), passwordField.getText());
+        } else {
+            authType = authenticate(cardPassword.getText(), "");
+        }
 
         if(authType == Constants.Auth.ADMIN) {
 
@@ -118,4 +142,25 @@ public class AuthController {
         ScreenController.activate(Constants.Routes.WELCOME);
     }
 
+    public void cardScanner(ActionEvent actionEvent) {
+        actionEvent.consume();
+        if(togScanner.isSelected()){
+            cardPassword.setVisible(true);
+            emailField.setVisible(false);
+            passwordField.setVisible(false);
+            passText.setVisible(false);
+            cardScanText.setVisible(true);
+            emailText.setVisible(false);
+            cardPassword.requestFocus();
+
+        } else{
+            cardPassword.setVisible(false);
+            emailField.setVisible(true);
+            passwordField.setVisible(true);
+            passText.setVisible(true);
+            cardScanText.setVisible(false);
+            emailText.setVisible(true);
+            emailField.requestFocus();
+        }
+    }
 }

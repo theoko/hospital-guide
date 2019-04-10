@@ -62,7 +62,7 @@ public class BookWorkspaceTable {
 
     }
 
-    public static boolean dropBookWorkspaceTable() {
+    public static boolean dropTable() {
         try {
             Statement statement;
 
