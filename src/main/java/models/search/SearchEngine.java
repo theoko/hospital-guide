@@ -88,9 +88,7 @@ public class SearchEngine {
 
         }
 
-        for(String key : uniqueNeighbors) {
-            results.add(key);
-        }
+        results.addAll(uniqueNeighbors);
 
         return results;
     }
