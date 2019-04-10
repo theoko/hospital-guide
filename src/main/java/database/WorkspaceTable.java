@@ -36,7 +36,7 @@ public class WorkspaceTable {
         }
     }
 
-    public static boolean dropWorkspaceTable() {
+    public static boolean dropTable() {
         try {
             Statement statement;
 

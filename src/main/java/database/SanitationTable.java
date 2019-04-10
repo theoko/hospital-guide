@@ -110,7 +110,7 @@ public class SanitationTable {
      * @brief Attempts to drop sanitation table.
      * @return Boolean indicating success of table drop.
      */
-    public static boolean dropSanitationTable() {
+    public static boolean dropTable() {
         try {
             Statement statement = Database.getConnection().createStatement();
             return statement.execute("DROP TABLE " + Constants.SANITATION_TABLE);

@@ -64,7 +64,7 @@ public class BookTable {
 
     }
 
-    public static boolean dropBookTable() {
+    public static boolean dropTable() {
         try {
             Statement statement;
 

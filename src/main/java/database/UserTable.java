@@ -95,7 +95,7 @@ public class UserTable {
         }
     }
 
-    public static boolean dropUsersTable() {
+    public static boolean dropTable() {
         try {
             Statement statement;
 

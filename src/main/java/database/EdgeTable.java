@@ -35,7 +35,7 @@ public class EdgeTable {
         }
     }
 
-    public static boolean dropEdgeTable() {
+    public static boolean dropTable() {
         try {
             Statement statement;
 
