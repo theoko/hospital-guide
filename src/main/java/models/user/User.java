@@ -70,4 +70,8 @@ public class User {
             return false;
         }
     }
+    @Override
+    public String toString(){
+        return "UserID: "+this.getUserID()+", Username:"+this.getUsername();
+    }
 }

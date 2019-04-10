@@ -36,6 +36,11 @@ public class Room {
             return false;
         }
     }
+
+    @Override
+    public String toString(){
+        return "roomID: "+this.getRoomID()+", Capacity:"+this.getCapacity();
+    }
 //    @Override
 //    public boolean equals(Room roomA){
 //        if(roomA.capacity==this.getCapacity() && roomA.roomID.equals(this.getRoomID())){

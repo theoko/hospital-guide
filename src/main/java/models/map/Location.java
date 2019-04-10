@@ -149,4 +149,18 @@ public class Location {
         this.nodeCircle = nodeCircle;
     }
 
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Location) {
+            if(((Location) obj).getNodeID().equals(this.getNodeID())){
+                return true;
+            }else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
 }

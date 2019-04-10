@@ -24,7 +24,6 @@ import static org.junit.Assert.*;
 public class DatabaseTest {
 
 
-
     @Before
     public void setUp() {
 
@@ -74,8 +73,7 @@ public class DatabaseTest {
     @Test
     public void getLocationsByID() {
         Location newLoc = new Location("AHALL00201", 1608, 2596, "1", "BTM", HALL, "Hall", "Hall");
-        HashMap<String, Location> locations = LocationTable.getLocations();
-        assertTrue(LocationTable.getLocationByID(newLoc.getNodeID()).equals(newLoc));
+        assertTrue(newLoc.equals(LocationTable.getLocationByID(newLoc.getNodeID())));
     }
 
     @Test
@@ -106,30 +104,29 @@ public class DatabaseTest {
     public void getRoomByID() {
         assertNull(RoomTable.getRoomByID("12345678900987654321"));
 
-        Room room = new Room("ABC", 50);
+        Location location = new Location("123asdfasdf", 55, 55, "4", "N", HALL, "asdfasdf", "asdfasdf");
+        LocationTable.addLocation(location);
+        Room room = new Room("123asdfasdf", 50);
         RoomTable.addRoom(room);
-        RoomTable.getRoomByID("ABC").setCapacity(5);
-        assertTrue(RoomTable.getRoomByID("ABC").getCapacity() == 5);
+        // RoomTable.getRoomByID("ABC").setCapacity(5);
+        assertTrue(RoomTable.getRoomByID("123asdfasdf").getCapacity() == 50);
     }
 
     @Test
     public void addRoom() {
-        Room room = new Room("RM101Z", 2);
+        Location loc = new Location("RM101Z", 3, 3, "s", "a", HALL, "h", "H");
+        LocationTable.addLocation(loc);
+        Room room = new Room(loc.getNodeID(), 2);
+
         RoomTable.addRoom(room);
-        assertTrue(RoomTable.getRoomByID("RB101Z").equals(room));
+
+        System.out.println(room.toString());
+        System.out.println("\n");
+        System.out.println(RoomTable.getRoomByID(room.getRoomID()).toString());
+
+        assertTrue(RoomTable.getRoomByID(room.getRoomID()).equals(room));
     }
 
-    @Test
-    public void addDeleteLocation() {
-
-
-        Location newLoc = new Location("AHALL00201", 1608, 2596, "1", "BTM", HALL, "Hall", "Hall");
-        HashMap<String, Location> locations = LocationTable.getLocations();
-
-        // check that all fields are equal to the original after being added and and pulled from the database
-
-        assertNull(LocationTable.getLocationByID(newLoc.getNodeID()));
-    }
     public void getRooms() {
         Room room = new Room("ABC", 50);
         RoomTable.addRoom(room);
@@ -147,12 +144,14 @@ public class DatabaseTest {
     public void addSanitationRequest() {
         Location newLoc = new Location("AHALL00201", 1608, 2596, "1", "BTM", HALL, "Hall", "Hall");
 
+        User user = new User(1, "Niko1", "password1234", Constants.Auth.ADMIN);
+        UserTable.createUser(user);
+
         SanitationRequest request = new SanitationRequest(
                 newLoc,
                 SanitationRequest.Priority.valueOf("HIGH"),
                 "DiRtY",
-                UserHelpers.getCurrentUser()
-        );
+                user);
 
         boolean F = false;
         SanitationTable.addSanitationRequest(request);
@@ -168,14 +167,18 @@ public class DatabaseTest {
 
     @Test
     public void getSanitationRequests() {
-        Location newLoc = new Location("AHALL00201", 1608, 2596, "1", "BTM", HALL, "Hall", "Hall");
-
-        SanitationRequest request = new SanitationRequest(
-                newLoc,
-                SanitationRequest.Priority.valueOf("HIGH"),
-                "DiRtY",
-                UserHelpers.getCurrentUser()
-        );
+        //Location newLoc = new Location("AHALL00201", 1608, 2596, "1", "BTM", HALL, "Hall", "Hall");
+        Location loc = LocationTable.getLocationByID("AHALL00201");
+        User user = new User(2, "Niko2", "password1234", Constants.Auth.ADMIN);
+        UserTable.createUser(user);
+        SanitationRequest request = new SanitationRequest(loc, SanitationRequest.Priority.valueOf("HIGH"), "DIRTY", user);
+//        SanitationRequest request = new SanitationRequest(
+//                123,
+//                newLoc,
+//                SanitationRequest.Priority.valueOf("HIGH"),
+//                "DiRtY",
+//                user
+//        );
 
         boolean F = false;
         SanitationTable.addSanitationRequest(request);
@@ -236,58 +239,27 @@ public class DatabaseTest {
         Location newLoc = new Location("fakeLoc", 1608, 2596, "1", "BTM", HALL, "Hall", "Hall");
         LocationTable.addLocation(newLoc);
         assertTrue(LocationTable.getLocationByID(newLoc.getNodeID()).equals(newLoc));//Check that is was added
-        assertTrue(LocationTable.deleteLocation(newLoc));
+        LocationTable.deleteLocation(newLoc);
         assertNull(LocationTable.getLocationByID(newLoc.getNodeID()));//check that it was deleted
     }
 
     @Test
     public void createUser() {
-        User Niko = new User(1499, "Niko1499", "2442", Constants.Auth.ADMIN);
+        //TODO: users should not take in a user ID to instantiate
+        User Niko = new User(2, "Niko1499", "2442", Constants.Auth.ADMIN);
         UserTable.createUser(Niko);
         List<User> userlist = UserTable.getUsers();
         boolean f = false;
         for (User e : userlist) {
+            System.out.println(e.toString());
             if (e.equals(Niko)) {
                 f = true;
+                System.out.println("here");
             }
         }
         assertTrue(f);
     }
-//
-//    @Test
-//    public void getBookings() {
-//
-//    }
 
-//    @Test
-//    public void getDeletedLocations() {
-//        HashMap<String, Location> getDL = new HashMap<>();
-//        getDL = Database.getDeletedLocations();
-//        System.out.println(getDL);
-//    }
-
-//    @Test NOT BEING USED
-//    public void removeSanitationRequest() {
-//        Location newLoc = new Location("AHALL00201",1608,2596,"1","BTM",HALL,"Hall","Hall");
-//
-//        SanitationRequest request = new SanitationRequest(
-//                newLoc,
-//                SanitationRequest.Priority.valueOf("HIGH"),
-//                "DiRtY"
-//        );
-//
-//        boolean F=false;
-//        Database.addSanitationRequest(request);
-//        List<SanitationRequest> lstReqs = Database.getSanitationRequests();
-//        Database.removeSanitationRequest(request);
-//        for(SanitationRequest E :lstReqs){
-//            if (E.getDescription().equals(request.getDescription())){
-//                F=true;
-//            }
-//        }
-//        assertFalse(F);
-//
-//    }
 //    @Test
 //    public void updateEdge() {
 //        Location AHALL00202 = new Location("AHALL00202", 1500, 2600, "2", "BTM", HALL, "Hall", "Hall");
