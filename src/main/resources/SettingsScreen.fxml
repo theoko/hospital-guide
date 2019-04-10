@@ -20,6 +20,11 @@
                     </Label>
                 </children>
             </AnchorPane>
+         <Label text="Select Algorithm Type:">
+            <font>
+               <Font size="27.0" />
+            </font>
+         </Label>
             <JFXComboBox fx:id="cmbAlgo" focusColor="#022d5a" prefHeight="27.0" prefWidth="339.0" promptText="Algorithm" unFocusColor="BLACK">
                 <items>
                     <FXCollections fx:factory="observableArrayList">
