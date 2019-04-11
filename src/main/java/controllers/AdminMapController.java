@@ -153,7 +153,7 @@ public class AdminMapController extends MapController {
         initSanitation();
         updateSanitation();
 
-        MapDisplay.displayAdmin(panes);
+        //MapDisplay.displayAdmin(panes);
         configVisualRealtimeController();
         VisualRealtimeController.setPanMap(panFloor1);
         selectedLocation = null;

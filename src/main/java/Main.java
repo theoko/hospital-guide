@@ -2,6 +2,7 @@ import controllers.ScreenController;
 import controllers.SettingsController;
 import database.Database;
 import helpers.FileHelpers;
+import images.ImageFactory;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import database.CSVParser;
@@ -18,6 +19,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        ImageFactory.load();
 
         if(!Database.getDatabase().databaseExists()) {
             CSVParser.parse(FileHelpers.getNodesCSV(), FileHelpers.getEdgesCSV(), FileHelpers.getWorkspacesCSV());

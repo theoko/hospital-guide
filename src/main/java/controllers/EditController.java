@@ -167,19 +167,19 @@ public class EditController extends PopUpController implements Initializable {
     }
 
     public void btnDefault_Click(MouseEvent mouseEvent) {
-        PathFinder.setDefLocation(loc.getNodeID());
-        for (AnchorPane pane : panes) {
-            List<Node> lstNodes1 = new ArrayList<>();
-            for (Node n : pane.getChildren()) {
-                if (n instanceof Circle) {
-                    Circle circle = (Circle) n;
-                    if (circle.getFill().equals(MapDisplay.nodeStart)) {
-                        circle.setFill(MapDisplay.nodeFill);
-                    }
-                }
-            }
-        }
-        circle.setFill(MapDisplay.nodeStart);
+//        PathFinder.setDefLocation(loc.getNodeID());
+//        for (AnchorPane pane : panes) {
+//            List<Node> lstNodes1 = new ArrayList<>();
+//            for (Node n : pane.getChildren()) {
+//                if (n instanceof Circle) {
+//                    Circle circle = (Circle) n;
+//                    if (circle.getFill().equals(MapDisplay.nodeStart)) {
+//                        circle.setFill(MapDisplay.nodeFill);
+//                    }
+//                }
+//            }
+//        }
+//        circle.setFill(MapDisplay.nodeStart);
         ScreenController.deactivate();
     }
 }

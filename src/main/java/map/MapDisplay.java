@@ -6,17 +6,19 @@ import helpers.Constants;
 import helpers.UIHelpers;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import models.map.Edge;
 import models.map.Location;
 import models.map.Map;
+
 import java.util.HashMap;
 
 public class MapDisplay {
-    private final static double locRadius = 7.5;
-    private final static double hallRadius = 2.5;
+    private final static double locRadius = 15;
+    private final static double hallRadius = 3.5;
     private final static double locWidth = 2.0;
     private final static double edgeWidth = 1.5;
     private final static double xShift = -2110.0;
@@ -29,49 +31,36 @@ public class MapDisplay {
     private final static Color nodeOutline = Color.BLACK;
     private final static Color edgeFill = Color.BLACK;
 
+    private static Map map = MapParser.parse();
+
     /**
      * Display the graph on a map for the default user (no halls, info boxes)
      */
-    public static void displayUser(AnchorPane[] panes, ScrollPane TextPane) {
-        Map map = MapParser.parse();
-        displayNodesUser(map, panes, TextPane);
+    public static void displayUser(Pane mapPane, ScrollPane txtPane, String floor) {
+        displayNodesUser(mapPane, txtPane, floor);
     }
 
-    /**
-     * Display the graph of a map for employees (halls, info boxes with spill reporting)
-     * @param panes
-     */
-    public static void displayEmployee(AnchorPane[] panes, ScrollPane TextPane) {
-        Map map = MapParser.parse();
-        displayNodesEmployee(map, panes, TextPane);
+    public static void displayEmployee(Pane mapPane, ScrollPane txtPane, String floor) {
+        displayNodesEmployee(mapPane, txtPane, floor);
     }
 
-    /**
-     * Display the graph on a map for the admin (halls, edit boxes)
-     * @param panes
-     */
-    public static void displayAdmin(AnchorPane[] panes) {
-        Map map = MapParser.parse();
-        displayEdges(map, panes);
-        displayNodesAdmin(map, panes);
+    public static void displayAdmin(Pane mapPane, String floor) {
+        displayEdges(mapPane, floor);
+        displayNodesAdmin(mapPane, floor);
     }
 
-    /**
-     * Display the graph on a map for the custodian (no halls)
-     * @param panes
-     */
-    public static void displayCust(MapController mc, AnchorPane[] panes, ScrollPane TextPane) {
-        Map map = MapParser.parse();
+    public static void displayCust(MapController mc, Pane mapPane, ScrollPane txtPane, String floor) {
         mc.setMap(map);
-        displayNodesCust(map, panes, TextPane);
+        displayNodesCust(mapPane, txtPane, floor);
     }
 
-    private static void displayNodesUser(Map map, AnchorPane[] panes, ScrollPane TextPane) {
+    private static void displayNodesUser(Pane mapPane, ScrollPane txtPane, String floor) {
+        mapPane.getChildren().clear();
         HashMap<String, Location> lstLocations = map.getAllLocations();
         for (Location loc : lstLocations.values()) {
-            if (loc.getNodeType() != Constants.NodeType.HALL) {
-                double xLoc = scaleX(loc.getxCord());
-                double yLoc = scaleY(loc.getyCord());
+            if (loc.getFloor().equals(floor) && loc.getNodeType() != Constants.NodeType.HALL) {
+                double xLoc = loc.getxCord();
+                double yLoc = loc.getyCord();
                 Circle circle = new Circle(xLoc, yLoc, locRadius);
                 if (!loc.getNodeID().equals(MapController.getTempStart())) {
                     circle.setFill(nodeFill);
@@ -84,48 +73,18 @@ public class MapDisplay {
                 circle.setOnMouseClicked(event -> {
                     try {
                         event.consume();
-                        ScreenController.popUp(Constants.Routes.USER_INFO, loc, map, panes, circle, TextPane);
+                        ScreenController.popUp(Constants.Routes.USER_INFO, loc, map, mapPane, circle, txtPane);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 });
                 loc.setNodeCircle(circle);
-                findPane(panes, loc.getFloor()).getChildren().add(circle);
+                mapPane.getChildren().add(circle);
             }
         }
     }
 
-    private static void displayNodesCust(Map map, AnchorPane[] panes, ScrollPane TextPane) {
-        HashMap<String, Location> lstLocations = map.getAllLocations();
-        for (Location loc : lstLocations.values()) {
-            if (loc.getNodeType() != Constants.NodeType.HALL) {
-                double xLoc = scaleX(loc.getxCord());
-                double yLoc = scaleY(loc.getyCord());
-                Circle circle = new Circle(xLoc, yLoc, locRadius);
-                if (!loc.getNodeID().equals(MapController.getTempStart())) {
-                    circle.setFill(nodeFill);
-                } else {
-                    circle.setFill(nodeStart);
-                }
-                circle.setStroke(nodeOutline);
-                circle.setStroke(nodeOutline);
-                circle.setStrokeWidth(locWidth);
-                circle.setId(loc.getNodeID());
-                circle.setOnMouseClicked(event -> {
-                    try {
-                        event.consume();
-                        ScreenController.popUp(Constants.Routes.CUSTODIAN_INFO, loc, map, panes, circle, TextPane);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
-                loc.setNodeCircle(circle);
-                findPane(panes, loc.getFloor()).getChildren().add(circle);
-            }
-        }
-    }
-
-    private static void displayNodesEmployee(Map map, AnchorPane[] panes, ScrollPane TextPane) {
+    private static void displayNodesCust(Pane mapPane, ScrollPane txtPane, String floor) {
         HashMap<String, Location> lstLocations = map.getAllLocations();
         for (Location loc : lstLocations.values()) {
             if (loc.getNodeType() != Constants.NodeType.HALL) {
@@ -144,18 +103,48 @@ public class MapDisplay {
                 circle.setOnMouseClicked(event -> {
                     try {
                         event.consume();
-                        ScreenController.popUp(Constants.Routes.EMPLOYEE_INFO, loc, map, panes, circle, TextPane);
+                        //ScreenController.popUp(Constants.Routes.CUSTODIAN_INFO, loc, map, panes, circle, TextPane);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 });
                 loc.setNodeCircle(circle);
-                findPane(panes, loc.getFloor()).getChildren().add(circle);
+                mapPane.getChildren().add(circle);
             }
         }
     }
 
-    private static void displayNodesAdmin(Map map, AnchorPane[] panes) {
+    private static void displayNodesEmployee(Pane mapPane, ScrollPane txtPane, String floor) {
+        HashMap<String, Location> lstLocations = map.getAllLocations();
+        for (Location loc : lstLocations.values()) {
+            if (loc.getNodeType() != Constants.NodeType.HALL) {
+                double xLoc = scaleX(loc.getxCord());
+                double yLoc = scaleY(loc.getyCord());
+                Circle circle = new Circle(xLoc, yLoc, locRadius);
+                if (!loc.getNodeID().equals(MapController.getTempStart())) {
+                    circle.setFill(nodeFill);
+                } else {
+                    circle.setFill(nodeStart);
+                }
+                circle.setStroke(nodeOutline);
+                circle.setStroke(nodeOutline);
+                circle.setStrokeWidth(locWidth);
+                circle.setId(loc.getNodeID());
+                circle.setOnMouseClicked(event -> {
+                    try {
+                        event.consume();
+                        //ScreenController.popUp(Constants.Routes.EMPLOYEE_INFO, loc, map, panes, circle, TextPane);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+                loc.setNodeCircle(circle);
+                mapPane.getChildren().add(circle);
+            }
+        }
+    }
+
+    private static void displayNodesAdmin(Pane mapPane, String floor) {
         HashMap<String, Location> lstLocations = map.getAllLocations();
         for (Location loc : lstLocations.values()) {
             double xLoc = scaleX(loc.getxCord());
@@ -170,13 +159,13 @@ public class MapDisplay {
             }
             circle.setStroke(nodeOutline);
             circle.setStrokeWidth(locWidth);
-            UIHelpers.setAdminNodeClickEvent(map, panes, loc, circle);
+            //UIHelpers.setAdminNodeClickEvent(map, mapPane, loc, circle);
             loc.setNodeCircle(circle);
-            findPane(panes, loc.getFloor()).getChildren().add(circle);
+            mapPane.getChildren().add(circle);
         }
     }
 
-    private static void displayEdges(Map map, AnchorPane[] panes) {
+    private static void displayEdges(Pane mapPane, String floor) {
         HashMap<String, Edge> lstEdges = map.getAllEdges();
         for (Edge edge : lstEdges.values()) {
             Location start = edge.getStart();
@@ -189,25 +178,8 @@ public class MapDisplay {
                 Line line = new Line(x1, y1, x2, y2);
                 line.setStroke(edgeFill);
                 line.setStrokeWidth(edgeWidth);
-                findPane(panes, start.getFloor()).getChildren().add(line);
+                mapPane.getChildren().add(line);
             }
-        }
-    }
-
-    private static AnchorPane findPane(AnchorPane[] panes, String floor) {
-        switch (floor) {
-            case "L2":
-                return panes[0];
-            case "L1":
-                return panes[1];
-            case "G":
-                return panes[2];
-            case "1":
-                return panes[3];
-            case "2":
-                return panes[4];
-            default:
-                return panes[5];
         }
     }
 

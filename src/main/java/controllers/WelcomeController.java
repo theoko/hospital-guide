@@ -12,7 +12,7 @@ public class WelcomeController {
 
     public void welcomeLogin() throws Exception{
         ScreenController.deactivate();
-        ScreenController.activate(Constants.Routes.USER_MAP);
+        ScreenController.activate(Constants.Routes.MAP_ALL);
     }
 
     public void employeeLogin() throws Exception{

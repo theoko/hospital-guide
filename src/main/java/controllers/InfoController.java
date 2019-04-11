@@ -8,6 +8,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Path;
 import map.MapDisplay;
 import map.PathFinder;
 import models.map.Location;
@@ -47,7 +48,7 @@ public abstract class InfoController extends PopUpController {
 
     public final void btnDirections_OnClick(MouseEvent event) throws Exception {
         event.consume();
-        PathFinder.printPath(panes, TextPane, map, kiosk, loc);
+        PathFinder.printPath(pane, txtPane, map, kiosk, loc);
         ScreenController.deactivate();
     }
 
@@ -58,21 +59,19 @@ public abstract class InfoController extends PopUpController {
 
     public final void btnStartHere_OnClick(MouseEvent mouseEvent) {
         MapController.setTempStart(loc.getNodeID());
-        for (AnchorPane pane : panes) {
-            List<Node> lstNodes1 = new ArrayList<>();
-            for (Node n : pane.getChildren()) {
-                if (n instanceof Line) {
-                    lstNodes1.add(n);
-                } else if (n instanceof Circle) {
-                    Circle circle = (Circle) n;
-                    if (circle.getFill().equals(MapDisplay.nodeEnd) || circle.getFill().equals(MapDisplay.nodeStart)) {
-                        circle.setFill(MapDisplay.nodeFill);
-                    }
+        List<Node> lstNodes = new ArrayList<>();
+        for (Node n : pane.getChildren()) {
+            if (n instanceof Path) {
+                lstNodes.add(n);
+            } else if (n instanceof Circle) {
+                Circle circle = (Circle) n;
+                if (circle.getFill().equals(MapDisplay.nodeEnd) || circle.getFill().equals(MapDisplay.nodeStart)) {
+                    circle.setFill(MapDisplay.nodeFill);
                 }
             }
-            for (Node n : lstNodes1) {
-                pane.getChildren().remove(n);
-            }
+        }
+        for (Node n : lstNodes) {
+            pane.getChildren().remove(n);
         }
         circle.setFill(MapDisplay.nodeStart);
         ScreenController.deactivate();

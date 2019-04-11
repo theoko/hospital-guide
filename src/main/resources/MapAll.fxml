@@ -6,9 +6,67 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="$CONTROLLER_NAME$"
-            prefHeight="400.0" prefWidth="600.0">
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import net.kurobako.gesturefx.GesturePane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+<AnchorPane stylesheets="@css/colorScheme.css" xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml" fx:controller="controllers.MapAllController">
+    <JFXTabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0"
+                AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <Tab text="PathFinder">
+            <AnchorPane>
+                <GesturePane fx:id="gesMap" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                             AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <AnchorPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                AnchorPane.topAnchor="0.0">
+                        <ImageView fx:id="imgMap"/>
+                        <Pane fx:id="panMap"/>
+                    </AnchorPane>
+                </GesturePane>
+                <VBox spacing="25">
+                    <padding>
+                        <Insets top="25" right="25" bottom="25" left="25"/>
+                    </padding>
+                    <JFXButton fx:id="btnFloor3" text="3" styleClass="animated-option-button" onMouseClicked="#btnFloor3_Click"/>
+                    <JFXButton fx:id="btnFloor2" text="2" styleClass="animated-option-button" onMouseClicked="#btnFloor2_Click"/>
+                    <JFXButton fx:id="btnFloor1" text="1" styleClass="animated-option-button" onMouseClicked="#btnFloor1_Click"/>
+                    <JFXButton fx:id="btnFloorG" text="G" styleClass="animated-option-button" onMouseClicked="#btnFloorG_Click"/>
+                    <JFXButton fx:id="btnFloorL1" text="L1" styleClass="animated-option-button" onMouseClicked="#btnFloorL1_Click"/>
+                    <JFXButton fx:id="btnFloorL2" text="L2" styleClass="animated-option-button" onMouseClicked="#btnFloorL2_Click"/>
+                </VBox>
 
+                <!--Top right settings-->
+                <AnchorPane prefHeight="135.0" prefWidth="225.0"
+                            style="-fx-background-color: #ffffff; -fx-background-radius: 10 10 10 10; -fx-border-width: 2px 2px 2px 2px; -fx-border-color: #022D5A; -fx-border-radius: 10;"
+                            AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
+                    <VBox alignment="CENTER" spacing="10.0"
+                          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <Label text="Welcome User!" textAlignment="CENTER" textFill="#022D5A"
+                               AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                            <font>
+                                <Font name="Moon Bold" size="24.0"/>
+                            </font>
+                        </Label>
+                        <JFXButton fx:id="btnReturn" buttonType="RAISED"
+                                   onMouseClicked="#btnReturn_Click" prefHeight="50.0"
+                                   prefWidth="150.0"
+                                   styleClass="jfx-button" text="Exit"/>
+                    </VBox>
+                </AnchorPane>
+                <TitledPane fx:id="tilDirections" alignment="CENTER" expanded="false" text="Text Directions"
+                            prefWidth="225.0" prefHeight="0.0"
+                            AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="165.0">
+                    <font>
+                        <Font size="18.0"/>
+                    </font>
+                    <ScrollPane fx:id="txtPane"/>
+                </TitledPane>
+            </AnchorPane>
+        </Tab>
+    </JFXTabPane>
 </AnchorPane>

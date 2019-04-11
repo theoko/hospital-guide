@@ -142,9 +142,9 @@
                                     <content>
                                         <ScrollPane fx:id="TextPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="339.0" />
                                     </content>
-                                   <font>
-                                      <Font size="18.0" />
-                                   </font>
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
                                 </TitledPane>
                             </AnchorPane>
                         </children>

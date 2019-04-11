@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -57,7 +58,6 @@ public class ScreenController {
         this.addScreen(Constants.Routes.EMPLOYEE_INFO, "/EmployeeInfo.fxml");
         this.addScreen(Constants.Routes.EMPLOYEE_MAP, "/EmployeeMap.fxml");
         this.addScreen(Constants.Routes.SANITATION_REQUEST, "/SanitationRequest.fxml");
-        this.addScreen(Constants.Routes.DIRECTIONS, "/Directions.fxml");
         this.addScreen(Constants.Routes.CUSTODIAN_MAP, "/CustodianMap.fxml");
         this.addScreen(Constants.Routes.CUSTODIAN_INFO, "/CustodianInfo.fxml");
         this.addScreen(Constants.Routes.BOOKING_WINDOW, "/RoomBookingWindow.fxml");
@@ -77,6 +77,7 @@ public class ScreenController {
         this.addScreen(Constants.Routes.VISUAL_AUDIO, "/requests/VisualAudio.fxml");
         this.addScreen(Constants.Routes.EXTERNAL_TRANS, "/requests/ExternalTrans.fxml");
         this.addScreen(Constants.Routes.PATIENT_INFO, "/requests/PatientInfo.fxml");
+        this.addScreen(Constants.Routes.MAP_ALL, "/MapAll.fxml");
     }
 
     public void addScreen(Constants.Routes route, String layout) {
@@ -86,7 +87,7 @@ public class ScreenController {
     private static void addStyles(Scene scene) {
         scene.getStylesheets().add(ScreenController.class.getResource("/css/jfoenix-components.css").toExternalForm());
         scene.getStylesheets().add(ScreenController.class.getResource("/css/custom.css").toExternalForm());
-        scene.getStylesheets().add(ScreenController.class.getResource("/css/colorScheme.css").toExternalForm());
+        //scene.getStylesheets().add(ScreenController.class.getResource("/css/colorScheme.css").toExternalForm());
     }
 
     public static void deactivate() {
@@ -105,7 +106,7 @@ public class ScreenController {
         stage.setTitle("Brigham and Women's Pathfinder Application");
         stage.setScene(s);
         stage.setResizable(true);
-       // stage.setMaximized(true);
+        stage.setMaximized(true);
         stage.show();
     }
 
@@ -158,7 +159,7 @@ public class ScreenController {
         displayPopUp(root);
     }
 
-    public static void popUp(Constants.Routes route, Location loc, Map map, AnchorPane[] panes) throws Exception {
+    public static void popUp(Constants.Routes route, Location loc, Map map, Pane pane) throws Exception {
         stage = new Stage();
         URL url = routeToURL(route);
 
@@ -168,12 +169,12 @@ public class ScreenController {
 
         pc.setLoc(loc);
         pc.setMap(map);
-        pc.setPanes(panes);
+        pc.setPane(pane);
 
         displayPopUp(root);
     }
 
-    public static void popUp(Constants.Routes route, Location loc, Map map, AnchorPane[] panes, Circle circle) throws Exception {
+    public static void popUp(Constants.Routes route, Location loc, Map map, Pane pane, Circle circle) throws Exception {
         stage = new Stage();
         URL url = routeToURL(route);
 
@@ -183,13 +184,13 @@ public class ScreenController {
 
         pc.setLoc(loc);
         pc.setMap(map);
-        pc.setPanes(panes);
+        pc.setPane(pane);
         pc.setCircle(circle);
 
         displayPopUp(root);
     }
 
-    public static void popUp(Constants.Routes route, Location loc, Map map, AnchorPane[] panes, Circle circle, ScrollPane TextPane) throws Exception {
+    public static void popUp(Constants.Routes route, Location loc, Map map, Pane pane, Circle circle, ScrollPane txtPane) throws Exception {
         stage = new Stage();
         URL url = routeToURL(route);
 
@@ -199,25 +200,9 @@ public class ScreenController {
 
         pc.setLoc(loc);
         pc.setMap(map);
-        pc.setPanes(panes);
+        pc.setPane(pane);
         pc.setCircle(circle);
-        pc.setTextPane(TextPane);
-
-        displayPopUp(root);
-    }
-
-    public static void popUp(Constants.Routes route, Location loc1, Location loc2, Map map, AnchorPane[] panes) throws Exception {
-        stage = new Stage();
-        URL url = routeToURL(route);
-
-        FXMLLoader loader = new FXMLLoader(url);
-        Parent root = loader.load();
-        DirectionsController pc = loader.getController();
-
-        pc.setLoc(loc1);
-        pc.setLoc2(loc2);
-        pc.setMap(map);
-        pc.setPanes(panes);
+        pc.setTxtPane(txtPane);
 
         displayPopUp(root);
     }

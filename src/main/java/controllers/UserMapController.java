@@ -13,7 +13,7 @@ public class UserMapController extends MapController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
-        MapDisplay.displayUser(panes, TextPane);
+        //MapDisplay.displayUser(panes, TextPane);
     }
 
     @Override
