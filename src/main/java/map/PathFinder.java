@@ -34,12 +34,12 @@ public abstract class PathFinder {
     protected final double FLOOR_HEURISTIC = 100000;
     protected final double STRAIGHT_ANGLE = 90.0;
     protected final double TURN_SENSITIVITY = 45.0;
-    protected final double PIXEL_TO_METERS = 0.03;
+    protected final double PIXEL_TO_METERS = 0.08;
     private static double LINE_WIDTH = 3.5;
     private static double LINE_LENGTH = 5.0;
     private static double LINE_GAP = 10.0;
     private static double SPEED = 1.4;
-    private static double FLOOR_TIME = 0.5;
+    private static double FLOOR_TIME = 30;
 
     public static String defLocation;
 
@@ -173,12 +173,12 @@ public abstract class PathFinder {
         return directions;
     }
 
-    public static void printPath(Pane pane, ScrollPane txtPane, Map map, Location start, Location end) {
-        clearPath(pane, end);
+    public static void printPath(MapAllController mc, Map map, Location start, Location end) {
+        clearPath(mc.panMap, end);
         PathContext context = SettingsController.getAlgType();
         Stack<Location> path = context.findPath(start, end);
         String directions = context.txtDirections((Stack<Location>) path.clone());
-        addDirections(txtPane, directions);
+        addDirections(mc.txtPane, directions);
         HashMap<String, Location> lstLocations = map.getAllLocations();
 
         Path line = null;
@@ -192,8 +192,8 @@ public abstract class PathFinder {
                 currFloor = curr.getFloor();
             } else if (!curr.getFloor().equals(currFloor)) {
                 animateLine(line);
-                MapAllController.addLine(line, floorToInt(currFloor));
-                pane.getChildren().add(0, line);
+                mc.addLine(line, floorToInt(currFloor));
+                mc.panMap.getChildren().add(0, line);
                 line = new Path();
                 line.getElements().add(new MoveTo(curr.getxCord(), curr.getyCord()));
                 currFloor = curr.getFloor();
@@ -202,8 +202,8 @@ public abstract class PathFinder {
             }
         }
         animateLine(line);
-        MapAllController.addLine(line, floorToInt(currFloor));
-        pane.getChildren().add(0, line);
+        mc.addLine(line, floorToInt(currFloor));
+        mc.panMap.getChildren().add(0, line);
     }
 
     private static void clearPath(Pane pane, Location end) {

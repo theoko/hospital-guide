@@ -1,11 +1,11 @@
 package map;
 
+import controllers.MapAllController;
 import controllers.MapController;
 import controllers.ScreenController;
 import helpers.Constants;
-import helpers.UIHelpers;
+import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -13,8 +13,9 @@ import javafx.scene.shape.Line;
 import models.map.Edge;
 import models.map.Location;
 import models.map.Map;
-
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class MapDisplay {
     private final static double locRadius = 15;
@@ -24,6 +25,7 @@ public class MapDisplay {
     private final static double xShift = -2110.0;
     private final static double yShift = 730.0;
     private final static double scale = 0.475;
+    public final static double opac = 0.25;
     public final static Color nodeFill = Color.WHITE;
     public final static Color nodeStart = Color.GREEN;
     public final static Color nodeEnd = Color.RED;
@@ -36,8 +38,39 @@ public class MapDisplay {
     /**
      * Display the graph on a map for the default user (no halls, info boxes)
      */
-    public static void displayUser(Pane mapPane, ScrollPane txtPane, String floor) {
-        displayNodesUser(mapPane, txtPane, floor);
+    public static void displayUser(MapAllController mc) {
+        String start = MapController.getTempStart();
+        String end = "";
+        List<Node> lstNodes = new ArrayList<>();
+        for (Node n : mc.panMap.getChildren()) {
+            if (n instanceof Circle) {
+                if (((Circle) n).getFill().equals(nodeEnd)) {
+                    end = n.getId();
+                }
+                lstNodes.add(n);
+            }
+        }
+        mc.panMap.getChildren().removeAll(lstNodes);
+
+        HashMap<String, Location> lstLocations = map.getAllLocations();
+        String floor = mc.getFloor();
+        for (Location loc : lstLocations.values()) {
+            if (loc.getNodeID().equals(start)) {
+                if (loc.getFloor().equals(floor)) {
+                    mc.panMap.getChildren().add(createCircle(mc, loc, nodeStart, 1));
+                } else {
+                    mc.panMap.getChildren().add(createCircle(mc, loc, nodeStart, opac));
+                }
+            } else if (loc.getNodeID().equals(end)) {
+                if (loc.getFloor().equals(floor)) {
+                    mc.panMap.getChildren().add(createCircle(mc, loc, nodeEnd, 1));
+                } else {
+                    mc.panMap.getChildren().add(createCircle(mc, loc, nodeEnd, opac));
+                }
+            } else if (loc.getFloor().equals(mc.getFloor()) && loc.getNodeType() != Constants.NodeType.HALL) {
+                mc.panMap.getChildren().add(createCircle(mc, loc, nodeFill, 1));
+            }
+        }
     }
 
     public static void displayEmployee(Pane mapPane, ScrollPane txtPane, String floor) {
@@ -52,36 +85,6 @@ public class MapDisplay {
     public static void displayCust(MapController mc, Pane mapPane, ScrollPane txtPane, String floor) {
         mc.setMap(map);
         displayNodesCust(mapPane, txtPane, floor);
-    }
-
-    private static void displayNodesUser(Pane mapPane, ScrollPane txtPane, String floor) {
-        mapPane.getChildren().clear();
-        HashMap<String, Location> lstLocations = map.getAllLocations();
-        for (Location loc : lstLocations.values()) {
-            if (loc.getFloor().equals(floor) && loc.getNodeType() != Constants.NodeType.HALL) {
-                double xLoc = loc.getxCord();
-                double yLoc = loc.getyCord();
-                Circle circle = new Circle(xLoc, yLoc, locRadius);
-                if (!loc.getNodeID().equals(MapController.getTempStart())) {
-                    circle.setFill(nodeFill);
-                } else {
-                    circle.setFill(nodeStart);
-                }
-                circle.setStroke(nodeOutline);
-                circle.setStrokeWidth(locWidth);
-                circle.setId(loc.getNodeID());
-                circle.setOnMouseClicked(event -> {
-                    try {
-                        event.consume();
-                        ScreenController.popUp(Constants.Routes.USER_INFO, loc, map, mapPane, circle, txtPane);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
-                loc.setNodeCircle(circle);
-                mapPane.getChildren().add(circle);
-            }
-        }
     }
 
     private static void displayNodesCust(Pane mapPane, ScrollPane txtPane, String floor) {
@@ -181,6 +184,27 @@ public class MapDisplay {
                 mapPane.getChildren().add(line);
             }
         }
+    }
+
+    private static Circle createCircle(MapAllController mc, Location loc, Color color, double opacity) {
+        double xLoc = loc.getxCord();
+        double yLoc = loc.getyCord();
+        Circle circle = new Circle(xLoc, yLoc, locRadius);
+        circle.setStroke(nodeOutline);
+        circle.setStrokeWidth(locWidth);
+        circle.setFill(color);
+        circle.setOpacity(opacity);
+        circle.setId(loc.getNodeID());
+        circle.setOnMouseClicked(event -> {
+            try {
+                event.consume();
+                ScreenController.infoPopUp(Constants.Routes.USER_INFO, loc, mc, map);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        loc.setNodeCircle(circle);
+        return circle;
     }
 
     public static double scaleX(double x) {

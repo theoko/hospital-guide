@@ -7,6 +7,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import database.CSVParser;
 import map.AStar;
+import map.DepthSearch;
 import map.PathContext;
 import map.PathFinder;
 

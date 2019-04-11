@@ -35,15 +35,15 @@ public class MapAllController implements Initializable {
     public TitledPane tilDirections;
 
     private Point2D center;
-    private static int floor;
-    private static List<List<Path>> lstLines;
+    private String floor;
+    private List<List<Path>> lstLines;
 
     public MapAllController() {
         lstLines = new ArrayList<>();
         for (int i = 0; i < 6; i++) {
             lstLines.add(new ArrayList<>());
         }
-        floor = PathFinder.floorToInt("3");
+        floor = "3";
     }
 
     @Override
@@ -66,7 +66,7 @@ public class MapAllController implements Initializable {
         Image img = ImageFactory.getImage("3");
         imgMap.setImage(img);
         center = new Point2D(img.getWidth() / 2, img.getHeight() / 2);
-        MapDisplay.displayUser(panMap, txtPane, "3");
+        MapDisplay.displayUser(this);
         gesMap.zoomTo(3, center);
         gesMap.animate(Duration.millis(1000)).zoomTo(.001, center);
     }
@@ -77,48 +77,58 @@ public class MapAllController implements Initializable {
 
     public void btnFloor3_Click(MouseEvent mouseEvent) {
         imgMap.setImage(ImageFactory.getImage("3"));
-        MapDisplay.displayUser(panMap, txtPane, "3");
-        floor = PathFinder.floorToInt("3");
+        floor = "3";
+        MapDisplay.displayUser(this);
+        upDateLines();
     }
 
     public void btnFloor2_Click(MouseEvent mouseEvent) {
         imgMap.setImage(ImageFactory.getImage("2"));
-        MapDisplay.displayUser(panMap, txtPane, "2");
-        floor = PathFinder.floorToInt("2");
+        floor = "2";
+        MapDisplay.displayUser(this);
+        upDateLines();
     }
 
     public void btnFloor1_Click(MouseEvent mouseEvent) {
         imgMap.setImage(ImageFactory.getImage("1"));
-        MapDisplay.displayUser(panMap, txtPane, "1");
-        floor = PathFinder.floorToInt("1");
+        floor = "1";
+        MapDisplay.displayUser(this);
+        upDateLines();
     }
 
     public void btnFloorG_Click(MouseEvent mouseEvent) {
         imgMap.setImage(ImageFactory.getImage("G"));
-        MapDisplay.displayUser(panMap, txtPane, "G");
-        floor = PathFinder.floorToInt("G");
+        floor = "G";
+        MapDisplay.displayUser(this);
+        upDateLines();
     }
 
     public void btnFloorL1_Click(MouseEvent mouseEvent) {
         imgMap.setImage(ImageFactory.getImage("L1"));
-        MapDisplay.displayUser(panMap, txtPane, "L1");
-        floor = PathFinder.floorToInt("L1");
+        floor = "L1";
+        MapDisplay.displayUser(this);
+        upDateLines();
     }
 
     public void btnFloorL2_Click(MouseEvent mouseEvent) {
         imgMap.setImage(ImageFactory.getImage("L2"));
-        MapDisplay.displayUser(panMap, txtPane, "L2");
-        floor = PathFinder.floorToInt("L2");
+        floor = "L2";
+        MapDisplay.displayUser(this);
+        upDateLines();
     }
 
-    public static void addLine(Path line, int index) {
+    public String getFloor() {
+        return floor;
+    }
+
+    public void addLine(Path line, int index) {
         lstLines.get(index).add(line);
         upDateLines();
     }
 
-    private static void upDateLines() {
+    private void upDateLines() {
         for (int i = 0; i < lstLines.size(); i++) {
-            boolean isCurr = i == floor;
+            boolean isCurr = i == PathFinder.floorToInt(floor);
             for (Path line : lstLines.get(i)) {
                 line.setStroke(PathFinder.colorLine(isCurr));
             }

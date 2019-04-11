@@ -30,6 +30,8 @@ public abstract class InfoController extends PopUpController {
     public JFXButton btnCancel;
     public JFXButton btnStartHere;
 
+    private MapAllController mc;
+
     @Override
     public final void initialize(URL location, ResourceBundle resources) {
 
@@ -48,7 +50,7 @@ public abstract class InfoController extends PopUpController {
 
     public final void btnDirections_OnClick(MouseEvent event) throws Exception {
         event.consume();
-        PathFinder.printPath(pane, txtPane, map, kiosk, loc);
+        PathFinder.printPath(mc, map, kiosk, loc);
         ScreenController.deactivate();
     }
 
@@ -60,7 +62,7 @@ public abstract class InfoController extends PopUpController {
     public final void btnStartHere_OnClick(MouseEvent mouseEvent) {
         MapController.setTempStart(loc.getNodeID());
         List<Node> lstNodes = new ArrayList<>();
-        for (Node n : pane.getChildren()) {
+        for (Node n : mc.panMap.getChildren()) {
             if (n instanceof Path) {
                 lstNodes.add(n);
             } else if (n instanceof Circle) {
@@ -70,10 +72,12 @@ public abstract class InfoController extends PopUpController {
                 }
             }
         }
-        for (Node n : lstNodes) {
-            pane.getChildren().remove(n);
-        }
-        circle.setFill(MapDisplay.nodeStart);
+        mc.panMap.getChildren().removeAll(lstNodes);
+        loc.getNodeCircle().setFill(MapDisplay.nodeStart);
         ScreenController.deactivate();
+    }
+
+    public void setMc(MapAllController mc) {
+        this.mc = mc;
     }
 }

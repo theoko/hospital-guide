@@ -17,6 +17,8 @@ import models.map.Map;
 import models.map.Workspace;
 import models.user.User;
 
+import javax.sound.sampled.Line;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -108,6 +110,19 @@ public class ScreenController {
         stage.setResizable(true);
         stage.setMaximized(true);
         stage.show();
+    }
+
+    public static void infoPopUp(Constants.Routes route, Location loc, MapAllController mc, Map map) throws IOException {
+        stage = new Stage();
+        URL url = routeToURL(route);
+
+        FXMLLoader loader = new FXMLLoader(url);
+        Parent root = loader.load();
+        InfoController ic = loader.getController();
+        ic.setLoc(loc);
+        ic.setMc(mc);
+        ic.setMap(map);
+        displayPopUp(root);
     }
 
     public static void popUp(Constants.Routes route) throws Exception {
