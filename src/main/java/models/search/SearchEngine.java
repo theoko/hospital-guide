@@ -14,9 +14,80 @@ public class SearchEngine {
         this.search();
     }
 
+    // TODO: Check if valid english word. If not, show results not found.
+    // TODO: Link spanish words to categories
     private void search() {
 
         SearchKeywords searchKeywords = new SearchKeywords();
+
+        if(searchKeywords.validEnglishWord(this.term)) {
+
+            search(searchKeywords);
+
+        } else {
+
+            // Convert to valid word
+            runDamerau(searchKeywords);
+
+        }
+
+    }
+
+    private void search(SearchKeywords searchKeywords) {
+
+        Iterator it = searchKeywords.getKeys().entrySet().iterator();
+
+        while (it.hasNext()) {
+
+            // Get next item
+            Map.Entry pair = (Map.Entry) it.next();
+
+            // Get category
+            String category = pair.getKey().toString();
+
+            if(this.term.equals(category)) { // Found category match!
+
+                results.add(category);
+
+                for(String s : searchKeywords.getSynonyms(this.term)) {
+
+                    neighbors.push(s);
+
+                }
+
+                break;
+
+            }
+
+            List<String> keywords = (List<String>) pair.getValue();
+
+            for(String k : keywords) {
+
+                if(this.term.equals(k)) { // Found match!
+
+                    results.add(k);
+
+                    for(String s : searchKeywords.getSynonyms(this.term)) {
+
+                        neighbors.push(s);
+
+                    }
+
+                    break;
+
+                }
+
+            }
+
+            // Remove item
+            it.remove();
+
+        }
+
+    }
+
+    private void runDamerau(SearchKeywords searchKeywords) {
+
         Damerau damerau = new Damerau();
 
         Iterator it = searchKeywords.getKeys().entrySet().iterator();
@@ -26,6 +97,7 @@ public class SearchEngine {
 
         String closestCategory = "";
         String closestKeyword = "";
+
         while (it.hasNext()) {
 
             // Get next item
@@ -41,7 +113,6 @@ public class SearchEngine {
                 closestCategory = category;
                 System.out.println("currCategory: " + closestCategory);
             }
-
 
             List<String> keywords = (List<String>) pair.getValue();
 

@@ -5,14 +5,15 @@ import edu.smu.tspell.wordnet.WordNetDatabase;
 import helpers.FileHelpers;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class SearchKeywords {
 
     // Main map
     private HashMap<String, List<String>> keys = new HashMap<>();
+
+    // WordNet Database
+    WordNetDatabase database = WordNetDatabase.getFileInstance();
 
     // Categories:
 
@@ -257,7 +258,6 @@ public class SearchKeywords {
     private void addSynonyms(String wordForm, List<String> keywords) {
 
         //  Get the synsets containing the word form
-        WordNetDatabase database = WordNetDatabase.getFileInstance();
         Synset[] synsets = database.getSynsets(wordForm);
 
         //  Display the word forms and definitions for synsets retrieved
@@ -293,6 +293,35 @@ public class SearchKeywords {
 //            System.err.println("No synsets exist that contain " +
 //                    "the word form '" + wordForm + "'");
         }
+
+    }
+
+    public Set<String> getSynonyms(String word) {
+
+        Set<String> synonyms = new HashSet<>();
+        Synset[] synsets = database.getSynsets(word);
+
+        for (int i = 0; i < synsets.length; i++)
+        {
+            String[] wordForms = synsets[i].getWordForms();
+
+            for (int j = 0; j < wordForms.length; j++)
+            {
+
+                String genWord = wordForms[j];
+
+                synonyms.add(genWord);
+
+            }
+        }
+
+        return synonyms;
+
+    }
+
+    public boolean validEnglishWord(String word) {
+
+        return database.getSynsets(word).length > 0;
 
     }
 
