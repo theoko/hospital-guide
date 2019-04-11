@@ -1,11 +1,14 @@
 package models.search;
 
+import database.LocationTable;
 import edu.smu.tspell.wordnet.Synset;
 import edu.smu.tspell.wordnet.WordNetDatabase;
 import helpers.FileHelpers;
+import models.map.Location;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.regex.Pattern;
 
 public class SearchKeywords {
 
@@ -16,6 +19,102 @@ public class SearchKeywords {
     WordNetDatabase database = WordNetDatabase.getFileInstance();
 
     // Categories:
+
+    public List<String> getFood() {
+        return food;
+    }
+
+    public List<String> getDrinks() {
+        return drinks;
+    }
+
+    public List<String> getCafe() {
+        return cafe;
+    }
+
+    public List<String> getBeverage() {
+        return beverage;
+    }
+
+    public List<String> getLab() {
+        return lab;
+    }
+
+    public List<String> getLaboratory() {
+        return laboratory;
+    }
+
+    public List<String> getMri() {
+        return mri;
+    }
+
+    public List<String> getCatScan() {
+        return catScan;
+    }
+
+    public List<String> getCtScan() {
+        return ctScan;
+    }
+
+    public List<String> getLegDoctor() {
+        return legDoctor;
+    }
+
+    public List<String> getChildDoctor() {
+        return childDoctor;
+    }
+
+    public List<String> getPolice() {
+        return police;
+    }
+
+    public List<String> getSecurity() {
+        return security;
+    }
+
+    public List<String> getSafety() {
+        return safety;
+    }
+
+    public List<String> getGarage() {
+        return garage;
+    }
+
+    public List<String> getParking() {
+        return parking;
+    }
+
+    public List<String> getBathroom() {
+        return bathroom;
+    }
+
+    public List<String> getWc() {
+        return wc;
+    }
+
+    public List<String> getRestroom() {
+        return restroom;
+    }
+
+    public List<String> getAtm() {
+        return atm;
+    }
+
+    public List<String> getExit() {
+        return exit;
+    }
+
+    public List<String> getEntrance() {
+        return entrance;
+    }
+
+    public List<String> getInternational() {
+        return international;
+    }
+
+    public List<String> getConference() {
+        return conference;
+    }
 
     // Food
     // Drinks
@@ -72,6 +171,9 @@ public class SearchKeywords {
     // International
     List<String> international = new ArrayList<>();
 
+    // Nodes
+    List<String> conference = new ArrayList<>();
+
     public static void initialize() {
 
         if (FileHelpers.checkJar()) {
@@ -104,6 +206,8 @@ public class SearchKeywords {
     }
 
     public SearchKeywords() {
+
+        HashMap<String, Location> locationNodes = LocationTable.getLocations();
 
         food.add("au bon pain");
         food.add("restaurant");
@@ -222,6 +326,79 @@ public class SearchKeywords {
         international.add("zapato");
         international.add("mano");
 
+        // Nodes
+
+        Iterator locationsIterator = locationNodes.entrySet().iterator();
+
+        while (locationsIterator.hasNext()) {
+
+            Map.Entry pair = (Map.Entry) locationsIterator.next();
+
+            Location currLocation = (Location) pair.getValue();
+
+            switch (currLocation.getNodeType()) {
+                case BATH:
+//                    return "BATH";
+                    bathroom.add(currLocation.getLongName());
+                    break;
+                case CONF:
+                    conference.add(currLocation.getLongName());
+                    break;
+//                    return "CONF";
+                case DEPT:
+//                    return "DEPT";
+
+                    break;
+                case ELEV:
+//                    return "ELEV";
+
+                    break;
+                case EXIT:
+//                    return "EXIT";
+                    exit.add(currLocation.getLongName());
+                    break;
+                case HALL:
+//                    return "HALL";
+
+                    break;
+                case INFO:
+//                    return "INFO";
+
+                    break;
+                case LABS:
+//                    return "LABS";
+                    lab.add(currLocation.getLongName());
+                    break;
+                case REST:
+//                    return "REST";
+
+                    break;
+                case RETL:
+//                    return "RETL";
+
+                    break;
+                case SERV:
+//                    return "SERV";
+
+                    break;
+                case STAI:
+//                    return "STAI";
+
+                    break;
+                case WORK:
+//                    return "WORK";
+
+                    break;
+                case WRKT:
+//                    return "WRKT";
+
+                    break;
+                default:
+//                    return null;
+            }
+
+            locationsIterator.remove();
+        }
 
         // Add to main map
         keys.put("food", food);
@@ -248,6 +425,9 @@ public class SearchKeywords {
         keys.put("exit", exit);
         keys.put("entrance", entrance);
         keys.put("international", international);
+
+        // Conference rooms
+        keys.put("conference", conference);
 
     }
 
@@ -322,6 +502,28 @@ public class SearchKeywords {
     public boolean validEnglishWord(String word) {
 
         return database.getSynsets(word).length > 0;
+
+    }
+
+    private boolean partiallyContains(List<String> words, String word) {
+
+        for(int i=0; i<words.size(); i++) {
+
+            System.out.println("This string: " + words.get(i) + ", Detect: " + word);
+            if(Pattern.compile(Pattern.quote(words.get(i)), Pattern.CASE_INSENSITIVE).matcher(word).find()) {
+                System.out.println("Contained: " + i + ": " + words.get(i));
+                return true;
+            }
+
+//            System.out.println(words.get(i));
+//            System.out.println("Contains? " + word);
+//            if(words.get(i).contains(word)) {
+//
+//            }
+
+        }
+
+        return false;
 
     }
 

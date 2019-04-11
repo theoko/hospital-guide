@@ -49,6 +49,10 @@ public class SearchEngine {
 
                 results.add(category);
 
+                for(String keysInCategory : (ArrayList<String>) pair.getValue()) {
+                    results.add(keysInCategory);
+                }
+
                 for(String s : searchKeywords.getSynonyms(this.term)) {
 
                     neighbors.push(s);
@@ -67,8 +71,13 @@ public class SearchEngine {
 
                     results.add(k);
 
+                    for(String keysInCategory : (ArrayList<String>) pair.getValue()) {
+                        results.add(keysInCategory);
+                    }
+
                     for(String s : searchKeywords.getSynonyms(this.term)) {
 
+                        results.add(s);
                         neighbors.push(s);
 
                     }
@@ -111,7 +120,7 @@ public class SearchEngine {
             if(currDist < minDistance) {
                 minDistance = currDist;
                 closestCategory = category;
-                System.out.println("currCategory: " + closestCategory);
+//                System.out.println("currCategory: " + closestCategory);
             }
 
             List<String> keywords = (List<String>) pair.getValue();
@@ -122,7 +131,7 @@ public class SearchEngine {
                 if(currDistKeyword < minDistanceKeyword) {
                     minDistanceKeyword = currDistKeyword;
                     closestKeyword = k;
-                    System.out.println("currKeyword: " + closestKeyword);
+//                    System.out.println("currKeyword: " + closestKeyword);
 
                     neighbors.push(closestKeyword);
                 }
@@ -136,12 +145,12 @@ public class SearchEngine {
         if(minDistance == Double.MAX_VALUE) {
             System.out.println("No match!");
         } else {
-            System.out.println("Distance is: " + minDistance);
-            System.out.println("Distance for keyword is: " + minDistanceKeyword);
-
-            System.out.println("Search term: " + this.term);
-            System.out.println("Closest category: " + closestCategory);
-            System.out.println("Closest keyword: " + closestKeyword);
+//            System.out.println("Distance is: " + minDistance);
+//            System.out.println("Distance for keyword is: " + minDistanceKeyword);
+//
+//            System.out.println("Search term: " + this.term);
+//            System.out.println("Closest category: " + closestCategory);
+//            System.out.println("Closest keyword: " + closestKeyword);
 
             results.add(closestCategory);
             results.add(closestKeyword);
