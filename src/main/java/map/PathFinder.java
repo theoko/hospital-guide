@@ -55,11 +55,10 @@ public abstract class PathFinder {
 
     /**
      * Generates a path from the given parent map and end map
-     * @param parent Hashmap of each node's parent
      * @param end The end map
      * @return A stack of locations containing the path
      */
-    protected final Stack<Location> genPath(HashMap<String, SubPath> parent, SubPath end) {
+    protected final Stack<Location> genPath(SubPath end) {
         // Create an empty stack of locations
         Stack<Location> path = new Stack<>();
         // Start at the last node (end)
@@ -68,7 +67,7 @@ public abstract class PathFinder {
         while (prev != null) {
             path.push(prev.getLocation());
             // prev := prev -> parent
-            prev = parent.get(prev.getLocation().getNodeID());
+            prev = prev.getParent();
         }
         return path;
     }

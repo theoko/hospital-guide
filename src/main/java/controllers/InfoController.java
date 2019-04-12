@@ -61,7 +61,7 @@ public abstract class InfoController extends PopUpController {
     }
 
     public final void btnStartHere_OnClick(MouseEvent mouseEvent) {
-        MapController1.setTempStart(loc.getNodeID());
+        MapController.setTempStart(loc.getNodeID());
         List<Node> lstNodes = new ArrayList<>();
         for (Node n : mc.panMap.getChildren()) {
             if (n instanceof Path) {
