@@ -3,27 +3,15 @@ package controllers;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
-import database.Database;
+import controllers.maps.AdminMapController;
 import database.LocationTable;
 import helpers.Constants;
 import helpers.UIHelpers;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
-import map.MapDisplay;
-import map.PathFinder;
 import models.map.Location;
-import org.omg.DynamicAny.DynArray;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class EditController extends PopUpController implements Initializable {

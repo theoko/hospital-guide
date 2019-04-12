@@ -1,8 +1,8 @@
 package controllers;
 
+import controllers.maps.MapController;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import models.map.Location;

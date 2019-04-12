@@ -1,12 +1,13 @@
 package controllers;
 
+import controllers.maps.MapController;
+import controllers.maps.UserMapController;
 import helpers.Constants;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
@@ -16,15 +17,12 @@ import models.map.Location;
 import models.map.Map;
 import models.map.Workspace;
 import models.user.User;
-
-import javax.sound.sampled.Line;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashMap;
-import java.util.List;
 
 public class ScreenController {
 
@@ -32,35 +30,31 @@ public class ScreenController {
     private static Stage stage;
 
     public ScreenController(Stage stage) {
-        this.stage = stage;
-
+        ScreenController.stage = stage;
         try {
-            // Initialize screens
-            this.initializeScreens(this.stage);
-
-            // Activate beginning screen
-            this.activate(Constants.Routes.WELCOME);
+            this.initializeScreens(ScreenController.stage);
+            activate(Constants.Routes.WELCOME);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
 
-    public void initializeScreens(Stage stage) throws Exception {
+    public void initializeScreens(Stage stage) {
         // Initialize screen controller to switch between different scenes
         this.addScreen(Constants.Routes.LOGO,"/Logo.fxml");
         this.addScreen(Constants.Routes.WELCOME,"/Welcome.fxml");
-        this.addScreen(Constants.Routes.USER_MAP, "/UserMap.fxml");
+        this.addScreen(Constants.Routes.USER_MAP, "/maps/UserMap.fxml");
         this.addScreen(Constants.Routes.LOGIN,"/Login.fxml");
-        this.addScreen(Constants.Routes.ADMIN_MAP, "/AdminMap.fxml");
+        this.addScreen(Constants.Routes.ADMIN_MAP, "/maps/AdminMap.fxml");
         this.addScreen(Constants.Routes.EDIT_LOCATION, "/EditLocation.fxml");
         this.addScreen(Constants.Routes.DOWNLOAD, "/Download.fxml");
         this.addScreen(Constants.Routes.DOWNLOADED, "/Downloaded.fxml");
         this.addScreen(Constants.Routes.USER_INFO, "/UserInfo.fxml");
         this.addScreen(Constants.Routes.EMPLOYEE_INFO, "/EmployeeInfo.fxml");
-        this.addScreen(Constants.Routes.EMPLOYEE_MAP, "/EmployeeMap.fxml");
+        this.addScreen(Constants.Routes.EMPLOYEE_MAP, "/maps/EmployeeMap.fxml");
         this.addScreen(Constants.Routes.SANITATION_REQUEST, "/SanitationRequest.fxml");
-        this.addScreen(Constants.Routes.CUSTODIAN_MAP, "/CustodianMap.fxml");
+        this.addScreen(Constants.Routes.CUSTODIAN_MAP, "/maps/CustodianMap.fxml");
         this.addScreen(Constants.Routes.CUSTODIAN_INFO, "/CustodianInfo.fxml");
         this.addScreen(Constants.Routes.BOOKING_WINDOW, "/RoomBookingWindow.fxml");
         this.addScreen(Constants.Routes.CREATE_USER, "/CreateUser.fxml");
@@ -79,7 +73,6 @@ public class ScreenController {
         this.addScreen(Constants.Routes.VISUAL_AUDIO, "/requests/VisualAudio.fxml");
         this.addScreen(Constants.Routes.EXTERNAL_TRANS, "/requests/ExternalTrans.fxml");
         this.addScreen(Constants.Routes.PATIENT_INFO, "/requests/PatientInfo.fxml");
-        this.addScreen(Constants.Routes.MAP_ALL, "/MapAll.fxml");
     }
 
     public void addScreen(Constants.Routes route, String layout) {
@@ -89,7 +82,7 @@ public class ScreenController {
     private static void addStyles(Scene scene) {
         scene.getStylesheets().add(ScreenController.class.getResource("/css/jfoenix-components.css").toExternalForm());
         scene.getStylesheets().add(ScreenController.class.getResource("/css/custom.css").toExternalForm());
-        //scene.getStylesheets().add(ScreenController.class.getResource("/css/colorScheme.css").toExternalForm());
+        scene.getStylesheets().add(ScreenController.class.getResource("/css/colorScheme.css").toExternalForm());
     }
 
     public static void deactivate() {
@@ -112,7 +105,7 @@ public class ScreenController {
         stage.show();
     }
 
-    public static void infoPopUp(Constants.Routes route, Location loc, MapAllController mc, Map map) throws IOException {
+    public static void infoPopUp(Constants.Routes route, Location loc, MapController mc, Map map) throws IOException {
         stage = new Stage();
         URL url = routeToURL(route);
 

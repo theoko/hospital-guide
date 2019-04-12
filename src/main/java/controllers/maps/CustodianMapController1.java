@@ -1,36 +1,25 @@
-package controllers;
+package controllers.maps;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTabPane;
-import database.Database;
-import database.LocationTable;
+import controllers.VisualRealtimeController;
 import database.SanitationTable;
-import helpers.Constants;
 import helpers.UserHelpers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import map.MapDisplay;
-import map.PathFinder;
 import models.map.Location;
 import models.sanitation.SanitationRequest;
 import models.user.User;
 
-import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.List;
-import java.sql.Timestamp;
-import java.util.ResourceBundle;
 import java.net.URL;
+import java.sql.Timestamp;
+import java.util.List;
+import java.util.ResourceBundle;
 
-import static controllers.VisualRealtimeController.panMap;
-
-public class CustodianMapController extends MapController {
+public class CustodianMapController1 extends MapController1 {
 
     public JFXButton btnSettings;
     public TableView<SanitationRequest> tblData;
@@ -96,7 +85,7 @@ public class CustodianMapController extends MapController {
     }
 
     public void navigateTo(){
-        Location start = map.getLocation(MapController.getTempStart());
+        Location start = map.getLocation(MapController1.getTempStart());
         Location end = tblData.getSelectionModel().getSelectedItem().getLocation();
 
 //        PathFinder.printPath(panes, TextPane, map, start, end);

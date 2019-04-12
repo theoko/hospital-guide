@@ -1,6 +1,8 @@
-package controllers;
+package controllers.maps;
 
 import com.jfoenix.controls.JFXButton;
+import controllers.ScreenController;
+import helpers.Constants;
 import images.ImageFactory;
 import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
@@ -12,15 +14,16 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
-import map.MapDisplay;
 import map.PathFinder;
+import models.map.Map;
 import net.kurobako.gesturefx.GesturePane;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class MapAllController implements Initializable {
+public abstract class MapController implements Initializable {
     public GesturePane gesMap;
     public ImageView imgMap;
     public JFXButton btnFloor3;
@@ -34,11 +37,13 @@ public class MapAllController implements Initializable {
     public ScrollPane txtPane;
     public TitledPane tilDirections;
 
-    private Point2D center;
-    private String floor;
-    private List<List<Path>> lstLines;
+    protected String floor;
+    protected List<List<Path>> lstLines;
+    protected Point2D center;
+    protected static String tempStart;
+    protected Map map;
 
-    public MapAllController() {
+    public MapController() {
         lstLines = new ArrayList<>();
         for (int i = 0; i < 6; i++) {
             lstLines.add(new ArrayList<>());
@@ -66,54 +71,48 @@ public class MapAllController implements Initializable {
         Image img = ImageFactory.getImage("3");
         imgMap.setImage(img);
         center = new Point2D(img.getWidth() / 2, img.getHeight() / 2);
-        MapDisplay.displayUser(this);
-        gesMap.zoomTo(3, center);
-        gesMap.animate(Duration.millis(1000)).zoomTo(.001, center);
+
+//        gesMap.zoomTo(3, center);
+//        gesMap.animate(Duration.millis(1000)).zoomTo(.001, center);
     }
 
-    public void btnReturn_Click(MouseEvent mouseEvent) {
-
+    public void btnReturn_Click(MouseEvent mouseEvent) throws Exception {
+        ScreenController.logOut(btnReturn);
     }
 
     public void btnFloor3_Click(MouseEvent mouseEvent) {
         imgMap.setImage(ImageFactory.getImage("3"));
         floor = "3";
-        MapDisplay.displayUser(this);
         upDateLines();
     }
 
     public void btnFloor2_Click(MouseEvent mouseEvent) {
         imgMap.setImage(ImageFactory.getImage("2"));
         floor = "2";
-        MapDisplay.displayUser(this);
         upDateLines();
     }
 
     public void btnFloor1_Click(MouseEvent mouseEvent) {
         imgMap.setImage(ImageFactory.getImage("1"));
         floor = "1";
-        MapDisplay.displayUser(this);
         upDateLines();
     }
 
     public void btnFloorG_Click(MouseEvent mouseEvent) {
         imgMap.setImage(ImageFactory.getImage("G"));
         floor = "G";
-        MapDisplay.displayUser(this);
         upDateLines();
     }
 
     public void btnFloorL1_Click(MouseEvent mouseEvent) {
         imgMap.setImage(ImageFactory.getImage("L1"));
         floor = "L1";
-        MapDisplay.displayUser(this);
         upDateLines();
     }
 
     public void btnFloorL2_Click(MouseEvent mouseEvent) {
         imgMap.setImage(ImageFactory.getImage("L2"));
         floor = "L2";
-        MapDisplay.displayUser(this);
         upDateLines();
     }
 
@@ -133,5 +132,17 @@ public class MapAllController implements Initializable {
                 line.setStroke(PathFinder.colorLine(isCurr));
             }
         }
+    }
+
+    public static void setTempStart(String tempStart) {
+        MapController.tempStart = tempStart;
+    }
+
+    public static String getTempStart() {
+        return tempStart;
+    }
+
+    public void setMap(Map map) {
+        this.map = map;
     }
 }

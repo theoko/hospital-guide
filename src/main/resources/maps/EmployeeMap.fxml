@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import net.kurobako.gesturefx.GesturePane?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.text.Font?>
-<AnchorPane stylesheets="@css/colorScheme.css" xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml" fx:controller="controllers.MapAllController">
+
+<AnchorPane stylesheets="@../css/colorScheme.css" xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml" fx:controller="controllers.maps.EmployeeMapController">
     <JFXTabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0"
                 AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <Tab text="PathFinder">
@@ -54,8 +50,7 @@
                         </Label>
                         <JFXButton fx:id="btnReturn" buttonType="RAISED"
                                    onMouseClicked="#btnReturn_Click" prefHeight="50.0"
-                                   prefWidth="150.0"
-                                   styleClass="jfx-button" text="Exit"/>
+                                   prefWidth="150.0" text="Exit"/>
                     </VBox>
                 </AnchorPane>
                 <TitledPane fx:id="tilDirections" alignment="CENTER" expanded="false" text="Text Directions"
@@ -67,6 +62,15 @@
                     <ScrollPane fx:id="txtPane"/>
                 </TitledPane>
             </AnchorPane>
+        </Tab>
+        <Tab style="-fx-background-color: #022D5A;" text="Room Booking">
+            <fx:include source="../RoomBookingWindow.fxml" />
+        </Tab>
+        <Tab style="-fx-background-color: #022D5A;" text="Workspaces">
+            <fx:include source="../Workspace.fxml" />
+        </Tab>
+        <Tab style="-fx-background-color: #022D5A;" text="Requests">
+            <fx:include source="../requests/Requests.fxml" />
         </Tab>
     </JFXTabPane>
 </AnchorPane>

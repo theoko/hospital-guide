@@ -1,16 +1,11 @@
-package controllers;
+package controllers.maps;
 
 import com.jfoenix.controls.JFXButton;
-import helpers.Constants;
-import javafx.scene.control.Tooltip;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import map.MapDisplay;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class EmployeeMapController extends MapController {
+public class EmployeeMapController1 extends MapController1 {
     public JFXButton btnSettings;
 
     @Override

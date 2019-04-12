@@ -1,7 +1,8 @@
 package map;
 
-import controllers.MapAllController;
-import controllers.MapController;
+import controllers.maps.MapController;
+import controllers.maps.UserMapController;
+import controllers.maps.MapController1;
 import controllers.ScreenController;
 import helpers.Constants;
 import javafx.scene.Node;
@@ -38,7 +39,25 @@ public class MapDisplay {
     /**
      * Display the graph on a map for the default user (no halls, info boxes)
      */
-    public static void displayUser(MapAllController mc) {
+    public static void displayUser(MapController mc) {
+        displayNodes(mc, Constants.Routes.USER_INFO);
+    }
+
+    public static void displayEmployee(MapController mc) {
+        displayNodes(mc, Constants.Routes.EMPLOYEE_INFO);
+    }
+
+    public static void displayCust(MapController mc) {
+        displayNodes(mc, Constants.Routes.CUSTODIAN_INFO);
+    }
+
+    public static void displayAdmin(MapController mc) {
+        displayEdges(mc);
+        displayNodes(mc, Constants.Routes.EDIT_LOCATION);
+    }
+
+    private static void displayNodes(MapController mc, Constants.Routes route) {
+        mc.setMap(map);
         String start = MapController.getTempStart();
         String end = "";
         List<Node> lstNodes = new ArrayList<>();
@@ -57,118 +76,23 @@ public class MapDisplay {
         for (Location loc : lstLocations.values()) {
             if (loc.getNodeID().equals(start)) {
                 if (loc.getFloor().equals(floor)) {
-                    mc.panMap.getChildren().add(createCircle(mc, loc, nodeStart, 1));
+                    mc.panMap.getChildren().add(createCircle(mc, loc, nodeStart, 1, route));
                 } else {
-                    mc.panMap.getChildren().add(createCircle(mc, loc, nodeStart, opac));
+                    mc.panMap.getChildren().add(createCircle(mc, loc, nodeStart, opac, route));
                 }
             } else if (loc.getNodeID().equals(end)) {
                 if (loc.getFloor().equals(floor)) {
-                    mc.panMap.getChildren().add(createCircle(mc, loc, nodeEnd, 1));
+                    mc.panMap.getChildren().add(createCircle(mc, loc, nodeEnd, 1, route));
                 } else {
-                    mc.panMap.getChildren().add(createCircle(mc, loc, nodeEnd, opac));
+                    mc.panMap.getChildren().add(createCircle(mc, loc, nodeEnd, opac, route));
                 }
             } else if (loc.getFloor().equals(mc.getFloor()) && loc.getNodeType() != Constants.NodeType.HALL) {
-                mc.panMap.getChildren().add(createCircle(mc, loc, nodeFill, 1));
+                mc.panMap.getChildren().add(createCircle(mc, loc, nodeFill, 1, route));
             }
         }
     }
 
-    public static void displayEmployee(Pane mapPane, ScrollPane txtPane, String floor) {
-        displayNodesEmployee(mapPane, txtPane, floor);
-    }
-
-    public static void displayAdmin(Pane mapPane, String floor) {
-        displayEdges(mapPane, floor);
-        displayNodesAdmin(mapPane, floor);
-    }
-
-    public static void displayCust(MapController mc, Pane mapPane, ScrollPane txtPane, String floor) {
-        mc.setMap(map);
-        displayNodesCust(mapPane, txtPane, floor);
-    }
-
-    private static void displayNodesCust(Pane mapPane, ScrollPane txtPane, String floor) {
-        HashMap<String, Location> lstLocations = map.getAllLocations();
-        for (Location loc : lstLocations.values()) {
-            if (loc.getNodeType() != Constants.NodeType.HALL) {
-                double xLoc = scaleX(loc.getxCord());
-                double yLoc = scaleY(loc.getyCord());
-                Circle circle = new Circle(xLoc, yLoc, locRadius);
-                if (!loc.getNodeID().equals(MapController.getTempStart())) {
-                    circle.setFill(nodeFill);
-                } else {
-                    circle.setFill(nodeStart);
-                }
-                circle.setStroke(nodeOutline);
-                circle.setStroke(nodeOutline);
-                circle.setStrokeWidth(locWidth);
-                circle.setId(loc.getNodeID());
-                circle.setOnMouseClicked(event -> {
-                    try {
-                        event.consume();
-                        //ScreenController.popUp(Constants.Routes.CUSTODIAN_INFO, loc, map, panes, circle, TextPane);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
-                loc.setNodeCircle(circle);
-                mapPane.getChildren().add(circle);
-            }
-        }
-    }
-
-    private static void displayNodesEmployee(Pane mapPane, ScrollPane txtPane, String floor) {
-        HashMap<String, Location> lstLocations = map.getAllLocations();
-        for (Location loc : lstLocations.values()) {
-            if (loc.getNodeType() != Constants.NodeType.HALL) {
-                double xLoc = scaleX(loc.getxCord());
-                double yLoc = scaleY(loc.getyCord());
-                Circle circle = new Circle(xLoc, yLoc, locRadius);
-                if (!loc.getNodeID().equals(MapController.getTempStart())) {
-                    circle.setFill(nodeFill);
-                } else {
-                    circle.setFill(nodeStart);
-                }
-                circle.setStroke(nodeOutline);
-                circle.setStroke(nodeOutline);
-                circle.setStrokeWidth(locWidth);
-                circle.setId(loc.getNodeID());
-                circle.setOnMouseClicked(event -> {
-                    try {
-                        event.consume();
-                        //ScreenController.popUp(Constants.Routes.EMPLOYEE_INFO, loc, map, panes, circle, TextPane);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
-                loc.setNodeCircle(circle);
-                mapPane.getChildren().add(circle);
-            }
-        }
-    }
-
-    private static void displayNodesAdmin(Pane mapPane, String floor) {
-        HashMap<String, Location> lstLocations = map.getAllLocations();
-        for (Location loc : lstLocations.values()) {
-            double xLoc = scaleX(loc.getxCord());
-            double yLoc = scaleY(loc.getyCord());
-            Circle circle;
-            if (loc.getNodeID().equals(MapController.getTempStart())) {
-                circle = new Circle(xLoc, yLoc, locRadius, nodeStart);
-            } else if (loc.getNodeType() != Constants.NodeType.HALL) {
-                circle = new Circle(xLoc, yLoc, locRadius, nodeFill);
-            } else {
-                circle = new Circle(xLoc, yLoc, hallRadius, hallFill);
-            }
-            circle.setStroke(nodeOutline);
-            circle.setStrokeWidth(locWidth);
-            //UIHelpers.setAdminNodeClickEvent(map, mapPane, loc, circle);
-            loc.setNodeCircle(circle);
-            mapPane.getChildren().add(circle);
-        }
-    }
-
-    private static void displayEdges(Pane mapPane, String floor) {
+    private static void displayEdges(MapController mc) {
         HashMap<String, Edge> lstEdges = map.getAllEdges();
         for (Edge edge : lstEdges.values()) {
             Location start = edge.getStart();
@@ -181,12 +105,12 @@ public class MapDisplay {
                 Line line = new Line(x1, y1, x2, y2);
                 line.setStroke(edgeFill);
                 line.setStrokeWidth(edgeWidth);
-                mapPane.getChildren().add(line);
+                mc.panMap.getChildren().add(line);
             }
         }
     }
 
-    private static Circle createCircle(MapAllController mc, Location loc, Color color, double opacity) {
+    private static Circle createCircle(MapController mc, Location loc, Color color, double opacity, Constants.Routes route) {
         double xLoc = loc.getxCord();
         double yLoc = loc.getyCord();
         Circle circle = new Circle(xLoc, yLoc, locRadius);
@@ -198,7 +122,7 @@ public class MapDisplay {
         circle.setOnMouseClicked(event -> {
             try {
                 event.consume();
-                ScreenController.infoPopUp(Constants.Routes.USER_INFO, loc, mc, map);
+                ScreenController.infoPopUp(route, loc, mc, map);
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -1,8 +1,6 @@
 package models.map;
 
-import controllers.AdminMapController;
 import controllers.VisualRealtimeController;
-import database.Database;
 import database.LocationTable;
 import helpers.Constants;
 import javafx.scene.shape.Circle;

@@ -1,7 +1,8 @@
 package map;
 
-import controllers.MapAllController;
-import controllers.MapController;
+import controllers.maps.MapController;
+import controllers.maps.UserMapController;
+import controllers.maps.MapController1;
 import controllers.SettingsController;
 import helpers.Constants;
 import helpers.MapHelpers;
@@ -173,7 +174,7 @@ public abstract class PathFinder {
         return directions;
     }
 
-    public static void printPath(MapAllController mc, Map map, Location start, Location end) {
+    public static void printPath(MapController mc, Map map, Location start, Location end) {
         clearPath(mc.panMap, end);
         PathContext context = SettingsController.getAlgType();
         Stack<Location> path = context.findPath(start, end);

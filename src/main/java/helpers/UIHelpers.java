@@ -1,10 +1,6 @@
 package helpers;
 
-import controllers.AdminMapController;
-import controllers.ScreenController;
-import controllers.VisualRealtimeController;
-import database.LocationTable;
-import javafx.scene.control.ScrollPane;
+import controllers.maps.AdminMapController;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
