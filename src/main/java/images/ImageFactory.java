@@ -20,12 +20,14 @@ public class ImageFactory {
                 imgMap.put("L1", flL1);
                 Image flL2 = new Image("/images/Original/00_thelowerlevel2.png");
                 imgMap.put("L2", flL2);
+                Image arrow = new Image("/images/left-arrow-15.gif");
+                imgMap.put("arrow", arrow);
             });
             t.setDaemon(true);
             t.start();
     }
 
-    public static Image getImage(String floor) {
-        return imgMap.get(floor);
+    public static Image getImage(String imgID) {
+        return imgMap.get(imgID);
     }
 }

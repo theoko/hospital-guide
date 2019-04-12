@@ -12,6 +12,7 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
@@ -37,6 +38,12 @@ public abstract class MapController implements Initializable {
     public Pane panMap;
     public ScrollPane txtPane;
     public TitledPane tilDirections;
+    public ImageView imgArrow3;
+    public ImageView imgArrow2;
+    public ImageView imgArrow1;
+    public ImageView imgArrowG;
+    public ImageView imgArrowL1;
+    public ImageView imgArrowL2;
 
     protected String floor;
     protected List<List<Path>> lstLines;
@@ -179,6 +186,32 @@ public abstract class MapController implements Initializable {
                 break;
             default:
                 styleButton(btnFloorL2, true);
+                break;
+        }
+        imgArrow3.setImage(null);
+        imgArrow2.setImage(null);
+        imgArrow1.setImage(null);
+        imgArrowG.setImage(null);
+        imgArrowL1.setImage(null);
+        imgArrowL2.setImage(null);
+        switch (floor) {
+            case "3":
+                imgArrow3.setImage(ImageFactory.getImage("arrow"));
+                break;
+            case "2":
+                imgArrow2.setImage(ImageFactory.getImage("arrow"));
+                break;
+            case "1":
+                imgArrow1.setImage(ImageFactory.getImage("arrow"));
+                break;
+            case "G":
+                imgArrowG.setImage(ImageFactory.getImage("arrow"));
+                break;
+            case "L1":
+                imgArrowL1.setImage(ImageFactory.getImage("arrow"));
+                break;
+            default:
+                imgArrowL2.setImage(ImageFactory.getImage("arrow"));
                 break;
         }
     }

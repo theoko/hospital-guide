@@ -2,7 +2,9 @@ package controllers.maps;
 
 import controllers.ScreenController;
 import helpers.Constants;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import map.MapDisplay;
 
 import java.net.URL;

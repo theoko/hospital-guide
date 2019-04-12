@@ -9,6 +9,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.image.Image?>
 <AnchorPane stylesheets="@../css/colorScheme.css" xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml" fx:controller="controllers.maps.UserMapController">
     <JFXTabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0"
@@ -27,12 +28,30 @@
                     <padding>
                         <Insets top="25" right="25" bottom="25" left="25"/>
                     </padding>
-                    <JFXButton fx:id="btnFloor3" text="3" styleClass="animated-option-button" onMouseClicked="#btnFloor3_Click"/>
-                    <JFXButton fx:id="btnFloor2" text="2" styleClass="animated-option-button" onMouseClicked="#btnFloor2_Click"/>
-                    <JFXButton fx:id="btnFloor1" text="1" styleClass="animated-option-button" onMouseClicked="#btnFloor1_Click"/>
-                    <JFXButton fx:id="btnFloorG" text="G" styleClass="animated-option-button" onMouseClicked="#btnFloorG_Click"/>
-                    <JFXButton fx:id="btnFloorL1" text="L1" styleClass="animated-option-button" onMouseClicked="#btnFloorL1_Click"/>
-                    <JFXButton fx:id="btnFloorL2" text="L2" styleClass="animated-option-button" onMouseClicked="#btnFloorL2_Click"/>
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <JFXButton fx:id="btnFloor3" text="3" styleClass="animated-option-button" onMouseClicked="#btnFloor3_Click"/>
+                        <ImageView fx:id="imgArrow3" fitWidth="50.0" fitHeight="50.0" preserveRatio="true"/>
+                    </HBox>
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <JFXButton fx:id="btnFloor2" text="2" styleClass="animated-option-button" onMouseClicked="#btnFloor2_Click"/>
+                        <ImageView fx:id="imgArrow2" fitWidth="50.0" fitHeight="50.0" preserveRatio="true"/>
+                    </HBox>
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <JFXButton fx:id="btnFloor1" text="1" styleClass="animated-option-button" onMouseClicked="#btnFloor1_Click"/>
+                        <ImageView fx:id="imgArrow1" fitWidth="50.0" fitHeight="50.0" preserveRatio="true"/>
+                    </HBox>
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <JFXButton fx:id="btnFloorG" text="G" styleClass="animated-option-button" onMouseClicked="#btnFloorG_Click"/>
+                        <ImageView fx:id="imgArrowG" fitWidth="50.0" fitHeight="50.0" preserveRatio="true"/>
+                    </HBox>
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <JFXButton fx:id="btnFloorL1" text="L1" styleClass="animated-option-button" onMouseClicked="#btnFloorL1_Click"/>
+                        <ImageView fx:id="imgArrowL1" fitWidth="50.0" fitHeight="50.0" preserveRatio="true"/>
+                    </HBox>
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <JFXButton fx:id="btnFloorL2" text="L2" styleClass="animated-option-button" onMouseClicked="#btnFloorL2_Click"/>
+                        <ImageView fx:id="imgArrowL2" fitWidth="50.0" fitHeight="50.0" preserveRatio="true"/>
+                    </HBox>
                 </VBox>
 
                 <!--Top right settings-->
