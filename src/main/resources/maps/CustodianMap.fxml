@@ -27,12 +27,30 @@
                     <padding>
                         <Insets top="25" right="25" bottom="25" left="25"/>
                     </padding>
-                    <JFXButton fx:id="btnFloor3" text="3" styleClass="animated-option-button" onMouseClicked="#btnFloor3_Click"/>
-                    <JFXButton fx:id="btnFloor2" text="2" styleClass="animated-option-button" onMouseClicked="#btnFloor2_Click"/>
-                    <JFXButton fx:id="btnFloor1" text="1" styleClass="animated-option-button" onMouseClicked="#btnFloor1_Click"/>
-                    <JFXButton fx:id="btnFloorG" text="G" styleClass="animated-option-button" onMouseClicked="#btnFloorG_Click"/>
-                    <JFXButton fx:id="btnFloorL1" text="L1" styleClass="animated-option-button" onMouseClicked="#btnFloorL1_Click"/>
-                    <JFXButton fx:id="btnFloorL2" text="L2" styleClass="animated-option-button" onMouseClicked="#btnFloorL2_Click"/>
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <JFXButton fx:id="btnFloor3" text="3" styleClass="animated-option-button" onMouseClicked="#btnFloor3_Click"/>
+                        <ImageView fx:id="imgArrow3" fitWidth="50.0" fitHeight="50.0" preserveRatio="true"/>
+                    </HBox>
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <JFXButton fx:id="btnFloor2" text="2" styleClass="animated-option-button" onMouseClicked="#btnFloor2_Click"/>
+                        <ImageView fx:id="imgArrow2" fitWidth="50.0" fitHeight="50.0" preserveRatio="true"/>
+                    </HBox>
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <JFXButton fx:id="btnFloor1" text="1" styleClass="animated-option-button" onMouseClicked="#btnFloor1_Click"/>
+                        <ImageView fx:id="imgArrow1" fitWidth="50.0" fitHeight="50.0" preserveRatio="true"/>
+                    </HBox>
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <JFXButton fx:id="btnFloorG" text="G" styleClass="animated-option-button" onMouseClicked="#btnFloorG_Click"/>
+                        <ImageView fx:id="imgArrowG" fitWidth="50.0" fitHeight="50.0" preserveRatio="true"/>
+                    </HBox>
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <JFXButton fx:id="btnFloorL1" text="L1" styleClass="animated-option-button" onMouseClicked="#btnFloorL1_Click"/>
+                        <ImageView fx:id="imgArrowL1" fitWidth="50.0" fitHeight="50.0" preserveRatio="true"/>
+                    </HBox>
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <JFXButton fx:id="btnFloorL2" text="L2" styleClass="animated-option-button" onMouseClicked="#btnFloorL2_Click"/>
+                        <ImageView fx:id="imgArrowL2" fitWidth="50.0" fitHeight="50.0" preserveRatio="true"/>
+                    </HBox>
                 </VBox>
 
                 <!--Top right settings-->
@@ -64,45 +82,7 @@
             </AnchorPane>
         </Tab>
         <Tab style="-fx-background-color: #022D5A;" text="Sanitation Requests">
-            <VBox>
-                <TableView fx:id="tblData" prefHeight="629.0" onMouseClicked="#tblClick" prefWidth="1163.0">
-                    <columns>
-                        <TableColumn fx:id="tblLocation" prefWidth="100.0" text="Location"/>
-                        <TableColumn fx:id="tblPriority" prefWidth="75.0" text="Priority"/>
-                        <TableColumn fx:id="tblStatus" prefWidth="100.0" text="Status"/>
-                        <TableColumn fx:id="tblDescription" prefWidth="250.0" text="Description"/>
-                        <TableColumn fx:id="tblRequester" prefWidth="100.0" text="Requester"/>
-                        <TableColumn fx:id="tblClaimTime" prefWidth="150.0" text="Time Claimed"/>
-                        <TableColumn fx:id="tblServicer" prefWidth="100.0" text="Servicer"/>
-                        <TableColumn fx:id="tblServiceTime" prefWidth="150.0" text="Service Time"/>
-                    </columns>
-                </TableView>
-                <ButtonBar minHeight="-Infinity" prefHeight="71.0" prefWidth="1099.0" VBox.vgrow="ALWAYS">
-                    <buttons>
-                        <JFXButton fx:id="btnNavigate" disable="true" onMouseClicked="#navigateTo" text="Navigate"
-                                   textFill="WHITE">
-                            <font>
-                                <Font size="22.0"/>
-                            </font>
-                        </JFXButton>
-                        <JFXButton fx:id="btnClaim" disable="true" onMouseClicked="#claimJob" prefWidth="200.0"
-                                   text="Claim" textFill="WHITE">
-                            <font>
-                                <Font size="22.0"/>
-                            </font>
-                        </JFXButton>
-                        <JFXButton fx:id="btnMarkDone" disable="true" onMouseClicked="#markDone" prefWidth="200.0"
-                                   text="Mark Complete" textFill="WHITE">
-                            <font>
-                                <Font size="22.0"/>
-                            </font>
-                        </JFXButton>
-                    </buttons>
-                    <padding>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-                    </padding>
-                </ButtonBar>
-            </VBox>
+            <fx:include source="SanitationTable.fxml"/>
         </Tab>
     </JFXTabPane>
 </AnchorPane>

@@ -14,9 +14,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
+import map.MapDisplay;
 import map.PathFinder;
+import models.map.Location;
 import models.map.Map;
 import net.kurobako.gesturefx.GesturePane;
 
@@ -88,9 +91,7 @@ public abstract class MapController implements Initializable {
 //        gesMap.animate(Duration.millis(1000)).zoomTo(.001, center);
     }
 
-    public void btnReturn_Click(MouseEvent mouseEvent) throws Exception {
-        ScreenController.logOut(btnReturn);
-    }
+    public abstract void btnReturn_Click(MouseEvent mouseEvent) throws Exception;
 
     public abstract void btnFloor3_Click(MouseEvent mouseEvent);
     public abstract void btnFloor2_Click(MouseEvent mouseEvent);
@@ -160,6 +161,32 @@ public abstract class MapController implements Initializable {
         }
     }
 
+    public void clearPath(Location end) {
+        lstLines = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            lstLines.add(new ArrayList<>());
+        }
+        lstTransitions = new LinkedList<>();
+
+        List<Node> lstNodes = new ArrayList<>();
+        for (Node n : panMap.getChildren()) {
+            if (n instanceof Path) {
+                lstNodes.add(n);
+            } else if (n instanceof Circle) {
+                Circle circle = (Circle) n;
+                if (circle.getFill().equals(MapDisplay.nodeEnd)) {
+                    circle.setFill(MapDisplay.nodeFill);
+                }
+                if (end != null && circle.getId().equals(end.getNodeID())) {
+                    circle.setFill(MapDisplay.nodeEnd);
+                }
+            }
+        }
+        for (Node n : lstNodes) {
+            panMap.getChildren().remove(n);
+        }
+    }
+
     public void displayPath(Path line) {
         panMap.getChildren().add(0, line);
         String startFloor = lstTransitions.remove(0);
@@ -183,6 +210,14 @@ public abstract class MapController implements Initializable {
                 showFloorL2();
         }
     };
+
+    private void displayHint() {
+        clearArrow();
+        if (lstTransitions.size() > 0) {
+            String nxtFloor = lstTransitions.remove(0);
+            displayArrow(nxtFloor);
+        }
+    }
 
     public static void setTempStart(String tempStart) {
         MapController.tempStart = tempStart;
@@ -223,13 +258,20 @@ public abstract class MapController implements Initializable {
                 styleButton(btnFloorL2, true);
                 break;
         }
+        displayHint();
+    }
+
+    private void clearArrow() {
         imgArrow3.setImage(null);
         imgArrow2.setImage(null);
         imgArrow1.setImage(null);
         imgArrowG.setImage(null);
         imgArrowL1.setImage(null);
         imgArrowL2.setImage(null);
-        switch (floor) {
+    }
+
+    private void displayArrow(String nxtFloor) {
+        switch (nxtFloor) {
             case "3":
                 imgArrow3.setImage(ImageFactory.getImage("arrow"));
                 break;

@@ -172,7 +172,7 @@ public abstract class PathFinder {
     }
 
     public static void printPath(MapController mc, Map map, Location start, Location end) {
-        clearPath(mc.panMap, end);
+        mc.clearPath(end);
         PathContext context = SettingsController.getAlgType();
         Stack<Location> path = context.findPath(start, end);
         String directions = context.txtDirections((Stack<Location>) path.clone());
@@ -202,26 +202,6 @@ public abstract class PathFinder {
         animateLine(line);
         mc.addLine(line, currFloor);
         mc.displayPath(line);
-    }
-
-    private static void clearPath(Pane pane, Location end) {
-        List<Node> lstNodes = new ArrayList<>();
-        for (Node n : pane.getChildren()) {
-            if (n instanceof Path) {
-                lstNodes.add(n);
-            } else if (n instanceof Circle) {
-                Circle circle = (Circle) n;
-                if (circle.getFill().equals(MapDisplay.nodeEnd)) {
-                    circle.setFill(MapDisplay.nodeFill);
-                }
-                if (end != null && circle.getId().equals(end.getNodeID())) {
-                    circle.setFill(MapDisplay.nodeEnd);
-                }
-            }
-        }
-        for (Node n : lstNodes) {
-            pane.getChildren().remove(n);
-        }
     }
 
     private static void animateLine(Path line) {

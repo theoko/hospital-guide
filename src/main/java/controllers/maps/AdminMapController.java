@@ -19,7 +19,7 @@ public class AdminMapController extends MapController {
 
     @Override
     public void btnReturn_Click(MouseEvent mouseEvent) throws Exception {
-        super.btnReturn_Click(mouseEvent);
+        ScreenController.logOut(btnReturn);
         ScreenController.activate(Constants.Routes.LOGIN);
     }
 
