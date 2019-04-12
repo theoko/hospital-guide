@@ -6,6 +6,7 @@ import helpers.Constants;
 import images.ImageFactory;
 import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
@@ -68,6 +69,7 @@ public abstract class MapController implements Initializable {
             gesMap.requestFocus();
         }));
 
+        updateButtons();
         Image img = ImageFactory.getImage("3");
         imgMap.setImage(img);
         center = new Point2D(img.getWidth() / 2, img.getHeight() / 2);
@@ -84,36 +86,42 @@ public abstract class MapController implements Initializable {
         imgMap.setImage(ImageFactory.getImage("3"));
         floor = "3";
         upDateLines();
+        updateButtons();
     }
 
     public void btnFloor2_Click(MouseEvent mouseEvent) {
         imgMap.setImage(ImageFactory.getImage("2"));
         floor = "2";
         upDateLines();
+        updateButtons();
     }
 
     public void btnFloor1_Click(MouseEvent mouseEvent) {
         imgMap.setImage(ImageFactory.getImage("1"));
         floor = "1";
         upDateLines();
+        updateButtons();
     }
 
     public void btnFloorG_Click(MouseEvent mouseEvent) {
         imgMap.setImage(ImageFactory.getImage("G"));
         floor = "G";
         upDateLines();
+        updateButtons();
     }
 
     public void btnFloorL1_Click(MouseEvent mouseEvent) {
         imgMap.setImage(ImageFactory.getImage("L1"));
         floor = "L1";
         upDateLines();
+        updateButtons();
     }
 
     public void btnFloorL2_Click(MouseEvent mouseEvent) {
         imgMap.setImage(ImageFactory.getImage("L2"));
         floor = "L2";
         upDateLines();
+        updateButtons();
     }
 
     public String getFloor() {
@@ -144,5 +152,45 @@ public abstract class MapController implements Initializable {
 
     public void setMap(Map map) {
         this.map = map;
+    }
+
+    private void updateButtons() {
+        styleButton(btnFloor3, false);
+        styleButton(btnFloor2, false);
+        styleButton(btnFloor1, false);
+        styleButton(btnFloorG, false);
+        styleButton(btnFloorL1, false);
+        styleButton(btnFloorL2, false);
+        switch (floor) {
+            case "3":
+                styleButton(btnFloor3, true);
+                break;
+            case "2":
+                styleButton(btnFloor2, true);
+                break;
+            case "1":
+                styleButton(btnFloor1, true);
+                break;
+            case "G":
+                styleButton(btnFloorG, true);
+                break;
+            case "L1":
+                styleButton(btnFloorL1, true);
+                break;
+            default:
+                styleButton(btnFloorL2, true);
+                break;
+        }
+    }
+
+    private void styleButton(JFXButton btn, boolean highlight) {
+        btn.getStyleClass().clear();
+        btn.getStyleClass().add("jfx-button");
+        btn.getStyleClass().add("animated-option-button");
+        if (highlight) {
+            btn.getStyleClass().add("highlight");
+        } else {
+            btn.getStyleClass().add("unhighlight");
+        }
     }
 }

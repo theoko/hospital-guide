@@ -42,15 +42,15 @@
                     <VBox alignment="CENTER" spacing="10.0"
                           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                           AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                        <Label text="Welcome User!" textAlignment="CENTER" textFill="#022D5A"
+                        <Label text="Welcome Employee!" textAlignment="CENTER" textFill="#022D5A"
                                AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                             <font>
-                                <Font name="Moon Bold" size="24.0"/>
+                                <Font name="Moon Bold" size="22.0"/>
                             </font>
                         </Label>
                         <JFXButton fx:id="btnReturn" buttonType="RAISED"
                                    onMouseClicked="#btnReturn_Click" prefHeight="50.0"
-                                   prefWidth="150.0" text="Exit"/>
+                                   prefWidth="150.0" text="Logout"/>
                     </VBox>
                 </AnchorPane>
                 <TitledPane fx:id="tilDirections" alignment="CENTER" expanded="false" text="Text Directions"
