@@ -228,9 +228,9 @@
                                         <TableColumn fx:id="tblStatus" prefWidth="100.0" text="Status" />
                                         <TableColumn fx:id="tblDescription" prefWidth="250.0" text="Description" />
                                         <TableColumn fx:id="tblRequester" prefWidth="100.0" text="Requester" />
-                                        <TableColumn fx:id="tblClaimTime" prefWidth="150.0" text="Time Claimed" />
+                                        <TableColumn fx:id="tblClaimTime" prefWidth="125.0" text="Time Claimed" />
                                         <TableColumn fx:id="tblServicer" prefWidth="100.0" text="Servicer" />
-                                        <TableColumn fx:id="tblServiceTime" prefWidth="150.0" text="Service Time" />
+                                        <TableColumn fx:id="tblServiceTime" prefWidth="125.0" text="Service Time" />
                                     </columns>
                                 </TableView>
                                 <ButtonBar minHeight="-Infinity" prefHeight="71.0" prefWidth="1099.0" VBox.vgrow="ALWAYS">

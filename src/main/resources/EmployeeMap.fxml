@@ -162,6 +162,9 @@
                 <Tab style="-fx-background-color: #022D5A;" text="Requests">
                     <fx:include source="requests/Requests.fxml" />
                 </Tab>
+                <Tab style="-fx-background-color: #022D5A;" text="Transportation Request">
+                    <fx:include source="TransportationRequest.fxml" />
+                </Tab>
             </tabs>
         </JFXTabPane>
     </children>
