@@ -8,7 +8,15 @@ import models.user.User;
 import java.util.Date;
 import java.sql.Timestamp;
 
-public class SanitationRequest extends ServiceRequest {
+public class SanitationRequest extends ServiceRequest implements Comparable<SanitationRequest> {
+
+    /**
+     * Enumerations
+     */
+    public enum Priority {
+        LOW, MEDIUM, HIGH
+    }
+    Priority priority;
 
     /**
      * @brief Constructs new sanitation request to add to database.
@@ -20,10 +28,11 @@ public class SanitationRequest extends ServiceRequest {
     public SanitationRequest(Location location, Priority priority, String description, User requester)
     {
         super(
-                0, location, priority, Status.INCOMPLETE, description,
+                0, location, Status.INCOMPLETE, description,
                 requester, new Timestamp(new Date().getTime()),
                 null, null, null
         );
+        this.priority = priority;
     }
 
     /**
@@ -51,9 +60,41 @@ public class SanitationRequest extends ServiceRequest {
             Timestamp claimedTime,
             Timestamp completedTime) {
         super(
-                requestID, location, priority, status, description,
+                requestID, location, status, description,
                 requester, requestTime,
                 servicer, claimedTime, completedTime
         );
+        this.priority = priority;
+    }
+
+    /**
+     * Attribute getters
+     */
+    public Priority getPriority() {
+        return priority;
+    }
+
+    /**
+     * Converts priority to integer
+     */
+    private Integer priorityToInt() {
+        switch(priority) {
+            case HIGH: return 1;
+            case MEDIUM: return 2;
+            case LOW: return 3;
+            default: return 0;
+        }
+    }
+
+    /**
+     * @brief Compares sanitation requests based on priority then request timestamp
+     */
+    public int compareTo(SanitationRequest request) {
+        int priorityCmp = priorityToInt().compareTo(request.priorityToInt());
+        if (priorityCmp == 0) {
+            return requestTime.compareTo(request.requestTime);
+        } else {
+            return priorityCmp;
+        }
     }
 }
