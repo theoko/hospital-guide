@@ -71,14 +71,16 @@ public class SanitationTableController implements Initializable {
 
     private void updateBtns(){
         SanitationRequest selected = tblData.getSelectionModel().getSelectedItem();
-        User servicer = selected.getServicer();
+        if (selected != null) {
+            User servicer = selected.getServicer();
 
-        boolean btnClaimEnabled = (servicer == null || (servicer.equals(UserHelpers.getCurrentUser()) &&
-                (selected.getStatus() == SanitationRequest.Status.INCOMPLETE)));
-        btnClaim.setDisable(!btnClaimEnabled);
+            boolean btnClaimEnabled = (servicer == null || (servicer.equals(UserHelpers.getCurrentUser()) &&
+                    (selected.getStatus() == SanitationRequest.Status.INCOMPLETE)));
+            btnClaim.setDisable(!btnClaimEnabled);
 
-        boolean btnMarkDoneEnabled = (servicer != null && servicer.equals(UserHelpers.getCurrentUser()));
-        btnMarkDone.setDisable(!btnMarkDoneEnabled);
+            boolean btnMarkDoneEnabled = (servicer != null && servicer.equals(UserHelpers.getCurrentUser()));
+            btnMarkDone.setDisable(!btnMarkDoneEnabled);
+        }
     }
 
     public void claimJob(MouseEvent mouseEvent) {
@@ -100,7 +102,7 @@ public class SanitationTableController implements Initializable {
     }
 
     private void updateClaimBtn() {
-        if (tblData.getSelectionModel().getSelectedItem().getServicer() != null) {
+        if (tblData.getSelectionModel().getSelectedItem() != null && tblData.getSelectionModel().getSelectedItem().getServicer() != null) {
             btnClaim.setText("Un-Claim");
         } else {
             btnClaim.setText("Claim");
