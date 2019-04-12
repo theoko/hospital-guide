@@ -23,37 +23,37 @@ public class EmployeeMapController extends MapController {
 
     @Override
     public void btnFloor3_Click(MouseEvent mouseEvent) {
-        super.btnFloor3_Click(mouseEvent);
+        showFloor3();
         MapDisplay.displayEmployee(this);
     }
 
     @Override
     public void btnFloor2_Click(MouseEvent mouseEvent) {
-        super.btnFloor2_Click(mouseEvent);
+        showFloor2();
         MapDisplay.displayEmployee(this);
     }
 
     @Override
     public void btnFloor1_Click(MouseEvent mouseEvent) {
-        super.btnFloor1_Click(mouseEvent);
+        showFloor1();
         MapDisplay.displayEmployee(this);
     }
 
     @Override
     public void btnFloorG_Click(MouseEvent mouseEvent) {
-        super.btnFloorG_Click(mouseEvent);
+        showFloorG();
         MapDisplay.displayEmployee(this);
     }
 
     @Override
     public void btnFloorL1_Click(MouseEvent mouseEvent) {
-        super.btnFloorL1_Click(mouseEvent);
+        showFloorL1();
         MapDisplay.displayEmployee(this);
     }
 
     @Override
     public void btnFloorL2_Click(MouseEvent mouseEvent) {
-        super.btnFloorL2_Click(mouseEvent);
+        showFloorL2();
         MapDisplay.displayEmployee(this);
     }
 }

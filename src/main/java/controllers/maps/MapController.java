@@ -22,6 +22,7 @@ import net.kurobako.gesturefx.GesturePane;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -47,6 +48,7 @@ public abstract class MapController implements Initializable {
 
     protected String floor;
     protected List<List<Path>> lstLines;
+    protected List<String> lstTransitions;
     protected Point2D center;
     protected static String tempStart;
     protected Map map;
@@ -57,6 +59,7 @@ public abstract class MapController implements Initializable {
             lstLines.add(new ArrayList<>());
         }
         floor = "3";
+        lstTransitions = new LinkedList<>();
     }
 
     @Override
@@ -89,42 +92,49 @@ public abstract class MapController implements Initializable {
         ScreenController.logOut(btnReturn);
     }
 
-    public void btnFloor3_Click(MouseEvent mouseEvent) {
+    public abstract void btnFloor3_Click(MouseEvent mouseEvent);
+    public abstract void btnFloor2_Click(MouseEvent mouseEvent);
+    public abstract void btnFloor1_Click(MouseEvent mouseEvent);
+    public abstract void btnFloorG_Click(MouseEvent mouseEvent);
+    public abstract void btnFloorL1_Click(MouseEvent mouseEvent);
+    public abstract void btnFloorL2_Click(MouseEvent mouseEvent);
+
+    protected void showFloor3() {
         imgMap.setImage(ImageFactory.getImage("3"));
         floor = "3";
         upDateLines();
         updateButtons();
     }
 
-    public void btnFloor2_Click(MouseEvent mouseEvent) {
+    protected void showFloor2() {
         imgMap.setImage(ImageFactory.getImage("2"));
         floor = "2";
         upDateLines();
         updateButtons();
     }
 
-    public void btnFloor1_Click(MouseEvent mouseEvent) {
+    protected void showFloor1() {
         imgMap.setImage(ImageFactory.getImage("1"));
         floor = "1";
         upDateLines();
         updateButtons();
     }
 
-    public void btnFloorG_Click(MouseEvent mouseEvent) {
+    protected void showFloorG() {
         imgMap.setImage(ImageFactory.getImage("G"));
         floor = "G";
         upDateLines();
         updateButtons();
     }
 
-    public void btnFloorL1_Click(MouseEvent mouseEvent) {
+    protected void showFloorL1() {
         imgMap.setImage(ImageFactory.getImage("L1"));
         floor = "L1";
         upDateLines();
         updateButtons();
     }
 
-    public void btnFloorL2_Click(MouseEvent mouseEvent) {
+    protected void showFloorL2() {
         imgMap.setImage(ImageFactory.getImage("L2"));
         floor = "L2";
         upDateLines();
@@ -135,8 +145,9 @@ public abstract class MapController implements Initializable {
         return floor;
     }
 
-    public void addLine(Path line, int index) {
-        lstLines.get(index).add(line);
+    public void addLine(Path line, String floor) {
+        lstLines.get(PathFinder.floorToInt(floor)).add(line);
+        lstTransitions.add(floor);
         upDateLines();
     }
 
@@ -148,6 +159,30 @@ public abstract class MapController implements Initializable {
             }
         }
     }
+
+    public void displayPath(Path line) {
+        panMap.getChildren().add(0, line);
+        String startFloor = lstTransitions.remove(0);
+        switch (startFloor) {
+            case "3":
+                showFloor3();
+                break;
+            case "2":
+                showFloor2();
+                break;
+            case "1":
+                showFloor1();
+                break;
+            case "G":
+                showFloorG();
+                break;
+            case "L1":
+                showFloorL1();
+                break;
+            default:
+                showFloorL2();
+        }
+    };
 
     public static void setTempStart(String tempStart) {
         MapController.tempStart = tempStart;

@@ -5,6 +5,7 @@ import helpers.Constants;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.shape.Path;
 import map.MapDisplay;
 
 import java.net.URL;
@@ -26,37 +27,43 @@ public class UserMapController extends MapController {
 
     @Override
     public void btnFloor3_Click(MouseEvent mouseEvent) {
-        super.btnFloor3_Click(mouseEvent);
+        showFloor3();
         MapDisplay.displayUser(this);
     }
 
     @Override
     public void btnFloor2_Click(MouseEvent mouseEvent) {
-        super.btnFloor2_Click(mouseEvent);
+        showFloor2();
         MapDisplay.displayUser(this);
     }
 
     @Override
     public void btnFloor1_Click(MouseEvent mouseEvent) {
-        super.btnFloor1_Click(mouseEvent);
+        showFloor1();
         MapDisplay.displayUser(this);
     }
 
     @Override
     public void btnFloorG_Click(MouseEvent mouseEvent) {
-        super.btnFloorG_Click(mouseEvent);
+        showFloorG();
         MapDisplay.displayUser(this);
     }
 
     @Override
     public void btnFloorL1_Click(MouseEvent mouseEvent) {
-        super.btnFloorL1_Click(mouseEvent);
+        showFloorL1();
         MapDisplay.displayUser(this);
     }
 
     @Override
     public void btnFloorL2_Click(MouseEvent mouseEvent) {
-        super.btnFloorL2_Click(mouseEvent);
+        showFloorL2();
+        MapDisplay.displayUser(this);
+    }
+
+    @Override
+    public void displayPath(Path line) {
+        super.displayPath(line);
         MapDisplay.displayUser(this);
     }
 }

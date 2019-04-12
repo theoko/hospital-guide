@@ -25,10 +25,8 @@ import javafx.util.Duration;
 import models.map.Location;
 import models.map.Map;
 import models.map.SubPath;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Stack;
+
+import java.util.*;
 
 public abstract class PathFinder {
 
@@ -192,7 +190,7 @@ public abstract class PathFinder {
                 currFloor = curr.getFloor();
             } else if (!curr.getFloor().equals(currFloor)) {
                 animateLine(line);
-                mc.addLine(line, floorToInt(currFloor));
+                mc.addLine(line, currFloor);
                 mc.panMap.getChildren().add(0, line);
                 line = new Path();
                 line.getElements().add(new MoveTo(curr.getxCord(), curr.getyCord()));
@@ -202,8 +200,8 @@ public abstract class PathFinder {
             }
         }
         animateLine(line);
-        mc.addLine(line, floorToInt(currFloor));
-        mc.panMap.getChildren().add(0, line);
+        mc.addLine(line, currFloor);
+        mc.displayPath(line);
     }
 
     private static void clearPath(Pane pane, Location end) {
