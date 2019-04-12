@@ -32,7 +32,6 @@ public class TransportationTable {
                             "requestID INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1)," +
                             "locationID VARCHAR(100) References " + Constants.LOCATION_TABLE + " (nodeID), " +
                             "destinationID VARCHAR(100) References " + Constants.LOCATION_TABLE + "(nodeID), " +
-                            "priority VARCHAR(10), " +
                             "status VARCHAR(100), " +
                             "description VARCHAR(100), " +
                             "requesterID INT REFERENCES " + Constants.USERS_TABLE + "(userID), " +
@@ -58,8 +57,7 @@ public class TransportationTable {
 
         // Get data from request
         String locationID = request.getLocation().getNodeID();
-        String destinationID = request.getLocation().getNodeID();
-        String priority = request.getPriority().name();
+        String destinationID = request.getDestination().getNodeID();
         String status = request.getStatus().name();
         String description = request.getDescription();
         int requesterID = request.getRequester().getUserID();
@@ -70,16 +68,15 @@ public class TransportationTable {
             // Attempt to add request to database
             PreparedStatement statement = Database.getDatabase().getConnection().prepareStatement(
                     "INSERT INTO " + Constants.SANITATION_TABLE +
-                            " (locationID, destinationID, priority, status, description, requesterID, requestTime)" +
-                            " VALUES (?, ?, ?, ?, ?, ?, ?)"
+                            " (locationID, destinationID, status, description, requesterID, requestTime)" +
+                            " VALUES (?, ?, ?, ?, ?, ?)"
             );
             statement.setString(1, locationID);
             statement.setString(2, destinationID);
-            statement.setString(3, priority);
-            statement.setString(4, status);
-            statement.setString(5, description);
-            statement.setInt(6, requesterID);
-            statement.setTimestamp(7, requestTime);
+            statement.setString(3, status);
+            statement.setString(4, description);
+            statement.setInt(5, requesterID);
+            statement.setTimestamp(6, requestTime);
             return statement.execute();
 
         } catch (SQLException exception) {
@@ -144,9 +141,6 @@ public class TransportationTable {
                         resultSet.getString("locationID"));
                 Location destination = LocationTable.getLocationByID(
                         resultSet.getString("destinationID"));
-                SanitationRequest.Priority priority =
-                        SanitationRequest.Priority.valueOf(
-                                resultSet.getString("priority"));
                 SanitationRequest.Status status =
                         SanitationRequest.Status.valueOf(
                                 resultSet.getString("status"));
@@ -161,7 +155,7 @@ public class TransportationTable {
 
                 // Create and add sanitation request to list
                 TransportationRequest transportationRequest = new TransportationRequest(
-                        requestID, location, destination, priority, status, description,
+                        requestID, location, destination, status, description,
                         requester, requestTime, servicer, claimedTime, completedTime);
                 transportationRequests.add(transportationRequest);
             }
