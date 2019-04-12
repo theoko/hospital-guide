@@ -6,16 +6,12 @@ package controllers;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
-import database.Database;
 import database.SanitationTable;
 import helpers.UserHelpers;
-import javafx.beans.value.ChangeListener;
-import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
 import models.map.Location;
-import models.sanitation.SanitationRequest;
+import models.services.SanitationRequest;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class SanitationController extends PopUpController {

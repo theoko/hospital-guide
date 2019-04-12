@@ -3,7 +3,6 @@ package controllers.requests;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
-import com.sun.javafx.scene.control.TableColumnComparatorBase;
 import controllers.ScreenController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,20 +12,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
-import models.map.Location;
 import models.requests.GIFT;
-import models.sanitation.SanitationRequest;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 
-import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 public class GiftStoreController {
 
