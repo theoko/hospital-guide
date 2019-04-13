@@ -1,5 +1,6 @@
-package controllers;
+package controllers.welcome;
 
+import controllers.ScreenController;
 import helpers.Constants;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;

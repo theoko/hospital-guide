@@ -1,6 +1,7 @@
-package controllers;
+package controllers.user;
 
 import com.jfoenix.controls.JFXButton;
+import controllers.ScreenController;
 import database.UserTable;
 import helpers.Constants;
 import javafx.collections.FXCollections;
@@ -9,7 +10,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 import models.user.User;
 
 import java.util.List;

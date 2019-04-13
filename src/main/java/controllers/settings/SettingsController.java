@@ -1,4 +1,4 @@
-package controllers;
+package controllers.settings;
 
 import com.jfoenix.controls.JFXComboBox;
 import helpers.MapHelpers;

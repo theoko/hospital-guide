@@ -1,14 +1,9 @@
-package controllers;
+package controllers.booking;
 
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXTextField;
+import controllers.ScreenController;
+import controllers.node.PopUpController;
 import database.BookWorkspaceTable;
-import database.BookWorkspaceTable;
-import database.LocationTable;
-import database.WorkspaceTable;
-import helpers.Constants;
 import helpers.DatabaseHelpers;
-import helpers.UIHelpers;
 import helpers.UserHelpers;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -18,12 +13,10 @@ import javafx.scene.shape.Circle;
 import models.map.Location;
 import models.map.Workspace;
 import models.room.Book;
-import models.user.User;
 
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class WorkspacePopUpController extends PopUpController implements Initializable {

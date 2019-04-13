@@ -1,10 +1,9 @@
-package controllers;
+package controllers.user;
 
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
-import database.UserTable;
+import controllers.ScreenController;
 import helpers.Constants;
-import helpers.UserHelpers;
 import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
 import models.user.User;

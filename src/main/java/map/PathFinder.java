@@ -1,9 +1,7 @@
 package map;
 
 import controllers.maps.MapController;
-import controllers.maps.UserMapController;
-import controllers.maps.MapController1;
-import controllers.SettingsController;
+import controllers.settings.SettingsController;
 import helpers.Constants;
 import helpers.MapHelpers;
 import javafx.animation.Interpolator;
@@ -12,10 +10,8 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;

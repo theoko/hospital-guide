@@ -5,7 +5,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXToggleButton;
 import controllers.ScreenController;
-import controllers.VisualRealtimeController;
+import controllers.node.VisualRealtimeController;
 import database.EdgeTable;
 import database.SanitationTable;
 import helpers.Constants;

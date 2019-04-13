@@ -1,8 +1,9 @@
-package controllers;
+package controllers.auth;
 
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXToggleButton;
+import controllers.ScreenController;
 import database.UserTable;
 import helpers.Constants;
 import javafx.event.ActionEvent;

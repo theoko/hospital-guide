@@ -1,4 +1,4 @@
-package controllers;
+package controllers.user;
 
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;

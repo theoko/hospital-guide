@@ -1,8 +1,6 @@
 package controllers.maps;
 
 import com.jfoenix.controls.JFXButton;
-import controllers.ScreenController;
-import helpers.Constants;
 import images.ImageFactory;
 import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
@@ -12,11 +10,9 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Path;
-import javafx.util.Duration;
 import map.MapDisplay;
 import map.PathFinder;
 import models.map.Location;

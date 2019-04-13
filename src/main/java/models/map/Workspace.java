@@ -1,6 +1,6 @@
 package models.map;
 
-import controllers.VisualRealtimeController;
+import controllers.node.VisualRealtimeController;
 import database.WorkspaceTable;
 import helpers.Constants;
 import javafx.scene.shape.Circle;

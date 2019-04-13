@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="700.0" minWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RoomBookingController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="700.0" minWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.booking.RoomBookingController">
    <children>
       <Label alignment="CENTER" layoutY="16.0" maxWidth="1.7976931348623157E308" prefHeight="44.0" prefWidth="1200.0" style="-fx-background-color: #022D5A;" text="Conference Room Booking" textAlignment="CENTER" textFill="WHITE">
          <font>

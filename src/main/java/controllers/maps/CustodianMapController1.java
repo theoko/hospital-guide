@@ -2,7 +2,7 @@ package controllers.maps;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTabPane;
-import controllers.VisualRealtimeController;
+import controllers.node.VisualRealtimeController;
 import database.SanitationTable;
 import helpers.UserHelpers;
 import javafx.collections.FXCollections;

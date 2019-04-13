@@ -1,12 +1,7 @@
-package controllers;
+package controllers.welcome;
 
+import controllers.ScreenController;
 import helpers.Constants;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.image.ImageView;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class WelcomeController {
 

@@ -1,7 +1,6 @@
-package controllers;
+package controllers.node;
 
 import helpers.UIHelpers;
-import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;

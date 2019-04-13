@@ -1,9 +1,8 @@
-package controllers;
+package controllers.node;
 
 import com.jfoenix.controls.JFXButton;
+import controllers.ScreenController;
 import controllers.maps.MapController;
-import controllers.maps.MapController1;
-import controllers.maps.UserMapController;
 import helpers.DatabaseHelpers;
 import javafx.scene.Node;
 import javafx.scene.control.Label;

@@ -1,6 +1,7 @@
-package controllers;
+package controllers.download;
 
 import com.jfoenix.controls.JFXButton;
+import controllers.ScreenController;
 import helpers.Constants;
 import helpers.FileHelpers;
 import javafx.fxml.FXML;

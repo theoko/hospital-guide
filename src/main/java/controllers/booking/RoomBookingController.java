@@ -1,10 +1,10 @@
-package controllers;
+package controllers.booking;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTimePicker;
+import controllers.ScreenController;
 import database.BookLocationTable;
-import database.Database;
 import database.LocationTable;
 import database.RoomTable;
 import helpers.Constants;

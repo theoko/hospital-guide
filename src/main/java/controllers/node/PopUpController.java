@@ -1,4 +1,4 @@
-package controllers;
+package controllers.node;
 
 import controllers.maps.MapController;
 import javafx.fxml.Initializable;

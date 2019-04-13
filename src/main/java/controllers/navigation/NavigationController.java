@@ -1,4 +1,4 @@
-package controllers;
+package controllers.navigation;
 
 public class NavigationController {
 

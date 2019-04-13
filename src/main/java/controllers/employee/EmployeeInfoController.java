@@ -1,16 +1,10 @@
-package controllers;
+package controllers.employee;
 
 import com.jfoenix.controls.JFXButton;
+import controllers.node.InfoController;
+import controllers.ScreenController;
 import helpers.Constants;
-import helpers.DatabaseHelpers;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import map.PathFinder;
-import models.map.Location;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class EmployeeInfoController extends InfoController {
     public JFXButton btnRequest;

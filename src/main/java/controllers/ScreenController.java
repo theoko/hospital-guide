@@ -1,7 +1,9 @@
 package controllers;
 
 import controllers.maps.MapController;
-import controllers.maps.UserMapController;
+import controllers.node.InfoController;
+import controllers.node.PopUpController;
+import controllers.user.PopUpControllerUser;
 import helpers.Constants;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -17,6 +19,8 @@ import models.map.Location;
 import models.map.Map;
 import models.map.Workspace;
 import models.user.User;
+
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
