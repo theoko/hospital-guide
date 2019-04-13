@@ -82,7 +82,7 @@
             </AnchorPane>
         </Tab>
         <Tab style="-fx-background-color: #022D5A;" text="Sanitation Requests">
-            <fx:include source="SanitationTable.fxml"/>
+            <fx:include source="../SanitationTable.fxml"/>
         </Tab>
     </JFXTabPane>
 </AnchorPane>

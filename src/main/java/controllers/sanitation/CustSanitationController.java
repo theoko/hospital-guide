@@ -1,67 +1,27 @@
-package controllers;
+package controllers.sanitation;
 
 import com.jfoenix.controls.JFXButton;
 import database.SanitationTable;
 import helpers.UserHelpers;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.fxml.Initializable;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import models.sanitation.SanitationRequest;
 import models.user.User;
 
 import java.net.URL;
 import java.sql.Timestamp;
-import java.util.List;
 import java.util.ResourceBundle;
 
-public class SanitationTableController implements Initializable {
-
-    public TableView<SanitationRequest> tblData;
-    public TableColumn<SanitationRequest,String> tblLocation;
-    public TableColumn<SanitationRequest,String> tblPriority;
-    public TableColumn<SanitationRequest,String> tblStatus;
-    public TableColumn<SanitationRequest,String> tblDescription;
-    public TableColumn<SanitationRequest,String> tblRequester;
-    public TableColumn<SanitationRequest,String> tblClaimTime;
-    public TableColumn<SanitationRequest,String> tblServicer;
-    public TableColumn<SanitationRequest,String> tblServiceTime;
+public class CustSanitationController extends SanitationController {
     public JFXButton btnMarkDone;
     public JFXButton btnNavigate;
     public JFXButton btnClaim;
 
-    ObservableList<SanitationRequest> spills = FXCollections.observableArrayList();
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        super.initialize(location, resources);
         tblData.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             btnNavigate.setDisable(false);
         });
-
-        initSanitation();
-        updateSanitation();
-    }
-
-    private void initSanitation(){
-        tblLocation.setCellValueFactory(new PropertyValueFactory<>("LocationShortName"));
-        tblPriority.setCellValueFactory(new PropertyValueFactory<>("Priority"));
-        tblStatus.setCellValueFactory(new PropertyValueFactory<>("Status"));
-        tblDescription.setCellValueFactory(new PropertyValueFactory<>("Description"));
-        tblRequester.setCellValueFactory(new PropertyValueFactory<>("RequesterUserName"));
-        tblClaimTime.setCellValueFactory(new PropertyValueFactory<>("ClaimedTime"));
-        tblServiceTime.setCellValueFactory(new PropertyValueFactory<>("CompletedTime"));
-        tblServicer.setCellValueFactory(new PropertyValueFactory<>("ServicerUserName"));
-        tblData.setItems(spills);
-    }
-
-    private void updateSanitation() {
-        List<SanitationRequest> lstReqs = SanitationTable.getSanitationRequests();
-        if (lstReqs != null) {
-            spills.addAll(lstReqs);
-        }
     }
 
     public void tblClick(MouseEvent mouseEvent) {
