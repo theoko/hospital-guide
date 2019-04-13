@@ -338,63 +338,48 @@ public class SearchKeywords {
 
             switch (currLocation.getNodeType()) {
                 case BATH:
-//                    return "BATH";
                     bathroom.add(currLocation.getLongName());
                     break;
                 case CONF:
                     conference.add(currLocation.getLongName());
                     break;
-//                    return "CONF";
                 case DEPT:
-//                    return "DEPT";
 
                     break;
                 case ELEV:
-//                    return "ELEV";
 
                     break;
                 case EXIT:
-//                    return "EXIT";
                     exit.add(currLocation.getLongName());
                     break;
                 case HALL:
-//                    return "HALL";
 
                     break;
                 case INFO:
-//                    return "INFO";
 
                     break;
                 case LABS:
-//                    return "LABS";
                     lab.add(currLocation.getLongName());
                     break;
                 case REST:
-//                    return "REST";
 
                     break;
                 case RETL:
-//                    return "RETL";
 
                     break;
                 case SERV:
-//                    return "SERV";
 
                     break;
                 case STAI:
-//                    return "STAI";
 
                     break;
                 case WORK:
-//                    return "WORK";
 
                     break;
                 case WRKT:
-//                    return "WRKT";
 
                     break;
                 default:
-//                    return null;
             }
 
             locationsIterator.remove();
@@ -405,8 +390,6 @@ public class SearchKeywords {
         keys.put("drinks", drinks);
         keys.put("cafe", cafe);
         keys.put("beverage", beverage);
-        keys.put("lab", lab);
-        keys.put("laboratory", laboratory);
         keys.put("cat scan", catScan);
         keys.put("ct scan", ctScan);
         keys.put("mri", mri);
@@ -418,21 +401,40 @@ public class SearchKeywords {
         keys.put("garage", garage);
         keys.put("parking", parking);
         keys.put("wc", wc);
-        keys.put("restroom", restroom);
-        keys.put("bathroom", bathroom);
         keys.put("atm", atm);
         keys.put("cash", atm);
-        keys.put("exit", exit);
         keys.put("entrance", entrance);
         keys.put("international", international);
 
+        // Nodes
         // Conference rooms
         keys.put("conference", conference);
+        this.addSynonymsToMap("conference", conference);
+
+        // Labs
+        keys.put("lab", lab);
+        keys.put("laboratory", laboratory);
+        this.addSynonymsToMap("lab", lab);
+
+        // Bathroom
+        keys.put("restroom", restroom);
+        keys.put("bathroom", bathroom);
+        this.addSynonymsToMap("bathroom", bathroom);
+
+        // Exits
+        keys.put("exit", exit);
+        this.addSynonymsToMap("exit", exit);
 
     }
 
     public HashMap<String, List<String>> getKeys() {
         return keys;
+    }
+
+    private void addSynonymsToMap(String word, List<String> wordlist) {
+        for(String synonym : this.getSynonyms(word)) {
+            keys.put(synonym, wordlist);
+        }
     }
 
     private void addSynonyms(String wordForm, List<String> keywords) {

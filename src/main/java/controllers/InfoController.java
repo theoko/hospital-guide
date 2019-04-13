@@ -1,13 +1,15 @@
 package controllers;
 
 import com.jfoenix.controls.JFXButton;
+import controllers.maps.MapController;
+import controllers.maps.MapController1;
+import controllers.maps.UserMapController;
 import helpers.DatabaseHelpers;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
+import javafx.scene.shape.Path;
 import map.MapDisplay;
 import map.PathFinder;
 import models.map.Location;
@@ -29,6 +31,8 @@ public abstract class InfoController extends PopUpController {
     public JFXButton btnCancel;
     public JFXButton btnStartHere;
 
+    private MapController mc;
+
     @Override
     public final void initialize(URL location, ResourceBundle resources) {
 
@@ -47,7 +51,7 @@ public abstract class InfoController extends PopUpController {
 
     public final void btnDirections_OnClick(MouseEvent event) throws Exception {
         event.consume();
-        PathFinder.printPath(panes, TextPane, map, kiosk, loc);
+        PathFinder.printPath(mc, map, kiosk, loc);
         ScreenController.deactivate();
     }
 
@@ -58,23 +62,23 @@ public abstract class InfoController extends PopUpController {
 
     public final void btnStartHere_OnClick(MouseEvent mouseEvent) {
         MapController.setTempStart(loc.getNodeID());
-        for (AnchorPane pane : panes) {
-            List<Node> lstNodes1 = new ArrayList<>();
-            for (Node n : pane.getChildren()) {
-                if (n instanceof Line) {
-                    lstNodes1.add(n);
-                } else if (n instanceof Circle) {
-                    Circle circle = (Circle) n;
-                    if (circle.getFill().equals(MapDisplay.nodeEnd) || circle.getFill().equals(MapDisplay.nodeStart)) {
-                        circle.setFill(MapDisplay.nodeFill);
-                    }
+        List<Node> lstNodes = new ArrayList<>();
+        for (Node n : mc.panMap.getChildren()) {
+            if (n instanceof Path) {
+                lstNodes.add(n);
+            } else if (n instanceof Circle) {
+                Circle circle = (Circle) n;
+                if (circle.getFill().equals(MapDisplay.nodeEnd) || circle.getFill().equals(MapDisplay.nodeStart)) {
+                    circle.setFill(MapDisplay.nodeFill);
                 }
             }
-            for (Node n : lstNodes1) {
-                pane.getChildren().remove(n);
-            }
         }
-        circle.setFill(MapDisplay.nodeStart);
+        mc.panMap.getChildren().removeAll(lstNodes);
+        loc.getNodeCircle().setFill(MapDisplay.nodeStart);
         ScreenController.deactivate();
+    }
+
+    public void setMc(MapController mc) {
+        this.mc = mc;
     }
 }
