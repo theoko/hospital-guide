@@ -20,7 +20,7 @@ import java.util.List;
 
 public class MapDisplay {
     private final static double locRadius = 15;
-    private final static double hallRadius = 3.5;
+    private final static double hallRadius = 5;
     private final static double locWidth = 2.0;
     private final static double edgeWidth = 1.5;
     private final static double xShift = -2110.0;
@@ -35,6 +35,10 @@ public class MapDisplay {
     private final static Color edgeFill = Color.BLACK;
 
     private static Map map = MapParser.parse();
+
+    private enum NodeStyle {
+        REGULAR, START, END, POINT
+    }
 
     /**
      * Display the graph on a map for the default user (no halls, info boxes)
@@ -76,18 +80,22 @@ public class MapDisplay {
         for (Location loc : lstLocations.values()) {
             if (loc.getNodeID().equals(start)) {
                 if (loc.getFloor().equals(floor)) {
-                    mc.panMap.getChildren().add(createCircle(mc, loc, nodeStart, 1, route));
+                    mc.panMap.getChildren().add(createCircle(mc, loc, NodeStyle.START, 1, route));
                 } else {
-                    mc.panMap.getChildren().add(createCircle(mc, loc, nodeStart, opac, route));
+                    mc.panMap.getChildren().add(createCircle(mc, loc, NodeStyle.START, opac, route));
                 }
             } else if (loc.getNodeID().equals(end)) {
                 if (loc.getFloor().equals(floor)) {
-                    mc.panMap.getChildren().add(createCircle(mc, loc, nodeEnd, 1, route));
+                    mc.panMap.getChildren().add(createCircle(mc, loc, NodeStyle.END, 1, route));
                 } else {
-                    mc.panMap.getChildren().add(createCircle(mc, loc, nodeEnd, opac, route));
+                    mc.panMap.getChildren().add(createCircle(mc, loc, NodeStyle.END, opac, route));
                 }
-            } else if (loc.getFloor().equals(mc.getFloor()) && loc.getNodeType() != Constants.NodeType.HALL) {
-                mc.panMap.getChildren().add(createCircle(mc, loc, nodeFill, 1, route));
+            } else if (loc.getFloor().equals(mc.getFloor())) {
+                if (loc.getNodeType() != Constants.NodeType.HALL) {
+                    mc.panMap.getChildren().add(createCircle(mc, loc, NodeStyle.REGULAR, 1, route));
+                } else if (mc.isAdmin()) {
+                    mc.panMap.getChildren().add(0, createCircle(mc, loc, NodeStyle.POINT, 1, route));
+                }
             }
         }
     }
@@ -97,11 +105,12 @@ public class MapDisplay {
         for (Edge edge : lstEdges.values()) {
             Location start = edge.getStart();
             Location end = edge.getEnd();
-            if (start.getFloor().equals(end.getFloor())) {
-                double x1 = scaleX(start.getxCord());
-                double x2 = scaleX(end.getxCord());
-                double y1 = scaleY(start.getyCord());
-                double y2 = scaleY(end.getyCord());
+            String floor = mc.getFloor();
+            if (start.getFloor().equals(floor) && end.getFloor().equals(floor)) {
+                double x1 = start.getxCord();
+                double x2 = end.getxCord();
+                double y1 = start.getyCord();
+                double y2 = end.getyCord();
                 Line line = new Line(x1, y1, x2, y2);
                 line.setStroke(edgeFill);
                 line.setStrokeWidth(edgeWidth);
@@ -110,15 +119,31 @@ public class MapDisplay {
         }
     }
 
-    private static Circle createCircle(MapController mc, Location loc, Color color, double opacity, Constants.Routes route) {
+    private static Circle createCircle(MapController mc, Location loc, NodeStyle nodeStyle, double opacity, Constants.Routes route) {
         double xLoc = loc.getxCord();
         double yLoc = loc.getyCord();
         Circle circle = new Circle(xLoc, yLoc, locRadius);
         circle.setStroke(nodeOutline);
         circle.setStrokeWidth(locWidth);
-        circle.setFill(color);
         circle.setOpacity(opacity);
         circle.setId(loc.getNodeID());
+
+        switch (nodeStyle){
+            case REGULAR:
+                circle.setFill(nodeFill);
+                break;
+            case START:
+                circle.setFill(nodeStart);
+                break;
+            case END:
+                circle.setFill(nodeEnd);
+                break;
+            default:
+                circle.setFill(edgeFill);
+                circle.setRadius(hallRadius);
+                break;
+        }
+
         circle.setOnMouseClicked(event -> {
             try {
                 event.consume();

@@ -75,6 +75,7 @@ public abstract class InfoController extends PopUpController {
         }
         mc.panMap.getChildren().removeAll(lstNodes);
         loc.getNodeCircle().setFill(MapDisplay.nodeStart);
+        mc.txtPane.setContent(null);
         ScreenController.deactivate();
     }
 

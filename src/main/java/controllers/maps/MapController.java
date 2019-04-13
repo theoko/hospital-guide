@@ -75,7 +75,7 @@ public abstract class MapController implements Initializable {
         imgMap.setImage(img);
         center = new Point2D(img.getWidth() / 2, img.getHeight() / 2);
 
-//        gesMap.zoomTo(3, center);
+        gesMap.zoomTo(0.001, center);
 //        gesMap.animate(Duration.millis(1000)).zoomTo(.001, center);
     }
 
@@ -102,6 +102,10 @@ public abstract class MapController implements Initializable {
     public abstract void btnFloorG_Click(MouseEvent mouseEvent);
     public abstract void btnFloorL1_Click(MouseEvent mouseEvent);
     public abstract void btnFloorL2_Click(MouseEvent mouseEvent);
+
+    public boolean isAdmin() {
+        return false;
+    }
 
     protected void showFloor3() {
         imgMap.setImage(ImageFactory.getImage("3"));
