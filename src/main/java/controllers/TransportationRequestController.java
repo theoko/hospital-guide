@@ -202,6 +202,14 @@ public class TransportationRequestController  {
             btnClaim.setText("Claim");
         }
     }
+
+    public void sendRequest(){
+
+    }
+
+    public void cancelScr(){
+
+    }
 }
 
 
