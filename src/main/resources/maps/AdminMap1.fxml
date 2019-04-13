@@ -147,13 +147,13 @@
                     </AnchorPane>
                 </Tab>
                 <Tab style="-fx-background-color: #022D5A;" text="Workspace Booking">
-                    <fx:include source="../RoomBookingWindow.fxml" />
+                    <fx:include source="../fxml/UI/booking/RoomBookingWindow.fxml" />
                 </Tab>
                 <Tab style="-fx-background-color: #022D5A;" text="User Dashboard">
-                    <fx:include source="../CreateUser.fxml" />
+                    <fx:include source="../fxml/UI/user/CreateUser.fxml" />
                 </Tab>
                 <Tab style="-fx-background-color: #022D5A;" text="Settings">
-                    <fx:include source="../SettingsScreen.fxml" />
+                    <fx:include source="../fxml/UI/settings/SettingsScreen.fxml" />
                 </Tab>
 
                 <Tab style="-fx-background-color: #022D5A;" text="Sanitation Requests">

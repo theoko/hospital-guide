@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane stylesheets="@css/colorScheme.css" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #022D5A;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.welcome.WelcomeController">
+<AnchorPane stylesheets="@../../../css/colorScheme.css" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #022D5A;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.welcome.WelcomeController">
     <children>
         <AnchorPane layoutY="167.0" prefHeight="473.0" prefWidth="1200.0" style="-fx-background-color: #F0F0F0; -fx-background-image: url('/images/bG.jpg');" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
             <children>
@@ -19,7 +19,7 @@
             <children>
                 <ImageView blendMode="MULTIPLY" disable="true" fitHeight="83.0" fitWidth="376.0" layoutX="455.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@images/writtenLogo.png" />
+                        <Image url="@../../../images/writtenLogo.png" />
                     </image>
                 </ImageView>
             </children>

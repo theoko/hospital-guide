@@ -20,7 +20,6 @@ import models.map.Map;
 import models.map.Workspace;
 import models.user.User;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -46,26 +45,26 @@ public class ScreenController {
 
     public void initializeScreens(Stage stage) {
         // Initialize screen controller to switch between different scenes
-        this.addScreen(Constants.Routes.LOGO,"/Logo.fxml");
-        this.addScreen(Constants.Routes.WELCOME,"/Welcome.fxml");
+        this.addScreen(Constants.Routes.LOGO, "/fxml/UI/welcome/Logo.fxml");
+        this.addScreen(Constants.Routes.WELCOME, "/fxml/UI/welcome/Welcome.fxml");
         this.addScreen(Constants.Routes.USER_MAP, "/maps/UserMap.fxml");
-        this.addScreen(Constants.Routes.LOGIN,"/Login.fxml");
+        this.addScreen(Constants.Routes.LOGIN, "/fxml/UI/auth/Login.fxml");
         this.addScreen(Constants.Routes.ADMIN_MAP, "/maps/AdminMap.fxml");
-        this.addScreen(Constants.Routes.EDIT_LOCATION, "/EditLocation.fxml");
-        this.addScreen(Constants.Routes.DOWNLOAD, "/Download.fxml");
-        this.addScreen(Constants.Routes.DOWNLOADED, "/Downloaded.fxml");
-        this.addScreen(Constants.Routes.USER_INFO, "/UserInfo.fxml");
-        this.addScreen(Constants.Routes.EMPLOYEE_INFO, "/EmployeeInfo.fxml");
+        this.addScreen(Constants.Routes.EDIT_LOCATION, "/fxml/UI/node/EditLocation.fxml");
+        this.addScreen(Constants.Routes.DOWNLOAD, "/fxml/UI/download/Download.fxml");
+        this.addScreen(Constants.Routes.DOWNLOADED, "/fxml/UI/download/Downloaded.fxml");
+        this.addScreen(Constants.Routes.USER_INFO, "/fxml/UI/user/UserInfo.fxml");
+        this.addScreen(Constants.Routes.EMPLOYEE_INFO, "/fxml/UI/employee/EmployeeInfo.fxml");
         this.addScreen(Constants.Routes.EMPLOYEE_MAP, "/maps/EmployeeMap.fxml");
-        this.addScreen(Constants.Routes.SANITATION_REQUEST, "/SanitationRequest.fxml");
+        this.addScreen(Constants.Routes.SANITATION_REQUEST, "/fxml/UI/sanitation/SanitationRequest.fxml");
         this.addScreen(Constants.Routes.CUSTODIAN_MAP, "/maps/CustodianMap.fxml");
-        this.addScreen(Constants.Routes.CUSTODIAN_INFO, "/CustodianInfo.fxml");
-        this.addScreen(Constants.Routes.BOOKING_WINDOW, "/RoomBookingWindow.fxml");
-        this.addScreen(Constants.Routes.CREATE_USER, "/CreateUser.fxml");
-        this.addScreen(Constants.Routes.USER_POPUP, "/CreateUserPopUp.fxml");
-        this.addScreen(Constants.Routes.EDIT_POPUP, "/EditUserPopUp.fxml");
-        this.addScreen(Constants.Routes.WORKSPACE, "/Workspace.fxml");
-        this.addScreen(Constants.Routes.WORKSPACE_POPUP, "/WorkspacePopUp.fxml");
+        this.addScreen(Constants.Routes.CUSTODIAN_INFO, "/fxml/UI/custodian/CustodianInfo.fxml");
+        this.addScreen(Constants.Routes.BOOKING_WINDOW, "/fxml/UI/booking/RoomBookingWindow.fxml");
+        this.addScreen(Constants.Routes.CREATE_USER, "/fxml/UI/user/CreateUser.fxml");
+        this.addScreen(Constants.Routes.USER_POPUP, "/fxml/UI/user/CreateUserPopUp.fxml");
+        this.addScreen(Constants.Routes.EDIT_POPUP, "/fxml/UI/user/EditUserPopUp.fxml");
+        this.addScreen(Constants.Routes.WORKSPACE, "/fxml/UI/booking/Workspace.fxml");
+        this.addScreen(Constants.Routes.WORKSPACE_POPUP, "/fxml/UI/booking/WorkspacePopUp.fxml");
         this.addScreen(Constants.Routes.REQUESTS, "/requests/Requests.fxml");
         this.addScreen(Constants.Routes.IT, "/requests/ITServiceRequest.fxml");
         this.addScreen(Constants.Routes.PERSCRIPTION, "/requests/Prescription.fxml");
