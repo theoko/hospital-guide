@@ -1,11 +1,14 @@
 package controllers;
 
+import controllers.maps.MapController;
+import controllers.maps.UserMapController;
 import helpers.Constants;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -14,13 +17,12 @@ import models.map.Location;
 import models.map.Map;
 import models.map.Workspace;
 import models.user.User;
-
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashMap;
-import java.util.List;
 
 public class ScreenController {
 
@@ -28,36 +30,31 @@ public class ScreenController {
     private static Stage stage;
 
     public ScreenController(Stage stage) {
-        this.stage = stage;
-
+        ScreenController.stage = stage;
         try {
-            // Initialize screens
-            this.initializeScreens(this.stage);
-
-            // Activate beginning screen
-            this.activate(Constants.Routes.WELCOME);
+            this.initializeScreens(ScreenController.stage);
+            activate(Constants.Routes.WELCOME);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
 
-    public void initializeScreens(Stage stage) throws Exception {
+    public void initializeScreens(Stage stage) {
         // Initialize screen controller to switch between different scenes
         this.addScreen(Constants.Routes.LOGO,"/Logo.fxml");
         this.addScreen(Constants.Routes.WELCOME,"/Welcome.fxml");
-        this.addScreen(Constants.Routes.USER_MAP, "/UserMap.fxml");
+        this.addScreen(Constants.Routes.USER_MAP, "/maps/UserMap.fxml");
         this.addScreen(Constants.Routes.LOGIN,"/Login.fxml");
-        this.addScreen(Constants.Routes.ADMIN_MAP, "/AdminMap.fxml");
+        this.addScreen(Constants.Routes.ADMIN_MAP, "/maps/AdminMap.fxml");
         this.addScreen(Constants.Routes.EDIT_LOCATION, "/EditLocation.fxml");
         this.addScreen(Constants.Routes.DOWNLOAD, "/Download.fxml");
         this.addScreen(Constants.Routes.DOWNLOADED, "/Downloaded.fxml");
         this.addScreen(Constants.Routes.USER_INFO, "/UserInfo.fxml");
         this.addScreen(Constants.Routes.EMPLOYEE_INFO, "/EmployeeInfo.fxml");
-        this.addScreen(Constants.Routes.EMPLOYEE_MAP, "/EmployeeMap.fxml");
+        this.addScreen(Constants.Routes.EMPLOYEE_MAP, "/maps/EmployeeMap.fxml");
         this.addScreen(Constants.Routes.SANITATION_REQUEST, "/SanitationRequest.fxml");
-        this.addScreen(Constants.Routes.DIRECTIONS, "/Directions.fxml");
-        this.addScreen(Constants.Routes.CUSTODIAN_MAP, "/CustodianMap.fxml");
+        this.addScreen(Constants.Routes.CUSTODIAN_MAP, "/maps/CustodianMap.fxml");
         this.addScreen(Constants.Routes.CUSTODIAN_INFO, "/CustodianInfo.fxml");
         this.addScreen(Constants.Routes.BOOKING_WINDOW, "/RoomBookingWindow.fxml");
         this.addScreen(Constants.Routes.CREATE_USER, "/CreateUser.fxml");
@@ -104,8 +101,21 @@ public class ScreenController {
         stage.setTitle("Brigham and Women's Pathfinder Application");
         stage.setScene(s);
         stage.setResizable(true);
-       // stage.setMaximized(true);
+        stage.setMaximized(true);
         stage.show();
+    }
+
+    public static void infoPopUp(Constants.Routes route, Location loc, MapController mc, Map map) throws IOException {
+        stage = new Stage();
+        URL url = routeToURL(route);
+
+        FXMLLoader loader = new FXMLLoader(url);
+        Parent root = loader.load();
+        InfoController ic = loader.getController();
+        ic.setLoc(loc);
+        ic.setMc(mc);
+        ic.setMap(map);
+        displayPopUp(root);
     }
 
     public static void popUp(Constants.Routes route) throws Exception {
@@ -157,7 +167,7 @@ public class ScreenController {
         displayPopUp(root);
     }
 
-    public static void popUp(Constants.Routes route, Location loc, Map map, AnchorPane[] panes) throws Exception {
+    public static void popUp(Constants.Routes route, Location loc, Map map, Pane pane) throws Exception {
         stage = new Stage();
         URL url = routeToURL(route);
 
@@ -167,12 +177,12 @@ public class ScreenController {
 
         pc.setLoc(loc);
         pc.setMap(map);
-        pc.setPanes(panes);
+        pc.setPane(pane);
 
         displayPopUp(root);
     }
 
-    public static void popUp(Constants.Routes route, Location loc, Map map, AnchorPane[] panes, Circle circle) throws Exception {
+    public static void popUp(Constants.Routes route, Location loc, Map map, Pane pane, Circle circle) throws Exception {
         stage = new Stage();
         URL url = routeToURL(route);
 
@@ -182,24 +192,25 @@ public class ScreenController {
 
         pc.setLoc(loc);
         pc.setMap(map);
-        pc.setPanes(panes);
+        pc.setPane(pane);
         pc.setCircle(circle);
 
         displayPopUp(root);
     }
 
-    public static void popUp(Constants.Routes route, Location loc1, Location loc2, Map map, AnchorPane[] panes) throws Exception {
+    public static void popUp(Constants.Routes route, Location loc, Map map, Pane pane, Circle circle, ScrollPane txtPane) throws Exception {
         stage = new Stage();
         URL url = routeToURL(route);
 
         FXMLLoader loader = new FXMLLoader(url);
         Parent root = loader.load();
-        DirectionsController pc = loader.getController();
+        PopUpController pc = loader.getController();
 
-        pc.setLoc(loc1);
-        pc.setLoc2(loc2);
+        pc.setLoc(loc);
         pc.setMap(map);
-        pc.setPanes(panes);
+        pc.setPane(pane);
+        pc.setCircle(circle);
+        pc.setTxtPane(txtPane);
 
         displayPopUp(root);
     }

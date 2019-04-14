@@ -1,36 +1,25 @@
-package controllers;
+package controllers.maps;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTabPane;
-import database.Database;
-import database.LocationTable;
+import controllers.VisualRealtimeController;
 import database.SanitationTable;
-import helpers.Constants;
 import helpers.UserHelpers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import map.MapDisplay;
-import map.PathFinder;
 import models.map.Location;
 import models.sanitation.SanitationRequest;
 import models.user.User;
 
-import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.List;
-import java.sql.Timestamp;
-import java.util.ResourceBundle;
 import java.net.URL;
+import java.sql.Timestamp;
+import java.util.List;
+import java.util.ResourceBundle;
 
-import static controllers.VisualRealtimeController.panMap;
-
-public class CustodianMapController extends MapController {
+public class CustodianMapController1 extends MapController1 {
 
     public JFXButton btnSettings;
     public TableView<SanitationRequest> tblData;
@@ -56,14 +45,13 @@ public class CustodianMapController extends MapController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
-        MapDisplay.displayCust(this, panes);
+        //MapDisplay.displayCust(this, panes, TextPane);
         VisualRealtimeController.setPanMap(panFloor1);
         initSanitation();
         updateSanitation();
 
         tblData.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             btnNavigate.setDisable(false);
-
         });
         SanitationRequest selected = tblData.getSelectionModel().getSelectedItem();
         if(selected!=null)
@@ -76,7 +64,6 @@ public class CustodianMapController extends MapController {
     }
 
     private void initSanitation(){
-//        tblRequestID.setCellValueFactory(new PropertyValueFactory<>("RequestID"));
         tblLocation.setCellValueFactory(new PropertyValueFactory<>("LocationShortName"));
         tblPriority.setCellValueFactory(new PropertyValueFactory<>("Priority"));
         tblStatus.setCellValueFactory(new PropertyValueFactory<>("Status"));
@@ -85,7 +72,6 @@ public class CustodianMapController extends MapController {
         tblClaimTime.setCellValueFactory(new PropertyValueFactory<>("ClaimedTime"));
         tblServiceTime.setCellValueFactory(new PropertyValueFactory<>("CompletedTime"));
         tblServicer.setCellValueFactory(new PropertyValueFactory<>("ServicerUserName"));
-        System.out.println(spills.toString());
         tblData.setItems(spills);
     }
 
@@ -96,10 +82,10 @@ public class CustodianMapController extends MapController {
     }
 
     public void navigateTo(){
-        Location start = map.getLocation(MapController.getTempStart());
+        Location start = map.getLocation(MapController1.getTempStart());
         Location end = tblData.getSelectionModel().getSelectedItem().getLocation();
 
-        PathFinder.printPath(panes, map, start, end);
+//        PathFinder.printPath(panes, TextPane, map, start, end);
 
         String floor = start.getFloor();
         int floorIndex;
@@ -141,35 +127,26 @@ public class CustodianMapController extends MapController {
 
     }
     public void claimJob(){
-
         SanitationRequest selected = tblData.getSelectionModel().getSelectedItem();
 
 //        if (selected.getServicer() != null) {
 //        }else{
 //            selected.setServicer(null);
 //        }
-
-
         if (selected.getServicer() != null) {
            //if(selected.getServicerUserName().equals(UserHelpers.getCurrentUser())){
                selected.setServicer(null);
                selected.setClaimedTime(null);
            //}
-
         } else {
             selected.setServicer(UserHelpers.getCurrentUser());
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             selected.setClaimedTime(timestamp);
         }
-
         SanitationTable.editSanitationRequest(selected);
-
         updateClaimBtn();
-
         updateAllBTNS();
-
         tblData.refresh();
-
     }
 
     public void markDone(){
@@ -189,9 +166,7 @@ public class CustodianMapController extends MapController {
         }
         SanitationTable.editSanitationRequest(selected);
         tblData.refresh();
-
         updateAllBTNS();
-
         updateMarkDoneBtn();
     }
 

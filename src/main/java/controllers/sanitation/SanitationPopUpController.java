@@ -2,10 +2,12 @@
  * @brief Controller for submitting sanitation requests.
  */
 
-package controllers;
+package controllers.sanitation;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
+import controllers.PopUpController;
+import controllers.ScreenController;
 import database.Database;
 import database.SanitationTable;
 import helpers.UserHelpers;
@@ -18,7 +20,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class SanitationController extends PopUpController {
+public class SanitationPopUpController extends PopUpController {
 
     public JFXComboBox cmbPriority;
     public JFXTextField txtDescription;

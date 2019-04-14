@@ -1,8 +1,10 @@
-package controllers;
+package controllers.maps;
 
 import com.jfoenix.controls.JFXButton;
+import controllers.ScreenController;
 import helpers.Constants;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.input.ZoomEvent;
@@ -13,7 +15,7 @@ import models.map.Map;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public abstract class MapController implements Initializable {
+public abstract class MapController1 implements Initializable {
     public JFXButton btnReturn;
     public  AnchorPane panFloor3;
     public  AnchorPane panFloor2;
@@ -21,6 +23,7 @@ public abstract class MapController implements Initializable {
     public AnchorPane panFloorG;
     public  AnchorPane panFloorL1;
     public  AnchorPane panFloorL2;
+    public ScrollPane TextPane;
     protected AnchorPane[] panes;
     protected double sceneX, sceneY;
     protected double translateX, translateY;
@@ -109,7 +112,7 @@ public abstract class MapController implements Initializable {
     }
 
     public static void setTempStart(String tempStart) {
-        MapController.tempStart = tempStart;
+        MapController1.tempStart = tempStart;
     }
 
     public void setMap(Map map) {

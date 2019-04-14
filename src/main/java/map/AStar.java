@@ -18,19 +18,17 @@ public class AStar extends PathFinder {
 
         // Create priority queue and hashmaps
         PriorityQueue<SubPath> inQueue = new PriorityQueue<>();
-        HashMap<String, SubPath> parent = new HashMap<>();
         HashMap<String, SubPath> used = new HashMap<>();
 
         // Initialize values
         SubPath sNeigh = new SubPath("", start, 0.0);
         inQueue.add(sNeigh);
-        parent.put(start.getNodeID(), null);
 
         // Loop while queue isn't empty or end map is found
         while (!inQueue.isEmpty()) {
             // Poll next neighbor off the queue and get its map
-            SubPath nNext = inQueue.poll();
-            Location lNext = nNext.getLocation();
+            SubPath sNext = inQueue.poll();
+            Location lNext = sNext.getLocation();
             if (used.containsKey(lNext.getNodeID())) {
                 continue;
             }
@@ -38,13 +36,13 @@ public class AStar extends PathFinder {
             // Check to see if map is our end map
             if (lNext.getNodeID().equals(end.getNodeID())) {
                 // Generate path from parent map and end node
-                path = genPath(parent, nNext);
+                path = genPath(sNext);
                 break;
             }
 
             // Get the node's value and add it to the used map
-            double currDist = nNext.getDist();
-            used.put(lNext.getNodeID(), nNext);
+            double currDist = sNext.getDist();
+            used.put(lNext.getNodeID(), sNext);
 
             // Gets the node's neighbors and loop thru them all
             List<SubPath> lstSubPaths = lNext.getSubPaths();
@@ -63,7 +61,7 @@ public class AStar extends PathFinder {
                     SubPath newNeigh = new SubPath(nCurr.getEdgeID(), nCurr.getLocation(), newDist, heuristic);
                     // Add the new neighbor into the queue and add its parent into the parent map
                     inQueue.add(newNeigh);
-                    parent.putIfAbsent(lCurr.getNodeID(), nNext);
+                    newNeigh.setParent(sNext);
                 }
             }
         }
