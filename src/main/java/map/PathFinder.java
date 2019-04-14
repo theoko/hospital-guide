@@ -1,21 +1,18 @@
 package map;
 
 import controllers.maps.MapController;
-import controllers.maps.UserMapController;
-import controllers.maps.MapController1;
 import controllers.SettingsController;
 import helpers.Constants;
 import helpers.MapHelpers;
+import images.SnapshotGenerator;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -23,7 +20,6 @@ import javafx.scene.shape.*;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 import messaging.EmailMessenger;
-import messaging.TextMessenger;
 import models.map.Location;
 import models.map.Map;
 import models.map.SubPath;
@@ -179,18 +175,21 @@ public abstract class PathFinder {
         Stack<Location> path = context.findPath(start, end);
         String directions = context.txtDirections((Stack<Location>) path.clone());
         addDirections(mc.txtPane, directions);
-        try {
-            TextMessenger tm = new TextMessenger();
-            tm.declareMessage(directions);
-            tm.declareRecipient("+17743070422");
-            tm.sendMessage();
-        } catch(Exception e) {
-            System.out.println("Failed message");
-        }
+//        try {
+//            TextMessenger tm = new TextMessenger();
+//            tm.declareMessage(directions);
+//            tm.declareRecipient("+17743070422");
+//            tm.sendMessage();
+//        } catch(Exception e) {
+//            System.out.println("Failed message");
+//        }
+        SnapshotGenerator sg = new SnapshotGenerator(mc);
+//        sg.generateImages(path);
 
         EmailMessenger em = new EmailMessenger();
-        em.setRecipient("1johnfairfax1@gmail.com");
+        em.setRecipient("@gmail.com");
         em.setMessageText(directions);
+        em.setImageFiles(sg.generateImages(path));
         em.sendMessage();
 
         HashMap<String, Location> lstLocations = map.getAllLocations();
