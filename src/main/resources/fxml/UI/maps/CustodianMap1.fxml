@@ -26,7 +26,7 @@
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.ScrollPane?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0"
-            prefWidth="1200.0" stylesheets="@../css/colorScheme.css" xmlns="http://javafx.com/javafx/8.0.171"
+            prefWidth="1200.0" stylesheets="@../../../css/colorScheme.css" xmlns="http://javafx.com/javafx/8.0.171"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.maps.CustodianMapController">
     <children>
         <JFXTabPane fx:id="tabMenu" prefHeight="700.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0"
@@ -60,7 +60,7 @@
                                                                            layoutX="1000.0" layoutY="-350.0"
                                                                            pickOnBounds="true" preserveRatio="true">
                                                                     <image>
-                                                                        <Image url="@../images/Original/03_thethirdfloor.png"/>
+                                                                        <Image url="@../../../images/Original/03_thethirdfloor.png"/>
                                                                     </image>
                                                                 </ImageView>
                                                             </children>
@@ -85,7 +85,7 @@
                                                                            layoutX="1000.0" layoutY="-350.0"
                                                                            pickOnBounds="true" preserveRatio="true">
                                                                     <image>
-                                                                        <Image url="@../images/Original/02_thesecondfloor.png"/>
+                                                                        <Image url="@../../../images/Original/02_thesecondfloor.png"/>
                                                                     </image>
                                                                 </ImageView>
                                                             </children>
@@ -110,7 +110,7 @@
                                                                        layoutY="-350.0" pickOnBounds="true"
                                                                        preserveRatio="true">
                                                                 <image>
-                                                                    <Image url="@../images/Original/01_thefirstfloor.png"/>
+                                                                    <Image url="@../../../images/Original/01_thefirstfloor.png"/>
                                                                 </image>
                                                             </ImageView>
                                                         </AnchorPane>
@@ -126,7 +126,7 @@
                                                             <children>
                                                                 <ImageView fitHeight="1620.0" fitWidth="2581.0" layoutX="1000.0" layoutY="-350.0" pickOnBounds="true" preserveRatio="true">
                                                                     <image>
-                                                                        <Image url="@../images/Original/00_thegroundfloor.png" />
+                                                                        <Image url="@../../../images/Original/00_thegroundfloor.png" />
                                                                     </image>
                                                                 </ImageView>
                                                             </children>
@@ -149,7 +149,7 @@
                                                                        layoutY="-350.0" pickOnBounds="true"
                                                                        preserveRatio="true">
                                                                 <image>
-                                                                    <Image url="@../images/Original/00_thelowerlevel1.png"/>
+                                                                    <Image url="@../../../images/Original/00_thelowerlevel1.png"/>
                                                                 </image>
                                                             </ImageView>
                                                         </AnchorPane>
@@ -173,7 +173,7 @@
                                                                        layoutY="-350.0" pickOnBounds="true"
                                                                        preserveRatio="true">
                                                                 <image>
-                                                                    <Image url="@../images/Original/00_thelowerlevel2.png"/>
+                                                                    <Image url="@../../../images/Original/00_thelowerlevel2.png"/>
                                                                 </image>
                                                             </ImageView>
                                                         </AnchorPane>

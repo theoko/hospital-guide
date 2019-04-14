@@ -9,8 +9,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane stylesheets="@../css/colorScheme.css" xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml" fx:controller="controllers.maps.AdminMapController">
+<AnchorPane stylesheets="@../../../css/colorScheme.css" xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml" fx:controller="controllers.maps.EmployeeMapController">
     <JFXTabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0"
                 AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <Tab text="PathFinder">
@@ -60,10 +60,10 @@
                     <VBox alignment="CENTER" spacing="10.0"
                           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                           AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                        <Label text="Welcome Admin!" textAlignment="CENTER" textFill="#022D5A"
+                        <Label text="Welcome Employee!" textAlignment="CENTER" textFill="#022D5A"
                                AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                             <font>
-                                <Font name="Moon Bold" size="24.0"/>
+                                <Font name="Moon Bold" size="22.0"/>
                             </font>
                         </Label>
                         <JFXButton fx:id="btnReturn" buttonType="RAISED"
@@ -71,19 +71,24 @@
                                    prefWidth="150.0" text="Logout"/>
                     </VBox>
                 </AnchorPane>
+                <TitledPane fx:id="tilDirections" alignment="CENTER" expanded="false" text="Text Directions"
+                            prefWidth="225.0" prefHeight="0.0"
+                            AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="165.0">
+                    <font>
+                        <Font size="18.0"/>
+                    </font>
+                    <ScrollPane fx:id="txtPane"/>
+                </TitledPane>
             </AnchorPane>
         </Tab>
-        <Tab style="-fx-background-color: #022D5A;" text="Workspace Booking">
-            <fx:include source="../fxml/UI/booking/RoomBookingWindow.fxml" />
+        <Tab style="-fx-background-color: #022D5A;" text="Room Booking">
+            <fx:include source="../booking/RoomBookingWindow.fxml" />
         </Tab>
-        <Tab style="-fx-background-color: #022D5A;" text="User Dashboard">
-            <fx:include source="../fxml/UI/user/CreateUser.fxml" />
+        <Tab style="-fx-background-color: #022D5A;" text="Workspaces">
+            <fx:include source="../booking/Workspace.fxml" />
         </Tab>
-        <Tab style="-fx-background-color: #022D5A;" text="Settings">
-            <fx:include source="../fxml/UI/settings/SettingsScreen.fxml" />
-        </Tab>
-        <Tab style="-fx-background-color: #022D5A;" text="Sanitation Requests">
-            <fx:include source="../fxml/UI/sanitation/AdminSanitation.fxml"/>
+        <Tab style="-fx-background-color: #022D5A;" text="Requests">
+            <fx:include source="../requests/Requests.fxml" />
         </Tab>
     </JFXTabPane>
 </AnchorPane>

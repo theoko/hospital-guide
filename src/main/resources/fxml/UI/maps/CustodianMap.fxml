@@ -9,7 +9,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane stylesheets="@../css/colorScheme.css" xmlns="http://javafx.com/javafx"
+<AnchorPane stylesheets="@../../../css/colorScheme.css" xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml" fx:controller="controllers.maps.CustodianMapController">
     <JFXTabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0"
                 AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -82,7 +82,7 @@
             </AnchorPane>
         </Tab>
         <Tab style="-fx-background-color: #022D5A;" text="Sanitation Requests">
-            <fx:include source="../fxml/UI/sanitation/SanitationTable.fxml"/>
+            <fx:include source="../sanitation/SanitationTable.fxml"/>
         </Tab>
     </JFXTabPane>
 </AnchorPane>

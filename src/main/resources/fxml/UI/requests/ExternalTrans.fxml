@@ -16,9 +16,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #fffff;" stylesheets="@../css/colorScheme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.requests.ExternalTransController">
+<AnchorPane prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #fffff;" stylesheets="@../../../css/colorScheme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.requests.ExternalTransController">
     <children>
-        <Label alignment="CENTER" layoutY="-3.0" maxWidth="1.7976931348623157E308" prefHeight="65.0" prefWidth="1201.0" style="-fx-background-color: #022D5A;" stylesheets="@../css/colorScheme.css" text="External Transportation Request" textAlignment="CENTER" textFill="WHITE">
+        <Label alignment="CENTER" layoutY="-3.0" maxWidth="1.7976931348623157E308" prefHeight="65.0" prefWidth="1201.0" style="-fx-background-color: #022D5A;" stylesheets="@../../../css/colorScheme.css" text="External Transportation Request" textAlignment="CENTER" textFill="WHITE">
             <font>
                 <Font size="31.0" />
             </font>

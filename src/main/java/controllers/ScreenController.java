@@ -47,17 +47,17 @@ public class ScreenController {
         // Initialize screen controller to switch between different scenes
         this.addScreen(Constants.Routes.LOGO, "/fxml/UI/welcome/Logo.fxml");
         this.addScreen(Constants.Routes.WELCOME, "/fxml/UI/welcome/Welcome.fxml");
-        this.addScreen(Constants.Routes.USER_MAP, "/maps/UserMap.fxml");
+        this.addScreen(Constants.Routes.USER_MAP, "/fxml/UI/maps/UserMap.fxml");
         this.addScreen(Constants.Routes.LOGIN, "/fxml/UI/auth/Login.fxml");
-        this.addScreen(Constants.Routes.ADMIN_MAP, "/maps/AdminMap.fxml");
+        this.addScreen(Constants.Routes.ADMIN_MAP, "/fxml/UI/maps/AdminMap.fxml");
         this.addScreen(Constants.Routes.EDIT_LOCATION, "/fxml/UI/node/EditLocation.fxml");
         this.addScreen(Constants.Routes.DOWNLOAD, "/fxml/UI/download/Download.fxml");
         this.addScreen(Constants.Routes.DOWNLOADED, "/fxml/UI/download/Downloaded.fxml");
         this.addScreen(Constants.Routes.USER_INFO, "/fxml/UI/user/UserInfo.fxml");
         this.addScreen(Constants.Routes.EMPLOYEE_INFO, "/fxml/UI/employee/EmployeeInfo.fxml");
-        this.addScreen(Constants.Routes.EMPLOYEE_MAP, "/maps/EmployeeMap.fxml");
+        this.addScreen(Constants.Routes.EMPLOYEE_MAP, "/fxml/UI/maps/EmployeeMap.fxml");
         this.addScreen(Constants.Routes.SANITATION_REQUEST, "/fxml/UI/sanitation/SanitationRequest.fxml");
-        this.addScreen(Constants.Routes.CUSTODIAN_MAP, "/maps/CustodianMap.fxml");
+        this.addScreen(Constants.Routes.CUSTODIAN_MAP, "/fxml/UI/maps/CustodianMap.fxml");
         this.addScreen(Constants.Routes.CUSTODIAN_INFO, "/fxml/UI/custodian/CustodianInfo.fxml");
         this.addScreen(Constants.Routes.BOOKING_WINDOW, "/fxml/UI/booking/RoomBookingWindow.fxml");
         this.addScreen(Constants.Routes.CREATE_USER, "/fxml/UI/user/CreateUser.fxml");
@@ -65,17 +65,17 @@ public class ScreenController {
         this.addScreen(Constants.Routes.EDIT_POPUP, "/fxml/UI/user/EditUserPopUp.fxml");
         this.addScreen(Constants.Routes.WORKSPACE, "/fxml/UI/booking/Workspace.fxml");
         this.addScreen(Constants.Routes.WORKSPACE_POPUP, "/fxml/UI/booking/WorkspacePopUp.fxml");
-        this.addScreen(Constants.Routes.REQUESTS, "/requests/Requests.fxml");
-        this.addScreen(Constants.Routes.IT, "/requests/ITServiceRequest.fxml");
-        this.addScreen(Constants.Routes.PERSCRIPTION, "/requests/Prescription.fxml");
-        this.addScreen(Constants.Routes.INTERPRETER, "/requests/Interpreter.fxml");
-        this.addScreen(Constants.Routes.INTERNAL_TRANS, "/requests/InternalTrans.fxml");
-        this.addScreen(Constants.Routes.GIFT_STORE, "/requests/GiftStore.fxml");
-        this.addScreen(Constants.Routes.FLOURIST, "/requests/Flourist.fxml");
-        this.addScreen(Constants.Routes.SECURITY, "/requests/Security.fxml");
-        this.addScreen(Constants.Routes.VISUAL_AUDIO, "/requests/VisualAudio.fxml");
-        this.addScreen(Constants.Routes.EXTERNAL_TRANS, "/requests/ExternalTrans.fxml");
-        this.addScreen(Constants.Routes.PATIENT_INFO, "/requests/PatientInfo.fxml");
+        this.addScreen(Constants.Routes.REQUESTS, "/fxml/UI/requests/Requests.fxml");
+        this.addScreen(Constants.Routes.IT, "/fxml/UI/requests/ITServiceRequest.fxml");
+        this.addScreen(Constants.Routes.PERSCRIPTION, "/fxml/UI/requests/Prescription.fxml");
+        this.addScreen(Constants.Routes.INTERPRETER, "/fxml/UI/requests/Interpreter.fxml");
+        this.addScreen(Constants.Routes.INTERNAL_TRANS, "/fxml/UI/requests/InternalTrans.fxml");
+        this.addScreen(Constants.Routes.GIFT_STORE, "/fxml/UI/requests/GiftStore.fxml");
+        this.addScreen(Constants.Routes.FLOURIST, "/fxml/UI/requests/Flourist.fxml");
+        this.addScreen(Constants.Routes.SECURITY, "/fxml/UI/requests/Security.fxml");
+        this.addScreen(Constants.Routes.VISUAL_AUDIO, "/fxml/UI/requests/VisualAudio.fxml");
+        this.addScreen(Constants.Routes.EXTERNAL_TRANS, "/fxml/UI/requests/ExternalTrans.fxml");
+        this.addScreen(Constants.Routes.PATIENT_INFO, "/fxml/UI/requests/PatientInfo.fxml");
     }
 
     public void addScreen(Constants.Routes route, String layout) {

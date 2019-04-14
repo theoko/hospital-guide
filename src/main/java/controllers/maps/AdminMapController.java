@@ -2,6 +2,7 @@ package controllers.maps;
 
 import controllers.ScreenController;
 import helpers.Constants;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import map.MapDisplay;
 import models.map.Location;
@@ -10,6 +11,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AdminMapController extends MapController {
+
+    public static Label welcomeMessage;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -65,5 +68,10 @@ public class AdminMapController extends MapController {
 
     public static void locationSelectEvent(Location loc) {
     }
+
+    public static void controlWelcomeMessage(boolean condition) {
+        welcomeMessage.setVisible(false);
+    }
+
 }
 

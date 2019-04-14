@@ -9,8 +9,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane stylesheets="@../css/colorScheme.css" xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml" fx:controller="controllers.maps.EmployeeMapController">
+<AnchorPane stylesheets="@../../../css/colorScheme.css" xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml" fx:controller="controllers.maps.AdminMapController">
     <JFXTabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0"
                 AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <Tab text="PathFinder">
@@ -54,41 +54,40 @@
                 </VBox>
 
                 <!--Top right settings-->
-                <AnchorPane prefHeight="135.0" prefWidth="225.0"
+                <AnchorPane prefHeight="155.0" prefWidth="225.0"
                             style="-fx-background-color: #ffffff; -fx-background-radius: 10 10 10 10; -fx-border-width: 2px 2px 2px 2px; -fx-border-color: #022D5A; -fx-border-radius: 10;"
                             AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
                     <VBox alignment="CENTER" spacing="10.0"
                           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                           AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                        <Label text="Welcome Employee!" textAlignment="CENTER" textFill="#022D5A"
+                        <Label fx:id="welcomeMessage" text="Welcome Admin!" textAlignment="CENTER" textFill="#022D5A"
                                AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                             <font>
-                                <Font name="Moon Bold" size="22.0"/>
+                                <Font name="Moon Bold" size="24.0"/>
                             </font>
                         </Label>
+
+                        <!-- Search -->
+                        <fx:include source="../search/Search.fxml" />
+
                         <JFXButton fx:id="btnReturn" buttonType="RAISED"
                                    onMouseClicked="#btnReturn_Click" prefHeight="50.0"
                                    prefWidth="150.0" text="Logout"/>
                     </VBox>
                 </AnchorPane>
-                <TitledPane fx:id="tilDirections" alignment="CENTER" expanded="false" text="Text Directions"
-                            prefWidth="225.0" prefHeight="0.0"
-                            AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="165.0">
-                    <font>
-                        <Font size="18.0"/>
-                    </font>
-                    <ScrollPane fx:id="txtPane"/>
-                </TitledPane>
             </AnchorPane>
         </Tab>
-        <Tab style="-fx-background-color: #022D5A;" text="Room Booking">
-            <fx:include source="../fxml/UI/booking/RoomBookingWindow.fxml" />
+        <Tab style="-fx-background-color: #022D5A;" text="Workspace Booking">
+            <fx:include source="../booking/RoomBookingWindow.fxml" />
         </Tab>
-        <Tab style="-fx-background-color: #022D5A;" text="Workspaces">
-            <fx:include source="../fxml/UI/booking/Workspace.fxml" />
+        <Tab style="-fx-background-color: #022D5A;" text="User Dashboard">
+            <fx:include source="../user/CreateUser.fxml" />
         </Tab>
-        <Tab style="-fx-background-color: #022D5A;" text="Requests">
-            <fx:include source="../requests/Requests.fxml" />
+        <Tab style="-fx-background-color: #022D5A;" text="Settings">
+            <fx:include source="../settings/SettingsScreen.fxml" />
+        </Tab>
+        <Tab style="-fx-background-color: #022D5A;" text="Sanitation Requests">
+            <fx:include source="../sanitation/AdminSanitation.fxml"/>
         </Tab>
     </JFXTabPane>
 </AnchorPane>
