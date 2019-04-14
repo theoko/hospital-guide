@@ -1,9 +1,10 @@
-package controllers;
+package controllers.maps;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXToggleButton;
-import database.Database;
+import controllers.ScreenController;
+import controllers.VisualRealtimeController;
 import database.EdgeTable;
 import database.SanitationTable;
 import helpers.Constants;
@@ -12,31 +13,27 @@ import helpers.UIHelpers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import map.MapDisplay;
 import models.map.Edge;
 import models.map.Location;
 import models.sanitation.SanitationRequest;
-
 import models.search.SearchEngine;
 
 import java.awt.*;
-import java.util.List;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
-public class AdminMapController extends MapController {
+public class AdminMapController1 extends MapController1 {
     public JFXButton btnDownload;
     public JFXButton btnBooking;
     @FXML
@@ -153,7 +150,7 @@ public class AdminMapController extends MapController {
         initSanitation();
         updateSanitation();
 
-        MapDisplay.displayAdmin(panes);
+        //MapDisplay.displayAdmin(panes);
         configVisualRealtimeController();
         VisualRealtimeController.setPanMap(panFloor1);
         selectedLocation = null;

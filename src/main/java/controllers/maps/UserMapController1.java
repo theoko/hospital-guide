@@ -1,19 +1,19 @@
-package controllers;
+package controllers.maps;
 
+import controllers.ScreenController;
+import controllers.maps.MapController1;
 import helpers.Constants;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
-import map.MapDisplay;
 import map.PathFinder;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class UserMapController extends MapController {
+public class UserMapController1 extends MapController1 {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
-        MapDisplay.displayUser(panes, TextPane);
+        //MapDisplay.displayUser(panes, TextPane);
     }
 
     @Override

@@ -16,7 +16,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.geometry.Insets?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" stylesheets="@css/colorScheme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminMapController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" stylesheets="@../css/colorScheme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.maps.AdminMapController">
     <children>
         <JFXTabPane prefHeight="700.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <tabs>
@@ -34,7 +34,7 @@
                                                             <children>
                                                                 <ImageView fitHeight="1620.0" fitWidth="2581.0" layoutX="1000.0" layoutY="-350.0" pickOnBounds="true" preserveRatio="true">
                                                                     <image>
-                                                                        <Image url="@images/Original/03_thethirdfloor.png" />
+                                                                        <Image url="@../images/Original/03_thethirdfloor.png" />
                                                                     </image>
                                                                 </ImageView>
                                                             </children>
@@ -50,7 +50,7 @@
                                                             <children>
                                                                 <ImageView fitHeight="1620.0" fitWidth="2581.0" layoutX="1000.0" layoutY="-350.0" pickOnBounds="true" preserveRatio="true">
                                                                     <image>
-                                                                        <Image url="@images/Original/02_thesecondfloor.png" />
+                                                                        <Image url="@../images/Original/02_thesecondfloor.png" />
                                                                     </image>
                                                                 </ImageView>
                                                             </children>
@@ -64,7 +64,7 @@
                                                         <AnchorPane fx:id="panFloor1" onMouseDragged="#floorOneMapOnMouseDragged" onMousePressed="#floorOneMapOnMousePressed" onScroll="#floorOneMapScroll" onZoom="#floorOneMapZoom" onZoomFinished="#floorOneMapZoomDone" prefHeight="896.0" prefWidth="1115.0">
                                                             <ImageView blendMode="MULTIPLY" fitHeight="1620.0" fitWidth="2581.0" layoutX="1000.0" layoutY="-350.0" pickOnBounds="true" preserveRatio="true">
                                                                 <image>
-                                                                    <Image url="@images/Original/01_thefirstfloor.png" />
+                                                                    <Image url="@../images/Original/01_thefirstfloor.png" />
                                                                 </image>
                                                             </ImageView>
                                                         </AnchorPane>
@@ -80,7 +80,7 @@
                                                             <children>
                                                                 <ImageView fitHeight="1620.0" fitWidth="2581.0" layoutX="1000.0" layoutY="-350.0" pickOnBounds="true" preserveRatio="true">
                                                                     <image>
-                                                                        <Image url="@images/Original/00_thegroundfloor.png" />
+                                                                        <Image url="@../images/Original/00_thegroundfloor.png" />
                                                                     </image>
                                                                 </ImageView>
                                                             </children>
@@ -94,7 +94,7 @@
                                                         <AnchorPane fx:id="panFloorL1" onMouseDragged="#floorOneMapOnMouseDragged" onMousePressed="#floorL1MapOnMousePressed" onScroll="#floorOneMapScroll" onZoom="#floorOneMapZoom" onZoomFinished="#floorOneMapZoomDone" prefHeight="896.0" prefWidth="1115.0">
                                                             <ImageView blendMode="MULTIPLY" fitHeight="1620.0" fitWidth="2581.0" layoutX="1000.0" layoutY="-350.0" pickOnBounds="true" preserveRatio="true">
                                                                 <image>
-                                                                    <Image url="@images/Original/00_thelowerlevel1.png" />
+                                                                    <Image url="@../images/Original/00_thelowerlevel1.png" />
                                                                 </image>
                                                             </ImageView>
                                                         </AnchorPane>
@@ -109,7 +109,7 @@
                                                         <AnchorPane fx:id="panFloorL2" onMouseDragged="#floorOneMapOnMouseDragged" onMousePressed="#floorL2MapOnMousePressed" onScroll="#floorOneMapScroll" onZoom="#floorOneMapZoom" onZoomFinished="#floorOneMapZoomDone" prefHeight="896.0" prefWidth="1115.0">
                                                             <ImageView blendMode="MULTIPLY" fitHeight="1620.0" fitWidth="2581.0" layoutX="1000.0" layoutY="-350.0" pickOnBounds="true" preserveRatio="true">
                                                                 <image>
-                                                                    <Image url="@images/Original/00_thelowerlevel2.png" />
+                                                                    <Image url="@../images/Original/00_thelowerlevel2.png" />
                                                                 </image>
                                                             </ImageView>
                                                         </AnchorPane>
@@ -147,13 +147,13 @@
                     </AnchorPane>
                 </Tab>
                 <Tab style="-fx-background-color: #022D5A;" text="Workspace Booking">
-                    <fx:include source="RoomBookingWindow.fxml" />
+                    <fx:include source="../RoomBookingWindow.fxml" />
                 </Tab>
                 <Tab style="-fx-background-color: #022D5A;" text="User Dashboard">
-                    <fx:include source="CreateUser.fxml" />
+                    <fx:include source="../CreateUser.fxml" />
                 </Tab>
                 <Tab style="-fx-background-color: #022D5A;" text="Settings">
-                    <fx:include source="SettingsScreen.fxml" />
+                    <fx:include source="../SettingsScreen.fxml" />
                 </Tab>
 
                 <Tab style="-fx-background-color: #022D5A;" text="Sanitation Requests">

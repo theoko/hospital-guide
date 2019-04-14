@@ -1,6 +1,8 @@
 package map;
 
-import controllers.MapController;
+import controllers.maps.MapController;
+import controllers.maps.UserMapController;
+import controllers.maps.MapController1;
 import controllers.SettingsController;
 import helpers.Constants;
 import helpers.MapHelpers;
@@ -13,37 +15,32 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.StrokeLineCap;
-import javafx.scene.shape.StrokeLineJoin;
+import javafx.scene.shape.*;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
+import messaging.EmailMessenger;
+import messaging.TextMessenger;
 import models.map.Location;
 import models.map.Map;
 import models.map.SubPath;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 public abstract class PathFinder {
 
     protected final double FLOOR_HEURISTIC = 100000;
     protected final double STRAIGHT_ANGLE = 90.0;
     protected final double TURN_SENSITIVITY = 45.0;
-    protected final double PIXEL_TO_METERS = 0.03;
+    protected final double PIXEL_TO_METERS = 0.08;
     private static double LINE_WIDTH = 3.5;
     private static double LINE_LENGTH = 5.0;
     private static double LINE_GAP = 10.0;
     private static double SPEED = 1.4;
-    private static double FLOOR_TIME = 0.5;
+    private static double FLOOR_TIME = 30;
 
     public static String defLocation;
 
@@ -58,11 +55,10 @@ public abstract class PathFinder {
 
     /**
      * Generates a path from the given parent map and end map
-     * @param parent Hashmap of each node's parent
      * @param end The end map
      * @return A stack of locations containing the path
      */
-    protected final Stack<Location> genPath(HashMap<String, SubPath> parent, SubPath end) {
+    protected final Stack<Location> genPath(SubPath end) {
         // Create an empty stack of locations
         Stack<Location> path = new Stack<>();
         // Start at the last node (end)
@@ -71,7 +67,7 @@ public abstract class PathFinder {
         while (prev != null) {
             path.push(prev.getLocation());
             // prev := prev -> parent
-            prev = parent.get(prev.getLocation().getNodeID());
+            prev = prev.getParent();
         }
         return path;
     }
@@ -177,84 +173,93 @@ public abstract class PathFinder {
         return directions;
     }
 
-    public static void printPath(AnchorPane[] panes, ScrollPane TextPane, Map map, Location loc1, Location loc2) {
-        for (AnchorPane pane : panes) {
-            List<Node> lstNodes1 = new ArrayList<>();
-            for (Node n : pane.getChildren()) {
-                if (n instanceof Line) {
-                    lstNodes1.add(n);
-                } else if (n instanceof Circle) {
-                    Circle circle = (Circle) n;
-                    if (circle.getFill().equals(MapDisplay.nodeEnd)) {
-                        circle.setFill(MapDisplay.nodeFill);
-                    }
-                    if (circle.getId().equals(loc2.getNodeID())) {
-                        circle.setFill(MapDisplay.nodeEnd);
-                    }
-                }
-            }
-            for (Node n : lstNodes1) {
-                pane.getChildren().remove(n);
-            }
+    public static void printPath(MapController mc, Map map, Location start, Location end) {
+        mc.clearPath(end);
+        PathContext context = SettingsController.getAlgType();
+        Stack<Location> path = context.findPath(start, end);
+        String directions = context.txtDirections((Stack<Location>) path.clone());
+        addDirections(mc.txtPane, directions);
+        try {
+            TextMessenger tm = new TextMessenger();
+            tm.declareMessage(directions);
+            tm.declareRecipient("+17743070422");
+            tm.sendMessage();
+        } catch(Exception e) {
+            System.out.println("Failed message");
         }
 
-        PathContext context = SettingsController.getAlgType();
-        Stack<Location> path = context.findPath(loc1, loc2);
-        String directions = context.txtDirections((Stack<Location>) path.clone());
-        addDirections(TextPane, directions);
-        HashMap<String, Location> lstLocations = map.getAllLocations();
-        Location prev = null;
-        while (!path.isEmpty()) {
-            Location curr = path.pop();
-            if (prev != null) {
-                Line line = new Line(MapDisplay.scaleX(prev.getxCord()), MapDisplay.scaleY(prev.getyCord()), MapDisplay.scaleX(curr.getxCord()), MapDisplay.scaleY(curr.getyCord()));
-                line.setStroke(Color.BLACK);
-                line.getStrokeDashArray().setAll(LINE_LENGTH, LINE_GAP);
-                line.setStrokeWidth(LINE_WIDTH);
-                line.setStrokeLineCap(StrokeLineCap.ROUND);
-                line.setStrokeLineJoin(StrokeLineJoin.ROUND);
-                final double maxOffset =
-                        line.getStrokeDashArray().stream()
-                                .reduce(
-                                        0d,
-                                        (a, b) -> a - b
-                                );
+        EmailMessenger em = new EmailMessenger();
+        em.setRecipient("1johnfairfax1@gmail.com");
+        em.setMessageText(directions);
+        em.sendMessage();
 
-                Timeline timeline = new Timeline(
-                        new KeyFrame(
-                                Duration.ZERO,
-                                new KeyValue(
-                                        line.strokeDashOffsetProperty(),
-                                        0,
-                                        Interpolator.LINEAR
-                                )
-                        ),
-                        new KeyFrame(
-                                Duration.seconds(3),
-                                new KeyValue(
-                                        line.strokeDashOffsetProperty(),
-                                        maxOffset,
-                                        Interpolator.LINEAR
-                                )
-                        )
-                );
-                timeline.setCycleCount(Timeline.INDEFINITE);
-                timeline.play();
-                if (curr.getFloor().equals("L2") && prev.getFloor().equals("L2")) {
-                    panes[0].getChildren().add(1, line);
-                } else if (curr.getFloor().equals("L1") && prev.getFloor().equals("L1")) {
-                    panes[1].getChildren().add(1, line);
-                } else if (curr.getFloor().equals("G") && prev.getFloor().equals("G")) {
-                    panes[2].getChildren().add(1, line);
-                } else if (curr.getFloor().equals("1") && prev.getFloor().equals("1")) {
-                    panes[3].getChildren().add(1, line);
-                } else if (curr.getFloor().equals("2") && prev.getFloor().equals("2")) {
-                    panes[4].getChildren().add(1, line);
-                } else {
-                    panes[5].getChildren().add(1, line);
-                }
+        HashMap<String, Location> lstLocations = map.getAllLocations();
+
+        Path line = null;
+        String currFloor = "";
+        Location curr;
+        while (!path.isEmpty()) {
+            curr = path.pop();
+            if (line == null) {
+                line = new Path();
+                line.getElements().add(new MoveTo(curr.getxCord(), curr.getyCord()));
+                currFloor = curr.getFloor();
+            } else if (!curr.getFloor().equals(currFloor)) {
+                animateLine(line);
+                mc.addLine(line, currFloor);
+                mc.panMap.getChildren().add(0, line);
+                line = new Path();
+                line.getElements().add(new MoveTo(curr.getxCord(), curr.getyCord()));
+                currFloor = curr.getFloor();
+            } else {
+                line.getElements().add(new LineTo(curr.getxCord(), curr.getyCord()));
             }
-            prev = curr;
+        }
+        animateLine(line);
+        mc.addLine(line, currFloor);
+        mc.displayPath(line);
+    }
+
+    private static void animateLine(Path line) {
+        line.setStroke(Color.BLACK);
+        line.getStrokeDashArray().setAll(LINE_LENGTH, LINE_GAP);
+        line.setStrokeWidth(LINE_WIDTH);
+        line.setStrokeLineCap(StrokeLineCap.ROUND);
+        line.setStrokeLineJoin(StrokeLineJoin.ROUND);
+        final double maxOffset =
+                line.getStrokeDashArray().stream()
+                        .reduce(
+                                0d,
+                                (a, b) -> a - b
+                        );
+
+        Timeline timeline = new Timeline(
+                new KeyFrame(
+                        Duration.ZERO,
+                        new KeyValue(
+                                line.strokeDashOffsetProperty(),
+                                0,
+                                Interpolator.LINEAR
+                        )
+                ),
+                new KeyFrame(
+                        Duration.seconds(3),
+                        new KeyValue(
+                                line.strokeDashOffsetProperty(),
+                                maxOffset,
+                                Interpolator.LINEAR
+                        )
+                )
+        );
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
+    }
+
+    public static Paint colorLine(boolean opac) {
+        if (opac) {
+            return Color.BLACK;
+        } else {
+            return new Color(0, 0, 0, 0.25);
         }
     }
 
@@ -281,7 +286,7 @@ public abstract class PathFinder {
 
     public abstract MapHelpers.Algorithm getAlg();
 
-    protected final int floorToInt(String floor) {
+    public static int floorToInt(String floor) {
         switch (floor) {
             case "L2":
                 return 0;
@@ -298,7 +303,7 @@ public abstract class PathFinder {
         }
     }
 
-    private static void addDirections(ScrollPane TextPane, String directions) {
+    private static void addDirections(ScrollPane txtPane, String directions) {
         VBox vbox = new VBox();
         vbox.setPadding(new Insets(10,4,10,4));
         vbox.setSpacing(5);
@@ -313,6 +318,7 @@ public abstract class PathFinder {
             lbl.setPadding(new Insets(5,4,4,5));
             vbox.getChildren().add(lbl);
         }
-        TextPane.setContent(vbox);
+        txtPane.setContent(vbox);
+        txtPane.setVisible(true);
     }
 }

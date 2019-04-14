@@ -1,7 +1,10 @@
 package controllers;
 
 import helpers.UIHelpers;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
+import javafx.scene.SnapshotParameters;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -46,6 +49,19 @@ public class VisualRealtimeController {
             UIHelpers.updateCircleForNodeType(c);
         }
         selectedLocations.clear();
+    }
+    public static WritableImage generateSnapshot(int[] boundaries, Location loc) {
+        return generateSnapshot(boundaries, loc.getFloor());
+    }
+    public static WritableImage generateSnapshot(int[] boundaries, String s) {
+        WritableImage wi;
+        wi = new WritableImage((int) panMap.getWidth(), (int) panMap.getHeight());
+        Rectangle2D viewPort = new Rectangle2D(boundaries[0], boundaries[2], boundaries[1]-boundaries[0],
+                boundaries[3]- boundaries[2]);
+
+//        wi = panMap.snapshot((new SnapshotParameters()).setViewport(viewPort));
+
+        return null;
     }
     public static void visuallyDeselectCircle(Location c) {
         setSelectedPane(c);
