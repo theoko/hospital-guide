@@ -20,9 +20,13 @@ import java.util.*;
 
 public class TransportationRequestController  {
 
-   public JFXComboBox cmbStartLoc;
-   public JFXComboBox cmbEndLoc;
-   public JFXTextField txtDetails;
+//   public JFXComboBox cmbStartLoc;
+//   public JFXComboBox cmbEndLoc;
+    public JFXTextField txtStartSearch;
+    public JFXTextField txtEndSearch;
+
+
+    public JFXTextField txtDetails;
    public JFXDatePicker datDate;
    public JFXTimePicker datTime;
 
@@ -59,8 +63,13 @@ public class TransportationRequestController  {
 //        initSanitation();
 //        updateSanitation();
 
+
+
         initTransportation();
         updateTransportation();
+
+
+
 
         //todo fix navigate btn disable
 
@@ -76,14 +85,14 @@ public class TransportationRequestController  {
             btnClaim.setDisable(true);
         }
 
-        cmbStartLoc.valueProperty().addListener(((observable, oldValue, newValue) -> {
-           // btnSendRequest.setDisable(false);
-            updateRequestBTNs();
-        }));
-        cmbStartLoc.valueProperty().addListener(((observable, oldValue, newValue) -> {
-           // btnSendRequest.setDisable(false);
-            updateRequestBTNs();
-        }));
+//        cmbStartLoc.valueProperty().addListener(((observable, oldValue, newValue) -> {
+//           // btnSendRequest.setDisable(false);
+//            updateRequestBTNs();
+//        }));
+//        cmbStartLoc.valueProperty().addListener(((observable, oldValue, newValue) -> {
+//           // btnSendRequest.setDisable(false);
+//            updateRequestBTNs();
+//        }));
 
     }
 
@@ -102,26 +111,30 @@ public class TransportationRequestController  {
         System.out.println("H");
         tblData.setItems(transports);
 
-        HashMap<String, Location> locations = LocationTable.getLocations();
+        //todo remove later once search works
 
-        LinkedList<String> locationNames = new LinkedList<>();
-        if(locations != null) {
-            Iterator it = locations.entrySet().iterator();
-            while (it.hasNext()) {
-                Map.Entry pair = (Map.Entry) it.next();
+//        HashMap<String, Location> locations = LocationTable.getLocations();
+//
+//        LinkedList<String> locationNames = new LinkedList<>();
+//        if(locations != null) {
+//            Iterator it = locations.entrySet().iterator();
+//            while (it.hasNext()) {
+//                Map.Entry pair = (Map.Entry) it.next();
+//
+//                Location location = (Location) pair.getValue();
+//
+//                locationNames.add(location.getLongName());
+//
+//                it.remove();
+//            }
+//        }
+//
+//        for(String name : locationNames) {
+//            cmbStartLoc.getItems().add(name);
+//            cmbEndLoc.getItems().add(name);
+//        }
 
-                Location location = (Location) pair.getValue();
-
-                locationNames.add(location.getLongName());
-
-                it.remove();
-            }
-        }
-
-        for(String name : locationNames) {
-            cmbStartLoc.getItems().add(name);
-            cmbEndLoc.getItems().add(name);
-        }
+        //todo end
     }
 
     private void updateTransportation() {
@@ -171,8 +184,11 @@ public class TransportationRequestController  {
 
     public void updateRequestBTNs(){
         // TODO replace with search engine...
-        boolean startLocEmpty = (cmbStartLoc.getValue() == null);
-        boolean endLocEmpty = (cmbEndLoc.getValue() == null);
+//        boolean startLocEmpty = (cmbStartLoc.getValue() == null);
+//        boolean endLocEmpty = (cmbEndLoc.getValue() == null);
+        boolean startLocEmpty=txtStartSearch.getText().equals("");
+        boolean endLocEmpty=txtEndSearch.getText().equals("");
+
         boolean detailsEmpty = txtDetails.getText().equals("");
         boolean dateEmpty = (datDate.getValue() == null);
         boolean timeEmpty = (datTime.getValue() == null);
@@ -253,11 +269,17 @@ public class TransportationRequestController  {
         // Get request data from UI fields
         String description = txtDetails.getText();
         //Location startLoc = (String) cmbStartLoc.getValue();
-        Location startLoc = LocationTable.getLocationByID((String) cmbStartLoc.getValue());
+        //Location startLoc = LocationTable.getLocationByID((String) cmbStartLoc.getValue());
+        //Location endLoc = LocationTable.getLocationByID((String) cmbEndLoc.getValue());
 
-        Location endLoc = LocationTable.getLocationByID((String) cmbEndLoc.getValue());
+        //todo get from search eng
 
-        // Send request to database
+
+        Location startLoc =LocationTable.getLocationByID(txtStartSearch.getText());
+        Location endLoc=LocationTable.getLocationByID(txtEndSearch.getText());
+
+
+                // Send request to database
         TransportationRequest request = new TransportationRequest(
                 startLoc,
                 endLoc,
