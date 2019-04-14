@@ -59,6 +59,8 @@ public class SearchEngineController {
 
                     focusOnNode(location);
 
+                    goBack(null);
+
                 } else {
                     // Display options if we match multiple nodes with same name
                     for(Location location : locations) {

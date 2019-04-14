@@ -18,115 +18,54 @@ public class SearchKeywords {
     // WordNet Database
     WordNetDatabase database = WordNetDatabase.getFileInstance();
 
-    // Categories:
+    // International
+    List<String> international = new ArrayList<>();
 
-    public List<String> getFood() {
-        return food;
-    }
+    /**
+     * NODES
+     */
 
-    public List<String> getDrinks() {
-        return drinks;
-    }
+    // Bathroom
+    List<String> bathroom = new ArrayList<>();
+    List<String> wc = new ArrayList<>();
 
-    public List<String> getCafe() {
-        return cafe;
-    }
+    // Conference rooms
+    List<String> conference = new ArrayList<>();
 
-    public List<String> getBeverage() {
-        return beverage;
-    }
+    // Departments
+    // Medical departments, clinics, waiting room areas
+    // Podiatrist
+    // Pediatrics
+    List<String> department = new ArrayList<>();
+    List<String> legDoctor = new ArrayList<>();
+    List<String> childDoctor = new ArrayList<>();
 
-    public List<String> getLab() {
-        return lab;
-    }
+    // Elevators
+    List<String> elevator = new ArrayList<>();
 
-    public List<String> getLaboratory() {
-        return laboratory;
-    }
+    // Exits
+    // Exit/entrance
+    List<String> exit = new ArrayList<>();
+    List<String> entrance = new ArrayList<>();
+    List<String> road = new ArrayList<>();
+    List<String> garage = new ArrayList<>();
+    List<String> parking = new ArrayList<>();
 
-    public List<String> getMri() {
-        return mri;
-    }
+    // Hall
+    // Hallway
+    List<String> hall = new ArrayList<>();
 
-    public List<String> getCatScan() {
-        return catScan;
-    }
+    // Info
+    // Information desks, security desks, lost and found
+    List<String> police = new ArrayList<>();
+    List<String> security = new ArrayList<>();
+    List<String> safety = new ArrayList<>();
+    List<String> info = new ArrayList<>();
+    List<String> information = new ArrayList<>();
+    List<String> service = new ArrayList<>();
 
-    public List<String> getCtScan() {
-        return ctScan;
-    }
-
-    public List<String> getLegDoctor() {
-        return legDoctor;
-    }
-
-    public List<String> getChildDoctor() {
-        return childDoctor;
-    }
-
-    public List<String> getPolice() {
-        return police;
-    }
-
-    public List<String> getSecurity() {
-        return security;
-    }
-
-    public List<String> getSafety() {
-        return safety;
-    }
-
-    public List<String> getGarage() {
-        return garage;
-    }
-
-    public List<String> getParking() {
-        return parking;
-    }
-
-    public List<String> getBathroom() {
-        return bathroom;
-    }
-
-    public List<String> getWc() {
-        return wc;
-    }
-
-    public List<String> getRestroom() {
-        return restroom;
-    }
-
-    public List<String> getAtm() {
-        return atm;
-    }
-
-    public List<String> getExit() {
-        return exit;
-    }
-
-    public List<String> getEntrance() {
-        return entrance;
-    }
-
-    public List<String> getInternational() {
-        return international;
-    }
-
-    public List<String> getConference() {
-        return conference;
-    }
-
-    // Food
-    // Drinks
-    // Cafe
-    // Beverage
-    List<String> food = new ArrayList<>();
-    List<String> drinks = new ArrayList<>();
-    List<String> cafe = new ArrayList<>();
-    List<String> beverage = new ArrayList<>();
-
-    // Lab
-    // Laboratory
+    // Labs
+    // Labs, imaging centers, and medical testing areas
     List<String> lab = new ArrayList<>();
     List<String> laboratory = new ArrayList<>();
 
@@ -138,41 +77,33 @@ public class SearchKeywords {
     List<String> catScan = new ArrayList<>();
     List<String> ctScan = new ArrayList<>();
 
-    // Podiatrist
-    // Pediatrics
-    List<String> legDoctor = new ArrayList<>();
-    List<String> childDoctor = new ArrayList<>();
-
-    // Police
-    // Police alternative
-    List<String> police = new ArrayList<>();
-    List<String> security = new ArrayList<>();
-    List<String> safety = new ArrayList<>();
-
-    // Garage
-    // Garage alternative (parking)
-    List<String> garage = new ArrayList<>();
-    List<String> parking = new ArrayList<>();
-
-    // Bathroom
-    List<String> bathroom = new ArrayList<>();
-    List<String> wc = new ArrayList<>();
+    // Restroom
     List<String> restroom = new ArrayList<>();
+
+    // Retl
+    // Shops, food, pay phone, areas that provide non-medical services for immediate payment
+    // Food
+    // Drinks
+    // Cafe
+    // Beverage
+    List<String> food = new ArrayList<>();
+    List<String> drinks = new ArrayList<>();
+    List<String> cafe = new ArrayList<>();
+    List<String> beverage = new ArrayList<>();
+    List<String> vending = new ArrayList<>();
+    List<String> places = new ArrayList<>();
 
     // ATM
     List<String> atm = new ArrayList<>();
 
-    // Exit
-    List<String> exit = new ArrayList<>();
+    // Services
+    // Hospital non-medical services, interpreters, shuttles, spiritual,library, patient financial, etc.
 
-    // Entrance
-    List<String> entrance = new ArrayList<>();
+    // Stairs
+    // Staircase
 
-    // International
-    List<String> international = new ArrayList<>();
-
-    // Nodes
-    List<String> conference = new ArrayList<>();
+    // Workt
+    // Workspaces
 
     public static void initialize() {
 
@@ -209,123 +140,6 @@ public class SearchKeywords {
 
         HashMap<String, Location> locationNodes = LocationTable.getLocations();
 
-        food.add("au bon pain");
-        food.add("restaurant");
-        food.add("drinks");
-        food.add("cafe");
-        food.add("beverage");
-        addSynonyms("food", food);
-
-        drinks.add("au bon pain");
-        drinks.add("restaurant");
-        drinks.add("food");
-        drinks.add("cafe");
-        drinks.add("beverage");
-        addSynonyms("drinks", drinks);
-
-        cafe.add("au bon pain");
-        cafe.add("restaurant");
-        cafe.add("drinks");
-        cafe.add("food");
-        cafe.add("beverage");
-        addSynonyms("cafe", cafe);
-
-        beverage.add("au bon pain");
-        beverage.add("restaurant");
-        beverage.add("drinks");
-        beverage.add("cafe");
-        beverage.add("food");
-        addSynonyms("beverage", beverage);
-
-        lab.add("laboratory");
-        laboratory.add("lab");
-        addSynonyms("lab", lab);
-
-        addSynonyms("mri", mri);
-
-        catScan.add("ct scan");
-        catScan.add("computer tomography");
-        addSynonyms("cat scan", catScan);
-
-        ctScan.add("ct scan");
-        ctScan.add("cat scan");
-        addSynonyms("ct scan", ctScan);
-
-        legDoctor.add("podiatrist");
-        addSynonyms("podiatrist", legDoctor);
-
-        childDoctor.add("pediatrist");
-        childDoctor.add("pediatrics");
-        addSynonyms("pediatrics", childDoctor);
-
-        police.add("security");
-        police.add("safety");
-        addSynonyms("police", police);
-
-        security.add("police");
-        security.add("safety");
-        addSynonyms("security", security);
-
-        safety.add("security");
-        safety.add("police");
-        addSynonyms("safety", safety);
-
-        garage.add("parking");
-        garage.add("parking garage");
-        addSynonyms("garage", garage);
-
-        parking.add("garage");
-        parking.add("parking garage");
-        addSynonyms("parking", parking);
-
-        wc.add("bathroom");
-        wc.add("restroom");
-        addSynonyms("wc", wc);
-
-        bathroom.add("wc");
-        bathroom.add("restroom");
-        addSynonyms("bathroom", bathroom);
-
-        restroom.add("bathroom");
-        restroom.add("wc");
-        addSynonyms("restroom", restroom);
-
-        atm.add("atm");
-        atm.add("money");
-        atm.add("cash");
-        atm.add("hard cash");
-        atm.add("deep pockets");
-        addSynonyms("atm", atm);
-
-        exit.add("gate");
-        exit.add("egress");
-        exit.add("doorway");
-        exit.add("gateway");
-        exit.add("portal");
-        exit.add("outlet");
-        exit.add("vent");
-        exit.add("departure");
-        exit.add("evacuation");
-        addSynonyms("exit", exit);
-
-        entrance.add("ingress");
-        entrance.add("access");
-        entrance.add("approach");
-        entrance.add("door");
-        entrance.add("doorway");
-        entrance.add("portal");
-        entrance.add("gate");
-        entrance.add("lobby");
-        entrance.add("entryway");
-        addSynonyms("entrance", entrance);
-
-        international.add("salida");
-        international.add("ingles");
-        international.add("hola");
-        international.add("domingo");
-        international.add("zapato");
-        international.add("mano");
-
         // Nodes
 
         Iterator locationsIterator = locationNodes.entrySet().iterator();
@@ -340,45 +154,100 @@ public class SearchKeywords {
                 case BATH:
                     bathroom.add(currLocation.getLongName());
                     break;
+
                 case CONF:
                     conference.add(currLocation.getLongName());
                     break;
+
                 case DEPT:
+                    department.add(currLocation.getLongName());
 
+                    // Orthopedics
+                    if(currLocation.getNodeID().equals("ADEPT00102"))
+                        legDoctor.add(currLocation.getLongName());
                     break;
+
                 case ELEV:
-
+                    elevator.add(currLocation.getLongName());
                     break;
+
                 case EXIT:
-                    exit.add(currLocation.getLongName());
+                    if (currLocation.getLongName().toLowerCase().contains("exit"))
+                        exit.add(currLocation.getLongName());
+                    else if (currLocation.getLongName().toLowerCase().contains("entrance"))
+                        entrance.add(currLocation.getLongName());
+                    else if (currLocation.getLongName().toLowerCase().contains("parking"))
+                        parking.add(currLocation.getLongName());
+                    else if (currLocation.getLongName().toLowerCase().contains("garage"))
+                        garage.add(currLocation.getLongName());
+                    else if (currLocation.getLongName().toLowerCase().contains("road"))
+                        road.add(currLocation.getLongName());
+                    else
+                        exit.add(currLocation.getLongName());
+
                     break;
+
                 case HALL:
+                    hall.add(currLocation.getLongName());
 
                     break;
+
                 case INFO:
+                    if(currLocation.getLongName().toLowerCase().contains("security")) {
+                        security.add(currLocation.getLongName());
+                        police.add(currLocation.getLongName());
+                        safety.add(currLocation.getLongName());
+                    } else if (currLocation.getLongName().toLowerCase().contains("information")
+                                || currLocation.getLongName().toLowerCase().contains("info")) {
+                        info.add(currLocation.getLongName());
+                        information.add(currLocation.getLongName());
+                    } else if (currLocation.getLongName().toLowerCase().contains("service")) {
+                        service.add(currLocation.getLongName());
+                    } else {
+                        info.add(currLocation.getLongName());
+                    }
 
                     break;
+
                 case LABS:
                     lab.add(currLocation.getLongName());
+
+                    // MRI CT Scan Imaging
+                    if(currLocation.getNodeID().equals("ALABS001L2")) {
+                        mri.add(currLocation.getLongName());
+                        catScan.add(currLocation.getLongName());
+                        ctScan.add(currLocation.getLongName());
+                    }
                     break;
+
                 case REST:
+                    restroom.add(currLocation.getLongName());
 
                     break;
+
                 case RETL:
+                    if(currLocation.getLongName().toLowerCase().contains("cafe")) {
+                        cafe.add(currLocation.getLongName());
+                    } else if (currLocation.getLongName().toLowerCase().contains("vending")) {
+                        vending.add(currLocation.getLongName());
+                    } else {
+                        places.add(currLocation.getLongName());
+                    }
 
                     break;
+
                 case SERV:
 
                     break;
+
                 case STAI:
 
                     break;
-                case WORK:
 
-                    break;
                 case WRKT:
 
                     break;
+
                 default:
             }
 
@@ -386,44 +255,88 @@ public class SearchKeywords {
         }
 
         // Add to main map
-        keys.put("food", food);
-        keys.put("drinks", drinks);
-        keys.put("cafe", cafe);
-        keys.put("beverage", beverage);
-        keys.put("cat scan", catScan);
-        keys.put("ct scan", ctScan);
-        keys.put("mri", mri);
-        keys.put("leg doctor", legDoctor);
-        keys.put("child doctor", childDoctor);
-        keys.put("police", police);
-        keys.put("security", security);
-        keys.put("safety", safety);
-        keys.put("garage", garage);
-        keys.put("parking", parking);
-        keys.put("wc", wc);
-        keys.put("atm", atm);
-        keys.put("cash", atm);
-        keys.put("entrance", entrance);
-        keys.put("international", international);
+//        keys.put("food", food);
+//        keys.put("drinks", drinks);
+//        keys.put("cafe", cafe);
+//        keys.put("beverage", beverage);
+//        keys.put("cat scan", catScan);
+//        keys.put("ct scan", ctScan);
+//        keys.put("mri", mri);
+//        keys.put("leg doctor", legDoctor);
+//        keys.put("child doctor", childDoctor);
+//        keys.put("police", police);
+//        keys.put("security", security);
+//        keys.put("safety", safety);
+//        keys.put("garage", garage);
+//        keys.put("parking", parking);
+//        keys.put("wc", wc);
+//        keys.put("atm", atm);
+//        keys.put("cash", atm);
+//        keys.put("entrance", entrance);
+//        keys.put("international", international);
 
         // Nodes
-        // Conference rooms
-        keys.put("conference", conference);
-        this.addSynonymsToMap("conference", conference);
-
-        // Labs
-        keys.put("lab", lab);
-        keys.put("laboratory", laboratory);
-        this.addSynonymsToMap("lab", lab);
 
         // Bathroom
+        bathroom.add("wc");
+        bathroom.add("restroom");
+        restroom.add("bathroom");
+        restroom.add("wc");
+        wc.add("bathroom");
+        wc.add("restroom");
+        this.addSynonyms("wc", wc);
+        this.addSynonyms("bathroom", bathroom);
+        this.addSynonyms("restroom", restroom);
         keys.put("restroom", restroom);
         keys.put("bathroom", bathroom);
         this.addSynonymsToMap("bathroom", bathroom);
 
+        // Conference rooms
+        keys.put("conference", conference);
+        this.addSynonymsToMap("conference", conference);
+
+        // Department
+        /*this.addSynonyms("mri", mri);
+        catScan.add("ct scan");
+        catScan.add("computer tomography");
+        this.addSynonyms("cat scan", catScan);
+        ctScan.add("ct scan");
+        ctScan.add("cat scan");
+        this.addSynonyms("ct scan", ctScan);
+        legDoctor.add("podiatrist");
+        this.addSynonyms("podiatrist", legDoctor);
+        childDoctor.add("pediatrist");
+        childDoctor.add("pediatrics");
+        this.addSynonyms("pediatrics", childDoctor);*/
+
+
+        // Elevators
+        this.addSynonyms("elevator", elevator);
+        keys.put("elevator", elevator);
+        this.addSynonymsToMap("elevator", elevator);
+
         // Exits
+        exit.add("gate");
+        exit.add("egress");
+        exit.add("doorway");
+        exit.add("gateway");
+        exit.add("portal");
+        exit.add("outlet");
+        exit.add("vent");
+        exit.add("departure");
+        exit.add("evacuation");
+        this.addSynonyms("exit", exit);
         keys.put("exit", exit);
         this.addSynonymsToMap("exit", exit);
+
+        // Labs
+        lab.add("laboratory");
+        laboratory.add("lab");
+        this.addSynonyms("lab", lab);
+        keys.put("lab", lab);
+        keys.put("laboratory", laboratory);
+        this.addSynonymsToMap("lab", lab);
+        this.addSynonymsToMap("laboratory", laboratory);
 
     }
 
