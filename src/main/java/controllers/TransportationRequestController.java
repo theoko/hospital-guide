@@ -100,8 +100,7 @@ public class TransportationRequestController  {
         tblServicer.setCellValueFactory(new PropertyValueFactory<>("ServicerUserName"));
         System.out.println(transports.toString());
         System.out.println("H");
-        if(!transports.isEmpty())
-            tblData.setItems(transports);
+        tblData.setItems(transports);
 
         HashMap<String, Location> locations = LocationTable.getLocations();
 

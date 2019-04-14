@@ -118,7 +118,7 @@
                     <AnchorPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                         <VBox layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="607.0" prefWidth="1200.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
                             <children>
-                                <TableView fx:id="tblFlorist" prefHeight="617.0" prefWidth="665.0">
+                                <TableView fx:id="tblData" prefHeight="617.0" prefWidth="665.0">
                                     <columns>
                                         <TableColumn fx:id="tblStartLoc" prefWidth="160.0" text="Start Location" />
                                         <TableColumn fx:id="tblEndLoc" prefWidth="160.0" text="End Location" />
