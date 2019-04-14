@@ -93,11 +93,15 @@ public class SearchKeywords {
     List<String> vending = new ArrayList<>();
     List<String> places = new ArrayList<>();
 
-    // ATM
-    List<String> atm = new ArrayList<>();
-
     // Services
     // Hospital non-medical services, interpreters, shuttles, spiritual,library, patient financial, etc.
+    List<String> services = new ArrayList<>();
+    List<String> atm = new ArrayList<>();
+    List<String> cashier = new ArrayList<>();
+    List<String> library = new ArrayList<>();
+    List<String> porch = new ArrayList<>();
+    List<String> room = new ArrayList<>();
+    List<String> floor = new ArrayList<>();
 
     // Stairs
     // Staircase
@@ -237,14 +241,33 @@ public class SearchKeywords {
                     break;
 
                 case SERV:
+                    if (currLocation.getLongName().toLowerCase().contains("service")) {
+                        services.add(currLocation.getLongName());
+                    } else if (currLocation.getLongName().toLowerCase().contains("atm")) {
+                        atm.add(currLocation.getLongName());
+                    } else if (currLocation.getLongName().toLowerCase().contains("cashier")) {
+                        cashier.add(currLocation.getLongName());
+                    } else if (currLocation.getLongName().toLowerCase().contains("library")) {
+                        library.add(currLocation.getLongName());
+                    } else if (currLocation.getLongName().toLowerCase().contains("porch")) {
+                        porch.add(currLocation.getLongName());
+                    } else if (currLocation.getLongName().toLowerCase().contains("room")) {
+                        room.add(currLocation.getLongName());
+                    } else if (currLocation.getLongName().toLowerCase().contains("floor")) {
+                        floor.add(currLocation.getLongName());
+                    } else {
+                        services.add(currLocation.getLongName());
+                    }
 
                     break;
 
                 case STAI:
 
+
                     break;
 
                 case WRKT:
+                    System.out.println(currLocation.getLongName());
 
                     break;
 
