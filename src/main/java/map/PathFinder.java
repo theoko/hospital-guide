@@ -23,6 +23,8 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.*;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
+import messaging.EmailMessenger;
+import messaging.TextMessenger;
 import models.map.Location;
 import models.map.Map;
 import models.map.SubPath;
@@ -178,6 +180,20 @@ public abstract class PathFinder {
         Stack<Location> path = context.findPath(start, end);
         String directions = context.txtDirections((Stack<Location>) path.clone());
         addDirections(mc.txtPane, directions);
+        try {
+            TextMessenger tm = new TextMessenger();
+            tm.declareMessage(directions);
+            tm.declareRecipient("+17743070422");
+            tm.sendMessage();
+        } catch(Exception e) {
+            System.out.println("Failed message");
+        }
+
+        EmailMessenger em = new EmailMessenger();
+        em.setRecipient("1johnfairfax1@gmail.com");
+        em.setMessageText(directions);
+        em.sendMessage();
+
         HashMap<String, Location> lstLocations = map.getAllLocations();
 
         Path line = null;

@@ -14,6 +14,7 @@ public class CustodianMapController extends MapController {
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
         MapDisplay.displayCust(this);
+        initDirections();
     }
 
     @Override

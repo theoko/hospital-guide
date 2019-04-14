@@ -69,6 +69,17 @@ public abstract class MapController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         gesMap.setVBarEnabled(false);
         gesMap.setHBarEnabled(false);
+
+        updateButtons();
+        Image img = ImageFactory.getImage("3");
+        imgMap.setImage(img);
+        center = new Point2D(img.getWidth() / 2, img.getHeight() / 2);
+
+//        gesMap.zoomTo(3, center);
+//        gesMap.animate(Duration.millis(1000)).zoomTo(.001, center);
+    }
+
+    protected void initDirections() {
         txtPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         txtPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         tilDirections.expandedProperty().addListener(((observable, oldValue, newValue) -> {
@@ -81,14 +92,6 @@ public abstract class MapController implements Initializable {
             }
             gesMap.requestFocus();
         }));
-
-        updateButtons();
-        Image img = ImageFactory.getImage("3");
-        imgMap.setImage(img);
-        center = new Point2D(img.getWidth() / 2, img.getHeight() / 2);
-
-//        gesMap.zoomTo(3, center);
-//        gesMap.animate(Duration.millis(1000)).zoomTo(.001, center);
     }
 
     public abstract void btnReturn_Click(MouseEvent mouseEvent) throws Exception;

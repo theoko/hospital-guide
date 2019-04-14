@@ -13,6 +13,7 @@ public class EmployeeMapController extends MapController {
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
         MapDisplay.displayEmployee(this);
+        initDirections();
     }
 
     @Override
