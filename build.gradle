@@ -50,7 +50,9 @@ task integrationTest(type: Test) {
 
 dependencies {
     testCompile(
-            [group: 'junit', name: 'junit', version: '4.12'],
+            [group: "com.twilio.sdk", name: "twilio", version: "7.37.0"],
+
+                    [group: 'junit', name: 'junit', version: '4.12'],
             [group: 'com.jfoenix', name: 'jfoenix', version: '8.0.3'],
             [group: 'org.apache.derby', name: 'derby', version: '10.11.1.1'],
             [group: 'org.apache.derby', name: 'derbyclient', version: '10.11.1.1'],
@@ -65,7 +67,8 @@ dependencies {
          //   [group: 'org.kordamp.jsilhouette', name: 'jsilhouette', version: '0.3.0']
     )
     compile(
-            [group: 'junit', name: 'junit', version: '4.12'],
+            [group: "com.twilio.sdk", name: "twilio", version: "7.37.0"],
+                    [group: 'junit', name: 'junit', version: '4.12'],
             [group: 'com.jfoenix', name: 'jfoenix', version: '8.0.3'],
             [group: 'org.apache.derby', name: 'derby', version: '10.11.1.1'],
             [group: 'org.apache.derby', name: 'derbyclient', version: '10.11.1.1'],
