@@ -60,8 +60,8 @@ public class MapDisplay {
     }
 
     public static void displayAdmin(MapController mc) {
-        displayEdges(mc);
         displayNodes(mc, Constants.Routes.EDIT_LOCATION, true);
+        displayEdges(mc);
     }
 
     private static void displayNodes(MapController mc, Constants.Routes route, boolean isAdmin) {
@@ -111,15 +111,16 @@ public class MapDisplay {
             Location end = edge.getEnd();
             String floor = mc.getFloor();
             if (start.getFloor().equals(floor) && end.getFloor().equals(floor)) {
-                double x1 = start.getxCord();
-                double x2 = end.getxCord();
-                double y1 = start.getyCord();
-                double y2 = end.getyCord();
-                Line line = new Line(x1, y1, x2, y2);
+                Line line = new Line();
+                line.startXProperty().bind(start.getNodeCircle().centerXProperty());
+                line.startYProperty().bind(start.getNodeCircle().centerYProperty());
+                line.endXProperty().bind(end.getNodeCircle().centerXProperty());
+                line.endYProperty().bind(end.getNodeCircle().centerYProperty());
+
                 line.setStroke(edgeFill);
                 line.setStrokeWidth(edgeWidth);
                 line.setId(edge.getEdgeID());
-                mc.panMap.getChildren().add(line);
+                mc.panMap.getChildren().add(0, line);
                 edge.setLine(line);
             }
         }
