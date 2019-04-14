@@ -1,5 +1,6 @@
 package map;
 
+import com.sun.deploy.uitoolkit.DragContext;
 import controllers.maps.MapController;
 import controllers.maps.UserMapController;
 import controllers.maps.MapController1;
@@ -7,6 +8,7 @@ import controllers.ScreenController;
 import helpers.Constants;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -14,6 +16,8 @@ import javafx.scene.shape.Line;
 import models.map.Edge;
 import models.map.Location;
 import models.map.Map;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -121,6 +125,11 @@ public class MapDisplay {
         }
     }
 
+    static class Delta {
+        double x, y;
+        boolean dragged;
+    }
+
     private static Circle createCircle(MapController mc, Location loc, NodeStyle nodeStyle, double opacity, Constants.Routes route, boolean isAdmin) {
         double xLoc = loc.getxCord();
         double yLoc = loc.getyCord();
@@ -147,18 +156,38 @@ public class MapDisplay {
                 break;
         }
 
-        circle.setOnMouseClicked(event -> {
-            try {
-                event.consume();
-                if (!isAdmin) {
+        if (!isAdmin) {
+            circle.setOnMouseClicked(event -> {
+                try {
                     ScreenController.infoPopUp(route, loc, mc, map);
-                } else {
-                    ScreenController.adminPopUp(route, loc, mc);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
+            });
+        } else {
+            final Delta dragDelta = new Delta();
+            circle.setOnMousePressed((e) -> {
+                dragDelta.dragged = false;
+                dragDelta.x = circle.getCenterX() - e.getX();
+                dragDelta.y = circle.getCenterY() - e.getY();
+            });
+            circle.setOnMouseDragged((e) -> {
+                dragDelta.dragged = true;
+                circle.setCenterX(e.getX() + dragDelta.x);
+                circle.setCenterY(e.getY() + dragDelta.y);
+                e.consume();
+            });
+            circle.setOnMouseReleased((e) -> {
+                if (!dragDelta.dragged) {
+                    try {
+                        ScreenController.adminPopUp(route, loc, mc);
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+            });
+        }
+
         loc.setNodeCircle(circle);
         return circle;
     }
