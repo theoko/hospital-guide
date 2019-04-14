@@ -77,6 +77,7 @@ public class SearchEngineController {
     }
 
 
+    double translation = -(UIHelpers.getScreenWidth() / 2.0) + 50.0;
     public void displaySearch(MouseEvent event) {
 
         // Display back button
@@ -84,18 +85,20 @@ public class SearchEngineController {
         searchBox.setVisible(true);
         btnDisplayBack.setVisible(true);
 
+        btnDisplayBack.setPrefWidth(searchBox.getWidth());
+
         // Do animation
         TranslateTransition addWidth = new TranslateTransition(
                 new Duration(350),
                 searchStackPane
         );
 
-        addWidth.setToX(-(UIHelpers.getScreenWidth() / 2.0));
+        addWidth.setToX(translation);
 
         addWidth.play();
 
         TranslateTransition addWidthBtn = new TranslateTransition(
-                new Duration(350),
+                new Duration(450),
                 btnDisplayBack
         );
 
@@ -103,14 +106,27 @@ public class SearchEngineController {
 
         addWidthBtn.play();
 
+        searchBox.requestFocus();
+
     }
 
     public void goBack(MouseEvent event) {
 
+        btnDisplaySearch.setVisible(true);
+
+        // Do animation
+        TranslateTransition addWidth = new TranslateTransition(
+                new Duration(450),
+                searchStackPane
+        );
+
+        addWidth.setByX(-translation);
+
+        addWidth.play();
+
         // Hide search box
         btnDisplayBack.setVisible(false);
         searchBox.setVisible(false);
-        btnDisplaySearch.setVisible(true);
 
     }
 
