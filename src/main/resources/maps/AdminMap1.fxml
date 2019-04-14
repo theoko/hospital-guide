@@ -12,7 +12,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" stylesheets="@css/colorScheme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminMapController">
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.geometry.Insets?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" stylesheets="@../css/colorScheme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.maps.AdminMapController">
     <children>
         <JFXTabPane prefHeight="700.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <tabs>
@@ -30,7 +34,7 @@
                                                             <children>
                                                                 <ImageView fitHeight="1620.0" fitWidth="2581.0" layoutX="1000.0" layoutY="-350.0" pickOnBounds="true" preserveRatio="true">
                                                                     <image>
-                                                                        <Image url="@images/Original/03_thethirdfloor.png" />
+                                                                        <Image url="@../images/Original/03_thethirdfloor.png" />
                                                                     </image>
                                                                 </ImageView>
                                                             </children>
@@ -46,7 +50,7 @@
                                                             <children>
                                                                 <ImageView fitHeight="1620.0" fitWidth="2581.0" layoutX="1000.0" layoutY="-350.0" pickOnBounds="true" preserveRatio="true">
                                                                     <image>
-                                                                        <Image url="@images/Original/02_thesecondfloor.png" />
+                                                                        <Image url="@../images/Original/02_thesecondfloor.png" />
                                                                     </image>
                                                                 </ImageView>
                                                             </children>
@@ -60,7 +64,7 @@
                                                         <AnchorPane fx:id="panFloor1" onMouseDragged="#floorOneMapOnMouseDragged" onMousePressed="#floorOneMapOnMousePressed" onScroll="#floorOneMapScroll" onZoom="#floorOneMapZoom" onZoomFinished="#floorOneMapZoomDone" prefHeight="896.0" prefWidth="1115.0">
                                                             <ImageView blendMode="MULTIPLY" fitHeight="1620.0" fitWidth="2581.0" layoutX="1000.0" layoutY="-350.0" pickOnBounds="true" preserveRatio="true">
                                                                 <image>
-                                                                    <Image url="@images/Original/01_thefirstfloor.png" />
+                                                                    <Image url="@../images/Original/01_thefirstfloor.png" />
                                                                 </image>
                                                             </ImageView>
                                                         </AnchorPane>
@@ -68,6 +72,21 @@
                                                 </AnchorPane>
                                             </content>
                                         </Tab>
+                                        <Tab style="-fx-background-color: #022D5A;" text="Floor G">
+                                            <content>
+                                                <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                                    <children>
+                                                        <AnchorPane fx:id="panFloorG" onMouseDragged="#floorOneMapOnMouseDragged" onMousePressed="#floorGMapOnMousePressed" onScroll="#floorOneMapScroll" onZoom="#floorOneMapZoom" onZoomFinished="#floorOneMapZoomDone" prefHeight="200.0" prefWidth="200.0">
+                                                            <children>
+                                                                <ImageView fitHeight="1620.0" fitWidth="2581.0" layoutX="1000.0" layoutY="-350.0" pickOnBounds="true" preserveRatio="true">
+                                                                    <image>
+                                                                        <Image url="@../images/Original/00_thegroundfloor.png" />
+                                                                    </image>
+                                                                </ImageView>
+                                                            </children>
+                                                        </AnchorPane>
+                                                    </children></AnchorPane>
+                                            </content></Tab>
                                         <Tab style="-fx-background-color: #022D5A;" text="Floor L1">
                                             <content>
                                                 <AnchorPane prefHeight="400.0" prefWidth="700.0">
@@ -75,7 +94,7 @@
                                                         <AnchorPane fx:id="panFloorL1" onMouseDragged="#floorOneMapOnMouseDragged" onMousePressed="#floorL1MapOnMousePressed" onScroll="#floorOneMapScroll" onZoom="#floorOneMapZoom" onZoomFinished="#floorOneMapZoomDone" prefHeight="896.0" prefWidth="1115.0">
                                                             <ImageView blendMode="MULTIPLY" fitHeight="1620.0" fitWidth="2581.0" layoutX="1000.0" layoutY="-350.0" pickOnBounds="true" preserveRatio="true">
                                                                 <image>
-                                                                    <Image url="@images/Original/00_thelowerlevel1.png" />
+                                                                    <Image url="@../images/Original/00_thelowerlevel1.png" />
                                                                 </image>
                                                             </ImageView>
                                                         </AnchorPane>
@@ -90,7 +109,7 @@
                                                         <AnchorPane fx:id="panFloorL2" onMouseDragged="#floorOneMapOnMouseDragged" onMousePressed="#floorL2MapOnMousePressed" onScroll="#floorOneMapScroll" onZoom="#floorOneMapZoom" onZoomFinished="#floorOneMapZoomDone" prefHeight="896.0" prefWidth="1115.0">
                                                             <ImageView blendMode="MULTIPLY" fitHeight="1620.0" fitWidth="2581.0" layoutX="1000.0" layoutY="-350.0" pickOnBounds="true" preserveRatio="true">
                                                                 <image>
-                                                                    <Image url="@images/Original/00_thelowerlevel2.png" />
+                                                                    <Image url="@../images/Original/00_thelowerlevel2.png" />
                                                                 </image>
                                                             </ImageView>
                                                         </AnchorPane>
@@ -128,14 +147,62 @@
                     </AnchorPane>
                 </Tab>
                 <Tab style="-fx-background-color: #022D5A;" text="Workspace Booking">
-                    <fx:include source="RoomBookingWindow.fxml" />
+                    <fx:include source="../RoomBookingWindow.fxml" />
                 </Tab>
                 <Tab style="-fx-background-color: #022D5A;" text="User Dashboard">
-                    <fx:include source="CreateUser.fxml" />
+                    <fx:include source="../CreateUser.fxml" />
                 </Tab>
                 <Tab style="-fx-background-color: #022D5A;" text="Settings">
-                    <fx:include source="SettingsScreen.fxml" />
+                    <fx:include source="../SettingsScreen.fxml" />
                 </Tab>
+
+                <Tab style="-fx-background-color: #022D5A;" text="Sanitation Requests">
+                    <content>
+                        <VBox>
+                            <children>
+                                <TableView fx:id="tblData" prefHeight="629.0" prefWidth="1163.0">
+                                    <columns>
+                                        <!--<TableColumn fx:id="tblRequestID" prefWidth="50.0" text="Request ID" />-->
+                                        <TableColumn fx:id="tblLocation" prefWidth="100.0" text="Location" />
+                                        <TableColumn fx:id="tblPriority" prefWidth="75.0" text="Priority" />
+                                        <TableColumn fx:id="tblStatus" prefWidth="100.0" text="Status" />
+                                        <TableColumn fx:id="tblDescription" prefWidth="250.0" text="Description" />
+                                        <TableColumn fx:id="tblRequester" prefWidth="100.0" text="Requester" />
+                                        <TableColumn fx:id="tblClaimTime" prefWidth="150.0" text="Time Claimed" />
+                                        <TableColumn fx:id="tblServicer" prefWidth="100.0" text="Servicer" />
+                                        <TableColumn fx:id="tblServiceTime" prefWidth="150.0" text="Service Time" />
+
+                                    </columns>
+                                </TableView>
+                                <ButtonBar minHeight="-Infinity" prefHeight="71.0" prefWidth="1099.0" VBox.vgrow="ALWAYS">
+                                    <buttons>
+                                        <JFXButton fx:id="btnDelete" disable="true" onMouseClicked="#deleteSanitationRequest" text="Delete" textFill="WHITE">
+                                            <font>
+                                                <Font size="22.0" />
+                                            </font></JFXButton>
+                                        <!--<JFXButton fx:id="btnClaim" disable="true" onMouseClicked="#claimJob" prefWidth="200.0" text="Claim" textFill="WHITE">-->
+                                            <!--<font>-->
+                                                <!--<Font size="22.0" />-->
+                                            <!--</font></JFXButton>-->
+                                        <!--<JFXButton fx:id="btnMarkDone" disable="true" onMouseClicked="#markDone" prefWidth="200.0" text="Mark Complete" textFill="WHITE">-->
+                                            <!--<font>-->
+                                                <!--<Font size="22.0" />-->
+                                            <!--</font>-->
+                                        <!--</JFXButton>-->
+                                    </buttons>
+                                    <padding>
+                                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                    </padding>
+                                </ButtonBar>
+                                <!--<SplitMenuButton mnemonicParsing="false" text="SplitMenuButton">-->
+                                <!--<items>-->
+                                <!--<MenuItem mnemonicParsing="false" text="Action 1" />-->
+                                <!--<MenuItem mnemonicParsing="false" text="Action 2" />-->
+                                <!--</items>-->
+                                <!--</SplitMenuButton>-->
+                            </children>
+                        </VBox>
+                    </content></Tab>
             </tabs>
         </JFXTabPane>
     </children>

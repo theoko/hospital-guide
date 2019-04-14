@@ -8,6 +8,7 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import database.Database;
 import database.SanitationTable;
+import helpers.UserHelpers;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
@@ -41,7 +42,8 @@ public class SanitationController extends PopUpController {
         SanitationRequest request = new SanitationRequest(
                 loc,
                 SanitationRequest.Priority.valueOf(priority),
-                description
+                description,
+                UserHelpers.getCurrentUser()
         );
         SanitationTable.addSanitationRequest(request);
 

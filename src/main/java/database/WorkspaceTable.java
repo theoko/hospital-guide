@@ -19,7 +19,7 @@ public class WorkspaceTable {
     public static void createtable(){
         Statement statement = null;
         try {
-            statement = Database.getConnection().createStatement();
+            statement = Database.getDatabase().getConnection().createStatement();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -36,11 +36,11 @@ public class WorkspaceTable {
         }
     }
 
-    public static boolean dropWorkspaceTable() {
+    public static boolean dropTable() {
         try {
             Statement statement;
 
-            statement = Database.getConnection().createStatement();
+            statement = Database.getDatabase().getConnection().createStatement();
 
             return statement.execute("DROP TABLE " + Constants.WORKSPACE_TABLE);
 
@@ -59,7 +59,7 @@ public class WorkspaceTable {
         try {
             // Execute query
             String stmtString = "SELECT * FROM " + Constants.WORKSPACE_TABLE + " WHERE NODEID=?";
-            PreparedStatement statement = Database.getConnection().prepareStatement(stmtString);
+            PreparedStatement statement = Database.getDatabase().getConnection().prepareStatement(stmtString);
             statement.setString(1, id);
             ResultSet resultSet = statement.executeQuery();
 
@@ -90,7 +90,7 @@ public class WorkspaceTable {
 
             PreparedStatement statement;
 
-            statement = Database.getConnection().prepareStatement(
+            statement = Database.getDatabase().getConnection().prepareStatement(
                     "INSERT INTO " + Constants.WORKSPACE_TABLE + " (NODEID, XCOORD, YCOORD, NODETYPE, LONGNAME)" +
                             " VALUES (?, ?, ?, ?, ?)"
             );
@@ -130,19 +130,19 @@ public class WorkspaceTable {
      * @param endTime
      * @return true if the room is available, false otherwise
      */
-    public static boolean checkAvailabilityByLocation(Room room, String startTime, String endTime) {
+    public static boolean checkAvailabilityByLocation(Workspace workspace, String startTime, String endTime) {
         PreparedStatement statement;
 
         try {
-            statement = Database.getConnection().prepareStatement(
-                    "SELECT * FROM " + Constants.BOOK_TABLE +
+            statement = Database.getDatabase().getConnection().prepareStatement(
+                    "SELECT * FROM " + Constants.BOOK_WORKSPACE_TABLE +
                             " WHERE nodeID=? AND ? <=  ENDDATE" +
                             " AND ? >= STARTDATE" +
                             " OR ? >=  STARTDATE" +
                             " AND ? <= ENDDATE"
             );
 
-            statement.setString(1, room.getRoomID());
+            statement.setString(1, workspace.getNodeID());
             statement.setString(2, endTime);
             statement.setString(3, endTime);
             statement.setString(4, startTime);
@@ -163,21 +163,22 @@ public class WorkspaceTable {
     /**
      * Checks if location is available
      */
-    public static List<Room> checkAvailabilityByTime(String startTime, String endTime) {
+    public static List<Workspace> checkAvailabilityByTime(String startTime, String endTime) {
 
         PreparedStatement statement1;
-        ArrayList<Room> roomsAvailable = new ArrayList<>();
+        ArrayList<Workspace> roomsAvailable = new ArrayList<>();
 
         try {
 
-            String unavailableRooms = "SELECT nodeID FROM " + Constants.BOOK_TABLE +
+            String unavailableRooms = "SELECT nodeID FROM " + Constants.BOOK_WORKSPACE_TABLE +
                     " WHERE ? <=  ENDDATE" +
                     " AND ? >= STARTDATE" +
                     " OR ? >=  STARTDATE" +
                     " AND ? <= ENDDATE";
 
-            statement1 = Database.getConnection().prepareStatement(
-                    "SELECT nodeID FROM " + Constants.ROOM_TABLE +
+
+            statement1 = Database.getDatabase().getConnection().prepareStatement(
+                    "SELECT nodeID FROM " + Constants.WORKSPACE_TABLE +
                             " EXCEPT (" + unavailableRooms + ")"
             );
 
@@ -189,9 +190,9 @@ public class WorkspaceTable {
             ResultSet resultSet = statement1.executeQuery();
 
             while (resultSet.next()) {
-                Room room = RoomTable.getRoomByID(resultSet.getString("NODEID"));
+                Workspace workspace = WorkspaceTable.getWorkspaceByID(resultSet.getString("NODEID"));
 
-                roomsAvailable.add(room);
+                roomsAvailable.add(workspace);
             }
 
             return roomsAvailable;
@@ -210,7 +211,7 @@ public class WorkspaceTable {
 
             Statement statement;
 
-            statement = Database.getConnection().createStatement();
+            statement = Database.getDatabase().getConnection().createStatement();
 
             String query = "SELECT * FROM " + Constants.WORKSPACE_TABLE;
 
@@ -249,7 +250,7 @@ public class WorkspaceTable {
         try {
             PreparedStatement statement;
 
-            statement = Database.getConnection().prepareStatement(
+            statement = Database.getDatabase().getConnection().prepareStatement(
                     "UPDATE " + Constants.WORKSPACE_TABLE +
                             " SET XCOORD=?, YCOORD=?, NODETYPE=?, LONGNAME=?" +
                             " WHERE NODEID=?"
@@ -283,7 +284,7 @@ public class WorkspaceTable {
             // Add location to deleted locations table
 
             PreparedStatement statement3;
-            statement3 = Database.getConnection().prepareStatement(
+            statement3 = Database.getDatabase().getConnection().prepareStatement(
                     "DELETE FROM " + Constants.WORKSPACE_TABLE +
                             " WHERE NODEID=?"
             );

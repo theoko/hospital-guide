@@ -17,7 +17,7 @@ public class EdgeTable {
     public static void createTable(){
         Statement statement = null;
         try {
-            statement = Database.getConnection().createStatement();
+            statement = Database.getDatabase().getConnection().createStatement();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -35,11 +35,11 @@ public class EdgeTable {
         }
     }
 
-    public static boolean dropEdgeTable() {
+    public static boolean dropTable() {
         try {
             Statement statement;
 
-            statement = Database.getConnection().createStatement();
+            statement = Database.getDatabase().getConnection().createStatement();
 
             return statement.execute("DROP TABLE " + Constants.EDGES_TABLE);
 
@@ -61,7 +61,7 @@ public class EdgeTable {
     public static List<Edge> getEdges(HashMap<String, Location> lstLocations) {
         try {
             Statement statement;
-            statement = Database.getConnection().createStatement();
+            statement = Database.getDatabase().getConnection().createStatement();
             String query = "SELECT * FROM " + Constants.EDGES_TABLE;
             ResultSet resultSet = statement.executeQuery(query);
             List<Edge> returnList = new ArrayList<>();
@@ -96,7 +96,7 @@ public class EdgeTable {
         try {
             PreparedStatement statement;
 
-            statement = Database.getConnection().prepareStatement(
+            statement = Database.getDatabase().getConnection().prepareStatement(
                     "UPDATE " + Constants.EDGES_TABLE +
                             " SET STARTNODEID=?, ENDNODEID=?" +
                             " WHERE EDGEID=?"
@@ -120,7 +120,7 @@ public class EdgeTable {
     public static boolean deleteEdge(Edge edge){
         try {
             String statement = "DELETE FROM " + Constants.ROOM_TABLE + " WHERE EDGEID=?";
-            PreparedStatement preparedStatement = Database.getConnection().prepareStatement(statement);
+            PreparedStatement preparedStatement = Database.getDatabase().getConnection().prepareStatement(statement);
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -162,7 +162,7 @@ public class EdgeTable {
         try {
             PreparedStatement statement;
 
-            statement = Database.getConnection().prepareStatement(
+            statement = Database.getDatabase().getConnection().prepareStatement(
                     "INSERT INTO " + Constants.EDGES_TABLE + " (EDGEID, STARTNODEID, ENDNODEID) " +
                             "VALUES (?, ?, ?)"
             );

@@ -3,7 +3,7 @@ package controllers;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTimePicker;
-import database.BookTable;
+import database.BookLocationTable;
 import database.Database;
 import database.LocationTable;
 import database.RoomTable;
@@ -112,7 +112,7 @@ public class RoomBookingController {
     private void initBooked() {
         User currentUser = UserHelpers.getCurrentUser();
 
-        List<Book> roomsBooked = BookTable.getBookingsForUser(currentUser);
+        List<Book> roomsBooked = BookLocationTable.getBookingsForUser(currentUser);
 
         if(roomsBooked != null) {
 
@@ -214,7 +214,7 @@ public class RoomBookingController {
                 DatabaseHelpers.getDateTime(endDate, endTime)
         );
 
-        boolean booked = BookTable.createBooking(book);
+        boolean booked = BookLocationTable.createBooking(book);
             // Add to rooms booked table
             Room roomD = RoomTable.getRoomByID(book.getRoomID());
 //            roomsAvailable.remove(roomD);

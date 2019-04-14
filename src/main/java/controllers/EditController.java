@@ -3,18 +3,13 @@ package controllers;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
-import database.Database;
+import controllers.maps.AdminMapController;
 import database.LocationTable;
 import helpers.Constants;
 import helpers.UIHelpers;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
-import map.PathFinder;
 import models.map.Location;
-import org.omg.DynamicAny.DynArray;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -160,7 +155,19 @@ public class EditController extends PopUpController implements Initializable {
     }
 
     public void btnDefault_Click(MouseEvent mouseEvent) {
-        PathFinder.setDefLocation(loc.getNodeID());
+//        PathFinder.setDefLocation(loc.getNodeID());
+//        for (AnchorPane pane : panes) {
+//            List<Node> lstNodes1 = new ArrayList<>();
+//            for (Node n : pane.getChildren()) {
+//                if (n instanceof Circle) {
+//                    Circle circle = (Circle) n;
+//                    if (circle.getFill().equals(MapDisplay.nodeStart)) {
+//                        circle.setFill(MapDisplay.nodeFill);
+//                    }
+//                }
+//            }
+//        }
+//        circle.setFill(MapDisplay.nodeStart);
         ScreenController.deactivate();
     }
 }

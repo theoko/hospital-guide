@@ -15,7 +15,7 @@ import java.util.List;
 public class CSVParser {
 
     public static void main(String[] args) throws IOException {
-        if(!Database.databaseExists()) {
+        if(!Database.getDatabase().databaseExists()) {
             parse(FileHelpers.getNodesCSV(), FileHelpers.getEdgesCSV(), FileHelpers.getWorkspacesCSV());
             System.out.println("Parsed");
         } else {

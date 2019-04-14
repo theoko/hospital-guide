@@ -23,5 +23,31 @@ public class Room {
     public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Room) {
+            if((((Room)obj).capacity)==this.getCapacity() && ((Room) obj).getRoomID().equals(this.getRoomID())){
+                return true;
+            }else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public String toString(){
+        return "roomID: "+this.getRoomID()+", Capacity:"+this.getCapacity();
+    }
+//    @Override
+//    public boolean equals(Room roomA){
+//        if(roomA.capacity==this.getCapacity() && roomA.roomID.equals(this.getRoomID())){
+//            return true;
+//        }else {
+//            return false;
+//        }
+//    }
 }
 
