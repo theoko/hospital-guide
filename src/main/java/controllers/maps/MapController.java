@@ -13,6 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Path;
+import javafx.util.Duration;
 import map.MapDisplay;
 import map.PathFinder;
 import models.map.Location;
@@ -72,7 +73,7 @@ public abstract class MapController implements Initializable {
         center = new Point2D(img.getWidth() / 2, img.getHeight() / 2);
 
 //        gesMap.zoomTo(3, center);
-//        gesMap.animate(Duration.millis(1000)).zoomTo(.001, center);
+        gesMap.animate(Duration.millis(1000)).zoomTo(.001, center);
     }
 
     protected void initDirections() {
@@ -143,6 +144,10 @@ public abstract class MapController implements Initializable {
 
     public String getFloor() {
         return floor;
+    }
+
+    public GesturePane getGesMap() {
+        return gesMap;
     }
 
     public void addLine(Path line, String floor) {

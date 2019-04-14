@@ -3,15 +3,13 @@ package controllers.search;
 import com.jfoenix.controls.JFXAutoCompletePopup;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import controllers.maps.AdminMapController;
-import controllers.maps.CustodianMapController;
-import controllers.maps.EmployeeMapController;
-import controllers.maps.UserMapController;
+import controllers.maps.*;
 import database.LocationTable;
 import helpers.UIHelpers;
 import javafx.animation.TranslateTransition;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Point2D;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -32,9 +30,6 @@ public class SearchEngineController {
     private static Object parentController;
 
     public void initialize() {
-
-        // Determine controller
-//        switch (this.parentController.getClass().getName())
 
         searchBox = new JFXTextField();
         searchBox.setMaxWidth(UIHelpers.getScreenWidth());
@@ -123,21 +118,37 @@ public class SearchEngineController {
                     case "controllers.maps.UserMapController":
                         UserMapController userMapController = (UserMapController) SearchEngineController.parentController;
                         userMapController.btnFloor3_Click(null);
+
+                        userMapController.getGesMap()
+                                .animate(Duration.millis(1000))
+                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                     case "controllers.maps.EmployeeMapController":
                         EmployeeMapController employeeMapController = (EmployeeMapController) SearchEngineController.parentController;
                         employeeMapController.btnFloor3_Click(null);
+
+                        employeeMapController.getGesMap()
+                                .animate(Duration.millis(1000))
+                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                     case "controllers.maps.CustodianMapController":
                         CustodianMapController custodianMapController = (CustodianMapController) SearchEngineController.parentController;
                         custodianMapController.btnFloor3_Click(null);
+
+                        custodianMapController.getGesMap()
+                                .animate(Duration.millis(1000))
+                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                     case "controllers.maps.AdminMapController":
                         AdminMapController adminMapController = (AdminMapController) SearchEngineController.parentController;
                         adminMapController.btnFloor3_Click(null);
+
+                        adminMapController.getGesMap()
+                                .animate(Duration.millis(1000))
+                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                 }
@@ -149,21 +160,37 @@ public class SearchEngineController {
                     case "controllers.maps.UserMapController":
                         UserMapController userMapController = (UserMapController) SearchEngineController.parentController;
                         userMapController.btnFloor2_Click(null);
+
+                        userMapController.getGesMap()
+                                .animate(Duration.millis(1000))
+                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                     case "controllers.maps.EmployeeMapController":
                         EmployeeMapController employeeMapController = (EmployeeMapController) SearchEngineController.parentController;
                         employeeMapController.btnFloor2_Click(null);
+
+                        employeeMapController.getGesMap()
+                                .animate(Duration.millis(1000))
+                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                     case "controllers.maps.CustodianMapController":
                         CustodianMapController custodianMapController = (CustodianMapController) SearchEngineController.parentController;
                         custodianMapController.btnFloor2_Click(null);
+
+                        custodianMapController.getGesMap()
+                                .animate(Duration.millis(1000))
+                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                     case "controllers.maps.AdminMapController":
                         AdminMapController adminMapController = (AdminMapController) SearchEngineController.parentController;
                         adminMapController.btnFloor2_Click(null);
+
+                        adminMapController.getGesMap()
+                                .animate(Duration.millis(1000))
+                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                 }
@@ -175,21 +202,37 @@ public class SearchEngineController {
                     case "controllers.maps.UserMapController":
                         UserMapController userMapController = (UserMapController) SearchEngineController.parentController;
                         userMapController.btnFloor1_Click(null);
+
+                        userMapController.getGesMap()
+                                .animate(Duration.millis(1000))
+                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                     case "controllers.maps.EmployeeMapController":
                         EmployeeMapController employeeMapController = (EmployeeMapController) SearchEngineController.parentController;
                         employeeMapController.btnFloor1_Click(null);
+
+                        employeeMapController.getGesMap()
+                                .animate(Duration.millis(1000))
+                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                     case "controllers.maps.CustodianMapController":
                         CustodianMapController custodianMapController = (CustodianMapController) SearchEngineController.parentController;
                         custodianMapController.btnFloor1_Click(null);
+
+                        custodianMapController.getGesMap()
+                                .animate(Duration.millis(1000))
+                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                     case "controllers.maps.AdminMapController":
                         AdminMapController adminMapController = (AdminMapController) SearchEngineController.parentController;
                         adminMapController.btnFloor1_Click(null);
+
+                        adminMapController.getGesMap()
+                                .animate(Duration.millis(1000))
+                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                 }
@@ -201,21 +244,37 @@ public class SearchEngineController {
                     case "controllers.maps.UserMapController":
                         UserMapController userMapController = (UserMapController) SearchEngineController.parentController;
                         userMapController.btnFloorG_Click(null);
+
+                        userMapController.getGesMap()
+                                .animate(Duration.millis(1000))
+                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                     case "controllers.maps.EmployeeMapController":
                         EmployeeMapController employeeMapController = (EmployeeMapController) SearchEngineController.parentController;
                         employeeMapController.btnFloorG_Click(null);
+
+                        employeeMapController.getGesMap()
+                                .animate(Duration.millis(1000))
+                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                     case "controllers.maps.CustodianMapController":
                         CustodianMapController custodianMapController = (CustodianMapController) SearchEngineController.parentController;
                         custodianMapController.btnFloorG_Click(null);
+
+                        custodianMapController.getGesMap()
+                                .animate(Duration.millis(1000))
+                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                     case "controllers.maps.AdminMapController":
                         AdminMapController adminMapController = (AdminMapController) SearchEngineController.parentController;
                         adminMapController.btnFloorG_Click(null);
+
+                        adminMapController.getGesMap()
+                                .animate(Duration.millis(1000))
+                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                 }
@@ -227,21 +286,37 @@ public class SearchEngineController {
                     case "controllers.maps.UserMapController":
                         UserMapController userMapController = (UserMapController) SearchEngineController.parentController;
                         userMapController.btnFloorL1_Click(null);
+
+                        userMapController.getGesMap()
+                                .animate(Duration.millis(1000))
+                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                     case "controllers.maps.EmployeeMapController":
                         EmployeeMapController employeeMapController = (EmployeeMapController) SearchEngineController.parentController;
                         employeeMapController.btnFloorL1_Click(null);
+
+                        employeeMapController.getGesMap()
+                                .animate(Duration.millis(1000))
+                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                     case "controllers.maps.CustodianMapController":
                         CustodianMapController custodianMapController = (CustodianMapController) SearchEngineController.parentController;
                         custodianMapController.btnFloorL1_Click(null);
+
+                        custodianMapController.getGesMap()
+                                .animate(Duration.millis(1000))
+                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                     case "controllers.maps.AdminMapController":
                         AdminMapController adminMapController = (AdminMapController) SearchEngineController.parentController;
                         adminMapController.btnFloorL1_Click(null);
+
+                        adminMapController.getGesMap()
+                                .animate(Duration.millis(1000))
+                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                 }
@@ -253,21 +328,37 @@ public class SearchEngineController {
                     case "controllers.maps.UserMapController":
                         UserMapController userMapController = (UserMapController) SearchEngineController.parentController;
                         userMapController.btnFloorL2_Click(null);
+
+                        userMapController.getGesMap()
+                                .animate(Duration.millis(1000))
+                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                     case "controllers.maps.EmployeeMapController":
                         EmployeeMapController employeeMapController = (EmployeeMapController) SearchEngineController.parentController;
                         employeeMapController.btnFloorL2_Click(null);
+
+                        employeeMapController.getGesMap()
+                                .animate(Duration.millis(1000))
+                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                     case "controllers.maps.CustodianMapController":
                         CustodianMapController custodianMapController = (CustodianMapController) SearchEngineController.parentController;
                         custodianMapController.btnFloorL2_Click(null);
+
+                        custodianMapController.getGesMap()
+                                .animate(Duration.millis(1000))
+                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                     case "controllers.maps.AdminMapController":
                         AdminMapController adminMapController = (AdminMapController) SearchEngineController.parentController;
                         adminMapController.btnFloorL2_Click(null);
+
+                        adminMapController.getGesMap()
+                                .animate(Duration.millis(1000))
+                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                 }
