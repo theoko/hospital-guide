@@ -1,29 +1,71 @@
 package models.search;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import database.LocationTable;
+import edu.smu.tspell.wordnet.Synset;
+import edu.smu.tspell.wordnet.WordNetDatabase;
+import helpers.FileHelpers;
+import models.map.Location;
 
-import edu.smu.tspell.wordnet.*;
+import java.io.IOException;
+import java.util.*;
+import java.util.regex.Pattern;
 
 public class SearchKeywords {
 
     // Main map
     private HashMap<String, List<String>> keys = new HashMap<>();
 
-    // Categories:
+    // WordNet Database
+    WordNetDatabase database = WordNetDatabase.getFileInstance();
 
-    // Food
-    // Drinks
-    // Cafe
-    // Beverage
-    List<String> food = new ArrayList<>();
-    List<String> drinks = new ArrayList<>();
-    List<String> cafe = new ArrayList<>();
-    List<String> beverage = new ArrayList<>();
+    // International
+    List<String> international = new ArrayList<>();
 
-    // Lab
-    // Laboratory
+    /**
+     * NODES
+     */
+
+    // Bathroom
+    List<String> bathroom = new ArrayList<>();
+    List<String> wc = new ArrayList<>();
+
+    // Conference rooms
+    List<String> conference = new ArrayList<>();
+
+    // Departments
+    // Medical departments, clinics, waiting room areas
+    // Podiatrist
+    // Pediatrics
+    List<String> department = new ArrayList<>();
+    List<String> legDoctor = new ArrayList<>();
+    List<String> childDoctor = new ArrayList<>();
+
+    // Elevators
+    List<String> elevator = new ArrayList<>();
+
+    // Exits
+    // Exit/entrance
+    List<String> exit = new ArrayList<>();
+    List<String> entrance = new ArrayList<>();
+    List<String> road = new ArrayList<>();
+    List<String> garage = new ArrayList<>();
+    List<String> parking = new ArrayList<>();
+
+    // Hall
+    // Hallway
+    List<String> hall = new ArrayList<>();
+
+    // Info
+    // Information desks, security desks, lost and found
+    List<String> police = new ArrayList<>();
+    List<String> security = new ArrayList<>();
+    List<String> safety = new ArrayList<>();
+    List<String> info = new ArrayList<>();
+    List<String> information = new ArrayList<>();
+    List<String> service = new ArrayList<>();
+
+    // Labs
+    // Labs, imaging centers, and medical testing areas
     List<String> lab = new ArrayList<>();
     List<String> laboratory = new ArrayList<>();
 
@@ -35,131 +77,268 @@ public class SearchKeywords {
     List<String> catScan = new ArrayList<>();
     List<String> ctScan = new ArrayList<>();
 
-    // Podiatrist
-    // Pediatrics
-    List<String> legDoctor = new ArrayList<>();
-    List<String> childDoctor = new ArrayList<>();
-
-    // Police
-    // Police alternative
-    List<String> police = new ArrayList<>();
-    List<String> security = new ArrayList<>();
-    List<String> safety = new ArrayList<>();
-
-    // Garage
-    // Garage alternative (parking)
-    List<String> garage = new ArrayList<>();
-    List<String> parking = new ArrayList<>();
-
-    // Bathroom
-    List<String> bathroom = new ArrayList<>();
-    List<String> wc = new ArrayList<>();
+    // Restroom
     List<String> restroom = new ArrayList<>();
 
-    // ATM
+    // Retl
+    // Shops, food, pay phone, areas that provide non-medical services for immediate payment
+    // Food
+    // Drinks
+    // Cafe
+    // Beverage
+    List<String> food = new ArrayList<>();
+    List<String> drinks = new ArrayList<>();
+    List<String> cafe = new ArrayList<>();
+    List<String> beverage = new ArrayList<>();
+    List<String> vending = new ArrayList<>();
+    List<String> places = new ArrayList<>();
+
+    // Services
+    // Hospital non-medical services, interpreters, shuttles, spiritual,library, patient financial, etc.
+    List<String> services = new ArrayList<>();
     List<String> atm = new ArrayList<>();
+    List<String> cashier = new ArrayList<>();
+    List<String> library = new ArrayList<>();
+    List<String> porch = new ArrayList<>();
+    List<String> room = new ArrayList<>();
+    List<String> floor = new ArrayList<>();
 
-    // Exit
-    List<String> exit = new ArrayList<>();
+    // Stairs
+    // Staircase
 
-    // Entrance
-    List<String> entrance = new ArrayList<>();
+    // Workt
+    // Workspaces
 
-    // International
-    List<String> international = new ArrayList<>();
+    public static void initialize() {
+
+        if (FileHelpers.checkJar()) {
+
+            // Path to dictionary directory
+            String pathToWordnet = "/data/dictionary.zip";
+
+            try {
+
+                // Copy files to filesystem if necessary
+                String dictionary;
+                dictionary = FileHelpers.extractFolder(pathToWordnet, "dictionary.zip");
+
+                String dictionaryPath = FileHelpers.unzipFile(dictionary, "dictionary");
+
+                // Point to dictionary location
+                System.setProperty("wordnet.database.dir", dictionaryPath);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        } else {
+
+            // Point to dictionary location
+            System.setProperty("wordnet.database.dir", SearchKeywords.class.getResource("/data/dictionary").getFile());
+
+        }
+
+    }
 
     public SearchKeywords() {
 
-        System.setProperty("wordnet.database.dir", SearchKeywords.class.getResource("/data/dictionary").getFile());
+        HashMap<String, Location> locationNodes = LocationTable.getLocations();
 
-        food.add("au bon pain");
-        food.add("restaurant");
-        food.add("drinks");
-        food.add("cafe");
-        food.add("beverage");
-        addSynonyms("food", food);
+        // Nodes
 
-        drinks.add("au bon pain");
-        drinks.add("restaurant");
-        drinks.add("food");
-        drinks.add("cafe");
-        drinks.add("beverage");
-        addSynonyms("drinks", drinks);
+        Iterator locationsIterator = locationNodes.entrySet().iterator();
 
-        cafe.add("au bon pain");
-        cafe.add("restaurant");
-        cafe.add("drinks");
-        cafe.add("food");
-        cafe.add("beverage");
-        addSynonyms("cafe", cafe);
+        while (locationsIterator.hasNext()) {
 
-        beverage.add("au bon pain");
-        beverage.add("restaurant");
-        beverage.add("drinks");
-        beverage.add("cafe");
-        beverage.add("food");
-        addSynonyms("beverage", beverage);
+            Map.Entry pair = (Map.Entry) locationsIterator.next();
 
-        lab.add("laboratory");
-        laboratory.add("lab");
-        addSynonyms("lab", lab);
+            Location currLocation = (Location) pair.getValue();
 
-        addSynonyms("mri", mri);
+            switch (currLocation.getNodeType()) {
+                case BATH:
+                    bathroom.add(currLocation.getLongName());
+                    break;
 
-        catScan.add("ct scan");
-        catScan.add("computer tomography");
-        addSynonyms("cat scan", catScan);
+                case CONF:
+                    conference.add(currLocation.getLongName());
+                    break;
 
-        ctScan.add("ct scan");
-        ctScan.add("cat scan");
-        addSynonyms("ct scan", ctScan);
+                case DEPT:
+                    department.add(currLocation.getLongName());
 
-        legDoctor.add("podiatrist");
-        addSynonyms("podiatrist", legDoctor);
+                    // Orthopedics
+                    if(currLocation.getNodeID().equals("ADEPT00102"))
+                        legDoctor.add(currLocation.getLongName());
+                    break;
 
-        childDoctor.add("pediatrist");
-        childDoctor.add("pediatrics");
-        addSynonyms("pediatrics", childDoctor);
+                case ELEV:
+                    elevator.add(currLocation.getLongName());
+                    break;
 
-        police.add("security");
-        police.add("safety");
-        addSynonyms("police", police);
+                case EXIT:
+                    if (currLocation.getLongName().toLowerCase().contains("exit"))
+                        exit.add(currLocation.getLongName());
+                    else if (currLocation.getLongName().toLowerCase().contains("entrance"))
+                        entrance.add(currLocation.getLongName());
+                    else if (currLocation.getLongName().toLowerCase().contains("parking"))
+                        parking.add(currLocation.getLongName());
+                    else if (currLocation.getLongName().toLowerCase().contains("garage"))
+                        garage.add(currLocation.getLongName());
+                    else if (currLocation.getLongName().toLowerCase().contains("road"))
+                        road.add(currLocation.getLongName());
+                    else
+                        exit.add(currLocation.getLongName());
 
-        security.add("police");
-        security.add("safety");
-        addSynonyms("security", security);
+                    break;
 
-        safety.add("security");
-        safety.add("police");
-        addSynonyms("safety", safety);
+                case HALL:
+                    hall.add(currLocation.getLongName());
 
-        garage.add("parking");
-        garage.add("parking garage");
-        addSynonyms("garage", garage);
+                    break;
 
-        parking.add("garage");
-        parking.add("parking garage");
-        addSynonyms("parking", parking);
+                case INFO:
+                    if(currLocation.getLongName().toLowerCase().contains("security")) {
+                        security.add(currLocation.getLongName());
+                        police.add(currLocation.getLongName());
+                        safety.add(currLocation.getLongName());
+                    } else if (currLocation.getLongName().toLowerCase().contains("information")
+                                || currLocation.getLongName().toLowerCase().contains("info")) {
+                        info.add(currLocation.getLongName());
+                        information.add(currLocation.getLongName());
+                    } else if (currLocation.getLongName().toLowerCase().contains("service")) {
+                        service.add(currLocation.getLongName());
+                    } else {
+                        info.add(currLocation.getLongName());
+                    }
 
-        wc.add("bathroom");
-        wc.add("restroom");
-        addSynonyms("wc", wc);
+                    break;
 
+                case LABS:
+                    lab.add(currLocation.getLongName());
+
+                    // MRI CT Scan Imaging
+                    if(currLocation.getNodeID().equals("ALABS001L2")) {
+                        mri.add(currLocation.getLongName());
+                        catScan.add(currLocation.getLongName());
+                        ctScan.add(currLocation.getLongName());
+                    }
+                    break;
+
+                case REST:
+                    restroom.add(currLocation.getLongName());
+
+                    break;
+
+                case RETL:
+                    if(currLocation.getLongName().toLowerCase().contains("cafe")) {
+                        cafe.add(currLocation.getLongName());
+                    } else if (currLocation.getLongName().toLowerCase().contains("vending")) {
+                        vending.add(currLocation.getLongName());
+                    } else {
+                        places.add(currLocation.getLongName());
+                    }
+
+                    break;
+
+                case SERV:
+                    if (currLocation.getLongName().toLowerCase().contains("service")) {
+                        services.add(currLocation.getLongName());
+                    } else if (currLocation.getLongName().toLowerCase().contains("atm")) {
+                        atm.add(currLocation.getLongName());
+                    } else if (currLocation.getLongName().toLowerCase().contains("cashier")) {
+                        cashier.add(currLocation.getLongName());
+                    } else if (currLocation.getLongName().toLowerCase().contains("library")) {
+                        library.add(currLocation.getLongName());
+                    } else if (currLocation.getLongName().toLowerCase().contains("porch")) {
+                        porch.add(currLocation.getLongName());
+                    } else if (currLocation.getLongName().toLowerCase().contains("room")) {
+                        room.add(currLocation.getLongName());
+                    } else if (currLocation.getLongName().toLowerCase().contains("floor")) {
+                        floor.add(currLocation.getLongName());
+                    } else {
+                        services.add(currLocation.getLongName());
+                    }
+
+                    break;
+
+                case STAI:
+
+
+                    break;
+
+                case WRKT:
+                    System.out.println(currLocation.getLongName());
+
+                    break;
+
+                default:
+            }
+
+            locationsIterator.remove();
+        }
+
+        // Add to main map
+//        keys.put("food", food);
+//        keys.put("drinks", drinks);
+//        keys.put("cafe", cafe);
+//        keys.put("beverage", beverage);
+//        keys.put("cat scan", catScan);
+//        keys.put("ct scan", ctScan);
+//        keys.put("mri", mri);
+//        keys.put("leg doctor", legDoctor);
+//        keys.put("child doctor", childDoctor);
+//        keys.put("police", police);
+//        keys.put("security", security);
+//        keys.put("safety", safety);
+//        keys.put("garage", garage);
+//        keys.put("parking", parking);
+//        keys.put("wc", wc);
+//        keys.put("atm", atm);
+//        keys.put("cash", atm);
+//        keys.put("entrance", entrance);
+//        keys.put("international", international);
+
+        // Nodes
+
+        // Bathroom
         bathroom.add("wc");
         bathroom.add("restroom");
-        addSynonyms("bathroom", bathroom);
-
         restroom.add("bathroom");
         restroom.add("wc");
-        addSynonyms("restroom", restroom);
+        wc.add("bathroom");
+        wc.add("restroom");
+        this.addSynonyms("wc", wc);
+        this.addSynonyms("bathroom", bathroom);
+        this.addSynonyms("restroom", restroom);
+        keys.put("restroom", restroom);
+        keys.put("bathroom", bathroom);
+        this.addSynonymsToMap("bathroom", bathroom);
 
-        atm.add("atm");
-        atm.add("money");
-        atm.add("cash");
-        atm.add("hard cash");
-        atm.add("deep pockets");
-        addSynonyms("atm", atm);
+        // Conference rooms
+        keys.put("conference", conference);
+        this.addSynonymsToMap("conference", conference);
 
+        // Department
+        /*this.addSynonyms("mri", mri);
+        catScan.add("ct scan");
+        catScan.add("computer tomography");
+        this.addSynonyms("cat scan", catScan);
+        ctScan.add("ct scan");
+        ctScan.add("cat scan");
+        this.addSynonyms("ct scan", ctScan);
+        legDoctor.add("podiatrist");
+        this.addSynonyms("podiatrist", legDoctor);
+        childDoctor.add("pediatrist");
+        childDoctor.add("pediatrics");
+        this.addSynonyms("pediatrics", childDoctor);*/
+
+
+        // Elevators
+        this.addSynonyms("elevator", elevator);
+        keys.put("elevator", elevator);
+        this.addSynonymsToMap("elevator", elevator);
+
+        // Exits
         exit.add("gate");
         exit.add("egress");
         exit.add("doorway");
@@ -169,51 +348,18 @@ public class SearchKeywords {
         exit.add("vent");
         exit.add("departure");
         exit.add("evacuation");
-        addSynonyms("exit", exit);
+        this.addSynonyms("exit", exit);
+        keys.put("exit", exit);
+        this.addSynonymsToMap("exit", exit);
 
-        entrance.add("ingress");
-        entrance.add("access");
-        entrance.add("approach");
-        entrance.add("door");
-        entrance.add("doorway");
-        entrance.add("portal");
-        entrance.add("gate");
-        entrance.add("lobby");
-        entrance.add("entryway");
-        addSynonyms("entrance", entrance);
-
-        international.add("salida");
-        international.add("ingles");
-        international.add("hola");
-        international.add("domingo");
-        international.add("zapato");
-        international.add("mano");
-
-
-        // Add to main map
-        keys.put("food", food);
-        keys.put("drinks", drinks);
-        keys.put("cafe", cafe);
-        keys.put("beverage", beverage);
+        // Labs
+        lab.add("laboratory");
+        laboratory.add("lab");
+        this.addSynonyms("lab", lab);
         keys.put("lab", lab);
         keys.put("laboratory", laboratory);
-        keys.put("cat scan", catScan);
-        keys.put("ct scan", ctScan);
-        keys.put("mri", mri);
-        keys.put("leg doctor", legDoctor);
-        keys.put("child doctor", childDoctor);
-        keys.put("police", police);
-        keys.put("security", security);
-        keys.put("safety", safety);
-        keys.put("garage", garage);
-        keys.put("parking", parking);
-        keys.put("wc", wc);
-        keys.put("restroom", restroom);
-        keys.put("bathroom", bathroom);
-        keys.put("atm", atm);
-        keys.put("exit", exit);
-        keys.put("entrance", entrance);
-        keys.put("international", international);
+        this.addSynonymsToMap("lab", lab);
+        this.addSynonymsToMap("laboratory", laboratory);
 
     }
 
@@ -221,10 +367,15 @@ public class SearchKeywords {
         return keys;
     }
 
+    private void addSynonymsToMap(String word, List<String> wordlist) {
+        for(String synonym : this.getSynonyms(word)) {
+            keys.put(synonym, wordlist);
+        }
+    }
+
     private void addSynonyms(String wordForm, List<String> keywords) {
 
         //  Get the synsets containing the word form
-        WordNetDatabase database = WordNetDatabase.getFileInstance();
         Synset[] synsets = database.getSynsets(wordForm);
 
         //  Display the word forms and definitions for synsets retrieved
@@ -260,6 +411,57 @@ public class SearchKeywords {
 //            System.err.println("No synsets exist that contain " +
 //                    "the word form '" + wordForm + "'");
         }
+
+    }
+
+    public Set<String> getSynonyms(String word) {
+
+        Set<String> synonyms = new HashSet<>();
+        Synset[] synsets = database.getSynsets(word);
+
+        for (int i = 0; i < synsets.length; i++)
+        {
+            String[] wordForms = synsets[i].getWordForms();
+
+            for (int j = 0; j < wordForms.length; j++)
+            {
+
+                String genWord = wordForms[j];
+
+                synonyms.add(genWord);
+
+            }
+        }
+
+        return synonyms;
+
+    }
+
+    public boolean validEnglishWord(String word) {
+
+        return database.getSynsets(word).length > 0;
+
+    }
+
+    private boolean partiallyContains(List<String> words, String word) {
+
+        for(int i=0; i<words.size(); i++) {
+
+            System.out.println("This string: " + words.get(i) + ", Detect: " + word);
+            if(Pattern.compile(Pattern.quote(words.get(i)), Pattern.CASE_INSENSITIVE).matcher(word).find()) {
+                System.out.println("Contained: " + i + ": " + words.get(i));
+                return true;
+            }
+
+//            System.out.println(words.get(i));
+//            System.out.println("Contains? " + word);
+//            if(words.get(i).contains(word)) {
+//
+//            }
+
+        }
+
+        return false;
 
     }
 

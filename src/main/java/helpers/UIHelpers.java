@@ -1,10 +1,6 @@
 package helpers;
 
-import controllers.AdminMapController;
-import controllers.ScreenController;
-import controllers.VisualRealtimeController;
-import database.LocationTable;
-import javafx.scene.control.ScrollPane;
+import controllers.maps.AdminMapController;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -50,8 +46,8 @@ public class UIHelpers {
             try {
                 evt.consume();
                 AdminMapController.locationSelectEvent(loc);
-                if(!AdminMapController.isEnableEditEdge())
-                    ScreenController.popUp(Constants.Routes.EDIT_LOCATION, loc, map, panes, c);
+//                if(!AdminMapController.isEnableEditEdge())
+//                    ScreenController.popUp(Constants.Routes.EDIT_LOCATION, loc, map, panes, c);
             } catch (Exception e) {
                 throw new UnsupportedOperationException(e);
             }

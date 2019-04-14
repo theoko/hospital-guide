@@ -1,6 +1,19 @@
 .jfx-button {
     -fx-background-color: #022D5A;
     -fx-text-fill: white;
+    -fx-alignment: center;
+    -fx-font-size: 15.0;
+}
+
+.unhiglight {
+    -fx-border-color: transparent;
+}
+
+.highlight {
+    -fx-border-color: #ffe138;
+    -fx-border-radius: 25.0;
+    -fx-border-style: solid;
+    -fx-border-width: 3.0;
 }
 
 .titled-pane
