@@ -1,10 +1,9 @@
 package controllers.maps;
 
 import com.jfoenix.controls.JFXButton;
-import controllers.ScreenController;
-import helpers.Constants;
 import images.ImageFactory;
 import javafx.fxml.Initializable;
+import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
@@ -12,7 +11,6 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Path;
@@ -30,6 +28,10 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public abstract class MapController implements Initializable {
+    private final double MAX_ZOOM = 2.0;
+    private final double MIN_ZOOM = 0.35;
+    private final double ANIMATION_TIME = 1000;
+
     public GesturePane gesMap;
     public ImageView imgMap;
     public JFXButton btnFloor3;
@@ -50,33 +52,34 @@ public abstract class MapController implements Initializable {
     public ImageView imgArrowL2;
 
     protected String floor;
-    protected List<List<Path>> lstLines;
-    protected List<String> lstTransitions;
+    protected List<LineTuple> lstLineTransits;
+    private int transitIt;
     protected Point2D center;
     protected static String tempStart;
     protected Map map;
 
     public MapController() {
-        lstLines = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
-            lstLines.add(new ArrayList<>());
-        }
         floor = "3";
-        lstTransitions = new LinkedList<>();
+        lstLineTransits = new LinkedList<>();
+        transitIt = 0;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         gesMap.setVBarEnabled(false);
         gesMap.setHBarEnabled(false);
+        gesMap.setMaxScale(MAX_ZOOM);
+        gesMap.setMinScale(MIN_ZOOM);
 
         updateButtons();
         Image img = ImageFactory.getImage("3");
         imgMap.setImage(img);
-        center = new Point2D(img.getWidth() / 2, img.getHeight() / 2);
-
-        gesMap.zoomTo(0.001, center);
-//        gesMap.animate(Duration.millis(1000)).zoomTo(.001, center);
+        gesMap.viewportBoundProperty().addListener(((observable, oldValue, newValue) -> {
+            center = new Point2D(img.getWidth() / 2, img.getHeight() / 2);
+            gesMap.centreOn(center);
+            gesMap.zoomTo(MAX_ZOOM, center);
+            gesMap.animate(Duration.millis(ANIMATION_TIME)).zoomTo(MIN_ZOOM, center);
+        }));
     }
 
     protected void initDirections() {
@@ -110,70 +113,90 @@ public abstract class MapController implements Initializable {
     protected void showFloor3() {
         imgMap.setImage(ImageFactory.getImage("3"));
         floor = "3";
-        upDateLines();
+        updateLines();
         updateButtons();
+        displayHint();
     }
 
     protected void showFloor2() {
         imgMap.setImage(ImageFactory.getImage("2"));
         floor = "2";
-        upDateLines();
+        updateLines();
         updateButtons();
+        displayHint();
     }
 
     protected void showFloor1() {
         imgMap.setImage(ImageFactory.getImage("1"));
         floor = "1";
-        upDateLines();
+        updateLines();
         updateButtons();
+        displayHint();
     }
 
     protected void showFloorG() {
         imgMap.setImage(ImageFactory.getImage("G"));
         floor = "G";
-        upDateLines();
+        updateLines();
         updateButtons();
+        displayHint();
     }
 
     protected void showFloorL1() {
         imgMap.setImage(ImageFactory.getImage("L1"));
         floor = "L1";
-        upDateLines();
+        updateLines();
         updateButtons();
+        displayHint();
     }
 
     protected void showFloorL2() {
         imgMap.setImage(ImageFactory.getImage("L2"));
         floor = "L2";
-        upDateLines();
+        updateLines();
         updateButtons();
+        displayHint();
     }
 
     public String getFloor() {
         return floor;
     }
 
-    public void addLine(Path line, String floor) {
-        lstLines.get(PathFinder.floorToInt(floor)).add(line);
-        lstTransitions.add(floor);
-        upDateLines();
+    private class LineTuple {
+        private Path line;
+        private String floor;
+
+        public LineTuple(Path line, String floor) {
+            this.line = line;
+            this.floor = floor;
+        }
+
+        public Path getLine() {
+            return line;
+        }
+
+        public String getFloor() {
+            return floor;
+        }
+
     }
 
-    private void upDateLines() {
-        for (int i = 0; i < lstLines.size(); i++) {
-            boolean isCurr = i == PathFinder.floorToInt(floor);
-            for (Path line : lstLines.get(i)) {
-                line.setStroke(PathFinder.colorLine(isCurr));
-            }
+    public void addLine(Path line, String floor) {
+        lstLineTransits.add(new LineTuple(line, floor));
+        updateLines();
+    }
+
+    private void updateLines() {
+        for (LineTuple lt : lstLineTransits) {
+            Path ltLine = lt.getLine();
+            String ltFloor = lt.getFloor();
+            ltLine.setStroke(PathFinder.colorLine(ltFloor.equals(floor)));
         }
     }
 
     public void clearPath(Location end) {
-        lstLines = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
-            lstLines.add(new ArrayList<>());
-        }
-        lstTransitions = new LinkedList<>();
+        lstLineTransits = new LinkedList<>();
+        transitIt = 0;
 
         List<Node> lstNodes = new ArrayList<>();
         for (Node n : panMap.getChildren()) {
@@ -196,7 +219,8 @@ public abstract class MapController implements Initializable {
 
     public void displayPath(Path line) {
         panMap.getChildren().add(0, line);
-        String startFloor = lstTransitions.remove(0);
+        String startFloor = lstLineTransits.get(transitIt).getFloor();
+        Path startLine = lstLineTransits.get(transitIt++).getLine();
         switch (startFloor) {
             case "3":
                 showFloor3();
@@ -219,10 +243,17 @@ public abstract class MapController implements Initializable {
     };
 
     private void displayHint() {
-        clearArrow();
-        if (lstTransitions.size() > 0) {
-            String nxtFloor = lstTransitions.remove(0);
-            displayArrow(nxtFloor);
+        if (lstLineTransits.size() > 0) {
+            String lstFloor = lstLineTransits.get(transitIt - 1).getFloor();
+            if (lstFloor.equals(floor)) {
+                clearArrow();
+                Path line = lstLineTransits.get(transitIt - 1).getLine();
+                panToLine(line);
+                if (lstLineTransits.size() > transitIt) {
+                    String nxtFloor = lstLineTransits.get(transitIt++).getFloor();
+                    displayArrow(nxtFloor);
+                }
+            }
         }
     }
 
@@ -265,7 +296,6 @@ public abstract class MapController implements Initializable {
                 styleButton(btnFloorL2, true);
                 break;
         }
-        displayHint();
     }
 
     private void clearArrow() {
@@ -309,5 +339,31 @@ public abstract class MapController implements Initializable {
         } else {
             btn.getStyleClass().add("unhighlight");
         }
+    }
+
+    private void panToLine(Path line) {
+        Bounds lineBounds = line.getBoundsInParent();
+        double startX = lineBounds.getMinX();
+        double startY = lineBounds.getMinY();
+        double endX = lineBounds.getMaxX();
+        double endY = lineBounds.getMaxY();
+        Point2D center = new Point2D((startX + endX) / 2, (startY + endY) / 2);
+
+        double width = endX - startX;
+        double height = endY - startY;
+        double zWidth = widthZoom(width);
+        double zHeight = heightZoom(height);
+        double zoom = (zWidth > zHeight) ? zHeight : zWidth;
+
+        gesMap.zoomTo(zoom, center);
+        gesMap.animate(Duration.millis(ANIMATION_TIME)).centreOn(center);
+    }
+
+    private double widthZoom(double width) {
+        return (width * -0.001534) + 2.837;
+    }
+
+    private double heightZoom(double height) {
+        return (height * -0.002259) + 2.546;
     }
 }

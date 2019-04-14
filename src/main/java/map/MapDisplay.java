@@ -27,11 +27,11 @@ public class MapDisplay {
     private final static double yShift = 730.0;
     private final static double scale = 0.475;
     public final static double opac = 0.25;
-    public final static Color nodeFill = Color.WHITE;
+    public final static Color nodeFill = Color.NAVY;
     public final static Color nodeStart = Color.GREEN;
     public final static Color nodeEnd = Color.RED;
     private final static Color hallFill = Color.GRAY;
-    private final static Color nodeOutline = Color.BLACK;
+    private final static Color nodeOutline = Color.GOLD;
     private final static Color edgeFill = Color.BLACK;
 
     private static Map map = MapParser.parse();
