@@ -30,7 +30,7 @@ public class MapDisplay {
     public final static Color nodeFill = Color.NAVY;
     public final static Color nodeStart = Color.GREEN;
     public final static Color nodeEnd = Color.RED;
-    private final static Color hallFill = Color.GRAY;
+    private final static Color edgeOutline = Color.BLACK;
     private final static Color nodeOutline = Color.GOLD;
     private final static Color edgeFill = Color.BLACK;
 
@@ -44,23 +44,23 @@ public class MapDisplay {
      * Display the graph on a map for the default user (no halls, info boxes)
      */
     public static void displayUser(MapController mc) {
-        displayNodes(mc, Constants.Routes.USER_INFO);
+        displayNodes(mc, Constants.Routes.USER_INFO, false);
     }
 
     public static void displayEmployee(MapController mc) {
-        displayNodes(mc, Constants.Routes.EMPLOYEE_INFO);
+        displayNodes(mc, Constants.Routes.EMPLOYEE_INFO, false);
     }
 
     public static void displayCust(MapController mc) {
-        displayNodes(mc, Constants.Routes.CUSTODIAN_INFO);
+        displayNodes(mc, Constants.Routes.CUSTODIAN_INFO, false);
     }
 
     public static void displayAdmin(MapController mc) {
         displayEdges(mc);
-        displayNodes(mc, Constants.Routes.EDIT_LOCATION);
+        displayNodes(mc, Constants.Routes.EDIT_LOCATION, true);
     }
 
-    private static void displayNodes(MapController mc, Constants.Routes route) {
+    private static void displayNodes(MapController mc, Constants.Routes route, boolean isAdmin) {
         mc.setMap(map);
         String start = MapController.getTempStart();
         String end = "";
@@ -80,21 +80,21 @@ public class MapDisplay {
         for (Location loc : lstLocations.values()) {
             if (loc.getNodeID().equals(start)) {
                 if (loc.getFloor().equals(floor)) {
-                    mc.panMap.getChildren().add(createCircle(mc, loc, NodeStyle.START, 1, route));
+                    mc.panMap.getChildren().add(createCircle(mc, loc, NodeStyle.START, 1, route, isAdmin));
                 } else {
-                    mc.panMap.getChildren().add(createCircle(mc, loc, NodeStyle.START, opac, route));
+                    mc.panMap.getChildren().add(createCircle(mc, loc, NodeStyle.START, opac, route, isAdmin));
                 }
             } else if (loc.getNodeID().equals(end)) {
                 if (loc.getFloor().equals(floor)) {
-                    mc.panMap.getChildren().add(createCircle(mc, loc, NodeStyle.END, 1, route));
+                    mc.panMap.getChildren().add(createCircle(mc, loc, NodeStyle.END, 1, route, isAdmin));
                 } else {
-                    mc.panMap.getChildren().add(createCircle(mc, loc, NodeStyle.END, opac, route));
+                    mc.panMap.getChildren().add(createCircle(mc, loc, NodeStyle.END, opac, route, isAdmin));
                 }
             } else if (loc.getFloor().equals(mc.getFloor())) {
                 if (loc.getNodeType() != Constants.NodeType.HALL) {
-                    mc.panMap.getChildren().add(createCircle(mc, loc, NodeStyle.REGULAR, 1, route));
+                    mc.panMap.getChildren().add(createCircle(mc, loc, NodeStyle.REGULAR, 1, route, isAdmin));
                 } else if (mc.isAdmin()) {
-                    mc.panMap.getChildren().add(0, createCircle(mc, loc, NodeStyle.POINT, 1, route));
+                    mc.panMap.getChildren().add(0, createCircle(mc, loc, NodeStyle.POINT, 1, route, isAdmin));
                 }
             }
         }
@@ -114,12 +114,14 @@ public class MapDisplay {
                 Line line = new Line(x1, y1, x2, y2);
                 line.setStroke(edgeFill);
                 line.setStrokeWidth(edgeWidth);
+                line.setId(edge.getEdgeID());
                 mc.panMap.getChildren().add(line);
+                edge.setLine(line);
             }
         }
     }
 
-    private static Circle createCircle(MapController mc, Location loc, NodeStyle nodeStyle, double opacity, Constants.Routes route) {
+    private static Circle createCircle(MapController mc, Location loc, NodeStyle nodeStyle, double opacity, Constants.Routes route, boolean isAdmin) {
         double xLoc = loc.getxCord();
         double yLoc = loc.getyCord();
         Circle circle = new Circle(xLoc, yLoc, locRadius);
@@ -141,13 +143,18 @@ public class MapDisplay {
             default:
                 circle.setFill(edgeFill);
                 circle.setRadius(hallRadius);
+                circle.setStroke(edgeOutline);
                 break;
         }
 
         circle.setOnMouseClicked(event -> {
             try {
                 event.consume();
-                ScreenController.infoPopUp(route, loc, mc, map);
+                if (!isAdmin) {
+                    ScreenController.infoPopUp(route, loc, mc, map);
+                } else {
+                    ScreenController.adminPopUp(route, loc, mc);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }

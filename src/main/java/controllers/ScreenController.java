@@ -118,6 +118,18 @@ public class ScreenController {
         displayPopUp(root);
     }
 
+    public static void adminPopUp(Constants.Routes route, Location loc, MapController mc) throws IOException {
+        stage = new Stage();
+        URL url = routeToURL(route);
+
+        FXMLLoader loader = new FXMLLoader(url);
+        Parent root = loader.load();
+        PopUpController pc = loader.getController();
+        pc.setLoc(loc);
+        pc.setMc(mc);
+        displayPopUp(root);
+    }
+
     public static void popUp(Constants.Routes route) throws Exception {
         stage = new Stage();
         URL url = routeToURL(route);
