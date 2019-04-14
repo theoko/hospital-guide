@@ -1,10 +1,11 @@
 package controllers.maps;
 
 import controllers.ScreenController;
+import controllers.search.SearchEngineController;
 import helpers.Constants;
-import javafx.scene.image.ImageView;
+import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Path;
 import map.MapDisplay;
 
@@ -16,6 +17,7 @@ public class UserMapController extends MapController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
+        SearchEngineController.setParentController(this);
         MapDisplay.displayUser(this);
         initDirections();
     }

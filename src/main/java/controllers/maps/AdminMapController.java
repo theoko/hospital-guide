@@ -1,6 +1,7 @@
 package controllers.maps;
 
 import controllers.ScreenController;
+import controllers.search.SearchEngineController;
 import helpers.Constants;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -17,6 +18,7 @@ public class AdminMapController extends MapController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
+        SearchEngineController.setParentController(this);
         MapDisplay.displayAdmin(this);
     }
 

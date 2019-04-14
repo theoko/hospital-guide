@@ -3,6 +3,11 @@ package controllers.search;
 import com.jfoenix.controls.JFXAutoCompletePopup;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import controllers.maps.AdminMapController;
+import controllers.maps.CustodianMapController;
+import controllers.maps.EmployeeMapController;
+import controllers.maps.UserMapController;
+import database.LocationTable;
 import helpers.UIHelpers;
 import javafx.animation.TranslateTransition;
 import javafx.event.EventHandler;
@@ -11,8 +16,10 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
+import models.map.Location;
 import models.search.SearchEngine;
 
+import java.util.Iterator;
 import java.util.Set;
 
 public class SearchEngineController {
@@ -22,8 +29,13 @@ public class SearchEngineController {
     public JFXButton btnDisplaySearch;
     public JFXTextField searchBox;
     public JFXButton btnDisplayBack;
+    private static Object parentController;
 
     public void initialize() {
+
+        // Determine controller
+//        switch (this.parentController.getClass().getName())
+
         searchBox = new JFXTextField();
         searchBox.setMaxWidth(UIHelpers.getScreenWidth());
         searchBox.setPadding(new Insets(5));
@@ -33,9 +45,31 @@ public class SearchEngineController {
         autoCompletePopup.setSelectionHandler(event -> {
             searchBox.setText(event.getObject());
 
-            // Focus on node
+            // Check database for nodes
+            Set<Location> locations = LocationTable.getLocationByLongName(event.getObject());
 
-            // Display options if we match multiple nodes with same name
+            if (locations.isEmpty()) {
+
+                // Handle with search engine API
+
+            } else {
+
+                if (locations.size() == 1) {
+                    // Focus on node
+                    Iterator iterator = locations.iterator();
+
+                    Location location = (Location) iterator.next();
+
+                    focusOnNode(location);
+
+                } else {
+                    // Display options if we match multiple nodes with same name
+                    for(Location location : locations) {
+                        System.out.println(location.getNodeID());
+                    }
+                }
+
+            }
 
         });
 
@@ -76,6 +110,173 @@ public class SearchEngineController {
 
     }
 
+    public static void setParentController(Object parentController) {
+        SearchEngineController.parentController = parentController;
+    }
+
+    public static void focusOnNode(Location location) {
+
+        switch (location.getFloor()) {
+            case "3":
+                switch (SearchEngineController.parentController.getClass().getName()) {
+
+                    case "controllers.maps.UserMapController":
+                        UserMapController userMapController = (UserMapController) SearchEngineController.parentController;
+                        userMapController.btnFloor3_Click(null);
+                        break;
+
+                    case "controllers.maps.EmployeeMapController":
+                        EmployeeMapController employeeMapController = (EmployeeMapController) SearchEngineController.parentController;
+                        employeeMapController.btnFloor3_Click(null);
+                        break;
+
+                    case "controllers.maps.CustodianMapController":
+                        CustodianMapController custodianMapController = (CustodianMapController) SearchEngineController.parentController;
+                        custodianMapController.btnFloor3_Click(null);
+                        break;
+
+                    case "controllers.maps.AdminMapController":
+                        AdminMapController adminMapController = (AdminMapController) SearchEngineController.parentController;
+                        adminMapController.btnFloor3_Click(null);
+                        break;
+
+                }
+                break;
+
+            case "2":
+                switch (SearchEngineController.parentController.getClass().getName()) {
+
+                    case "controllers.maps.UserMapController":
+                        UserMapController userMapController = (UserMapController) SearchEngineController.parentController;
+                        userMapController.btnFloor2_Click(null);
+                        break;
+
+                    case "controllers.maps.EmployeeMapController":
+                        EmployeeMapController employeeMapController = (EmployeeMapController) SearchEngineController.parentController;
+                        employeeMapController.btnFloor2_Click(null);
+                        break;
+
+                    case "controllers.maps.CustodianMapController":
+                        CustodianMapController custodianMapController = (CustodianMapController) SearchEngineController.parentController;
+                        custodianMapController.btnFloor2_Click(null);
+                        break;
+
+                    case "controllers.maps.AdminMapController":
+                        AdminMapController adminMapController = (AdminMapController) SearchEngineController.parentController;
+                        adminMapController.btnFloor2_Click(null);
+                        break;
+
+                }
+                break;
+
+            case "1":
+                switch (SearchEngineController.parentController.getClass().getName()) {
+
+                    case "controllers.maps.UserMapController":
+                        UserMapController userMapController = (UserMapController) SearchEngineController.parentController;
+                        userMapController.btnFloor1_Click(null);
+                        break;
+
+                    case "controllers.maps.EmployeeMapController":
+                        EmployeeMapController employeeMapController = (EmployeeMapController) SearchEngineController.parentController;
+                        employeeMapController.btnFloor1_Click(null);
+                        break;
+
+                    case "controllers.maps.CustodianMapController":
+                        CustodianMapController custodianMapController = (CustodianMapController) SearchEngineController.parentController;
+                        custodianMapController.btnFloor1_Click(null);
+                        break;
+
+                    case "controllers.maps.AdminMapController":
+                        AdminMapController adminMapController = (AdminMapController) SearchEngineController.parentController;
+                        adminMapController.btnFloor1_Click(null);
+                        break;
+
+                }
+                break;
+
+            case "G":
+                switch (SearchEngineController.parentController.getClass().getName()) {
+
+                    case "controllers.maps.UserMapController":
+                        UserMapController userMapController = (UserMapController) SearchEngineController.parentController;
+                        userMapController.btnFloorG_Click(null);
+                        break;
+
+                    case "controllers.maps.EmployeeMapController":
+                        EmployeeMapController employeeMapController = (EmployeeMapController) SearchEngineController.parentController;
+                        employeeMapController.btnFloorG_Click(null);
+                        break;
+
+                    case "controllers.maps.CustodianMapController":
+                        CustodianMapController custodianMapController = (CustodianMapController) SearchEngineController.parentController;
+                        custodianMapController.btnFloorG_Click(null);
+                        break;
+
+                    case "controllers.maps.AdminMapController":
+                        AdminMapController adminMapController = (AdminMapController) SearchEngineController.parentController;
+                        adminMapController.btnFloorG_Click(null);
+                        break;
+
+                }
+                break;
+
+            case "L1":
+                switch (SearchEngineController.parentController.getClass().getName()) {
+
+                    case "controllers.maps.UserMapController":
+                        UserMapController userMapController = (UserMapController) SearchEngineController.parentController;
+                        userMapController.btnFloorL1_Click(null);
+                        break;
+
+                    case "controllers.maps.EmployeeMapController":
+                        EmployeeMapController employeeMapController = (EmployeeMapController) SearchEngineController.parentController;
+                        employeeMapController.btnFloorL1_Click(null);
+                        break;
+
+                    case "controllers.maps.CustodianMapController":
+                        CustodianMapController custodianMapController = (CustodianMapController) SearchEngineController.parentController;
+                        custodianMapController.btnFloorL1_Click(null);
+                        break;
+
+                    case "controllers.maps.AdminMapController":
+                        AdminMapController adminMapController = (AdminMapController) SearchEngineController.parentController;
+                        adminMapController.btnFloorL1_Click(null);
+                        break;
+
+                }
+                break;
+
+            case "L2":
+                switch (SearchEngineController.parentController.getClass().getName()) {
+
+                    case "controllers.maps.UserMapController":
+                        UserMapController userMapController = (UserMapController) SearchEngineController.parentController;
+                        userMapController.btnFloorL2_Click(null);
+                        break;
+
+                    case "controllers.maps.EmployeeMapController":
+                        EmployeeMapController employeeMapController = (EmployeeMapController) SearchEngineController.parentController;
+                        employeeMapController.btnFloorL2_Click(null);
+                        break;
+
+                    case "controllers.maps.CustodianMapController":
+                        CustodianMapController custodianMapController = (CustodianMapController) SearchEngineController.parentController;
+                        custodianMapController.btnFloorL2_Click(null);
+                        break;
+
+                    case "controllers.maps.AdminMapController":
+                        AdminMapController adminMapController = (AdminMapController) SearchEngineController.parentController;
+                        adminMapController.btnFloorL2_Click(null);
+                        break;
+
+                }
+                break;
+
+            default:
+        }
+
+    }
 
     double translation = -(UIHelpers.getScreenWidth() / 2.0) + 50.0;
     public void displaySearch(MouseEvent event) {

@@ -1,7 +1,9 @@
 package controllers.maps;
 
 import controllers.ScreenController;
+import controllers.search.SearchEngineController;
 import helpers.Constants;
+import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Path;
 import map.MapDisplay;
@@ -10,9 +12,11 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class CustodianMapController extends MapController {
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
+        SearchEngineController.setParentController(this);
         MapDisplay.displayCust(this);
         initDirections();
     }
