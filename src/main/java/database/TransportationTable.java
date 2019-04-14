@@ -38,9 +38,7 @@ public class TransportationTable {
                             "requestTime TIMESTAMP, " +
                             "servicerID INT REFERENCES " + Constants.USERS_TABLE + "(userID), " +
                             "claimedTime TIMESTAMP, " +
-                            "completedTime TIMESTAMP, " +
-                            "CONSTRAINT priority_enum CHECK (priority in ('LOW', 'MEDIUM', 'HIGH')), " +
-                            "CONSTRAINT status_enum CHECK (status in ('INCOMPLETE', 'COMPLETE')))"
+                            "completedTime TIMESTAMP)"
             );
         } catch (SQLException | NullPointerException e) {
             e.printStackTrace();

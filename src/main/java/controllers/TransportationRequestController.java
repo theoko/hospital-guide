@@ -170,7 +170,13 @@ public class TransportationRequestController  {
     public void requestClick(){updateRequestBTNs();}
 
     public void updateRequestBTNs(){
-        btnSendRequest.setDisable(cmbStartLoc.getValue().equals("")||cmbEndLoc.getValue().equals("")||txtDetails.getText().equals("")||datDate.getValue().equals("")||datTime.getValue().equals(""));
+        // TODO replace with search engine...
+        boolean startLocEmpty = (cmbStartLoc.getValue() == null);
+        boolean endLocEmpty = (cmbEndLoc.getValue() == null);
+        boolean detailsEmpty = txtDetails.getText().equals("");
+        boolean dateEmpty = (datDate.getValue() == null);
+        boolean timeEmpty = (datTime.getValue() == null);
+        btnSendRequest.setDisable(startLocEmpty || endLocEmpty || detailsEmpty || dateEmpty || timeEmpty);
     }
 
     public void updateTableBTNs(){
