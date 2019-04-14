@@ -29,6 +29,8 @@ public class SearchEngineController {
     public JFXButton btnDisplayBack;
     private static Object parentController;
 
+    static final double ZOOM_SCALE = 2;
+
     public void initialize() {
 
         searchBox = new JFXTextField();
@@ -121,7 +123,7 @@ public class SearchEngineController {
 
                         userMapController.getGesMap()
                                 .animate(Duration.millis(1000))
-                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
+                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                     case "controllers.maps.EmployeeMapController":
@@ -130,7 +132,7 @@ public class SearchEngineController {
 
                         employeeMapController.getGesMap()
                                 .animate(Duration.millis(1000))
-                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
+                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                     case "controllers.maps.CustodianMapController":
@@ -139,7 +141,7 @@ public class SearchEngineController {
 
                         custodianMapController.getGesMap()
                                 .animate(Duration.millis(1000))
-                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
+                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                     case "controllers.maps.AdminMapController":
@@ -148,7 +150,7 @@ public class SearchEngineController {
 
                         adminMapController.getGesMap()
                                 .animate(Duration.millis(1000))
-                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
+                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                 }
@@ -163,7 +165,7 @@ public class SearchEngineController {
 
                         userMapController.getGesMap()
                                 .animate(Duration.millis(1000))
-                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
+                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                     case "controllers.maps.EmployeeMapController":
@@ -172,7 +174,7 @@ public class SearchEngineController {
 
                         employeeMapController.getGesMap()
                                 .animate(Duration.millis(1000))
-                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
+                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                     case "controllers.maps.CustodianMapController":
@@ -181,7 +183,7 @@ public class SearchEngineController {
 
                         custodianMapController.getGesMap()
                                 .animate(Duration.millis(1000))
-                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
+                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                     case "controllers.maps.AdminMapController":
@@ -190,7 +192,7 @@ public class SearchEngineController {
 
                         adminMapController.getGesMap()
                                 .animate(Duration.millis(1000))
-                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
+                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                 }
@@ -205,7 +207,7 @@ public class SearchEngineController {
 
                         userMapController.getGesMap()
                                 .animate(Duration.millis(1000))
-                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
+                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                     case "controllers.maps.EmployeeMapController":
@@ -214,7 +216,7 @@ public class SearchEngineController {
 
                         employeeMapController.getGesMap()
                                 .animate(Duration.millis(1000))
-                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
+                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                     case "controllers.maps.CustodianMapController":
@@ -223,7 +225,7 @@ public class SearchEngineController {
 
                         custodianMapController.getGesMap()
                                 .animate(Duration.millis(1000))
-                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
+                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                     case "controllers.maps.AdminMapController":
@@ -232,7 +234,7 @@ public class SearchEngineController {
 
                         adminMapController.getGesMap()
                                 .animate(Duration.millis(1000))
-                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
+                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                 }
@@ -247,7 +249,7 @@ public class SearchEngineController {
 
                         userMapController.getGesMap()
                                 .animate(Duration.millis(1000))
-                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
+                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                     case "controllers.maps.EmployeeMapController":
@@ -256,7 +258,7 @@ public class SearchEngineController {
 
                         employeeMapController.getGesMap()
                                 .animate(Duration.millis(1000))
-                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
+                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                     case "controllers.maps.CustodianMapController":
@@ -265,7 +267,7 @@ public class SearchEngineController {
 
                         custodianMapController.getGesMap()
                                 .animate(Duration.millis(1000))
-                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
+                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                     case "controllers.maps.AdminMapController":
@@ -274,7 +276,7 @@ public class SearchEngineController {
 
                         adminMapController.getGesMap()
                                 .animate(Duration.millis(1000))
-                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
+                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                 }
@@ -289,7 +291,7 @@ public class SearchEngineController {
 
                         userMapController.getGesMap()
                                 .animate(Duration.millis(1000))
-                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
+                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                     case "controllers.maps.EmployeeMapController":
@@ -298,7 +300,7 @@ public class SearchEngineController {
 
                         employeeMapController.getGesMap()
                                 .animate(Duration.millis(1000))
-                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
+                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                     case "controllers.maps.CustodianMapController":
@@ -307,7 +309,7 @@ public class SearchEngineController {
 
                         custodianMapController.getGesMap()
                                 .animate(Duration.millis(1000))
-                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
+                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                     case "controllers.maps.AdminMapController":
@@ -316,7 +318,7 @@ public class SearchEngineController {
 
                         adminMapController.getGesMap()
                                 .animate(Duration.millis(1000))
-                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
+                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                 }
@@ -331,7 +333,7 @@ public class SearchEngineController {
 
                         userMapController.getGesMap()
                                 .animate(Duration.millis(1000))
-                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
+                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                     case "controllers.maps.EmployeeMapController":
@@ -340,7 +342,7 @@ public class SearchEngineController {
 
                         employeeMapController.getGesMap()
                                 .animate(Duration.millis(1000))
-                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
+                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                     case "controllers.maps.CustodianMapController":
@@ -349,7 +351,7 @@ public class SearchEngineController {
 
                         custodianMapController.getGesMap()
                                 .animate(Duration.millis(1000))
-                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
+                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                     case "controllers.maps.AdminMapController":
@@ -358,7 +360,7 @@ public class SearchEngineController {
 
                         adminMapController.getGesMap()
                                 .animate(Duration.millis(1000))
-                                .zoomTo(3, new Point2D(location.getxCord(), location.getyCord()));
+                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
                         break;
 
                 }
