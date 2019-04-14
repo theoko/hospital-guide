@@ -66,6 +66,10 @@
                                 <Font name="Moon Bold" size="22.0"/>
                             </font>
                         </Label>
+
+                        <!-- Search -->
+                        <fx:include source="../search/Search.fxml" />
+
                         <JFXButton fx:id="btnReturn" buttonType="RAISED"
                                    onMouseClicked="#btnReturn_Click" prefHeight="50.0"
                                    prefWidth="150.0" text="Logout"/>
