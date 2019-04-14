@@ -1,6 +1,7 @@
 package controllers.maps;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTabPane;
 import images.ImageFactory;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
@@ -50,18 +51,21 @@ public abstract class MapController implements Initializable {
     public ImageView imgArrowG;
     public ImageView imgArrowL1;
     public ImageView imgArrowL2;
+    public JFXTabPane tabMenu;
 
     protected String floor;
     protected List<LineTuple> lstLineTransits;
     private int transitIt;
     protected Point2D center;
     protected static String tempStart;
+    private static MapController currMapControl;
     protected Map map;
 
     public MapController() {
         floor = "3";
         lstLineTransits = new LinkedList<>();
         transitIt = 0;
+        currMapControl = this;
     }
 
     @Override
@@ -95,6 +99,14 @@ public abstract class MapController implements Initializable {
             }
             gesMap.requestFocus();
         }));
+    }
+
+    public static MapController getCurrMapControl() {
+        return currMapControl;
+    }
+
+    public JFXTabPane getTabMenu() {
+        return tabMenu;
     }
 
     public abstract void btnReturn_Click(MouseEvent mouseEvent) throws Exception;
@@ -267,6 +279,10 @@ public abstract class MapController implements Initializable {
 
     public void setMap(Map map) {
         this.map = map;
+    }
+
+    public Map getMap() {
+        return map;
     }
 
     private void updateButtons() {

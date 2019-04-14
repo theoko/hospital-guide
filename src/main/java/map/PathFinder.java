@@ -171,13 +171,13 @@ public abstract class PathFinder {
         return directions;
     }
 
-    public static void printPath(MapController mc, Map map, Location start, Location end) {
+    public static void printPath(MapController mc, Location start, Location end) {
         mc.clearPath(end);
         PathContext context = SettingsController.getAlgType();
         Stack<Location> path = context.findPath(start, end);
         String directions = context.txtDirections((Stack<Location>) path.clone());
         addDirections(mc.txtPane, directions);
-        HashMap<String, Location> lstLocations = map.getAllLocations();
+        HashMap<String, Location> lstLocations = mc.getMap().getAllLocations();
 
         Path line = null;
         String currFloor = "";
