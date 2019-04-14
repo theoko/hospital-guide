@@ -1,5 +1,6 @@
 package map;
 
+import com.jfoenix.controls.JFXButton;
 import controllers.maps.MapController;
 import controllers.maps.UserMapController;
 import controllers.maps.MapController1;
@@ -302,6 +303,11 @@ public abstract class PathFinder {
             lbl.setPadding(new Insets(5,4,4,5));
             vbox.getChildren().add(lbl);
         }
+
+        JFXButton btn = new JFXButton();
+        btn.setText("Send Text");
+        vbox.getChildren().add(btn);
+
         txtPane.setContent(vbox);
         txtPane.setVisible(true);
     }
