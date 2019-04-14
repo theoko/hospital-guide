@@ -134,17 +134,9 @@ public class CustodianMapController extends MapController {
 
         SanitationRequest selected = tblData.getSelectionModel().getSelectedItem();
 
-//        if (selected.getServicer() != null) {
-//        }else{
-//            selected.setServicer(null);
-//        }
-
-
         if (selected.getServicer() != null) {
-           //if(selected.getServicerUserName().equals(UserHelpers.getCurrentUser())){
                selected.setServicer(null);
                selected.setClaimedTime(null);
-           //}
 
         } else {
             selected.setServicer(UserHelpers.getCurrentUser());
@@ -153,22 +145,15 @@ public class CustodianMapController extends MapController {
         }
 
         SanitationTable.editSanitationRequest(selected);
-
         updateClaimBtn();
-
         updateAllBTNS();
-
         tblData.refresh();
 
     }
 
     public void markDone(){
         SanitationRequest selected = tblData.getSelectionModel().getSelectedItem();
-//        if (selected.getUser().equals("")) {
-//            selected.setUser("user_temp");
-//        } else {
-//            selected.setUser("");
-//        }
+
         if (selected.getStatus() == SanitationRequest.Status.COMPLETE) {
             selected.setStatus(SanitationRequest.Status.INCOMPLETE);
             selected.setCompletedTime(null);

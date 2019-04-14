@@ -1,7 +1,7 @@
 package controllers;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXTabPane;
+import com.jfoenix.controls.*;
+import database.LocationTable;
 import database.TransportationTable;
 import helpers.UserHelpers;
 import javafx.collections.FXCollections;
@@ -9,18 +9,22 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import map.MapDisplay;
-import map.PathFinder;
+import javafx.scene.input.MouseEvent;
 import models.map.Location;
 import models.services.TransportationRequest;
 import models.user.User;
 
 import java.net.URL;
 import java.sql.Timestamp;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class TransportationRequestController  {
+
+   public JFXComboBox cmbStartLoc;
+   public JFXComboBox cmbEndLoc;
+   public JFXTextField txtDetails;
+   public JFXDatePicker datDate;
+   public JFXTimePicker datTime;
 
     public JFXButton btnSettings;
     public TableView<TransportationRequest> tblData;
@@ -36,6 +40,7 @@ public class TransportationRequestController  {
     public TableColumn<TransportationRequest,String> tblServiceTime;
 
 
+    public JFXButton btnSendRequest;
     public JFXButton btnMarkDone;
     public JFXButton btnNavigate;
     public JFXButton btnClaim;
@@ -45,17 +50,24 @@ public class TransportationRequestController  {
     ObservableList<TransportationRequest> transports = FXCollections.observableArrayList();
 
 //    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize() {
+
+        System.out.println("initializing ,..");
 //        super.initialize(location, resources);
 //        MapDisplay.displayCust(this, panes, TextPane);
 //        VisualRealtimeController.setPanMap(panFloor1);
 //        initSanitation();
 //        updateSanitation();
 
-        tblData.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            btnNavigate.setDisable(false);
+        initTransportation();
+        updateTransportation();
 
-        });
+        //todo fix navigate btn disable
+
+//        tblData.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+//            btnNavigate.setDisable(false);
+//
+//        });
         TransportationRequest selected = tblData.getSelectionModel().getSelectedItem();
         if(selected!=null)
         if(selected.getServicer()==null||selected.getServicer().equals(UserHelpers.getCurrentUser())) {//only enable claiming if unclaimed
@@ -64,9 +76,18 @@ public class TransportationRequestController  {
             btnClaim.setDisable(true);
         }
 
+        cmbStartLoc.valueProperty().addListener(((observable, oldValue, newValue) -> {
+           // btnSendRequest.setDisable(false);
+            updateRequestBTNs();
+        }));
+        cmbStartLoc.valueProperty().addListener(((observable, oldValue, newValue) -> {
+           // btnSendRequest.setDisable(false);
+            updateRequestBTNs();
+        }));
+
     }
 
-    private void initSanitation(){
+    private void initTransportation(){
 //        tblRequestID.setCellValueFactory(new PropertyValueFactory<>("RequestID"));
         tblStartLoc.setCellValueFactory(new PropertyValueFactory<>("StartLocation"));
         tblEndLoc.setCellValueFactory(new PropertyValueFactory<>("EndLocation"));
@@ -78,16 +99,41 @@ public class TransportationRequestController  {
         tblServiceTime.setCellValueFactory(new PropertyValueFactory<>("CompletedTime"));
         tblServicer.setCellValueFactory(new PropertyValueFactory<>("ServicerUserName"));
         System.out.println(transports.toString());
-        tblData.setItems(transports);
+        System.out.println("H");
+        if(!transports.isEmpty())
+            tblData.setItems(transports);
+
+        HashMap<String, Location> locations = LocationTable.getLocations();
+
+        LinkedList<String> locationNames = new LinkedList<>();
+        if(locations != null) {
+            Iterator it = locations.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry) it.next();
+
+                Location location = (Location) pair.getValue();
+
+                locationNames.add(location.getLongName());
+
+                it.remove();
+            }
+        }
+
+        for(String name : locationNames) {
+            cmbStartLoc.getItems().add(name);
+            cmbEndLoc.getItems().add(name);
+        }
     }
 
-    private void updateSanitation() {
+    private void updateTransportation() {
         List<TransportationRequest> lstReqs = TransportationTable.getTransportationRequests();
         if(lstReqs!=null)
          transports.addAll(lstReqs);
     }
 
     public void navigateTo(){
+
+        //todo update with new floor select btns
 //        Location start = map.getLocation(MapController.getTempStart());
 //        Location end = tblData.getSelectionModel().getSelectedItem().getLocation();
 //
@@ -119,10 +165,16 @@ public class TransportationRequestController  {
 
     public void tblClick(){
         updateClaimBtn();
-        updateAllBTNS();
+        updateTableBTNs();
     }
 
-    public void updateAllBTNS(){
+    public void requestClick(){updateRequestBTNs();}
+
+    public void updateRequestBTNs(){
+        btnSendRequest.setDisable(cmbStartLoc.getValue().equals("")||cmbEndLoc.getValue().equals("")||txtDetails.getText().equals("")||datDate.getValue().equals("")||datTime.getValue().equals(""));
+    }
+
+    public void updateTableBTNs(){
 
         TransportationRequest selected = tblData.getSelectionModel().getSelectedItem();
         User servicer = selected.getServicer();
@@ -135,12 +187,6 @@ public class TransportationRequestController  {
     public void claimJob(){
 
         TransportationRequest selected = tblData.getSelectionModel().getSelectedItem();
-
-//        if (selected.getServicer() != null) {
-//        }else{
-//            selected.setServicer(null);
-//        }
-
 
         if (selected.getServicer() != null) {
            //if(selected.getServicerUserName().equals(UserHelpers.getCurrentUser())){
@@ -157,20 +203,14 @@ public class TransportationRequestController  {
         TransportationTable.editTransportationRequest(selected);
 
         updateClaimBtn();
-
-        updateAllBTNS();
-
+        updateTableBTNs();
         tblData.refresh();
 
     }
 
     public void markDone(){
         TransportationRequest selected = tblData.getSelectionModel().getSelectedItem();
-//        if (selected.getUser().equals("")) {
-//            selected.setUser("user_temp");
-//        } else {
-//            selected.setUser("");
-//        }
+
         if (selected.getStatus() == TransportationRequest.Status.COMPLETE) {
             selected.setStatus(TransportationRequest.Status.INCOMPLETE);
             selected.setCompletedTime(null);
@@ -182,8 +222,7 @@ public class TransportationRequestController  {
         TransportationTable.editTransportationRequest(selected);
         tblData.refresh();
 
-        updateAllBTNS();
-
+        updateTableBTNs();
         updateMarkDoneBtn();
     }
 
@@ -203,12 +242,36 @@ public class TransportationRequestController  {
         }
     }
 
-    public void sendRequest(){
+    public void sendRequest(MouseEvent event) {
+        event.consume();
 
+        // Get request data from UI fields
+        String description = txtDetails.getText();
+        //Location startLoc = (String) cmbStartLoc.getValue();
+        Location startLoc = LocationTable.getLocationByID((String) cmbStartLoc.getValue());
+
+        Location endLoc = LocationTable.getLocationByID((String) cmbEndLoc.getValue());
+
+        // Send request to database
+        TransportationRequest request = new TransportationRequest(
+                startLoc,
+                endLoc,
+               // ServiceRequest.Status.INCOMPLETE,
+                description,
+                UserHelpers.getCurrentUser()
+               // null,
+              //  null
+
+
+        );
+        TransportationTable.addTransportationRequest(request);
+
+        // Deactivate popup
     }
 
-    public void cancelScr(){
-
+    public void cancelScr(MouseEvent event){
+        event.consume();
+        //ScreenController.deactivate();//todo figure out appropriate action after UI refactor
     }
 }
 
