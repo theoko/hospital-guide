@@ -28,37 +28,37 @@ public class UserMapController extends MapController {
 
     @Override
     public void btnFloor3_Click(MouseEvent mouseEvent) {
-        showFloor3();
-        MapDisplay.displayUser(this);
+        showFloor("3");
     }
 
     @Override
     public void btnFloor2_Click(MouseEvent mouseEvent) {
-        showFloor2();
-        MapDisplay.displayUser(this);
+        showFloor("2");
     }
 
     @Override
     public void btnFloor1_Click(MouseEvent mouseEvent) {
-        showFloor1();
-        MapDisplay.displayUser(this);
+        showFloor("1");
     }
 
     @Override
     public void btnFloorG_Click(MouseEvent mouseEvent) {
-        showFloorG();
-        MapDisplay.displayUser(this);
+        showFloor("G");
     }
 
     @Override
     public void btnFloorL1_Click(MouseEvent mouseEvent) {
-        showFloorL1();
-        MapDisplay.displayUser(this);
+        showFloor("L1");
     }
 
     @Override
     public void btnFloorL2_Click(MouseEvent mouseEvent) {
-        showFloorL2();
+        showFloor("L2");
+    }
+
+    @Override
+    public void showFloor(String newFloor) {
+        super.showFloor(newFloor);
         MapDisplay.displayUser(this);
     }
 
@@ -67,5 +67,4 @@ public class UserMapController extends MapController {
         super.displayPath(line);
         MapDisplay.displayUser(this);
     }
-
 }

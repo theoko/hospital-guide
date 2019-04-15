@@ -17,8 +17,6 @@ import java.util.ResourceBundle;
 
 public class AdminMapController extends MapController {
 
-    public static Label welcomeMessage;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
@@ -34,44 +32,32 @@ public class AdminMapController extends MapController {
 
     @Override
     public void btnFloor3_Click(MouseEvent mouseEvent) {
-        clearEdges();
-        showFloor3();
-        MapDisplay.displayAdmin(this);
+        showFloor("3");
     }
 
     @Override
     public void btnFloor2_Click(MouseEvent mouseEvent) {
-        clearEdges();
-        showFloor2();
-        MapDisplay.displayAdmin(this);
+        showFloor("2");
     }
 
     @Override
     public void btnFloor1_Click(MouseEvent mouseEvent) {
-        clearEdges();
-        showFloor1();
-        MapDisplay.displayAdmin(this);
+        showFloor("1");
     }
 
     @Override
     public void btnFloorG_Click(MouseEvent mouseEvent) {
-        clearEdges();
-        showFloorG();
-        MapDisplay.displayAdmin(this);
+        showFloor("G");
     }
 
     @Override
     public void btnFloorL1_Click(MouseEvent mouseEvent) {
-        clearEdges();
-        showFloorL1();
-        MapDisplay.displayAdmin(this);
+        showFloor("L1");
     }
 
     @Override
     public void btnFloorL2_Click(MouseEvent mouseEvent) {
-        clearEdges();
-        showFloorL2();
-        MapDisplay.displayAdmin(this);
+        showFloor("L2");
     }
 
     private void clearEdges() {
@@ -85,19 +71,18 @@ public class AdminMapController extends MapController {
     }
 
     @Override
+    public void showFloor(String newFloor) {
+        super.showFloor(newFloor);
+        clearEdges();
+        MapDisplay.displayAdmin(this);
+    }
+
+    @Override
     public boolean isAdmin() {
         return true;
     }
 
-    public static boolean isEnableAddNode() {
-        return false;
-    }
-
     public static void locationSelectEvent(Location loc) {
-    }
-
-    public static void controlWelcomeMessage(boolean condition) {
-        welcomeMessage.setVisible(false);
     }
 
 }

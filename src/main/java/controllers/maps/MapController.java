@@ -122,49 +122,9 @@ public abstract class MapController implements Initializable {
         return false;
     }
 
-    protected void showFloor3() {
-        imgMap.setImage(ImageFactory.getImage("3"));
-        floor = "3";
-        updateLines();
-        updateButtons();
-        displayHint();
-    }
-
-    protected void showFloor2() {
-        imgMap.setImage(ImageFactory.getImage("2"));
-        floor = "2";
-        updateLines();
-        updateButtons();
-        displayHint();
-    }
-
-    protected void showFloor1() {
-        imgMap.setImage(ImageFactory.getImage("1"));
-        floor = "1";
-        updateLines();
-        updateButtons();
-        displayHint();
-    }
-
-    protected void showFloorG() {
-        imgMap.setImage(ImageFactory.getImage("G"));
-        floor = "G";
-        updateLines();
-        updateButtons();
-        displayHint();
-    }
-
-    protected void showFloorL1() {
-        imgMap.setImage(ImageFactory.getImage("L1"));
-        floor = "L1";
-        updateLines();
-        updateButtons();
-        displayHint();
-    }
-
-    protected void showFloorL2() {
-        imgMap.setImage(ImageFactory.getImage("L2"));
-        floor = "L2";
+    public void showFloor(String newFloor){
+        floor = newFloor;
+        imgMap.setImage(ImageFactory.getImage(floor));
         updateLines();
         updateButtons();
         displayHint();
@@ -235,27 +195,8 @@ public abstract class MapController implements Initializable {
 
     public void displayPath(Path line) {
         panMap.getChildren().add(0, line);
-        String startFloor = lstLineTransits.get(transitIt).getFloor();
-        Path startLine = lstLineTransits.get(transitIt++).getLine();
-        switch (startFloor) {
-            case "3":
-                showFloor3();
-                break;
-            case "2":
-                showFloor2();
-                break;
-            case "1":
-                showFloor1();
-                break;
-            case "G":
-                showFloorG();
-                break;
-            case "L1":
-                showFloorL1();
-                break;
-            default:
-                showFloorL2();
-        }
+        String startFloor = lstLineTransits.get(transitIt++).getFloor();
+        showFloor(startFloor);
     };
 
     private void displayHint() {
