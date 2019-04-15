@@ -35,7 +35,7 @@ public class MapDisplay {
 
     private static Map map;
 
-    private enum NodeStyle {
+    public enum NodeStyle {
         REGULAR, START, END, POINT
     }
 
@@ -127,7 +127,7 @@ public class MapDisplay {
         boolean dragged;
     }
 
-    private static Circle createCircle(MapController mc, Location loc, NodeStyle nodeStyle, double opacity, Constants.Routes route, boolean isAdmin) {
+    public static Circle createCircle(MapController mc, Location loc, NodeStyle nodeStyle, double opacity, Constants.Routes route, boolean isAdmin) {
         double xLoc = loc.getxCord();
         double yLoc = loc.getyCord();
         Circle circle = new Circle(xLoc, yLoc, locRadius);
@@ -167,6 +167,7 @@ public class MapDisplay {
                 dragDelta.dragged = false;
                 dragDelta.x = circle.getCenterX() - e.getX();
                 dragDelta.y = circle.getCenterY() - e.getY();
+                e.consume();
             });
             circle.setOnMouseDragged((e) -> {
                 dragDelta.dragged = true;
@@ -186,6 +187,7 @@ public class MapDisplay {
                     loc.setyCord((int) circle.getCenterY());
                     LocationTable.updateLocation(loc);
                 }
+                e.consume();
             });
         }
 

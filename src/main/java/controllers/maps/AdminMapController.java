@@ -3,13 +3,20 @@ package controllers.maps;
 import controllers.ScreenController;
 import controllers.search.SearchEngineController;
 import helpers.Constants;
+import javafx.event.Event;
+import javafx.geometry.Point3D;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.transform.Transform;
 import map.MapDisplay;
 import models.map.Location;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,11 +24,32 @@ import java.util.ResourceBundle;
 
 public class AdminMapController extends MapController {
 
+    static class Delta {
+        boolean bolDragged;
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
         SearchEngineController.setParentController(this);
         MapDisplay.displayAdmin(this);
+
+        Delta deltaDragged = new Delta();
+        panMap.setOnMousePressed((e) -> {
+            deltaDragged.bolDragged = false;
+        });
+        panMap.setOnMouseDragged((e) -> {
+            deltaDragged.bolDragged = true;
+        });
+        panMap.setOnMouseReleased((e) -> {
+            try {
+                if (!deltaDragged.bolDragged) {
+                    ScreenController.addPopUp(this,(int) e.getX(), (int) e.getY());
+                }
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
     }
 
     @Override

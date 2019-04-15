@@ -54,20 +54,6 @@
                     </HBox>
                 </VBox>
 
-                <!--Add node component-->
-                <AnchorPane prefHeight="175.0" prefWidth="250.0" style="-fx-background-color: #ffffff; -fx-background-radius: 10 10 10 10;
-                      -fx-border-width: 2px 2px 2px 2px; -fx-border-color: #022D5A; -fx-border-radius: 10;" AnchorPane.rightAnchor="280.0" AnchorPane.topAnchor="15.0">
-                    <VBox prefHeight="175.0" prefWidth="250.0" alignment="CENTER">
-                        <HBox prefWidth="250.0" alignment="CENTER">
-                            <Label text="Click and drag to add new location." textAlignment="CENTER"/>
-                        </HBox>
-                        <HBox prefWidth="250.0" alignment="CENTER">
-                            <Circle radius="10.0" fill="navy"/>
-                            <Label text="Location"/>
-                        </HBox>
-                    </VBox>
-                </AnchorPane>
-
                 <!--Top right settings-->
                 <AnchorPane prefHeight="175.0" prefWidth="250.0" style="-fx-background-color: #ffffff; -fx-background-radius: 10 10 10 10; -fx-border-width: 2px 2px 2px 2px; -fx-border-color: #022D5A; -fx-border-radius: 10;" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
                     <VBox alignment="CENTER" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

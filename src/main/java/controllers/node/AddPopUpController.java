@@ -9,6 +9,8 @@ import database.LocationTable;
 import helpers.Constants;
 import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Circle;
+import map.MapDisplay;
 import models.map.Location;
 
 import java.net.URL;
@@ -33,11 +35,12 @@ public class AddPopUpController implements Initializable {
         cmbBuilding.valueProperty().addListener(((observable, oldValue, newValue) -> {
             checkFields();
         }));
+        checkFields();
     }
 
     private void checkFields(){
-        boolean bolCheck = cmbBuilding.getValue() != null && cmbNodeType.getValue() != null;
-        btnAdd.setDisable(!bolCheck);
+        boolean bolCheck = cmbBuilding.getValue() == null || cmbNodeType.getValue() == null;
+        btnAdd.setDisable(bolCheck);
     }
 
     public void setMc(MapController mc) {
@@ -53,13 +56,19 @@ public class AddPopUpController implements Initializable {
     }
 
     public void btnAdd_Clicked(MouseEvent mouseEvent) {
+        String floor = mc.getFloor();
         String longName = txtLongName.getText();
         String shortName = txtShortName.getText();
         String stringType = (String) cmbNodeType.getValue();
         Constants.NodeType nodeType = Constants.NodeType.valueOf(stringType.substring(0, stringType.indexOf(":")));
         String building = (String) cmbBuilding.getValue();
-        Location loc = new Location("", xCoord, yCoord, mc.getFloor(), building, nodeType, longName, shortName);
+        String id = LocationTable.generateUniqueNodeID(nodeType, floor);
+        Location loc = new Location(id, xCoord, yCoord, floor, building, nodeType, longName, shortName);
+
+        Circle newCirle = MapDisplay.createCircle(mc, loc, MapDisplay.NodeStyle.REGULAR, 1.0, Constants.Routes.EDIT_LOCATION, true);
+        mc.panMap.getChildren().add(newCirle);
         LocationTable.addLocation(loc);
+        ScreenController.deactivate();
     }
 
     public void btnCancel_Clicked(MouseEvent mouseEvent) {
