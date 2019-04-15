@@ -42,7 +42,7 @@ public class EditController extends PopUpController {
         loc.setBuilding(building);
         String shortName = txtName.getText();
         loc.setShortName(shortName);
-        // TODO: Update database
+        LocationTable.updateLocation(loc);
         ScreenController.deactivate();
     }
 
@@ -65,7 +65,7 @@ public class EditController extends PopUpController {
             }
         }
         mc.panMap.getChildren().removeAll(lstNodes);
-        // TODO: Delete from database
+        LocationTable.deleteLocation(loc);
         ScreenController.deactivate();
     }
 

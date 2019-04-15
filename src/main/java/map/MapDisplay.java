@@ -5,6 +5,7 @@ import controllers.maps.MapController;
 import controllers.maps.UserMapController;
 import controllers.maps.MapController1;
 import controllers.ScreenController;
+import database.LocationTable;
 import helpers.Constants;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
@@ -38,7 +39,7 @@ public class MapDisplay {
     private final static Color nodeOutline = Color.GOLD;
     private final static Color edgeFill = Color.BLACK;
 
-    private static Map map = MapParser.parse();
+    private static Map map;
 
     private enum NodeStyle {
         REGULAR, START, END, POINT
@@ -65,6 +66,7 @@ public class MapDisplay {
     }
 
     private static void displayNodes(MapController mc, Constants.Routes route, boolean isAdmin) {
+        map = MapParser.parse();
         mc.setMap(map);
         String start = MapController.getTempStart();
         String end = "";
@@ -185,6 +187,10 @@ public class MapDisplay {
                     } catch (IOException e1) {
                         e1.printStackTrace();
                     }
+                } else {
+                    loc.setxCord((int) circle.getCenterX());
+                    loc.setyCord((int) circle.getCenterY());
+                    LocationTable.updateLocation(loc);
                 }
             });
         }
