@@ -8,12 +8,16 @@ import javafx.scene.shape.Circle;
 import models.map.Location;
 import models.map.Map;
 import models.map.Workspace;
+
+import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ResourceBundle;
 
 public abstract class PopUpController implements Initializable {
 
     protected Location loc;
+    protected MapController mc;
     protected Map map;
     protected Pane pane;
     public ScrollPane txtPane;
@@ -25,7 +29,16 @@ public abstract class PopUpController implements Initializable {
     protected LocalDate EndDate;
     protected LocalTime EndTime;
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+    }
+
     public abstract void setLoc(Location loc);
+
+    public void setMc(MapController mc) {
+        this.mc = mc;
+    }
 
     public final void setMap(Map map) {
         this.map = map;
