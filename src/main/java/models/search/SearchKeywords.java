@@ -134,7 +134,7 @@ public class SearchKeywords {
         } else {
 
             // Point to dictionary location
-            System.setProperty("wordnet.database.dir", SearchKeywords.class.getResource("/data/dictionary").getFile());
+            System.setProperty("wordnet.database.dir", SearchKeywords.class.getResource("/data/dictionary").getPath().replaceAll("%20", " "));
 
         }
 
