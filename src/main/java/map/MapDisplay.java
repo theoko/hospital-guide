@@ -1,16 +1,10 @@
 package map;
 
-import com.sun.deploy.uitoolkit.DragContext;
-import controllers.maps.MapController;
-import controllers.maps.UserMapController;
-import controllers.maps.MapController1;
 import controllers.ScreenController;
+import controllers.maps.MapController;
 import database.LocationTable;
 import helpers.Constants;
 import javafx.scene.Node;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.input.TransferMode;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
