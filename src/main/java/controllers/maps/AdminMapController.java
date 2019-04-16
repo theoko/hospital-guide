@@ -4,6 +4,7 @@ import controllers.ScreenController;
 import controllers.search.SearchEngineController;
 import helpers.Constants;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.geometry.Point3D;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -24,8 +25,14 @@ import java.util.ResourceBundle;
 
 public class AdminMapController extends MapController {
 
+    private static Location edgLoc = null;
+
     static class Delta {
         boolean bolDragged;
+    }
+
+    static class Mover {
+        Line line;
     }
 
     @Override
@@ -44,10 +51,29 @@ public class AdminMapController extends MapController {
         panMap.setOnMouseReleased((e) -> {
             try {
                 if (!deltaDragged.bolDragged) {
-                    ScreenController.addPopUp(this,(int) e.getX(), (int) e.getY());
+                    ScreenController.addPopUp(this,(int) e.getX(), (int) e.getY(), map);
                 }
             } catch (IOException e1) {
                 e1.printStackTrace();
+            }
+        });
+
+        Mover mover = new Mover();
+        panMap.setOnMouseMoved(e -> {
+            Location edgLoc = AdminMapController.getEdgLoc();
+            if (edgLoc != null) {
+                if (mover.line == null) {
+                    mover.line = new Line();
+                    mover.line.setStrokeWidth(MapDisplay.edgeWidth);
+                    panMap.getChildren().add(0, mover.line);
+                    mover.line.setStartX(edgLoc.getxCord());
+                    mover.line.setStartY(edgLoc.getyCord());
+                }
+                mover.line.setEndX(e.getX());
+                mover.line.setEndY(e.getY());
+            } else if (mover.line != null) {
+                panMap.getChildren().remove(mover.line);
+                mover.line = null;
             }
         });
     }
@@ -110,8 +136,12 @@ public class AdminMapController extends MapController {
         return true;
     }
 
-    public static void locationSelectEvent(Location loc) {
+    public static Location getEdgLoc() {
+        return edgLoc;
     }
 
+    public static void setEdgLoc(Location edgLoc) {
+        AdminMapController.edgLoc = edgLoc;
+    }
 }
 

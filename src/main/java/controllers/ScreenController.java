@@ -1,7 +1,9 @@
 package controllers;
 
+import controllers.maps.AdminMapController;
 import controllers.maps.MapController;
 import controllers.node.AddPopUpController;
+import controllers.node.EditController;
 import controllers.node.InfoController;
 import controllers.node.PopUpController;
 import controllers.user.PopUpControllerUser;
@@ -130,13 +132,14 @@ public class ScreenController {
 
         FXMLLoader loader = new FXMLLoader(url);
         Parent root = loader.load();
-        PopUpController pc = loader.getController();
-        pc.setLoc(loc);
-        pc.setMc(mc);
+        EditController ec = loader.getController();
+        ec.setLoc(loc);
+        ec.setMc(mc);
+
         displayPopUp(root);
     }
 
-    public static void addPopUp(MapController mc, int xCoord, int yCoord) throws IOException {
+    public static void addPopUp(AdminMapController mc, int xCoord, int yCoord, Map map) throws IOException {
         stage = new Stage();
         URL url = routeToURL(Constants.Routes.ADD);
 
@@ -146,6 +149,7 @@ public class ScreenController {
         ac.setMc(mc);
         ac.setxCoord(xCoord);
         ac.setyCoord(yCoord);
+        ac.setMap(map);
         displayPopUp(root);
     }
 
