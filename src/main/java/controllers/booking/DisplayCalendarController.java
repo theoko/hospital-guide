@@ -1,5 +1,6 @@
 package controllers.booking;
 
+import helpers.UIHelpers;
 import javafx.scene.layout.BorderPane;
 import jfxtras.icalendarfx.VCalendar;
 import jfxtras.scene.control.agenda.icalendar.ICalendarAgenda;
@@ -16,10 +17,29 @@ public class DisplayCalendarController {
 //    }
 
     public void initialize() {
-        System.out.println("initializing............");
 
         VCalendar vCalendar = new VCalendar();
         ICalendarAgenda agenda = new ICalendarAgenda(vCalendar);
+
+        String publishMessage = "BEGIN:VCALENDAR" + System.lineSeparator() +
+                "METHOD:PUBLISH" + System.lineSeparator() +
+                "PRODID:-//Example/ExampleCalendarClient//EN" + System.lineSeparator() +
+                "VERSION:2.0" + System.lineSeparator() +
+                "BEGIN:VEVENT" + System.lineSeparator() +
+                "ORGANIZER:mailto:a@example.com" + System.lineSeparator() +
+                "DTSTART:20190401T200000Z" + System.lineSeparator() +
+                "DTEND:20190401T220000Z" + System.lineSeparator() +
+                "DTSTAMP:20150611T190000Z" + System.lineSeparator() +
+                "RRULE:FREQ=WEEKLY;BYDAY=FR" + System.lineSeparator() +
+                "SUMMARY:Friday meeting with Joe" + System.lineSeparator() +
+                "UID:0981234-1234234-23@example.com" + System.lineSeparator() +
+                "END:VEVENT" + System.lineSeparator() +
+                "END:VCALENDAR";
+
+        vCalendar.processITIPMessage(publishMessage);
+
+        panCalendar.setPrefWidth(UIHelpers.getScreenWidth());
+        panCalendar.setPrefHeight(UIHelpers.getScreenHeight() - 150.0);
 
         panCalendar.setCenter(agenda);
 
