@@ -24,10 +24,7 @@ import models.map.Map;
 import net.kurobako.gesturefx.GesturePane;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public abstract class MapController implements Initializable {
     public GesturePane gesMap;
@@ -55,6 +52,7 @@ public abstract class MapController implements Initializable {
     protected Point2D center;
     protected static String tempStart;
     protected Map map;
+    public Stack<Location> route;
 
     public MapController() {
         lstLines = new ArrayList<>();
@@ -103,42 +101,42 @@ public abstract class MapController implements Initializable {
     public abstract void btnFloorL1_Click(MouseEvent mouseEvent);
     public abstract void btnFloorL2_Click(MouseEvent mouseEvent);
 
-    protected void showFloor3() {
+    public void showFloor3() {
         imgMap.setImage(ImageFactory.getImage("3"));
         floor = "3";
         upDateLines();
         updateButtons();
     }
 
-    protected void showFloor2() {
+    public void showFloor2() {
         imgMap.setImage(ImageFactory.getImage("2"));
         floor = "2";
         upDateLines();
         updateButtons();
     }
 
-    protected void showFloor1() {
+    public void showFloor1() {
         imgMap.setImage(ImageFactory.getImage("1"));
         floor = "1";
         upDateLines();
         updateButtons();
     }
 
-    protected void showFloorG() {
+    public void showFloorG() {
         imgMap.setImage(ImageFactory.getImage("G"));
         floor = "G";
         upDateLines();
         updateButtons();
     }
 
-    protected void showFloorL1() {
+    public void showFloorL1() {
         imgMap.setImage(ImageFactory.getImage("L1"));
         floor = "L1";
         upDateLines();
         updateButtons();
     }
 
-    protected void showFloorL2() {
+    public void showFloorL2() {
         imgMap.setImage(ImageFactory.getImage("L2"));
         floor = "L2";
         upDateLines();
@@ -305,5 +303,13 @@ public abstract class MapController implements Initializable {
         } else {
             btn.getStyleClass().add("unhighlight");
         }
+    }
+
+    public Stack<Location> getRoute() {
+        return route;
+    }
+
+    public void setRoute(Stack<Location> route) {
+        this.route = route;
     }
 }

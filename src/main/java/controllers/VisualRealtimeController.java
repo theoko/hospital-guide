@@ -9,9 +9,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.transform.Transform;
 import models.map.Location;
 import models.map.Workspace;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class VisualRealtimeController {
@@ -54,23 +56,28 @@ public class VisualRealtimeController {
         return generateSnapshot(boundaries, loc.getFloor());
     }
     public static WritableImage generateSnapshot(int[] boundaries, String s) {
-        WritableImage wi;
-        wi = new WritableImage((int) panMap.getWidth(), (int) panMap.getHeight());
+        setSelectedPane(s);
+        SnapshotParameters shp = new SnapshotParameters();
         Rectangle2D viewPort = new Rectangle2D(boundaries[0], boundaries[2], boundaries[1]-boundaries[0],
                 boundaries[3]- boundaries[2]);
+        shp.setViewport(viewPort);
+        double scale = 512 / viewPort.getWidth();
+        shp.setTransform(Transform.scale(scale, scale, panMap.getWidth() / 2, panMap.getHeight() / 2));
+        WritableImage snap = panMap.snapshot(shp, null);
 
-//        wi = panMap.snapshot((new SnapshotParameters()).setViewport(viewPort));
-
-        return null;
+        return snap;
     }
     public static void visuallyDeselectCircle(Location c) {
         setSelectedPane(c);
         UIHelpers.updateCircleForNodeType(c);
     }
-    public static void setSelectedPane(Location c) {
+    public static void setSelectedPane(String floor) {
         for(AnchorPane p : mapPanes) {
-            panMap = p.getId().equals(c.getFloor()) ? p : panMap;
+            panMap = p.getId().equals(floor) ? p : panMap;
         }
+    }
+    public static void setSelectedPane(Location c) {
+        setSelectedPane(c.getFloor());
     }
 
     public static void visuallySelectCircle(Location c) {
