@@ -30,6 +30,7 @@ public class UserMapController extends MapController {
     public ImageView imgLogOut;
     public JFXButton btnLogOut;
     public AnchorPane tilDirections;
+    public JFXTextField search;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -117,18 +118,6 @@ public class UserMapController extends MapController {
         userBox.setSpacing(-20);
 
         HBox searchBox = new HBox();
-
-        JFXTextField search = new JFXTextField();
-        search.setPromptText(" Search");
-        search.setPrefHeight(34);
-        search.setPrefWidth(450);
-        search.setAlignment(Pos.CENTER);
-        search.setStyle("-fx-font-size: 18px;"
-                + "-fx-font-weight: bold;"
-                + "-fx-font-family: fantasy;"
-                + "-fx-text-fill: #022D5A;"
-                + "-fx-background-color: white");
-
 
         searchBox.getChildren().add(search);
         searchBox.getChildren().add(btnArrow);

@@ -38,6 +38,7 @@ public class EmployeeMapController extends MapController {
     public AnchorPane Int;
     public AnchorPane Lock;
     public AnchorPane Cal;
+    public JFXTextField search;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -350,16 +351,16 @@ public class EmployeeMapController extends MapController {
 
         HBox searchBox = new HBox();
 
-        JFXTextField search = new JFXTextField();
-        search.setPromptText(" Search");
-        search.setPrefHeight(34);
-        search.setPrefWidth(450);
-        search.setAlignment(Pos.CENTER);
-        search.setStyle("-fx-font-size: 18px;"
-                + "-fx-font-weight: bold;"
-                + "-fx-font-family: fantasy;"
-                + "-fx-text-fill: #022D5A;"
-                + "-fx-background-color: white");
+//        JFXTextField search = new JFXTextField();
+//        search.setPromptText(" Search");
+//        search.setPrefHeight(34);
+//        search.setPrefWidth(450);
+//        search.setAlignment(Pos.CENTER);
+//        search.setStyle("-fx-font-size: 18px;"
+//                + "-fx-font-weight: bold;"
+//                + "-fx-font-family: fantasy;"
+//                + "-fx-text-fill: #022D5A;"
+//                + "-fx-background-color: white");
 
 
         searchBox.getChildren().add(search);
