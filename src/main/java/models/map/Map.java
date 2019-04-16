@@ -26,4 +26,8 @@ public class Map {
     public HashMap<String, Edge> getAllEdges() {
         return lstEdges;
     }
+
+    public void addLocation(String locID, Location loc) {
+        lstLocations.put(locID, loc);
+    }
 }

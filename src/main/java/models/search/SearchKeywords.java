@@ -3,6 +3,7 @@ package models.search;
 import database.LocationTable;
 import edu.smu.tspell.wordnet.Synset;
 import edu.smu.tspell.wordnet.WordNetDatabase;
+import edu.smu.tspell.wordnet.impl.file.RetrievalException;
 import helpers.FileHelpers;
 import models.map.Location;
 
@@ -17,6 +18,8 @@ public class SearchKeywords {
 
     // WordNet Database
     WordNetDatabase database = WordNetDatabase.getFileInstance();
+
+    boolean dictionaryAvailable = true;
 
     // International
     List<String> international = new ArrayList<>();
@@ -105,6 +108,7 @@ public class SearchKeywords {
 
     // Stairs
     // Staircase
+    List<String> stairs = new ArrayList<>();
 
     // Workt
     // Workspaces
@@ -134,7 +138,7 @@ public class SearchKeywords {
         } else {
 
             // Point to dictionary location
-            System.setProperty("wordnet.database.dir", SearchKeywords.class.getResource("/data/dictionary").getPath().replaceAll("%20", " ").substring(1));
+            System.setProperty("wordnet.database.dir", SearchKeywords.class.getResource("/data/dictionary").getPath().replaceAll("%20", " "));
 
         }
 
@@ -157,43 +161,57 @@ public class SearchKeywords {
             switch (currLocation.getNodeType()) {
                 case BATH:
                     bathroom.add(currLocation.getLongName());
+                    keys.put(currLocation.getLongName(), bathroom);
                     break;
 
                 case CONF:
                     conference.add(currLocation.getLongName());
+                    keys.put(currLocation.getLongName(), conference);
                     break;
 
                 case DEPT:
                     department.add(currLocation.getLongName());
 
                     // Orthopedics
-                    if(currLocation.getNodeID().equals("ADEPT00102"))
+                    if(currLocation.getNodeID().equals("ADEPT00102")) {
                         legDoctor.add(currLocation.getLongName());
+                        keys.put(currLocation.getLongName(), legDoctor);
+                    }
+
+                    keys.put(currLocation.getLongName(), department);
                     break;
 
                 case ELEV:
                     elevator.add(currLocation.getLongName());
+                    keys.put(currLocation.getLongName(), elevator);
                     break;
 
                 case EXIT:
-                    if (currLocation.getLongName().toLowerCase().contains("exit"))
+                    if (currLocation.getLongName().toLowerCase().contains("exit")) {
                         exit.add(currLocation.getLongName());
-                    else if (currLocation.getLongName().toLowerCase().contains("entrance"))
+                        keys.put(currLocation.getLongName(), exit);
+                    } else if (currLocation.getLongName().toLowerCase().contains("entrance")) {
                         entrance.add(currLocation.getLongName());
-                    else if (currLocation.getLongName().toLowerCase().contains("parking"))
+                        keys.put(currLocation.getLongName(), entrance);
+                    } else if (currLocation.getLongName().toLowerCase().contains("parking")) {
                         parking.add(currLocation.getLongName());
-                    else if (currLocation.getLongName().toLowerCase().contains("garage"))
+                        keys.put(currLocation.getLongName(), parking);
+                    } else if (currLocation.getLongName().toLowerCase().contains("garage")) {
                         garage.add(currLocation.getLongName());
-                    else if (currLocation.getLongName().toLowerCase().contains("road"))
+                        keys.put(currLocation.getLongName(), garage);
+                    } else if (currLocation.getLongName().toLowerCase().contains("road")) {
                         road.add(currLocation.getLongName());
-                    else
+                        keys.put(currLocation.getLongName(), road);
+                    } else {
                         exit.add(currLocation.getLongName());
+                        keys.put(currLocation.getLongName(), exit);
+                    }
 
                     break;
 
                 case HALL:
                     hall.add(currLocation.getLongName());
-
+                    keys.put(currLocation.getLongName(), hall);
                     break;
 
                 case INFO:
@@ -201,41 +219,64 @@ public class SearchKeywords {
                         security.add(currLocation.getLongName());
                         police.add(currLocation.getLongName());
                         safety.add(currLocation.getLongName());
+
+                        keys.put(currLocation.getLongName(), security);
+                        keys.put(currLocation.getLongName(), police);
+                        keys.put(currLocation.getLongName(), safety);
                     } else if (currLocation.getLongName().toLowerCase().contains("information")
                                 || currLocation.getLongName().toLowerCase().contains("info")) {
                         info.add(currLocation.getLongName());
                         information.add(currLocation.getLongName());
+
+                        keys.put(currLocation.getLongName(), info);
+                        keys.put(currLocation.getLongName(), information);
                     } else if (currLocation.getLongName().toLowerCase().contains("service")) {
                         service.add(currLocation.getLongName());
+                        keys.put(currLocation.getLongName(), service);
                     } else {
                         info.add(currLocation.getLongName());
+                        keys.put(currLocation.getLongName(), info);
                     }
 
                     break;
 
                 case LABS:
                     lab.add(currLocation.getLongName());
+                    keys.put(currLocation.getLongName(), lab);
 
                     // MRI CT Scan Imaging
                     if(currLocation.getNodeID().equals("ALABS001L2")) {
                         mri.add(currLocation.getLongName());
                         catScan.add(currLocation.getLongName());
                         ctScan.add(currLocation.getLongName());
+
+                        keys.put(currLocation.getLongName(), mri);
+                        keys.put(currLocation.getLongName(), catScan);
+                        keys.put(currLocation.getLongName(), ctScan);
                     }
                     break;
 
                 case REST:
                     restroom.add(currLocation.getLongName());
-
+                    keys.put(currLocation.getLongName(), restroom);
                     break;
 
                 case RETL:
+                    food.add(currLocation.getLongName());
                     if(currLocation.getLongName().toLowerCase().contains("cafe")) {
                         cafe.add(currLocation.getLongName());
+                        beverage.add(currLocation.getLongName());
+                        drinks.add(currLocation.getLongName());
+
+                        keys.put(currLocation.getLongName(), cafe);
+                        keys.put(currLocation.getLongName(), beverage);
+                        keys.put(currLocation.getLongName(), drinks);
                     } else if (currLocation.getLongName().toLowerCase().contains("vending")) {
                         vending.add(currLocation.getLongName());
+                        keys.put(currLocation.getLongName(), vending);
                     } else {
                         places.add(currLocation.getLongName());
+                        keys.put(currLocation.getLongName(), places);
                     }
 
                     break;
@@ -243,30 +284,44 @@ public class SearchKeywords {
                 case SERV:
                     if (currLocation.getLongName().toLowerCase().contains("service")) {
                         services.add(currLocation.getLongName());
+                        keys.put(currLocation.getLongName(), services);
                     } else if (currLocation.getLongName().toLowerCase().contains("atm")) {
                         atm.add(currLocation.getLongName());
+                        keys.put(currLocation.getLongName(), atm);
                     } else if (currLocation.getLongName().toLowerCase().contains("cashier")) {
                         cashier.add(currLocation.getLongName());
+                        keys.put(currLocation.getLongName(), cashier);
                     } else if (currLocation.getLongName().toLowerCase().contains("library")) {
                         library.add(currLocation.getLongName());
+                        keys.put(currLocation.getLongName(), library);
                     } else if (currLocation.getLongName().toLowerCase().contains("porch")) {
                         porch.add(currLocation.getLongName());
+                        keys.put(currLocation.getLongName(), porch);
                     } else if (currLocation.getLongName().toLowerCase().contains("room")) {
                         room.add(currLocation.getLongName());
+                        keys.put(currLocation.getLongName(), room);
                     } else if (currLocation.getLongName().toLowerCase().contains("floor")) {
                         floor.add(currLocation.getLongName());
+                        keys.put(currLocation.getLongName(), floor);
                     } else {
                         services.add(currLocation.getLongName());
+                        keys.put(currLocation.getLongName(), services);
                     }
 
                     break;
 
                 case STAI:
-
+                    stairs.add(currLocation.getLongName());
+                    keys.put(currLocation.getLongName(), stairs);
 
                     break;
 
                 case WRKT:
+                    System.out.println(currLocation.getLongName());
+
+                    break;
+
+                case WORK:
                     System.out.println(currLocation.getLongName());
 
                     break;
@@ -278,38 +333,29 @@ public class SearchKeywords {
         }
 
         // Add to main map
-//        keys.put("food", food);
-//        keys.put("drinks", drinks);
-//        keys.put("cafe", cafe);
-//        keys.put("beverage", beverage);
-//        keys.put("cat scan", catScan);
-//        keys.put("ct scan", ctScan);
-//        keys.put("mri", mri);
-//        keys.put("leg doctor", legDoctor);
-//        keys.put("child doctor", childDoctor);
-//        keys.put("police", police);
-//        keys.put("security", security);
-//        keys.put("safety", safety);
-//        keys.put("garage", garage);
-//        keys.put("parking", parking);
-//        keys.put("wc", wc);
-//        keys.put("atm", atm);
-//        keys.put("cash", atm);
-//        keys.put("entrance", entrance);
-//        keys.put("international", international);
+        /*keys.put("food", food);
+        keys.put("drinks", drinks);
+        keys.put("cafe", cafe);
+        keys.put("beverage", beverage);
+        keys.put("cat scan", catScan);
+        keys.put("ct scan", ctScan);
+        keys.put("mri", mri);
+        keys.put("leg doctor", legDoctor);
+        keys.put("child doctor", childDoctor);
+        keys.put("police", police);
+        keys.put("security", security);
+        keys.put("safety", safety);
+        keys.put("garage", garage);
+        keys.put("parking", parking);
+        keys.put("wc", wc);
+        keys.put("atm", atm);
+        keys.put("cash", atm);
+        keys.put("entrance", entrance);
+        keys.put("international", international)*/
 
         // Nodes
 
         // Bathroom
-        bathroom.add("wc");
-        bathroom.add("restroom");
-        restroom.add("bathroom");
-        restroom.add("wc");
-        wc.add("bathroom");
-        wc.add("restroom");
-        this.addSynonyms("wc", wc);
-        this.addSynonyms("bathroom", bathroom);
-        this.addSynonyms("restroom", restroom);
         keys.put("restroom", restroom);
         keys.put("bathroom", bathroom);
         this.addSynonymsToMap("bathroom", bathroom);
@@ -331,15 +377,16 @@ public class SearchKeywords {
         childDoctor.add("pediatrist");
         childDoctor.add("pediatrics");
         this.addSynonyms("pediatrics", childDoctor);*/
-
+        this.addSynonymsToMap("department", department);
+        this.addSynonymsToMap("foot doctor", legDoctor);
 
         // Elevators
-        this.addSynonyms("elevator", elevator);
+        /*this.addSynonyms("elevator", elevator);*/
         keys.put("elevator", elevator);
         this.addSynonymsToMap("elevator", elevator);
 
         // Exits
-        exit.add("gate");
+        /*exit.add("gate");
         exit.add("egress");
         exit.add("doorway");
         exit.add("gateway");
@@ -348,19 +395,46 @@ public class SearchKeywords {
         exit.add("vent");
         exit.add("departure");
         exit.add("evacuation");
-        this.addSynonyms("exit", exit);
+        this.addSynonyms("exit", exit);*/
         keys.put("exit", exit);
         this.addSynonymsToMap("exit", exit);
 
+        // Hall
+        this.addSynonymsToMap("hall", hall);
+
+        // Info
+        this.addSynonymsToMap("info", info);
+        this.addSynonymsToMap("information", information);
+
         // Labs
-        lab.add("laboratory");
+        /*lab.add("laboratory");
         laboratory.add("lab");
-        this.addSynonyms("lab", lab);
-        keys.put("lab", lab);
-        keys.put("laboratory", laboratory);
+        this.addSynonyms("lab", lab);*/
+//        keys.put("lab", lab);
+//        keys.put("laboratory", laboratory);
         this.addSynonymsToMap("lab", lab);
         this.addSynonymsToMap("laboratory", laboratory);
 
+        // Restroom
+        this.addSynonymsToMap("restroom", restroom);
+
+        // Retl
+        this.addSynonymsToMap("restroom", restroom);
+
+        // Services
+        this.addSynonymsToMap("food", food);
+        this.addSynonymsToMap("cafe", cafe);
+        this.addSynonymsToMap("beverage", beverage);
+        this.addSynonymsToMap("drinks", drinks);
+        this.addSynonymsToMap("vending", vending);
+        this.addSynonymsToMap("places", places);
+
+        // Stairs
+        this.addSynonymsToMap("stairs", stairs);
+
+        // Workspaces
+
+        // Wrkt
     }
 
     public HashMap<String, List<String>> getKeys() {
@@ -375,16 +449,17 @@ public class SearchKeywords {
 
     private void addSynonyms(String wordForm, List<String> keywords) {
 
-        //  Get the synsets containing the word form
-        Synset[] synsets = database.getSynsets(wordForm);
+        try {
+            //  Get the synsets containing the word form
+            Synset[] synsets = database.getSynsets(wordForm);
 
-        //  Display the word forms and definitions for synsets retrieved
-        if (synsets.length > 0)
-        {
-
-            for (int i = 0; i < synsets.length; i++)
+            //  Display the word forms and definitions for synsets retrieved
+            if (synsets.length > 0)
             {
-                String[] wordForms = synsets[i].getWordForms();
+
+                for (int i = 0; i < synsets.length; i++)
+                {
+                    String[] wordForms = synsets[i].getWordForms();
 
 //                String[] usage = synsets[i].getUsageExamples();
 //
@@ -392,54 +467,66 @@ public class SearchKeywords {
 //                    System.out.println(usage[j]);
 //                }
 
-                for (int j = 0; j < wordForms.length; j++)
-                {
-                    String genWord = wordForms[j];
+                    for (int j = 0; j < wordForms.length; j++)
+                    {
+                        String genWord = wordForms[j];
 
 //                    System.out.println(genWord);
 
-                    if(!keywords.contains(genWord)) {
-                        keywords.add(genWord);
-                    }
+                        if(!keywords.contains(genWord)) {
+                            keywords.add(genWord);
+                        }
 
+                    }
                 }
+
             }
 
-        }
-        else
-        {
-//            System.err.println("No synsets exist that contain " +
-//                    "the word form '" + wordForm + "'");
+        } catch (RetrievalException e) {
+
+            dictionaryAvailable = false;
+            System.out.println("Falling back to basic search. Not adding synonyms.");
+
         }
 
     }
 
     public Set<String> getSynonyms(String word) {
 
-        Set<String> synonyms = new HashSet<>();
-        Synset[] synsets = database.getSynsets(word);
+        try {
+            Set<String> synonyms = new HashSet<>();
+            Synset[] synsets = database.getSynsets(word);
 
-        for (int i = 0; i < synsets.length; i++)
-        {
-            String[] wordForms = synsets[i].getWordForms();
+            for (int i = 0; i < synsets.length; i++) {
+                String[] wordForms = synsets[i].getWordForms();
 
-            for (int j = 0; j < wordForms.length; j++)
-            {
+                for (int j = 0; j < wordForms.length; j++) {
 
-                String genWord = wordForms[j];
+                    String genWord = wordForms[j];
 
-                synonyms.add(genWord);
+                    synonyms.add(genWord);
 
+                }
             }
-        }
 
-        return synonyms;
+            return synonyms;
+
+        } catch (RetrievalException e) {
+
+            System.out.println("Cannot get synonyms. Dictionary unavailable.");
+
+            return new HashSet<>();
+
+        }
 
     }
 
     public boolean validEnglishWord(String word) {
 
-        return database.getSynsets(word).length > 0;
+        if(dictionaryAvailable)
+            return database.getSynsets(word).length > 0;
+        else
+            return true;
 
     }
 

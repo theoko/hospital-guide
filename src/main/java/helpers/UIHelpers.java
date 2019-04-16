@@ -41,17 +41,17 @@ public class UIHelpers {
 //            } catch (Exception e) {
 //                throw new UnsupportedOperationException(e);
 //            }
+////        });
+//        c.setOnMouseClicked(evt -> {
+//            try {
+//                evt.consume();
+//                AdminMapController.locationSelectEvent(loc);
+////                if(!AdminMapController.isEnableEditEdge())
+////                    ScreenController.popUp(Constants.Routes.EDIT_LOCATION, loc, map, panes, c);
+//            } catch (Exception e) {
+//                throw new UnsupportedOperationException(e);
+//            }
 //        });
-        c.setOnMouseClicked(evt -> {
-            try {
-                evt.consume();
-                AdminMapController.locationSelectEvent(loc);
-//                if(!AdminMapController.isEnableEditEdge())
-//                    ScreenController.popUp(Constants.Routes.EDIT_LOCATION, loc, map, panes, c);
-            } catch (Exception e) {
-                throw new UnsupportedOperationException(e);
-            }
-        });
     }
 
     public static Line generateLineFromEdge(Edge e) {

@@ -1,7 +1,9 @@
 package map;
 
 import controllers.ScreenController;
+import controllers.maps.AdminMapController;
 import controllers.maps.MapController;
+import database.EdgeTable;
 import database.LocationTable;
 import helpers.Constants;
 import javafx.scene.Node;
@@ -11,6 +13,7 @@ import javafx.scene.shape.Line;
 import models.map.Edge;
 import models.map.Location;
 import models.map.Map;
+import models.map.SubPath;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,7 +24,7 @@ public class MapDisplay {
     private final static double locRadius = 15;
     private final static double hallRadius = 5;
     private final static double locWidth = 2.0;
-    private final static double edgeWidth = 1.5;
+    public final static double edgeWidth = 1.5;
     private final static double xShift = -2110.0;
     private final static double yShift = 730.0;
     private final static double scale = 0.475;
@@ -35,7 +38,7 @@ public class MapDisplay {
 
     private static Map map;
 
-    private enum NodeStyle {
+    public enum NodeStyle {
         REGULAR, START, END, POINT
     }
 
@@ -108,11 +111,7 @@ public class MapDisplay {
             String floor = mc.getFloor();
             if (start.getFloor().equals(floor) && end.getFloor().equals(floor)) {
                 Line line = new Line();
-                line.startXProperty().bind(start.getNodeCircle().centerXProperty());
-                line.startYProperty().bind(start.getNodeCircle().centerYProperty());
-                line.endXProperty().bind(end.getNodeCircle().centerXProperty());
-                line.endYProperty().bind(end.getNodeCircle().centerYProperty());
-
+                bindLineCircle(line, start, end);
                 line.setStroke(edgeFill);
                 line.setStrokeWidth(edgeWidth);
                 line.setId(edge.getEdgeID());
@@ -122,12 +121,19 @@ public class MapDisplay {
         }
     }
 
+    private static void bindLineCircle(Line line, Location start, Location end) {
+        line.startXProperty().bind(start.getNodeCircle().centerXProperty());
+        line.startYProperty().bind(start.getNodeCircle().centerYProperty());
+        line.endXProperty().bind(end.getNodeCircle().centerXProperty());
+        line.endYProperty().bind(end.getNodeCircle().centerYProperty());
+    }
+
     static class Delta {
         double x, y;
         boolean dragged;
     }
 
-    private static Circle createCircle(MapController mc, Location loc, NodeStyle nodeStyle, double opacity, Constants.Routes route, boolean isAdmin) {
+    public static Circle createCircle(MapController mc, Location loc, NodeStyle nodeStyle, double opacity, Constants.Routes route, boolean isAdmin) {
         double xLoc = loc.getxCord();
         double yLoc = loc.getyCord();
         Circle circle = new Circle(xLoc, yLoc, locRadius);
@@ -164,28 +170,56 @@ public class MapDisplay {
         } else {
             final Delta dragDelta = new Delta();
             circle.setOnMousePressed((e) -> {
-                dragDelta.dragged = false;
-                dragDelta.x = circle.getCenterX() - e.getX();
-                dragDelta.y = circle.getCenterY() - e.getY();
+                if (AdminMapController.getEdgLoc() == null) {
+                    dragDelta.dragged = false;
+                    dragDelta.x = circle.getCenterX() - e.getX();
+                    dragDelta.y = circle.getCenterY() - e.getY();
+                    e.consume();
+                }
             });
             circle.setOnMouseDragged((e) -> {
-                dragDelta.dragged = true;
-                circle.setCenterX(e.getX() + dragDelta.x);
-                circle.setCenterY(e.getY() + dragDelta.y);
-                e.consume();
+                if (AdminMapController.getEdgLoc() == null) {
+                    dragDelta.dragged = true;
+                    circle.setCenterX(e.getX() + dragDelta.x);
+                    circle.setCenterY(e.getY() + dragDelta.y);
+                    e.consume();
+                }
             });
             circle.setOnMouseReleased((e) -> {
                 if (!dragDelta.dragged) {
-                    try {
-                        ScreenController.adminPopUp(route, loc, mc);
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
+                    if (AdminMapController.getEdgLoc() == null) {
+                        try {
+                            ScreenController.adminPopUp(route, loc, mc);
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
+                    } else {
+                        Location loc1 = AdminMapController.getEdgLoc();
+                        Location loc2 = map.getLocation(circle.getId());
+                        if (!loc1.getNodeID().equals(loc2.getNodeID())) {
+                            String id = loc1.getNodeID() + "_" + loc2.getNodeID();
+                            Edge edge = new Edge(id, loc1, loc2);
+                            int x1 = loc1.getxCord();
+                            int y1 = loc1.getyCord();
+                            int x2 = loc2.getxCord();
+                            int y2 = loc2.getyCord();
+                            EdgeTable.addEdge(edge);
+
+                            Line line = new Line(x1, y1, x2, y2);
+                            line.setId(id);
+                            bindLineCircle(line, loc1, loc2);
+                            line.setStrokeWidth(MapDisplay.edgeWidth);
+                            mc.panMap.getChildren().add(0, line);
+                        } else {
+                            AdminMapController.setEdgLoc(null);
+                        }
                     }
                 } else {
                     loc.setxCord((int) circle.getCenterX());
                     loc.setyCord((int) circle.getCenterY());
                     LocationTable.updateLocation(loc);
                 }
+                e.consume();
             });
         }
 

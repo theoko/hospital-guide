@@ -380,25 +380,26 @@ public class LocationTable {
         }
     }
 
-    public static String uniqueID(Location loc) {
-        String locID = generateUniqueNodeID(loc);
-        loc.setNodeID(locID);
-        LocationTable.addLocation(loc);
-        return locID;
-    }
+//    public static String uniqueID(Location loc) {
+//        String locID = generateUniqueNodeID(loc);
+//        loc.setNodeID(locID);
+//        LocationTable.addLocation(loc);
+//        return locID;
+//    }
 
-    public static String generateUniqueNodeID(Location c) {
-
-        String id = Database.getDatabase().getNewPrefixChar() + c.getNodeType().toString() + "000" +
-                c.getDBFormattedFloor();
-        while(LocationTable.getLocations().containsKey(id)) {
-            String numericalIDStr = id.substring(id.length() - 5, id.length() - 2);
-            int numericalIDVal = Integer.parseInt(numericalIDStr);
-            numericalIDVal++;
-            numericalIDStr = String.format("%03d", numericalIDVal);
-            id = Database.getDatabase().getNewPrefixChar() + c.getNodeType().toString() + numericalIDStr +
-                    c.getDBFormattedFloor();
+    public static String generateUniqueNodeID(Constants.NodeType nodeType, String floor) {
+        // XTYPE###0F
+        String team = "F";
+        String strType = nodeType.name();
+        int i = 0;
+        String id = "";
+        if (getLocations() != null) {
+            do {
+                i++;
+                id = team + strType + String.format("%03d0", i) + floor;
+            } while (getLocations().containsKey(id));
         }
+        System.out.println(id);
         return id;
     }
 
