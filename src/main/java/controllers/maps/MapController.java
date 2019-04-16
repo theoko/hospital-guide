@@ -13,6 +13,8 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Path;
@@ -46,7 +48,7 @@ public abstract class MapController implements Initializable {
     public JFXButton btnReturn;
     public Pane panMap;
     public ScrollPane txtPane;
-    public TitledPane tilDirections;
+    public AnchorPane tilDirections;
     public ImageView imgArrow3;
     public ImageView imgArrow2;
     public ImageView imgArrow1;
@@ -86,18 +88,18 @@ public abstract class MapController implements Initializable {
     }
 
     protected void initDirections() {
-        txtPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        txtPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         txtPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        tilDirections.expandedProperty().addListener(((observable, oldValue, newValue) -> {
-            if (newValue) {
-                tilDirections.setPrefHeight(500.0);
-                txtPane.setPrefHeight(500.0);
-            } else {
-                tilDirections.setPrefHeight(0.0);
-                txtPane.setPrefHeight(0.0);
-            }
-            gesMap.requestFocus();
-        }));
+//        tilDirections.expandedProperty().addListener(((observable, oldValue, newValue) -> {
+//            if (newValue) {
+//                tilDirections.setPrefHeight(500.0);
+//                txtPane.setPrefHeight(500.0);
+//            } else {
+//                tilDirections.setPrefHeight(0.0);
+//                txtPane.setPrefHeight(0.0);
+//            }
+//            gesMap.requestFocus();
+//        }));
     }
 
     public static MapController getCurrMapControl() {

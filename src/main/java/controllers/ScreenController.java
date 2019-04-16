@@ -8,7 +8,6 @@ import controllers.node.InfoController;
 import controllers.node.PopUpController;
 import controllers.user.PopUpControllerUser;
 import helpers.Constants;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -47,6 +46,22 @@ public class ScreenController {
 
     }
 
+    public static HashMap<String, String> getScreenMap() {
+        return screenMap;
+    }
+
+    public static void setScreenMap(HashMap<String, String> screenMap) {
+        ScreenController.screenMap = screenMap;
+    }
+
+    public static Stage getStage() {
+        return stage;
+    }
+
+    public static void setStage(Stage stage) {
+        ScreenController.stage = stage;
+    }
+
     public void initializeScreens(Stage stage) {
         // Initialize screen controller to switch between different scenes
         this.addScreen(Constants.Routes.LOGO, "/fxml/UI/welcome/Logo.fxml");
@@ -81,6 +96,7 @@ public class ScreenController {
         this.addScreen(Constants.Routes.EXTERNAL_TRANS, "/fxml/UI/requests/ExternalTrans.fxml");
         this.addScreen(Constants.Routes.PATIENT_INFO, "/fxml/UI/requests/PatientInfo.fxml");
         this.addScreen(Constants.Routes.ADD, "/fxml/UI/node/AddPopUp.fxml");
+        this.addScreen(Constants.Routes.CALENDAR, "/fxml/UI/booking/CalendarTab.fxml");
     }
 
     public void addScreen(Constants.Routes route, String layout) {
