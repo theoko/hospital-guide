@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTimePicker;
 import controllers.ScreenController;
 import database.BookLocationTable;
+import database.Database;
 import database.LocationTable;
 import database.RoomTable;
 import helpers.Constants;
@@ -231,6 +232,11 @@ public class RoomBookingController {
 
             populateRoomBookedTable(roomDetails);
             populateRoomBookingTable(roomsAvailable);
+
+        String calStartTime = DatabaseHelpers.getCalDateTime(startDate, startTime);
+        String calEndTime = DatabaseHelpers.getCalDateTime(endDate, endTime);
+        book.setCalStartDate(calStartTime);
+        book.setCalEndDate(calEndTime);
 
 //        } else {
 //
