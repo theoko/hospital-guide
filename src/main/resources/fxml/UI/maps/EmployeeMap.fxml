@@ -9,7 +9,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane stylesheets="@../../../css/colorScheme.css" xmlns="http://javafx.com/javafx"
+<AnchorPane stylesheets="@../css/colorScheme.css" xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml" fx:controller="controllers.maps.EmployeeMapController">
     <JFXTabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0"
                 AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -52,50 +52,35 @@
                         <ImageView fx:id="imgArrowL2" fitWidth="50.0" fitHeight="50.0" preserveRatio="true"/>
                     </HBox>
                 </VBox>
-
-                <!--Top right settings-->
-                <AnchorPane prefHeight="175.0" prefWidth="250.0"
-                            style="-fx-background-color: #ffffff; -fx-background-radius: 10 10 10 10; -fx-border-width: 2px 2px 2px 2px; -fx-border-color: #022D5A; -fx-border-radius: 10;"
-                            AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
-                    <VBox alignment="CENTER" spacing="10.0"
-                          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                        <Label text="Welcome Employee!" textAlignment="CENTER" textFill="#022D5A"
-                               AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                <AnchorPane AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="230.0">
+                    <children>
+                        <VBox fx:id="vboxDock" prefHeight="332.0" prefWidth="60.0" style="-fx-background-color: #022D5A; -fx-background-radius: 30;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <JFXButton fx:id="btnLogOut" contentDisplay="CENTER" onMouseClicked="#btnReturn_Click" prefHeight="60.0" prefWidth="60.0" textOverrun="CLIP">
+                            <graphic>
+                                <ImageView fx:id="imgLogOut" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+                            </graphic>
                             <font>
-                                <Font name="Moon Bold" size="22.0"/>
+                                <Font size="1.0" />
                             </font>
-                        </Label>
-
-                        <!-- Search -->
-                        <fx:include fx:id="searchEngineController" source="../search/Search.fxml" />
-
-                        <JFXButton fx:id="btnReturn" buttonType="RAISED"
-                                   onMouseClicked="#btnReturn_Click" prefHeight="50.0"
-                                   prefWidth="150.0" text="Logout"/>
-                    </VBox>
+                            <padding>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </padding>
+                        </JFXButton>
+                    </children>
                 </AnchorPane>
-                <TitledPane fx:id="tilDirections" alignment="CENTER" expanded="false" text="Text Directions"
-                            prefWidth="250.0" prefHeight="0.0"
-                            AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="205.0">
-                    <font>
-                        <Font size="18.0"/>
-                    </font>
-                    <ScrollPane fx:id="txtPane"/>
-                </TitledPane>
+                <AnchorPane style="-fx-background-color: #022D5A; -fx-background-radius: 30;" fx:id="tilDirections" prefWidth="400.0" prefHeight="500.0">
+                    <ScrollPane fx:id="txtPane" style="-fx-background-radius: 22; -fx-padding: 10, 10, 10, 10;" AnchorPane.leftAnchor="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                </AnchorPane>
+                <AnchorPane fx:id="roomBooking">
+                    <fx:include source="../booking/RoomBookingWindow.fxml" />
+                </AnchorPane>
+                <AnchorPane fx:id="IT">
+                    <fx:include source="../requests/ITServiceRequest.fxml" />
+                </AnchorPane>
+                <!--AnchorPane fx:id="Flo">
+                    <fx:include source="../requests/ITServiceRequest.fxml" />
+                </AnchorPane-->
             </AnchorPane>
-        </Tab>
-        <Tab style="-fx-background-color: #022D5A;" text="Room Booking">
-            <fx:include source="../booking/RoomBookingWindow.fxml" />
-        </Tab>
-        <Tab style="-fx-background-color: #022D5A;" text="Workspaces">
-            <fx:include source="../booking/Workspace.fxml" />
-        </Tab>
-        <Tab style="-fx-background-color: #022D5A;" text="Calendar">
-            <fx:include source="../booking/CalendarTab.fxml" />
-        </Tab>
-        <Tab style="-fx-background-color: #022D5A;" text="Requests">
-            <fx:include source="../requests/Requests.fxml" />
         </Tab>
     </JFXTabPane>
 </AnchorPane>
