@@ -1,5 +1,8 @@
 package controllers;
 
+import com.google.api.client.util.DateTime;
+import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.Events;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import database.BookWorkspaceTable;
@@ -20,11 +23,12 @@ import models.map.Workspace;
 import models.room.Book;
 import models.user.User;
 
+import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class WorkspacePopUpController extends PopUpController implements Initializable {
 
@@ -109,6 +113,5 @@ public class WorkspacePopUpController extends PopUpController implements Initial
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-    }
+    public void initialize(URL location, ResourceBundle resources) {}
 }
