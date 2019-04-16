@@ -12,6 +12,8 @@ import java.util.Date;
 public class TransportationRequest extends ServiceRequest implements Comparable<TransportationRequest> {
 
     Location destination;   // Destination of transportation
+    String requestedTime;
+    String requestedDate;
 
     /**
      * @brief Constructs new transportation request to add to database.
@@ -24,6 +26,8 @@ public class TransportationRequest extends ServiceRequest implements Comparable<
             Location location,
             Location destination,
             String description,
+            String requestedTime,
+            String requestedDate,
             User requester)
     {
         super(
@@ -32,6 +36,8 @@ public class TransportationRequest extends ServiceRequest implements Comparable<
                 null, null, null
         );
         this.destination = destination;
+        this.requestedDate=requestedDate;
+        this.requestedTime=requestedTime;
     }
 
     /**

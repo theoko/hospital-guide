@@ -13,6 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import map.PathFinder;
 import models.map.Location;
+import models.services.ServiceRequest;
 import models.services.TransportationRequest;
 import models.user.User;
 
@@ -254,19 +255,29 @@ public class TransportationRequestController  {
         Location startLoc =LocationTable.getLocationByID(txtStartSearch.getText());
         Location endLoc=LocationTable.getLocationByID(txtEndSearch.getText());
 
+        //Location startLoc =LocationTable.getLocationByID("");
+        endLoc=LocationTable.getLocationByID("AHALL00201");
+        MapController mc = MapController.getCurrMapControl();
 
-                // Send request to database
-        TransportationRequest request = new TransportationRequest(
-                startLoc,
-                endLoc,
-               // ServiceRequest.Status.INCOMPLETE,
-                description,
-                UserHelpers.getCurrentUser()
-               // null,
-              //  null
+        startLoc = mc.getMap().getLocation(MapController.getTempStart());
 
 
-        );
+TransportationRequest request = new TransportationRequest(startLoc,endLoc, txtDetails.getText(),datDate.toString(),datTime.toString(), UserHelpers.getCurrentUser());
+        // Send request to database
+//        TransportationRequest request = new TransportationRequest(
+//
+//
+//                //                1,
+////                startLoc,
+////                endLoc,
+////               // ServiceRequest.Status.INCOMPLETE,
+////                description,
+////                UserHelpers.getCurrentUser()
+////               // null,
+////              //  null
+//
+//
+//        );
         TransportationTable.addTransportationRequest(request);
 
         // Deactivate popup
