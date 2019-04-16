@@ -81,7 +81,7 @@
                                                     <Font size="24.0" />
                                                 </font>
                                             </Label>
-                                            <JFXDatePicker fx:id="datDate" promptText="Select Date" />
+                                            <JFXDatePicker fx:id="datDate" onAction="#updateRequestBTNs" onKeyTyped="#updateRequestBTNs" promptText="Select Date" />
                                         </children>
                                     </HBox>
                                     <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
@@ -91,7 +91,7 @@
                                                     <Font size="24.0" />
                                                 </font>
                                             </Label>
-                                            <JFXTimePicker fx:id="datTime" defaultColor="#022d5a" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="300.0" promptText="Select Time" />
+                                            <JFXTimePicker fx:id="datTime" defaultColor="#022d5a" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#updateRequestBTNs" onKeyTyped="#updateRequestBTNs" prefHeight="27.0" prefWidth="300.0" promptText="Select Time" />
                                         </children>
                                     </HBox>
                                 </children>

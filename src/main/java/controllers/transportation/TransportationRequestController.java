@@ -1,6 +1,7 @@
 package controllers.transportation;
 
 import com.jfoenix.controls.*;
+import controllers.maps.MapController;
 import database.LocationTable;
 import database.TransportationTable;
 import helpers.UserHelpers;
@@ -10,6 +11,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import map.PathFinder;
 import models.map.Location;
 import models.services.TransportationRequest;
 import models.user.User;
@@ -89,10 +91,7 @@ public class TransportationRequestController  {
 //           // btnSendRequest.setDisable(false);
 //            updateRequestBTNs();
 //        }));
-//        cmbStartLoc.valueProperty().addListener(((observable, oldValue, newValue) -> {
-//           // btnSendRequest.setDisable(false);
-//            updateRequestBTNs();
-//        }));
+
 
     }
 
@@ -108,7 +107,6 @@ public class TransportationRequestController  {
         tblServiceTime.setCellValueFactory(new PropertyValueFactory<>("CompletedTime"));
         tblServicer.setCellValueFactory(new PropertyValueFactory<>("ServicerUserName"));
         System.out.println(transports.toString());
-        System.out.println("H");
         tblData.setItems(transports);
 
         //todo remove later once search works
@@ -144,35 +142,11 @@ public class TransportationRequestController  {
     }
 
     public void navigateTo(){
-
-        //todo update with new floor select btns
-//        Location start = map.getLocation(MapController.getTempStart());
-//        Location end = tblData.getSelectionModel().getSelectedItem().getLocation();
-//
-//        PathFinder.printPath(panes, TextPane, map, start, end);
-//
-//        String floor = start.getFloor();
-//        int floorIndex;
-//        switch (floor) {
-//            case "1":
-//                floorIndex = 3;
-//                break;
-//            case "2":
-//                floorIndex = 1;
-//                break;
-//            case "3":
-//                floorIndex = 0;
-//                break;
-//            case "L1":
-//                floorIndex = 3;
-//                break;
-//            default:
-//                floorIndex = 4;
-//                break;
-//        }
-//
-//        tabMenu.getSelectionModel().select(0);
-//        floorMenu.getSelectionModel().select(floorIndex);
+        MapController mc = MapController.getCurrMapControl();
+        Location start = mc.getMap().getLocation(MapController.getTempStart());
+        Location end = tblData.getSelectionModel().getSelectedItem().getLocation();
+        PathFinder.printPath(mc, start, end);
+        mc.getTabMenu().getSelectionModel().select(0);
     }
 
     public void tblClick(){
@@ -192,6 +166,8 @@ public class TransportationRequestController  {
         boolean detailsEmpty = txtDetails.getText().equals("");
         boolean dateEmpty = (datDate.getValue() == null);
         boolean timeEmpty = (datTime.getValue() == null);
+
+        System.out.println("Bools"+startLocEmpty+endLocEmpty+detailsEmpty+dateEmpty+timeEmpty);
         btnSendRequest.setDisable(startLocEmpty || endLocEmpty || detailsEmpty || dateEmpty || timeEmpty);
     }
 
