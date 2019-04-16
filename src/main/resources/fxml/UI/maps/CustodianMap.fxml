@@ -73,7 +73,7 @@
                 <AnchorPane style="-fx-background-color: #022D5A; -fx-background-radius: 30;" fx:id="tilDirections" prefWidth="400.0" prefHeight="500.0">
                     <ScrollPane fx:id="txtPane" style="-fx-background-radius: 22; -fx-padding: 10, 10, 10, 10;" AnchorPane.leftAnchor="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
                 </AnchorPane>
-                <AnchorPane fx:id="sanitation" >
+                <AnchorPane fx:id="sanitation">
                     <fx:include source="../sanitation/SanitationTable.fxml"/>
                 </AnchorPane>
             </AnchorPane>
