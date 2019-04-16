@@ -289,15 +289,17 @@ public abstract class PathFinder {
 
     private static void addDirections(ScrollPane txtPane, String directions) {
         VBox vbox = new VBox();
-        vbox.setPadding(new Insets(10,4,10,4));
+        vbox.setPadding(new Insets(10,10,10,15));
+        vbox.setStyle("-fx-background-radius: 20;");
         vbox.setSpacing(5);
+        vbox.setAlignment(Pos.CENTER);
         String[] arrDirections = directions.split("\n");
         for (String direction : arrDirections) {
             Label lbl = new Label(direction);
-            lbl.setFont(new Font(11.9));
+            lbl.setFont(new Font(18));
             lbl.setTextFill(Color.WHITE);
-            lbl.setPrefWidth(210);
-            lbl.setStyle("-fx-background-color: #022D5A;");
+            lbl.setPrefWidth(330);
+            lbl.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
             lbl.setAlignment(Pos.CENTER);
             lbl.setPadding(new Insets(5,4,4,5));
             vbox.getChildren().add(lbl);
