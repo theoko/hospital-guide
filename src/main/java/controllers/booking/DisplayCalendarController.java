@@ -3,16 +3,13 @@ package controllers.booking;
 import database.BookLocationTable;
 import database.BookWorkspaceTable;
 import database.LocationTable;
-import database.RoomTable;
 import helpers.UIHelpers;
 import helpers.UserHelpers;
 import javafx.scene.layout.BorderPane;
 import jfxtras.icalendarfx.VCalendar;
 import jfxtras.scene.control.agenda.icalendar.ICalendarAgenda;
 import models.map.Location;
-import models.map.Workspace;
 import models.room.Book;
-import models.room.Room;
 
 import java.util.Calendar;
 import java.util.List;
@@ -32,8 +29,8 @@ public class DisplayCalendarController {
 
     public void initialize() {
 
-//        vCalendar = new VCalendar();
-//        agenda = new ICalendarAgenda(vCalendar);
+        vCalendar = new VCalendar();
+        agenda = new ICalendarAgenda(vCalendar);
 //
 //        String publishMessage = "BEGIN:VCALENDAR" + System.lineSeparator() +
 //                "METHOD:PUBLISH" + System.lineSeparator() +
@@ -52,9 +49,10 @@ public class DisplayCalendarController {
 //
 //        vCalendar.processITIPMessage(publishMessage);
 
-        panCalendar.setPrefWidth(UIHelpers.getScreenWidth());
-        panCalendar.setPrefHeight(UIHelpers.getScreenHeight() - 150.0);
+        panCalendar.setPrefWidth(1200);
+        panCalendar.setPrefHeight(656);
 
+//        setEntries();
         panCalendar.setCenter(agenda);
     }
 
