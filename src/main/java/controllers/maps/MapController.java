@@ -3,6 +3,7 @@ package controllers.maps;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTabPane;
 import images.ImageFactory;
+import javafx.animation.Interpolator;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
@@ -30,8 +31,8 @@ import java.util.ResourceBundle;
 
 public abstract class MapController implements Initializable {
     private final double MAX_ZOOM = 2.0;
-    private final double MIN_ZOOM = 0.35;
-    private final double ZOOM_BUFFER = 0.25;
+    private final double MIN_ZOOM = 0.01;
+    private final double ZOOM_BUFFER = 0.5;
     private final double ANIMATION_TIME = 1000;
 
     public GesturePane gesMap;
@@ -57,7 +58,6 @@ public abstract class MapController implements Initializable {
     protected String floor;
     protected List<LineTuple> lstLineTransits;
     private int transitIt;
-    protected Point2D center;
     protected static String tempStart;
     private static MapController currMapControl;
     protected Map map;
@@ -75,15 +75,13 @@ public abstract class MapController implements Initializable {
         gesMap.setHBarEnabled(false);
         gesMap.setMaxScale(MAX_ZOOM);
         gesMap.setMinScale(MIN_ZOOM);
+        gesMap.setFitMode(GesturePane.FitMode.COVER);
 
         updateButtons();
         Image img = ImageFactory.getImage("3");
         imgMap.setImage(img);
         gesMap.viewportBoundProperty().addListener(((observable, oldValue, newValue) -> {
-            center = new Point2D(img.getWidth() / 2, img.getHeight() / 2);
-            gesMap.centreOn(center);
-            gesMap.zoomTo(MAX_ZOOM, center);
-            gesMap.animate(Duration.millis(ANIMATION_TIME)).zoomTo(MIN_ZOOM, center);
+            gesMap.reset();
         }));
     }
 
@@ -308,12 +306,14 @@ public abstract class MapController implements Initializable {
     }
 
     private void panToLine(Path line) {
+        gesMap.reset();
+
         Bounds lineBounds = line.getBoundsInLocal();
         double startX = lineBounds.getMinX();
         double startY = lineBounds.getMinY();
         double endX = lineBounds.getMaxX();
         double endY = lineBounds.getMaxY();
-        Point2D center = new Point2D((startX + endX) / 2, (startY + endY) / 2);
+        Point2D middle = new Point2D((startX + endX) / 2, (startY + endY) / 2);
 
         double lineWidth = lineBounds.getWidth();
         double lineHeight = lineBounds.getHeight();
@@ -328,7 +328,8 @@ public abstract class MapController implements Initializable {
         } else {
             zoom *= 1 + ZOOM_BUFFER;
         }
-        gesMap.zoomBy(zoom, gesMap.viewportCentre());
-        gesMap.animate(Duration.millis(ANIMATION_TIME)).centreOn(center);
+        gesMap.animate(Duration.millis(ANIMATION_TIME)).afterFinished(() -> {
+                gesMap.animate(Duration.millis(ANIMATION_TIME)).centreOn(middle);
+        }).zoomBy(zoom, middle);
     }
 }
