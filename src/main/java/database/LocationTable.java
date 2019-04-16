@@ -7,10 +7,7 @@ import models.map.Location;
 import models.room.Room;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class LocationTable {
 
@@ -88,6 +85,44 @@ public class LocationTable {
             System.out.println();
             return null;
         }
+    }
+
+    /**
+     *
+     * @return
+     */
+    public static Set<Location> getLocationByLongName(String longName) {
+
+        try {
+
+            Set<Location> results = new HashSet<>();
+
+            String stmtString = "SELECT * FROM " + Constants.LOCATION_TABLE + " WHERE LONGNAME=?";
+            PreparedStatement statement = Database.getDatabase().getConnection().prepareStatement(stmtString);
+            statement.setString(1, longName);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                results.add(new Location(
+                        resultSet.getString("NODEID"),
+                        resultSet.getInt("XCOORD"),
+                        resultSet.getInt("YCOORD"),
+                        resultSet.getString("FLOOR"),
+                        resultSet.getString("BUILDING"),
+                        Constants.NodeType.valueOf(resultSet.getString("NODETYPE")),
+                        resultSet.getString("LONGNAME"),
+                        resultSet.getString("SHORTNAME")
+                ));
+            }
+
+            return results;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            return new HashSet<>();
+        }
+
     }
 
     public static boolean addLocation(Location location) {

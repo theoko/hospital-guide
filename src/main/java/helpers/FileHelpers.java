@@ -1,56 +1,21 @@
 package helpers;
 
+import net.lingala.zip4j.core.ZipFile;
+import net.lingala.zip4j.exception.ZipException;
+
 import java.io.*;
 
 public class FileHelpers {
 
     static File jarFile = new File(FileHelpers.class.getProtectionDomain().getCodeSource().getLocation().getPath());
 
-//    public static convertPath(String path) throws IOException {
-//
-//        if(jarFile.isFile()) {  // Run with JAR file
-//
-//            final JarFile jar = new JarFile(jarFile);
-//            final Enumeration<JarEntry> entries = jar.entries(); //gives ALL entries in jar
-//            while(entries.hasMoreElements()) {
-//                final String name = entries.nextElement().getName();
-//                if (name.startsWith(path + "/")) { //filter according to the path
-//                    System.out.println(name);
-//                }
-//            }
-//
-//            jar.close();
-//
-//        } else { // Run with IDE
-//
-//            final URL url = Launcher.class.getResource("/" + path);
-//            if (url != null) {
-//                try {
-//                    final File apps = new File(url.toURI());
-//                    for (File app : apps.listFiles()) {
-//                        System.out.println(app);
-//                    }
-//                } catch (URISyntaxException ex) {
-//                    // never happens
-//                }
-//            }
-//
-//        }
-//
-//
-//    }
-
+    /**
+     * Checks if the program currently runs in JAR
+     * @return true if we're in JAR, false otherwise
+     */
     public static boolean checkJar() {
         return jarFile.isFile();
     }
-
-//    public static File getNodesCSV() {
-//        if(checkJar()) {
-//
-//        } else {
-//
-//        }
-//    }
 
     /**
      * Deletes and re-creates the specified File (if the file exists).
@@ -114,6 +79,86 @@ public class FileHelpers {
         InputStream in = FileHelpers.class.getResourceAsStream(Constants.CSV_WORKSPACES);
 
         return in;
+    }
+
+    /**
+     * Copies a zip file to the specified output path
+     * @param inputPath
+     * @param outputPath
+     * @return
+     * @throws IOException
+     */
+    public static String extractFolder(String inputPath, String outputPath) throws IOException {
+
+        if(checkJar()) {
+
+            // Extract folder
+            InputStream inputStream = null;
+
+            OutputStream outputStream = null;
+
+            try {
+
+                inputStream =  FileHelpers.class.getResourceAsStream(inputPath);
+                outputStream = new FileOutputStream("./" + outputPath);
+
+                byte[] buf = new byte[1024];
+
+                int bytesRead;
+
+                while ((bytesRead = inputStream.read(buf)) > 0) {
+
+                    outputStream.write(buf, 0, bytesRead);
+
+                }
+
+            }
+            finally {
+
+
+                inputStream.close();
+
+                outputStream.close();
+
+            }
+
+            return "./" + outputPath;
+
+        } else {
+
+            // Return path
+            return inputPath;
+
+        }
+
+    }
+
+    /**
+     * Unzips the specified ZIP file to the specified destination (./destination/destination)
+     * @param source
+     * @param destination
+     * @return
+     */
+    public static String unzipFile(String source, String destination) {
+
+        try {
+            ZipFile zipFile = new ZipFile(source);
+
+            if(!zipFile.isEncrypted()) {
+
+                zipFile.extractAll("./" + destination);
+
+                return "./" + destination + "/" + destination;
+
+            } else {
+                return null;
+            }
+        } catch (ZipException e) {
+            e.printStackTrace();
+
+            return null;
+        }
+
     }
 
 }

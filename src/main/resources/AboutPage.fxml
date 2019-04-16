@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="700.0" minWidth="1200.0" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AboutPageController">
+   <children>
+      <HBox minHeight="100.0" minWidth="1200.0" prefWidth="1200.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" minHeight="100.0" minWidth="1200.0" style="-fx-background-color: #022D5A;" text="About This Application" textFill="WHITE">
+               <font>
+                  <Font size="40.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox prefHeight="25.0" prefWidth="200.0" AnchorPane.bottomAnchor="750.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="1200.0" text="WPI Computer Science Department" textFill="#022d5a">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="125.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="1200.0" text="CS3733-D19 Software Engineering" textFill="#022d5a">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="550.0" AnchorPane.rightAnchor="550.0">
+         <image>
+            <Image url="@../../../../Brigham_and_Womens_Hospital_logo.svg.png" />
+         </image>
+      </ImageView>
+      <HBox prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="150.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="1200.0" text="Professor Wong" textFill="#022d5a">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="475.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="200.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="600.0" prefHeight="25.0" prefWidth="600.0" text="Theo Konstantopoulos: Lead Software Engineer" textFill="#022d5a">
+               <padding>
+                  <Insets left="50.0" right="50.0" />
+               </padding>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="600.0" prefHeight="25.0" prefWidth="600.0" text="Niko Gamarra: Test Engineer" textFill="#022d5a">
+               <padding>
+                  <Insets left="50.0" right="50.0" />
+               </padding>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="50.0" prefWidth="1200.0" AnchorPane.bottomAnchor="275.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="1200.0" text="Special Thanks" textFill="#022d5a">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox layoutX="335.0" layoutY="500.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.bottomAnchor="250.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="1200.0" text="We would like to thank Brigham and Women’s Faulkner Hospital" textFill="#022d5a">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox layoutX="334.0" layoutY="457.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.bottomAnchor="225.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="1200.0" text="along with their reprentative, Andrew Shinn, for their time and input " textFill="#022d5a">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox layoutX="259.0" layoutY="239.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="240.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="600.0" text="Matt Iandoli: Assistant Lead Software Engineer" textFill="#022d5a">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="600.0" text="Sophie Antoniou: Documentation Analyst" textFill="#022d5a">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox layoutX="162.0" layoutY="275.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.bottomAnchor="395.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="280.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="600.0" text="Manas Mehta: Assistant Lead Software Engineer" textFill="#022d5a">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="600.0" text="Max Luu: Scrum Master" textFill="#022d5a">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox layoutX="129.0" layoutY="300.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="345.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="320.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="600.0" text="Katie Deyette: Full-Time Software Engineer" textFill="#022d5a">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="600.0" text="Danya Baron: Product Owner" textFill="#022d5a">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox layoutX="213.0" layoutY="325.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="315.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="360.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="600.0" text="Garrett Smith: Full-Time Software Engineer" textFill="#022d5a">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="600.0" text="Dan Oates: Project Manager" textFill="#022d5a">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
