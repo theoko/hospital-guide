@@ -472,6 +472,24 @@ public class EmployeeMapController extends MapController {
         boxInt.setPrefSize(1200,700);
         boxInt.setSpacing(5);
 
+        Label lblLock = new Label("Interpreter Service Request");
+        lblLock.setPrefHeight(50);
+        lblLock.setPrefWidth(1200);
+        lblLock.setTextFill(Color.WHITE);
+        lblLock.setAlignment(Pos.CENTER);
+        lblLock.setStyle("-fx-background-color: radial-gradient(radius 120%, #022D5A, derive(#022D5A, -60%), derive(#022D5A, 60%));" +
+                "-fx-background-radius: 30;" +
+                "-fx-font-size: 24;" +
+                "-fx-font-weight: BOLD");
+        lblLock.setPadding(new Insets(10, 10, 10, 10));
+
+        VBox boxLock = new VBox();
+        boxLock.getChildren().add(lblLock);
+        boxLock.getChildren().add(Lock);
+        boxLock.setAlignment(Pos.CENTER_LEFT);
+        boxLock.setPrefSize(1200,700);
+        boxLock.setSpacing(5);
+
         JFXNodesList nodeListSearch = new JFXNodesList();
         JFXNodesList nodeListUser = new JFXNodesList();
         JFXNodesList nodeListRoute = new JFXNodesList();
@@ -481,6 +499,7 @@ public class EmployeeMapController extends MapController {
         JFXNodesList nodesListComp = new JFXNodesList();
         JFXNodesList nodesListFlo = new JFXNodesList();
         JFXNodesList nodesListInt = new JFXNodesList();
+        JFXNodesList nodesListLock = new JFXNodesList();
 
         nodeListSearch.addAnimatedNode(btnSearch);
         nodeListSearch.addAnimatedNode(searchBox);
@@ -522,11 +541,16 @@ public class EmployeeMapController extends MapController {
         nodesListInt.setRotate(75);
         nodesListInt.setSpacing(310);
 
+        nodesListLock.addAnimatedNode(btnLock);
+        nodesListLock.addAnimatedNode(boxLock);
+        nodesListLock.setRotate(75);
+        nodesListLock.setSpacing(310);
+
         VBox boxReq = new VBox();
         boxReq.getChildren().add(nodesListComp);
         boxReq.getChildren().add(nodesListFlo);
         boxReq.getChildren().add(nodesListInt);
-        boxReq.getChildren().add(btnLock);
+        boxReq.getChildren().add(nodesListLock);
         boxReq.getChildren().add(btnDrug);
         boxReq.getChildren().add(btnAv);
         boxReq.getChildren().add(btnIn);

@@ -52,7 +52,7 @@
                         <ImageView fx:id="imgArrowL2" fitWidth="50.0" fitHeight="50.0" preserveRatio="true"/>
                     </HBox>
                 </VBox>
-                <AnchorPane AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="230.0">
+                <AnchorPane AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="200.0">
                     <children>
                         <VBox fx:id="vboxDock" prefHeight="400.0" prefWidth="60.0" style="-fx-background-color: #022D5A; -fx-background-radius: 30;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                         <JFXButton fx:id="btnLogOut" contentDisplay="CENTER" onMouseClicked="#btnReturn_Click" prefHeight="60.0" prefWidth="60.0" textOverrun="CLIP">
@@ -83,9 +83,9 @@
                 <AnchorPane style="-fx-background-color: white;" fx:id="Int">
                     <fx:include source="../requests/Interpreter.fxml" />
                 </AnchorPane>
-                <!--AnchorPane style="-fx-background-color: white;" fx:id="Lock">
+                <AnchorPane style="-fx-background-color: white;" fx:id="Lock">
                     <fx:include source="../requests/Security.fxml" />
-                </AnchorPane-->
+                </AnchorPane>
             </AnchorPane>
         </Tab>
     </JFXTabPane>
