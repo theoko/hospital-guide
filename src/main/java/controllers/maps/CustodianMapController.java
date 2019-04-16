@@ -59,7 +59,7 @@ public class CustodianMapController extends MapController {
 
     @Override
     public void showFloor(String newFloor) {
-        super.showFloor(newFloor);
+        super.showFloorHelper(newFloor);
         MapDisplay.displayEmployee(this);
     }
 

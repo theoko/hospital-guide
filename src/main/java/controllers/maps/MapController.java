@@ -123,13 +123,15 @@ public abstract class MapController implements Initializable {
         return false;
     }
 
-    public void showFloor(String newFloor){
+    protected void showFloorHelper(String newFloor) {
         floor = newFloor;
         imgMap.setImage(ImageFactory.getImage(floor));
         updateLines();
         updateButtons();
         displayHint();
     }
+
+    public abstract void showFloor(String newFloor);
 
     public String getFloor() {
         return floor;
@@ -201,7 +203,7 @@ public abstract class MapController implements Initializable {
     };
 
     private void displayHint() {
-        if (lstLineTransits.size() > 0) {
+        if (lstLineTransits.size() > 0 && lstLineTransits.size() >= transitIt) {
             String lstFloor = lstLineTransits.get(transitIt - 1).getFloor();
             if (lstFloor.equals(floor)) {
                 clearArrow();
@@ -210,6 +212,8 @@ public abstract class MapController implements Initializable {
                 if (lstLineTransits.size() > transitIt) {
                     String nxtFloor = lstLineTransits.get(transitIt++).getFloor();
                     displayArrow(nxtFloor);
+                } else {
+                    transitIt++;
                 }
             }
         }
@@ -324,15 +328,7 @@ public abstract class MapController implements Initializable {
         } else {
             zoom *= 1 + ZOOM_BUFFER;
         }
-        gesMap.zoomBy(zoom, center);
+        gesMap.zoomBy(zoom, gesMap.viewportCentre());
         gesMap.animate(Duration.millis(ANIMATION_TIME)).centreOn(center);
-    }
-
-    private double widthZoom(double width) {
-        return (width * -0.001534) + 2.837;
-    }
-
-    private double heightZoom(double height) {
-        return (height * -0.002259) + 2.546;
     }
 }

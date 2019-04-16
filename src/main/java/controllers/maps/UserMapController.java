@@ -58,7 +58,7 @@ public class UserMapController extends MapController {
 
     @Override
     public void showFloor(String newFloor) {
-        super.showFloor(newFloor);
+        super.showFloorHelper(newFloor);
         MapDisplay.displayUser(this);
     }
 
