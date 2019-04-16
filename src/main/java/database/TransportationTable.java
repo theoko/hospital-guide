@@ -2,7 +2,6 @@ package database;
 
 import helpers.Constants;
 import models.map.Location;
-import models.services.SanitationRequest;
 import models.services.TransportationRequest;
 import models.user.User;
 
@@ -65,7 +64,7 @@ public class TransportationTable {
         try {
             // Attempt to add request to database
             PreparedStatement statement = Database.getDatabase().getConnection().prepareStatement(
-                    "INSERT INTO " + Constants.SANITATION_TABLE +
+                    "INSERT INTO " + Constants.TRANSPORTATION_TABLE +
                             " (locationID, destinationID, status, description, requesterID, requestTime)" +
                             " VALUES (?, ?, ?, ?, ?, ?)"
             );
@@ -139,8 +138,8 @@ public class TransportationTable {
                         resultSet.getString("locationID"));
                 Location destination = LocationTable.getLocationByID(
                         resultSet.getString("destinationID"));
-                SanitationRequest.Status status =
-                        SanitationRequest.Status.valueOf(
+                TransportationRequest.Status status =
+                        TransportationRequest.Status.valueOf(
                                 resultSet.getString("status"));
                 String description = resultSet.getString("description");
                 User requester = UserTable.getUserByID(
@@ -190,7 +189,7 @@ public class TransportationTable {
 
             // Attempt to remove request from database
             PreparedStatement statement = Database.getDatabase().getConnection().prepareStatement(
-                    "UPDATE " + Constants.SANITATION_TABLE +
+                    "UPDATE " + Constants.TRANSPORTATION_TABLE +
                             " SET status=?, servicerID=?, claimedTime=?, completedTime=? WHERE requestID=?"
             );
             statement.setString(1, status);

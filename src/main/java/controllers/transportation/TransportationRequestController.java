@@ -59,7 +59,6 @@ public class TransportationRequestController  {
 //    @Override
     public void initialize() {
 
-        System.out.println("initializing ,..");
 //        super.initialize(location, resources);
 //        MapDisplay.displayCust(this, panes, TextPane);
 //        VisualRealtimeController.setPanMap(panFloor1);
@@ -107,7 +106,7 @@ public class TransportationRequestController  {
         tblClaimTime.setCellValueFactory(new PropertyValueFactory<>("ClaimedTime"));
         tblServiceTime.setCellValueFactory(new PropertyValueFactory<>("CompletedTime"));
         tblServicer.setCellValueFactory(new PropertyValueFactory<>("ServicerUserName"));
-        System.out.println(transports.toString());
+        //System.out.println(transports.toString());
         tblData.setItems(transports);
 
         //todo remove later once search works
@@ -168,7 +167,6 @@ public class TransportationRequestController  {
         boolean dateEmpty = (datDate.getValue() == null);
         boolean timeEmpty = (datTime.getValue() == null);
 
-        System.out.println("Bools"+startLocEmpty+endLocEmpty+detailsEmpty+dateEmpty+timeEmpty);
         btnSendRequest.setDisable(startLocEmpty || endLocEmpty || detailsEmpty || dateEmpty || timeEmpty);
     }
 
@@ -222,6 +220,20 @@ public class TransportationRequestController  {
 
         updateTableBTNs();
         updateMarkDoneBtn();
+    }
+
+    private void updateBtns(){
+        TransportationRequest selected = tblData.getSelectionModel().getSelectedItem();
+        if (selected != null) {
+            User servicer = selected.getServicer();
+
+            boolean btnClaimEnabled = (servicer == null || (servicer.equals(UserHelpers.getCurrentUser()) &&
+                    (selected.getStatus() == TransportationRequest.Status.INCOMPLETE)));
+            btnClaim.setDisable(!btnClaimEnabled);
+
+            boolean btnMarkDoneEnabled = (servicer != null && servicer.equals(UserHelpers.getCurrentUser()));
+            btnMarkDone.setDisable(!btnMarkDoneEnabled);
+        }
     }
 
     private void updateMarkDoneBtn() {
@@ -278,6 +290,7 @@ TransportationRequest request = new TransportationRequest(startLoc,endLoc, txtDe
 //
 //
 //        );
+        TransportationTable.dropTable();//todo
         TransportationTable.addTransportationRequest(request);
 
         // Deactivate popup
@@ -287,6 +300,8 @@ TransportationRequest request = new TransportationRequest(startLoc,endLoc, txtDe
         event.consume();
         //ScreenController.deactivate();//todo figure out appropriate action after UI refactor
     }
+
+
 }
 
 
