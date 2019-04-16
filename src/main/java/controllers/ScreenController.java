@@ -1,10 +1,12 @@
 package controllers;
 
 import controllers.maps.MapController;
+import controllers.node.AddPopUpController;
 import controllers.node.InfoController;
 import controllers.node.PopUpController;
 import controllers.user.PopUpControllerUser;
 import helpers.Constants;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -76,6 +78,7 @@ public class ScreenController {
         this.addScreen(Constants.Routes.VISUAL_AUDIO, "/fxml/UI/requests/VisualAudio.fxml");
         this.addScreen(Constants.Routes.EXTERNAL_TRANS, "/fxml/UI/requests/ExternalTrans.fxml");
         this.addScreen(Constants.Routes.PATIENT_INFO, "/fxml/UI/requests/PatientInfo.fxml");
+        this.addScreen(Constants.Routes.ADD, "/fxml/UI/node/AddPopUp.fxml");
     }
 
     public void addScreen(Constants.Routes route, String layout) {
@@ -118,6 +121,31 @@ public class ScreenController {
         ic.setLoc(loc);
         ic.setMc(mc);
         ic.setMap(map);
+        displayPopUp(root);
+    }
+
+    public static void adminPopUp(Constants.Routes route, Location loc, MapController mc) throws IOException {
+        stage = new Stage();
+        URL url = routeToURL(route);
+
+        FXMLLoader loader = new FXMLLoader(url);
+        Parent root = loader.load();
+        PopUpController pc = loader.getController();
+        pc.setLoc(loc);
+        pc.setMc(mc);
+        displayPopUp(root);
+    }
+
+    public static void addPopUp(MapController mc, int xCoord, int yCoord) throws IOException {
+        stage = new Stage();
+        URL url = routeToURL(Constants.Routes.ADD);
+
+        FXMLLoader loader = new FXMLLoader(url);
+        Parent root = loader.load();
+        AddPopUpController ac = loader.getController();
+        ac.setMc(mc);
+        ac.setxCoord(xCoord);
+        ac.setyCoord(yCoord);
         displayPopUp(root);
     }
 
@@ -229,6 +257,7 @@ public class ScreenController {
 
     /**
      * Closes out of a current window with selected
+     *
      * @param n Node from the window the logout is from
      */
     public static void logOut(Node n) {

@@ -54,7 +54,7 @@
                 </VBox>
 
                 <!--Top right settings-->
-                <AnchorPane prefHeight="135.0" prefWidth="225.0"
+                <AnchorPane prefHeight="175.0" prefWidth="250.0"
                             style="-fx-background-color: #ffffff; -fx-background-radius: 10 10 10 10; -fx-border-width: 2px 2px 2px 2px; -fx-border-color: #022D5A; -fx-border-radius: 10;"
                             AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
                     <VBox alignment="CENTER" spacing="10.0"
@@ -76,8 +76,8 @@
                     </VBox>
                 </AnchorPane>
                 <TitledPane fx:id="tilDirections" alignment="CENTER" expanded="false" text="Text Directions"
-                            prefWidth="225.0" prefHeight="0.0"
-                            AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="165.0">
+                            prefWidth="250.0" prefHeight="0.0"
+                            AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="205.0">
                     <font>
                         <Font size="18.0"/>
                     </font>

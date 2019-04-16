@@ -3,23 +3,53 @@ package controllers.maps;
 import controllers.ScreenController;
 import controllers.search.SearchEngineController;
 import helpers.Constants;
+import javafx.event.Event;
+import javafx.geometry.Point3D;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
+import javafx.scene.transform.Transform;
 import map.MapDisplay;
 import models.map.Location;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class AdminMapController extends MapController {
 
-    public static Label welcomeMessage;
+    static class Delta {
+        boolean bolDragged;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
         SearchEngineController.setParentController(this);
         MapDisplay.displayAdmin(this);
+
+        Delta deltaDragged = new Delta();
+        panMap.setOnMousePressed((e) -> {
+            deltaDragged.bolDragged = false;
+        });
+        panMap.setOnMouseDragged((e) -> {
+            deltaDragged.bolDragged = true;
+        });
+        panMap.setOnMouseReleased((e) -> {
+            try {
+                if (!deltaDragged.bolDragged) {
+                    ScreenController.addPopUp(this,(int) e.getX(), (int) e.getY());
+                }
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
     }
 
     @Override
@@ -30,49 +60,57 @@ public class AdminMapController extends MapController {
 
     @Override
     public void btnFloor3_Click(MouseEvent mouseEvent) {
-        showFloor3();
-        MapDisplay.displayAdmin(this);
+        showFloor("3");
     }
 
     @Override
     public void btnFloor2_Click(MouseEvent mouseEvent) {
-        showFloor2();
-        MapDisplay.displayAdmin(this);
+        showFloor("2");
     }
 
     @Override
     public void btnFloor1_Click(MouseEvent mouseEvent) {
-        showFloor1();
-        MapDisplay.displayAdmin(this);
+        showFloor("1");
     }
 
     @Override
     public void btnFloorG_Click(MouseEvent mouseEvent) {
-        showFloorG();
-        MapDisplay.displayAdmin(this);
+        showFloor("G");
     }
 
     @Override
     public void btnFloorL1_Click(MouseEvent mouseEvent) {
-        showFloorL1();
-        MapDisplay.displayAdmin(this);
+        showFloor("L1");
     }
 
     @Override
     public void btnFloorL2_Click(MouseEvent mouseEvent) {
-        showFloorL2();
+        showFloor("L2");
+    }
+
+    private void clearEdges() {
+        List<Node> lstNodes = new ArrayList<>();
+        for (Node n : panMap.getChildren()) {
+            if (n instanceof Line) {
+                lstNodes.add(n);
+            }
+        }
+        panMap.getChildren().removeAll(lstNodes);
+    }
+
+    @Override
+    public void showFloor(String newFloor) {
+        super.showFloor(newFloor);
+        clearEdges();
         MapDisplay.displayAdmin(this);
     }
 
-    public static boolean isEnableAddNode() {
-        return false;
+    @Override
+    public boolean isAdmin() {
+        return true;
     }
 
     public static void locationSelectEvent(Location loc) {
-    }
-
-    public static void controlWelcomeMessage(boolean condition) {
-        welcomeMessage.setVisible(false);
     }
 
 }

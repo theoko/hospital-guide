@@ -5,6 +5,7 @@ import controllers.search.SearchEngineController;
 import helpers.Constants;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Path;
 import map.MapDisplay;
 
 import java.net.URL;
@@ -28,37 +29,43 @@ public class EmployeeMapController extends MapController {
 
     @Override
     public void btnFloor3_Click(MouseEvent mouseEvent) {
-        showFloor3();
-        MapDisplay.displayEmployee(this);
+        showFloor("3");
     }
 
     @Override
     public void btnFloor2_Click(MouseEvent mouseEvent) {
-        showFloor2();
-        MapDisplay.displayEmployee(this);
+        showFloor("2");
     }
 
     @Override
     public void btnFloor1_Click(MouseEvent mouseEvent) {
-        showFloor1();
-        MapDisplay.displayEmployee(this);
+        showFloor("1");
     }
 
     @Override
     public void btnFloorG_Click(MouseEvent mouseEvent) {
-        showFloorG();
-        MapDisplay.displayEmployee(this);
+        showFloor("G");
     }
 
     @Override
     public void btnFloorL1_Click(MouseEvent mouseEvent) {
-        showFloorL1();
-        MapDisplay.displayEmployee(this);
+        showFloor("L1");
     }
 
     @Override
     public void btnFloorL2_Click(MouseEvent mouseEvent) {
-        showFloorL2();
+        showFloor("L2");
+    }
+
+    @Override
+    public void showFloor(String newFloor) {
+        super.showFloor(newFloor);
+        MapDisplay.displayEmployee(this);
+    }
+
+    @Override
+    public void displayPath(Path line) {
+        super.displayPath(line);
         MapDisplay.displayEmployee(this);
     }
 }
