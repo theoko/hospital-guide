@@ -31,6 +31,7 @@ import java.util.ResourceBundle;
 public abstract class MapController implements Initializable {
     private final double MAX_ZOOM = 2.0;
     private final double MIN_ZOOM = 0.35;
+    private final double ZOOM_BUFFER = 0.25;
     private final double ANIMATION_TIME = 1000;
 
     public GesturePane gesMap;
@@ -303,20 +304,27 @@ public abstract class MapController implements Initializable {
     }
 
     private void panToLine(Path line) {
-        Bounds lineBounds = line.getBoundsInParent();
+        Bounds lineBounds = line.getBoundsInLocal();
         double startX = lineBounds.getMinX();
         double startY = lineBounds.getMinY();
         double endX = lineBounds.getMaxX();
         double endY = lineBounds.getMaxY();
         Point2D center = new Point2D((startX + endX) / 2, (startY + endY) / 2);
 
-        double width = endX - startX;
-        double height = endY - startY;
-        double zWidth = widthZoom(width);
-        double zHeight = heightZoom(height);
-        double zoom = (zWidth > zHeight) ? zHeight : zWidth;
-
-        gesMap.zoomTo(zoom, center);
+        double lineWidth = lineBounds.getWidth();
+        double lineHeight = lineBounds.getHeight();
+        Bounds gesView = gesMap.getTargetViewport();
+        double gesWidth = gesView.getWidth();
+        double gesHeight = gesView.getHeight();
+        double zoomWidth = (gesWidth - lineWidth) / gesWidth;
+        double zoomHeight = (gesHeight - lineHeight) / gesHeight;
+        double zoom = zoomWidth < zoomHeight ? zoomWidth : zoomHeight;
+        if (zoom > 0) {
+            zoom *= 1 - ZOOM_BUFFER;
+        } else {
+            zoom *= 1 + ZOOM_BUFFER;
+        }
+        gesMap.zoomBy(zoom, center);
         gesMap.animate(Duration.millis(ANIMATION_TIME)).centreOn(center);
     }
 
