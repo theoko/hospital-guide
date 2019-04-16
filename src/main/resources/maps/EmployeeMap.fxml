@@ -52,9 +52,9 @@
                         <ImageView fx:id="imgArrowL2" fitWidth="50.0" fitHeight="50.0" preserveRatio="true"/>
                     </HBox>
                 </VBox>
-                <AnchorPane AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="190.0">
+                <AnchorPane AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="230.0">
                     <children>
-                        <VBox fx:id="vboxDock" prefHeight="400.0" prefWidth="60.0" style="-fx-background-color: #022D5A; -fx-background-radius: 30;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <VBox fx:id="vboxDock" prefHeight="332.0" prefWidth="60.0" style="-fx-background-color: #022D5A; -fx-background-radius: 30;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                         <JFXButton fx:id="btnLogOut" contentDisplay="CENTER" onMouseClicked="#btnReturn_Click" prefHeight="60.0" prefWidth="60.0" textOverrun="CLIP">
                             <graphic>
                                 <ImageView fx:id="imgLogOut" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
@@ -74,13 +74,13 @@
                 <AnchorPane fx:id="roomBooking">
                     <fx:include source="../RoomBookingWindow.fxml" />
                 </AnchorPane>
-                <AnchorPane fx:id="workBooking" prefHeight="700" prefWidth="1200">
-                    <fx:include source="../Workspace.fxml" />
+                <AnchorPane fx:id="IT">
+                    <fx:include source="../requests/ITServiceRequest.fxml" />
                 </AnchorPane>
+                <!--AnchorPane fx:id="Flo">
+                    <fx:include source="../requests/ITServiceRequest.fxml" />
+                </AnchorPane-->
             </AnchorPane>
-        </Tab>
-        <Tab style="-fx-background-color: #022D5A;" text="WorkSpace Booking">
-            <fx:include source="../Workspace.fxml" />
         </Tab>
     </JFXTabPane>
 </AnchorPane>

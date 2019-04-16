@@ -29,7 +29,7 @@ public class EmployeeMapController extends MapController {
     public JFXButton btnLogOut;
     public AnchorPane tilDirections;
     public AnchorPane roomBooking;
-    public AnchorPane workBooking;
+    public AnchorPane IT;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -107,20 +107,6 @@ public class EmployeeMapController extends MapController {
         btnRoom.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnRoom.setTextOverrun(OverrunStyle.CLIP);
 
-        ImageView imgComp = new ImageView();
-        imgComp.setImage(new Image("images/Icons/comp.png"));
-        imgComp.setFitHeight(30);
-        imgComp.setFitWidth(30);
-        imgComp.setPreserveRatio(true);
-        imgComp.setPickOnBounds(true);
-
-        JFXButton btnComp = new JFXButton("",imgComp);
-        btnComp.setAlignment(Pos.CENTER);
-        btnComp.setPrefWidth(60);
-        btnComp.setPrefHeight(60);
-        btnComp.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
-        btnComp.setTextOverrun(OverrunStyle.CLIP);
-
         ImageView imgExl = new ImageView();
         imgExl.setImage(new Image("images/Icons/excl.png"));
         imgExl.setFitHeight(30);
@@ -148,13 +134,6 @@ public class EmployeeMapController extends MapController {
         btnComp1.setPrefHeight(60);
         btnComp1.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnComp1.setTextOverrun(OverrunStyle.CLIP);
-        btnComp1.setOnMouseClicked(event -> {
-            try {
-                ScreenController.activate(Constants.Routes.IT);
-            }
-            catch (Exception e) {
-            }
-        });
 
         ImageView imgFlo = new ImageView();
         imgFlo.setImage(new Image("images/Icons/florist.png"));
@@ -407,7 +386,7 @@ public class EmployeeMapController extends MapController {
         pathDir.setPrefSize(400,560);
         pathDir.setSpacing(5);
 
-        Label lblRoom = new Label("Room Booking");
+        Label lblRoom = new Label("Conference Room and Workspace Booking");
         lblRoom.setPrefHeight(50);
         lblRoom.setPrefWidth(1200);
         lblRoom.setTextFill(Color.WHITE);
@@ -425,7 +404,7 @@ public class EmployeeMapController extends MapController {
         boxRoom.setPrefSize(1200,760);
         boxRoom.setSpacing(5);
 
-        Label lblComp = new Label("Workspace Booking");
+        Label lblComp = new Label("IT Service Request");
         lblComp.setPrefHeight(50);
         lblComp.setPrefWidth(1200);
         lblComp.setTextFill(Color.WHITE);
@@ -438,35 +417,17 @@ public class EmployeeMapController extends MapController {
 
         VBox boxComp = new VBox();
         boxComp.getChildren().add(lblComp);
-        boxComp.getChildren().add(workBooking);
+        boxComp.getChildren().add(IT);
         boxComp.setAlignment(Pos.CENTER_LEFT);
         boxComp.setPrefSize(1200,760);
         boxComp.setSpacing(5);
-
-        Label lblExl = new Label("Sanitation Requests");
-        lblExl.setPrefHeight(50);
-        lblExl.setPrefWidth(1170);
-        lblExl.setTextFill(Color.WHITE);
-        lblExl.setAlignment(Pos.CENTER);
-        lblExl.setStyle("-fx-background-color: radial-gradient(radius 120%, #022D5A, derive(#022D5A, -60%), derive(#022D5A, 60%));" +
-                "-fx-background-radius: 30;" +
-                "-fx-font-size: 24;" +
-                "-fx-font-weight: BOLD");
-        lblExl.setPadding(new Insets(10, 10, 10, 10));
-
-        VBox boxExl = new VBox();
-        boxExl.getChildren().add(lblExl);
-       // boxExl.getChildren().add(sanitation);
-        boxExl.setAlignment(Pos.CENTER_LEFT);
-        boxExl.setPrefSize(1200,760);
-        boxExl.setSpacing(5);
 
         JFXNodesList nodeListSearch = new JFXNodesList();
         JFXNodesList nodeListUser = new JFXNodesList();
         JFXNodesList nodeListRoute = new JFXNodesList();
         JFXNodesList nodeListRoom = new JFXNodesList();
-        JFXNodesList nodesListWork = new JFXNodesList();
         JFXNodesList nodeListExl = new JFXNodesList();
+        JFXNodesList nodesListComp = new JFXNodesList();
 
         nodeListSearch.addAnimatedNode(btnSearch);
         nodeListSearch.addAnimatedNode(searchBox);
@@ -488,30 +449,45 @@ public class EmployeeMapController extends MapController {
         nodeListRoom.setRotate(90);
         nodeListRoom.setSpacing(240);
 
-        nodesListWork.addAnimatedNode(btnComp);
-        nodesListWork.addAnimatedNode(boxComp);
-        nodesListWork.setRotate(90);
-        nodesListWork.setSpacing(240);
+        nodesListComp.addAnimatedNode(btnComp1);
+        nodesListComp.addAnimatedNode(boxComp);
+        nodesListComp.setRotate(60);
+        nodesListComp.setSpacing(330);
+
+        VBox boxReq = new VBox();
+        boxReq.getChildren().add(nodesListComp);
+        boxReq.getChildren().add(btnFlo);
+        boxReq.getChildren().add(btnSign);
+        boxReq.getChildren().add(btnLock);
+        boxReq.getChildren().add(btnDrug);
+        boxReq.getChildren().add(btnAv);
+        boxReq.getChildren().add(btnIn);
+        boxReq.getChildren().add(btnOut);
+        boxReq.getChildren().add(btnGift);
+        boxReq.getChildren().add(btnInfo);
+        boxReq.setAlignment(Pos.CENTER);
+        boxReq.setPrefSize(60,700);
+        boxReq.setSpacing(5);
 
         nodeListExl.addAnimatedNode(btnExl);
-        nodeListExl.addAnimatedNode(btnComp1);
-        nodeListExl.addAnimatedNode(btnFlo);
-        nodeListExl.addAnimatedNode(btnSign);
-        nodeListExl.addAnimatedNode(btnLock);
-        nodeListExl.addAnimatedNode(btnDrug);
-        nodeListExl.addAnimatedNode(btnAv);
-        nodeListExl.addAnimatedNode(btnIn);
-        nodeListExl.addAnimatedNode(btnOut);
-        nodeListExl.addAnimatedNode(btnGift);
-        nodeListExl.addAnimatedNode(btnInfo);
-        nodeListExl.setRotate(90);
-        nodeListExl.setSpacing(10);
+//        nodeListExl.addAnimatedNode(nodesListComp);
+//        nodeListExl.addAnimatedNode(btnFlo);
+//        nodeListExl.addAnimatedNode(btnSign);
+//        nodeListExl.addAnimatedNode(btnLock);
+//        nodeListExl.addAnimatedNode(btnDrug);
+//        nodeListExl.addAnimatedNode(btnAv);
+//        nodeListExl.addAnimatedNode(btnIn);
+//        nodeListExl.addAnimatedNode(btnOut);
+//        nodeListExl.addAnimatedNode(btnGift);
+//        nodeListExl.addAnimatedNode(btnInfo);
+        nodeListExl.addAnimatedNode(boxReq);
+        nodeListExl.setRotate(150);
+        nodeListExl.setSpacing(-220);
 
         vboxDock.getChildren().add(nodeListUser);
         vboxDock.getChildren().add(nodeListSearch);
         vboxDock.getChildren().add(nodeListRoute);
         vboxDock.getChildren().add(nodeListRoom);
-        vboxDock.getChildren().add(nodesListWork);
         vboxDock.getChildren().add(nodeListExl);
     }
 
