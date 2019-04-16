@@ -52,8 +52,10 @@ public class DisplayCalendarController {
         panCalendar.setPrefWidth(1200);
         panCalendar.setPrefHeight(656);
 
-//        setEntries();
+
         panCalendar.setCenter(agenda);
+
+        setEntries();
     }
 
 // String nodeID, int xCord, int yCord, String floor, String building, Constants.NodeType nodeType, String longName, String shortName
@@ -149,10 +151,10 @@ public class DisplayCalendarController {
             Location location = LocationTable.getLocationByID(roomID);
             String name = location.getLongName();
         }
-        for (Book w: bookingsWorkspace) {
-            String roomID = w.getRoomID();
-            Location location = LocationTable.getLocationByID(roomID);
-            String name = location.getLongName();
-        }
+//        for (Book w: bookingsWorkspace) {
+//            String roomID = w.getRoomID();
+//            Location location = LocationTable.getLocationByID(roomID);
+//            String name = location.getLongName();
+//        }
     }
 }

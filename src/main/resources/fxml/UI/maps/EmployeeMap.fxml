@@ -86,6 +86,9 @@
                 <AnchorPane style="-fx-background-color: white;" fx:id="Cal">
                     <fx:include source="../booking/CalendarTab.fxml" />
                 </AnchorPane>
+                <AnchorPane style="-fx-background-color: white;" fx:id="Lock">
+                    <fx:include source="../requests/Security.fxml" />
+                </AnchorPane>
             </AnchorPane>
         </Tab>
     </JFXTabPane>

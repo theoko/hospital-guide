@@ -72,7 +72,7 @@
                     <ScrollPane fx:id="txtPane" style="-fx-background-radius: 22; -fx-padding: 10, 10, 10, 10;" AnchorPane.leftAnchor="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
                 </AnchorPane>
                 <AnchorPane fx:id="sanitation" >
-                    <fx:include source="../SanitationTable.fxml"/>
+                    <fx:include source="../sanitation/SanitationTable.fxml"/>
                 </AnchorPane>
             </AnchorPane>
         </Tab>
