@@ -52,9 +52,9 @@
                         <ImageView fx:id="imgArrowL2" fitWidth="50.0" fitHeight="50.0" preserveRatio="true"/>
                     </HBox>
                 </VBox>
-                <AnchorPane AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="260.0">
+                <AnchorPane AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="190.0">
                     <children>
-                        <VBox fx:id="vboxDock" prefHeight="264.0" prefWidth="60.0" style="-fx-background-color: #022D5A; -fx-background-radius: 30;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <VBox fx:id="vboxDock" prefHeight="400.0" prefWidth="60.0" style="-fx-background-color: #022D5A; -fx-background-radius: 30;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                         <JFXButton fx:id="btnLogOut" contentDisplay="CENTER" onMouseClicked="#btnReturn_Click" prefHeight="60.0" prefWidth="60.0" textOverrun="CLIP">
                             <graphic>
                                 <ImageView fx:id="imgLogOut" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
@@ -71,16 +71,16 @@
                 <AnchorPane style="-fx-background-color: #022D5A; -fx-background-radius: 30;" fx:id="tilDirections" prefWidth="400.0" prefHeight="500.0">
                     <ScrollPane fx:id="txtPane" style="-fx-background-radius: 22; -fx-padding: 10, 10, 10, 10;" AnchorPane.leftAnchor="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
                 </AnchorPane>
+                <AnchorPane fx:id="roomBooking">
+                    <fx:include source="../RoomBookingWindow.fxml" />
+                </AnchorPane>
+                <AnchorPane fx:id="workBooking" prefHeight="700" prefWidth="1200">
+                    <fx:include source="../Workspace.fxml" />
+                </AnchorPane>
             </AnchorPane>
         </Tab>
-        <Tab style="-fx-background-color: #022D5A;" text="Room Booking">
-            <fx:include source="../RoomBookingWindow.fxml" />
-        </Tab>
-        <Tab style="-fx-background-color: #022D5A;" text="Workspaces">
+        <Tab style="-fx-background-color: #022D5A;" text="WorkSpace Booking">
             <fx:include source="../Workspace.fxml" />
-        </Tab>
-        <Tab style="-fx-background-color: #022D5A;" text="Requests">
-            <fx:include source="../requests/Requests.fxml" />
         </Tab>
     </JFXTabPane>
 </AnchorPane>

@@ -52,7 +52,6 @@
                         <ImageView fx:id="imgArrowL2" fitWidth="50.0" fitHeight="50.0" preserveRatio="true"/>
                     </HBox>
                 </VBox>
-
                 <AnchorPane AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="260.0">
                     <children>
                         <VBox fx:id="vboxDock" prefHeight="264.0" prefWidth="60.0" style="-fx-background-color: #022D5A; -fx-background-radius: 30;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />

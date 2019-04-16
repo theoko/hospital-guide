@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="700.0" minWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RoomBookingController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="700.0" minWidth="1200.0" prefHeight="717.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RoomBookingController">
    <children>
       <Label alignment="CENTER" layoutY="16.0" maxWidth="1.7976931348623157E308" prefHeight="44.0" prefWidth="1200.0" style="-fx-background-color: #022D5A;" text="Conference Room Booking" textAlignment="CENTER" textFill="WHITE">
          <font>
@@ -79,13 +79,13 @@
                                     </VBox.margin></JFXTimePicker>
                                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                                     <children>
-                                       <JFXButton fx:id="btnBookSelected" onMouseClicked="#handleBooking" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" prefHeight="42.0" prefWidth="165.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Book Room" textAlignment="CENTER" />
+                                       <JFXButton fx:id="btnBookSelected" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" onMouseClicked="#handleBooking" prefHeight="42.0" prefWidth="165.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Book Room" textAlignment="CENTER" />
                                        <JFXButton fx:id="btnReturn1" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" onMouseClicked="#logOut" prefHeight="11.0" prefWidth="140.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Logout" textAlignment="CENTER" />
                                     </children>
                                  </HBox>
                               </children>
                            </VBox>
-                           <TableView fx:id="tblRooms" prefHeight="643.0" prefWidth="850.0" onMouseClicked="#handleBookingSelection">
+                           <TableView fx:id="tblRooms" onMouseClicked="#handleBookingSelection" prefHeight="643.0" prefWidth="850.0">
                               <columns>
                                  <TableColumn fx:id="tblRoomID" prefWidth="247.0" text="Room ID" />
                                  <TableColumn fx:id="tblRoomCapacity" prefWidth="240.0" text="Capacity" />
