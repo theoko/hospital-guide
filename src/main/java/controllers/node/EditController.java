@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import controllers.ScreenController;
 import controllers.maps.AdminMapController;
+import controllers.maps.MapController;
 import database.LocationTable;
 import helpers.Constants;
 import helpers.UIHelpers;
@@ -21,6 +22,7 @@ import models.map.SubPath;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 import java.util.ResourceBundle;
 
 public class EditController extends PopUpController {
@@ -29,6 +31,7 @@ public class EditController extends PopUpController {
     public JFXTextField txtName;
     public String BATH, CONF, DEPT, ELEV, EXIT, HALL, INFO, LABS, REST, RETL, SERV, STAI;
     public JFXButton btnDefault, btnDelete;
+    public JFXButton btnAddEdge;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -126,6 +129,11 @@ public class EditController extends PopUpController {
         }
         PathFinder.setDefLocation(loc.getNodeID());
         loc.getNodeCircle().setFill(MapDisplay.nodeStart);
+        ScreenController.deactivate();
+    }
+
+    public void btnAddEdge_Click(MouseEvent mouseEvent) {
+        AdminMapController.setEdgLoc(loc);
         ScreenController.deactivate();
     }
 }
