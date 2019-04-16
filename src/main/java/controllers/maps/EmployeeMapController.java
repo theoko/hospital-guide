@@ -30,6 +30,9 @@ public class EmployeeMapController extends MapController {
     public AnchorPane tilDirections;
     public AnchorPane roomBooking;
     public AnchorPane IT;
+    public AnchorPane Flo;
+    public AnchorPane Int;
+    public AnchorPane Lock;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -107,6 +110,20 @@ public class EmployeeMapController extends MapController {
         btnRoom.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnRoom.setTextOverrun(OverrunStyle.CLIP);
 
+        ImageView imgCal = new ImageView();
+        imgCal.setImage(new Image("images/Icons/cald.png"));
+        imgCal.setFitHeight(30);
+        imgCal.setFitWidth(30);
+        imgCal.setPreserveRatio(true);
+        imgCal.setPickOnBounds(true);
+
+        JFXButton btnCal = new JFXButton("",imgCal);
+        btnCal.setAlignment(Pos.CENTER);
+        btnCal.setPrefWidth(60);
+        btnCal.setPrefHeight(60);
+        btnCal.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnCal.setTextOverrun(OverrunStyle.CLIP);
+
         ImageView imgExl = new ImageView();
         imgExl.setImage(new Image("images/Icons/excl.png"));
         imgExl.setFitHeight(30);
@@ -148,13 +165,6 @@ public class EmployeeMapController extends MapController {
         btnFlo.setPrefHeight(60);
         btnFlo.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnFlo.setTextOverrun(OverrunStyle.CLIP);
-        btnFlo.setOnMouseClicked(event -> {
-            try {
-                ScreenController.activate(Constants.Routes.FLOURIST);
-            }
-            catch (Exception e) {
-            }
-        });
 
         ImageView imgSign = new ImageView();
         imgSign.setImage(new Image("images/Icons/sign.png"));
@@ -169,13 +179,6 @@ public class EmployeeMapController extends MapController {
         btnSign.setPrefHeight(60);
         btnSign.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnSign.setTextOverrun(OverrunStyle.CLIP);
-        btnSign.setOnMouseClicked(event -> {
-            try {
-                ScreenController.activate(Constants.Routes.INTERPRETER);
-            }
-            catch (Exception e) {
-            }
-        });
 
         ImageView imgLock = new ImageView();
         imgLock.setImage(new Image("images/Icons/lock.png"));
@@ -190,13 +193,6 @@ public class EmployeeMapController extends MapController {
         btnLock.setPrefHeight(60);
         btnLock.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnLock.setTextOverrun(OverrunStyle.CLIP);
-        btnLock.setOnMouseClicked(event -> {
-            try {
-                ScreenController.activate(Constants.Routes.SECURITY);
-            }
-            catch (Exception e) {
-            }
-        });
 
         ImageView imgDrug = new ImageView();
         imgDrug.setImage(new Image("images/Icons/drug.png"));
@@ -404,6 +400,24 @@ public class EmployeeMapController extends MapController {
         boxRoom.setPrefSize(1200,760);
         boxRoom.setSpacing(5);
 
+        Label lblCal = new Label("My Bookings Calendar");
+        lblCal.setPrefHeight(50);
+        lblCal.setPrefWidth(1200);
+        lblCal.setTextFill(Color.WHITE);
+        lblCal.setAlignment(Pos.CENTER);
+        lblCal.setStyle("-fx-background-color: radial-gradient(radius 120%, #022D5A, derive(#022D5A, -60%), derive(#022D5A, 60%));" +
+                "-fx-background-radius: 30;" +
+                "-fx-font-size: 24;" +
+                "-fx-font-weight: BOLD");
+        lblCal.setPadding(new Insets(10, 10, 10, 10));
+
+        VBox boxCal = new VBox();
+        boxCal.getChildren().add(lblCal);
+       // boxRoom.getChildren().add(roomBooking);
+        boxCal.setAlignment(Pos.CENTER_LEFT);
+        boxCal.setPrefSize(1200,760);
+        boxCal.setSpacing(5);
+
         Label lblComp = new Label("IT Service Request");
         lblComp.setPrefHeight(50);
         lblComp.setPrefWidth(1200);
@@ -419,15 +433,54 @@ public class EmployeeMapController extends MapController {
         boxComp.getChildren().add(lblComp);
         boxComp.getChildren().add(IT);
         boxComp.setAlignment(Pos.CENTER_LEFT);
-        boxComp.setPrefSize(1200,760);
+        boxComp.setPrefSize(1200,700);
         boxComp.setSpacing(5);
+
+        Label lblFlo = new Label("Florist Service Request");
+        lblFlo.setPrefHeight(50);
+        lblFlo.setPrefWidth(1200);
+        lblFlo.setTextFill(Color.WHITE);
+        lblFlo.setAlignment(Pos.CENTER);
+        lblFlo.setStyle("-fx-background-color: radial-gradient(radius 120%, #022D5A, derive(#022D5A, -60%), derive(#022D5A, 60%));" +
+                "-fx-background-radius: 30;" +
+                "-fx-font-size: 24;" +
+                "-fx-font-weight: BOLD");
+        lblFlo.setPadding(new Insets(10, 10, 10, 10));
+
+        VBox boxFlo = new VBox();
+        boxFlo.getChildren().add(lblFlo);
+        boxFlo.getChildren().add(Flo);
+        boxFlo.setAlignment(Pos.CENTER_LEFT);
+        boxFlo.setPrefSize(1200,700);
+        boxFlo.setSpacing(5);
+
+        Label lblInt = new Label("Interpreter Service Request");
+        lblInt.setPrefHeight(50);
+        lblInt.setPrefWidth(1200);
+        lblInt.setTextFill(Color.WHITE);
+        lblInt.setAlignment(Pos.CENTER);
+        lblInt.setStyle("-fx-background-color: radial-gradient(radius 120%, #022D5A, derive(#022D5A, -60%), derive(#022D5A, 60%));" +
+                "-fx-background-radius: 30;" +
+                "-fx-font-size: 24;" +
+                "-fx-font-weight: BOLD");
+        lblFlo.setPadding(new Insets(10, 10, 10, 10));
+
+        VBox boxInt = new VBox();
+        boxInt.getChildren().add(lblInt);
+        boxInt.getChildren().add(Int);
+        boxInt.setAlignment(Pos.CENTER_LEFT);
+        boxInt.setPrefSize(1200,700);
+        boxInt.setSpacing(5);
 
         JFXNodesList nodeListSearch = new JFXNodesList();
         JFXNodesList nodeListUser = new JFXNodesList();
         JFXNodesList nodeListRoute = new JFXNodesList();
         JFXNodesList nodeListRoom = new JFXNodesList();
+        JFXNodesList nodeListCal = new JFXNodesList();
         JFXNodesList nodeListExl = new JFXNodesList();
         JFXNodesList nodesListComp = new JFXNodesList();
+        JFXNodesList nodesListFlo = new JFXNodesList();
+        JFXNodesList nodesListInt = new JFXNodesList();
 
         nodeListSearch.addAnimatedNode(btnSearch);
         nodeListSearch.addAnimatedNode(searchBox);
@@ -446,18 +499,33 @@ public class EmployeeMapController extends MapController {
 
         nodeListRoom.addAnimatedNode(btnRoom);
         nodeListRoom.addAnimatedNode(boxRoom);
-        nodeListRoom.setRotate(90);
+        nodeListRoom.setRotate(95);
         nodeListRoom.setSpacing(240);
+
+        nodeListCal.addAnimatedNode(btnCal);
+        nodeListCal.addAnimatedNode(boxCal);
+        nodeListCal.setRotate(95);
+        nodeListCal.setSpacing(240);
 
         nodesListComp.addAnimatedNode(btnComp1);
         nodesListComp.addAnimatedNode(boxComp);
-        nodesListComp.setRotate(60);
+        nodesListComp.setRotate(65);
         nodesListComp.setSpacing(330);
+
+        nodesListFlo.addAnimatedNode(btnFlo);
+        nodesListFlo.addAnimatedNode(boxFlo);
+        nodesListFlo.setRotate(70);
+        nodesListFlo.setSpacing(320);
+
+        nodesListInt.addAnimatedNode(btnSign);
+        nodesListInt.addAnimatedNode(boxInt);
+        nodesListInt.setRotate(75);
+        nodesListInt.setSpacing(310);
 
         VBox boxReq = new VBox();
         boxReq.getChildren().add(nodesListComp);
-        boxReq.getChildren().add(btnFlo);
-        boxReq.getChildren().add(btnSign);
+        boxReq.getChildren().add(nodesListFlo);
+        boxReq.getChildren().add(nodesListInt);
         boxReq.getChildren().add(btnLock);
         boxReq.getChildren().add(btnDrug);
         boxReq.getChildren().add(btnAv);
@@ -470,16 +538,6 @@ public class EmployeeMapController extends MapController {
         boxReq.setSpacing(5);
 
         nodeListExl.addAnimatedNode(btnExl);
-//        nodeListExl.addAnimatedNode(nodesListComp);
-//        nodeListExl.addAnimatedNode(btnFlo);
-//        nodeListExl.addAnimatedNode(btnSign);
-//        nodeListExl.addAnimatedNode(btnLock);
-//        nodeListExl.addAnimatedNode(btnDrug);
-//        nodeListExl.addAnimatedNode(btnAv);
-//        nodeListExl.addAnimatedNode(btnIn);
-//        nodeListExl.addAnimatedNode(btnOut);
-//        nodeListExl.addAnimatedNode(btnGift);
-//        nodeListExl.addAnimatedNode(btnInfo);
         nodeListExl.addAnimatedNode(boxReq);
         nodeListExl.setRotate(150);
         nodeListExl.setSpacing(-220);
@@ -488,6 +546,7 @@ public class EmployeeMapController extends MapController {
         vboxDock.getChildren().add(nodeListSearch);
         vboxDock.getChildren().add(nodeListRoute);
         vboxDock.getChildren().add(nodeListRoom);
+        vboxDock.getChildren().add(nodeListCal);
         vboxDock.getChildren().add(nodeListExl);
     }
 
