@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="450.0" prefWidth="400.0" style="-fx-border-color: black;" stylesheets="@/css/colorScheme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.node.EditController">
+   <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane prefHeight="105.0" prefWidth="398.0" style="-fx-background-color: #022D5A;">
+         <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="398.0" text="Node Editor" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <font>
+               <Font size="48.0" />
+            </font>
+         </Label>
+      </AnchorPane>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+         <Label text="Name">
+            <font>
+               <Font size="16.0" />
+            </font>
+         </Label>
+         <JFXTextField fx:id="txtName" prefHeight="27.0" prefWidth="303.0" />
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+         <JFXComboBox fx:id="cmbNodeType" focusColor="#022d5a" labelFloat="true" prefHeight="27.0" prefWidth="339.0"
+                      promptText="Node Type" unFocusColor="BLACK">
+            <items>
+               <FXCollections fx:factory="observableArrayList">
+                  <String fx:id="BATH" fx:value="BATH: Bathroom"/>
+                  <String fx:id="CONF" fx:value="CONF: Conference Room"/>
+                  <String fx:id="DEPT" fx:value="DEPT: Department"/>
+                  <String fx:id="ELEV" fx:value="ELEV: Elevator"/>
+                  <String fx:id="EXIT" fx:value="EXIT: Exit"/>
+                  <String fx:id="HALL" fx:value="HALL: Hallway"/>
+                  <String fx:id="INFO" fx:value="INFO: Information Desk"/>
+                  <String fx:id="LABS" fx:value="LABS: Laboratory"/>
+                  <String fx:id="REST" fx:value="REST: Restroom"/>
+                  <String fx:id="RETL" fx:value="RETL: Retail"/>
+                  <String fx:id="SERV" fx:value="SERV: Service"/>
+                  <String fx:id="STAI" fx:value="STAI: Staircase"/>
+               </FXCollections>
+            </items>
+         </JFXComboBox>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <JFXComboBox fx:id="cmbBuilding" focusColor="#022d5a" labelFloat="true" prefHeight="27.0" prefWidth="339.0" promptText="Building" unFocusColor="BLACK">
+               <items>
+                  <FXCollections fx:factory="observableArrayList">
+                     <String fx:id="BTM" fx:value="BTM" />
+                     <String fx:id="45Francis" fx:value="45 Francis" />
+                     <String fx:id="Tower" fx:value="Tower" />
+                     <String fx:id="15Francis" fx:value="15 Francis" />
+                     <String fx:id="Shapiro" fx:value="Shapiro" />
+                  </FXCollections>
+               </items>
+            </JFXComboBox>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="96.0" prefWidth="400.0" spacing="20.0">
+         <JFXButton buttonType="RAISED" defaultButton="true" onMouseClicked="#updateNode" prefHeight="50.0" prefWidth="175.0" ripplerFill="#3dff00" text="Update" textFill="WHITE">
+            <font>
+               <Font size="24.0" />
+            </font>
+         </JFXButton>
+         <JFXButton fx:id="btnDelete" buttonType="RAISED" onMouseClicked="#deleteNode" prefHeight="50.0" prefWidth="175.0" ripplerFill="#3dff00" text="Delete" textFill="WHITE">
+            <font>
+               <Font size="24.0" />
+            </font>
+         </JFXButton>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+         <JFXButton fx:id="btnDefault" buttonType="RAISED" onMouseClicked="#btnDefault_Click" prefHeight="50.0" prefWidth="175.0" ripplerFill="#3dff00" text="Default" textFill="WHITE">
+            <font>
+               <Font size="24.0" />
+            </font>
+         </JFXButton>
+         <JFXButton buttonType="RAISED" onMouseClicked="#goBack" prefHeight="50.0" prefWidth="175.0" ripplerFill="RED" text="Cancel" textFill="WHITE">
+            <font>
+               <Font size="24.0" />
+            </font>
+         </JFXButton>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+         <JFXButton fx:id="btnAddEdge" buttonType="RAISED" defaultButton="true" onMouseClicked="#btnAddEdge_Click"
+                    prefHeight="50.0" prefWidth="370.0" ripplerFill="#3dff00" text="Add Edge" textFill="WHITE">
+            <font>
+               <Font size="24.0"/>
+            </font>
+         </JFXButton>
+      </HBox>
+      <padding>
+         <Insets bottom="10.0" />
+      </padding>
+   </VBox>
+</AnchorPane>

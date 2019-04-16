@@ -1,6 +1,6 @@
 package models.map;
 
-import controllers.VisualRealtimeController;
+import controllers.node.VisualRealtimeController;
 import database.LocationTable;
 import helpers.Constants;
 import javafx.scene.shape.Circle;
@@ -136,7 +136,6 @@ public class Location {
     public void setNodeCircle(Circle nodeCircle) {
         this.nodeCircle = nodeCircle;
     }
-
 
     @Override
     public boolean equals(Object obj) {

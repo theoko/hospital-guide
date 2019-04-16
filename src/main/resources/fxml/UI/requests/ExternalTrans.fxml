@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTimePicker?>
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #fffff;" stylesheets="@../../../css/colorScheme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.requests.ExternalTransController">
+    <children>
+        <Label alignment="CENTER" layoutY="-3.0" maxWidth="1.7976931348623157E308" prefHeight="65.0" prefWidth="1201.0" style="-fx-background-color: #022D5A;" stylesheets="@../../../css/colorScheme.css" text="External Transportation Request" textAlignment="CENTER" textFill="WHITE">
+            <font>
+                <Font size="31.0" />
+            </font>
+        </Label>
+      <AnchorPane layoutY="60.0" prefHeight="649.0" prefWidth="1200.0">
+         <children>
+            <JFXTabPane layoutX="1.0" prefHeight="649.0" prefWidth="1200.0" side="BOTTOM">
+               <tabs>
+                  <Tab style="-fx-background-color: #022D5A;" text="Send Service">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
+                           <children>
+                              <Label alignment="CENTER" contentDisplay="CENTER" layoutX="35.0" layoutY="69.0" prefHeight="35.0" prefWidth="127.0" style="-fx-background-color: #022D5A;" text="Name:" textFill="WHITE">
+                                 <font>
+                                    <Font size="29.0" />
+                                 </font></Label>
+                              <JFXTextField fx:id="name" layoutX="170.0" layoutY="79.0" prefHeight="31.0" prefWidth="198.0" />
+                              <Label alignment="CENTER" contentDisplay="CENTER" layoutX="476.0" layoutY="66.0" prefHeight="35.0" prefWidth="296.0" style="-fx-background-color: #022D5A;" text="Request Arrival Time:" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
+                                 <font>
+                                    <Font size="29.0" />
+                                 </font>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </Label>
+                              <Label alignment="CENTER" contentDisplay="CENTER" layoutX="909.0" layoutY="69.0" prefHeight="35.0" prefWidth="226.0" style="-fx-background-color: #022D5A;" text="Type of Service:" textFill="WHITE">
+                                 <font>
+                                    <Font size="29.0" />
+                                 </font>
+                              </Label>
+                               <JFXComboBox fx:id="cmbTransType" layoutX="906.0" layoutY="107.0" prefHeight="31.0" prefWidth="232.0">
+                                   <items>
+                                       <FXCollections fx:factory="observableArrayList">
+                                           <String fx:id="CAB" fx:value="Cab" />
+                                           <String fx:id="UBER" fx:value="Uber" />
+                                           <String fx:id="LIMO" fx:value="Limo" />
+                                           <String fx:id="BUS" fx:value="Bus" />
+                                           <String fx:id="PARTYBUS" fx:value="Party Bus" />
+                                       </FXCollections>
+                                   </items>
+                               </JFXComboBox>
+                              <JFXButton fx:id="btnSendRequest" buttonType="RAISED" disable="true" layoutX="309.0" layoutY="419.0" onMouseClicked="#sendReq" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Send Request" textFill="WHITE">
+                                 <font>
+                                    <Font size="29.0" />
+                                 </font></JFXButton>
+                              <JFXButton fx:id="btnCancel" buttonType="RAISED" layoutX="675.0" layoutY="419.0" onMouseClicked="#cancelScreen" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Cancel" textFill="WHITE">
+                                 <font>
+                                    <Font size="29.0" />
+                                 </font>
+                              </JFXButton>
+                              <JFXTimePicker fx:id="time" layoutX="477.0" layoutY="107.0" prefHeight="31.0" prefWidth="298.0" />
+                           </children></AnchorPane>
+                    </content>
+                  </Tab>
+                  <Tab style="-fx-background-color: #022D5A;" text="Your Requests">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <VBox prefHeight="552.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <TableView fx:id="tbl" prefHeight="612.0" prefWidth="1200.0">
+                                      <columns>
+                                          <TableColumn fx:id="tblExternalReqID" prefWidth="259.0" text="Service Request ID" />
+                                        <TableColumn fx:id="tblName" prefWidth="335.0" text="Name" />
+                                        <TableColumn fx:id="tblTime" prefWidth="319.0" text="Requested Arrival Time" />
+                                          <TableColumn fx:id="tblType" prefWidth="286.0" text="Type" />
+                                      </columns>
+                                    </TableView>
+                                 </children>
+                              </VBox>
+                           </children></AnchorPane>
+                     </content>
+                  </Tab>
+               </tabs>
+            </JFXTabPane>
+         </children>
+      </AnchorPane>
+
+
+    </children>
+</AnchorPane>

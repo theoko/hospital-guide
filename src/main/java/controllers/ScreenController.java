@@ -1,7 +1,12 @@
 package controllers;
 
+import controllers.maps.AdminMapController;
 import controllers.maps.MapController;
-import controllers.maps.UserMapController;
+import controllers.node.AddPopUpController;
+import controllers.node.EditController;
+import controllers.node.InfoController;
+import controllers.node.PopUpController;
+import controllers.user.PopUpControllerUser;
 import helpers.Constants;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -17,6 +22,7 @@ import models.map.Location;
 import models.map.Map;
 import models.map.Workspace;
 import models.user.User;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -40,39 +46,57 @@ public class ScreenController {
 
     }
 
+    public static HashMap<String, String> getScreenMap() {
+        return screenMap;
+    }
+
+    public static void setScreenMap(HashMap<String, String> screenMap) {
+        ScreenController.screenMap = screenMap;
+    }
+
+    public static Stage getStage() {
+        return stage;
+    }
+
+    public static void setStage(Stage stage) {
+        ScreenController.stage = stage;
+    }
+
     public void initializeScreens(Stage stage) {
         // Initialize screen controller to switch between different scenes
-        this.addScreen(Constants.Routes.LOGO,"/Logo.fxml");
-        this.addScreen(Constants.Routes.WELCOME,"/Welcome.fxml");
-        this.addScreen(Constants.Routes.USER_MAP, "/maps/UserMap.fxml");
-        this.addScreen(Constants.Routes.LOGIN,"/Login.fxml");
-        this.addScreen(Constants.Routes.ADMIN_MAP, "/maps/AdminMap.fxml");
-        this.addScreen(Constants.Routes.EDIT_LOCATION, "/EditLocation.fxml");
-        this.addScreen(Constants.Routes.DOWNLOAD, "/Download.fxml");
-        this.addScreen(Constants.Routes.DOWNLOADED, "/Downloaded.fxml");
-        this.addScreen(Constants.Routes.USER_INFO, "/UserInfo.fxml");
-        this.addScreen(Constants.Routes.EMPLOYEE_INFO, "/EmployeeInfo.fxml");
-        this.addScreen(Constants.Routes.EMPLOYEE_MAP, "/maps/EmployeeMap.fxml");
-        this.addScreen(Constants.Routes.SANITATION_REQUEST, "/SanitationRequest.fxml");
-        this.addScreen(Constants.Routes.CUSTODIAN_MAP, "/maps/CustodianMap.fxml");
-        this.addScreen(Constants.Routes.CUSTODIAN_INFO, "/CustodianInfo.fxml");
-        this.addScreen(Constants.Routes.BOOKING_WINDOW, "/RoomBookingWindow.fxml");
-        this.addScreen(Constants.Routes.CREATE_USER, "/CreateUser.fxml");
-        this.addScreen(Constants.Routes.USER_POPUP, "/CreateUserPopUp.fxml");
-        this.addScreen(Constants.Routes.EDIT_POPUP, "/EditUserPopUp.fxml");
-        this.addScreen(Constants.Routes.WORKSPACE, "/Workspace.fxml");
-        this.addScreen(Constants.Routes.WORKSPACE_POPUP, "/WorkspacePopUp.fxml");
-        this.addScreen(Constants.Routes.REQUESTS, "/requests/Requests.fxml");
-        this.addScreen(Constants.Routes.IT, "/requests/ITServiceRequest.fxml");
-        this.addScreen(Constants.Routes.PERSCRIPTION, "/requests/Prescription.fxml");
-        this.addScreen(Constants.Routes.INTERPRETER, "/requests/Interpreter.fxml");
-        this.addScreen(Constants.Routes.INTERNAL_TRANS, "/requests/InternalTrans.fxml");
-        this.addScreen(Constants.Routes.GIFT_STORE, "/requests/GiftStore.fxml");
-        this.addScreen(Constants.Routes.FLOURIST, "/requests/Flourist.fxml");
-        this.addScreen(Constants.Routes.SECURITY, "/requests/Security.fxml");
-        this.addScreen(Constants.Routes.VISUAL_AUDIO, "/requests/VisualAudio.fxml");
-        this.addScreen(Constants.Routes.EXTERNAL_TRANS, "/requests/ExternalTrans.fxml");
-        this.addScreen(Constants.Routes.PATIENT_INFO, "/requests/PatientInfo.fxml");
+        this.addScreen(Constants.Routes.LOGO, "/fxml/UI/welcome/Logo.fxml");
+        this.addScreen(Constants.Routes.WELCOME, "/fxml/UI/welcome/Welcome.fxml");
+        this.addScreen(Constants.Routes.USER_MAP, "/fxml/UI/maps/UserMap.fxml");
+        this.addScreen(Constants.Routes.LOGIN, "/fxml/UI/auth/Login.fxml");
+        this.addScreen(Constants.Routes.ADMIN_MAP, "/fxml/UI/maps/AdminMap.fxml");
+        this.addScreen(Constants.Routes.EDIT_LOCATION, "/fxml/UI/node/EditLocation.fxml");
+        this.addScreen(Constants.Routes.DOWNLOAD, "/fxml/UI/download/Download.fxml");
+        this.addScreen(Constants.Routes.DOWNLOADED, "/fxml/UI/download/Downloaded.fxml");
+        this.addScreen(Constants.Routes.USER_INFO, "/fxml/UI/user/UserInfo.fxml");
+        this.addScreen(Constants.Routes.EMPLOYEE_INFO, "/fxml/UI/employee/EmployeeInfo.fxml");
+        this.addScreen(Constants.Routes.EMPLOYEE_MAP, "/fxml/UI/maps/EmployeeMap.fxml");
+        this.addScreen(Constants.Routes.SANITATION_REQUEST, "/fxml/UI/sanitation/SanitationRequest.fxml");
+        this.addScreen(Constants.Routes.CUSTODIAN_MAP, "/fxml/UI/maps/CustodianMap.fxml");
+        this.addScreen(Constants.Routes.CUSTODIAN_INFO, "/fxml/UI/custodian/CustodianInfo.fxml");
+        this.addScreen(Constants.Routes.BOOKING_WINDOW, "/fxml/UI/booking/RoomBookingWindow.fxml");
+        this.addScreen(Constants.Routes.CREATE_USER, "/fxml/UI/user/CreateUser.fxml");
+        this.addScreen(Constants.Routes.USER_POPUP, "/fxml/UI/user/CreateUserPopUp.fxml");
+        this.addScreen(Constants.Routes.EDIT_POPUP, "/fxml/UI/user/EditUserPopUp.fxml");
+        this.addScreen(Constants.Routes.WORKSPACE, "/fxml/UI/booking/Workspace.fxml");
+        this.addScreen(Constants.Routes.WORKSPACE_POPUP, "/fxml/UI/booking/WorkspacePopUp.fxml");
+        this.addScreen(Constants.Routes.REQUESTS, "/fxml/UI/requests/Requests.fxml");
+        this.addScreen(Constants.Routes.IT, "/fxml/UI/requests/ITServiceRequest.fxml");
+        this.addScreen(Constants.Routes.PERSCRIPTION, "/fxml/UI/requests/Prescription.fxml");
+        this.addScreen(Constants.Routes.INTERPRETER, "/fxml/UI/requests/Interpreter.fxml");
+        this.addScreen(Constants.Routes.INTERNAL_TRANS, "/fxml/UI/requests/InternalTrans.fxml");
+        this.addScreen(Constants.Routes.GIFT_STORE, "/fxml/UI/requests/GiftStore.fxml");
+        this.addScreen(Constants.Routes.FLOURIST, "/fxml/UI/requests/Flourist.fxml");
+        this.addScreen(Constants.Routes.SECURITY, "/fxml/UI/requests/Security.fxml");
+        this.addScreen(Constants.Routes.VISUAL_AUDIO, "/fxml/UI/requests/VisualAudio.fxml");
+        this.addScreen(Constants.Routes.EXTERNAL_TRANS, "/fxml/UI/requests/ExternalTrans.fxml");
+        this.addScreen(Constants.Routes.PATIENT_INFO, "/fxml/UI/requests/PatientInfo.fxml");
+        this.addScreen(Constants.Routes.ADD, "/fxml/UI/node/AddPopUp.fxml");
+        this.addScreen(Constants.Routes.CALENDAR, "/fxml/UI/booking/CalendarTab.fxml");
     }
 
     public void addScreen(Constants.Routes route, String layout) {
@@ -115,6 +139,33 @@ public class ScreenController {
         ic.setLoc(loc);
         ic.setMc(mc);
         ic.setMap(map);
+        displayPopUp(root);
+    }
+
+    public static void adminPopUp(Constants.Routes route, Location loc, MapController mc) throws IOException {
+        stage = new Stage();
+        URL url = routeToURL(route);
+
+        FXMLLoader loader = new FXMLLoader(url);
+        Parent root = loader.load();
+        EditController ec = loader.getController();
+        ec.setLoc(loc);
+        ec.setMc(mc);
+
+        displayPopUp(root);
+    }
+
+    public static void addPopUp(AdminMapController mc, int xCoord, int yCoord, Map map) throws IOException {
+        stage = new Stage();
+        URL url = routeToURL(Constants.Routes.ADD);
+
+        FXMLLoader loader = new FXMLLoader(url);
+        Parent root = loader.load();
+        AddPopUpController ac = loader.getController();
+        ac.setMc(mc);
+        ac.setxCoord(xCoord);
+        ac.setyCoord(yCoord);
+        ac.setMap(map);
         displayPopUp(root);
     }
 
@@ -226,6 +277,7 @@ public class ScreenController {
 
     /**
      * Closes out of a current window with selected
+     *
      * @param n Node from the window the logout is from
      */
     public static void logOut(Node n) {

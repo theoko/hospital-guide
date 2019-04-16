@@ -1,11 +1,9 @@
 package map;
 
-import com.jfoenix.controls.JFXButton;
 import controllers.maps.MapController;
-import controllers.SettingsController;
+import controllers.settings.SettingsController;
 import helpers.Constants;
 import helpers.MapHelpers;
-import images.SnapshotGenerator;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -20,7 +18,6 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.*;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
-import messaging.EmailMessenger;
 import models.map.Location;
 import models.map.Map;
 import models.map.SubPath;
@@ -170,30 +167,13 @@ public abstract class PathFinder {
         return directions;
     }
 
-    public static void printPath(MapController mc, Map map, Location start, Location end) {
+    public static void printPath(MapController mc, Location start, Location end) {
         mc.clearPath(end);
         PathContext context = SettingsController.getAlgType();
         Stack<Location> path = context.findPath(start, end);
         String directions = context.txtDirections((Stack<Location>) path.clone());
         addDirections(mc.txtPane, directions);
-//        try {
-//            TextMessenger tm = new TextMessenger();
-//            tm.declareMessage(directions);
-//            tm.declareRecipient("+17743070422");
-//            tm.sendMessage();
-//        } catch(Exception e) {
-//            System.out.println("Failed message");
-//        }
-        SnapshotGenerator sg = new SnapshotGenerator(mc);
-//        sg.generateImages(path);
-
-        EmailMessenger em = new EmailMessenger();
-        em.setRecipient("@gmail.com");
-        em.setMessageText(directions);
-        em.setImageFiles(sg.generateImages(path));
-        em.sendMessage();
-
-        HashMap<String, Location> lstLocations = map.getAllLocations();
+        HashMap<String, Location> lstLocations = mc.getMap().getAllLocations();
 
         Path line = null;
         String currFloor = "";
@@ -305,24 +285,21 @@ public abstract class PathFinder {
 
     private static void addDirections(ScrollPane txtPane, String directions) {
         VBox vbox = new VBox();
-        vbox.setPadding(new Insets(10,4,10,4));
+        vbox.setPadding(new Insets(10,10,10,15));
+        vbox.setStyle("-fx-background-radius: 20;");
         vbox.setSpacing(5);
+        vbox.setAlignment(Pos.CENTER);
         String[] arrDirections = directions.split("\n");
         for (String direction : arrDirections) {
             Label lbl = new Label(direction);
-            lbl.setFont(new Font(11.9));
+            lbl.setFont(new Font(18));
             lbl.setTextFill(Color.WHITE);
-            lbl.setPrefWidth(210);
-            lbl.setStyle("-fx-background-color: #022D5A;");
+            lbl.setPrefWidth(330);
+            lbl.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
             lbl.setAlignment(Pos.CENTER);
             lbl.setPadding(new Insets(5,4,4,5));
             vbox.getChildren().add(lbl);
         }
-
-        JFXButton btn = new JFXButton();
-        btn.setText("Send Text");
-        vbox.getChildren().add(btn);
-
         txtPane.setContent(vbox);
         txtPane.setVisible(true);
     }

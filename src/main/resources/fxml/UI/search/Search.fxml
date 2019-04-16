@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<StackPane fx:id="searchStackPane"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controllers.search.SearchEngineController">
+
+    <JFXButton fx:id="btnDisplaySearch" buttonType="RAISED"
+               onMouseClicked="#displaySearch" prefHeight="50.0"
+               prefWidth="150.0" text="Search"/>
+
+    <JFXButton fx:id="btnDisplayBack" visible="false"
+               buttonType="RAISED" onMouseClicked="#goBack"
+               prefHeight="50.0" prefWidth="150.0" text="Back"/>
+
+</StackPane>

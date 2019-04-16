@@ -1,9 +1,13 @@
 package controllers.sanitation;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTabPane;
+import controllers.maps.MapController;
 import database.SanitationTable;
 import helpers.UserHelpers;
 import javafx.scene.input.MouseEvent;
+import map.PathFinder;
+import models.map.Location;
 import models.sanitation.SanitationRequest;
 import models.user.User;
 
@@ -96,29 +100,10 @@ public class CustSanitationController extends SanitationController {
     }
 
     public void navigateTo(MouseEvent mouseEvent) {
-        //        Location start = map.getLocation(MapController1.getTempStart());
-//        Location end = tblData.getSelectionModel().getSelectedItem().getLocation();
-//        PathFinder.printPath(panes, TextPane, map, start, end);
-//        String floor = start.getFloor();
-//        int floorIndex;
-//        switch (floor) {
-//            case "1":
-//                floorIndex = 3;
-//                break;
-//            case "2":
-//                floorIndex = 1;
-//                break;
-//            case "3":
-//                floorIndex = 0;
-//                break;
-//            case "L1":
-//                floorIndex = 3;
-//                break;
-//            default:
-//                floorIndex = 4;
-//                break;
-//        }
-//        tabMenu.getSelectionModel().select(0);
-//        floorMenu.getSelectionModel().select(floorIndex);
+        MapController mc = MapController.getCurrMapControl();
+        Location start = mc.getMap().getLocation(MapController.getTempStart());
+        Location end = tblData.getSelectionModel().getSelectedItem().getLocation();
+        PathFinder.printPath(mc, start, end);
+        mc.getTabMenu().getSelectionModel().select(0);
     }
 }

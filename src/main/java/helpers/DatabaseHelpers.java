@@ -110,5 +110,21 @@ public class DatabaseHelpers {
 
     }
 
+    public static String getCalDateTime(LocalDate date, LocalTime time) { try {
+
+            Date parsedDate = new SimpleDateFormat(Constants.calDateFormat).parse(
+                    date.toString().replaceAll("[-:]", "") + time.toString().replaceAll("[\\s\\-()]", "")
+            );
+
+            return new SimpleDateFormat(Constants.calDateFormat).format(parsedDate);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+
+            return null;
+        }
+
+    }
+
 
 }

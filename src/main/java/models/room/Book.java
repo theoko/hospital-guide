@@ -11,12 +11,31 @@ public class Book {
     private String startDate;
     private String endDate;
 
+    private String calStartDate;
+    private String calEndDate;
+
     public Book(int bookingID, String roomID, User user, String startDate, String endDate) {
         this.bookingID = bookingID;
         this.roomID = roomID;
         this.user = user;
         this.startDate = startDate;
         this.endDate = endDate;
+    }
+
+    public String getCalStartDate() {
+        return calStartDate;
+    }
+
+    public void setCalStartDate(String calStartDate) {
+        this.calStartDate = calStartDate;
+    }
+
+    public String getCalEndDate() {
+        return calEndDate;
+    }
+
+    public void setCalEndDate(String calEndDate) {
+        this.calEndDate = calEndDate;
     }
 
     public int getBookingID() {

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import net.kurobako.gesturefx.GesturePane?>
+
+<?import javafx.scene.shape.Circle?>
+<AnchorPane stylesheets="@../../../css/colorScheme.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.maps.AdminMapController">
+    <JFXTabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <Tab text="PathFinder">
+            <AnchorPane>
+                <GesturePane fx:id="gesMap" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <AnchorPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <ImageView fx:id="imgMap" />
+                        <Pane fx:id="panMap" />
+                    </AnchorPane>
+                </GesturePane>
+                <VBox spacing="25">
+                    <padding>
+                        <Insets bottom="25" left="25" right="25" top="25" />
+                    </padding>
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <JFXButton fx:id="btnFloor3" onMouseClicked="#btnFloor3_Click" styleClass="animated-option-button" text="3" />
+                        <ImageView fx:id="imgArrow3" fitHeight="50.0" fitWidth="50.0" preserveRatio="true" />
+                    </HBox>
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <JFXButton fx:id="btnFloor2" onMouseClicked="#btnFloor2_Click" styleClass="animated-option-button" text="2" />
+                        <ImageView fx:id="imgArrow2" fitHeight="50.0" fitWidth="50.0" preserveRatio="true" />
+                    </HBox>
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <JFXButton fx:id="btnFloor1" onMouseClicked="#btnFloor1_Click" styleClass="animated-option-button" text="1" />
+                        <ImageView fx:id="imgArrow1" fitHeight="50.0" fitWidth="50.0" preserveRatio="true" />
+                    </HBox>
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <JFXButton fx:id="btnFloorG" onMouseClicked="#btnFloorG_Click" styleClass="animated-option-button" text="G" />
+                        <ImageView fx:id="imgArrowG" fitHeight="50.0" fitWidth="50.0" preserveRatio="true" />
+                    </HBox>
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <JFXButton fx:id="btnFloorL1" onMouseClicked="#btnFloorL1_Click" styleClass="animated-option-button" text="L1" />
+                        <ImageView fx:id="imgArrowL1" fitHeight="50.0" fitWidth="50.0" preserveRatio="true" />
+                    </HBox>
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <JFXButton fx:id="btnFloorL2" onMouseClicked="#btnFloorL2_Click" styleClass="animated-option-button" text="L2" />
+                        <ImageView fx:id="imgArrowL2" fitHeight="50.0" fitWidth="50.0" preserveRatio="true" />
+                    </HBox>
+                </VBox>
+
+                <!--Top right settings-->
+                <AnchorPane prefHeight="175.0" prefWidth="250.0" style="-fx-background-color: #ffffff; -fx-background-radius: 10 10 10 10; -fx-border-width: 2px 2px 2px 2px; -fx-border-color: #022D5A; -fx-border-radius: 10;" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
+                    <VBox alignment="CENTER" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <Label text="Welcome Admin!" textAlignment="CENTER" textFill="#022D5A" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                            <font>
+                                <Font name="Moon Bold" size="24.0" />
+                            </font>
+                        </Label>
+
+                        <!-- Search -->
+                        <fx:include fx:id="searchEngineController" source="../search/Search.fxml" />
+
+                        <JFXButton fx:id="btnReturn" buttonType="RAISED" onMouseClicked="#btnReturn_Click" prefHeight="50.0" prefWidth="150.0" text="Logout" />
+                    </VBox>
+                </AnchorPane>
+            </AnchorPane>
+        </Tab>
+        <Tab style="-fx-background-color: #022D5A;" text="Workspace Booking">
+            <fx:include source="../booking/RoomBookingWindow.fxml" />
+        </Tab>
+        <Tab style="-fx-background-color: #022D5A;" text="User Dashboard">
+            <fx:include source="../user/CreateUser.fxml" />
+        </Tab>
+        <Tab style="-fx-background-color: #022D5A;" text="Settings">
+            <fx:include source="../settings/SettingsScreen.fxml" />
+        </Tab>
+        <Tab style="-fx-background-color: #022D5A;" text="Sanitation Requests">
+            <fx:include source="../sanitation/AdminSanitation.fxml" />
+        </Tab>
+    </JFXTabPane>
+</AnchorPane>
