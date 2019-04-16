@@ -92,7 +92,7 @@
             <fx:include source="../booking/Workspace.fxml" />
         </Tab>
         <Tab style="-fx-background-color: #022D5A;" text="Calendar">
-            <fx:include source="../booking/Calendar.fxml" />
+            <fx:include source="../booking/CalendarTab.fxml" />
         </Tab>
         <Tab style="-fx-background-color: #022D5A;" text="Requests">
             <fx:include source="../requests/Requests.fxml" />

@@ -8,7 +8,6 @@ import controllers.node.InfoController;
 import controllers.node.PopUpController;
 import controllers.user.PopUpControllerUser;
 import helpers.Constants;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -97,7 +96,7 @@ public class ScreenController {
         this.addScreen(Constants.Routes.EXTERNAL_TRANS, "/fxml/UI/requests/ExternalTrans.fxml");
         this.addScreen(Constants.Routes.PATIENT_INFO, "/fxml/UI/requests/PatientInfo.fxml");
         this.addScreen(Constants.Routes.ADD, "/fxml/UI/node/AddPopUp.fxml");
-        this.addScreen(Constants.Routes.CALENDAR, "/fxml/UI/booking/Calendar.fxml");
+        this.addScreen(Constants.Routes.CALENDAR, "/fxml/UI/booking/CalendarTab.fxml");
     }
 
     public void addScreen(Constants.Routes route, String layout) {
