@@ -20,6 +20,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import map.MapDisplay;
+import messaging.TextMessenger;
 import models.search.SearchAPI;
 
 import java.net.URL;
@@ -712,6 +713,13 @@ public class EmployeeMapController extends MapController {
     }
 
     public void btn_SendDirections (MouseEvent event) {
+        if(currentRoute == null) return;
+        TextMessenger tm = new TextMessenger();
+        String input_phone_number = "+1"+textNum.getText();
+        tm.declareRecipient(input_phone_number);
+        tm.declareMessage(MapController.currentDirections);
+        tm.sendMessage();
+        event.consume();
         event.consume();
     }
 
