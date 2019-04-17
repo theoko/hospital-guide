@@ -255,12 +255,6 @@ public class TransportationRequestController  {
         TransportationRequest request = new TransportationRequest(startLoc,endLoc, txtDetails.getText(),datDate.toString(),datTime.toString(), UserHelpers.getCurrentUser());
 
         TransportationTable.addTransportationRequest(request);
-        System.out.println("IN sendRequest");
-
-        System.out.println("STARTLOC:"+startLoc.getShortName());
-        System.out.println("ENDLOC:"+endLoc.getShortName());
-
-        System.out.println("DB :"+TransportationTable.getTransportationRequests());
 
 
         updateTransportation();
