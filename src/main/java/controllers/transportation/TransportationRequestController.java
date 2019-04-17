@@ -262,43 +262,14 @@ public class TransportationRequestController  {
 
         // Get request data from UI fields
         String description = txtDetails.getText();
-        //Location startLoc = (String) cmbStartLoc.getValue();
-        //Location startLoc = LocationTable.getLocationByID((String) cmbStartLoc.getValue());
-        //Location endLoc = LocationTable.getLocationByID((String) cmbEndLoc.getValue());
 
-        //todo get from search eng
+        //get locations form search fields
+        Location startLoc =LocationTable.getLocationByLongName(txtStartSearch.getText()).iterator().next();
+        Location endLoc=LocationTable.getLocationByLongName(txtEndSearch.getText()).iterator().next();
 
+        TransportationRequest request = new TransportationRequest(startLoc,endLoc, txtDetails.getText(),datDate.toString(),datTime.toString(), UserHelpers.getCurrentUser());
 
-        Location startLoc =LocationTable.getLocationByID(txtStartSearch.getText());
-        Location endLoc=LocationTable.getLocationByID(txtEndSearch.getText());
-
-        //Location startLoc =LocationTable.getLocationByID("");
-        endLoc=LocationTable.getLocationByID("AHALL00201");
-        MapController mc = MapController.getCurrMapControl();
-
-        startLoc = mc.getMap().getLocation(MapController.getTempStart());
-
-
-TransportationRequest request = new TransportationRequest(startLoc,endLoc, txtDetails.getText(),datDate.toString(),datTime.toString(), UserHelpers.getCurrentUser());
-        // Send request to database
-//        TransportationRequest request = new TransportationRequest(
-//
-//
-//                //                1,
-////                startLoc,
-////                endLoc,
-////               // ServiceRequest.Status.INCOMPLETE,
-////                description,
-////                UserHelpers.getCurrentUser()
-////               // null,
-////              //  null
-//
-//
-//        );
-        TransportationTable.dropTable();//todo
         TransportationTable.addTransportationRequest(request);
-
-        // Deactivate popup
     }
 
     public void cancelScr(MouseEvent event){
