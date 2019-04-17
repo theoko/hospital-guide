@@ -26,8 +26,6 @@ import java.util.ResourceBundle;
 
 public class EmployeeMapController extends MapController {
 
-
-    public AnchorPane paneDock;
     public VBox vboxDock;
     public ImageView imgLogOut;
     public JFXButton btnLogOut;
