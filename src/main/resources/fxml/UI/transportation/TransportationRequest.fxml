@@ -118,7 +118,7 @@
                     <AnchorPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                         <VBox layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="607.0" prefWidth="1200.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
                             <children>
-                                <TableView fx:id="tblData" prefHeight="617.0" prefWidth="665.0">
+                                <TableView fx:id="tblData" onMouseClicked="#tblClick" onMouseReleased="#tblClick" prefHeight="617.0" prefWidth="665.0">
                                     <columns>
                                         <TableColumn fx:id="tblStartLoc" prefWidth="160.0" text="Start Location" />
                                         <TableColumn fx:id="tblEndLoc" prefWidth="160.0" text="End Location" />
@@ -136,7 +136,7 @@
                                     <JFXButton fx:id="btnNavigate" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" disable="true" onMouseClicked="#navigateTo" prefHeight="45.0" prefWidth="147.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Navigate" textAlignment="CENTER" />
                                     <JFXButton fx:id="btnClaim" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" disable="true" onMouseClicked="#claimJob" prefHeight="45.0" prefWidth="147.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Claim" textAlignment="CENTER" />
                                     <JFXButton fx:id="btnMarkDone" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" disable="true" onMouseClicked="#markDone" prefHeight="45.0" prefWidth="200.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Mark Complete" textAlignment="CENTER" />
-                                    <JFXButton fx:id="btnReturn" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" onMouseClicked="#cancelScr" prefHeight="45.0" prefWidth="147.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Go Back" textAlignment="CENTER" />
+                                    <JFXButton fx:id="btnDelete" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" onMouseClicked="#deleteTransportationRequest" prefHeight="45.0" prefWidth="147.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Delete" textAlignment="CENTER" />
                           </buttons>
                         </ButtonBar>
                             </children>

@@ -79,6 +79,17 @@ public class TransportationRequest extends ServiceRequest implements Comparable<
         return destination;
     }
 
+    public String getStartShortName(){return location.getShortName();}
+
+    public String getEndShortName(){return location.getShortName();}
+
+    public String getDueDate(){return this.requestedDate;}
+    public String getDueTime(){return this.requestedTime;}
+
+
+
+
+
     /**
      * @brief Compares transportation requests based on request time (default).
      */

@@ -29,7 +29,7 @@ public class SearchEngineController {
     public JFXButton btnDisplayBack;
     private static Object parentController;
 
-    static final double ZOOM_SCALE = 2;
+    static final double ZOOM_SCALE = 3;
 
     public void initialize() {
 

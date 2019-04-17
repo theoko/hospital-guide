@@ -105,25 +105,35 @@ public class DisplayCalendarController {
 
     public void setWorkspaces(){
         List<Book> bookingsForUser = BookWorkspaceTable.getBookingsForUser(UserHelpers.getCurrentUser());
-        for (Book book: bookingsForUser) {
-            String roomID = book.getRoomID();
-            Location room = LocationTable.getLocationByID(roomID);
-            String name = room.getLongName();
-            Entry<String> newEntry = new Entry<>(name);
-            workspaces.addEntry(newEntry);
 
+        if(bookingsForUser != null) {
+            for (Book book : bookingsForUser) {
+                String roomID = book.getRoomID();
+                Location room = LocationTable.getLocationByID(roomID);
+
+                if(room != null) {
+                    String name = room.getLongName();
+                    Entry<String> newEntry = new Entry<>(name);
+                    workspaces.addEntry(newEntry);
+                }
+            }
         }
     }
 
-    public void setLocations(){
+    public void setLocations() {
         List<Book> bookingsForUser = BookLocationTable.getBookingsForUser(UserHelpers.getCurrentUser());
-        for (Book book: bookingsForUser) {
-            String roomID = book.getRoomID();
-            Location room = LocationTable.getLocationByID(roomID);
-            String name = room.getLongName();
-            Entry<String> newEntry = new Entry<>(name);
-            locations.addEntry(newEntry);
 
+        if (bookingsForUser != null) {
+            for (Book book : bookingsForUser) {
+                String roomID = book.getRoomID();
+                Location room = LocationTable.getLocationByID(roomID);
+
+                if (room != null) {
+                    String name = room.getLongName();
+                    Entry<String> newEntry = new Entry<>(name);
+                    locations.addEntry(newEntry);
+                }
+            }
         }
     }
 }
