@@ -123,55 +123,69 @@ public class SearchEngineController {
 
         Circle nodeCircle = mapController.getMap().getLocation(location.getNodeID()).getNodeCircle();
 
-        Point2D zoomPoint = new Point2D(nodeCircle.getCenterX(), nodeCircle.getCenterY());
+        if(nodeCircle == null) {
 
-        mapController.getGesMap()
-                .animate(Duration.millis(1000)).afterFinished(() -> {
-            mapController.gesMap.animate(Duration.millis(500)).centreOn(zoomPoint);
-        }).zoomTo(ZOOM_SCALE, zoomPoint);
-        // Fill
-        nodeCircle.setFill(Color.ORANGE);
+            Point2D zoomPoint = new Point2D(location.getxCord(), location.getyCord());
+
+            mapController.getGesMap()
+                    .animate(Duration.millis(1000)).afterFinished(() -> {
+                mapController.gesMap.animate(Duration.millis(500)).centreOn(zoomPoint);
+            }).zoomTo(ZOOM_SCALE, zoomPoint);
+
+        } else {
+
+            Point2D zoomPoint = new Point2D(nodeCircle.getCenterX(), nodeCircle.getCenterY());
+
+            mapController.getGesMap()
+                    .animate(Duration.millis(1000)).afterFinished(() -> {
+                mapController.gesMap.animate(Duration.millis(500)).centreOn(zoomPoint);
+            }).zoomTo(ZOOM_SCALE, zoomPoint);
+            // Fill
+            nodeCircle.setFill(Color.ORANGE);
 
 
-        KeyFrame[] keyFrames = new KeyFrame[] {
-                new KeyFrame(Duration.seconds(2),
-                        new KeyValue(
-                                nodeCircle.radiusProperty(),
-                                nodeCircle.getRadius() + 10
-                        )
-                ),
-                new KeyFrame(Duration.seconds(2),
-                        new KeyValue(
-                                nodeCircle.radiusProperty(),
-                                nodeCircle.getRadius()
-                        )
-                ),
-                new KeyFrame(Duration.seconds(2),
-                        new KeyValue(
-                                nodeCircle.radiusProperty(),
-                                nodeCircle.getRadius() + 10
-                        )
-                ),
-                new KeyFrame(Duration.seconds(2),
-                        new KeyValue(
-                                nodeCircle.radiusProperty(),
-                                nodeCircle.getRadius()
-                        )
-                )
-        };
+            KeyFrame[] keyFrames = new KeyFrame[] {
+                    new KeyFrame(Duration.seconds(2),
+                            new KeyValue(
+                                    nodeCircle.radiusProperty(),
+                                    nodeCircle.getRadius() + 10
+                            )
+                    ),
+                    new KeyFrame(Duration.seconds(2),
+                            new KeyValue(
+                                    nodeCircle.radiusProperty(),
+                                    nodeCircle.getRadius()
+                            )
+                    ),
+                    new KeyFrame(Duration.seconds(2),
+                            new KeyValue(
+                                    nodeCircle.radiusProperty(),
+                                    nodeCircle.getRadius() + 10
+                            )
+                    ),
+                    new KeyFrame(Duration.seconds(2),
+                            new KeyValue(
+                                    nodeCircle.radiusProperty(),
+                                    nodeCircle.getRadius()
+                            )
+                    )
+            };
 
-        Timeline[] timelines = new Timeline[keyFrames.length];
+            Timeline[] timelines = new Timeline[keyFrames.length];
 
-        SequentialTransition sequentialTransition = new SequentialTransition();
-        for(int i=0; i<timelines.length; i++) {
+            SequentialTransition sequentialTransition = new SequentialTransition();
+            for(int i=0; i<timelines.length; i++) {
 
-            timelines[i] = new Timeline();
-            timelines[i].getKeyFrames().add(keyFrames[i]);
+                timelines[i] = new Timeline();
+                timelines[i].getKeyFrames().add(keyFrames[i]);
 
-            sequentialTransition.getChildren().add(timelines[i]);
+                sequentialTransition.getChildren().add(timelines[i]);
+            }
+
+            sequentialTransition.play();
+
+
         }
-
-        sequentialTransition.play();
 
     }
 
