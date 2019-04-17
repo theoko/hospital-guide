@@ -133,13 +133,13 @@ public class AuthController {
         currentUser.setUserID(UserTable.getUserByUsername(currentUser.getUsername()).getUserID());
 
 
-        ScreenController.deactivate();
+//        ScreenController.deactivate();
 
     }
 
     public void goBack(ActionEvent actionEvent) throws Exception {
         actionEvent.consume();
-        ScreenController.deactivate();
+//        ScreenController.deactivate();
         ScreenController.activate(Constants.Routes.WELCOME);
     }
 

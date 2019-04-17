@@ -119,9 +119,10 @@ public class EdgeTable {
 
     public static boolean deleteEdge(Edge edge){
         try {
-            String statement = "DELETE FROM " + Constants.ROOM_TABLE + " WHERE EDGEID=?";
-            PreparedStatement preparedStatement = Database.getDatabase().getConnection().prepareStatement(statement);
-            return true;
+            PreparedStatement statement = Database.getDatabase().getConnection().prepareStatement(
+                    "DELETE FROM " + Constants.EDGES_TABLE + " WHERE EDGEID=?");
+            statement.setString(1, edge.getEdgeID());
+            return statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
             return false;

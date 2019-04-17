@@ -1,22 +1,17 @@
 package database;
 
 import helpers.Constants;
-import helpers.FileHelpers;
-import helpers.UserHelpers;
 import models.map.Edge;
 import models.map.Location;
-import models.room.Book;
 import models.room.Room;
-import models.sanitation.SanitationRequest;
+import models.services.SanitationRequest;
 import models.user.User;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.xml.crypto.Data;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 import static helpers.Constants.NodeType.HALL;
 import static org.junit.Assert.*;

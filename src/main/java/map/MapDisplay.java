@@ -6,10 +6,12 @@ import controllers.maps.MapController;
 import database.EdgeTable;
 import database.LocationTable;
 import helpers.Constants;
+import javafx.event.Event;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.StrokeLineCap;
 import models.map.Edge;
 import models.map.Location;
 import models.map.Map;
@@ -22,9 +24,9 @@ import java.util.List;
 
 public class MapDisplay {
     private final static double locRadius = 15;
-    private final static double hallRadius = 5;
+    private final static double hallRadius = 8;
     private final static double locWidth = 2.0;
-    public final static double edgeWidth = 1.5;
+    public final static double edgeWidth = 5;
     private final static double xShift = -2110.0;
     private final static double yShift = 730.0;
     private final static double scale = 0.475;
@@ -109,23 +111,39 @@ public class MapDisplay {
             Location start = edge.getStart();
             Location end = edge.getEnd();
             String floor = mc.getFloor();
-            if (start.getFloor().equals(floor) && end.getFloor().equals(floor)) {
-                Line line = new Line();
-                bindLineCircle(line, start, end);
-                line.setStroke(edgeFill);
-                line.setStrokeWidth(edgeWidth);
-                line.setId(edge.getEdgeID());
+            if (start.getFloor().equals(floor) || end.getFloor().equals(floor)) {
+                Line line = creatLine(mc, start, end, edge);
                 mc.panMap.getChildren().add(0, line);
                 edge.setLine(line);
             }
         }
     }
 
-    private static void bindLineCircle(Line line, Location start, Location end) {
-        line.startXProperty().bind(start.getNodeCircle().centerXProperty());
-        line.startYProperty().bind(start.getNodeCircle().centerYProperty());
-        line.endXProperty().bind(end.getNodeCircle().centerXProperty());
-        line.endYProperty().bind(end.getNodeCircle().centerYProperty());
+    private static void bindLineCircle(MapController mc, Line line, Location start, Location end) {
+        Circle startCirc = start.getNodeCircle();
+        Circle endCirc = end.getNodeCircle();
+        if (startCirc != null) {
+            line.startXProperty().bind(startCirc.centerXProperty());
+            line.startYProperty().bind(startCirc.centerYProperty());
+        } else {
+            line.setStartX(start.getxCord());
+            line.setStartY(start.getyCord());
+            ghostCircle(mc, start);
+        }
+        if (endCirc != null) {
+            line.endXProperty().bind(endCirc.centerXProperty());
+            line.endYProperty().bind(endCirc.centerYProperty());
+        } else {
+            line.setEndX(end.getxCord());
+            line.setEndY(end.getyCord());
+            ghostCircle(mc, end);
+        }
+    }
+
+    private static void ghostCircle(MapController mc, Location loc) {
+        Circle circle = new Circle(loc.getxCord(), loc.getyCord(), hallRadius, edgeFill);
+        circle.setOpacity(opac);
+        mc.panMap.getChildren().add(0, circle);
     }
 
     static class Delta {
@@ -204,17 +222,19 @@ public class MapDisplay {
                             int x2 = loc2.getxCord();
                             int y2 = loc2.getyCord();
                             EdgeTable.addEdge(edge);
+                            double dist = PathFinder.calcDist(x1, y1, x2, y2);
+                            loc1.addSubPath(new SubPath(id, loc2, dist));
+                            loc2.addSubPath(new SubPath(id, loc1, dist));
 
-                            Line line = new Line(x1, y1, x2, y2);
-                            line.setId(id);
-                            bindLineCircle(line, loc1, loc2);
-                            line.setStrokeWidth(MapDisplay.edgeWidth);
+                            Line line = creatLine(mc, loc1, loc2, edge);
+                            map.addEdge(id, edge);
                             mc.panMap.getChildren().add(0, line);
                         } else {
                             AdminMapController.setEdgLoc(null);
                         }
                     }
                 } else {
+                    dragDelta.dragged = false;
                     loc.setxCord((int) circle.getCenterX());
                     loc.setyCord((int) circle.getCenterY());
                     LocationTable.updateLocation(loc);
@@ -225,6 +245,30 @@ public class MapDisplay {
 
         loc.setNodeCircle(circle);
         return circle;
+    }
+
+    private static Line creatLine(MapController mc, Location start, Location end, Edge edge) {
+        Line line = new Line();
+        bindLineCircle(mc, line, start, end);
+        line.setStroke(edgeFill);
+        line.setStrokeWidth(edgeWidth);
+        line.setId(edge.getEdgeID());
+        String floor = mc.getFloor();
+        if (!(start.getFloor().equals(floor) && end.getFloor().equals(floor))) {
+            line.setOpacity(opac);
+        }
+
+        line.setOnMousePressed(Event::consume);
+        line.setOnMouseDragged(Event::consume);
+        line.setOnMouseReleased((e) -> {
+            try {
+                ScreenController.edgePopUp(mc, line.getId(), map);
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+            e.consume();
+        });
+        return line;
     }
 
     public static double scaleX(double x) {

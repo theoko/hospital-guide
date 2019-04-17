@@ -1,36 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 <?import com.jfoenix.controls.JFXButton?>
-<?import javafx.scene.text.Font?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="700.0" minWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.sanitation.AdminSanitationController">
-    <VBox>
-        <TableView fx:id="tblData" prefHeight="629.0" prefWidth="1163.0">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="655.0" minWidth="1200.0" prefHeight="655.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.sanitation.AdminSanitationController">
+    <VBox prefHeight="655.0" prefWidth="1200.0">
+        <TableView fx:id="tblData" onMouseClicked="#tblClick" prefHeight="629.0" prefWidth="1163.0">
             <columns>
-                <TableColumn fx:id="tblLocation" prefWidth="100.0" text="Location"/>
-                <TableColumn fx:id="tblPriority" prefWidth="75.0" text="Priority"/>
-                <TableColumn fx:id="tblStatus" prefWidth="100.0" text="Status"/>
-                <TableColumn fx:id="tblDescription" prefWidth="250.0" text="Description"/>
-                <TableColumn fx:id="tblRequester" prefWidth="100.0" text="Requester"/>
-                <TableColumn fx:id="tblClaimTime" prefWidth="150.0" text="Time Claimed"/>
-                <TableColumn fx:id="tblServicer" prefWidth="100.0" text="Servicer"/>
-                <TableColumn fx:id="tblServiceTime" prefWidth="150.0" text="Service Time"/>
+                <TableColumn fx:id="tblLocation" prefWidth="138.0" text="Location" />
+                <TableColumn fx:id="tblPriority" prefWidth="92.0" text="Priority" />
+                <TableColumn fx:id="tblStatus" prefWidth="91.0" text="Status" />
+                <TableColumn fx:id="tblDescription" prefWidth="232.0" text="Description" />
+                <TableColumn fx:id="tblRequester" prefWidth="118.0" text="Requester" />
+                <TableColumn fx:id="tblClaimTime" prefWidth="157.0" text="Time Claimed" />
+                <TableColumn fx:id="tblServicer" prefWidth="145.0" text="Servicer" />
+                <TableColumn fx:id="tblServiceTime" prefWidth="225.0" text="Service Time" />
             </columns>
         </TableView>
         <ButtonBar minHeight="-Infinity" prefHeight="71.0" prefWidth="1099.0" VBox.vgrow="ALWAYS">
             <buttons>
-                <JFXButton fx:id="btnDelete" disable="true" onMouseClicked="#deleteSanitationRequest"
-                           text="Delete" textFill="WHITE">
+                <JFXButton fx:id="btnDelete" disable="true" onMouseClicked="#deleteSanitationRequest" text="Delete" textFill="WHITE">
                     <font>
-                        <Font size="22.0"/>
+                        <Font size="22.0" />
                     </font>
                 </JFXButton>
             </buttons>
             <padding>
-                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
             </padding>
         </ButtonBar>
     </VBox>

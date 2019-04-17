@@ -6,13 +6,17 @@ import com.jfoenix.controls.JFXTextField;
 import controllers.maps.*;
 import database.LocationTable;
 import helpers.UIHelpers;
-import javafx.animation.TranslateTransition;
+import javafx.animation.*;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 import models.map.Location;
 import models.search.SearchEngine;
@@ -29,7 +33,7 @@ public class SearchEngineController {
     public JFXButton btnDisplayBack;
     private static Object parentController;
 
-    static final double ZOOM_SCALE = 2;
+    static final double ZOOM_SCALE = 3;
 
     public void initialize() {
 
@@ -115,261 +119,59 @@ public class SearchEngineController {
 
     public static void focusOnNode(Location location) {
 
-        switch (location.getFloor()) {
-            case "3":
-                switch (SearchEngineController.parentController.getClass().getName()) {
+        MapController mapController = (MapController) SearchEngineController.parentController;
 
-                    case "controllers.maps.UserMapController":
-                        UserMapController userMapController = (UserMapController) SearchEngineController.parentController;
-                        userMapController.btnFloor3_Click(null);
+        mapController.showFloor(location.getFloor());
 
-                        userMapController.getGesMap()
-                                .animate(Duration.millis(1000))
-                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
-                        break;
+        mapController.getGesMap()
+                .animate(Duration.millis(1000))
+                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
 
-                    case "controllers.maps.EmployeeMapController":
-                        EmployeeMapController employeeMapController = (EmployeeMapController) SearchEngineController.parentController;
-                        employeeMapController.btnFloor3_Click(null);
+        Circle nodeCircle = mapController.getMap().getLocation(location.getNodeID()).getNodeCircle();
 
-                        employeeMapController.getGesMap()
-                                .animate(Duration.millis(1000))
-                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
-                        break;
+        // Fill
+        nodeCircle.setFill(Color.ORANGE);
 
-                    case "controllers.maps.CustodianMapController":
-                        CustodianMapController custodianMapController = (CustodianMapController) SearchEngineController.parentController;
-                        custodianMapController.btnFloor3_Click(null);
 
-                        custodianMapController.getGesMap()
-                                .animate(Duration.millis(1000))
-                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
-                        break;
+        KeyFrame[] keyFrames = new KeyFrame[] {
+                new KeyFrame(Duration.seconds(2),
+                        new KeyValue(
+                                nodeCircle.radiusProperty(),
+                                nodeCircle.getRadius() + 10
+                        )
+                ),
+                new KeyFrame(Duration.seconds(2),
+                        new KeyValue(
+                                nodeCircle.radiusProperty(),
+                                nodeCircle.getRadius()
+                        )
+                ),
+                new KeyFrame(Duration.seconds(2),
+                        new KeyValue(
+                                nodeCircle.radiusProperty(),
+                                nodeCircle.getRadius() + 10
+                        )
+                ),
+                new KeyFrame(Duration.seconds(2),
+                        new KeyValue(
+                                nodeCircle.radiusProperty(),
+                                nodeCircle.getRadius()
+                        )
+                )
+        };
 
-                    case "controllers.maps.AdminMapController":
-                        AdminMapController adminMapController = (AdminMapController) SearchEngineController.parentController;
-                        adminMapController.btnFloor3_Click(null);
+        Timeline[] timelines = new Timeline[keyFrames.length];
 
-                        adminMapController.getGesMap()
-                                .animate(Duration.millis(1000))
-                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
-                        break;
+        SequentialTransition sequentialTransition = new SequentialTransition();
+        for(int i=0; i<timelines.length; i++) {
 
-                }
-                break;
+            timelines[i] = new Timeline();
+            timelines[i].getKeyFrames().add(keyFrames[i]);
 
-            case "2":
-                switch (SearchEngineController.parentController.getClass().getName()) {
-
-                    case "controllers.maps.UserMapController":
-                        UserMapController userMapController = (UserMapController) SearchEngineController.parentController;
-                        userMapController.btnFloor2_Click(null);
-
-                        userMapController.getGesMap()
-                                .animate(Duration.millis(1000))
-                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
-                        break;
-
-                    case "controllers.maps.EmployeeMapController":
-                        EmployeeMapController employeeMapController = (EmployeeMapController) SearchEngineController.parentController;
-                        employeeMapController.btnFloor2_Click(null);
-
-                        employeeMapController.getGesMap()
-                                .animate(Duration.millis(1000))
-                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
-                        break;
-
-                    case "controllers.maps.CustodianMapController":
-                        CustodianMapController custodianMapController = (CustodianMapController) SearchEngineController.parentController;
-                        custodianMapController.btnFloor2_Click(null);
-
-                        custodianMapController.getGesMap()
-                                .animate(Duration.millis(1000))
-                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
-                        break;
-
-                    case "controllers.maps.AdminMapController":
-                        AdminMapController adminMapController = (AdminMapController) SearchEngineController.parentController;
-                        adminMapController.btnFloor2_Click(null);
-
-                        adminMapController.getGesMap()
-                                .animate(Duration.millis(1000))
-                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
-                        break;
-
-                }
-                break;
-
-            case "1":
-                switch (SearchEngineController.parentController.getClass().getName()) {
-
-                    case "controllers.maps.UserMapController":
-                        UserMapController userMapController = (UserMapController) SearchEngineController.parentController;
-                        userMapController.btnFloor1_Click(null);
-
-                        userMapController.getGesMap()
-                                .animate(Duration.millis(1000))
-                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
-                        break;
-
-                    case "controllers.maps.EmployeeMapController":
-                        EmployeeMapController employeeMapController = (EmployeeMapController) SearchEngineController.parentController;
-                        employeeMapController.btnFloor1_Click(null);
-
-                        employeeMapController.getGesMap()
-                                .animate(Duration.millis(1000))
-                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
-                        break;
-
-                    case "controllers.maps.CustodianMapController":
-                        CustodianMapController custodianMapController = (CustodianMapController) SearchEngineController.parentController;
-                        custodianMapController.btnFloor1_Click(null);
-
-                        custodianMapController.getGesMap()
-                                .animate(Duration.millis(1000))
-                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
-                        break;
-
-                    case "controllers.maps.AdminMapController":
-                        AdminMapController adminMapController = (AdminMapController) SearchEngineController.parentController;
-                        adminMapController.btnFloor1_Click(null);
-
-                        adminMapController.getGesMap()
-                                .animate(Duration.millis(1000))
-                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
-                        break;
-
-                }
-                break;
-
-            case "G":
-                switch (SearchEngineController.parentController.getClass().getName()) {
-
-                    case "controllers.maps.UserMapController":
-                        UserMapController userMapController = (UserMapController) SearchEngineController.parentController;
-                        userMapController.btnFloorG_Click(null);
-
-                        userMapController.getGesMap()
-                                .animate(Duration.millis(1000))
-                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
-                        break;
-
-                    case "controllers.maps.EmployeeMapController":
-                        EmployeeMapController employeeMapController = (EmployeeMapController) SearchEngineController.parentController;
-                        employeeMapController.btnFloorG_Click(null);
-
-                        employeeMapController.getGesMap()
-                                .animate(Duration.millis(1000))
-                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
-                        break;
-
-                    case "controllers.maps.CustodianMapController":
-                        CustodianMapController custodianMapController = (CustodianMapController) SearchEngineController.parentController;
-                        custodianMapController.btnFloorG_Click(null);
-
-                        custodianMapController.getGesMap()
-                                .animate(Duration.millis(1000))
-                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
-                        break;
-
-                    case "controllers.maps.AdminMapController":
-                        AdminMapController adminMapController = (AdminMapController) SearchEngineController.parentController;
-                        adminMapController.btnFloorG_Click(null);
-
-                        adminMapController.getGesMap()
-                                .animate(Duration.millis(1000))
-                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
-                        break;
-
-                }
-                break;
-
-            case "L1":
-                switch (SearchEngineController.parentController.getClass().getName()) {
-
-                    case "controllers.maps.UserMapController":
-                        UserMapController userMapController = (UserMapController) SearchEngineController.parentController;
-                        userMapController.btnFloorL1_Click(null);
-
-                        userMapController.getGesMap()
-                                .animate(Duration.millis(1000))
-                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
-                        break;
-
-                    case "controllers.maps.EmployeeMapController":
-                        EmployeeMapController employeeMapController = (EmployeeMapController) SearchEngineController.parentController;
-                        employeeMapController.btnFloorL1_Click(null);
-
-                        employeeMapController.getGesMap()
-                                .animate(Duration.millis(1000))
-                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
-                        break;
-
-                    case "controllers.maps.CustodianMapController":
-                        CustodianMapController custodianMapController = (CustodianMapController) SearchEngineController.parentController;
-                        custodianMapController.btnFloorL1_Click(null);
-
-                        custodianMapController.getGesMap()
-                                .animate(Duration.millis(1000))
-                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
-                        break;
-
-                    case "controllers.maps.AdminMapController":
-                        AdminMapController adminMapController = (AdminMapController) SearchEngineController.parentController;
-                        adminMapController.btnFloorL1_Click(null);
-
-                        adminMapController.getGesMap()
-                                .animate(Duration.millis(1000))
-                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
-                        break;
-
-                }
-                break;
-
-            case "L2":
-                switch (SearchEngineController.parentController.getClass().getName()) {
-
-                    case "controllers.maps.UserMapController":
-                        UserMapController userMapController = (UserMapController) SearchEngineController.parentController;
-                        userMapController.btnFloorL2_Click(null);
-
-                        userMapController.getGesMap()
-                                .animate(Duration.millis(1000))
-                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
-                        break;
-
-                    case "controllers.maps.EmployeeMapController":
-                        EmployeeMapController employeeMapController = (EmployeeMapController) SearchEngineController.parentController;
-                        employeeMapController.btnFloorL2_Click(null);
-
-                        employeeMapController.getGesMap()
-                                .animate(Duration.millis(1000))
-                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
-                        break;
-
-                    case "controllers.maps.CustodianMapController":
-                        CustodianMapController custodianMapController = (CustodianMapController) SearchEngineController.parentController;
-                        custodianMapController.btnFloorL2_Click(null);
-
-                        custodianMapController.getGesMap()
-                                .animate(Duration.millis(1000))
-                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
-                        break;
-
-                    case "controllers.maps.AdminMapController":
-                        AdminMapController adminMapController = (AdminMapController) SearchEngineController.parentController;
-                        adminMapController.btnFloorL2_Click(null);
-
-                        adminMapController.getGesMap()
-                                .animate(Duration.millis(1000))
-                                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
-                        break;
-
-                }
-                break;
-
-            default:
+            sequentialTransition.getChildren().add(timelines[i]);
         }
+
+        sequentialTransition.play();
 
     }
 
