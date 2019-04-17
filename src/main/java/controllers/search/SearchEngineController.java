@@ -33,11 +33,19 @@ public class SearchEngineController {
 
     static final double ZOOM_SCALE = 2.5;
 
+    SearchEngine searchEngine;
+
+    public SearchEngineController() {
+
+    }
+
     public void initialize() {
 
         searchBox = new JFXTextField();
         searchBox.setMaxWidth(UIHelpers.getScreenWidth());
         searchBox.setPadding(new Insets(5));
+
+        searchEngine = new SearchEngine();
 
         JFXAutoCompletePopup<String> autoCompletePopup = new JFXAutoCompletePopup<>();
 
@@ -80,7 +88,7 @@ public class SearchEngineController {
             public void handle(KeyEvent event) {
 
                 // Get results
-                SearchEngine searchEngine = new SearchEngine(searchBox.getText());
+                searchEngine.search(searchBox.getText());
 
                 Set<String> results = searchEngine.getResults();
 

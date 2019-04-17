@@ -9,16 +9,20 @@ public class SearchEngine {
     Stack<String> neighbors = new Stack<>();
     Set<String> uniqueNeighbors = new HashSet<>();
 
-    public SearchEngine(String term) {
+    SearchKeywords searchKeywords;
+
+    public SearchEngine() {
+        searchKeywords = new SearchKeywords();
+    }
+
+    public void search(String term) {
         this.term = term;
-        this.search();
+        this.runSearch(searchKeywords);
     }
 
     // TODO: Check if valid english word. If not, show results not found.
     // TODO: Link spanish words to categories
-    private void search() {
-
-        SearchKeywords searchKeywords = new SearchKeywords();
+    private void runSearch(SearchKeywords searchKeywords) {
 
         if(searchKeywords.validEnglishWord(this.term)) {
 
@@ -176,7 +180,8 @@ public class SearchEngine {
     public static void main(String[] args)
     {
 
-        SearchEngine searchEngine = new SearchEngine("doctor");
+        SearchEngine searchEngine = new SearchEngine();
+        searchEngine.search("doctor");
 
     }
 
