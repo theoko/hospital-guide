@@ -712,6 +712,21 @@ public class EmployeeMapController extends MapController {
         vboxDock.getChildren().add(nodeListExl);
     }
 
+    @Override
+    public void zoomOut() {
+        Thread t = new Thread(() -> {
+            try {
+                Thread.sleep(5000);
+                gesMap.reset();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        });
+        t.setDaemon(true);
+        t.start();
+    }
+
     public void btn_SendDirections (MouseEvent event) {
         if(currentRoute == null) return;
         TextMessenger tm = new TextMessenger();

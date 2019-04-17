@@ -68,13 +68,28 @@ public class AdminMapController extends MapController {
         searchAPI.searchable();
 
         Delta deltaDragged = new Delta();
-        gesMap.setOnMousePressed((e) -> {
+        panMap.setOnMousePressed((e) -> {
             deltaDragged.bolDragged = false;
         });
-        gesMap.setOnMouseDragged((e) -> {
+        panMap.setOnMouseDragged((e) -> {
             deltaDragged.bolDragged = true;
         });
-        gesMap.setOnMouseReleased((e) -> {
+        panMap.setOnMouseReleased((e) -> {
+            try {
+                if (!deltaDragged.bolDragged && edgLoc == null) {
+                    ScreenController.addPopUp(this,(int) e.getX(), (int) e.getY(), map);
+                }
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
+        imgMap.setOnMousePressed((e) -> {
+            deltaDragged.bolDragged = false;
+        });
+        imgMap.setOnMouseDragged((e) -> {
+            deltaDragged.bolDragged = true;
+        });
+        imgMap.setOnMouseReleased((e) -> {
             try {
                 if (!deltaDragged.bolDragged && edgLoc == null) {
                     ScreenController.addPopUp(this,(int) e.getX(), (int) e.getY(), map);
@@ -84,8 +99,27 @@ public class AdminMapController extends MapController {
             }
         });
 
+
         Mover mover = new Mover();
-        gesMap.setOnMouseMoved(e -> {
+        panMap.setOnMouseMoved(e -> {
+            Location edgLoc = AdminMapController.getEdgLoc();
+            if (edgLoc != null) {
+                if (mover.line == null) {
+                    mover.line = new Line();
+                    mover.line.setStrokeWidth(MapDisplay.edgeWidth);
+                    panMap.getChildren().add(0, mover.line);
+                    mover.line.setStartX(edgLoc.getxCord());
+                    mover.line.setStartY(edgLoc.getyCord());
+                    mover.line.setId(MOVER_EDGE);
+                }
+                mover.line.setEndX(e.getX());
+                mover.line.setEndY(e.getY());
+            } else if (mover.line != null) {
+                panMap.getChildren().remove(mover.line);
+                mover.line = null;
+            }
+        });
+        imgMap.setOnMouseMoved(e -> {
             Location edgLoc = AdminMapController.getEdgLoc();
             if (edgLoc != null) {
                 if (mover.line == null) {
