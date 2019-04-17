@@ -14,6 +14,9 @@ public class SearchAPI {
 
     public SearchAPI(JFXTextField searchTextField) {
         this.searchTextField = searchTextField;
+
+        autoCompletePopup.setWidth(searchTextField.getWidth());
+        autoCompletePopup.setHeight(300);
     }
 
     public void searchable() {
@@ -27,24 +30,35 @@ public class SearchAPI {
             @Override
             public void handle(KeyEvent event) {
 
-                // Get results
-                SearchEngine searchEngine = new SearchEngine(searchTextField.getText());
+                if (searchTextField.getText().length() > 3) {
 
-                Set<String> results = searchEngine.getResults();
+                    // Get results
+                    SearchEngine searchEngine = new SearchEngine(searchTextField.getText());
 
-                if(results.size() > 0) {
+                    Set<String> results = searchEngine.getResults();
 
-                    autoCompletePopup.getSuggestions().clear();
-                    for(String word : results) {
-                        autoCompletePopup.getSuggestions().add(word);
+                    if (results.size() > 0) {
+
+                        autoCompletePopup.getSuggestions().clear();
+
+                        int resultsCount = 0;
+                        for (String word : results) {
+                            autoCompletePopup.getSuggestions().add(word);
+
+                            resultsCount++;
+
+                            if(resultsCount == 10)
+                                break;
+                        }
+
+                        autoCompletePopup.show(searchTextField);
+
+                    } else {
+
+                        autoCompletePopup.getSuggestions().clear();
+                        autoCompletePopup.hide();
+
                     }
-
-                    autoCompletePopup.show(searchTextField);
-
-                } else {
-
-                    autoCompletePopup.getSuggestions().clear();
-                    autoCompletePopup.hide();
 
                 }
 
