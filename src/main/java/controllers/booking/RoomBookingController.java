@@ -70,6 +70,7 @@ public class RoomBookingController {
     public void initialize() {
 
         btnBookSelected.setVisible(false);
+        btnCancel.setVisible(false);
 
         // Add listeners for date and time pickers
         datStartDay.valueProperty().addListener((observable, oldValue, newValue) -> {
