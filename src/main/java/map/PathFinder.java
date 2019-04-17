@@ -1,5 +1,6 @@
 package map;
 
+import com.jfoenix.controls.JFXButton;
 import controllers.maps.MapController;
 import controllers.settings.SettingsController;
 import helpers.Constants;
@@ -11,7 +12,12 @@ import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.OverrunStyle;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -296,7 +302,7 @@ public abstract class PathFinder {
 
     private static void addDirections(ScrollPane txtPane, String directions) {
         VBox vbox = new VBox();
-        vbox.setPadding(new Insets(10,10,10,15));
+        vbox.setPadding(new Insets(10, 10, 10, 15));
         vbox.setStyle("-fx-background-radius: 20;");
         vbox.setSpacing(5);
         vbox.setAlignment(Pos.CENTER);
@@ -306,12 +312,58 @@ public abstract class PathFinder {
             lbl.setFont(new Font(18));
             lbl.setTextFill(Color.WHITE);
             lbl.setPrefWidth(330);
+            lbl.setPrefHeight(40);
             lbl.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
             lbl.setAlignment(Pos.CENTER);
-            lbl.setPadding(new Insets(5,4,4,5));
-            vbox.getChildren().add(lbl);
+            lbl.setPadding(new Insets(5, 4, 4, 5));
+            if (lbl.getText().contains("left")) {
+                HBox left = new HBox();
+                left.getChildren().add(lbl);
+                ImageView imgLeft = new ImageView();
+                imgLeft.setImage(new Image("images/Icons/left.png"));
+                imgLeft.setFitHeight(40);
+                imgLeft.setFitWidth(40);
+                imgLeft.setPreserveRatio(true);
+                imgLeft.setPickOnBounds(true);
+                imgLeft.setStyle("-fx-background-color: green;");
+                AnchorPane leftPane = new AnchorPane();
+                leftPane.getChildren().add(imgLeft);
+                leftPane.setPrefWidth(40);
+                leftPane.setPrefHeight(40);
+                leftPane.setStyle("-fx-background-color: green;" + "-fx-background-radius: 20;");
+                left.getChildren().add(leftPane);
+                left.setSpacing(-40);
+                left.setAlignment(Pos.CENTER);
+                vbox.getChildren().add(left);
+            } else if (lbl.getText().contains("right")) {
+                HBox right = new HBox();
+                right.getChildren().add(lbl);
+                ImageView imgRight = new ImageView();
+                imgRight.setImage(new Image("images/Icons/right.png"));
+                imgRight.setFitHeight(40);
+                imgRight.setFitWidth(40);
+                imgRight.setPreserveRatio(true);
+                imgRight.setPickOnBounds(true);
+                imgRight.setStyle("-fx-background-color: green;");
+                AnchorPane rightPane = new AnchorPane();
+                rightPane.getChildren().add(imgRight);
+                rightPane.setPrefWidth(40);
+                rightPane.setPrefHeight(40);
+                rightPane.setStyle("-fx-background-color: green;" + "-fx-background-radius: 20;");
+                right.getChildren().add(rightPane);
+                right.setSpacing(-40);
+                right.setAlignment(Pos.CENTER);
+                vbox.getChildren().add(right);
+            } else if (lbl.getText().contains("Distance") || lbl.getText().contains("Time")) {
+                lbl.setStyle("-fx-font-size: 20px;" + "-fx-font-weight: BOLD;" + "-fx-background-color: green;" + "-fx-background-radius: 30;");
+                lbl.setTextFill(Color.BLACK);
+                vbox.getChildren().add(lbl);
+            } else {
+                vbox.getChildren().add(lbl);
+            }
         }
         txtPane.setContent(vbox);
         txtPane.setVisible(true);
     }
+
 }
