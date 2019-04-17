@@ -10,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.StrokeLineCap;
 import models.map.Edge;
 import models.map.Location;
 import models.map.Map;
@@ -109,12 +110,15 @@ public class MapDisplay {
             Location start = edge.getStart();
             Location end = edge.getEnd();
             String floor = mc.getFloor();
-            if (start.getFloor().equals(floor) && end.getFloor().equals(floor)) {
+            if (start.getFloor().equals(floor) || end.getFloor().equals(floor)) {
                 Line line = new Line();
                 bindLineCircle(line, start, end);
                 line.setStroke(edgeFill);
                 line.setStrokeWidth(edgeWidth);
                 line.setId(edge.getEdgeID());
+                if (!(start.getFloor().equals(floor) && end.getFloor().equals(floor))) {
+                    line.setOpacity(opac);
+                }
                 mc.panMap.getChildren().add(0, line);
                 edge.setLine(line);
             }
@@ -122,10 +126,30 @@ public class MapDisplay {
     }
 
     private static void bindLineCircle(Line line, Location start, Location end) {
-        line.startXProperty().bind(start.getNodeCircle().centerXProperty());
-        line.startYProperty().bind(start.getNodeCircle().centerYProperty());
-        line.endXProperty().bind(end.getNodeCircle().centerXProperty());
-        line.endYProperty().bind(end.getNodeCircle().centerYProperty());
+        Circle startCirc = start.getNodeCircle();
+        Circle endCirc = end.getNodeCircle();
+        if (startCirc != null) {
+            line.startXProperty().bind(startCirc.centerXProperty());
+            line.startYProperty().bind(startCirc.centerYProperty());
+        } else {
+            line.setStartX(start.getxCord());
+            line.setStartY(start.getyCord());
+        }
+        if (endCirc != null) {
+            line.endXProperty().bind(endCirc.centerXProperty());
+            line.endYProperty().bind(endCirc.centerYProperty());
+        } else {
+            line.setEndX(end.getxCord());
+            line.setEndY(end.getyCord());
+        }
+    }
+
+    private void connectLine(Line line, Location loc) {
+
+    }
+
+    private void ghostCircle(Location loc) {
+
     }
 
     static class Delta {
