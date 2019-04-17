@@ -156,6 +156,7 @@ public class UserTable {
             ResultSet resultSet = statement.executeQuery();
 
             if(resultSet.next()) {
+
                 User user = new User(
                         resultSet.getInt("USERID"),
                         resultSet.getString("USERNAME"),

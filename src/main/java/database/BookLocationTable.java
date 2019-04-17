@@ -66,6 +66,41 @@ public class BookLocationTable {
 
     }
 
+    /**
+     * Delete a booking for a room
+     * @param book
+     */
+    public static boolean deleteBooking(String roomID) {
+
+        try {
+
+            PreparedStatement statement;
+            statement = Database.getDatabase().getConnection().prepareStatement(
+                    "DELETE FROM " + Constants.BOOK_LOCATION_TABLE + " WHERE STARTDATE=? AND ENDDATE=?"
+            );
+
+            Book book = getBookByRoomID(roomID);
+
+            if(book != null) {
+
+//            System.out.println(book.getRoomID());
+                statement.setTimestamp(1, Timestamp.valueOf(book.getStartDate()));
+                statement.setTimestamp(2, Timestamp.valueOf(book.getEndDate()));
+
+                return statement.execute();
+
+            } else {
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            return false;
+        }
+
+    }
+
     public static boolean dropTable() {
         try {
             Statement statement;
@@ -84,21 +119,41 @@ public class BookLocationTable {
         try {
             PreparedStatement statement;
             statement = Database.getDatabase().getConnection().prepareStatement(
-                    "SELECT * FROM " + Constants.BOOK_LOCATION_TABLE + " WHERE ROOMID=?"
+                    "SELECT * FROM " + Constants.BOOK_LOCATION_TABLE + " WHERE NODEID=?"
             );
             statement.setString(1, roomID);
 
             ResultSet resultSet = statement.executeQuery();
 
+//            System.out.println(resultSet.getFetchSize());
+
             if(resultSet.next()) {
 
+//                System.out.println("success");
+
+                int bookingid = resultSet.getInt("BOOKINGID");
+                System.out.println(bookingid);
+
+                String nodeID = resultSet.getString("NODEID");
+                System.out.println(nodeID);
+
+                User userid = UserTable.getUserByID(resultSet.getInt("USERID"));
+                System.out.println(userid);
+
+                String startDate = resultSet.getString("STARTDATE");
+                System.out.println(startDate);
+
+                String endDate = resultSet.getString("ENDDATE");
+                System.out.println(endDate);
+
                 Book book = new Book(
-                        resultSet.getInt("BOOKINGID"),
-                        resultSet.getString("ROOMID"),
-                        UserTable.getUserByID(resultSet.getInt("USERID")),
-                        resultSet.getString("STARTDATE"),
-                        resultSet.getString("ENDDATES")
+                        bookingid,
+                        nodeID,
+                        userid,
+                        startDate,
+                        endDate
                 );
+
                 return book;
             }
             return null;
