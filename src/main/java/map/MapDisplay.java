@@ -204,6 +204,9 @@ public class MapDisplay {
                             int x2 = loc2.getxCord();
                             int y2 = loc2.getyCord();
                             EdgeTable.addEdge(edge);
+                            double dist = PathFinder.calcDist(x1, y1, x2, y2);
+                            loc1.addSubPath(new SubPath(id, loc2, dist));
+                            loc2.addSubPath(new SubPath(id, loc1, dist));
 
                             Line line = new Line(x1, y1, x2, y2);
                             line.setId(id);
