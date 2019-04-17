@@ -31,6 +31,7 @@ public class ScreenController {
 
     private static HashMap<String, String> screenMap = new HashMap<>();
     private static Stage stage;
+    private static Scene sceneThing = null;
 
     public ScreenController(Stage stage) {
         ScreenController.stage = stage;
@@ -118,13 +119,17 @@ public class ScreenController {
         FXMLLoader loader = new FXMLLoader(url);
         Parent root = loader.load();
 
-        Scene s = new Scene(root);
-        addStyles(s);
-        stage.setTitle("Brigham and Women's Pathfinder Application");
-        stage.setScene(s);
-        stage.setResizable(true);
-        stage.setMaximized(true);
-        stage.show();
+        if (sceneThing == null) {
+            sceneThing = new Scene(root);
+            addStyles(sceneThing);
+            stage.setTitle("Brigham and Women's Pathfinder Application");
+            stage.setScene(sceneThing);
+            stage.setResizable(true);
+            stage.setMaximized(true);
+            stage.show();
+        } else {
+            sceneThing.setRoot(root);
+        }
     }
 
     public static void infoPopUp(Constants.Routes route, Location loc, MapController mc, Map map) throws IOException {
@@ -292,7 +297,7 @@ public class ScreenController {
      * @param n Node from the window the logout is from
      */
     public static void logOut(Node n) {
-        ((Stage) n.getScene().getWindow()).close();
+        //((Stage) n.getScene().getWindow()).close();
     }
 
     private static URL routeToURL(Constants.Routes route) throws MalformedURLException {
