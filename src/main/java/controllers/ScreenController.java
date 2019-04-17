@@ -2,10 +2,7 @@ package controllers;
 
 import controllers.maps.AdminMapController;
 import controllers.maps.MapController;
-import controllers.node.AddPopUpController;
-import controllers.node.EditController;
-import controllers.node.InfoController;
-import controllers.node.PopUpController;
+import controllers.node.*;
 import controllers.user.PopUpControllerUser;
 import helpers.Constants;
 import javafx.fxml.FXMLLoader;
@@ -97,6 +94,7 @@ public class ScreenController {
         this.addScreen(Constants.Routes.PATIENT_INFO, "/fxml/UI/requests/PatientInfo.fxml");
         this.addScreen(Constants.Routes.ADD, "/fxml/UI/node/AddPopUp.fxml");
         this.addScreen(Constants.Routes.CALENDAR, "/fxml/UI/booking/CalendarTab.fxml");
+        this.addScreen(Constants.Routes.EDGE_EDITOR, "/fxml/UI/node/EdgeEditor.fxml");
     }
 
     public void addScreen(Constants.Routes route, String layout) {
@@ -166,6 +164,19 @@ public class ScreenController {
         ac.setxCoord(xCoord);
         ac.setyCoord(yCoord);
         ac.setMap(map);
+        displayPopUp(root);
+    }
+
+    public static void edgePopUp(MapController mc, String edgeId, Map map) throws IOException {
+        stage = new Stage();
+        URL url = routeToURL(Constants.Routes.EDGE_EDITOR);
+
+        FXMLLoader loader = new FXMLLoader(url);
+        Parent root = loader.load();
+        EdgeEditorController ec = loader.getController();
+        ec.setMc(mc);
+        ec.setEdgeId(edgeId);
+        ec.setMap(map);
         displayPopUp(root);
     }
 

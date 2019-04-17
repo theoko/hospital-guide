@@ -27,8 +27,6 @@ import java.util.ResourceBundle;
 
 public class EmployeeMapController extends MapController {
 
-
-    public AnchorPane paneDock;
     public VBox vboxDock;
     public ImageView imgLogOut;
     public JFXButton btnLogOut;
@@ -56,7 +54,7 @@ public class EmployeeMapController extends MapController {
         super.initialize(location, resources);
         SearchEngineController.setParentController(this);
 
-        SearchAPI searchAPI = new SearchAPI(search);
+        SearchAPI searchAPI = new SearchAPI(search, true);
         searchAPI.searchable();
 
         MapDisplay.displayEmployee(this);
