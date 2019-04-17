@@ -26,6 +26,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.transform.Transform;
 import map.MapDisplay;
 import models.map.Location;
+import models.search.SearchAPI;
 
 import java.io.IOException;
 import java.net.URL;
@@ -61,6 +62,9 @@ public class AdminMapController extends MapController {
         super.initialize(location, resources);
         SearchEngineController.setParentController(this);
         MapDisplay.displayAdmin(this);
+
+        SearchAPI searchAPI = new SearchAPI(search, true);
+        searchAPI.searchable();
 
         Delta deltaDragged = new Delta();
         panMap.setOnMousePressed((e) -> {
