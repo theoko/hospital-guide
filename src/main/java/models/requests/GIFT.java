@@ -1,7 +1,5 @@
 package models.requests;
 
-import models.sanitation.SanitationRequest;
-
 public class GIFT {
 
     private int requestID;
