@@ -86,7 +86,7 @@ public class DisplayCalendarController {
         updateTimeThread.setDaemon(true);
         updateTimeThread.start();
         primaryStage.setCenter(calendarView);
-        setWorkspaces();
+//        setWorkspaces();
         setRooms();
     }
 

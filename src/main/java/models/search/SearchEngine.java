@@ -176,7 +176,7 @@ public class SearchEngine {
     public static void main(String[] args)
     {
 
-        SearchEngine searchEngine = new SearchEngine("hola");
+        SearchEngine searchEngine = new SearchEngine("doctor");
 
     }
 

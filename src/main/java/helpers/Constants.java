@@ -15,6 +15,7 @@ public class Constants {
     public static String BOOK_WORKSPACE_TABLE = "BOOKWORKSPACE";
 
     public static String SANITATION_TABLE = "SANITATION";
+    public static String TRANSPORTATION_TABLE = "TRANSPORTATION";
     public static String WORKSPACE_TABLE = "WORKSPACE";
 
     public static String DB_PROJECTION = "projection";

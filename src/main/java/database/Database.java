@@ -77,7 +77,7 @@ public class Database {
         BookLocationTable.createTable();
         BookWorkspaceTable.createTable();
         SanitationTable.createTable();
-
+        TransportationTable.createTable();
     }
 
     public Connection getConnection() {
