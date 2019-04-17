@@ -191,9 +191,17 @@ public abstract class PathFinder {
                 mc.addLine(line, currFloor);
                 mc.panMap.getChildren().add(0, line);
 
-                LineTo lt = (LineTo) line.getElements().get(line.getElements().size() - 1);
+                PathElement pe = line.getElements().get(line.getElements().size() - 1);
                 line = new Path();
-                line.getElements().add(new MoveTo(lt.getX(), lt.getY()));
+                LineTo lt;
+                MoveTo mt;
+                if (pe instanceof LineTo) {
+                    lt = (LineTo) pe;
+                    line.getElements().add(new MoveTo(lt.getX(), lt.getY()));
+                } else {
+                    mt = (MoveTo) pe;
+                    line.getElements().add(new MoveTo(mt.getX(), mt.getY()));
+                }
                 line.getElements().add(new LineTo(curr.getxCord(), curr.getyCord()));
                 animateLine(line);
                 mc.panMap.getChildren().add(0, line);
