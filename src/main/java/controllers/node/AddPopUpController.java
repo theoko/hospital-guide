@@ -71,7 +71,12 @@ public class AddPopUpController implements Initializable {
         String id = LocationTable.generateUniqueNodeID(nodeType, floor);
         Location loc = new Location(id, xCoord, yCoord, floor, building, nodeType, longName, shortName);
 
-        Circle newCirle = MapDisplay.createCircle(mc, loc, MapDisplay.NodeStyle.REGULAR, 1.0, Constants.Routes.EDIT_LOCATION, true);
+        Circle newCirle;
+        if (!nodeType.equals(Constants.NodeType.HALL)) {
+            newCirle = MapDisplay.createCircle(mc, loc, MapDisplay.NodeStyle.REGULAR, 1.0, Constants.Routes.EDIT_LOCATION, true);
+        } else {
+            newCirle = MapDisplay.createCircle(mc, loc, MapDisplay.NodeStyle.POINT, 1.0, Constants.Routes.EDIT_LOCATION, true);
+        }
         mc.panMap.getChildren().add(newCirle);
         map.addLocation(id, loc);
         LocationTable.addLocation(loc);
