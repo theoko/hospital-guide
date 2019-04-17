@@ -309,29 +309,30 @@ public abstract class MapController implements Initializable {
 
     private void panToLine(Path line) {
         gesMap.reset();
-
         Bounds lineBounds = line.getBoundsInLocal();
         double startX = lineBounds.getMinX();
         double startY = lineBounds.getMinY();
         double endX = lineBounds.getMaxX();
         double endY = lineBounds.getMaxY();
-        Point2D middle = new Point2D((startX + endX) / 2, (startY + endY) / 2);
+        if (endX >= 0.0) {
+            Point2D middle = new Point2D((startX + endX) / 2, (startY + endY) / 2);
 
-        double lineWidth = lineBounds.getWidth();
-        double lineHeight = lineBounds.getHeight();
-        Bounds gesView = gesMap.getTargetViewport();
-        double gesWidth = gesView.getWidth();
-        double gesHeight = gesView.getHeight();
-        double zoomWidth = (gesWidth - lineWidth) / gesWidth;
-        double zoomHeight = (gesHeight - lineHeight) / gesHeight;
-        double zoom = zoomWidth < zoomHeight ? zoomWidth : zoomHeight;
-        if (zoom > 0) {
-            zoom *= 1 - ZOOM_BUFFER;
-        } else {
-            zoom *= 1 + ZOOM_BUFFER;
-        }
-        gesMap.animate(Duration.millis(ANIMATION_TIME)).afterFinished(() -> {
+            double lineWidth = lineBounds.getWidth();
+            double lineHeight = lineBounds.getHeight();
+            Bounds gesView = gesMap.getTargetViewport();
+            double gesWidth = gesView.getWidth();
+            double gesHeight = gesView.getHeight();
+            double zoomWidth = (gesWidth - lineWidth) / gesWidth;
+            double zoomHeight = (gesHeight - lineHeight) / gesHeight;
+            double zoom = zoomWidth < zoomHeight ? zoomWidth : zoomHeight;
+            if (zoom > 0) {
+                zoom *= 1 - ZOOM_BUFFER;
+            } else {
+                zoom *= 1 + ZOOM_BUFFER;
+            }
+            gesMap.animate(Duration.millis(ANIMATION_TIME)).afterFinished(() -> {
                 gesMap.animate(Duration.millis(ANIMATION_TIME)).centreOn(middle);
-        }).zoomBy(zoom, middle);
+            }).zoomBy(zoom, middle);
+        }
     }
 }

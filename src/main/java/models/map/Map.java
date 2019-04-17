@@ -30,4 +30,8 @@ public class Map {
     public void addLocation(String locID, Location loc) {
         lstLocations.put(locID, loc);
     }
+
+    public void addEdge(String edgeID, Edge edge) {
+        lstEdges.put(edgeID, edge);
+    }
 }

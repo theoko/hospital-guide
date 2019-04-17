@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class AdminMapController extends MapController {
+    private final static String MOVER_EDGE = "";
 
     public VBox vboxDock;
     public ImageView imgLogOut;
@@ -70,7 +71,7 @@ public class AdminMapController extends MapController {
         });
         panMap.setOnMouseReleased((e) -> {
             try {
-                if (!deltaDragged.bolDragged) {
+                if (!deltaDragged.bolDragged && edgLoc == null) {
                     ScreenController.addPopUp(this,(int) e.getX(), (int) e.getY(), map);
                 }
             } catch (IOException e1) {
@@ -88,6 +89,7 @@ public class AdminMapController extends MapController {
                     panMap.getChildren().add(0, mover.line);
                     mover.line.setStartX(edgLoc.getxCord());
                     mover.line.setStartY(edgLoc.getyCord());
+                    mover.line.setId(MOVER_EDGE);
                 }
                 mover.line.setEndX(e.getX());
                 mover.line.setEndY(e.getY());
@@ -395,7 +397,7 @@ public class AdminMapController extends MapController {
     private void clearEdges() {
         List<Node> lstNodes = new ArrayList<>();
         for (Node n : panMap.getChildren()) {
-            if (n instanceof Line) {
+            if (n instanceof Line && !n.getId().equals(MOVER_EDGE)) {
                 lstNodes.add(n);
             }
         }
