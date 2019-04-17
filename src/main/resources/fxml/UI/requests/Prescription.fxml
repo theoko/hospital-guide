@@ -10,13 +10,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.requests.PrescriptionController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="656.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.requests.PrescriptionController">
     <children>
-        <JFXTabPane prefHeight="400.0" prefWidth="600.0">
+        <JFXTabPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <tabs>
                 <Tab text="Make Request">
                     <content>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="40.0">
                             <children>
                                 <JFXTextField fx:id="patientTextField" onKeyReleased="#onTextFieldKeyrelease" promptText="Patient">
                                     <VBox.margin>
@@ -38,12 +38,7 @@
                                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                     </VBox.margin>
                                 </JFXTextField>
-                                <JFXButton fx:id="submitButton" onMouseClicked="#onSubmitButtonPressed" prefHeight="96.0" prefWidth="600.0" ripplerFill="WHITE" text="Submit">
-                                    <VBox.margin>
-                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                    </VBox.margin>
-                                </JFXButton>
-                                <JFXButton fx:id="backButton" onMouseClicked="#onBackButtonPressed" prefHeight="53.0" prefWidth="600.0" ripplerFill="WHITE" text="Back">
+                                <JFXButton fx:id="submitButton" onMouseClicked="#onSubmitButtonPressed" prefHeight="41.0" prefWidth="145.0" ripplerFill="WHITE" text="Submit">
                                     <VBox.margin>
                                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                     </VBox.margin>
@@ -53,12 +48,12 @@
                 </Tab>
                 <Tab text="View Requests">
                     <content>
-                        <TableView prefHeight="200.0" prefWidth="200.0" fx:id="tableView">
+                        <TableView fx:id="tableView" prefHeight="200.0" prefWidth="200.0">
                             <columns>
-                                <TableColumn prefWidth="150.0" text="Patient" fx:id="patientColumn"/>
-                                <TableColumn prefWidth="150.0" text="Location" fx:id="locationColumn"/>
-                                <TableColumn prefWidth="150.0" text="Prescription" fx:id="prescriptionColumn"/>
-                                <TableColumn prefWidth="150.0" text="Amount" fx:id="amountColumn"/>
+                                <TableColumn fx:id="patientColumn" prefWidth="150.0" text="Patient" />
+                                <TableColumn fx:id="locationColumn" prefWidth="150.0" text="Location" />
+                                <TableColumn fx:id="prescriptionColumn" prefWidth="150.0" text="Prescription" />
+                                <TableColumn fx:id="amountColumn" prefWidth="150.0" text="Amount" />
                             </columns>
                         </TableView>
                     </content></Tab>
