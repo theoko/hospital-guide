@@ -9,6 +9,7 @@ import javafx.scene.input.KeyEvent;
 import models.map.Location;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 public class SearchAPI {
@@ -45,9 +46,13 @@ public class SearchAPI {
 
                 Iterator iterator = locations.iterator();
 
-                Location location = (Location) iterator.next();
-                
-                SearchEngineController.focusOnNode(location);
+                try {
+                    Location location = (Location) iterator.next();
+
+                    SearchEngineController.focusOnNode(location);
+                } catch (NoSuchElementException e) {
+                    System.out.println("Name not mapped to location");
+                }
 
             }
         });
