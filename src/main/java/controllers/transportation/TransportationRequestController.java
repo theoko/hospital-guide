@@ -13,6 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import map.PathFinder;
 import models.map.Location;
+import models.search.SearchAPI;
 import models.services.ServiceRequest;
 import models.services.TransportationRequest;
 import models.user.User;
@@ -65,7 +66,11 @@ public class TransportationRequestController  {
 //        initSanitation();
 //        updateSanitation();
 
+        SearchAPI txtStartSearchAPI = new SearchAPI(txtStartSearch);
+        SearchAPI txtEndSearchAPI = new SearchAPI(txtEndSearch);
 
+        txtStartSearchAPI.searchable();
+        txtEndSearchAPI.searchable();
 
         initTransportation();
         updateTransportation();

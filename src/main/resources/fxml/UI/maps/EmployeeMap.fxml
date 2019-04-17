@@ -97,7 +97,7 @@
                     <fx:include source="../requests/VisualAudio.fxml" />
                 </AnchorPane>
                 <AnchorPane style="-fx-background-color: white;" fx:id="InTr">
-                    <fx:include source="../requests/InternalTrans.fxml" />
+                    <fx:include source="../transportation/TransportationRequest.fxml" />
                 </AnchorPane>
                 <AnchorPane style="-fx-background-color: white;" fx:id="Out">
                     <fx:include source="../requests/ExternalTrans.fxml" />
