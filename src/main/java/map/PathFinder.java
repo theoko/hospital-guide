@@ -26,10 +26,10 @@ import java.util.*;
 
 public abstract class PathFinder {
 
-    protected final double FLOOR_HEURISTIC = 100000;
-    protected final double STRAIGHT_ANGLE = 90.0;
-    protected final double TURN_SENSITIVITY = 45.0;
-    protected final double PIXEL_TO_METERS = 0.08;
+    protected static final double FLOOR_HEURISTIC = 100000;
+    protected static final double STRAIGHT_ANGLE = 90.0;
+    protected static final double TURN_SENSITIVITY = 45.0;
+    protected static final double PIXEL_TO_METERS = 0.08;
     private static double LINE_WIDTH = 3.5;
     private static double LINE_LENGTH = 5.0;
     private static double LINE_GAP = 10.0;
@@ -66,7 +66,7 @@ public abstract class PathFinder {
         return path;
     }
 
-    public final String txtDirections(Stack<Location> path) {
+    public static final String txtDirections(Stack<Location> path) {
         String directions = "";
         Location start = null;
 
@@ -171,7 +171,9 @@ public abstract class PathFinder {
         mc.clearPath(end);
         PathContext context = SettingsController.getAlgType();
         Stack<Location> path = context.findPath(start, end);
+        MapController.currentRoute = (Stack<Location>) path.clone();
         String directions = context.txtDirections((Stack<Location>) path.clone());
+        MapController.currentDirections = directions;
         addDirections(mc.txtPane, directions);
         HashMap<String, Location> lstLocations = mc.getMap().getAllLocations();
 

@@ -11,7 +11,7 @@ public class TextMessenger {
 
     private Message message;
     private String recipient;
-    private String messageText = "dank";
+    private String messageText = "";
     public static final String callerID = "+17867892578";
     public TextMessenger() {
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);

@@ -1,15 +1,10 @@
 package images;
 
-import controllers.VisualRealtimeController;
 import controllers.maps.MapController;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.image.WritableImage;
-import javafx.scene.input.GestureEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.transform.Transform;
 import models.map.Location;
 import net.kurobako.gesturefx.GesturePane;
 
@@ -17,7 +12,6 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -136,28 +130,7 @@ public class SnapshotGenerator {
         return f;
     }
     public WritableImage generateFloorImage(String floor, int[] boundaries) {
-        switch(floor) {
-            case "3":
-                mc.showFloor3();
-                break;
-            case "2":
-                mc.showFloor2();
-                break;
-            case "1":
-                mc.showFloor1();
-                break;
-            case "G":
-                mc.showFloorG();
-                break;
-            case "L1":
-                mc.showFloorL1();
-                break;
-            case "L2":
-                mc.showFloorL2();
-                break;
-
-
-        }
+       mc.showFloor(floor);
         return generateSnapshot(boundaries, floor);
     }
 }

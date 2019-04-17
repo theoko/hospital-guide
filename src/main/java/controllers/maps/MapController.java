@@ -26,10 +26,7 @@ import models.map.Map;
 import net.kurobako.gesturefx.GesturePane;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public abstract class MapController implements Initializable {
     private final double MAX_ZOOM = 2.0;
@@ -62,6 +59,8 @@ public abstract class MapController implements Initializable {
     private int transitIt;
     protected static String tempStart;
     private static MapController currMapControl;
+    public static Stack<Location> currentRoute;
+    public static String currentDirections;
     protected Map map;
 
     public MapController() {
