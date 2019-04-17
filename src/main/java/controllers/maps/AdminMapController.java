@@ -3,17 +3,9 @@ package controllers.maps;
 import controllers.ScreenController;
 import controllers.search.SearchEngineController;
 import helpers.Constants;
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.geometry.Point3D;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import javafx.scene.transform.Transform;
 import map.MapDisplay;
 import models.map.Location;
 

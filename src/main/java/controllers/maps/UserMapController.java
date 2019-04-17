@@ -19,6 +19,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Path;
 import map.MapDisplay;
+import models.search.SearchAPI;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -41,6 +42,9 @@ public class UserMapController extends MapController {
         SearchEngineController.setParentController(this);
         MapDisplay.displayUser(this);
         initDirections();
+
+        SearchAPI searchAPI = new SearchAPI(search, true);
+        searchAPI.searchable();
 
         ImageView imgUser = new ImageView();
         imgUser.setImage(new Image("images/Icons/user.png"));
