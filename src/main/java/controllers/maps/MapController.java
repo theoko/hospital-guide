@@ -82,9 +82,17 @@ public abstract class MapController implements Initializable {
         updateButtons();
         Image img = ImageFactory.getImage("3");
         imgMap.setImage(img);
-        gesMap.viewportBoundProperty().addListener(((observable, oldValue, newValue) -> {
-            gesMap.reset();
-        }));
+        Thread t = new Thread(() -> {
+            try {
+                Thread.sleep(2000);
+                gesMap.reset();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        });
+        t.setDaemon(true);
+        t.start();
     }
 
     protected void initDirections() {
