@@ -112,7 +112,7 @@ public class MapDisplay {
             String floor = mc.getFloor();
             if (start.getFloor().equals(floor) || end.getFloor().equals(floor)) {
                 Line line = new Line();
-                bindLineCircle(line, start, end);
+                bindLineCircle(mc, line, start, end);
                 line.setStroke(edgeFill);
                 line.setStrokeWidth(edgeWidth);
                 line.setId(edge.getEdgeID());
@@ -125,7 +125,7 @@ public class MapDisplay {
         }
     }
 
-    private static void bindLineCircle(Line line, Location start, Location end) {
+    private static void bindLineCircle(MapController mc, Line line, Location start, Location end) {
         Circle startCirc = start.getNodeCircle();
         Circle endCirc = end.getNodeCircle();
         if (startCirc != null) {
@@ -134,6 +134,7 @@ public class MapDisplay {
         } else {
             line.setStartX(start.getxCord());
             line.setStartY(start.getyCord());
+            ghostCircle(mc, start);
         }
         if (endCirc != null) {
             line.endXProperty().bind(endCirc.centerXProperty());
@@ -141,15 +142,14 @@ public class MapDisplay {
         } else {
             line.setEndX(end.getxCord());
             line.setEndY(end.getyCord());
+            ghostCircle(mc, end);
         }
     }
 
-    private void connectLine(Line line, Location loc) {
-
-    }
-
-    private void ghostCircle(Location loc) {
-
+    private static void ghostCircle(MapController mc, Location loc) {
+        Circle circle = new Circle(loc.getxCord(), loc.getyCord(), hallRadius, edgeFill);
+        circle.setOpacity(opac);
+        mc.panMap.getChildren().add(0, circle);
     }
 
     static class Delta {
@@ -234,7 +234,7 @@ public class MapDisplay {
 
                             Line line = new Line(x1, y1, x2, y2);
                             line.setId(id);
-                            bindLineCircle(line, loc1, loc2);
+                            bindLineCircle(mc, line, loc1, loc2);
                             line.setStrokeWidth(MapDisplay.edgeWidth);
                             mc.panMap.getChildren().add(0, line);
                         } else {
