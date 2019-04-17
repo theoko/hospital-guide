@@ -126,7 +126,7 @@ public class AdminMapController extends MapController {
 
     @Override
     public void showFloor(String newFloor) {
-        super.showFloor(newFloor);
+        super.showFloorHelper(newFloor);
         clearEdges();
         MapDisplay.displayAdmin(this);
     }

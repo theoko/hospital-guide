@@ -2,34 +2,64 @@ package controllers.booking;
 
 import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
+import com.calendarfx.model.Entry;
 import com.calendarfx.view.CalendarView;
+import database.BookLocationTable;
+import database.BookWorkspaceTable;
+import database.LocationTable;
+import database.WorkspaceTable;
 import de.jensd.fx.glyphs.fontawesome.utils.FontAwesomeIconFactory;
+import helpers.DatabaseHelpers;
+import helpers.UserHelpers;
 import javafx.application.Platform;
+import javafx.scene.Scene;
+import javafx.scene.control.PopupControl;
 import javafx.scene.layout.BorderPane;
+import jfxtras.icalendarfx.VCalendar;
+import jfxtras.scene.control.agenda.icalendar.ICalendarAgenda;
+import models.map.Location;
+import models.map.Workspace;
+import models.room.Book;
 
+import javax.swing.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashMap;
+import java.util.List;
 
 public class DisplayCalendarController {
 
-    public BorderPane panCalendar;
+    public BorderPane primaryStage;
+    public Calendar rooms;
+    public Calendar workspaces;
+
+    public Calendar getRooms() {
+        return rooms;
+    }
+
+    public void setRooms(Calendar rooms) {
+        this.rooms = rooms;
+    }
+
+    public Calendar getWorkspaces() {
+        return workspaces;
+    }
+
+    public void setWorkspaces(Calendar workspaces) {
+        this.workspaces = workspaces;
+    }
 
     public void initialize() {
 
         CalendarView calendarView = new CalendarView();
-        FontAwesomeIconFactory.get();
 
-        Calendar birthdays = new com.calendarfx.model.Calendar("Birthdays");
-        Calendar holidays = new com.calendarfx.model.Calendar("Holidays");
-
-        birthdays.setStyle(com.calendarfx.model.Calendar.Style.STYLE1);
-        holidays.setStyle(com.calendarfx.model.Calendar.Style.STYLE2);
+        rooms = new Calendar("Rooms");
+        workspaces = new Calendar("Workspaces");
 
         CalendarSource myCalendarSource = new CalendarSource("My Calendars");
-        myCalendarSource.getCalendars().addAll(birthdays, holidays);
+        myCalendarSource.getCalendars().addAll(workspaces, rooms);
 
         calendarView.getCalendarSources().addAll(myCalendarSource);
-
         calendarView.setRequestedTime(LocalTime.now());
 
         Thread updateTimeThread = new Thread("Calendar: Update Time Thread") {
@@ -55,9 +85,32 @@ public class DisplayCalendarController {
         updateTimeThread.setPriority(Thread.MIN_PRIORITY);
         updateTimeThread.setDaemon(true);
         updateTimeThread.start();
-
-        panCalendar.setPrefWidth(1200);
-        panCalendar.setPrefHeight(656);
+        primaryStage.setCenter(calendarView);
+        setWorkspaces();
+        setRooms();
     }
 
+    public void setWorkspaces(){
+        List<Book> bookingsForUser = BookWorkspaceTable.getBookingsForUser(UserHelpers.getCurrentUser());
+        for (Book book: bookingsForUser) {
+            String roomID = book.getRoomID();
+            Location room = LocationTable.getLocationByID(roomID);
+            String name = room.getLongName();
+            Entry<String> newEntry = new Entry<>(name);
+            workspaces.addEntry(newEntry);
+
+        }
+    }
+
+    public void setRooms(){
+        List<Book> bookingsForUser = BookLocationTable.getBookingsForUser(UserHelpers.getCurrentUser());
+        for (Book book: bookingsForUser) {
+            String roomID = book.getRoomID();
+            Location room = LocationTable.getLocationByID(roomID);
+            String name = room.getLongName();
+            Entry<String> newEntry = new Entry<>(name);
+            rooms.addEntry(newEntry);
+
+        }
+    }
 }

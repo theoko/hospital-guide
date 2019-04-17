@@ -35,6 +35,7 @@ public class CustodianMapController extends MapController {
     public JFXButton btnLogOut;
     public AnchorPane tilDirections;
     public AnchorPane sanitation;
+    public JFXTextField search;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -137,16 +138,16 @@ public class CustodianMapController extends MapController {
 
         HBox searchBox = new HBox();
 
-        JFXTextField search = new JFXTextField();
-        search.setPromptText(" Search");
-        search.setPrefHeight(34);
-        search.setPrefWidth(450);
-        search.setAlignment(Pos.CENTER);
-        search.setStyle("-fx-font-size: 18px;"
-                + "-fx-font-weight: bold;"
-                + "-fx-font-family: fantasy;"
-                + "-fx-text-fill: #022D5A;"
-                + "-fx-background-color: white");
+//        JFXTextField search = new JFXTextField();
+//        search.setPromptText(" Search");
+//        search.setPrefHeight(34);
+//        search.setPrefWidth(450);
+//        search.setAlignment(Pos.CENTER);
+//        search.setStyle("-fx-font-size: 18px;"
+//                + "-fx-font-weight: bold;"
+//                + "-fx-font-family: fantasy;"
+//                + "-fx-text-fill: #022D5A;"
+//                + "-fx-background-color: white");
 
 
         searchBox.getChildren().add(search);
@@ -264,7 +265,7 @@ public class CustodianMapController extends MapController {
 
     @Override
     public void showFloor(String newFloor) {
-        super.showFloor(newFloor);
+        super.showFloorHelper(newFloor);
         MapDisplay.displayEmployee(this);
     }
 
