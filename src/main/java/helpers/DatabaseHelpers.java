@@ -4,9 +4,18 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 public class DatabaseHelpers {
+
+    public static boolean isValidFloor(String floor) {
+        ArrayList<String> validFloorList = new ArrayList<String>(
+                Arrays.asList("1", "2", "3", "G", "L1", "L2")
+        );
+        return validFloorList.contains(floor);
+    }
 
     /**
      * Translates data from constant.NodeType to an int to put into database

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="655.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.maps.TableEditorController">
+    <children>
+        <JFXTabPane layoutX="10.0" layoutY="10.0" prefHeight="603.0" prefWidth="576.0" side="BOTTOM" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <tabs>
+                <Tab text="Node Editor">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="341.0" prefWidth="576.0">
+                            <children>
+                                <TableView fx:id="nodes" prefHeight="558.0" prefWidth="856.0">
+                                    <columns>
+                                        <TableColumn fx:id="ID" prefWidth="102.0" text="ID" />
+                                        <TableColumn prefWidth="60.0" text="X" fx:id="x" />
+                                        <TableColumn fx:id="y" prefWidth="61.0" text="Y" />
+                                        <TableColumn fx:id="floor" prefWidth="87.0" text="Floor" />
+                                        <TableColumn fx:id="building" prefWidth="98.0" text="Building" />
+                                        <TableColumn fx:id="type" prefWidth="214.0" text="Type" />
+                                        <TableColumn fx:id="name" prefWidth="233.0" text="Name" />
+                                    </columns>
+                                </TableView>
+                                <JFXButton fx:id="deleteNodeButton" buttonType="RAISED" layoutX="726.0" layoutY="568.0" mnemonicParsing="false" onMouseClicked="#deleteNode" prefHeight="40.0" prefWidth="131.0" text="Delete Node">
+                           <font>
+                              <Font size="18.0" />
+                           </font></JFXButton>
+                                <JFXTextField fx:id="nodeIDText" layoutX="1002.0" layoutY="182.0" prefHeight="25.0" prefWidth="159.0" />
+                                <Label layoutX="903.0" layoutY="182.0" prefHeight="33.0" prefWidth="99.0" text="Node ID">
+                                    <font>
+                                        <Font name="System Bold" size="18.0" />
+                                    </font>
+                                </Label>
+                                <JFXTextField layoutX="1002.0" layoutY="215.0" prefHeight="25.0" prefWidth="159.0" fx:id="xText" />
+                                <Label layoutX="903.0" layoutY="215.0" prefHeight="33.0" prefWidth="99.0" text="X">
+                                    <font>
+                                        <Font name="System Bold" size="18.0" />
+                                    </font>
+                                </Label>
+                                <JFXTextField fx:id="yText" layoutX="1002.0" layoutY="248.0" prefHeight="25.0" prefWidth="159.0" />
+                                <Label layoutX="903.0" layoutY="248.0" prefHeight="33.0" prefWidth="99.0" text="Y">
+                                    <font>
+                                        <Font name="System Bold" size="18.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="903.0" layoutY="281.0" prefHeight="33.0" prefWidth="99.0" text="Floor">
+                                    <font>
+                                        <Font name="System Bold" size="18.0" />
+                                    </font>
+                                </Label>
+                                <JFXTextField fx:id="buildingText" layoutX="1002.0" layoutY="314.0" prefHeight="25.0" prefWidth="159.0" />
+                                <Label layoutX="903.0" layoutY="314.0" prefHeight="33.0" prefWidth="99.0" text="Building">
+                                    <font>
+                                        <Font name="System Bold" size="18.0" />
+                                    </font>
+                                </Label>
+                                <JFXTextField fx:id="nameText" layoutX="1002.0" layoutY="347.0" prefHeight="25.0" prefWidth="159.0" />
+                                <Label layoutX="903.0" layoutY="347.0" prefHeight="33.0" prefWidth="99.0" text="Name">
+                                    <font>
+                                        <Font name="System Bold" size="18.0" />
+                                    </font>
+                                </Label>
+                                <JFXTextField fx:id="floorText" layoutX="1002.0" layoutY="282.0" prefHeight="18.0" prefWidth="159.0" />
+                                <JFXButton fx:id="addNodeButton" buttonType="RAISED" layoutX="887.0" layoutY="434.0" mnemonicParsing="false" onMouseClicked="#addNode" prefHeight="40.0" prefWidth="131.0" text="Add Node">
+                           <font>
+                              <Font size="18.0" />
+                           </font></JFXButton>
+                                <JFXButton fx:id="editNodeButton" buttonType="RAISED" layoutX="1041.0" layoutY="434.0" mnemonicParsing="false" onMouseClicked="#editNode" prefHeight="40.0" prefWidth="131.0" text="Edit Node">
+                           <font>
+                              <Font size="18.0" />
+                           </font></JFXButton>
+                                <JFXTextField fx:id="typeText" layoutX="1002.0" layoutY="380.0" prefHeight="25.0" prefWidth="159.0" />
+                                <Label layoutX="903.0" layoutY="380.0" prefHeight="33.0" prefWidth="99.0" text="Type">
+                                    <font>
+                                        <Font name="System Bold" size="18.0" />
+                                    </font>
+                                </Label>
+                                <JFXTextField fx:id="warningText" alignment="CENTER" layoutX="909.0" layoutY="508.0" prefHeight="42.0" prefWidth="243.0" style="-jfx-unfocus-color: transparent; -fx-prompt-text-fill: red;">
+                           <font>
+                              <Font size="24.0" />
+                           </font></JFXTextField>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="Edge Editor">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="341.0" prefWidth="576.0">
+                            <children>
+                                <TableView fx:id="edges" prefHeight="554.0" prefWidth="885.0">
+                                    <columns>
+                                        <TableColumn fx:id="startColumn" prefWidth="450.0" text="Node 1" />
+                                        <TableColumn fx:id="endColumn" prefWidth="434.0" text="Node 2" />
+                                    </columns>
+                                </TableView>
+                                <JFXButton fx:id="deleteEdgeButton" buttonType="RAISED" layoutX="754.0" layoutY="563.0" mnemonicParsing="false" onMouseClicked="#deleteEdge" prefHeight="40.0" prefWidth="131.0" text="Delete Edge">
+                           <font>
+                              <Font size="18.0" />
+                           </font></JFXButton>
+                                <JFXTextField fx:id="startText" layoutX="1021.0" layoutY="292.0" prefHeight="25.0" prefWidth="159.0" />
+                                <Label layoutX="922.0" layoutY="292.0" prefHeight="33.0" prefWidth="99.0" text="Node ID">
+                                    <font>
+                                        <Font name="System Bold" size="18.0" />
+                                    </font>
+                                </Label>
+                                <JFXTextField fx:id="endText" layoutX="1021.0" layoutY="325.0" prefHeight="25.0" prefWidth="159.0" />
+                                <Label layoutX="922.0" layoutY="325.0" prefHeight="33.0" prefWidth="99.0" text="Node ID">
+                                    <font>
+                                        <Font name="System Bold" size="18.0" />
+                                    </font>
+                                </Label>
+                                <JFXButton fx:id="addEdgeButton" buttonType="RAISED" layoutX="1049.0" layoutY="383.0" mnemonicParsing="false" onMouseClicked="#addEdge" prefHeight="40.0" prefWidth="131.0" text="Add Edge">
+                           <font>
+                              <Font size="18.0" />
+                           </font></JFXButton>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+            </tabs>
+        </JFXTabPane>
+    </children>
+</AnchorPane>

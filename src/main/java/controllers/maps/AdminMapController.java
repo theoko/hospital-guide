@@ -44,6 +44,7 @@ public class AdminMapController extends MapController {
     public AnchorPane UserD;
     public AnchorPane Algo;
     public AnchorPane Clean;
+    public AnchorPane TabEdit;
 
     public JFXTextField search;
 
@@ -67,13 +68,13 @@ public class AdminMapController extends MapController {
         searchAPI.searchable();
 
         Delta deltaDragged = new Delta();
-        panMap.setOnMousePressed((e) -> {
+        gesMap.setOnMousePressed((e) -> {
             deltaDragged.bolDragged = false;
         });
-        panMap.setOnMouseDragged((e) -> {
+        gesMap.setOnMouseDragged((e) -> {
             deltaDragged.bolDragged = true;
         });
-        panMap.setOnMouseReleased((e) -> {
+        gesMap.setOnMouseReleased((e) -> {
             try {
                 if (!deltaDragged.bolDragged && edgLoc == null) {
                     ScreenController.addPopUp(this,(int) e.getX(), (int) e.getY(), map);
@@ -84,7 +85,7 @@ public class AdminMapController extends MapController {
         });
 
         Mover mover = new Mover();
-        panMap.setOnMouseMoved(e -> {
+        gesMap.setOnMouseMoved(e -> {
             Location edgLoc = AdminMapController.getEdgLoc();
             if (edgLoc != null) {
                 if (mover.line == null) {
@@ -200,6 +201,20 @@ public class AdminMapController extends MapController {
         btnClean.setPrefHeight(60);
         btnClean.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnClean.setTextOverrun(OverrunStyle.CLIP);
+
+        ImageView imgTab = new ImageView();
+        imgTab.setImage(new Image("images/Icons/tabEdit.png"));
+        imgTab.setFitHeight(30);
+        imgTab.setFitWidth(30);
+        imgTab.setPreserveRatio(true);
+        imgTab.setPickOnBounds(true);
+
+        JFXButton btnTab = new JFXButton("",imgTab);
+        btnTab.setAlignment(Pos.CENTER);
+        btnTab.setPrefWidth(60);
+        btnTab.setPrefHeight(60);
+        btnTab.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnTab.setTextOverrun(OverrunStyle.CLIP);
 
         btnLogOut.setStyle("-fx-background-radius: 30;" );
         btnLogOut.setButtonType(JFXButton.ButtonType.RAISED);
@@ -317,12 +332,31 @@ public class AdminMapController extends MapController {
         boxClean.setPrefSize(1200,760);
         boxClean.setSpacing(5);
 
+        Label lblTab = new Label("Tabular Map Editor");
+        lblTab.setPrefHeight(50);
+        lblTab.setPrefWidth(1200);
+        lblTab.setTextFill(Color.WHITE);
+        lblTab.setAlignment(Pos.CENTER);
+        lblTab.setStyle("-fx-background-color: radial-gradient(radius 120%, #022D5A, derive(#022D5A, -60%), derive(#022D5A, 60%));" +
+                "-fx-background-radius: 30;" +
+                "-fx-font-size: 24;" +
+                "-fx-font-weight: BOLD");
+        lblTab.setPadding(new Insets(10, 10, 10, 10));
+
+        VBox boxTab = new VBox();
+        boxTab.getChildren().add(lblTab);
+        boxTab.getChildren().add(TabEdit);
+        boxTab.setAlignment(Pos.CENTER_LEFT);
+        boxTab.setPrefSize(1200,760);
+        boxTab.setSpacing(5);
+
         JFXNodesList nodeListSearch = new JFXNodesList();
         JFXNodesList nodeListUser = new JFXNodesList();
         JFXNodesList nodeListRoom = new JFXNodesList();
         JFXNodesList nodesListEdit = new JFXNodesList();
         JFXNodesList nodesListAlgo = new JFXNodesList();
         JFXNodesList nodesListClean = new JFXNodesList();
+        JFXNodesList nodesListTab = new JFXNodesList();
 
         nodeListSearch.addAnimatedNode(btnSearch);
         nodeListSearch.addAnimatedNode(searchBox);
@@ -354,12 +388,18 @@ public class AdminMapController extends MapController {
         nodesListClean.setRotate(100);
         nodesListClean.setSpacing(250);
 
+        nodesListTab.addAnimatedNode(btnTab);
+        nodesListTab.addAnimatedNode(boxTab);
+        nodesListTab.setRotate(105);
+        nodesListTab.setSpacing(260);
+
         vboxDock.getChildren().add(nodeListUser);
         vboxDock.getChildren().add(nodeListSearch);
         vboxDock.getChildren().add(nodeListRoom);
         vboxDock.getChildren().add(nodesListEdit);
         vboxDock.getChildren().add(nodesListAlgo);
         vboxDock.getChildren().add(nodesListClean);
+        vboxDock.getChildren().add(nodesListTab);
     }
 
     @Override
