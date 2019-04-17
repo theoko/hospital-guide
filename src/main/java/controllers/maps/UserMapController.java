@@ -19,13 +19,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Path;
 import map.MapDisplay;
-<<<<<<< HEAD
 import map.PathFinder;
 import messaging.EmailMessenger;
 import messaging.TextMessenger;
-=======
 import models.search.SearchAPI;
->>>>>>> iteration3
 
 import java.net.URL;
 import java.util.ResourceBundle;
