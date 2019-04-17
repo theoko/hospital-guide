@@ -234,10 +234,10 @@ public class RoomBookingController {
             populateRoomBookedTable(roomDetails);
             populateRoomBookingTable(roomsAvailable);
 
-        ZonedDateTime calStartTime = DatabaseHelpers.getCalDateTime(startDate, startTime);
-        ZonedDateTime calEndTime = DatabaseHelpers.getCalDateTime(endDate, endTime);
-        book.setCalStartDate(calStartTime);
-        book.setCalEndDate(calEndTime);
+//        ZonedDateTime calStartTime = DatabaseHelpers.getCalDateTime(startDate, startTime);
+//        ZonedDateTime calEndTime = DatabaseHelpers.getCalDateTime(endDate, endTime);
+//        book.setCalStartDate(calStartTime);
+//        book.setCalEndDate(calEndTime);
 
 //        } else {
 //

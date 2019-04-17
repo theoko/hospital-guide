@@ -49,11 +49,10 @@ public class WorkspacePopUpController extends PopUpController implements Initial
                 DatabaseHelpers.getDateTime(StartDate, StartTime),
                 DatabaseHelpers.getDateTime(EndDate, EndTime)
         );
-        ZonedDateTime calStartTime = DatabaseHelpers.getCalDateTime(StartDate, StartTime);
-        ZonedDateTime calEndTime = DatabaseHelpers.getCalDateTime(EndDate, EndTime);
-        book.setCalStartDate(calStartTime);
-        book.setCalEndDate(calEndTime);
-
+//        ZonedDateTime calStartTime = DatabaseHelpers.getCalDateTime(StartDate, StartTime);
+//        ZonedDateTime calEndTime = DatabaseHelpers.getCalDateTime(EndDate, EndTime);
+//        book.setCalStartDate(calStartTime);
+//        book.setCalEndDate(calEndTime);
         BookWorkspaceTable.createBooking(book);
         circle.setFill(Color.ORANGE);
         ScreenController.deactivate();

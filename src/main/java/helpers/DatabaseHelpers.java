@@ -1,13 +1,10 @@
 package helpers;
 
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.*;
-import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -123,25 +120,10 @@ public class DatabaseHelpers {
 
     }
 
-    public static String getCalDateTime1(LocalDate date, LocalTime time) {
-        try {
-
-            Date parsedDate = new SimpleDateFormat(Constants.dateFormat).parse(
-                    date.toString() + "T" + time.toString() + ":00" + ZoneOffset.systemDefault() + ZoneId.systemDefault()
-            );
-
-            return new SimpleDateFormat(Constants.calDateFormat).format(parsedDate).replaceAll("[-:]", "");
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-
-            return null;
-        }
-    }
-
-    public static ZonedDateTime getCalDateTime(LocalDate date, LocalTime time) {
+    public static ZonedDateTime getCalDateTime(String date, String time) {
         //LocalDateTime parsedDate = LocalDateTime.parse(date + "T" + time + ":00", DateTimeFormatter.ofPattern(Constants.calDateFormat));
-        ZonedDateTime zdt = ZonedDateTime.parse(date + "T" + time + ":00" + "-4:00");
+        String str = date + "T" + time + "-04:00";
+        ZonedDateTime zdt = ZonedDateTime.parse(str);
         // ZonedDateTime zonedDateTime = ZonedDateTime.parse("2011-12-03T10:15:30+01:00");
         return zdt;
     }

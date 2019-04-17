@@ -15,8 +15,10 @@ import javafx.scene.layout.BorderPane;
 import models.map.Location;
 import models.room.Book;
 
-import java.sql.Timestamp;
-import java.time.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 public class DisplayCalendarController extends DateControl {
@@ -111,15 +113,13 @@ public class DisplayCalendarController extends DateControl {
             for (Book book : bookingsForUser) {
                 String roomID = book.getRoomID();
                 Location room = LocationTable.getLocationByID(roomID);
-                ZonedDateTime calStartDate = book.getCalStartDate();
-                ZonedDateTime calEndDate = book.getCalEndDate();
-                Duration between = Duration.between(calEndDate, calStartDate);
 
-                if(room != null && calStartDate != null) {
+                if(room != null && book.getCalStartDate() != null) {
                     String name = room.getLongName();
                     Entry<String> newEntry = new Entry<>(name);
-                    //createEntryAt(calStartDate, workspaces);
-                    workspaces.addEntry(newEntry);
+                    createEntryAt(book.getCalStartDate(), workspaces);
+                    getWorkspaces().addEntry(newEntry);
+
                 }
             }
         }
@@ -127,20 +127,28 @@ public class DisplayCalendarController extends DateControl {
 
     public void setLocations() {
         List<Book> bookingsForUser = BookLocationTable.getBookingsForUser(UserHelpers.getCurrentUser());
-
+        for (Book bk : bookingsForUser) {
+            String[] start = bk.getStartDate().split(" ");
+            String[] end = bk.getEndDate().split(" ");
+            String startDay = start[0];
+            String startTime = start[1].substring(0, start[1].indexOf("."));
+            String endDay = end[0];
+            String endTime = end[1].substring(0, end[1].indexOf("."));
+            ZonedDateTime calStartTime = DatabaseHelpers.getCalDateTime(startDay, startTime);
+            ZonedDateTime calEndTime = DatabaseHelpers.getCalDateTime(endDay, endTime);
+            bk.setCalStartDate(calStartTime);
+            bk.setCalEndDate(calEndTime);
+        }
         if (bookingsForUser != null) {
             for (Book book : bookingsForUser) {
                 String roomID = book.getRoomID();
                 Location room = LocationTable.getLocationByID(roomID);
-                ZonedDateTime calStartDate = book.getCalStartDate();
-                ZonedDateTime calEndDate = book.getCalEndDate();
-                Duration between = Duration.between(calEndDate, calStartDate);
 
-                if (room != null && calStartDate != null) {
+                if (room != null && book.getCalStartDate() != null) {
                     String name = room.getLongName();
                     Entry<String> newEntry = new Entry<>(name);
-                    //createEntryAt(calStartDate, locations);
-                    locations.addEntry(newEntry);
+                    createEntryAt(book.getCalStartDate(), locations);
+                    getLocations().addEntry(newEntry);
                 }
             }
         }
