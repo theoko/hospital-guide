@@ -68,6 +68,8 @@ public abstract class MapController implements Initializable {
         lstLineTransits = new LinkedList<>();
         transitIt = 0;
         currMapControl = this;
+        currentDirections = null;
+        currentRoute = null;
     }
 
     @Override

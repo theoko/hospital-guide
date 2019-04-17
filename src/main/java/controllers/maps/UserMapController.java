@@ -199,7 +199,7 @@ public class UserMapController extends MapController {
     public void btn_SendDirections (MouseEvent event) {
         if(currentRoute == null) return;
         TextMessenger tm = new TextMessenger();
-        String input_phone_number = textNum.getText();
+        String input_phone_number = "+1"+textNum.getText();
         tm.declareRecipient(input_phone_number);
         tm.declareMessage(MapController.currentDirections);
         tm.sendMessage();
