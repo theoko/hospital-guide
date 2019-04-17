@@ -5,35 +5,34 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane stylesheets="@../../../css/colorScheme.css" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #022D5A;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.welcome.WelcomeController">
+<AnchorPane prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #022D5A;" stylesheets="@../../../css/colorScheme.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.welcome.WelcomeController">
     <children>
         <AnchorPane layoutY="167.0" prefHeight="473.0" prefWidth="1200.0" style="-fx-background-color: #F0F0F0; -fx-background-image: url('/images/bG.jpg');" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
             <children>
-                <JFXButton fx:id="getStButton" buttonType="RAISED" defaultButton="true" layoutX="500.0" layoutY="272.0" onAction="#welcomeLogin" prefHeight="60.0" prefWidth="200.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Get Started" />
+                <JFXButton fx:id="getStButton" buttonType="RAISED" defaultButton="true" layoutX="500.0" layoutY="272.0" onAction="#welcomeLogin" prefHeight="60.0" prefWidth="200.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Get Started" AnchorPane.bottomAnchor="141.0" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="500.0" />
             </children>
         </AnchorPane>
-        <Pane layoutY="580.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="120.0" prefWidth="1200.0" style="-fx-background-color: #FFFFFF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <AnchorPane layoutY="580.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="120.0" prefWidth="1200.0" style="-fx-background-color: #FFFFFF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
             <children>
-                <ImageView blendMode="MULTIPLY" disable="true" fitHeight="83.0" fitWidth="376.0" layoutX="455.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView blendMode="MULTIPLY" disable="true" fitHeight="83.0" fitWidth="299.0" layoutX="455.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="18.0" AnchorPane.leftAnchor="455.0" AnchorPane.rightAnchor="455.0" AnchorPane.topAnchor="19.0">
                     <image>
                         <Image url="@../../../images/writtenLogo.png" />
                     </image>
                 </ImageView>
             </children>
-        </Pane>
-        <Pane prefHeight="91.0" prefWidth="1200.0" style="-fx-background-color: #FFFFFF;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        </AnchorPane>
+        <AnchorPane prefHeight="91.0" prefWidth="1200.0" style="-fx-background-color: #FFFFFF;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <Label layoutX="249.0" layoutY="4.0" prefHeight="85.0" prefWidth="702.0" text="Welcome to Brigham and Women's Hospital">
+                <Label layoutX="249.0" layoutY="3.0" prefHeight="85.0" prefWidth="702.0" text="Welcome to Brigham and Women's Hospital" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="249.0" AnchorPane.rightAnchor="249.0" AnchorPane.topAnchor="0.0">
                     <font>
                         <Font size="34.0" />
                     </font>
                 </Label>
-            <JFXButton fx:id="loginButton" alignment="CENTER" buttonType="RAISED" layoutX="974.0" layoutY="17.0" onAction="#employeeLogin" prefHeight="60.0" prefWidth="212.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Employee Login" />
+            <JFXButton fx:id="loginButton" alignment="CENTER" buttonType="RAISED" layoutX="974.0" layoutY="17.0" onAction="#employeeLogin" prefHeight="60.0" prefWidth="212.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Employee Login" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="17.0" />
             </children>
-        </Pane>
+        </AnchorPane>
         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="232.0" layoutY="106.0" prefHeight="101.0" prefWidth="736.0" text="Information Kiosk" textFill="WHITE">
             <font>
                 <Font name="System Bold" size="72.0" />
