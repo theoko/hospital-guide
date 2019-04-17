@@ -1,114 +1,44 @@
 package controllers.booking;
 
+import com.calendarfx.model.Calendar;
+import com.calendarfx.model.CalendarSource;
+import com.calendarfx.model.Entry;
+import com.calendarfx.view.CalendarView;
 import database.BookLocationTable;
 import database.BookWorkspaceTable;
 import database.LocationTable;
-import helpers.UIHelpers;
+import database.WorkspaceTable;
+import de.jensd.fx.glyphs.fontawesome.utils.FontAwesomeIconFactory;
+import helpers.DatabaseHelpers;
 import helpers.UserHelpers;
+import javafx.application.Platform;
+import javafx.scene.Scene;
+import javafx.scene.control.PopupControl;
 import javafx.scene.layout.BorderPane;
 import jfxtras.icalendarfx.VCalendar;
 import jfxtras.scene.control.agenda.icalendar.ICalendarAgenda;
 import models.map.Location;
+import models.map.Workspace;
 import models.room.Book;
 
-import java.util.Calendar;
+import javax.swing.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.HashMap;
 import java.util.List;
 
 public class DisplayCalendarController {
 
-    public BorderPane panCalendar;
-    private Calendar workspaces;
-    private Calendar rooms;
-    private VCalendar vCalendar;
-    ICalendarAgenda agenda;
+    public BorderPane primaryStage;
+    public Calendar rooms;
+    public Calendar workspaces;
 
-//    public DisplayCalendarController(Calendar workspaces, Calendar rooms) {
-//        this.workspaces = workspaces;
-//        this.rooms = rooms;
-//    }
-
-    public void initialize() {
-
-        vCalendar = new VCalendar();
-        agenda = new ICalendarAgenda(vCalendar);
-//
-//        String publishMessage = "BEGIN:VCALENDAR" + System.lineSeparator() +
-//                "METHOD:PUBLISH" + System.lineSeparator() +
-//                "PRODID:-//Example/ExampleCalendarClient//EN" + System.lineSeparator() +
-//                "VERSION:2.0" + System.lineSeparator() +
-//                "BEGIN:VEVENT" + System.lineSeparator() +
-//                "ORGANIZER:mailto:a@example.com" + System.lineSeparator() +
-//                "DTSTART:20190401T200000Z" + System.lineSeparator() +
-//                "DTEND:20190401T210000Z" + System.lineSeparator() +
-//                "DTSTAMP:20150611T190000Z" + System.lineSeparator() +
-//                "RRULE:FREQ=WEEKLY;BYDAY=FR" + System.lineSeparator() +
-//                "SUMMARY:Friday meeting with Joe" + System.lineSeparator() +
-//                "UID:0981234-1234234-23@example.com" + System.lineSeparator() +
-//                "END:VEVENT" + System.lineSeparator() +
-//                "END:VCALENDAR";
-//
-//        vCalendar.processITIPMessage(publishMessage);
-
-        panCalendar.setPrefWidth(1200);
-        panCalendar.setPrefHeight(656);
-
-
-        panCalendar.setCenter(agenda);
-
-        setEntries();
+    public Calendar getRooms() {
+        return rooms;
     }
 
-// String nodeID, int xCord, int yCord, String floor, String building, Constants.NodeType nodeType, String longName, String shortName
-// String nodeID, int xCord, int yCord, Constants.NodeType nodeType, String longName
-// int bookingID, String roomID, User user, String startDate, String endDate (book)
-    public void displayWorkspaceEntries(String message){
-        List<Book> bookingsWorkspace = BookWorkspaceTable.getBookingsForUser(UserHelpers.getCurrentUser());
-        for (Book book: bookingsWorkspace) {
-            String startDate = book.getCalStartDate();
-            String endDate = book.getCalEndDate();
-
-            String publishMessage = "BEGIN:VCALENDAR" + System.lineSeparator() +
-                    "METHOD:PUBLISH" + System.lineSeparator() +
-                    "PRODID:-//Example/ExampleCalendarClient//EN" + System.lineSeparator() +
-                    "VERSION:2.0" + System.lineSeparator() +
-                    "BEGIN:VEVENT" + System.lineSeparator() +
-                    "ORGANIZER:mailto:a@example.com" + System.lineSeparator() +
-                    "DTSTART:" + startDate + System.lineSeparator() +
-                    "DTEND:" + endDate + System.lineSeparator() +
-                    "DTSTAMP:20150611T190000Z" + System.lineSeparator() +
-                    "RRULE:FREQ=WEEKLY;BYDAY=FR" + System.lineSeparator() +
-                    "SUMMARY:" + message + System.lineSeparator() +
-                    "UID:0981234-1234234-23@example.com" + System.lineSeparator() +
-                    "END:VEVENT" + System.lineSeparator() +
-                    "END:VCALENDAR";
-
-            getvCalendar().processITIPMessage(publishMessage);
-        }
-    }
-
-    public void displayRoomEntries(String message){
-        List<Book> bookingsWorkspace = BookWorkspaceTable.getBookingsForUser(UserHelpers.getCurrentUser());
-        for (Book book: bookingsWorkspace) {
-            String startDate = book.getCalStartDate();
-            String endDate = book.getCalEndDate();
-
-            String publishMessage = "BEGIN:VCALENDAR" + System.lineSeparator() +
-                    "METHOD:PUBLISH" + System.lineSeparator() +
-                    "PRODID:-//Example/ExampleCalendarClient//EN" + System.lineSeparator() +
-                    "VERSION:2.0" + System.lineSeparator() +
-                    "BEGIN:VEVENT" + System.lineSeparator() +
-                    "ORGANIZER:mailto:a@example.com" + System.lineSeparator() +
-                    "DTSTART:" + startDate + System.lineSeparator() +
-                    "DTEND:" + endDate + System.lineSeparator() +
-                    "DTSTAMP:20150611T190000Z" + System.lineSeparator() +
-                    "RRULE:FREQ=WEEKLY;BYDAY=FR" + System.lineSeparator() +
-                    "SUMMARY:" + message + System.lineSeparator() +
-                    "UID:0981234-1234234-23@example.com" + System.lineSeparator() +
-                    "END:VEVENT" + System.lineSeparator() +
-                    "END:VCALENDAR";
-
-            getvCalendar().processITIPMessage(publishMessage);
-        }
+    public void setRooms(Calendar rooms) {
+        this.rooms = rooms;
     }
 
     public Calendar getWorkspaces() {
@@ -119,42 +49,68 @@ public class DisplayCalendarController {
         this.workspaces = workspaces;
     }
 
-    public Calendar getRooms() {
-        return rooms;
+    public void initialize() {
+
+        CalendarView calendarView = new CalendarView();
+
+        rooms = new Calendar("Rooms");
+        workspaces = new Calendar("Workspaces");
+
+        CalendarSource myCalendarSource = new CalendarSource("My Calendars");
+        myCalendarSource.getCalendars().addAll(workspaces, rooms);
+
+        calendarView.getCalendarSources().addAll(myCalendarSource);
+        calendarView.setRequestedTime(LocalTime.now());
+
+        Thread updateTimeThread = new Thread("Calendar: Update Time Thread") {
+            @Override
+            public void run() {
+                while (true) {
+                    Platform.runLater(() -> {
+                        calendarView.setToday(LocalDate.now());
+                        calendarView.setTime(LocalTime.now());
+                    });
+
+                    try {
+                        // update every 10 seconds
+                        sleep(10000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            };
+        };
+
+        updateTimeThread.setPriority(Thread.MIN_PRIORITY);
+        updateTimeThread.setDaemon(true);
+        updateTimeThread.start();
+        primaryStage.setCenter(calendarView);
+        setWorkspaces();
+        setRooms();
     }
 
-    public void setRooms(Calendar rooms) {
-        this.rooms = rooms;
-    }
+    public void setWorkspaces(){
+        List<Book> bookingsForUser = BookWorkspaceTable.getBookingsForUser(UserHelpers.getCurrentUser());
+        for (Book book: bookingsForUser) {
+            String roomID = book.getRoomID();
+            Location room = LocationTable.getLocationByID(roomID);
+            String name = room.getLongName();
+            Entry<String> newEntry = new Entry<>(name);
+            workspaces.addEntry(newEntry);
 
-    public VCalendar getvCalendar() {
-        return vCalendar;
-    }
-
-    public void setvCalendar(VCalendar vCalendar) {
-        this.vCalendar = vCalendar;
-    }
-
-    public ICalendarAgenda getAgenda() {
-        return agenda;
-    }
-
-    public void setAgenda(ICalendarAgenda agenda) {
-        this.agenda = agenda;
-    }
-
-    private void setEntries(){
-        List<Book> bookingsLocation = BookLocationTable.getBookingsForUser(UserHelpers.getCurrentUser());
-        List<Book> bookingsWorkspace = BookWorkspaceTable.getBookingsForUser(UserHelpers.getCurrentUser());
-        for (Book l: bookingsLocation) {
-            String roomID = l.getRoomID();
-            Location location = LocationTable.getLocationByID(roomID);
-            String name = location.getLongName();
         }
-//        for (Book w: bookingsWorkspace) {
-//            String roomID = w.getRoomID();
-//            Location location = LocationTable.getLocationByID(roomID);
-//            String name = location.getLongName();
-//        }
+    }
+
+    public void setRooms(){
+        List<Book> bookingsForUser = BookLocationTable.getBookingsForUser(UserHelpers.getCurrentUser());
+        for (Book book: bookingsForUser) {
+            String roomID = book.getRoomID();
+            Location room = LocationTable.getLocationByID(roomID);
+            String name = room.getLongName();
+            Entry<String> newEntry = new Entry<>(name);
+            rooms.addEntry(newEntry);
+
+        }
     }
 }

@@ -44,10 +44,16 @@ public abstract class SanitationController implements Initializable {
         tblData.setItems(spills);
     }
 
-    protected void updateSanitation() {
+    protected List updateSanitation() {
         List<SanitationRequest> lstReqs = SanitationTable.getSanitationRequests();
         if (lstReqs != null) {
             spills.addAll(lstReqs);
         }
+        return lstReqs;
+    }
+    public void deleteSanitationRequest(SanitationRequest selected) {
+        SanitationTable.deleteSanitationRequest(selected);
+        spills.setAll(updateSanitation());
+        tblData.refresh();
     }
 }

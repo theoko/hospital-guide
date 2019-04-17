@@ -65,13 +65,6 @@ public class CustSanitationController extends SanitationController {
         updateBtns();
     }
 
-    private void updateClaimBtn() {
-        if (tblData.getSelectionModel().getSelectedItem() != null && tblData.getSelectionModel().getSelectedItem().getServicer() != null) {
-            btnClaim.setText("Un-Claim");
-        } else {
-            btnClaim.setText("Claim");
-        }
-    }
 
     public void markDone(MouseEvent mouseEvent) {
         SanitationRequest selected = tblData.getSelectionModel().getSelectedItem();
@@ -96,6 +89,14 @@ public class CustSanitationController extends SanitationController {
             btnMarkDone.setText("Mark Incomplete");
         } else {
             btnMarkDone.setText("Mark Complete");
+        }
+    }
+
+    private void updateClaimBtn() {
+        if (tblData.getSelectionModel().getSelectedItem() != null && tblData.getSelectionModel().getSelectedItem().getServicer() != null) {
+            btnClaim.setText("Un-Claim");
+        } else {
+            btnClaim.setText("Claim");
         }
     }
 
