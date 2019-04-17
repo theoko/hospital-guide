@@ -9,6 +9,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.text.Font?>
 
+<?import com.jfoenix.controls.JFXTextField?>
 <AnchorPane stylesheets="@../../../css/colorScheme.css" xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml" fx:controller="controllers.maps.EmployeeMapController">
     <JFXTabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0"
@@ -89,6 +90,25 @@
                 <AnchorPane style="-fx-background-color: white;" fx:id="Lock">
                     <fx:include source="../requests/Security.fxml" />
                 </AnchorPane>
+                <AnchorPane style="-fx-background-color: white;" fx:id="Drug">
+                    <fx:include source="../requests/Prescription.fxml" />
+                </AnchorPane>
+                <AnchorPane style="-fx-background-color: white;" fx:id="Av">
+                    <fx:include source="../requests/VisualAudio.fxml" />
+                </AnchorPane>
+                <JFXTextField fx:id="search" prefWidth="450" prefHeight="34" promptText=" Search"  alignment="CENTER" style=" -fx-font-size: 18px; -fx-font-weight: bold; -fx-font-family: fantasy; -fx-text-fill: #022D5A; -fx-background-color: white" />
+                <JFXTextField fx:id="textNum" prefWidth="450" prefHeight="34" promptText=" Phone Number"  alignment="CENTER" style=" -fx-font-size: 18px; -fx-font-weight: bold; -fx-font-family: fantasy; -fx-text-fill: #022D5A; -fx-background-color: white" />
+                <JFXButton fx:id="btnText" contentDisplay="CENTER" onMouseClicked="#btn_SendDirections" prefHeight="60.0" prefWidth="60.0" textOverrun="CLIP">
+                    <graphic>
+                        <ImageView fx:id="imgText" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+                    </graphic>
+                    <font>
+                        <Font size="1.0" />
+                    </font>
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </padding>
+                </JFXButton>
             </AnchorPane>
         </Tab>
     </JFXTabPane>

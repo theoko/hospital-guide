@@ -35,6 +35,10 @@ public class CustodianMapController extends MapController {
     public JFXButton btnLogOut;
     public AnchorPane tilDirections;
     public AnchorPane sanitation;
+    public JFXTextField search;
+    public JFXTextField textNum;
+    public ImageView imgText;
+    public JFXButton btnText;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -116,7 +120,22 @@ public class CustodianMapController extends MapController {
         btnLogOut.setStyle("-fx-background-radius: 30;" );
         btnLogOut.setButtonType(JFXButton.ButtonType.RAISED);
         imgLogOut.setImage(new Image("images/Icons/signout.png"));
+
+        btnText.setStyle("-fx-background-radius: 30;" );
+        btnText.setButtonType(JFXButton.ButtonType.RAISED);
+        imgText.setImage(new Image("images/Icons/text.png"));
+
         vboxDock.setSpacing(8);
+
+        HBox textBox = new HBox();
+
+        textBox.getChildren().add(textNum);
+        textBox.getChildren().add(btnText);
+        textBox.setStyle( "-fx-background-radius: 20;");
+        textBox.setPrefHeight(60);
+        textBox.setPrefWidth(180);
+        textBox.setAlignment(Pos.CENTER);
+        textBox.setSpacing(-20);
 
         Label user = new Label("Logout");
         user.setPrefHeight(50);
@@ -137,16 +156,16 @@ public class CustodianMapController extends MapController {
 
         HBox searchBox = new HBox();
 
-        JFXTextField search = new JFXTextField();
-        search.setPromptText(" Search");
-        search.setPrefHeight(34);
-        search.setPrefWidth(450);
-        search.setAlignment(Pos.CENTER);
-        search.setStyle("-fx-font-size: 18px;"
-                + "-fx-font-weight: bold;"
-                + "-fx-font-family: fantasy;"
-                + "-fx-text-fill: #022D5A;"
-                + "-fx-background-color: white");
+//        JFXTextField search = new JFXTextField();
+//        search.setPromptText(" Search");
+//        search.setPrefHeight(34);
+//        search.setPrefWidth(450);
+//        search.setAlignment(Pos.CENTER);
+//        search.setStyle("-fx-font-size: 18px;"
+//                + "-fx-font-weight: bold;"
+//                + "-fx-font-family: fantasy;"
+//                + "-fx-text-fill: #022D5A;"
+//                + "-fx-background-color: white");
 
 
         searchBox.getChildren().add(search);
@@ -172,8 +191,9 @@ public class CustodianMapController extends MapController {
         VBox pathDir = new VBox();
         pathDir.getChildren().add(dir);
         pathDir.getChildren().add(tilDirections);
+        pathDir.getChildren().add(textBox);
         pathDir.setAlignment(Pos.CENTER);
-        pathDir.setPrefSize(400,560);
+        pathDir.setPrefSize(400,700);
         pathDir.setSpacing(5);
 
         Label lblExl = new Label("Sanitation Requests");
@@ -213,7 +233,7 @@ public class CustodianMapController extends MapController {
         nodeListRoute.addAnimatedNode(btnRoute);
         nodeListRoute.addAnimatedNode(pathDir);
         nodeListRoute.setRotate(90);
-        nodeListRoute.setSpacing(-65);
+        nodeListRoute.setSpacing(-135);
 
         nodeListExl.addAnimatedNode(btnExl);
         nodeListExl.addAnimatedNode(boxExl);
@@ -224,6 +244,10 @@ public class CustodianMapController extends MapController {
         vboxDock.getChildren().add(nodeListSearch);
         vboxDock.getChildren().add(nodeListRoute);
         vboxDock.getChildren().add(nodeListExl);
+    }
+
+    public void btn_SendDirections (MouseEvent event) {
+        event.consume();
     }
 
     @Override
@@ -264,7 +288,7 @@ public class CustodianMapController extends MapController {
 
     @Override
     public void showFloor(String newFloor) {
-        super.showFloor(newFloor);
+        super.showFloorHelper(newFloor);
         MapDisplay.displayEmployee(this);
     }
 
