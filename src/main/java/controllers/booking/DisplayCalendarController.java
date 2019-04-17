@@ -7,25 +7,15 @@ import com.calendarfx.view.CalendarView;
 import database.BookLocationTable;
 import database.BookWorkspaceTable;
 import database.LocationTable;
-import database.WorkspaceTable;
-import de.jensd.fx.glyphs.fontawesome.utils.FontAwesomeIconFactory;
-import helpers.DatabaseHelpers;
 import helpers.UserHelpers;
 import javafx.application.Platform;
-import javafx.scene.Scene;
-import javafx.scene.control.PopupControl;
 import javafx.scene.layout.BorderPane;
-import jfxtras.icalendarfx.VCalendar;
-import jfxtras.scene.control.agenda.icalendar.ICalendarAgenda;
 import models.map.Location;
-import models.map.Workspace;
 import models.room.Book;
 
-import javax.swing.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.HashMap;
 import java.util.List;
 
 public class DisplayCalendarController {
@@ -87,7 +77,7 @@ public class DisplayCalendarController {
         updateTimeThread.setDaemon(true);
         updateTimeThread.start();
         primaryStage.setCenter(calendarView);
-//        setWorkspaces();
+        setWorkspaces();
         setRooms();
     }
 
@@ -112,25 +102,35 @@ public class DisplayCalendarController {
 
     public void setWorkspaces(){
         List<Book> bookingsForUser = BookWorkspaceTable.getBookingsForUser(UserHelpers.getCurrentUser());
-        for (Book book: bookingsForUser) {
-            String roomID = book.getRoomID();
-            Location room = LocationTable.getLocationByID(roomID);
-            String name = room.getLongName();
-            Entry<String> newEntry = new Entry<>(name);
-            workspaces.addEntry(newEntry);
 
+        if(bookingsForUser != null) {
+            for (Book book : bookingsForUser) {
+                String roomID = book.getRoomID();
+                Location room = LocationTable.getLocationByID(roomID);
+
+                if(room != null) {
+                    String name = room.getLongName();
+                    Entry<String> newEntry = new Entry<>(name);
+                    workspaces.addEntry(newEntry);
+                }
+            }
         }
     }
 
     public void setRooms(){
         List<Book> bookingsForUser = BookLocationTable.getBookingsForUser(UserHelpers.getCurrentUser());
-        for (Book book: bookingsForUser) {
-            String roomID = book.getRoomID();
-            Location room = LocationTable.getLocationByID(roomID);
-            String name = room.getLongName();
-            Entry<String> newEntry = new Entry<>(name);
-            rooms.addEntry(newEntry);
 
+        if(bookingsForUser != null) {
+            for (Book book : bookingsForUser) {
+                String roomID = book.getRoomID();
+                Location room = LocationTable.getLocationByID(roomID);
+
+                if(room != null) {
+                    String name = room.getLongName();
+                    Entry<String> newEntry = new Entry<>(name);
+                    rooms.addEntry(newEntry);
+                }
+            }
         }
     }
 }
