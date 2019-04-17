@@ -52,6 +52,7 @@ public class TransportationRequestController  {
     public JFXButton btnMarkDone;
     public JFXButton btnNavigate;
     public JFXButton btnClaim;
+    public JFXButton btnDelete;
     public JFXTabPane tabMenu;
     public JFXTabPane floorMenu;
 
@@ -74,7 +75,11 @@ public class TransportationRequestController  {
 
         initTransportation();
         updateTransportation();
-        System.out.println("initializing");
+
+        tblData.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {// only enable btns if item selected
+            btnDelete.setDisable(false);
+
+        });
 
 
 
@@ -106,8 +111,8 @@ public class TransportationRequestController  {
         tblEndLoc.setCellValueFactory(new PropertyValueFactory<>("EndShortName"));
         tblDetails.setCellValueFactory(new PropertyValueFactory<>("Description"));
         tblRequester.setCellValueFactory(new PropertyValueFactory<>("RequesterUserName"));
-        tblDate.setCellValueFactory(new PropertyValueFactory<>("DueDate"));
-        tblTime.setCellValueFactory(new PropertyValueFactory<>("DueTime"));
+//        tblDate.setCellValueFactory(new PropertyValueFactory<>("DueDate"));
+//        tblTime.setCellValueFactory(new PropertyValueFactory<>("DueTime"));
         tblClaimTime.setCellValueFactory(new PropertyValueFactory<>("ClaimedTime"));
         tblServiceTime.setCellValueFactory(new PropertyValueFactory<>("CompletedTime"));
         tblServicer.setCellValueFactory(new PropertyValueFactory<>("ServicerUserName"));

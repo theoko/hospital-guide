@@ -123,8 +123,8 @@
                                         <TableColumn fx:id="tblStartLoc" prefWidth="160.0" text="Start Location" />
                                         <TableColumn fx:id="tblEndLoc" prefWidth="160.0" text="End Location" />
                                         <TableColumn fx:id="tblDetails" prefWidth="150.0" text="Details" />
-                                        <TableColumn fx:id="tblTime" prefWidth="100.0" text="Time" />
-                                        <TableColumn fx:id="tblDate" prefWidth="110.0" text="Date" />
+                                  <!--       <TableColumn fx:id="tblTime" prefWidth="100.0" text="Time" />
+                                        <TableColumn fx:id="tblDate" prefWidth="110.0" text="Date" /> -->
                                         <TableColumn fx:id="tblRequester" prefWidth="100.0" text="Requester" />
 										<TableColumn fx:id="tblClaimTime" prefWidth="110.0" text="Claim Time" />
 										<TableColumn fx:id="tblServicer" prefWidth="100.0" text="Servicer" />
