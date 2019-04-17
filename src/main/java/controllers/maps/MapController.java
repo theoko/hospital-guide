@@ -90,7 +90,7 @@ public abstract class MapController implements Initializable {
     public void zoomOut() {
         Thread t = new Thread(() -> {
             try {
-                Thread.sleep(2000);
+                Thread.sleep(1000);
                 gesMap.reset();
             } catch (InterruptedException e) {
                 e.printStackTrace();

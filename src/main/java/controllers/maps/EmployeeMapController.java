@@ -716,7 +716,7 @@ public class EmployeeMapController extends MapController {
     public void zoomOut() {
         Thread t = new Thread(() -> {
             try {
-                Thread.sleep(5000);
+                Thread.sleep(3700);
                 gesMap.reset();
             } catch (InterruptedException e) {
                 e.printStackTrace();
