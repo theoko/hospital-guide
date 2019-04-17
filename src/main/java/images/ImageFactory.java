@@ -20,7 +20,7 @@ public class ImageFactory {
                 imgMap.put("L1", flL1);
                 Image flL2 = new Image("/images/Original/00_thelowerlevel2.png");
                 imgMap.put("L2", flL2);
-                Image arrow = new Image("/images/left-arrow-15.gif");
+                Image arrow = new Image("/images/Arrow.gif");
                 imgMap.put("arrow", arrow);
             });
             t.setDaemon(true);
