@@ -24,6 +24,7 @@ import models.user.User;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -233,8 +234,8 @@ public class RoomBookingController {
             populateRoomBookedTable(roomDetails);
             populateRoomBookingTable(roomsAvailable);
 
-        String calStartTime = DatabaseHelpers.getCalDateTime(startDate, startTime);
-        String calEndTime = DatabaseHelpers.getCalDateTime(endDate, endTime);
+        ZonedDateTime calStartTime = DatabaseHelpers.getCalDateTime(startDate, startTime);
+        ZonedDateTime calEndTime = DatabaseHelpers.getCalDateTime(endDate, endTime);
         book.setCalStartDate(calStartTime);
         book.setCalEndDate(calEndTime);
 
