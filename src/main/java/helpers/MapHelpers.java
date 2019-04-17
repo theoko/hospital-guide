@@ -17,7 +17,7 @@ import java.awt.*;
 public class MapHelpers {
 
     public enum Algorithm {
-        ASTAR, DFS, BFS
+        ASTAR, DFS, BFS, BEST, DIJKSTRA
     }
 
     public static double clamp(double value, double min, double max) {

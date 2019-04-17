@@ -51,7 +51,44 @@ public abstract class PathFinder {
      * Finds a path from the start map to the end map using a*
      * @return A stack of locations that contains the path
      */
-    public abstract Stack<Location> findPath(Location start, Location end);
+    public Stack<Location> findPath(Location start, Location end) {
+        Stack<Location> path = new Stack<>();
+        setUp(start);
+        HashMap<String, SubPath> used = new HashMap<>();
+
+        while(!isEmpty()) {
+            SubPath sNext = getNext();
+            Location lNext = sNext.getLocation();
+            if (used.containsKey(lNext.getNodeID())) {
+                continue;
+            }
+
+            if (lNext.getNodeID().equals(end.getNodeID())) {
+                path = genPath(sNext);
+                break;
+            }
+
+            used.put(lNext.getNodeID(), sNext);
+
+            List<SubPath> lstSubPaths = lNext.getSubPaths();
+            for (SubPath nCurr : lstSubPaths) {
+                Location lCurr = nCurr.getLocation();
+                if (!used.containsKey(lCurr.getNodeID())) {
+                    SubPath newNeigh = new SubPath(nCurr.getEdgeID(), nCurr.getLocation(), getDist(sNext, nCurr), getHeuristic(lCurr, end));
+                    addNext(newNeigh);
+                    newNeigh.setParent(sNext);
+                }
+            }
+        }
+        return path;
+    }
+
+    protected abstract void setUp(Location start);
+    protected abstract boolean isEmpty();
+    protected abstract SubPath getNext();
+    protected abstract void addNext(SubPath next);
+    protected abstract double getDist(SubPath loc1, SubPath loc2);
+    protected abstract double getHeuristic(Location loc1, Location loc2);
 
     /**
      * Generates a path from the given parent map and end map
