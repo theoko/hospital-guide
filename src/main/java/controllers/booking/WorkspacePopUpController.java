@@ -17,6 +17,7 @@ import models.room.Book;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZonedDateTime;
 import java.util.ResourceBundle;
 
 public class WorkspacePopUpController extends PopUpController implements Initializable {
@@ -48,9 +49,13 @@ public class WorkspacePopUpController extends PopUpController implements Initial
                 DatabaseHelpers.getDateTime(StartDate, StartTime),
                 DatabaseHelpers.getDateTime(EndDate, EndTime)
         );
-       BookWorkspaceTable.createBooking(book);
-       circle.setFill(Color.ORANGE);
-       ScreenController.deactivate();
+//        ZonedDateTime calStartTime = DatabaseHelpers.getCalDateTime(StartDate, StartTime);
+//        ZonedDateTime calEndTime = DatabaseHelpers.getCalDateTime(EndDate, EndTime);
+//        book.setCalStartDate(calStartTime);
+//        book.setCalEndDate(calEndTime);
+        BookWorkspaceTable.createBooking(book);
+        circle.setFill(Color.ORANGE);
+        ScreenController.deactivate();
     }
 
     public void removeBooking(MouseEvent event) {
@@ -82,16 +87,20 @@ public class WorkspacePopUpController extends PopUpController implements Initial
     }
 
     public void setStartDate(LocalDate StartDate) {
-        this.StartDate = StartDate; }
+        this.StartDate = StartDate;
+    }
 
     public void setStartTime(LocalTime StartTime) {
-        this.StartTime = StartTime; }
+        this.StartTime = StartTime;
+    }
 
     public void setEndDate(LocalDate EndDate) {
-        this.EndDate = EndDate; }
+        this.EndDate = EndDate;
+    }
 
     public void setEndTime(LocalTime EndTime) {
-        this.EndTime = EndTime; }
+        this.EndTime = EndTime;
+    }
 
     public static double scaleX(double x) {
         return (x - xShift) * scale;
