@@ -74,16 +74,17 @@ public class TransportationRequestController  {
 
         initTransportation();
         updateTransportation();
+        System.out.println("initializing");
 
 
 
 
         //todo fix navigate btn disable
 
-//        tblData.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-//            btnNavigate.setDisable(false);
-//
-//        });
+        tblData.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            btnNavigate.setDisable(false);
+
+        });
         TransportationRequest selected = tblData.getSelectionModel().getSelectedItem();
         if(selected!=null)
         if(selected.getServicer()==null||selected.getServicer().equals(UserHelpers.getCurrentUser())) {//only enable claiming if unclaimed
@@ -101,49 +102,26 @@ public class TransportationRequestController  {
     }
 
     private void initTransportation(){
-//        tblRequestID.setCellValueFactory(new PropertyValueFactory<>("RequestID"));
-        tblStartLoc.setCellValueFactory(new PropertyValueFactory<>("StartLocation"));
-        tblEndLoc.setCellValueFactory(new PropertyValueFactory<>("EndLocation"));
-        //tblPriority.setCellValueFactory(new PropertyValueFactory<>("Priority"));
-        //tblStatus.setCellValueFactory(new PropertyValueFactory<>("Status"));
+        tblStartLoc.setCellValueFactory(new PropertyValueFactory<>("StartShortName"));
+        tblEndLoc.setCellValueFactory(new PropertyValueFactory<>("EndShortName"));
         tblDetails.setCellValueFactory(new PropertyValueFactory<>("Description"));
         tblRequester.setCellValueFactory(new PropertyValueFactory<>("RequesterUserName"));
+        tblDate.setCellValueFactory(new PropertyValueFactory<>("DueDate"));
+        tblTime.setCellValueFactory(new PropertyValueFactory<>("DueTime"));
         tblClaimTime.setCellValueFactory(new PropertyValueFactory<>("ClaimedTime"));
         tblServiceTime.setCellValueFactory(new PropertyValueFactory<>("CompletedTime"));
         tblServicer.setCellValueFactory(new PropertyValueFactory<>("ServicerUserName"));
         //System.out.println(transports.toString());
         tblData.setItems(transports);
 
-        //todo remove later once search works
-
-//        HashMap<String, Location> locations = LocationTable.getLocations();
-//
-//        LinkedList<String> locationNames = new LinkedList<>();
-//        if(locations != null) {
-//            Iterator it = locations.entrySet().iterator();
-//            while (it.hasNext()) {
-//                Map.Entry pair = (Map.Entry) it.next();
-//
-//                Location location = (Location) pair.getValue();
-//
-//                locationNames.add(location.getLongName());
-//
-//                it.remove();
-//            }
-//        }
-//
-//        for(String name : locationNames) {
-//            cmbStartLoc.getItems().add(name);
-//            cmbEndLoc.getItems().add(name);
-//        }
-
-        //todo end
     }
 
-    private void updateTransportation() {
+    private List updateTransportation() {
         List<TransportationRequest> lstReqs = TransportationTable.getTransportationRequests();
-        if(lstReqs!=null)
-         transports.addAll(lstReqs);
+        if (lstReqs != null){
+            transports.addAll(lstReqs);
+    }
+        return lstReqs;
     }
 
     public void navigateTo(){
@@ -155,8 +133,15 @@ public class TransportationRequestController  {
     }
 
     public void tblClick(){
-        updateClaimBtn();
-        updateTableBTNs();
+        try {
+            TransportationRequest selected = tblData.getSelectionModel().getSelectedItem();
+            if(selected.getDestination()!=null){
+                updateClaimBtn();
+                updateTableBTNs();
+            }
+        }catch (NullPointerException e){
+
+        }
     }
 
     public void requestClick(){updateRequestBTNs();}
@@ -270,6 +255,16 @@ public class TransportationRequestController  {
         TransportationRequest request = new TransportationRequest(startLoc,endLoc, txtDetails.getText(),datDate.toString(),datTime.toString(), UserHelpers.getCurrentUser());
 
         TransportationTable.addTransportationRequest(request);
+        System.out.println("IN sendRequest");
+
+        System.out.println("STARTLOC:"+startLoc.getShortName());
+        System.out.println("ENDLOC:"+endLoc.getShortName());
+
+        System.out.println("DB :"+TransportationTable.getTransportationRequests());
+
+
+        updateTransportation();
+        tblData.refresh();
     }
 
     public void cancelScr(MouseEvent event){
@@ -277,6 +272,12 @@ public class TransportationRequestController  {
         //ScreenController.deactivate();//todo figure out appropriate action after UI refactor
     }
 
+    public void deleteTransportationRequest(MouseEvent mouseEvent) {
+        TransportationRequest selected = tblData.getSelectionModel().getSelectedItem();
+        TransportationTable.deleteTransportationRequest(selected);
+        transports.setAll(updateTransportation());
+        tblData.refresh();
+    }
 
 }
 
