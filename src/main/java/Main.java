@@ -1,4 +1,5 @@
 import controllers.ScreenController;
+import controllers.booking.DisplayCalendarController;
 import controllers.settings.SettingsController;
 import database.Database;
 import helpers.FileHelpers;

@@ -28,9 +28,17 @@ public class InternalTransController {
 
     public void initialize() {
 
-        internalTransPane.setPrefHeight(UIHelpers.getScreenHeight());
+        internalTransPane.setPrefHeight(655);
+        internalTransPane.setPrefWidth(1200);
 
         VBox vBox = new VBox(15);
+        vBox.setAlignment(Pos.CENTER);
+
+        AnchorPane.setTopAnchor(vBox,0.0);
+        AnchorPane.setBottomAnchor(vBox,0.0);
+        AnchorPane.setLeftAnchor(vBox,0.0);
+        AnchorPane.setRightAnchor(vBox,0.0);
+
 
         Label startLocation = new Label("Start location");
         Label endLocation = new Label("End location");
@@ -39,10 +47,10 @@ public class InternalTransController {
         setLabelProperties(endLocation);
 
         JFXComboBox startComboBox = new JFXComboBox();
-        startComboBox.setPrefWidth(UIHelpers.getScreenWidth());
+        startComboBox.setPrefWidth(600);
 
         JFXComboBox endComboBox = new JFXComboBox();
-        endComboBox.setPrefWidth(UIHelpers.getScreenWidth());
+        endComboBox.setPrefWidth(600);
 
         HashMap<String, Location> locations = LocationTable.getLocations();
 
@@ -100,7 +108,7 @@ public class InternalTransController {
 
     private void setLabelProperties(Label label) {
         label.setPrefHeight(40.0);
-        label.setPrefWidth(UIHelpers.getScreenWidth());
+        label.setPrefWidth(600);
 
         label.setAlignment(Pos.CENTER);
         label.setContentDisplay(ContentDisplay.CENTER);

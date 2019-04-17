@@ -47,17 +47,17 @@ public class SearchEngine {
 
             if(this.term.equals(category)) { // Found category match!
 
-                results.add(category);
+//                results.add(category);
 
                 for(String keysInCategory : (ArrayList<String>) pair.getValue()) {
                     results.add(keysInCategory);
                 }
 
-                for(String s : searchKeywords.getSynonyms(this.term)) {
-
-                    neighbors.push(s);
-
-                }
+//                for(String s : searchKeywords.getSynonyms(this.term)) {
+//
+//                    neighbors.push(s);
+//
+//                }
 
                 break;
 
@@ -69,18 +69,18 @@ public class SearchEngine {
 
                 if(this.term.equals(k)) { // Found match!
 
-                    results.add(k);
+//                    results.add(k);
 
                     for(String keysInCategory : (ArrayList<String>) pair.getValue()) {
                         results.add(keysInCategory);
                     }
 
-                    for(String s : searchKeywords.getSynonyms(this.term)) {
-
-                        results.add(s);
-                        neighbors.push(s);
-
-                    }
+//                    for(String s : searchKeywords.getSynonyms(this.term)) {
+//
+//                        results.add(s);
+//                        neighbors.push(s);
+//
+//                    }
 
                     break;
 
@@ -160,15 +160,15 @@ public class SearchEngine {
 
     public Set<String> getResults() {
 
-        while(!neighbors.isEmpty()) {
-
-            String key = neighbors.pop();
-
-            uniqueNeighbors.add(key);
-
-        }
-
-        results.addAll(uniqueNeighbors);
+//        while(!neighbors.isEmpty()) {
+//
+//            String key = neighbors.pop();
+//
+//            uniqueNeighbors.add(key);
+//
+//        }
+//
+//        results.addAll(uniqueNeighbors);
 
         return results;
     }
@@ -176,7 +176,7 @@ public class SearchEngine {
     public static void main(String[] args)
     {
 
-        SearchEngine searchEngine = new SearchEngine("hola");
+        SearchEngine searchEngine = new SearchEngine("doctor");
 
     }
 

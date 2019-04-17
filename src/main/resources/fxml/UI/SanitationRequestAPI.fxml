@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="700.0" minWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.transportation.TransportationRequestController">
+    <children>
+        <Label alignment="CENTER" layoutY="16.0" maxWidth="1.7976931348623157E308" prefHeight="44.0" prefWidth="1200.0" style="-fx-background-color: #022D5A;" text="Sanitation Requests" textAlignment="CENTER" textFill="WHITE">
+            <font>
+                <Font size="31.0" />
+            </font>
+        </Label>
+        <JFXTabPane prefHeight="687.0" prefWidth="1200.0" side="BOTTOM" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="60.0">
+            <tabs>
+                <Tab style="-fx-background-color: #022D5A;" text="Create Request">
+					  <VBox alignment="CENTER" layoutY="-52.0" maxWidth="-Infinity" prefHeight="452.0" prefWidth="600.0" spacing="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+						 <children>
+							<Pane prefHeight="133.0" prefWidth="400.0" style="-fx-background-color: #022D5A;">
+							   <children>
+								  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="66.0" layoutY="34.0" text="Create New Sanitation Request" textAlignment="CENTER" textFill="WHITE">
+									 <font>
+										<Font size="34.0" />
+									 </font>
+								  </Label>
+							   </children>
+							</Pane>
+							<JFXComboBox fx:id="cmbPriority" focusColor="#022d5a" labelFloat="true" prefHeight="27.0" prefWidth="339.0" promptText="Priority" unFocusColor="BLACK">
+							   <items>
+								  <FXCollections fx:factory="observableArrayList">
+									 <String fx:id="LOW" fx:value="LOW" />
+									 <String fx:id="MEDIUM" fx:value="MEDIUM" />
+									 <String fx:id="HIGH" fx:value="HIGH" />
+								  </FXCollections>
+							   </items>
+							</JFXComboBox>
+							<JFXTextField fx:id="txtDescription" prefHeight="25.0" prefWidth="332.0" promptText="Description">
+							   <opaqueInsets>
+								  <Insets />
+							   </opaqueInsets>
+							   <padding>
+								  <Insets left="30.0" right="30.0" />
+							   </padding>
+							</JFXTextField>
+							<HBox alignment="CENTER" prefHeight="96.0" prefWidth="400.0" spacing="50.0">
+							   <children>
+								  <JFXButton fx:id="submitBTN" buttonType="RAISED" defaultButton="true" disable="true" onMouseClicked="#sendRequest" prefHeight="50.0" prefWidth="149.0" ripplerFill="#3dff00" text="Send" textFill="WHITE">
+									 <font>
+										<Font size="24.0" />
+									 </font>
+								  </JFXButton>
+								  <JFXButton buttonType="RAISED" onMouseClicked="#goBack" prefHeight="50.0" prefWidth="134.0" ripplerFill="RED" text="Cancel" textFill="WHITE">
+									 <font>
+										<Font size="24.0" />
+									 </font>
+								  </JFXButton>
+							   </children>
+							</HBox>
+						 </children>
+						 <padding>
+							<Insets bottom="50.0" />
+						 </padding>
+					  </VBox>
+                </Tab>
+                <Tab style="-fx-background-color: #022D5A;" text="View Requests">
+                    <AnchorPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <VBox layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="607.0" prefWidth="1200.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
+                            <children>
+                                <TableView fx:id="tblData" prefHeight="617.0" prefWidth="665.0">
+                                    <columns>
+                                        <TableColumn fx:id="tblLocation" prefWidth="100.0" text="Location" />
+                                        <TableColumn fx:id="tblPriority" prefWidth="75.0" text="Priority" />
+                                        <TableColumn fx:id="tblStatus" prefWidth="100.0" text="Status" />
+                                        <TableColumn fx:id="tblDescription" prefWidth="250.0" text="Description" />
+                                        <TableColumn fx:id="tblRequester" prefWidth="100.0" text="Requester" />
+                                        <TableColumn fx:id="tblClaimTime" prefWidth="125.0" text="Time Claimed" />
+                                        <TableColumn fx:id="tblServicer" prefWidth="100.0" text="Servicer" />
+                                        <TableColumn fx:id="tblServiceTime" prefWidth="125.0" text="Service Time" />
+                                    </columns>
+                                </TableView>
+                        <ButtonBar prefHeight="40.0" prefWidth="200.0">
+                          <buttons>
+                                    <JFXButton fx:id="btnNavigate" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" onMouseClicked="#navigateTo" prefHeight="45.0" prefWidth="147.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Navigate" textAlignment="CENTER" />
+                                    <JFXButton fx:id="btnClaim" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" onMouseClicked="#claimJob" prefHeight="45.0" prefWidth="147.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Claim" textAlignment="CENTER" />
+                                    <JFXButton fx:id="btnMarkDone" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" onMouseClicked="#markDone" prefHeight="45.0" prefWidth="200.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Mark Complete" textAlignment="CENTER" />
+                              <JFXButton fx:id="btnDelete" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" layoutX="800.0" layoutY="10.0" onMouseClicked="#markDone" prefHeight="45.0" prefWidth="200.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Delete" textAlignment="CENTER" />
+                                    <JFXButton fx:id="btnReturn" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" onMouseClicked="#cancelScr" prefHeight="45.0" prefWidth="147.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Go Back" textAlignment="CENTER" />
+                          </buttons>
+                        </ButtonBar>
+                            </children>
+                        </VBox>
+                    </AnchorPane>
+                </Tab>
+            </tabs>
+        </JFXTabPane>
+    </children>
+</AnchorPane>

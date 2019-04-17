@@ -31,6 +31,9 @@ public class UserMapController extends MapController {
     public JFXButton btnLogOut;
     public AnchorPane tilDirections;
     public JFXTextField search;
+    public JFXTextField textNum;
+    public ImageView imgText;
+    public JFXButton btnText;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -98,7 +101,22 @@ public class UserMapController extends MapController {
         btnLogOut.setStyle("-fx-background-radius: 30;" );
         btnLogOut.setButtonType(JFXButton.ButtonType.RAISED);
         imgLogOut.setImage(new Image("images/Icons/signout.png"));
+
+        btnText.setStyle("-fx-background-radius: 30;" );
+        btnText.setButtonType(JFXButton.ButtonType.RAISED);
+        imgText.setImage(new Image("images/Icons/text.png"));
+
         vboxDock.setSpacing(8);
+
+        HBox textBox = new HBox();
+
+        textBox.getChildren().add(textNum);
+        textBox.getChildren().add(btnText);
+        textBox.setStyle( "-fx-background-radius: 20;");
+        textBox.setPrefHeight(60);
+        textBox.setPrefWidth(180);
+        textBox.setAlignment(Pos.CENTER);
+        textBox.setSpacing(-20);
 
         Label user = new Label("Logout");
         user.setPrefHeight(50);
@@ -142,8 +160,9 @@ public class UserMapController extends MapController {
         VBox pathDir = new VBox();
         pathDir.getChildren().add(dir);
         pathDir.getChildren().add(tilDirections);
+        pathDir.getChildren().add(textBox);
         pathDir.setAlignment(Pos.CENTER);
-        pathDir.setPrefSize(400,560);
+        pathDir.setPrefSize(400,700);
         pathDir.setSpacing(5);
 
         JFXNodesList nodeListSearch = new JFXNodesList();
@@ -163,11 +182,15 @@ public class UserMapController extends MapController {
         nodeListRoute.addAnimatedNode(btnRoute);
         nodeListRoute.addAnimatedNode(pathDir);
         nodeListRoute.setRotate(90);
-        nodeListRoute.setSpacing(-65);
+        nodeListRoute.setSpacing(-135);
 
         vboxDock.getChildren().add(nodeListUser);
         vboxDock.getChildren().add(nodeListSearch);
         vboxDock.getChildren().add(nodeListRoute);
+    }
+
+    public void btn_SendDirections (MouseEvent event) {
+        event.consume();
     }
 
     @Override
