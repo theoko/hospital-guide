@@ -21,15 +21,15 @@ import java.util.List;
 public class DisplayCalendarController {
 
     public BorderPane primaryStage;
-    public Calendar rooms;
+    public Calendar locations;
     public Calendar workspaces;
 
-    public Calendar getRooms() {
-        return rooms;
+    public Calendar getLocations() {
+        return locations;
     }
 
-    public void setRooms(Calendar rooms) {
-        this.rooms = rooms;
+    public void setLocations(Calendar rooms) {
+        this.locations = rooms;
     }
 
     public Calendar getWorkspaces() {
@@ -44,11 +44,14 @@ public class DisplayCalendarController {
 
         CalendarView calendarView = new CalendarView();
 
-        rooms = new Calendar("Rooms");
+        locations = new Calendar("Locations");
         workspaces = new Calendar("Workspaces");
 
+        locations.setStyle(Calendar.Style.STYLE1);
+        workspaces.setStyle(Calendar.Style.STYLE2);
+
         CalendarSource myCalendarSource = new CalendarSource("My Calendars");
-        myCalendarSource.getCalendars().addAll(workspaces, rooms);
+        myCalendarSource.getCalendars().addAll(workspaces, locations);
 
         calendarView.getCalendarSources().addAll(myCalendarSource);
         calendarView.setRequestedTime(LocalTime.now());
@@ -78,7 +81,7 @@ public class DisplayCalendarController {
         updateTimeThread.start();
         primaryStage.setCenter(calendarView);
         setWorkspaces();
-        setRooms();
+        setLocations();
     }
 
     public void removeWorkspacesEntry(Entry workspaces){
@@ -90,10 +93,10 @@ public class DisplayCalendarController {
 
     }
 
-    public void removeRoomsEntry(Entry rooms){
-        getRooms().removeEntry(rooms);
-        LocalDateTime startTime = rooms.getStartAsLocalDateTime();
-        LocalDateTime endTime = rooms.getEndAsLocalDateTime();
+    public void removeLocationsEntry(Entry location){
+        getLocations().removeEntry(location);
+        LocalDateTime startTime = location.getStartAsLocalDateTime();
+        LocalDateTime endTime = location.getEndAsLocalDateTime();
         Book book = BookWorkspaceTable.getBookByTimes(startTime, endTime);
         BookLocationTable.deleteLocationeBook(book);
 
@@ -117,18 +120,18 @@ public class DisplayCalendarController {
         }
     }
 
-    public void setRooms(){
+    public void setLocations() {
         List<Book> bookingsForUser = BookLocationTable.getBookingsForUser(UserHelpers.getCurrentUser());
 
-        if(bookingsForUser != null) {
+        if (bookingsForUser != null) {
             for (Book book : bookingsForUser) {
                 String roomID = book.getRoomID();
                 Location room = LocationTable.getLocationByID(roomID);
 
-                if(room != null) {
+                if (room != null) {
                     String name = room.getLongName();
                     Entry<String> newEntry = new Entry<>(name);
-                    rooms.addEntry(newEntry);
+                    locations.addEntry(newEntry);
                 }
             }
         }
