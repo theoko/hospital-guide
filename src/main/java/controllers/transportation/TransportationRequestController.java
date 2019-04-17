@@ -133,8 +133,15 @@ public class TransportationRequestController  {
     }
 
     public void tblClick(){
-        updateClaimBtn();
-        updateTableBTNs();
+        try {
+            TransportationRequest selected = tblData.getSelectionModel().getSelectedItem();
+            if(selected.getDestination()!=null){
+                updateClaimBtn();
+                updateTableBTNs();
+            }
+        }catch (NullPointerException e){
+
+        }
     }
 
     public void requestClick(){updateRequestBTNs();}
