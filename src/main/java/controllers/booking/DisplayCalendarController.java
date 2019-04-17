@@ -23,6 +23,7 @@ import models.room.Book;
 
 import javax.swing.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.List;
@@ -73,7 +74,7 @@ public class DisplayCalendarController {
 
                     try {
                         // update every 10 seconds
-                        sleep(10000);
+                        sleep(1000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -89,6 +90,25 @@ public class DisplayCalendarController {
 //        setWorkspaces();
         setRooms();
     }
+
+    public void removeWorkspacesEntry(Entry workspaces){
+        getWorkspaces().removeEntry(workspaces);
+        LocalDateTime startTime = workspaces.getStartAsLocalDateTime();
+        LocalDateTime endTime = workspaces.getEndAsLocalDateTime();
+        Book book = BookWorkspaceTable.getBookByTimes(startTime, endTime);
+        BookWorkspaceTable.deleteWorkspaceBook(book);
+
+    }
+
+    public void removeRoomsEntry(Entry rooms){
+        getRooms().removeEntry(rooms);
+        LocalDateTime startTime = rooms.getStartAsLocalDateTime();
+        LocalDateTime endTime = rooms.getEndAsLocalDateTime();
+        Book book = BookWorkspaceTable.getBookByTimes(startTime, endTime);
+        BookLocationTable.deleteLocationeBook(book);
+
+    }
+
 
     public void setWorkspaces(){
         List<Book> bookingsForUser = BookWorkspaceTable.getBookingsForUser(UserHelpers.getCurrentUser());
