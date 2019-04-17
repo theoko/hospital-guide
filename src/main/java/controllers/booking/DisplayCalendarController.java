@@ -83,8 +83,8 @@ public class DisplayCalendarController extends DateControl {
         updateTimeThread.setDaemon(true);
         updateTimeThread.start();
         primaryStage.setCenter(calendarView);
-//        setWorkspaces();
-//        setLocations();
+        setWorkspaces();
+        setLocations();
     }
 
     public void removeWorkspacesEntry(Entry workspaces){
@@ -108,7 +108,18 @@ public class DisplayCalendarController extends DateControl {
 
     public void setWorkspaces(){
         List<Book> bookingsForUser = BookWorkspaceTable.getBookingsForUser(UserHelpers.getCurrentUser());
-
+        for (Book bk : bookingsForUser) {
+            String[] start = bk.getStartDate().split(" ");
+            String[] end = bk.getEndDate().split(" ");
+            String startDay = start[0];
+            String startTime = start[1].substring(0, start[1].indexOf("."));
+            String endDay = end[0];
+            String endTime = end[1].substring(0, end[1].indexOf("."));
+            ZonedDateTime calStartTime = DatabaseHelpers.getCalDateTime(startDay, startTime);
+            ZonedDateTime calEndTime = DatabaseHelpers.getCalDateTime(endDay, endTime);
+            bk.setCalStartDate(calStartTime);
+            bk.setCalEndDate(calEndTime);
+        }
         if(bookingsForUser != null) {
             for (Book book : bookingsForUser) {
                 String roomID = book.getRoomID();
