@@ -3,11 +3,10 @@ package controllers.search;
 import com.jfoenix.controls.JFXAutoCompletePopup;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import controllers.maps.*;
+import controllers.maps.MapController;
 import database.LocationTable;
 import helpers.UIHelpers;
 import javafx.animation.*;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
@@ -15,7 +14,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 import models.map.Location;
@@ -33,7 +31,7 @@ public class SearchEngineController {
     public JFXButton btnDisplayBack;
     private static Object parentController;
 
-    static final double ZOOM_SCALE = 3;
+    static final double ZOOM_SCALE = 2.5;
 
     public void initialize() {
 
@@ -123,12 +121,14 @@ public class SearchEngineController {
 
         mapController.showFloor(location.getFloor());
 
-        mapController.getGesMap()
-                .animate(Duration.millis(1000))
-                .zoomTo(ZOOM_SCALE, new Point2D(location.getxCord(), location.getyCord()));
-
         Circle nodeCircle = mapController.getMap().getLocation(location.getNodeID()).getNodeCircle();
 
+        Point2D zoomPoint = new Point2D(nodeCircle.getCenterX(), nodeCircle.getCenterY());
+
+        mapController.getGesMap()
+                .animate(Duration.millis(1000)).afterFinished(() -> {
+            mapController.gesMap.animate(Duration.millis(500)).centreOn(zoomPoint);
+        }).zoomTo(ZOOM_SCALE, zoomPoint);
         // Fill
         nodeCircle.setFill(Color.ORANGE);
 
