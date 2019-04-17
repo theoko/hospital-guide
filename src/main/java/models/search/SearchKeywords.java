@@ -435,6 +435,21 @@ public class SearchKeywords {
         // Workspaces
 
         // Wrkt
+
+        // Print keywords
+//        Iterator it = keys.entrySet().iterator();
+//
+//        System.out.println("KEYS:");
+//        while (it.hasNext()) {
+//
+//            // Get next item
+//            Map.Entry pair = (Map.Entry) it.next();
+//
+//            System.out.println(pair.getKey());
+//
+//            it.remove();
+//        }
+
     }
 
     public HashMap<String, List<String>> getKeys() {

@@ -20,6 +20,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import map.MapDisplay;
+import models.search.SearchAPI;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -54,6 +55,10 @@ public class EmployeeMapController extends MapController {
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
         SearchEngineController.setParentController(this);
+
+        SearchAPI searchAPI = new SearchAPI(search);
+        searchAPI.searchable();
+
         MapDisplay.displayEmployee(this);
         initDirections();
 
@@ -352,7 +357,6 @@ public class EmployeeMapController extends MapController {
         searchBox.setPrefWidth(370);
         searchBox.setAlignment(Pos.CENTER);
         searchBox.setSpacing(-20);
-
 
         Label dir = new Label("Text Directions");
         dir.setPrefHeight(50);
