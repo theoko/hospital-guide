@@ -83,8 +83,8 @@ public class DisplayCalendarController extends DateControl {
         updateTimeThread.setDaemon(true);
         updateTimeThread.start();
         primaryStage.setCenter(calendarView);
-        setWorkspaces();
-        setLocations();
+//        setWorkspaces();
+//        setLocations();
     }
 
     public void removeWorkspacesEntry(Entry workspaces){

@@ -291,6 +291,16 @@ public class RoomBookingController {
         // Get currently authenticated user
         User currentUser = UserHelpers.getCurrentUser();
 
+        BookLocationTable.deleteBooking(selected.getRoomID());
+
+        for(int i=0; i<roomDetails.size(); i++) {
+            if(roomDetails.get(i).getRoomID().equals(selected.getRoomID())) {
+                roomDetails.remove(i);
+            }
+        }
+
+        populateRoomBookedTable(roomDetails);
+
     }
 
     /**
