@@ -141,7 +141,7 @@ public class DatabaseHelpers {
 
     public static ZonedDateTime getCalDateTime(LocalDate date, LocalTime time) {
         //LocalDateTime parsedDate = LocalDateTime.parse(date + "T" + time + ":00", DateTimeFormatter.ofPattern(Constants.calDateFormat));
-        ZonedDateTime zdt = ZonedDateTime.parse(date + "T" + time + ":00" + "-4:00");
+        ZonedDateTime zdt = ZonedDateTime.parse(date + "T" + time + ":00" + "-04:00");
         // ZonedDateTime zonedDateTime = ZonedDateTime.parse("2011-12-03T10:15:30+01:00");
         return zdt;
     }
