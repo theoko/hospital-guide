@@ -188,6 +188,14 @@ public abstract class PathFinder {
                 animateLine(line);
                 mc.addLine(line, currFloor);
                 mc.panMap.getChildren().add(0, line);
+
+                LineTo lt = (LineTo) line.getElements().get(line.getElements().size() - 1);
+                line = new Path();
+                line.getElements().add(new MoveTo(lt.getX(), lt.getY()));
+                line.getElements().add(new LineTo(curr.getxCord(), curr.getyCord()));
+                animateLine(line);
+                mc.panMap.getChildren().add(0, line);
+
                 line = new Path();
                 line.getElements().add(new MoveTo(curr.getxCord(), curr.getyCord()));
                 currFloor = curr.getFloor();
@@ -202,6 +210,7 @@ public abstract class PathFinder {
 
     private static void animateLine(Path line) {
         line.setStroke(Color.BLACK);
+        line.setOpacity(MapDisplay.opac);
         line.getStrokeDashArray().setAll(LINE_LENGTH, LINE_GAP);
         line.setStrokeWidth(LINE_WIDTH);
         line.setStrokeLineCap(StrokeLineCap.ROUND);
@@ -233,14 +242,6 @@ public abstract class PathFinder {
         );
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
-    }
-
-    public static Paint colorLine(boolean opac) {
-        if (opac) {
-            return Color.BLACK;
-        } else {
-            return new Color(0, 0, 0, 0.25);
-        }
     }
 
     public static String getDefLocation() {
