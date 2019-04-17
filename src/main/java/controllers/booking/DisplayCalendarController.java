@@ -8,11 +8,13 @@ import com.calendarfx.view.DateControl;
 import database.BookLocationTable;
 import database.BookWorkspaceTable;
 import database.LocationTable;
+import database.WorkspaceTable;
 import helpers.DatabaseHelpers;
 import helpers.UserHelpers;
 import javafx.application.Platform;
 import javafx.scene.layout.BorderPane;
 import models.map.Location;
+import models.map.Workspace;
 import models.room.Book;
 
 import java.time.LocalDate;
@@ -108,18 +110,28 @@ public class DisplayCalendarController extends DateControl {
 
     public void setWorkspaces(){
         List<Book> bookingsForUser = BookWorkspaceTable.getBookingsForUser(UserHelpers.getCurrentUser());
-
-        if(bookingsForUser != null) {
+        for (Book bk : bookingsForUser) {
+            String[] start = bk.getStartDate().split(" ");
+            String[] end = bk.getEndDate().split(" ");
+            String startDay = start[0];
+            String startTime = start[1].substring(0, start[1].indexOf("."));
+            String endDay = end[0];
+            String endTime = end[1].substring(0, end[1].indexOf("."));
+            ZonedDateTime calStartTime = DatabaseHelpers.getCalDateTime(startDay, startTime);
+            ZonedDateTime calEndTime = DatabaseHelpers.getCalDateTime(endDay, endTime);
+            bk.setCalStartDate(calStartTime);
+            bk.setCalEndDate(calEndTime);
+        }
+        if (bookingsForUser != null) {
             for (Book book : bookingsForUser) {
                 String roomID = book.getRoomID();
-                Location room = LocationTable.getLocationByID(roomID);
+                Workspace room = WorkspaceTable.getWorkspaceByID(roomID);
 
-                if(room != null && book.getCalStartDate() != null) {
+                if (room != null && book.getCalStartDate() != null) {
                     String name = room.getLongName();
                     Entry<String> newEntry = new Entry<>(name);
                     createEntryAt(book.getCalStartDate(), workspaces);
                     getWorkspaces().addEntry(newEntry);
-
                 }
             }
         }
