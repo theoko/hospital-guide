@@ -38,6 +38,7 @@ public class UserMapController extends MapController {
     public JFXTextField textNum;
     public ImageView imgText;
     public JFXButton btnText;
+    public AnchorPane AboutUs;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -104,6 +105,20 @@ public class UserMapController extends MapController {
         btnRoute.setPrefHeight(60);
         btnRoute.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnRoute.setTextOverrun(OverrunStyle.CLIP);
+
+        ImageView imgAbout = new ImageView();
+        imgAbout.setImage(new Image("images/Icons/about.png"));
+        imgAbout.setFitHeight(30);
+        imgAbout.setFitWidth(30);
+        imgAbout.setPreserveRatio(true);
+        imgAbout.setPickOnBounds(true);
+
+        JFXButton btnAbout = new JFXButton("",imgAbout);
+        btnAbout.setAlignment(Pos.CENTER);
+        btnAbout.setPrefWidth(60);
+        btnAbout.setPrefHeight(60);
+        btnAbout.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnAbout.setTextOverrun(OverrunStyle.CLIP);
 
         btnLogOut.setStyle("-fx-background-radius: 30;" );
         btnLogOut.setButtonType(JFXButton.ButtonType.RAISED);
@@ -172,9 +187,28 @@ public class UserMapController extends MapController {
         pathDir.setPrefSize(400,700);
         pathDir.setSpacing(5);
 
+        Label lblAbout = new Label("About Us");
+        lblAbout.setPrefHeight(50);
+        lblAbout.setPrefWidth(1200);
+        lblAbout.setTextFill(Color.WHITE);
+        lblAbout.setAlignment(Pos.CENTER);
+        lblAbout.setStyle("-fx-background-color: radial-gradient(radius 120%, #022D5A, derive(#022D5A, -60%), derive(#022D5A, 60%));" +
+                "-fx-background-radius: 30;" +
+                "-fx-font-size: 24;" +
+                "-fx-font-weight: BOLD");
+        lblAbout.setPadding(new Insets(10, 10, 10, 10));
+
+        VBox boxAbout = new VBox();
+        boxAbout.getChildren().add(lblAbout);
+        boxAbout.getChildren().add(AboutUs);
+        boxAbout.setAlignment(Pos.CENTER);
+        boxAbout.setPrefSize(1200,700);
+        boxAbout.setSpacing(5);
+
         JFXNodesList nodeListSearch = new JFXNodesList();
         JFXNodesList nodeListUser = new JFXNodesList();
         JFXNodesList nodeListRoute = new JFXNodesList();
+        JFXNodesList nodesListAbout = new JFXNodesList();
 
         nodeListSearch.addAnimatedNode(btnSearch);
         nodeListSearch.addAnimatedNode(searchBox);
@@ -191,15 +225,21 @@ public class UserMapController extends MapController {
         nodeListRoute.setRotate(90);
         nodeListRoute.setSpacing(-135);
 
+        nodesListAbout.addAnimatedNode(btnAbout);
+        nodesListAbout.addAnimatedNode(boxAbout);
+        nodesListAbout.setRotate(90);
+        nodesListAbout.setSpacing(255);
+
         vboxDock.getChildren().add(nodeListUser);
         vboxDock.getChildren().add(nodeListSearch);
         vboxDock.getChildren().add(nodeListRoute);
+        vboxDock.getChildren().add(nodesListAbout);
     }
 
     public void btn_SendDirections (MouseEvent event) {
         if(currentRoute == null) return;
         TextMessenger tm = new TextMessenger();
-        String input_phone_number = textNum.getText();
+        String input_phone_number = "+1"+textNum.getText();
         tm.declareRecipient(input_phone_number);
         tm.declareMessage(MapController.currentDirections);
         tm.sendMessage();

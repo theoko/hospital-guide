@@ -4,14 +4,46 @@ import helpers.MapHelpers;
 import models.map.Location;
 import models.map.SubPath;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.PriorityQueue;
-import java.util.Stack;
+import java.util.*;
 
 public class AStar extends PathFinder {
+    private PriorityQueue<SubPath> inQueue;
 
     @Override
+    protected void setUp(Location start) {
+        inQueue = new PriorityQueue<>();
+        SubPath sNeigh = new SubPath("", start, 0.0);
+        inQueue.add(sNeigh);
+    }
+
+    @Override
+    protected boolean isEmpty() {
+        return inQueue.isEmpty();
+    }
+
+    @Override
+    protected SubPath getNext() {
+        return inQueue.poll();
+    }
+
+    @Override
+    protected void addNext(SubPath next) {
+        inQueue.add(next);
+    }
+
+    @Override
+    protected double getDist(SubPath loc1, SubPath loc2) {
+        return loc1.getDist() + loc2.getDist();
+    }
+
+    @Override
+    protected double getHeuristic(Location loc1, Location loc2) {
+        double heuristic = calcDist(loc1.getxCord(), loc1.getyCord(), loc2.getxCord(), loc2.getyCord());
+        heuristic += FLOOR_HEURISTIC * Math.abs(floorToInt(loc1.getFloor()) - floorToInt(loc2.getFloor()));
+        return heuristic;
+    }
+
+    /*@Override
     public Stack<Location> findPath(Location start, Location end) {
         // Create a new stack to hold the path from start to end
         Stack<Location> path = new Stack<>();
@@ -66,7 +98,7 @@ public class AStar extends PathFinder {
             }
         }
         return path;
-    }
+    }*/
 
     @Override
     public MapHelpers.Algorithm getAlg() {

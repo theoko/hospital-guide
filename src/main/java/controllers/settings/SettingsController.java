@@ -3,19 +3,14 @@ package controllers.settings;
 import com.jfoenix.controls.JFXComboBox;
 import helpers.MapHelpers;
 import javafx.fxml.Initializable;
-import map.AStar;
-import map.BreadthSearch;
-import map.DepthSearch;
-import map.PathContext;
+import map.*;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class SettingsController implements Initializable {
     public JFXComboBox cmbAlgo;
-    public String BFS;
-    public String DFS;
-    public String ASTAR;
+    public String BFS, DFS, ASTAR, BEST, DIJKSTRA;
 
     private static PathContext algType;
 
@@ -32,6 +27,12 @@ public class SettingsController implements Initializable {
             case BFS:
                 cmbAlgo.setValue(BFS);
                 break;
+            case BEST:
+                cmbAlgo.setValue(BEST);
+                break;
+            case DIJKSTRA:
+                cmbAlgo.setValue(DIJKSTRA);
+                break;
         }
 
         cmbAlgo.valueProperty().addListener(((observable, oldValue, newValue) -> {
@@ -43,8 +44,14 @@ public class SettingsController implements Initializable {
                 case "BFS":
                     algType = new PathContext(new BreadthSearch());
                     break;
-                default:
+                case "DFS":
                     algType = new PathContext(new DepthSearch());
+                    break;
+                case "BEST":
+                    algType = new PathContext(new BestFirst());
+                    break;
+                default:
+                    algType = new PathContext(new Dijkstra());
                     break;
             }
         }));

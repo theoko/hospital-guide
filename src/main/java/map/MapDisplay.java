@@ -231,6 +231,7 @@ public class MapDisplay {
                             mc.panMap.getChildren().add(0, line);
                         } else {
                             AdminMapController.setEdgLoc(null);
+                            circle.setFill(nodeFill);
                         }
                     }
                 } else {

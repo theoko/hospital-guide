@@ -17,6 +17,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
 import map.MapDisplay;
@@ -68,6 +69,8 @@ public abstract class MapController implements Initializable {
         lstLineTransits = new LinkedList<>();
         transitIt = 0;
         currMapControl = this;
+        currentDirections = null;
+        currentRoute = null;
     }
 
     @Override
@@ -81,9 +84,13 @@ public abstract class MapController implements Initializable {
         updateButtons();
         Image img = ImageFactory.getImage("3");
         imgMap.setImage(img);
+        zoomOut();
+    }
+
+    public void zoomOut() {
         Thread t = new Thread(() -> {
             try {
-                Thread.sleep(2000);
+                Thread.sleep(1000);
                 gesMap.reset();
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -176,7 +183,11 @@ public abstract class MapController implements Initializable {
         for (LineTuple lt : lstLineTransits) {
             Path ltLine = lt.getLine();
             String ltFloor = lt.getFloor();
-            ltLine.setStroke(PathFinder.colorLine(ltFloor.equals(floor)));
+            if (ltFloor.equals(floor)) {
+                ltLine.setOpacity(1);
+            } else {
+                ltLine.setOpacity(MapDisplay.opac);
+            }
         }
     }
 
@@ -340,6 +351,12 @@ public abstract class MapController implements Initializable {
             gesMap.animate(Duration.millis(ANIMATION_TIME)).afterFinished(() -> {
                 gesMap.animate(Duration.millis(ANIMATION_TIME)).centreOn(middle);
             }).zoomBy(zoom, middle);
+        } else {
+            MoveTo mt = ((MoveTo) line.getElements().get(0));
+            Point2D pnt = new Point2D(mt.getX(), mt.getY());
+            gesMap.animate(Duration.millis(ANIMATION_TIME)).afterFinished(() -> {
+                gesMap.animate(Duration.millis(ANIMATION_TIME)).centreOn(pnt);
+            }).zoomBy(2, pnt);
         }
     }
 }

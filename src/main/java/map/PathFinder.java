@@ -1,5 +1,6 @@
 package map;
 
+import com.jfoenix.controls.JFXButton;
 import controllers.maps.MapController;
 import controllers.settings.SettingsController;
 import helpers.Constants;
@@ -11,7 +12,12 @@ import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.OverrunStyle;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -45,7 +51,44 @@ public abstract class PathFinder {
      * Finds a path from the start map to the end map using a*
      * @return A stack of locations that contains the path
      */
-    public abstract Stack<Location> findPath(Location start, Location end);
+    public Stack<Location> findPath(Location start, Location end) {
+        Stack<Location> path = new Stack<>();
+        setUp(start);
+        HashMap<String, SubPath> used = new HashMap<>();
+
+        while(!isEmpty()) {
+            SubPath sNext = getNext();
+            Location lNext = sNext.getLocation();
+            if (used.containsKey(lNext.getNodeID())) {
+                continue;
+            }
+
+            if (lNext.getNodeID().equals(end.getNodeID())) {
+                path = genPath(sNext);
+                break;
+            }
+
+            used.put(lNext.getNodeID(), sNext);
+
+            List<SubPath> lstSubPaths = lNext.getSubPaths();
+            for (SubPath nCurr : lstSubPaths) {
+                Location lCurr = nCurr.getLocation();
+                if (!used.containsKey(lCurr.getNodeID())) {
+                    SubPath newNeigh = new SubPath(nCurr.getEdgeID(), nCurr.getLocation(), getDist(sNext, nCurr), getHeuristic(lCurr, end));
+                    addNext(newNeigh);
+                    newNeigh.setParent(sNext);
+                }
+            }
+        }
+        return path;
+    }
+
+    protected abstract void setUp(Location start);
+    protected abstract boolean isEmpty();
+    protected abstract SubPath getNext();
+    protected abstract void addNext(SubPath next);
+    protected abstract double getDist(SubPath loc1, SubPath loc2);
+    protected abstract double getHeuristic(Location loc1, Location loc2);
 
     /**
      * Generates a path from the given parent map and end map
@@ -190,6 +233,22 @@ public abstract class PathFinder {
                 animateLine(line);
                 mc.addLine(line, currFloor);
                 mc.panMap.getChildren().add(0, line);
+
+                PathElement pe = line.getElements().get(line.getElements().size() - 1);
+                line = new Path();
+                LineTo lt;
+                MoveTo mt;
+                if (pe instanceof LineTo) {
+                    lt = (LineTo) pe;
+                    line.getElements().add(new MoveTo(lt.getX(), lt.getY()));
+                } else {
+                    mt = (MoveTo) pe;
+                    line.getElements().add(new MoveTo(mt.getX(), mt.getY()));
+                }
+                line.getElements().add(new LineTo(curr.getxCord(), curr.getyCord()));
+                animateLine(line);
+                mc.panMap.getChildren().add(0, line);
+
                 line = new Path();
                 line.getElements().add(new MoveTo(curr.getxCord(), curr.getyCord()));
                 currFloor = curr.getFloor();
@@ -204,6 +263,7 @@ public abstract class PathFinder {
 
     private static void animateLine(Path line) {
         line.setStroke(Color.BLACK);
+        line.setOpacity(MapDisplay.opac);
         line.getStrokeDashArray().setAll(LINE_LENGTH, LINE_GAP);
         line.setStrokeWidth(LINE_WIDTH);
         line.setStrokeLineCap(StrokeLineCap.ROUND);
@@ -235,14 +295,6 @@ public abstract class PathFinder {
         );
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
-    }
-
-    public static Paint colorLine(boolean opac) {
-        if (opac) {
-            return Color.BLACK;
-        } else {
-            return new Color(0, 0, 0, 0.25);
-        }
     }
 
     public static String getDefLocation() {
@@ -287,7 +339,7 @@ public abstract class PathFinder {
 
     private static void addDirections(ScrollPane txtPane, String directions) {
         VBox vbox = new VBox();
-        vbox.setPadding(new Insets(10,10,10,15));
+        vbox.setPadding(new Insets(10, 10, 10, 15));
         vbox.setStyle("-fx-background-radius: 20;");
         vbox.setSpacing(5);
         vbox.setAlignment(Pos.CENTER);
@@ -297,12 +349,58 @@ public abstract class PathFinder {
             lbl.setFont(new Font(18));
             lbl.setTextFill(Color.WHITE);
             lbl.setPrefWidth(330);
+            lbl.setPrefHeight(40);
             lbl.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
             lbl.setAlignment(Pos.CENTER);
-            lbl.setPadding(new Insets(5,4,4,5));
-            vbox.getChildren().add(lbl);
+            lbl.setPadding(new Insets(5, 4, 4, 5));
+            if (lbl.getText().contains("left")) {
+                HBox left = new HBox();
+                left.getChildren().add(lbl);
+                ImageView imgLeft = new ImageView();
+                imgLeft.setImage(new Image("images/Icons/left.png"));
+                imgLeft.setFitHeight(40);
+                imgLeft.setFitWidth(40);
+                imgLeft.setPreserveRatio(true);
+                imgLeft.setPickOnBounds(true);
+                imgLeft.setStyle("-fx-background-color: green;");
+                AnchorPane leftPane = new AnchorPane();
+                leftPane.getChildren().add(imgLeft);
+                leftPane.setPrefWidth(40);
+                leftPane.setPrefHeight(40);
+                leftPane.setStyle("-fx-background-color: green;" + "-fx-background-radius: 20;");
+                left.getChildren().add(leftPane);
+                left.setSpacing(-40);
+                left.setAlignment(Pos.CENTER);
+                vbox.getChildren().add(left);
+            } else if (lbl.getText().contains("right")) {
+                HBox right = new HBox();
+                right.getChildren().add(lbl);
+                ImageView imgRight = new ImageView();
+                imgRight.setImage(new Image("images/Icons/right.png"));
+                imgRight.setFitHeight(40);
+                imgRight.setFitWidth(40);
+                imgRight.setPreserveRatio(true);
+                imgRight.setPickOnBounds(true);
+                imgRight.setStyle("-fx-background-color: green;");
+                AnchorPane rightPane = new AnchorPane();
+                rightPane.getChildren().add(imgRight);
+                rightPane.setPrefWidth(40);
+                rightPane.setPrefHeight(40);
+                rightPane.setStyle("-fx-background-color: green;" + "-fx-background-radius: 20;");
+                right.getChildren().add(rightPane);
+                right.setSpacing(-40);
+                right.setAlignment(Pos.CENTER);
+                vbox.getChildren().add(right);
+            } else if (lbl.getText().contains("Distance") || lbl.getText().contains("Time")) {
+                lbl.setStyle("-fx-font-size: 20px;" + "-fx-font-weight: BOLD;" + "-fx-background-color: green;" + "-fx-background-radius: 30;");
+                lbl.setTextFill(Color.BLACK);
+                vbox.getChildren().add(lbl);
+            } else {
+                vbox.getChildren().add(lbl);
+            }
         }
         txtPane.setContent(vbox);
         txtPane.setVisible(true);
     }
+
 }

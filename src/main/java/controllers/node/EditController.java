@@ -50,7 +50,6 @@ public class EditController extends PopUpController {
         ScreenController.deactivate();
     }
 
-
     public void goBack(MouseEvent event) throws Exception{
         ScreenController.deactivate();
     }
@@ -134,6 +133,7 @@ public class EditController extends PopUpController {
 
     public void btnAddEdge_Click(MouseEvent mouseEvent) {
         AdminMapController.setEdgLoc(loc);
+        loc.getNodeCircle().setFill(MapDisplay.nodeEnd);
         ScreenController.deactivate();
     }
 }
