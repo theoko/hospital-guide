@@ -50,7 +50,7 @@ public class AdminMapController extends MapController {
         });
         panMap.setOnMouseReleased((e) -> {
             try {
-                if (!deltaDragged.bolDragged) {
+                if (!deltaDragged.bolDragged && edgLoc == null) {
                     ScreenController.addPopUp(this,(int) e.getX(), (int) e.getY(), map);
                 }
             } catch (IOException e1) {

@@ -218,6 +218,7 @@ public class MapDisplay {
                         }
                     }
                 } else {
+                    dragDelta.dragged = false;
                     loc.setxCord((int) circle.getCenterX());
                     loc.setyCord((int) circle.getCenterY());
                     LocationTable.updateLocation(loc);
