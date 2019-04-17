@@ -63,7 +63,7 @@ public class Constants {
      * General types
      */
     public static String dateFormat = "yyyy-MM-dd HH:mm:ss";
-    public static String calDateFormat = "yyyy-MM-ddTHH:mm:ssZ";
+    public static String calDateFormat = "yyyy-MM-ddTHH:mm:ss";
 
     /**
      * Enums

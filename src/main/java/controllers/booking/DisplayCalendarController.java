@@ -4,21 +4,22 @@ import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
 import com.calendarfx.model.Entry;
 import com.calendarfx.view.CalendarView;
+import com.calendarfx.view.DateControl;
 import database.BookLocationTable;
 import database.BookWorkspaceTable;
 import database.LocationTable;
+import helpers.DatabaseHelpers;
 import helpers.UserHelpers;
 import javafx.application.Platform;
 import javafx.scene.layout.BorderPane;
 import models.map.Location;
 import models.room.Book;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.sql.Timestamp;
+import java.time.*;
 import java.util.List;
 
-public class DisplayCalendarController {
+public class DisplayCalendarController extends DateControl {
 
     public BorderPane primaryStage;
     public Calendar locations;
@@ -110,10 +111,14 @@ public class DisplayCalendarController {
             for (Book book : bookingsForUser) {
                 String roomID = book.getRoomID();
                 Location room = LocationTable.getLocationByID(roomID);
+                ZonedDateTime calStartDate = book.getCalStartDate();
+                ZonedDateTime calEndDate = book.getCalEndDate();
+                Duration between = Duration.between(calEndDate, calStartDate);
 
-                if(room != null) {
+                if(room != null && calStartDate != null) {
                     String name = room.getLongName();
                     Entry<String> newEntry = new Entry<>(name);
+                    //createEntryAt(calStartDate, workspaces);
                     workspaces.addEntry(newEntry);
                 }
             }
@@ -127,10 +132,14 @@ public class DisplayCalendarController {
             for (Book book : bookingsForUser) {
                 String roomID = book.getRoomID();
                 Location room = LocationTable.getLocationByID(roomID);
+                ZonedDateTime calStartDate = book.getCalStartDate();
+                ZonedDateTime calEndDate = book.getCalEndDate();
+                Duration between = Duration.between(calEndDate, calStartDate);
 
-                if (room != null) {
+                if (room != null && calStartDate != null) {
                     String name = room.getLongName();
                     Entry<String> newEntry = new Entry<>(name);
+                    //createEntryAt(calStartDate, locations);
                     locations.addEntry(newEntry);
                 }
             }
