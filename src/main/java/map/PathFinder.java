@@ -74,7 +74,11 @@ public abstract class PathFinder {
             for (SubPath nCurr : lstSubPaths) {
                 Location lCurr = nCurr.getLocation();
                 if (!used.containsKey(lCurr.getNodeID())) {
-                    SubPath newNeigh = new SubPath(nCurr.getEdgeID(), nCurr.getLocation(), getDist(sNext, nCurr), getHeuristic(lCurr, end));
+                    SubPath newNeigh = new SubPath(
+                            nCurr.getEdgeID(),
+                            nCurr.getLocation(),
+                            getDist(sNext, nCurr),
+                            getHeuristic(lCurr, end));
                     addNext(newNeigh);
                     newNeigh.setParent(sNext);
                 }
