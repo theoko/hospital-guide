@@ -23,6 +23,9 @@ repositories {
     maven {
         url 'https://jitpack.io'
     }
+    maven {
+        url 'https://ravana.dyn.wpi.edu/maven'
+    }
 //    maven {
 //        url 'https://dl.bintray.com/android/android-tools'
 //    }
@@ -90,7 +93,8 @@ dependencies {
             [group: 'net.kurobako', name: 'gesturefx', version: '0.3.0'],
             [group: 'org.jfxtras', name: 'jfxtras-icalendaragenda', version: '8.0-r6'],
             [group: 'com.calendarfx', name: 'view', version: '8.5.0'],
-            [group: 'com.google.firebase', name:'firebase-admin', version:'6.8.0']
+            [group: 'com.google.firebase', name:'firebase-admin', version:'6.8.0'],
+            [group: 'edu.wpi.cs3733.b17.teamI', name: 'FoodRequest', version:'1.0.0']
     )
 }
 
