@@ -1,6 +1,7 @@
 package database;
 
 import helpers.Constants;
+import helpers.Constants.Auth;
 import models.user.User;
 
 import java.sql.PreparedStatement;
@@ -32,6 +33,18 @@ public class UserTable {
         } catch (SQLException | NullPointerException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Seeds table with a few users
+     */
+    public static void seed() {
+        User employee = new User(0, "Employee-1", "password", Auth.EMPLOYEE);
+        User custodian = new User(0, "Custodian-1", "password", Auth.CUSTODIAN);
+        createUser(employee);
+        createUser(custodian);
+        // TODO procedurally generate employees and custodians
+        return; // TODO
     }
 
     /**

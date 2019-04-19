@@ -3,11 +3,13 @@ package database;
 import helpers.Constants;
 import models.map.Location;
 import models.services.SanitationRequest;
+import models.services.SanitationRequest.Priority;
+import models.services.ServiceRequest.Status;
 import models.user.User;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
+import java.util.Date;
 
 public class SanitationTable {
 
@@ -50,6 +52,57 @@ public class SanitationTable {
      * Seeds the database with sanitation requests from a CSV file.
      */
     public static void seed() {
+
+        // Get locations, employees, and custodians from database.
+        ArrayList<Location> locations = new ArrayList(LocationTable.getLocations().values());
+        ArrayList<User> users = new ArrayList(UserTable.getUsers());
+        ArrayList<User> employees = new ArrayList<>();
+        ArrayList<User> custodians = new ArrayList<>();
+        for (User user : users) {
+            switch (user.getUserType()) {
+                case EMPLOYEE: employees.add(user); break;
+                case CUSTODIAN: custodians.add(user); break;
+            }
+        }
+
+        // Generate random sanitation requests
+        Random rand = new Random();
+        final int numEntries = 30;
+        for (int i = 0; i < numEntries; i++) {
+
+            // Generate location (uniform)
+            Location location = locations.get(rand.nextInt(locations.size()));
+
+            // Generate priority (uniform)
+            Priority priority;
+            switch (rand.nextInt(3)) {
+                case 0: priority = Priority.HIGH; break;
+                case 1: priority = Priority.MEDIUM; break;
+                default: priority = Priority.LOW; break;
+            }
+
+            // Generate requester
+            User requester = employees.get(rand.nextInt(employees.size()));
+
+            // Generate request time (uniform current time + ~12 hours)
+            Timestamp requestTime = new Timestamp(new Date().getTime() + rand.nextInt(43200000));
+
+            // Generate description
+            String description;
+            switch (rand.nextInt(3)) {
+                case 0: description = "Drink spill";
+                case 1: description = "Vomit";
+                default: description = "Radioactive waste";
+            }
+
+            // Add request to database
+            SanitationRequest request = new SanitationRequest(
+                    0, location, priority, Status.INCOMPLETE, description,
+                    requester, requestTime,
+                    null, null, null);
+            addSanitationRequest(request);
+        }
+
         return; // TODO make and parse CSV into database.
     }
 

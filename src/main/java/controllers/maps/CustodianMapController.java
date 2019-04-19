@@ -49,8 +49,11 @@ public class CustodianMapController extends MapController {
         MapDisplay.displayCust(this);
         initDirections();
 
+        // TODO uncomment
+        /*
         SearchAPI searchAPI = new SearchAPI(search, true);
         searchAPI.searchable();
+        */
 
         ImageView imgUser = new ImageView();
         imgUser.setImage(new Image("images/Icons/user.png"));
