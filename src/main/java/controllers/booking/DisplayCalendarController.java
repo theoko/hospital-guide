@@ -72,7 +72,7 @@ public class DisplayCalendarController extends DateControl {
 
                     try {
                         // update every 10 seconds
-                        sleep(1000);
+                        sleep(10000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

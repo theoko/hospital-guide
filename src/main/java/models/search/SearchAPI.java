@@ -18,11 +18,15 @@ public class SearchAPI {
     private boolean isMapController;
     private JFXAutoCompletePopup<String> autoCompletePopup = new JFXAutoCompletePopup<>();
 
+    SearchEngine searchEngine;
+
     public SearchAPI(JFXTextField searchTextField) {
         this.searchTextField = searchTextField;
 
         autoCompletePopup.setWidth(searchTextField.getWidth());
         autoCompletePopup.setHeight(300);
+
+        searchEngine = new SearchEngine();
     }
 
     public SearchAPI(JFXTextField searchTextField, boolean isMapController) {
@@ -31,6 +35,8 @@ public class SearchAPI {
 
         autoCompletePopup.setWidth(searchTextField.getWidth());
         autoCompletePopup.setHeight(300);
+
+        searchEngine = new SearchEngine();
     }
 
     public void searchable() {
@@ -66,7 +72,7 @@ public class SearchAPI {
                 if (searchTextField.getText().length() > 3) {
 
                     // Get results
-                    SearchEngine searchEngine = new SearchEngine(searchTextField.getText());
+                    searchEngine.search(searchTextField.getText());
 
                     Set<String> results = searchEngine.getResults();
 

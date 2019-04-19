@@ -9,17 +9,22 @@ public class SearchEngine {
     Stack<String> neighbors = new Stack<>();
     Set<String> uniqueNeighbors = new HashSet<>();
 
-    public SearchEngine(String term) {
+    SearchKeywords searchKeywords;
+
+    public SearchEngine() {
+        searchKeywords = new SearchKeywords();
+    }
+
+    public void search(String term) {
         this.term = term;
-        this.search();
+        this.runSearch(searchKeywords);
     }
 
     // TODO: Check if valid english word. If not, show results not found.
     // TODO: Link spanish words to categories
-    private void search() {
+    private void runSearch(SearchKeywords searchKeywords) {
 
-        SearchKeywords searchKeywords = new SearchKeywords();
-
+        System.out.println("Term: " + this.term);
         if(searchKeywords.validEnglishWord(this.term)) {
 
             search(searchKeywords);
@@ -145,15 +150,16 @@ public class SearchEngine {
         if(minDistance == Double.MAX_VALUE) {
             System.out.println("No match!");
         } else {
+            // TODO: Check string length and minimum distance
 //            System.out.println("Distance is: " + minDistance);
 //            System.out.println("Distance for keyword is: " + minDistanceKeyword);
 //
 //            System.out.println("Search term: " + this.term);
-//            System.out.println("Closest category: " + closestCategory);
-//            System.out.println("Closest keyword: " + closestKeyword);
+            System.out.println("Closest category: " + closestCategory);
+            System.out.println("Closest keyword: " + closestKeyword);
 
-            results.add(closestCategory);
-            results.add(closestKeyword);
+//            results.add(closestCategory);
+//            results.add(closestKeyword);
         }
 
     }
@@ -176,7 +182,8 @@ public class SearchEngine {
     public static void main(String[] args)
     {
 
-        SearchEngine searchEngine = new SearchEngine("doctor");
+        SearchEngine searchEngine = new SearchEngine();
+        searchEngine.search("doctor");
 
     }
 

@@ -11,6 +11,7 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 repositories {
+//    google()
     mavenCentral()
     jcenter()
     maven {
@@ -22,6 +23,9 @@ repositories {
     maven {
         url 'https://jitpack.io'
     }
+//    maven {
+//        url 'https://dl.bintray.com/android/android-tools'
+//    }
 }
 
 // You'll need to create an integration-test folder with the same structure as your test or main folders
@@ -86,6 +90,7 @@ dependencies {
             [group: 'net.kurobako', name: 'gesturefx', version: '0.3.0'],
             [group: 'org.jfxtras', name: 'jfxtras-icalendaragenda', version: '8.0-r6'],
             [group: 'com.calendarfx', name: 'view', version: '8.5.0'],
+            [group: 'com.google.firebase', name:'firebase-admin', version:'6.8.0']
     )
 }
 
