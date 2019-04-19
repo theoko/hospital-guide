@@ -47,6 +47,14 @@ public class SanitationTable {
     }
 
     /**
+     * Seeds the database with sanitation requests from a CSV file.
+     */
+    public static void seed() {
+        return; // TODO make and parse CSV into database.
+    }
+
+    /**
+     * Adds sanitation request to the database.
      * @param request Sanitation request to add.
      * @return Boolean indicating success of add.
      * @brief Attempts to add NEW sanitation request to the database.
