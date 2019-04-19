@@ -67,11 +67,11 @@ public class TransportationRequestController  {
 //        initSanitation();
 //        updateSanitation();
 
-        SearchAPI txtStartSearchAPI = new SearchAPI(txtStartSearch);
-        SearchAPI txtEndSearchAPI = new SearchAPI(txtEndSearch);
-
-        txtStartSearchAPI.searchable();
-        txtEndSearchAPI.searchable();
+//        SearchAPI txtStartSearchAPI = new SearchAPI(txtStartSearch);
+//        SearchAPI txtEndSearchAPI = new SearchAPI(txtEndSearch);
+//
+//        txtStartSearchAPI.searchable();
+//        txtEndSearchAPI.searchable();
 
         initTransportation();
         updateTransportation();
