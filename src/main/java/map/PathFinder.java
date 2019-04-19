@@ -62,12 +62,10 @@ public abstract class PathFinder {
             if (used.containsKey(lNext.getNodeID())) {
                 continue;
             }
-
             if (lNext.getNodeID().equals(end.getNodeID())) {
                 path = genPath(sNext);
                 break;
             }
-
             used.put(lNext.getNodeID(), sNext);
 
             List<SubPath> lstSubPaths = lNext.getSubPaths();
@@ -76,11 +74,48 @@ public abstract class PathFinder {
                 if (!used.containsKey(lCurr.getNodeID())) {
                     SubPath newNeigh = new SubPath(
                             nCurr.getEdgeID(),
-                            nCurr.getLocation(),
+                            lCurr,
                             getDist(sNext, nCurr),
                             getHeuristic(lCurr, end));
                     addNext(newNeigh);
                     newNeigh.setParent(sNext);
+                }
+            }
+        }
+        return path;
+    }
+
+    public Stack<Location> findByType(Location start, Constants.NodeType nodeType) {
+        Stack<Location> path = new Stack<>();
+        Queue<SubPath> queue = new LinkedList<>();
+        SubPath sStart = new SubPath("", start, 0.0);
+        queue.add(sStart);
+        HashMap<String, SubPath> used = new HashMap<>();
+
+        while (!queue.isEmpty()) {
+            SubPath currSub = queue.poll();
+            Location currLoc = currSub.getLocation();
+            if (used.containsKey(currLoc.getNodeID())) {
+                continue;
+            }
+            if (currLoc.getNodeType().equals(nodeType)) {
+                path = genPath(currSub);
+                break;
+            }
+            used.put(currLoc.getNodeID(), currSub);
+
+            List<SubPath> lstSubs = currLoc.getSubPaths();
+            for (SubPath nxtSub : lstSubs) {
+                Location nxtLoc = nxtSub.getLocation();
+                if (!used.containsKey(nxtLoc.getNodeID())) {
+                    SubPath nxtCpy = new SubPath(
+                            nxtSub.getEdgeID(),
+                            nxtLoc,
+                            0.0,
+                            0.0
+                    );
+                    nxtCpy.setParent(currSub);
+                    queue.add(nxtCpy);
                 }
             }
         }
