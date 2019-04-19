@@ -1,6 +1,6 @@
 package helpers;
 
-import controllers.AuthController;
+import controllers.auth.AuthController;
 import models.user.User;
 
 public class UserHelpers {

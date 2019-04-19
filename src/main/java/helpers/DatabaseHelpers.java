@@ -4,9 +4,19 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 public class DatabaseHelpers {
+
+    public static boolean isValidFloor(String floor) {
+        ArrayList<String> validFloorList = new ArrayList<String>(
+                Arrays.asList("1", "2", "3", "G", "L1", "L2")
+        );
+        return validFloorList.contains(floor);
+    }
 
     /**
      * Translates data from constant.NodeType to an int to put into database
@@ -108,6 +118,14 @@ public class DatabaseHelpers {
             return null;
         }
 
+    }
+
+    public static ZonedDateTime getCalDateTime(String date, String time) {
+        //LocalDateTime parsedDate = LocalDateTime.parse(date + "T" + time + ":00", DateTimeFormatter.ofPattern(Constants.calDateFormat));
+        String str = date + "T" + time + "-04:00";
+        ZonedDateTime zdt = ZonedDateTime.parse(str);
+        // ZonedDateTime zonedDateTime = ZonedDateTime.parse("2011-12-03T10:15:30+01:00");
+        return zdt;
     }
 
 

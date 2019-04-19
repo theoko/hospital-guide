@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="589.0" prefWidth="1200.0" stylesheets="@../../../css/colorScheme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.requests.SecurityController">
+   <children>
+      <JFXTabPane side="BOTTOM" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <tabs>
+            <Tab text="New Request">
+              <content>
+                <AnchorPane prefHeight="700.0" prefWidth="1547.0" style="-fx-background-color: #ffffff;">
+                     <children>
+                        <JFXButton fx:id="btnSubmit" layoutX="516.0" layoutY="420.0" onMouseClicked="#btnSubmit_Clicked" prefHeight="48.0" prefWidth="169.0" text="Submit" />
+                        <GridPane layoutX="357.0" layoutY="135.0" prefHeight="169.0" prefWidth="486.0" vgap="20.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="228.0" minWidth="10.0" prefWidth="199.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="248.0" minWidth="10.0" prefWidth="207.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label prefHeight="74.0" prefWidth="186.0" text="Threat Level">
+                                 <font>
+                                    <Font size="27.0" />
+                                 </font>
+                              </Label>
+                               <JFXComboBox fx:id="cmdThreatLevel" prefHeight="31.0" prefWidth="205.0" GridPane.columnIndex="1">
+                               <items>
+                                   <FXCollections fx:factory="observableArrayList">
+                                       <String fx:id="LOW" fx:value="LOW" />
+                                       <String fx:id="MEDIUM" fx:value="MEDIUM" />
+                                       <String fx:id="HIGH" fx:value="HIGH" />
+                                       <String fx:id="MIDNIGHT" fx:value="MIDNIGHT" />
+                                   </FXCollections>
+                               </items>
+                               </JFXComboBox>
+                              <Label prefHeight="54.0" prefWidth="172.0" text="Description" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font size="27.0" />
+                                 </font>
+                              </Label>
+                              <JFXTextField fx:id="txtDescription" prefHeight="25.0" prefWidth="248.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </JFXTextField>
+                           </children>
+                        </GridPane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="Requests">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="tblSecurity" prefHeight="279.0" prefWidth="393.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <columns>
+                            <TableColumn fx:id="colThreatLevel" prefWidth="193.0" text="Threat Level" />
+                            <TableColumn fx:id="colDescription" prefWidth="1006.0" text="Description" />
+                          </columns>
+                        </TableView>
+                     </children></AnchorPane>
+              </content>
+            </Tab>
+         </tabs>
+      </JFXTabPane>
+   </children>
+</AnchorPane>

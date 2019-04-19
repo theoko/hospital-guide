@@ -9,43 +9,38 @@ import java.util.List;
 import java.util.Stack;
 
 public class DepthSearch extends PathFinder {
+    private Stack<SubPath> stack;
 
     @Override
-    public Stack<Location> findPath(Location start, Location end) {
-        Stack<Location> path = new Stack<>();
-
-        Stack<SubPath> stack = new Stack<>();
-        HashMap<String, SubPath> parent = new HashMap<>();
-        HashMap<String, SubPath> used = new HashMap<>();
-
+    protected void setUp(Location start) {
+        stack = new Stack<>();
         SubPath sStart = new SubPath("", start, 0.0);
         stack.push(sStart);
-        parent.put(start.getNodeID(), null);
+    }
 
-        while (!stack.isEmpty()) {
-            SubPath sNext = stack.pop();
-            Location lNext = sNext.getLocation();
-            if (used.containsKey(lNext.getNodeID())) {
-                continue;
-            }
+    @Override
+    protected boolean isEmpty() {
+        return stack.isEmpty();
+    }
 
-            if (lNext.getNodeID().equals(end.getNodeID())) {
-                path = genPath(parent, sNext);
-                break;
-            }
+    @Override
+    protected SubPath getNext() {
+        return stack.pop();
+    }
 
-            used.put(lNext.getNodeID(), sNext);
+    @Override
+    protected void addNext(SubPath next) {
+        stack.add(next);
+    }
 
-            List<SubPath> lstNeighbors = lNext.getSubPaths();
-            for (SubPath nCurr : lstNeighbors) {
-                Location lCurr = nCurr.getLocation();
-                if (!used.containsKey(lCurr.getNodeID())) {
-                    stack.push(nCurr);
-                    parent.putIfAbsent(lCurr.getNodeID(), sNext);
-                }
-            }
-        }
-        return path;
+    @Override
+    protected double getDist(SubPath loc1, SubPath loc2) {
+        return 0;
+    }
+
+    @Override
+    protected double getHeuristic(Location loc1, Location loc2) {
+        return 0;
     }
 
     @Override

@@ -5,12 +5,13 @@ import models.room.Book;
 import models.user.User;
 
 import java.sql.*;
+import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BookWorkspaceTable {
 
-    public static void createTable(){
+    public static void createTable() {
         Statement statement1 = null;
         try {
             statement1 = Database.getDatabase().getConnection().createStatement();
@@ -24,7 +25,7 @@ public class BookWorkspaceTable {
                 "userID INT," +
                 "startDate TIMESTAMP," +
                 "endDate TIMESTAMP," +
-                "CONSTRAINT roomID3_fk FOREIGN KEY(nodeID) REFERENCES " + Constants.WORKSPACE_TABLE+ "(nodeID)," +
+                "CONSTRAINT roomID3_fk FOREIGN KEY(nodeID) REFERENCES " + Constants.WORKSPACE_TABLE + "(nodeID)," +
                 "CONSTRAINT userID3_fk FOREIGN KEY(userID) REFERENCES " + Constants.USERS_TABLE + "(userID))";
         try {
             statement1.execute(bookWorkspaceTable);
@@ -35,6 +36,7 @@ public class BookWorkspaceTable {
 
     /**
      * Create a booking for a room
+     *
      * @param book
      */
     public static boolean createBooking(Book book) {
@@ -86,7 +88,7 @@ public class BookWorkspaceTable {
 
             ResultSet resultSet = statement.executeQuery();
 
-            if(resultSet.next()) {
+            if (resultSet.next()) {
 
                 Book book = new Book(
                         resultSet.getInt("BOOKINGID"),
@@ -109,7 +111,7 @@ public class BookWorkspaceTable {
         try {
 
             User userByUsername = UserTable.getUserByUsername(user.getUsername());
-            if(userByUsername == null) {
+            if (userByUsername == null) {
                 return null;
             }
 
@@ -125,7 +127,7 @@ public class BookWorkspaceTable {
             ResultSet resultSet = statement.executeQuery();
             List<Book> bookings = new ArrayList<>();
 
-            while(resultSet.next()) {
+            while (resultSet.next()) {
 
                 Book book = new Book(
                         resultSet.getInt("BOOKINGID"),
@@ -181,7 +183,7 @@ public class BookWorkspaceTable {
         }
     }
 
-    public static void deleteWorkspaceBook(Book book){
+    public static void deleteWorkspaceBook(Book book) {
         PreparedStatement statement;
         try {
             statement = Database.getDatabase().getConnection().prepareStatement(
@@ -195,5 +197,36 @@ public class BookWorkspaceTable {
             e.printStackTrace();
         }
 
+    }
+
+    public static Book getBookByTimes(LocalDateTime startTime, LocalDateTime endTime) {
+        try {
+            // Execute query
+            String stmtString = "SELECT * FROM " + Constants.BOOK_WORKSPACE_TABLE +
+                    " WHERE STARTDATE=? AND ENDDATE=?";
+            PreparedStatement statement = Database.getDatabase().getConnection().prepareStatement(stmtString);
+            statement.setString(1, startTime.toString());
+            statement.setString(2, endTime.toString());
+            ResultSet resultSet = statement.executeQuery();
+
+            // Process and return result
+            if (resultSet.next()) {
+                Book book = new Book(
+                        resultSet.getInt("BOOKINGID"),
+                        resultSet.getString("NODEID"),
+                        UserTable.getUserByID(resultSet.getInt("USERID")),
+                        resultSet.getString("STARTDATE"),
+                        resultSet.getString("ENDDATE")
+                );
+                return book;
+            }
+            return null;
+
+        } catch (SQLException exception) {
+            System.out.println("Cannot get location by times: " + startTime + endTime);
+            exception.printStackTrace();
+            System.out.println();
+            return null;
+        }
     }
 }

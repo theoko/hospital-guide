@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTimePicker?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="655.0" minWidth="1200.0" prefHeight="655.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.transportation.TransportationRequestController">
+    <children>
+        <JFXTabPane layoutY="1.0" prefHeight="639.0" prefWidth="1200.0" side="BOTTOM" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <tabs>
+                <Tab style="-fx-background-color: #022D5A;" text="Create Request">
+                    <VBox layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+                        <children>
+                            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                                <children>
+                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="200.0" style="-fx-background-color: #022D5A;" text="Start Location" textFill="WHITE">
+                                        <font>
+                                            <Font size="24.0" />
+                                        </font>
+                                    </Label>
+                           <JFXTextField fx:id="txtStartSearch" onKeyReleased="#requestClick" prefHeight="27.0" prefWidth="800.0" promptText="Search for a location" />
+            <!--                <JFXComboBox fx:id="cmbStartLoc" focusColor="#022d5a" labelFloat="true" onKeyTyped="#requestClick" onMousePressed="#requestClick" onMouseReleased="#requestClick" prefHeight="27.0" prefWidth="339.0" promptText="Select Location" unFocusColor="BLACK">
+                              <items>
+                                 <FXCollections fx:factory="observableArrayList">
+                          
+                                 </FXCollections>
+                              </items>
+                           </JFXComboBox> -->
+                                </children>
+                            </HBox>
+                            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                                <children>
+                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="200.0" style="-fx-background-color: #022D5A;" text="End Location" textFill="WHITE">
+                                        <font>
+                                            <Font size="24.0" />
+                                        </font>
+                                    </Label>
+                           <JFXTextField fx:id="txtEndSearch" onKeyReleased="#requestClick" prefHeight="27.0" prefWidth="800.0" promptText="Search for a location" />
+              <!--                       <JFXComboBox fx:id="cmbEndLoc" focusColor="#022d5a" labelFloat="true" prefHeight="27.0" prefWidth="339.0" promptText="Select Location" unFocusColor="BLACK">
+                                        <items>
+                                            <FXCollections fx:factory="observableArrayList">
+                                     
+                                            </FXCollections>
+                                        </items>
+                                    </JFXComboBox> -->
+                                </children>
+                            </HBox>
+                            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="20.0" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                        <children>
+                           <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="200.0" style="-fx-background-color: #022D5A;" text="Description" textFill="WHITE">
+                              <font>
+                                 <Font size="24.0" />
+                              </font>
+                           </Label>
+                           <JFXTextField fx:id="txtDetails" onKeyReleased="#requestClick" prefHeight="27.0" prefWidth="800.0" promptText="Type additional detalis (i.e. wheelchair needed, hospital bed location moving, ect...)" />
+                        </children>
+                            </HBox>
+                            <VBox prefHeight="200.0" prefWidth="100.0">
+                                <children>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                                        <children>
+                                            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="200.0" style="-fx-background-color: #022D5A;" text="Date" textFill="WHITE">
+                                                <font>
+                                                    <Font size="24.0" />
+                                                </font>
+                                            </Label>
+                                            <JFXDatePicker fx:id="datDate" onAction="#updateRequestBTNs" onKeyTyped="#updateRequestBTNs" promptText="Select Date" />
+                                        </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                                        <children>
+                                            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: #022D5A;" text="Time" textFill="WHITE">
+                                                <font>
+                                                    <Font size="24.0" />
+                                                </font>
+                                            </Label>
+                                            <JFXTimePicker fx:id="datTime" defaultColor="#022d5a" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#updateRequestBTNs" onKeyTyped="#updateRequestBTNs" prefHeight="27.0" prefWidth="300.0" promptText="Select Time" />
+                                        </children>
+                                    </HBox>
+                                </children>
+                            </VBox>
+                            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                                <children>
+                                    <JFXButton fx:id="btnSendRequest" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" disable="true" onMouseClicked="#sendRequest" prefHeight="45.0" prefWidth="205.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Send Request" textAlignment="CENTER" />
+                                    <JFXButton fx:id="btnReturn1" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" onMouseClicked="#cancelScr" prefHeight="11.0" prefWidth="140.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Cancel" textAlignment="CENTER" />
+                                </children>
+                        <VBox.margin>
+                           <Insets bottom="30.0" />
+                        </VBox.margin>
+                            </HBox>
+                        </children>
+                        <opaqueInsets>
+                            <Insets top="20.0" />
+                        </opaqueInsets>
+                        <padding>
+                            <Insets left="15.0" top="10.0" />
+                        </padding>
+                    </VBox>
+                </Tab>
+                <Tab style="-fx-background-color: #022D5A;" text="View Requests">
+                    <AnchorPane prefHeight="645.0" prefWidth="1240.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <VBox layoutX="10.0" layoutY="27.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="1200.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="27.0">
+                            <children>
+                                <TableView fx:id="tblData" onMouseClicked="#tblClick" onMouseReleased="#tblClick" prefHeight="569.0" prefWidth="1200.0">
+                                    <columns>
+                                        <TableColumn fx:id="tblStartLoc" prefWidth="160.0" text="Start Location" />
+                                        <TableColumn fx:id="tblEndLoc" prefWidth="160.0" text="End Location" />
+                                        <TableColumn fx:id="tblDetails" prefWidth="150.0" text="Details" />
+                                  <!--       <TableColumn fx:id="tblTime" prefWidth="100.0" text="Time" />
+                                        <TableColumn fx:id="tblDate" prefWidth="110.0" text="Date" /> -->
+                                        <TableColumn fx:id="tblRequester" prefWidth="100.0" text="Requester" />
+										<TableColumn fx:id="tblClaimTime" prefWidth="110.0" text="Claim Time" />
+										<TableColumn fx:id="tblServicer" prefWidth="100.0" text="Servicer" />
+										<TableColumn fx:id="tblServiceTime" prefWidth="110.0" text="Completion Time" />
+                                    </columns>
+                                </TableView>
+                        <ButtonBar prefHeight="69.0" prefWidth="1190.0">
+                          <buttons>
+                                    <JFXButton fx:id="btnNavigate" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" disable="true" onMouseClicked="#navigateTo" style="-fx-text-fill: WHITE; -fx-font-size: 18px;" text="Navigate" textAlignment="CENTER" />
+                                    <JFXButton fx:id="btnClaim" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" disable="true" onMouseClicked="#claimJob" style="-fx-text-fill: WHITE; -fx-font-size: 18px;" text="Claim" textAlignment="CENTER" />
+                                    <JFXButton fx:id="btnMarkDone" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" disable="true" onMouseClicked="#markDone" style="-fx-text-fill: WHITE; -fx-font-size: 18px;" text="Mark Complete" textAlignment="CENTER" />
+                                    <JFXButton fx:id="btnDelete" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" disable="true" onMouseClicked="#deleteTransportationRequest" style="-fx-text-fill: WHITE; -fx-font-size: 18px;" text="Delete" textAlignment="CENTER" />
+                          </buttons>
+                           <VBox.margin>
+                              <Insets bottom="10.0" right="10.0" top="10.0" />
+                           </VBox.margin>
+                        </ButtonBar>
+                            </children>
+                        </VBox>
+                    </AnchorPane>
+                </Tab>
+            </tabs>
+        </JFXTabPane>
+    </children>
+</AnchorPane>

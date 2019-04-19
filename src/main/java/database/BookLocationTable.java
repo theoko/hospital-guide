@@ -5,6 +5,7 @@ import models.room.Book;
 import models.user.User;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,6 +66,41 @@ public class BookLocationTable {
 
     }
 
+    /**
+     * Delete a booking for a room
+     * @param book
+     */
+    public static boolean deleteBooking(String roomID) {
+
+        try {
+
+            PreparedStatement statement;
+            statement = Database.getDatabase().getConnection().prepareStatement(
+                    "DELETE FROM " + Constants.BOOK_LOCATION_TABLE + " WHERE STARTDATE=? AND ENDDATE=?"
+            );
+
+            Book book = getBookByRoomID(roomID);
+
+            if(book != null) {
+
+//            System.out.println(book.getRoomID());
+                statement.setTimestamp(1, Timestamp.valueOf(book.getStartDate()));
+                statement.setTimestamp(2, Timestamp.valueOf(book.getEndDate()));
+
+                return statement.execute();
+
+            } else {
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            return false;
+        }
+
+    }
+
     public static boolean dropTable() {
         try {
             Statement statement;
@@ -83,21 +119,41 @@ public class BookLocationTable {
         try {
             PreparedStatement statement;
             statement = Database.getDatabase().getConnection().prepareStatement(
-                    "SELECT * FROM " + Constants.BOOK_LOCATION_TABLE + " WHERE ROOMID=?"
+                    "SELECT * FROM " + Constants.BOOK_LOCATION_TABLE + " WHERE NODEID=?"
             );
             statement.setString(1, roomID);
 
             ResultSet resultSet = statement.executeQuery();
 
+//            System.out.println(resultSet.getFetchSize());
+
             if(resultSet.next()) {
 
+//                System.out.println("success");
+
+                int bookingid = resultSet.getInt("BOOKINGID");
+                System.out.println(bookingid);
+
+                String nodeID = resultSet.getString("NODEID");
+                System.out.println(nodeID);
+
+                User userid = UserTable.getUserByID(resultSet.getInt("USERID"));
+                System.out.println(userid);
+
+                String startDate = resultSet.getString("STARTDATE");
+                System.out.println(startDate);
+
+                String endDate = resultSet.getString("ENDDATE");
+                System.out.println(endDate);
+
                 Book book = new Book(
-                        resultSet.getInt("BOOKINGID"),
-                        resultSet.getString("ROOMID"),
-                        UserTable.getUserByID(resultSet.getInt("USERID")),
-                        resultSet.getString("STARTDATE"),
-                        resultSet.getString("ENDDATES")
+                        bookingid,
+                        nodeID,
+                        userid,
+                        startDate,
+                        endDate
                 );
+
                 return book;
             }
             return null;
@@ -181,5 +237,52 @@ public class BookLocationTable {
 
             return null;
         }
+    }
+
+    public static Book getBookByTimes(LocalDateTime startTime, LocalDateTime endTime) {
+        try {
+            // Execute query
+            String stmtString = "SELECT * FROM " + Constants.BOOK_LOCATION_TABLE +
+                    " WHERE STARTDATE=? AND ENDDATE=?";
+            PreparedStatement statement = Database.getDatabase().getConnection().prepareStatement(stmtString);
+            statement.setString(1, startTime.toString());
+            statement.setString(2, endTime.toString());
+            ResultSet resultSet = statement.executeQuery();
+
+            // Process and return result
+            if (resultSet.next()) {
+                Book book = new Book(
+                        resultSet.getInt("BOOKINGID"),
+                        resultSet.getString("NODEID"),
+                        UserTable.getUserByID(resultSet.getInt("USERID")),
+                        resultSet.getString("STARTDATE"),
+                        resultSet.getString("ENDDATE")
+                );
+                return book;
+            }
+            return null;
+
+        } catch (SQLException exception) {
+            System.out.println("Cannot get location by times: " + startTime + endTime);
+            exception.printStackTrace();
+            System.out.println();
+            return null;
+        }
+    }
+
+    public static void deleteLocationeBook(Book book) {
+        PreparedStatement statement;
+        try {
+            statement = Database.getDatabase().getConnection().prepareStatement(
+                    "DELETE FROM " + Constants.BOOK_WORKSPACE_TABLE +
+                            " WHERE BOOKINGID=?"
+            );
+            statement.setInt(1, book.getBookingID());
+
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 }

@@ -2,7 +2,7 @@ package database;
 
 import helpers.Constants;
 import models.map.Location;
-import models.sanitation.SanitationRequest;
+import models.services.SanitationRequest;
 import models.user.User;
 
 import java.sql.*;

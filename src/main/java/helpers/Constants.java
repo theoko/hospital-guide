@@ -15,6 +15,7 @@ public class Constants {
     public static String BOOK_WORKSPACE_TABLE = "BOOKWORKSPACE";
 
     public static String SANITATION_TABLE = "SANITATION";
+    public static String TRANSPORTATION_TABLE = "TRANSPORTATION";
     public static String WORKSPACE_TABLE = "WORKSPACE";
 
     public static String DB_PROJECTION = "projection";
@@ -62,6 +63,7 @@ public class Constants {
      * General types
      */
     public static String dateFormat = "yyyy-MM-dd HH:mm:ss";
+    public static String calDateFormat = "yyyy-MM-ddTHH:mm:ss";
 
     /**
      * Enums
@@ -78,6 +80,6 @@ public class Constants {
         LOGO, WELCOME, LOGIN, USER_MAP, EMPLOYEE_MAP, CUSTODIAN_MAP, ADMIN_MAP, USER_INFO, EMPLOYEE_INFO,
         CUSTODIAN_INFO, EDIT_LOCATION, SANITATION_REQUEST, DIRECTIONS, BOOKING_WINDOW, DOWNLOAD, DOWNLOADED,
         CREATE_USER, USER_POPUP, EDIT_POPUP, REQUESTS, WORKSPACE, WORKSPACE_POPUP, IT, PERSCRIPTION, INTERPRETER, INTERNAL_TRANS, GIFT_STORE,
-        FLOURIST, SECURITY, VISUAL_AUDIO, EXTERNAL_TRANS, PATIENT_INFO
+        FLOURIST, SECURITY, VISUAL_AUDIO, EXTERNAL_TRANS, PATIENT_INFO, MAP_ALL, ADD, CALENDAR, EDGE_EDITOR
     }
 }

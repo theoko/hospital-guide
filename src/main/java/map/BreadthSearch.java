@@ -7,43 +7,38 @@ import models.map.SubPath;
 import java.util.*;
 
 public class BreadthSearch extends PathFinder {
+    private Queue<SubPath> queue;
 
     @Override
-    public Stack<Location> findPath(Location start, Location end) {
-        Stack<Location> path = new Stack<>();
-
-        Queue<SubPath> queue = new LinkedList<>();
-        HashMap<String, SubPath> parent = new HashMap<>();
-        HashMap<String, SubPath> used = new HashMap<>();
-
+    protected void setUp(Location start) {
+        queue = new LinkedList<>();
         SubPath sStart = new SubPath("", start, 0.0);
         queue.add(sStart);
-        parent.put(start.getNodeID(), null);
+    }
 
-        while (!queue.isEmpty()) {
-            SubPath sNext = queue.poll();
-            Location lNext = sNext.getLocation();
-            if (used.containsKey(lNext.getNodeID())) {
-                continue;
-            }
+    @Override
+    protected boolean isEmpty() {
+        return queue.isEmpty();
+    }
 
-            if (lNext.getNodeID().equals(end.getNodeID())) {
-                path = genPath(parent, sNext);
-                break;
-            }
+    @Override
+    protected SubPath getNext() {
+        return queue.poll();
+    }
 
-            used.put(lNext.getNodeID(), sNext);
+    @Override
+    protected void addNext(SubPath next) {
+        queue.add(next);
+    }
 
-            List<SubPath> lstNeighbors = lNext.getSubPaths();
-            for (SubPath nCurr : lstNeighbors) {
-                Location lCurr = nCurr.getLocation();
-                if (!used.containsKey(lCurr.getNodeID())) {
-                    queue.add(nCurr);
-                    parent.putIfAbsent(lCurr.getNodeID(), sNext);
-                }
-            }
-        }
-        return path;
+    @Override
+    protected double getDist(SubPath loc1, SubPath loc2) {
+        return 0;
+    }
+
+    @Override
+    protected double getHeuristic(Location loc1, Location loc2) {
+        return 0;
     }
 
     @Override

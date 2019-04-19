@@ -1,0 +1,9 @@
+.jfx-button {
+    -fx-background-color: #022D5A;
+    -fx-text-fill: white;
+    -fx-alignment: center;}
+
+.separator *.line {
+    -fx-border-style: solid;
+    -fx-border-color: #001B3A;
+}
