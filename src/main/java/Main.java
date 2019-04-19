@@ -2,6 +2,7 @@ import controllers.ScreenController;
 import controllers.booking.DisplayCalendarController;
 import controllers.settings.SettingsController;
 import database.Database;
+import google.FirebaseAPI;
 import helpers.FileHelpers;
 import messaging.TextMessenger;
 import images.ImageFactory;
@@ -31,6 +32,9 @@ public class Main extends Application {
 
         // Initialize keywords for search engine
         SearchKeywords.initialize();
+
+        // Initialize firebase API
+        FirebaseAPI firebaseAPI = new FirebaseAPI();
 
         // Initialize screen controller
         screenController = new ScreenController(primaryStage);

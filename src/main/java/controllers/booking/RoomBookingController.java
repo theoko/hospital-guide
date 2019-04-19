@@ -8,6 +8,7 @@ import database.BookLocationTable;
 import database.Database;
 import database.LocationTable;
 import database.RoomTable;
+import google.FirebaseAPI;
 import helpers.Constants;
 import helpers.DatabaseHelpers;
 import helpers.UserHelpers;
@@ -235,6 +236,8 @@ public class RoomBookingController {
             populateRoomBookedTable(roomDetails);
             populateRoomBookingTable(roomsAvailable);
 
+        FirebaseAPI.sendBooking(book);
+
 //        ZonedDateTime calStartTime = DatabaseHelpers.getCalDateTime(startDate, startTime);
 //        ZonedDateTime calEndTime = DatabaseHelpers.getCalDateTime(endDate, endTime);
 //        book.setCalStartDate(calStartTime);
@@ -301,6 +304,8 @@ public class RoomBookingController {
         }
 
         populateRoomBookedTable(roomDetails);
+
+        FirebaseAPI.deleteBooking(selected.getRoomID());
 
     }
 
