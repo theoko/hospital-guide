@@ -33,7 +33,13 @@ public abstract class MapController implements Initializable {
     private final double MAX_ZOOM = 2.0;
     private final double MIN_ZOOM = 0.01;
     private final double ZOOM_BUFFER = 0.5;
+    private final double ZOOM_PADDING_W = 500.0;
+    private final double ZOOM_PADDING_H = 0;
     private final double ANIMATION_TIME = 1000;
+    private final double ZOOM_OUT = 50.0;
+    private final double ZOOM_SPEED = 0.35;
+    private final double PAN_SPEED = 0.25;
+    private final double PARTIAL_ZOOM = 0.3;
 
     public GesturePane gesMap;
     public ImageView imgMap;
@@ -65,7 +71,7 @@ public abstract class MapController implements Initializable {
     protected Map map;
 
     public MapController() {
-        floor = "3";
+        floor = "1";
         lstLineTransits = new LinkedList<>();
         transitIt = 0;
         currMapControl = this;
@@ -82,7 +88,7 @@ public abstract class MapController implements Initializable {
         gesMap.setFitMode(GesturePane.FitMode.COVER);
 
         updateButtons();
-        Image img = ImageFactory.getImage("3");
+        Image img = ImageFactory.getImage(floor);
         imgMap.setImage(img);
         zoomOut();
     }
@@ -92,6 +98,7 @@ public abstract class MapController implements Initializable {
             try {
                 Thread.sleep(1000);
                 gesMap.reset();
+//                gesMap.setMinScale(gesMap.getCurrentScale());
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -104,16 +111,6 @@ public abstract class MapController implements Initializable {
     protected void initDirections() {
         txtPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         txtPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-//        tilDirections.expandedProperty().addListener(((observable, oldValue, newValue) -> {
-//            if (newValue) {
-//                tilDirections.setPrefHeight(500.0);
-//                txtPane.setPrefHeight(500.0);
-//            } else {
-//                tilDirections.setPrefHeight(0.0);
-//                txtPane.setPrefHeight(0.0);
-//            }
-//            gesMap.requestFocus();
-//        }));
     }
 
     public static MapController getCurrMapControl() {
@@ -226,7 +223,7 @@ public abstract class MapController implements Initializable {
             if (lstFloor.equals(floor)) {
                 clearArrow();
                 Path line = lstLineTransits.get(transitIt - 1).getLine();
-                panToLine(line);
+                panner(line);
                 if (lstLineTransits.size() > transitIt) {
                     String nxtFloor = lstLineTransits.get(transitIt++).getFloor();
                     displayArrow(nxtFloor);
@@ -356,7 +353,78 @@ public abstract class MapController implements Initializable {
             Point2D pnt = new Point2D(mt.getX(), mt.getY());
             gesMap.animate(Duration.millis(ANIMATION_TIME)).afterFinished(() -> {
                 gesMap.animate(Duration.millis(ANIMATION_TIME)).centreOn(pnt);
-            }).zoomBy(2, pnt);
+            }).zoomBy(2 * MAX_ZOOM, pnt);
         }
+    }
+
+    private void panner(Path line) {
+        Bounds beforeView = gesMap.getTargetViewport();
+        Point2D beforeCenter = getCenter(beforeView);
+        if (line.getElements().size() > 1) { // Actual path
+            // Big -> small
+            Bounds lineView = line.getBoundsInLocal();
+            Point2D lineCenter = new Point2D((lineView.getMinX() + lineView.getMaxX()) / 2,
+                    (lineView.getMinY() + lineView.getMaxY()) / 2);
+            double mockZoom = calcZoom(beforeView, lineView, false);
+            if (mockZoom > 0) { // Big -> small
+                double zoomOut = -(beforeView.getHeight() + ZOOM_OUT) / beforeView.getHeight() + 1.0;
+                // Zoom out a bit
+                gesMap.animate(Duration.seconds(Math.abs(zoomOut / ZOOM_SPEED))).afterFinished(() -> {
+                    // Pan as close to center of line as possible
+                    gesMap.animate(Duration.millis(calcDist(beforeCenter, lineCenter) / PAN_SPEED)).afterFinished(() -> {
+                        // Zoom in towards line
+                        Bounds afterView = gesMap.getTargetViewport();
+                        Point2D afterCenter = getCenter(afterView);
+                        double zoomIn = calcZoom(afterView, lineView, true);
+                        gesMap.animate(Duration.seconds(Math.abs(zoomIn / ZOOM_SPEED))).afterFinished(() -> {
+                            // Center the line
+                            gesMap.animate(Duration.millis(calcDist(afterCenter, lineCenter) / PAN_SPEED)).centreOn(lineCenter);
+                        }).zoomBy(zoomIn, afterCenter);
+                    }).centreOn(lineCenter);
+                }).zoomBy(zoomOut, beforeCenter);
+            } else { // Small -> big
+                // Zoom out a partial amount
+                double zoomOut = calcZoom(beforeView, lineView, true) * PARTIAL_ZOOM;
+                gesMap.animate(Duration.seconds(Math.abs(zoomOut / ZOOM_SPEED))).afterFinished(() -> {
+                    // Pan as close to center of line as possible
+                    gesMap.animate(Duration.millis(calcDist(beforeCenter, lineCenter))).afterFinished(() -> {
+                        // Finish out the zoom
+                        Bounds afterView = gesMap.getTargetViewport();
+                        double zoomOuter = calcZoom(afterView, lineView, true);
+                        gesMap.animate(Duration.seconds(Math.abs(zoomOuter / ZOOM_SPEED))).zoomBy(zoomOuter, lineCenter);
+                    }).centreOn(lineCenter);
+                }).zoomBy(zoomOut, beforeCenter);
+
+            }
+        } else { // Point
+            MoveTo mt = ((MoveTo) line.getElements().get(0));
+            Point2D pnt = new Point2D(mt.getX(), mt.getY());
+            double zoom = 2 * MAX_ZOOM;
+            gesMap.animate(Duration.seconds(zoom / ZOOM_SPEED)).afterFinished(() -> {
+                gesMap.animate(Duration.millis(calcDist(beforeCenter, pnt))).centreOn(pnt);
+            }).zoomBy(zoom, pnt);
+        }
+    }
+
+    private Point2D getCenter(Bounds bounds) {
+        return new Point2D((bounds.getMinX() + bounds.getMaxX()) / 2,
+                (bounds.getMinY() + bounds.getMaxY()) / 2);
+    }
+
+    private double calcDist(Point2D start, Point2D end) {
+        return Math.pow(Math.pow(end.getX() - start.getX(), 2) + Math.pow(end.getY() - start.getY(), 2), 0.5);
+    }
+
+    private double calcZoom(Bounds start, Bounds end, boolean hasPadding) {
+        double endWidth = end.getWidth();
+        double endHeight = end.getHeight();
+        if (hasPadding) {
+            endWidth += ZOOM_PADDING_W;
+            endHeight += ZOOM_PADDING_H;
+        }
+        double zoomWidth = (start.getWidth() - endWidth) / start.getWidth();
+        double zoomHeight = (start.getHeight() - endHeight) / start.getHeight();
+
+        return zoomWidth < zoomHeight ? zoomWidth : zoomHeight;
     }
 }
