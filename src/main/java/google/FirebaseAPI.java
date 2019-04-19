@@ -1,8 +1,7 @@
 package google;
 
 import com.google.auth.oauth2.GoogleCredentials;
-import com.google.cloud.storage.Storage;
-import com.google.cloud.storage.StorageOptions;
+import com.google.cloud.storage.*;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.DatabaseError;
@@ -12,20 +11,24 @@ import helpers.Constants;
 import helpers.UserHelpers;
 import models.room.Book;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class FirebaseAPI {
 
+    private static final String STORAGE_BUCKET = "hospital-guide-47dc0.appspot.com";
+
     private FileInputStream serviceAccount;
     private FirebaseOptions options;
 
     public FirebaseAPI() {
+
+        System.out.println("Firebase: created instance");
 
         serviceAccount = null;
         options = null;
@@ -93,13 +96,17 @@ public class FirebaseAPI {
 
     }
 
-    public static void uploadDirectionsImage(List<File> directions) {
+    public static void uploadDirectionsImage(List<File> directions) throws IOException {
 
         Storage storage = StorageOptions.getDefaultInstance().getService();
 
-
-
-
+        BlobId blobId = BlobId.of(STORAGE_BUCKET, "blob_name");
+        BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType("image/png").build();
+        BufferedImage bImage = ImageIO.read(FirebaseAPI.class.getResourceAsStream("/images/H_logo.png"));
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ImageIO.write(bImage, "png", bos );
+        byte [] data = bos.toByteArray();
+        Blob blob = storage.create(blobInfo, data);
 
     }
 
