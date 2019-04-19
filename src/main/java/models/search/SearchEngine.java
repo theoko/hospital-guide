@@ -24,6 +24,7 @@ public class SearchEngine {
     // TODO: Link spanish words to categories
     private void runSearch(SearchKeywords searchKeywords) {
 
+        System.out.println("Term: " + this.term);
         if(searchKeywords.validEnglishWord(this.term)) {
 
             search(searchKeywords);
@@ -149,15 +150,16 @@ public class SearchEngine {
         if(minDistance == Double.MAX_VALUE) {
             System.out.println("No match!");
         } else {
+            // TODO: Check string length and minimum distance
 //            System.out.println("Distance is: " + minDistance);
 //            System.out.println("Distance for keyword is: " + minDistanceKeyword);
 //
 //            System.out.println("Search term: " + this.term);
-//            System.out.println("Closest category: " + closestCategory);
-//            System.out.println("Closest keyword: " + closestKeyword);
+            System.out.println("Closest category: " + closestCategory);
+            System.out.println("Closest keyword: " + closestKeyword);
 
-            results.add(closestCategory);
-            results.add(closestKeyword);
+//            results.add(closestCategory);
+//            results.add(closestKeyword);
         }
 
     }
