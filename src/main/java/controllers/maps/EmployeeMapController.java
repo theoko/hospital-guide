@@ -302,6 +302,22 @@ public class EmployeeMapController extends MapController {
         btnInfo.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnInfo.setTextOverrun(OverrunStyle.CLIP);
 
+        ImageView imgFood = new ImageView();
+        imgFood.setImage(new Image("images/Icons/food.png"));
+        imgFood.setFitHeight(30);
+        imgFood.setFitWidth(30);
+        imgFood.setPreserveRatio(true);
+        imgFood.setPickOnBounds(true);
+
+        JFXButton btnFood = new JFXButton("",imgFood);
+        btnFood.setAlignment(Pos.CENTER);
+        btnFood.setPrefWidth(60);
+        btnFood.setPrefHeight(60);
+        btnFood.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnFood.setTextOverrun(OverrunStyle.CLIP);
+        btnFood.setOnMouseClicked( event -> {
+           //TODO method for FOOD API
+        });
         btnLogOut.setStyle("-fx-background-radius: 30;" );
         btnLogOut.setButtonType(JFXButton.ButtonType.RAISED);
         imgLogOut.setImage(new Image("images/Icons/signout.png"));
@@ -698,8 +714,9 @@ public class EmployeeMapController extends MapController {
         boxReq.getChildren().add(nodesListOut);
         boxReq.getChildren().add(nodesListGift);
         boxReq.getChildren().add(nodesListInfo);
+        boxReq.getChildren().add(btnFood);
         boxReq.setAlignment(Pos.CENTER);
-        boxReq.setPrefSize(60,700);
+        boxReq.setPrefSize(60,800);
         boxReq.setSpacing(5);
 
         nodeListExl.addAnimatedNode(btnExl);
