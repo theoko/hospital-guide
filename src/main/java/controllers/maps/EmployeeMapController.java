@@ -25,6 +25,7 @@ import messaging.TextMessenger;
 import models.search.SearchAPI;
 
 import java.net.URL;
+import java.time.Duration;
 import java.util.ResourceBundle;
 
 public class EmployeeMapController extends MapController {
@@ -58,9 +59,6 @@ public class EmployeeMapController extends MapController {
 
         SearchAPI searchAPI = new SearchAPI(search, true);
         searchAPI.searchable();
-
-        // Add listener for commands
-        FirebaseAPI.checkForCommands(UserHelpers.getCurrentUser().getUsername());
 
         MapDisplay.displayEmployee(this);
         initDirections();
@@ -755,6 +753,8 @@ public class EmployeeMapController extends MapController {
 
     @Override
     public void btnFloor3_Click(MouseEvent mouseEvent) {
+        // Add listener for commands
+        FirebaseAPI.checkForCommands(UserHelpers.getCurrentUser().getUsername(), EmployeeMapController.this);
         showFloor("3");
     }
 

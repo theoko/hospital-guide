@@ -60,12 +60,12 @@ public abstract class InfoController extends PopUpController {
 
         // Generate images and send them to firebase
         // Mobile app will then get updated
-        SnapshotGenerator sg = new SnapshotGenerator(mc);
-        ArrayList<File> imgFiles = sg.generateImages(MapController.currentRoute);
-
-        for(File file : imgFiles) {
-            FirebaseAPI.uploadDirectionsImage(file);
-        }
+//        SnapshotGenerator sg = new SnapshotGenerator(mc);
+//        ArrayList<File> imgFiles = sg.generateImages(MapController.currentRoute);
+//
+//        for(File file : imgFiles) {
+//            FirebaseAPI.uploadDirectionsImage(file);
+//        }
 
     }
 

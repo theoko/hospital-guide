@@ -5,16 +5,18 @@ import com.google.cloud.storage.*;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.*;
+import controllers.maps.MapController;
+import database.LocationTable;
 import helpers.Constants;
 import helpers.UserHelpers;
+import map.PathFinder;
+import models.map.Location;
 import models.room.Book;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class FirebaseAPI {
 
@@ -125,7 +127,7 @@ public class FirebaseAPI {
 
     }
 
-    public static void checkForCommands(String username) {
+    public static void checkForCommands(String username, MapController caller) {
 
         DatabaseReference commandsRef = FirebaseDatabase.getInstance()
                                         .getReference()
@@ -137,7 +139,45 @@ public class FirebaseAPI {
             public void onDataChange(DataSnapshot snapshot) {
 
                 if(snapshot.exists() && snapshot.getChildrenCount() > 0) {
+
                     System.out.println("we got commands!");
+                    System.out.println(snapshot.getValue().toString());
+
+                    Iterable<DataSnapshot> children = snapshot.getChildren();
+                    Iterator<DataSnapshot> iterator = children.iterator();
+
+//                    System.out.println(iterator.next());
+
+                    while(iterator.hasNext()) {
+
+                        DataSnapshot pair = iterator.next();
+
+                        System.out.println(pair.getValue().toString().substring(0, pair.getValue().toString().indexOf(":")));
+                        System.out.println(pair.getValue().toString().substring(pair.getValue().toString().indexOf(":") + 1));
+
+                        if(pair.getKey().equals("pathfinding")) {
+                            String path = pair.getValue().toString();
+//                            PathFinder.setDefLocation(path.substring(0, path.indexOf(":")));
+                            System.out.println("we got it 1");
+                            PathFinder.printPath(
+                                    caller,
+//                                    LocationTable.getLocationByID(path.substring(0, path.indexOf(":"))),
+//                                    LocationTable.getLocationByID(path.substring(path.indexOf(":") + 1))
+//                                    caller.getMap().getLocation(),
+//                                    caller.getMap().getLocation(path.substring(path.indexOf(":") + 1))
+                                    caller.getMap().getLocation(pair.getValue().toString().substring(0, pair.getValue().toString().indexOf(":"))),
+                                    caller.getMap().getLocation(pair.getValue().toString().substring(pair.getValue().toString().indexOf(":") + 1))
+                            );
+                            System.out.println("we got it 2");
+                        }
+
+                        iterator.remove();
+                    }
+
+                    System.out.println("end of commands");
+                    // Remove commands after executing them
+                    commandsRef.removeValue((error, ref) -> System.out.println("Removed children"));
+
                 } else {
                     System.out.println("no commands");
                 }
