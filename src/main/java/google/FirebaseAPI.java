@@ -4,9 +4,7 @@ import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.storage.*;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.*;
 import helpers.Constants;
 import helpers.UserHelpers;
 import models.room.Book;
@@ -14,9 +12,8 @@ import models.room.Book;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class FirebaseAPI {
@@ -96,17 +93,63 @@ public class FirebaseAPI {
 
     }
 
-    public static void uploadDirectionsImage(List<File> directions) throws IOException {
+    public static void uploadDirectionsImage(File directionsImage) {
 
-        Storage storage = StorageOptions.getDefaultInstance().getService();
+        new Thread(() -> {
+            Storage storage = StorageOptions.getDefaultInstance().getService();
 
-        BlobId blobId = BlobId.of(STORAGE_BUCKET, "blob_name");
-        BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType("image/png").build();
-        BufferedImage bImage = ImageIO.read(FirebaseAPI.class.getResourceAsStream("/images/H_logo.png"));
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ImageIO.write(bImage, "png", bos );
-        byte [] data = bos.toByteArray();
-        Blob blob = storage.create(blobInfo, data);
+            BlobId blobId = BlobId.of(
+                    STORAGE_BUCKET,
+                            Base64.getEncoder().encodeToString("start location, end location".getBytes()) +
+                            "_" +
+                            directionsImage.getName()
+            );
+            BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
+                    .setContentType("image/png")
+                    .build();
+            BufferedImage bImage = null;
+            try {
+                bImage = ImageIO.read(directionsImage);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            try {
+                ImageIO.write(bImage, "png", bos );
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            byte [] data = bos.toByteArray();
+            Blob blob = storage.create(blobInfo, data);
+        }).start();
+
+    }
+
+    public static void checkForCommands(String username) {
+
+        DatabaseReference commandsRef = FirebaseDatabase.getInstance()
+                                        .getReference()
+                                        .child(Constants.FIREBASE_COMMANDS)
+                                        .child(username);
+
+        commandsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+
+                if(snapshot.exists() && snapshot.getChildrenCount() > 0) {
+                    System.out.println("we got commands!");
+                } else {
+                    System.out.println("no commands");
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+
+            }
+        });
+
 
     }
 

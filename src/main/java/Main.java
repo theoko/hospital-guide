@@ -38,11 +38,6 @@ public class Main extends Application {
 
         // Initialize firebase API
         FirebaseAPI firebaseAPI = new FirebaseAPI();
-        try {
-            FirebaseAPI.uploadDirectionsImage(new ArrayList<>());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         // Initialize screen controller
         screenController = new ScreenController(primaryStage);

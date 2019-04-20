@@ -5,8 +5,9 @@ import com.jfoenix.controls.JFXNodesList;
 import com.jfoenix.controls.JFXTextField;
 import controllers.ScreenController;
 import controllers.search.SearchEngineController;
+import google.FirebaseAPI;
 import helpers.Constants;
-import javafx.fxml.FXML;
+import helpers.UserHelpers;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -14,11 +15,11 @@ import javafx.scene.control.OverrunStyle;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.shape.Path;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Path;
 import map.MapDisplay;
 import messaging.TextMessenger;
 import models.search.SearchAPI;
@@ -58,6 +59,9 @@ public class EmployeeMapController extends MapController {
         SearchAPI searchAPI = new SearchAPI(search, true);
         searchAPI.searchable();
 
+        // Add listener for commands
+        FirebaseAPI.checkForCommands(UserHelpers.getCurrentUser().getUsername());
+
         MapDisplay.displayEmployee(this);
         initDirections();
 
@@ -68,7 +72,7 @@ public class EmployeeMapController extends MapController {
         imgUser.setPreserveRatio(true);
         imgUser.setPickOnBounds(true);
 
-        JFXButton btnUser = new JFXButton("",imgUser);
+        JFXButton btnUser = new JFXButton("", imgUser);
         btnUser.setAlignment(Pos.CENTER);
         btnUser.setPrefWidth(60);
         btnUser.setPrefHeight(60);
@@ -82,7 +86,7 @@ public class EmployeeMapController extends MapController {
         imgSearch.setPreserveRatio(true);
         imgSearch.setPickOnBounds(true);
 
-        JFXButton btnSearch = new JFXButton("",imgSearch);
+        JFXButton btnSearch = new JFXButton("", imgSearch);
         btnSearch.setAlignment(Pos.CENTER);
         btnSearch.setPrefWidth(60);
         btnSearch.setPrefHeight(60);
@@ -96,7 +100,7 @@ public class EmployeeMapController extends MapController {
         imgArrow.setPreserveRatio(true);
         imgArrow.setPickOnBounds(true);
 
-        JFXButton btnArrow = new JFXButton("",imgArrow);
+        JFXButton btnArrow = new JFXButton("", imgArrow);
         btnArrow.setAlignment(Pos.CENTER);
         btnArrow.setPrefWidth(60);
         btnArrow.setPrefHeight(60);
@@ -110,7 +114,7 @@ public class EmployeeMapController extends MapController {
         imgRoute.setPreserveRatio(true);
         imgRoute.setPickOnBounds(true);
 
-        JFXButton btnRoute = new JFXButton("",imgRoute);
+        JFXButton btnRoute = new JFXButton("", imgRoute);
         btnRoute.setAlignment(Pos.CENTER);
         btnRoute.setPrefWidth(60);
         btnRoute.setPrefHeight(60);
@@ -124,7 +128,7 @@ public class EmployeeMapController extends MapController {
         imgRoom.setPreserveRatio(true);
         imgRoom.setPickOnBounds(true);
 
-        JFXButton btnRoom = new JFXButton("",imgRoom);
+        JFXButton btnRoom = new JFXButton("", imgRoom);
         btnRoom.setAlignment(Pos.CENTER);
         btnRoom.setPrefWidth(60);
         btnRoom.setPrefHeight(60);
@@ -138,7 +142,7 @@ public class EmployeeMapController extends MapController {
         imgCal.setPreserveRatio(true);
         imgCal.setPickOnBounds(true);
 
-        JFXButton btnCal = new JFXButton("",imgCal);
+        JFXButton btnCal = new JFXButton("", imgCal);
         btnCal.setAlignment(Pos.CENTER);
         btnCal.setPrefWidth(60);
         btnCal.setPrefHeight(60);
@@ -152,7 +156,7 @@ public class EmployeeMapController extends MapController {
         imgExl.setPreserveRatio(true);
         imgExl.setPickOnBounds(true);
 
-        JFXButton btnExl = new JFXButton("",imgExl);
+        JFXButton btnExl = new JFXButton("", imgExl);
         btnExl.setAlignment(Pos.CENTER);
         btnExl.setPrefWidth(60);
         btnExl.setPrefHeight(60);
@@ -166,7 +170,7 @@ public class EmployeeMapController extends MapController {
         imgComp1.setPreserveRatio(true);
         imgComp1.setPickOnBounds(true);
 
-        JFXButton btnComp1 = new JFXButton("",imgComp1);
+        JFXButton btnComp1 = new JFXButton("", imgComp1);
         btnComp1.setAlignment(Pos.CENTER);
         btnComp1.setPrefWidth(60);
         btnComp1.setPrefHeight(60);
@@ -180,7 +184,7 @@ public class EmployeeMapController extends MapController {
         imgFlo.setPreserveRatio(true);
         imgFlo.setPickOnBounds(true);
 
-        JFXButton btnFlo = new JFXButton("",imgFlo);
+        JFXButton btnFlo = new JFXButton("", imgFlo);
         btnFlo.setAlignment(Pos.CENTER);
         btnFlo.setPrefWidth(60);
         btnFlo.setPrefHeight(60);
@@ -194,7 +198,7 @@ public class EmployeeMapController extends MapController {
         imgSign.setPreserveRatio(true);
         imgSign.setPickOnBounds(true);
 
-        JFXButton btnSign = new JFXButton("",imgSign);
+        JFXButton btnSign = new JFXButton("", imgSign);
         btnSign.setAlignment(Pos.CENTER);
         btnSign.setPrefWidth(60);
         btnSign.setPrefHeight(60);
@@ -208,7 +212,7 @@ public class EmployeeMapController extends MapController {
         imgLock.setPreserveRatio(true);
         imgLock.setPickOnBounds(true);
 
-        JFXButton btnLock = new JFXButton("",imgLock);
+        JFXButton btnLock = new JFXButton("", imgLock);
         btnLock.setAlignment(Pos.CENTER);
         btnLock.setPrefWidth(60);
         btnLock.setPrefHeight(60);
@@ -222,7 +226,7 @@ public class EmployeeMapController extends MapController {
         imgDrug.setPreserveRatio(true);
         imgDrug.setPickOnBounds(true);
 
-        JFXButton btnDrug = new JFXButton("",imgDrug);
+        JFXButton btnDrug = new JFXButton("", imgDrug);
         btnDrug.setAlignment(Pos.CENTER);
         btnDrug.setPrefWidth(60);
         btnDrug.setPrefHeight(60);
@@ -236,7 +240,7 @@ public class EmployeeMapController extends MapController {
         imgAv.setPreserveRatio(true);
         imgAv.setPickOnBounds(true);
 
-        JFXButton btnAv = new JFXButton("",imgAv);
+        JFXButton btnAv = new JFXButton("", imgAv);
         btnAv.setAlignment(Pos.CENTER);
         btnAv.setPrefWidth(60);
         btnAv.setPrefHeight(60);
@@ -250,7 +254,7 @@ public class EmployeeMapController extends MapController {
         imgIn.setPreserveRatio(true);
         imgIn.setPickOnBounds(true);
 
-        JFXButton btnIn = new JFXButton("",imgIn);
+        JFXButton btnIn = new JFXButton("", imgIn);
         btnIn.setAlignment(Pos.CENTER);
         btnIn.setPrefWidth(60);
         btnIn.setPrefHeight(60);
@@ -264,7 +268,7 @@ public class EmployeeMapController extends MapController {
         imgGift.setPreserveRatio(true);
         imgGift.setPickOnBounds(true);
 
-        JFXButton btnGift = new JFXButton("",imgGift);
+        JFXButton btnGift = new JFXButton("", imgGift);
         btnGift.setAlignment(Pos.CENTER);
         btnGift.setPrefWidth(60);
         btnGift.setPrefHeight(60);
@@ -278,7 +282,7 @@ public class EmployeeMapController extends MapController {
         imgOut.setPreserveRatio(true);
         imgOut.setPickOnBounds(true);
 
-        JFXButton btnOut = new JFXButton("",imgOut);
+        JFXButton btnOut = new JFXButton("", imgOut);
         btnOut.setAlignment(Pos.CENTER);
         btnOut.setPrefWidth(60);
         btnOut.setPrefHeight(60);
@@ -292,18 +296,18 @@ public class EmployeeMapController extends MapController {
         imgInfo.setPreserveRatio(true);
         imgInfo.setPickOnBounds(true);
 
-        JFXButton btnInfo = new JFXButton("",imgInfo);
+        JFXButton btnInfo = new JFXButton("", imgInfo);
         btnInfo.setAlignment(Pos.CENTER);
         btnInfo.setPrefWidth(60);
         btnInfo.setPrefHeight(60);
         btnInfo.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnInfo.setTextOverrun(OverrunStyle.CLIP);
 
-        btnLogOut.setStyle("-fx-background-radius: 30;" );
+        btnLogOut.setStyle("-fx-background-radius: 30;");
         btnLogOut.setButtonType(JFXButton.ButtonType.RAISED);
         imgLogOut.setImage(new Image("images/Icons/signout.png"));
 
-        btnText.setStyle("-fx-background-radius: 30;" );
+        btnText.setStyle("-fx-background-radius: 30;");
         btnText.setButtonType(JFXButton.ButtonType.RAISED);
         imgText.setImage(new Image("images/Icons/text.png"));
 
@@ -609,107 +613,112 @@ public class EmployeeMapController extends MapController {
         JFXNodesList nodesListGift = new JFXNodesList();
         JFXNodesList nodesListInfo = new JFXNodesList();
 
-        nodeListSearch.addAnimatedNode(btnSearch);
-        nodeListSearch.addAnimatedNode(searchBox);
-        nodeListSearch.setRotate(90);
-        nodeListSearch.setSpacing(150);
+        new Thread(() -> {
 
-        nodeListUser.addAnimatedNode(btnUser);
-        nodeListUser.addAnimatedNode(userBox);
-        nodeListUser.setRotate(90);
-        nodeListUser.setSpacing(60);
+            nodeListSearch.addAnimatedNode(btnSearch);
+            nodeListSearch.addAnimatedNode(searchBox);
+            nodeListSearch.setRotate(90);
+            nodeListSearch.setSpacing(150);
 
-        nodeListRoute.addAnimatedNode(btnRoute);
-        nodeListRoute.addAnimatedNode(pathDir);
-        nodeListRoute.setRotate(90);
-        nodeListRoute.setSpacing(-135);
+            nodeListUser.addAnimatedNode(btnUser);
+            nodeListUser.addAnimatedNode(userBox);
+            nodeListUser.setRotate(90);
+            nodeListUser.setSpacing(60);
 
-        nodeListRoom.addAnimatedNode(btnRoom);
-        nodeListRoom.addAnimatedNode(boxRoom);
-        nodeListRoom.setRotate(95);
-        nodeListRoom.setSpacing(240);
+            nodeListRoute.addAnimatedNode(btnRoute);
+            nodeListRoute.addAnimatedNode(pathDir);
+            nodeListRoute.setRotate(90);
+            nodeListRoute.setSpacing(-135);
 
-        nodeListCal.addAnimatedNode(btnCal);
-        nodeListCal.addAnimatedNode(boxCal);
-        nodeListCal.setRotate(95);
-        nodeListCal.setSpacing(240);
+            nodeListRoom.addAnimatedNode(btnRoom);
+            nodeListRoom.addAnimatedNode(boxRoom);
+            nodeListRoom.setRotate(95);
+            nodeListRoom.setSpacing(240);
 
-        nodesListComp.addAnimatedNode(btnComp1);
-        nodesListComp.addAnimatedNode(boxComp);
-        nodesListComp.setRotate(65);
-        nodesListComp.setSpacing(330);
+            nodeListCal.addAnimatedNode(btnCal);
+            nodeListCal.addAnimatedNode(boxCal);
+            nodeListCal.setRotate(95);
+            nodeListCal.setSpacing(240);
 
-        nodesListFlo.addAnimatedNode(btnFlo);
-        nodesListFlo.addAnimatedNode(boxFlo);
-        nodesListFlo.setRotate(70);
-        nodesListFlo.setSpacing(320);
+            nodesListComp.addAnimatedNode(btnComp1);
+            nodesListComp.addAnimatedNode(boxComp);
+            nodesListComp.setRotate(65);
+            nodesListComp.setSpacing(330);
 
-        nodesListInt.addAnimatedNode(btnSign);
-        nodesListInt.addAnimatedNode(boxInt);
-        nodesListInt.setRotate(75);
-        nodesListInt.setSpacing(310);
+            nodesListFlo.addAnimatedNode(btnFlo);
+            nodesListFlo.addAnimatedNode(boxFlo);
+            nodesListFlo.setRotate(70);
+            nodesListFlo.setSpacing(320);
 
-        nodesListLock.addAnimatedNode(btnLock);
-        nodesListLock.addAnimatedNode(boxLock);
-        nodesListLock.setRotate(80);
-        nodesListLock.setSpacing(300);
+            nodesListInt.addAnimatedNode(btnSign);
+            nodesListInt.addAnimatedNode(boxInt);
+            nodesListInt.setRotate(75);
+            nodesListInt.setSpacing(310);
 
-        nodesListDrug.addAnimatedNode(btnDrug);
-        nodesListDrug.addAnimatedNode(boxDrug);
-        nodesListDrug.setRotate(85);
-        nodesListDrug.setSpacing(290);
+            nodesListLock.addAnimatedNode(btnLock);
+            nodesListLock.addAnimatedNode(boxLock);
+            nodesListLock.setRotate(80);
+            nodesListLock.setSpacing(300);
 
-        nodesListAv.addAnimatedNode(btnAv);
-        nodesListAv.addAnimatedNode(boxAv);
-        nodesListAv.setRotate(90);
-        nodesListAv.setSpacing(280);
+            nodesListDrug.addAnimatedNode(btnDrug);
+            nodesListDrug.addAnimatedNode(boxDrug);
+            nodesListDrug.setRotate(85);
+            nodesListDrug.setSpacing(290);
 
-        nodesListInTr.addAnimatedNode(btnIn);
-        nodesListInTr.addAnimatedNode(boxInTr);
-        nodesListInTr.setRotate(100);
-        nodesListInTr.setSpacing(280);
+            nodesListAv.addAnimatedNode(btnAv);
+            nodesListAv.addAnimatedNode(boxAv);
+            nodesListAv.setRotate(90);
+            nodesListAv.setSpacing(280);
 
-        nodesListOut.addAnimatedNode(btnOut);
-        nodesListOut.addAnimatedNode(boxOut);
-        nodesListOut.setRotate(105);
-        nodesListOut.setSpacing(290);
+            nodesListInTr.addAnimatedNode(btnIn);
+            nodesListInTr.addAnimatedNode(boxInTr);
+            nodesListInTr.setRotate(100);
+            nodesListInTr.setSpacing(280);
 
-        nodesListGift.addAnimatedNode(btnGift);
-        nodesListGift.addAnimatedNode(boxGift);
-        nodesListGift.setRotate(110);
-        nodesListGift.setSpacing(310);
+            nodesListOut.addAnimatedNode(btnOut);
+            nodesListOut.addAnimatedNode(boxOut);
+            nodesListOut.setRotate(105);
+            nodesListOut.setSpacing(290);
 
-        nodesListInfo.addAnimatedNode(btnInfo);
-        nodesListInfo.addAnimatedNode(boxInfo);
-        nodesListInfo.setRotate(115);
-        nodesListInfo.setSpacing(330);
+            nodesListGift.addAnimatedNode(btnGift);
+            nodesListGift.addAnimatedNode(boxGift);
+            nodesListGift.setRotate(110);
+            nodesListGift.setSpacing(310);
 
-        VBox boxReq = new VBox();
-        boxReq.getChildren().add(nodesListComp);
-        boxReq.getChildren().add(nodesListFlo);
-        boxReq.getChildren().add(nodesListInt);
-        boxReq.getChildren().add(nodesListLock);
-        boxReq.getChildren().add(nodesListDrug);
-        boxReq.getChildren().add(nodesListAv);
-        boxReq.getChildren().add(nodesListInTr);
-        boxReq.getChildren().add(nodesListOut);
-        boxReq.getChildren().add(nodesListGift);
-        boxReq.getChildren().add(nodesListInfo);
-        boxReq.setAlignment(Pos.CENTER);
-        boxReq.setPrefSize(60,700);
-        boxReq.setSpacing(5);
+            nodesListInfo.addAnimatedNode(btnInfo);
+            nodesListInfo.addAnimatedNode(boxInfo);
+            nodesListInfo.setRotate(115);
+            nodesListInfo.setSpacing(330);
 
-        nodeListExl.addAnimatedNode(btnExl);
-        nodeListExl.addAnimatedNode(boxReq);
-        nodeListExl.setRotate(150);
-        nodeListExl.setSpacing(-220);
+            VBox boxReq = new VBox();
+            boxReq.getChildren().add(nodesListComp);
+            boxReq.getChildren().add(nodesListFlo);
+            boxReq.getChildren().add(nodesListInt);
+            boxReq.getChildren().add(nodesListLock);
+            boxReq.getChildren().add(nodesListDrug);
+            boxReq.getChildren().add(nodesListAv);
+            boxReq.getChildren().add(nodesListInTr);
+            boxReq.getChildren().add(nodesListOut);
+            boxReq.getChildren().add(nodesListGift);
+            boxReq.getChildren().add(nodesListInfo);
+            boxReq.setAlignment(Pos.CENTER);
+            boxReq.setPrefSize(60,700);
+            boxReq.setSpacing(5);
 
-        vboxDock.getChildren().add(nodeListUser);
-        vboxDock.getChildren().add(nodeListSearch);
-        vboxDock.getChildren().add(nodeListRoute);
-        vboxDock.getChildren().add(nodeListRoom);
-        vboxDock.getChildren().add(nodeListCal);
-        vboxDock.getChildren().add(nodeListExl);
+            nodeListExl.addAnimatedNode(btnExl);
+            nodeListExl.addAnimatedNode(boxReq);
+            nodeListExl.setRotate(150);
+            nodeListExl.setSpacing(-220);
+
+            vboxDock.getChildren().add(nodeListUser);
+            vboxDock.getChildren().add(nodeListSearch);
+            vboxDock.getChildren().add(nodeListRoute);
+            vboxDock.getChildren().add(nodeListRoom);
+            vboxDock.getChildren().add(nodeListCal);
+            vboxDock.getChildren().add(nodeListExl);
+
+        }).start();
+
     }
 
     @Override
