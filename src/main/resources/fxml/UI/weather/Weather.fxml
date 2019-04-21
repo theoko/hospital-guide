@@ -29,6 +29,9 @@
             </padding>
          </Label>
       </children>
+      <effect>
+         <DropShadow />
+      </effect>
    </AnchorPane>
    <AnchorPane layoutX="100.0" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: #022D5A; -fx-background-radius: 40;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
