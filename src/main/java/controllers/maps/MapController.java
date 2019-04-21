@@ -271,6 +271,7 @@ public abstract class MapController implements Initializable {
     }
 
     private void updateButtons() {
+        styleButton(btnFloor4, false);
         styleButton(btnFloor3, false);
         styleButton(btnFloor2, false);
         styleButton(btnFloor1, false);
@@ -280,6 +281,7 @@ public abstract class MapController implements Initializable {
         switch (floor) {
             case "4":
                 styleButton(btnFloor4, true);
+                break;
             case "3":
                 styleButton(btnFloor3, true);
                 break;
