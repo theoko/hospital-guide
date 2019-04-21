@@ -240,6 +240,33 @@ public class UserTable {
     }
 
     /**
+     * Returns list of users in table with given authorization
+     */
+    public static ArrayList<User> getUsersWithAuth(Auth auth) {
+        ArrayList<User> employees = new ArrayList<>();
+        for (User user : getUsers()) {
+            if (user.getUserType().equals(auth)) {
+                employees.add(user);
+            }
+        }
+        return employees;
+    }
+
+    /**
+     * Returns list of employees in table.
+     */
+    public static ArrayList<User> getEmployees() {
+        return getUsersWithAuth(Auth.EMPLOYEE);
+    }
+
+    /**
+     * Returns list of custodians in table.
+     */
+    public static ArrayList<User> getCustodians() {
+        return getUsersWithAuth(Auth.CUSTODIAN);
+    }
+
+    /**
      * Returns a true if user deleted
      */
     public static boolean deleteUser(User user) {

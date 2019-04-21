@@ -14,6 +14,7 @@ import database.CSVParser;
 import map.AStar;
 import map.PathContext;
 import map.PathFinder;
+import models.analysis.SanitationAnalyzer;
 import models.search.SearchKeywords;
 
 public class Main extends Application {
@@ -37,6 +38,10 @@ public class Main extends Application {
             // Seed sanitation table
             SanitationTable.seed();
         }
+
+        // TODO remove this
+        // Analyze sanitation requests
+        new SanitationAnalyzer();
 
         // Initialize keywords for search engine
         SearchKeywords.initialize();

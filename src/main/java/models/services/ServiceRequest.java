@@ -81,6 +81,24 @@ public abstract class ServiceRequest {
     }
 
     /**
+     * Attribute comparators
+     */
+    public boolean isClaimed() {
+        return servicer != null;
+    }
+    public boolean isCompleted() {
+        return completedTime != null;
+    }
+    public Integer getMinutesRequestedToClaimed() {
+        if (claimedTime == null) return null;
+        return (int)((claimedTime.getTime() - requestTime.getTime()) / 60000);
+    }
+    public Integer getMinutesClaimedToCompleted() {
+        if (claimedTime == null || completedTime == null) return null;
+        return (int)((completedTime.getTime() - claimedTime.getTime()) / 60000);
+    }
+
+    /**
      * Attribute getters
      */
     public int getRequestID() {

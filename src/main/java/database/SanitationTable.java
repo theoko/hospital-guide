@@ -56,15 +56,8 @@ public class SanitationTable {
 
         // Get locations, employees, and custodians from database.
         ArrayList<Location> locations = new ArrayList(LocationTable.getLocations().values());
-        ArrayList<User> users = new ArrayList(UserTable.getUsers());
-        ArrayList<User> employees = new ArrayList<>();
-        ArrayList<User> custodians = new ArrayList<>();
-        for (User user : users) {
-            switch (user.getUserType()) {
-                case EMPLOYEE: employees.add(user); break;
-                case CUSTODIAN: custodians.add(user); break;
-            }
-        }
+        ArrayList<User> employees = UserTable.getEmployees();
+        ArrayList<User> custodians = UserTable.getCustodians();
 
         // Generate random sanitation requests
         Random rand = new Random();
