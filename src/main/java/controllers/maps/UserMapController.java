@@ -153,6 +153,34 @@ public class UserMapController extends MapController {
         btnAbout.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnAbout.setTextOverrun(OverrunStyle.CLIP);
 
+        ImageView imgCoffee = new ImageView();
+        imgCoffee.setImage(new Image("images/SearchIcons/coffee.png"));
+        imgCoffee.setFitHeight(30);
+        imgCoffee.setFitWidth(30);
+        imgCoffee.setPreserveRatio(true);
+        imgCoffee.setPickOnBounds(true);
+
+        JFXButton btnCoffee = new JFXButton("",imgCoffee);
+        btnCoffee.setAlignment(Pos.CENTER);
+        btnCoffee.setPrefWidth(60);
+        btnCoffee.setPrefHeight(60);
+        btnCoffee.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnCoffee.setTextOverrun(OverrunStyle.CLIP);
+
+        ImageView imgRest = new ImageView();
+        imgRest.setImage(new Image("images/SearchIcons/rest.png"));
+        imgRest.setFitHeight(30);
+        imgRest.setFitWidth(30);
+        imgRest.setPreserveRatio(true);
+        imgRest.setPickOnBounds(true);
+
+        JFXButton btnRest = new JFXButton("",imgRest);
+        btnRest.setAlignment(Pos.CENTER);
+        btnRest.setPrefWidth(60);
+        btnRest.setPrefHeight(60);
+        btnRest.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnRest.setTextOverrun(OverrunStyle.CLIP);
+
         btnLogOut.setStyle("-fx-background-radius: 30;" );
         btnLogOut.setButtonType(JFXButton.ButtonType.RAISED);
         imgLogOut.setImage(new Image("images/Icons/signout.png"));
@@ -194,12 +222,22 @@ public class UserMapController extends MapController {
 
         searchBox.getChildren().add(search);
         searchBox.getChildren().add(btnArrow);
-        //searchBox.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 10;");
         searchBox.setPrefHeight(60);
         searchBox.setPrefWidth(370);
         searchBox.setAlignment(Pos.CENTER);
         searchBox.setSpacing(-20);
 
+        HBox searchIcons = new HBox();
+        searchIcons.setSpacing(10);
+        searchIcons.getChildren().add(btnCoffee);
+        searchIcons.getChildren().add(btnRest);
+
+        VBox searchNear = new VBox();
+        searchNear.setPrefWidth(370);
+        searchNear.setPrefHeight(200);
+        searchNear.setSpacing(10);
+        searchNear.getChildren().add(searchBox);
+        searchNear.getChildren().add(searchIcons);
 
         Label dir = new Label("Text Directions");
         dir.setPrefHeight(50);
@@ -244,7 +282,7 @@ public class UserMapController extends MapController {
         JFXNodesList nodesListAbout = new JFXNodesList();
 
         nodeListSearch.addAnimatedNode(btnSearch);
-        nodeListSearch.addAnimatedNode(searchBox);
+        nodeListSearch.addAnimatedNode(searchNear);
         nodeListSearch.setRotate(90);
         nodeListSearch.setSpacing(150);
 
