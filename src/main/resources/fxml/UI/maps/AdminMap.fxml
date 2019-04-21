@@ -92,7 +92,7 @@
             </AnchorPane>
         </Tab>
 		
-		<Tab>
+		<Tab text="Sanitation Report Place Holder Location">
 		    <fx:include source="../sanitation/SanitationReport.fxml" />
 		</Tab>
     </JFXTabPane>
