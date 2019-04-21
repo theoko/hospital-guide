@@ -288,6 +288,48 @@ public class AdminMapController extends MapController {
         btnTab.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnTab.setTextOverrun(OverrunStyle.CLIP);
 
+        ImageView imgCoffee = new ImageView();
+        imgCoffee.setImage(new Image("images/SearchIcons/coffee.png"));
+        imgCoffee.setFitHeight(30);
+        imgCoffee.setFitWidth(30);
+        imgCoffee.setPreserveRatio(true);
+        imgCoffee.setPickOnBounds(true);
+
+        JFXButton btnCoffee = new JFXButton("",imgCoffee);
+        btnCoffee.setAlignment(Pos.CENTER);
+        btnCoffee.setPrefWidth(60);
+        btnCoffee.setPrefHeight(60);
+        btnCoffee.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnCoffee.setTextOverrun(OverrunStyle.CLIP);
+
+        ImageView imgRest = new ImageView();
+        imgRest.setImage(new Image("images/SearchIcons/rest.png"));
+        imgRest.setFitHeight(30);
+        imgRest.setFitWidth(30);
+        imgRest.setPreserveRatio(true);
+        imgRest.setPickOnBounds(true);
+
+        JFXButton btnRest = new JFXButton("",imgRest);
+        btnRest.setAlignment(Pos.CENTER);
+        btnRest.setPrefWidth(60);
+        btnRest.setPrefHeight(60);
+        btnRest.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnRest.setTextOverrun(OverrunStyle.CLIP);
+
+        ImageView imgExit = new ImageView();
+        imgExit.setImage(new Image("images/SearchIcons/exit.png"));
+        imgExit.setFitHeight(30);
+        imgExit.setFitWidth(30);
+        imgExit.setPreserveRatio(true);
+        imgExit.setPickOnBounds(true);
+
+        JFXButton btnExit = new JFXButton("",imgExit);
+        btnExit.setAlignment(Pos.CENTER);
+        btnExit.setPrefWidth(60);
+        btnExit.setPrefHeight(60);
+        btnExit.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnExit.setTextOverrun(OverrunStyle.CLIP);
+
         btnLogOut.setStyle("-fx-background-radius: 30;" );
         btnLogOut.setButtonType(JFXButton.ButtonType.RAISED);
         imgLogOut.setImage(new Image("images/Icons/signout.png"));
@@ -313,24 +355,25 @@ public class AdminMapController extends MapController {
 
         HBox searchBox = new HBox();
 
-//        JFXTextField search = new JFXTextField();
-//        search.setPromptText(" Search");
-//        search.setPrefHeight(34);
-//        search.setPrefWidth(450);
-//        search.setAlignment(Pos.CENTER);
-//        search.setStyle("-fx-font-size: 18px;"
-//                + "-fx-font-weight: bold;"
-//                + "-fx-font-family: fantasy;"
-//                + "-fx-text-fill: #022D5A;"
-//                + "-fx-background-color: white");
-
-
         searchBox.getChildren().add(search);
         searchBox.getChildren().add(btnArrow);
         searchBox.setPrefHeight(60);
         searchBox.setPrefWidth(370);
         searchBox.setAlignment(Pos.CENTER);
         searchBox.setSpacing(-20);
+
+        HBox searchIcons = new HBox();
+        searchIcons.setSpacing(10);
+        searchIcons.getChildren().add(btnCoffee);
+        searchIcons.getChildren().add(btnRest);
+        searchIcons.getChildren().add(btnExit);
+
+        VBox searchNear = new VBox();
+        searchNear.setPrefWidth(370);
+        searchNear.setPrefHeight(200);
+        searchNear.setSpacing(10);
+        searchNear.getChildren().add(searchBox);
+        searchNear.getChildren().add(searchIcons);
 
         Label lblRoom = new Label("Conference Room and Workspace Booking");
         lblRoom.setPrefHeight(50);
@@ -431,7 +474,7 @@ public class AdminMapController extends MapController {
         JFXNodesList nodesListTab = new JFXNodesList();
 
         nodeListSearch.addAnimatedNode(btnSearch);
-        nodeListSearch.addAnimatedNode(searchBox);
+        nodeListSearch.addAnimatedNode(searchNear);
         nodeListSearch.setRotate(90);
         nodeListSearch.setSpacing(150);
 
