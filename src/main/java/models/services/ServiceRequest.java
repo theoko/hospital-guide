@@ -102,6 +102,10 @@ public abstract class ServiceRequest {
     public User getRequester() {
         return requester;
     }
+    public Integer getRequesterID() {
+        if (requester == null) return null;
+        return requester.getUserID();
+    }
     public String getRequesterUserName() {
         if(requester==null) return null;
         return requester.getUsername();
@@ -115,6 +119,10 @@ public abstract class ServiceRequest {
     }
     public User getServicer() {
         return servicer;
+    }
+    public Integer getServicerID() {
+        if (servicer == null) return null;
+        return servicer.getUserID();
     }
     public Timestamp getClaimedTime() {
         return claimedTime;

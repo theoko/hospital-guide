@@ -39,12 +39,24 @@ public class UserTable {
      * Seeds table with a few users
      */
     public static void seed() {
-        User employee = new User(0, "Employee-1", "password", Auth.EMPLOYEE);
-        User custodian = new User(0, "Custodian-1", "password", Auth.CUSTODIAN);
-        createUser(employee);
-        createUser(custodian);
-        // TODO procedurally generate employees and custodians
-        return; // TODO
+
+        // Seed settings
+        final int numEmployees = 5;
+        final int numCustodians = 3;
+
+        // Procedurally generate employees
+        for (int i = 1; i <= numEmployees; i++) {
+            String username = "Employee-" + i;
+            User employee = new User(0, username, "password", Auth.EMPLOYEE);
+            createUser(employee);
+        }
+
+        // Procedurally generate custodians
+        for (int i = 1; i <= numCustodians; i++) {
+            String username = "Custodian-" + i;
+            User custodian = new User(0, username, "password", Auth.CUSTODIAN);
+            createUser(custodian);
+        }
     }
 
     /**
