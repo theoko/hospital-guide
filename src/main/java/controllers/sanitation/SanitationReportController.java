@@ -39,22 +39,6 @@ public class SanitationReportController {
 
     }
 
-
-//    private void initTransportation(){
-//        tblStartLoc.setCellValueFactory(new PropertyValueFactory<>("StartShortName"));
-//        tblEndLoc.setCellValueFactory(new PropertyValueFactory<>("EndShortName"));
-//        tblDetails.setCellValueFactory(new PropertyValueFactory<>("Description"));
-//        tblRequester.setCellValueFactory(new PropertyValueFactory<>("RequesterUserName"));
-////        tblDate.setCellValueFactory(new PropertyValueFactory<>("DueDate"));
-////        tblTime.setCellValueFactory(new PropertyValueFactory<>("DueTime"));
-//        tblClaimTime.setCellValueFactory(new PropertyValueFactory<>("ClaimedTime"));
-//        tblServiceTime.setCellValueFactory(new PropertyValueFactory<>("CompletedTime"));
-//        tblServicer.setCellValueFactory(new PropertyValueFactory<>("ServicerUserName"));
-//        //System.out.println(transports.toString());
-//        tblData.setItems(transports);
-//
-//    }
-
     private List updateRequests() {
         List<SanitationRequest> lstReqs = SanitationTable.getSanitationRequests();
         if (lstReqs != null) {
@@ -97,9 +81,9 @@ public class SanitationReportController {
         //todo implement or remove from fxml
     }
 
-    public  void tblClick(){
-        //todo implement or remove from fxml
-    }
+//    public  void tblClick(){
+//        //todo implement or remove from fxml
+//    }
 
     public void filterData(MouseEvent event) {
         event.consume();
