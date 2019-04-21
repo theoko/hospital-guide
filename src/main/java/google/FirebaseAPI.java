@@ -9,6 +9,7 @@ import controllers.maps.MapController;
 import database.LocationTable;
 import helpers.Constants;
 import helpers.UserHelpers;
+import javafx.application.Platform;
 import map.PathFinder;
 import models.map.Location;
 import models.room.Book;
@@ -127,7 +128,7 @@ public class FirebaseAPI {
 
     }
 
-    public static void checkForCommands(String username, MapController caller) {
+    public static void checkForCommands(String username, Object caller) {
 
         DatabaseReference commandsRef = FirebaseDatabase.getInstance()
                                         .getReference()
@@ -159,24 +160,28 @@ public class FirebaseAPI {
                             String path = pair.getValue().toString();
 //                            PathFinder.setDefLocation(path.substring(0, path.indexOf(":")));
                             System.out.println("we got it 1");
-                            PathFinder.printPath(
-                                    caller,
+                            Platform.runLater(() -> {
+                                PathFinder.printPath(
+                                        (MapController) caller,
 //                                    LocationTable.getLocationByID(path.substring(0, path.indexOf(":"))),
 //                                    LocationTable.getLocationByID(path.substring(path.indexOf(":") + 1))
 //                                    caller.getMap().getLocation(),
 //                                    caller.getMap().getLocation(path.substring(path.indexOf(":") + 1))
-                                    caller.getMap().getLocation(pair.getValue().toString().substring(0, pair.getValue().toString().indexOf(":"))),
-                                    caller.getMap().getLocation(pair.getValue().toString().substring(pair.getValue().toString().indexOf(":") + 1))
-                            );
+                                        ((MapController) caller).getMap().getLocation(pair.getValue().toString().substring(0, pair.getValue().toString().indexOf(":"))),
+                                        ((MapController) caller).getMap().getLocation(pair.getValue().toString().substring(pair.getValue().toString().indexOf(":") + 1))
+
+                                );
+
+                                // Remove commands after executing them
+                                commandsRef.removeValue((error, ref) -> System.out.println("Removed children"));
+                            });
+
+                            commandsRef.removeEventListener(this);
                             System.out.println("we got it 2");
                         }
 
                         iterator.remove();
                     }
-
-                    System.out.println("end of commands");
-                    // Remove commands after executing them
-                    commandsRef.removeValue((error, ref) -> System.out.println("Removed children"));
 
                 } else {
                     System.out.println("no commands");

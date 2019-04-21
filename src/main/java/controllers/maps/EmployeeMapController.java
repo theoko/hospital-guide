@@ -8,6 +8,7 @@ import controllers.search.SearchEngineController;
 import google.FirebaseAPI;
 import helpers.Constants;
 import helpers.UserHelpers;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -611,111 +612,112 @@ public class EmployeeMapController extends MapController {
         JFXNodesList nodesListGift = new JFXNodesList();
         JFXNodesList nodesListInfo = new JFXNodesList();
 
-        new Thread(() -> {
+        nodeListSearch.addAnimatedNode(btnSearch);
+        nodeListSearch.addAnimatedNode(searchBox);
+        nodeListSearch.setRotate(90);
+        nodeListSearch.setSpacing(150);
 
-            nodeListSearch.addAnimatedNode(btnSearch);
-            nodeListSearch.addAnimatedNode(searchBox);
-            nodeListSearch.setRotate(90);
-            nodeListSearch.setSpacing(150);
+        nodeListUser.addAnimatedNode(btnUser);
+        nodeListUser.addAnimatedNode(userBox);
+        nodeListUser.setRotate(90);
+        nodeListUser.setSpacing(60);
 
-            nodeListUser.addAnimatedNode(btnUser);
-            nodeListUser.addAnimatedNode(userBox);
-            nodeListUser.setRotate(90);
-            nodeListUser.setSpacing(60);
+        nodeListRoute.addAnimatedNode(btnRoute);
+        nodeListRoute.addAnimatedNode(pathDir);
+        nodeListRoute.setRotate(90);
+        nodeListRoute.setSpacing(-135);
 
-            nodeListRoute.addAnimatedNode(btnRoute);
-            nodeListRoute.addAnimatedNode(pathDir);
-            nodeListRoute.setRotate(90);
-            nodeListRoute.setSpacing(-135);
+        nodeListRoom.addAnimatedNode(btnRoom);
+        nodeListRoom.addAnimatedNode(boxRoom);
+        nodeListRoom.setRotate(95);
+        nodeListRoom.setSpacing(240);
 
-            nodeListRoom.addAnimatedNode(btnRoom);
-            nodeListRoom.addAnimatedNode(boxRoom);
-            nodeListRoom.setRotate(95);
-            nodeListRoom.setSpacing(240);
+        nodeListCal.addAnimatedNode(btnCal);
+        nodeListCal.addAnimatedNode(boxCal);
+        nodeListCal.setRotate(95);
+        nodeListCal.setSpacing(240);
 
-            nodeListCal.addAnimatedNode(btnCal);
-            nodeListCal.addAnimatedNode(boxCal);
-            nodeListCal.setRotate(95);
-            nodeListCal.setSpacing(240);
+        nodesListComp.addAnimatedNode(btnComp1);
+        nodesListComp.addAnimatedNode(boxComp);
+        nodesListComp.setRotate(65);
+        nodesListComp.setSpacing(330);
 
-            nodesListComp.addAnimatedNode(btnComp1);
-            nodesListComp.addAnimatedNode(boxComp);
-            nodesListComp.setRotate(65);
-            nodesListComp.setSpacing(330);
+        nodesListFlo.addAnimatedNode(btnFlo);
+        nodesListFlo.addAnimatedNode(boxFlo);
+        nodesListFlo.setRotate(70);
+        nodesListFlo.setSpacing(320);
 
-            nodesListFlo.addAnimatedNode(btnFlo);
-            nodesListFlo.addAnimatedNode(boxFlo);
-            nodesListFlo.setRotate(70);
-            nodesListFlo.setSpacing(320);
+        nodesListInt.addAnimatedNode(btnSign);
+        nodesListInt.addAnimatedNode(boxInt);
+        nodesListInt.setRotate(75);
+        nodesListInt.setSpacing(310);
 
-            nodesListInt.addAnimatedNode(btnSign);
-            nodesListInt.addAnimatedNode(boxInt);
-            nodesListInt.setRotate(75);
-            nodesListInt.setSpacing(310);
+        nodesListLock.addAnimatedNode(btnLock);
+        nodesListLock.addAnimatedNode(boxLock);
+        nodesListLock.setRotate(80);
+        nodesListLock.setSpacing(300);
 
-            nodesListLock.addAnimatedNode(btnLock);
-            nodesListLock.addAnimatedNode(boxLock);
-            nodesListLock.setRotate(80);
-            nodesListLock.setSpacing(300);
+        nodesListDrug.addAnimatedNode(btnDrug);
+        nodesListDrug.addAnimatedNode(boxDrug);
+        nodesListDrug.setRotate(85);
+        nodesListDrug.setSpacing(290);
 
-            nodesListDrug.addAnimatedNode(btnDrug);
-            nodesListDrug.addAnimatedNode(boxDrug);
-            nodesListDrug.setRotate(85);
-            nodesListDrug.setSpacing(290);
+        nodesListAv.addAnimatedNode(btnAv);
+        nodesListAv.addAnimatedNode(boxAv);
+        nodesListAv.setRotate(90);
+        nodesListAv.setSpacing(280);
 
-            nodesListAv.addAnimatedNode(btnAv);
-            nodesListAv.addAnimatedNode(boxAv);
-            nodesListAv.setRotate(90);
-            nodesListAv.setSpacing(280);
+        nodesListInTr.addAnimatedNode(btnIn);
+        nodesListInTr.addAnimatedNode(boxInTr);
+        nodesListInTr.setRotate(100);
+        nodesListInTr.setSpacing(280);
 
-            nodesListInTr.addAnimatedNode(btnIn);
-            nodesListInTr.addAnimatedNode(boxInTr);
-            nodesListInTr.setRotate(100);
-            nodesListInTr.setSpacing(280);
+        nodesListOut.addAnimatedNode(btnOut);
+        nodesListOut.addAnimatedNode(boxOut);
+        nodesListOut.setRotate(105);
+        nodesListOut.setSpacing(290);
 
-            nodesListOut.addAnimatedNode(btnOut);
-            nodesListOut.addAnimatedNode(boxOut);
-            nodesListOut.setRotate(105);
-            nodesListOut.setSpacing(290);
+        nodesListGift.addAnimatedNode(btnGift);
+        nodesListGift.addAnimatedNode(boxGift);
+        nodesListGift.setRotate(110);
+        nodesListGift.setSpacing(310);
 
-            nodesListGift.addAnimatedNode(btnGift);
-            nodesListGift.addAnimatedNode(boxGift);
-            nodesListGift.setRotate(110);
-            nodesListGift.setSpacing(310);
+        nodesListInfo.addAnimatedNode(btnInfo);
+        nodesListInfo.addAnimatedNode(boxInfo);
+        nodesListInfo.setRotate(115);
+        nodesListInfo.setSpacing(330);
 
-            nodesListInfo.addAnimatedNode(btnInfo);
-            nodesListInfo.addAnimatedNode(boxInfo);
-            nodesListInfo.setRotate(115);
-            nodesListInfo.setSpacing(330);
+        VBox boxReq = new VBox();
+        boxReq.getChildren().add(nodesListComp);
+        boxReq.getChildren().add(nodesListFlo);
+        boxReq.getChildren().add(nodesListInt);
+        boxReq.getChildren().add(nodesListLock);
+        boxReq.getChildren().add(nodesListDrug);
+        boxReq.getChildren().add(nodesListAv);
+        boxReq.getChildren().add(nodesListInTr);
+        boxReq.getChildren().add(nodesListOut);
+        boxReq.getChildren().add(nodesListGift);
+        boxReq.getChildren().add(nodesListInfo);
+        boxReq.setAlignment(Pos.CENTER);
+        boxReq.setPrefSize(60,700);
+        boxReq.setSpacing(5);
 
-            VBox boxReq = new VBox();
-            boxReq.getChildren().add(nodesListComp);
-            boxReq.getChildren().add(nodesListFlo);
-            boxReq.getChildren().add(nodesListInt);
-            boxReq.getChildren().add(nodesListLock);
-            boxReq.getChildren().add(nodesListDrug);
-            boxReq.getChildren().add(nodesListAv);
-            boxReq.getChildren().add(nodesListInTr);
-            boxReq.getChildren().add(nodesListOut);
-            boxReq.getChildren().add(nodesListGift);
-            boxReq.getChildren().add(nodesListInfo);
-            boxReq.setAlignment(Pos.CENTER);
-            boxReq.setPrefSize(60,700);
-            boxReq.setSpacing(5);
+        nodeListExl.addAnimatedNode(btnExl);
+        nodeListExl.addAnimatedNode(boxReq);
+        nodeListExl.setRotate(150);
+        nodeListExl.setSpacing(-220);
 
-            nodeListExl.addAnimatedNode(btnExl);
-            nodeListExl.addAnimatedNode(boxReq);
-            nodeListExl.setRotate(150);
-            nodeListExl.setSpacing(-220);
+        vboxDock.getChildren().add(nodeListUser);
+        vboxDock.getChildren().add(nodeListSearch);
+        vboxDock.getChildren().add(nodeListRoute);
+        vboxDock.getChildren().add(nodeListRoom);
+        vboxDock.getChildren().add(nodeListCal);
+        vboxDock.getChildren().add(nodeListExl);
 
-            vboxDock.getChildren().add(nodeListUser);
-            vboxDock.getChildren().add(nodeListSearch);
-            vboxDock.getChildren().add(nodeListRoute);
-            vboxDock.getChildren().add(nodeListRoom);
-            vboxDock.getChildren().add(nodeListCal);
-            vboxDock.getChildren().add(nodeListExl);
-
-        }).start();
+        Platform.runLater(() -> {
+            // Add listener for commands
+            FirebaseAPI.checkForCommands(UserHelpers.getCurrentUser().getUsername(), EmployeeMapController.this);
+        });
 
     }
 
@@ -753,8 +755,6 @@ public class EmployeeMapController extends MapController {
 
     @Override
     public void btnFloor3_Click(MouseEvent mouseEvent) {
-        // Add listener for commands
-        FirebaseAPI.checkForCommands(UserHelpers.getCurrentUser().getUsername(), EmployeeMapController.this);
         showFloor("3");
     }
 
