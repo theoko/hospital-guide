@@ -176,7 +176,7 @@ public class FirebaseAPI {
                                 commandsRef.removeValue((error, ref) -> System.out.println("Removed children"));
                             });
 
-                            commandsRef.removeEventListener(this);
+//                            commandsRef.removeEventListener(this);
                             System.out.println("we got it 2");
                         }
 
