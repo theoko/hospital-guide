@@ -157,23 +157,24 @@ public class FirebaseAPI {
                         System.out.println(pair.getValue().toString().substring(pair.getValue().toString().indexOf(":") + 1));
 
                         if(pair.getKey().equals("pathfinding")) {
-                            String path = pair.getValue().toString();
-//                            PathFinder.setDefLocation(path.substring(0, path.indexOf(":")));
                             System.out.println("we got it 1");
                             Platform.runLater(() -> {
+
+                                String startingLocation = pair.getValue().toString().substring(0, pair.getValue().toString().indexOf(":"));
+                                String destination = pair.getValue().toString().substring(pair.getValue().toString().indexOf(":") + 1);
+
+                                if(!startingLocation.equals(MapController.getTempStart())) {
+                                    MapController.setTempStart(startingLocation);
+                                }
+
                                 PathFinder.printPath(
                                         (MapController) caller,
-//                                    LocationTable.getLocationByID(path.substring(0, path.indexOf(":"))),
-//                                    LocationTable.getLocationByID(path.substring(path.indexOf(":") + 1))
-//                                    caller.getMap().getLocation(),
-//                                    caller.getMap().getLocation(path.substring(path.indexOf(":") + 1))
-                                        ((MapController) caller).getMap().getLocation(pair.getValue().toString().substring(0, pair.getValue().toString().indexOf(":"))),
-                                        ((MapController) caller).getMap().getLocation(pair.getValue().toString().substring(pair.getValue().toString().indexOf(":") + 1))
-
+                                        ((MapController) caller).getMap().getLocation(startingLocation),
+                                        ((MapController) caller).getMap().getLocation(destination)
                                 );
 
                                 // Remove commands after executing them
-                                commandsRef.removeValue((error, ref) -> System.out.println("Removed children"));
+                                commandsRef.child("pathfinding").removeValue((error, ref) -> System.out.println("Removed children"));
                             });
 
 //                            commandsRef.removeEventListener(this);
