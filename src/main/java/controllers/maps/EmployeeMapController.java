@@ -55,11 +55,8 @@ public class EmployeeMapController extends MapController {
         super.initialize(location, resources);
         SearchEngineController.setParentController(this);
 
-        // TODO add back in
-        /*
         SearchAPI searchAPI = new SearchAPI(search, true);
         searchAPI.searchable();
-        */
 
         MapDisplay.displayEmployee(this);
         initDirections();

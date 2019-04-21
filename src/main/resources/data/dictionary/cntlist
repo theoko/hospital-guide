@@ -2723,7 +2723,7 @@
 21 1%1:23:00:: 1
 20 work%2:35:02:: 4
 20 weep%2:29:00:: 1
-20 weather%1:19:00:: 1
+20 weatherController%1:19:00:: 1
 20 wall%1:08:00:: 5
 20 vary%2:42:00:: 2
 20 university%1:14:00:: 1
@@ -21648,8 +21648,8 @@
 1 weave%2:38:01:: 3
 1 weatherstrip%2:30:00:: 1
 1 weather_condition%1:19:00:: 1
-1 weather-beaten%5:00:00:tough:02 1
-1 weather%5:00:00:windward:00 1
+1 weatherController-beaten%5:00:00:tough:02 1
+1 weatherController%5:00:00:windward:00 1
 1 wearying%5:00:00:effortful:00 1
 1 weary%2:29:00:: 1
 1 wearisome%5:00:00:uninteresting:00 1
@@ -36633,7 +36633,7 @@
 1 all_of_a_sudden%4:02:00:: 1
 1 all_at_once%4:02:01:: 1
 1 all_at_once%4:02:00:: 2
-1 all-weather%5:00:00:unrestricted:00 1
+1 all-weatherController%5:00:00:unrestricted:00 1
 1 all-victorious%5:00:00:unconquerable:00 1
 1 all-time%5:00:00:incomparable:00 1
 1 all-round%5:00:00:comprehensive:00 1

@@ -76,6 +76,9 @@
                 <AnchorPane fx:id="AboutUs" style="-fx-background-color: white;">
                     <fx:include source="../../../AboutPage.fxml"/>
                 </AnchorPane>
+                <AnchorPane AnchorPane.topAnchor="15" AnchorPane.rightAnchor="15">
+                    <fx:include source="../weather/Weather.fxml"/>
+                </AnchorPane>
                 <JFXTextField fx:id="search" prefWidth="450" prefHeight="34" promptText=" Search"  alignment="CENTER" style=" -fx-font-size: 18px; -fx-font-weight: bold; -fx-font-family: fantasy; -fx-text-fill: #022D5A; -fx-background-color: white" />
                 <JFXTextField fx:id="textNum" prefWidth="450" prefHeight="34" promptText=" Phone Number"  alignment="CENTER" style=" -fx-font-size: 18px; -fx-font-weight: bold; -fx-font-family: fantasy; -fx-text-fill: #022D5A; -fx-background-color: white" />
                 <JFXButton fx:id="btnText" contentDisplay="CENTER" onMouseClicked="#btn_SendDirections" prefHeight="60.0" prefWidth="60.0" textOverrun="CLIP">

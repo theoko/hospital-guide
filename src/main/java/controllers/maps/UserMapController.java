@@ -47,8 +47,8 @@ public class UserMapController extends MapController {
         MapDisplay.displayUser(this);
         initDirections();
 
-//        SearchAPI searchAPI = new SearchAPI(search, true);
-//        searchAPI.searchable();
+        SearchAPI searchAPI = new SearchAPI(search, true);
+        searchAPI.searchable();
 
 
     }
