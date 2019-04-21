@@ -49,9 +49,42 @@ public class CustodianMapController extends MapController {
         MapDisplay.displayCust(this);
         initDirections();
 
-        SearchAPI searchAPI = new SearchAPI(search, true);
-        searchAPI.searchable();
+//        SearchAPI searchAPI = new SearchAPI(search, true);
+//        searchAPI.searchable();
 
+    }
+
+    public void btn_SendDirections (MouseEvent event) {
+        if(currentRoute == null) return;
+        TextMessenger tm = new TextMessenger();
+        String input_phone_number = "+1"+textNum.getText();
+        tm.declareRecipient(input_phone_number);
+        tm.declareMessage(MapController.currentDirections);
+        tm.sendMessage();
+        event.consume();
+        event.consume();
+    }
+
+    @Override
+    public void btnReturn_Click(MouseEvent mouseEvent) throws Exception {
+        ScreenController.logOut(btnLogOut);
+        ScreenController.activate(Constants.Routes.LOGIN);
+    }
+
+    @Override
+    public void showFloor(String newFloor) {
+        super.showFloorHelper(newFloor);
+        MapDisplay.displayEmployee(this);
+    }
+
+    @Override
+    public void displayPath(Path line) {
+        super.displayPath(line);
+        MapDisplay.displayCust(this);
+    }
+
+    @Override
+    protected void addDoc() {
         ImageView imgUser = new ImageView();
         imgUser.setImage(new Image("images/Icons/user.png"));
         imgUser.setFitHeight(30);
@@ -250,66 +283,6 @@ public class CustodianMapController extends MapController {
         vboxDock.getChildren().add(nodeListRoute);
         vboxDock.getChildren().add(nodeListExl);
     }
-
-    public void btn_SendDirections (MouseEvent event) {
-        if(currentRoute == null) return;
-        TextMessenger tm = new TextMessenger();
-        String input_phone_number = "+1"+textNum.getText();
-        tm.declareRecipient(input_phone_number);
-        tm.declareMessage(MapController.currentDirections);
-        tm.sendMessage();
-        event.consume();
-        event.consume();
-    }
-
-    @Override
-    public void btnReturn_Click(MouseEvent mouseEvent) throws Exception {
-        ScreenController.logOut(btnLogOut);
-        ScreenController.activate(Constants.Routes.LOGIN);
-    }
-
-    @Override
-    public void btnFloor3_Click(MouseEvent mouseEvent) {
-        showFloor("3");
-    }
-
-    @Override
-    public void btnFloor2_Click(MouseEvent mouseEvent) {
-        showFloor("2");
-    }
-
-    @Override
-    public void btnFloor1_Click(MouseEvent mouseEvent) {
-        showFloor("1");
-    }
-
-    @Override
-    public void btnFloorG_Click(MouseEvent mouseEvent) {
-        showFloor("G");
-    }
-
-    @Override
-    public void btnFloorL1_Click(MouseEvent mouseEvent) {
-        showFloor("L1");
-    }
-
-    @Override
-    public void btnFloorL2_Click(MouseEvent mouseEvent) {
-        showFloor("L2");
-    }
-
-    @Override
-    public void showFloor(String newFloor) {
-        super.showFloorHelper(newFloor);
-        MapDisplay.displayEmployee(this);
-    }
-
-    @Override
-    public void displayPath(Path line) {
-        super.displayPath(line);
-        MapDisplay.displayCust(this);
-    }
-
 }
 
 

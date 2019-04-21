@@ -64,8 +64,8 @@ public class AdminMapController extends MapController {
         SearchEngineController.setParentController(this);
         MapDisplay.displayAdmin(this);
 
-        SearchAPI searchAPI = new SearchAPI(search, true);
-        searchAPI.searchable();
+//        SearchAPI searchAPI = new SearchAPI(search, true);
+//        searchAPI.searchable();
 
         Delta deltaDragged = new Delta();
         panMap.setOnMousePressed((e) -> {
@@ -98,7 +98,6 @@ public class AdminMapController extends MapController {
                 e1.printStackTrace();
             }
         });
-
 
         Mover mover = new Mover();
         panMap.setOnMouseMoved(e -> {
@@ -137,7 +136,46 @@ public class AdminMapController extends MapController {
                 mover.line = null;
             }
         });
+    }
 
+    @Override
+    public void btnReturn_Click(MouseEvent mouseEvent) throws Exception {
+        ScreenController.logOut(btnLogOut);
+        ScreenController.activate(Constants.Routes.LOGIN);
+    }
+
+    private void clearEdges() {
+        List<Node> lstNodes = new ArrayList<>();
+        for (Node n : panMap.getChildren()) {
+            if (n instanceof Line && !n.getId().equals(MOVER_EDGE)) {
+                lstNodes.add(n);
+            }
+        }
+        panMap.getChildren().removeAll(lstNodes);
+    }
+
+    @Override
+    public void showFloor(String newFloor) {
+        super.showFloorHelper(newFloor);
+        clearEdges();
+        MapDisplay.displayAdmin(this);
+    }
+
+    @Override
+    public boolean isAdmin() {
+        return true;
+    }
+
+    public static Location getEdgLoc() {
+        return edgLoc;
+    }
+
+    public static void setEdgLoc(Location edgLoc) {
+        AdminMapController.edgLoc = edgLoc;
+    }
+
+    @Override
+    protected void addDoc() {
         ImageView imgUser = new ImageView();
         imgUser.setImage(new Image("images/Icons/user.png"));
         imgUser.setFitHeight(30);
@@ -434,72 +472,6 @@ public class AdminMapController extends MapController {
         vboxDock.getChildren().add(nodesListAlgo);
         vboxDock.getChildren().add(nodesListClean);
         vboxDock.getChildren().add(nodesListTab);
-    }
-
-    @Override
-    public void btnReturn_Click(MouseEvent mouseEvent) throws Exception {
-        ScreenController.logOut(btnLogOut);
-        ScreenController.activate(Constants.Routes.LOGIN);
-    }
-
-    @Override
-    public void btnFloor3_Click(MouseEvent mouseEvent) {
-        showFloor("3");
-    }
-
-    @Override
-    public void btnFloor2_Click(MouseEvent mouseEvent) {
-        showFloor("2");
-    }
-
-    @Override
-    public void btnFloor1_Click(MouseEvent mouseEvent) {
-        showFloor("1");
-    }
-
-    @Override
-    public void btnFloorG_Click(MouseEvent mouseEvent) {
-        showFloor("G");
-    }
-
-    @Override
-    public void btnFloorL1_Click(MouseEvent mouseEvent) {
-        showFloor("L1");
-    }
-
-    @Override
-    public void btnFloorL2_Click(MouseEvent mouseEvent) {
-        showFloor("L2");
-    }
-
-    private void clearEdges() {
-        List<Node> lstNodes = new ArrayList<>();
-        for (Node n : panMap.getChildren()) {
-            if (n instanceof Line && !n.getId().equals(MOVER_EDGE)) {
-                lstNodes.add(n);
-            }
-        }
-        panMap.getChildren().removeAll(lstNodes);
-    }
-
-    @Override
-    public void showFloor(String newFloor) {
-        super.showFloorHelper(newFloor);
-        clearEdges();
-        MapDisplay.displayAdmin(this);
-    }
-
-    @Override
-    public boolean isAdmin() {
-        return true;
-    }
-
-    public static Location getEdgLoc() {
-        return edgLoc;
-    }
-
-    public static void setEdgLoc(Location edgLoc) {
-        AdminMapController.edgLoc = edgLoc;
     }
 }
 

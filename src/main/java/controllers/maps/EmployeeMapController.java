@@ -63,7 +63,54 @@ public class EmployeeMapController extends MapController {
 
         MapDisplay.displayEmployee(this);
         initDirections();
+    }
 
+    @Override
+    public void zoomOut() {
+        Thread t = new Thread(() -> {
+            try {
+                Thread.sleep(3700);
+                gesMap.reset();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        });
+        t.setDaemon(true);
+        t.start();
+    }
+
+    public void btn_SendDirections (MouseEvent event) {
+        if(currentRoute == null) return;
+        TextMessenger tm = new TextMessenger();
+        String input_phone_number = "+1"+textNum.getText();
+        tm.declareRecipient(input_phone_number);
+        tm.declareMessage(MapController.currentDirections);
+        tm.sendMessage();
+        event.consume();
+        event.consume();
+    }
+
+    @Override
+    public void btnReturn_Click(MouseEvent mouseEvent) throws Exception {
+        ScreenController.logOut(btnLogOut);
+        ScreenController.activate(Constants.Routes.LOGIN);
+    }
+
+    @Override
+    public void showFloor(String newFloor) {
+        super.showFloorHelper(newFloor);
+        MapDisplay.displayEmployee(this);
+    }
+
+    @Override
+    public void displayPath(Path line) {
+        super.displayPath(line);
+        MapDisplay.displayEmployee(this);
+    }
+
+    @Override
+    protected void addDoc() {
         ImageView imgUser = new ImageView();
         imgUser.setImage(new Image("images/Icons/user.png"));
         imgUser.setFitHeight(30);
@@ -713,79 +760,5 @@ public class EmployeeMapController extends MapController {
         vboxDock.getChildren().add(nodeListRoom);
         vboxDock.getChildren().add(nodeListCal);
         vboxDock.getChildren().add(nodeListExl);
-    }
-
-    @Override
-    public void zoomOut() {
-        Thread t = new Thread(() -> {
-            try {
-                Thread.sleep(3700);
-                gesMap.reset();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-        });
-        t.setDaemon(true);
-        t.start();
-    }
-
-    public void btn_SendDirections (MouseEvent event) {
-        if(currentRoute == null) return;
-        TextMessenger tm = new TextMessenger();
-        String input_phone_number = "+1"+textNum.getText();
-        tm.declareRecipient(input_phone_number);
-        tm.declareMessage(MapController.currentDirections);
-        tm.sendMessage();
-        event.consume();
-        event.consume();
-    }
-
-    @Override
-    public void btnReturn_Click(MouseEvent mouseEvent) throws Exception {
-        ScreenController.logOut(btnLogOut);
-        ScreenController.activate(Constants.Routes.LOGIN);
-    }
-
-    @Override
-    public void btnFloor3_Click(MouseEvent mouseEvent) {
-        showFloor("3");
-    }
-
-    @Override
-    public void btnFloor2_Click(MouseEvent mouseEvent) {
-        showFloor("2");
-    }
-
-    @Override
-    public void btnFloor1_Click(MouseEvent mouseEvent) {
-        showFloor("1");
-    }
-
-    @Override
-    public void btnFloorG_Click(MouseEvent mouseEvent) {
-        showFloor("G");
-    }
-
-    @Override
-    public void btnFloorL1_Click(MouseEvent mouseEvent) {
-        showFloor("L1");
-    }
-
-    @Override
-    public void btnFloorL2_Click(MouseEvent mouseEvent) {
-        showFloor("L2");
-    }
-
-    @Override
-    public void showFloor(String newFloor) {
-        super.showFloorHelper(newFloor);
-        MapDisplay.displayEmployee(this);
-    }
-
-    @Override
-    public void displayPath(Path line) {
-        super.displayPath(line);
-        MapDisplay.displayEmployee(this);
     }
 }

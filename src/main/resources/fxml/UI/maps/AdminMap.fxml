@@ -3,7 +3,6 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -13,7 +12,6 @@
 <?import javafx.scene.text.Font?>
 <?import net.kurobako.gesturefx.GesturePane?>
 
-<?import javafx.scene.shape.Circle?>
 <?import com.jfoenix.controls.JFXTextField?>
 <AnchorPane stylesheets="@../../../css/colorScheme.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.maps.AdminMapController">
     <JFXTabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -30,45 +28,45 @@
                         <Insets bottom="25" left="25" right="25" top="25" />
                     </padding>
                     <HBox alignment="CENTER_LEFT" spacing="10">
+                        <JFXButton fx:id="btnFloor4" text="4" styleClass="animated-option-button" onMouseClicked="#btnFloor4_Click"/>
+                    </HBox>
+                    <HBox alignment="CENTER_LEFT" spacing="10">
                         <JFXButton fx:id="btnFloor3" onMouseClicked="#btnFloor3_Click" styleClass="animated-option-button" text="3" />
-                        <ImageView fx:id="imgArrow3" fitHeight="50.0" fitWidth="50.0" preserveRatio="true" />
                     </HBox>
                     <HBox alignment="CENTER_LEFT" spacing="10">
                         <JFXButton fx:id="btnFloor2" onMouseClicked="#btnFloor2_Click" styleClass="animated-option-button" text="2" />
-                        <ImageView fx:id="imgArrow2" fitHeight="50.0" fitWidth="50.0" preserveRatio="true" />
                     </HBox>
                     <HBox alignment="CENTER_LEFT" spacing="10">
                         <JFXButton fx:id="btnFloor1" onMouseClicked="#btnFloor1_Click" styleClass="animated-option-button" text="1" />
-                        <ImageView fx:id="imgArrow1" fitHeight="50.0" fitWidth="50.0" preserveRatio="true" />
                     </HBox>
                     <HBox alignment="CENTER_LEFT" spacing="10">
                         <JFXButton fx:id="btnFloorG" onMouseClicked="#btnFloorG_Click" styleClass="animated-option-button" text="G" />
-                        <ImageView fx:id="imgArrowG" fitHeight="50.0" fitWidth="50.0" preserveRatio="true" />
                     </HBox>
                     <HBox alignment="CENTER_LEFT" spacing="10">
                         <JFXButton fx:id="btnFloorL1" onMouseClicked="#btnFloorL1_Click" styleClass="animated-option-button" text="L1" />
-                        <ImageView fx:id="imgArrowL1" fitHeight="50.0" fitWidth="50.0" preserveRatio="true" />
                     </HBox>
                     <HBox alignment="CENTER_LEFT" spacing="10">
                         <JFXButton fx:id="btnFloorL2" onMouseClicked="#btnFloorL2_Click" styleClass="animated-option-button" text="L2" />
-                        <ImageView fx:id="imgArrowL2" fitHeight="50.0" fitWidth="50.0" preserveRatio="true" />
                     </HBox>
                 </VBox>
                 <AnchorPane AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="200.0">
-                    <children>
-                        <VBox fx:id="vboxDock" prefHeight="468.0" prefWidth="60.0" style="-fx-background-color: #022D5A; -fx-background-radius: 30;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                        <JFXButton fx:id="btnLogOut" contentDisplay="CENTER" onMouseClicked="#btnReturn_Click" prefHeight="60.0" prefWidth="60.0" textOverrun="CLIP">
-                            <graphic>
-                                <ImageView fx:id="imgLogOut" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
-                            </graphic>
-                            <font>
-                                <Font size="1.0" />
-                            </font>
-                            <padding>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                            </padding>
-                        </JFXButton>
-                    </children>
+                    <VBox fx:id="vboxDock" prefHeight="468.0" prefWidth="60.0"
+                          style="-fx-background-color: #022D5A; -fx-background-radius: 30;"
+                          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                          AnchorPane.topAnchor="0.0"/>
+                    <JFXButton fx:id="btnLogOut" contentDisplay="CENTER" onMouseClicked="#btnReturn_Click"
+                               prefHeight="60.0" prefWidth="60.0" textOverrun="CLIP">
+                        <graphic>
+                            <ImageView fx:id="imgLogOut" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true"
+                                       preserveRatio="true"/>
+                        </graphic>
+                        <font>
+                            <Font size="1.0"/>
+                        </font>
+                        <padding>
+                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                        </padding>
+                    </JFXButton>
                 </AnchorPane>
                 <AnchorPane style="-fx-background-color: white;" fx:id="roomBooking">
                     <fx:include source="../booking/RoomBookingWindow.fxml" />
