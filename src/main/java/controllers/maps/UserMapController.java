@@ -181,6 +181,20 @@ public class UserMapController extends MapController {
         btnRest.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnRest.setTextOverrun(OverrunStyle.CLIP);
 
+        ImageView imgExit = new ImageView();
+        imgExit.setImage(new Image("images/SearchIcons/exit.png"));
+        imgExit.setFitHeight(30);
+        imgExit.setFitWidth(30);
+        imgExit.setPreserveRatio(true);
+        imgExit.setPickOnBounds(true);
+
+        JFXButton btnExit = new JFXButton("",imgExit);
+        btnExit.setAlignment(Pos.CENTER);
+        btnExit.setPrefWidth(60);
+        btnExit.setPrefHeight(60);
+        btnExit.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnExit.setTextOverrun(OverrunStyle.CLIP);
+
         btnLogOut.setStyle("-fx-background-radius: 30;" );
         btnLogOut.setButtonType(JFXButton.ButtonType.RAISED);
         imgLogOut.setImage(new Image("images/Icons/signout.png"));
@@ -231,6 +245,7 @@ public class UserMapController extends MapController {
         searchIcons.setSpacing(10);
         searchIcons.getChildren().add(btnCoffee);
         searchIcons.getChildren().add(btnRest);
+        searchIcons.getChildren().add(btnExit);
 
         VBox searchNear = new VBox();
         searchNear.setPrefWidth(370);
