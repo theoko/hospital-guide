@@ -3,19 +3,28 @@ package controllers.weather;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.util.Duration;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.LocalDateTime;
 
 public class WeatherController {
 
     public Label lblTemp;
     public ImageView imgType;
+    private int minute;
+    private int hour;
+    public Label lblTime;
 
     private final String weatherURL = "https://api.openweathermap.org/data/2.5/weather?q=Boston&appid=0021f7b296482eecb5c71c4f138cf484";
 
@@ -60,6 +69,24 @@ public class WeatherController {
             double tempK = Double.valueOf(this.getKey(this.getKey(result.toString(), "main"), "temp"));
             int tempF = (int)((tempK - 273) * 1.8 + 32);
             lblTemp.setText(String.valueOf(tempF));
+
+
+            Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
+                minute = LocalDateTime.now().getMinute();
+                hour = LocalDateTime.now().getHour();
+                if(hour < 10 && minute < 10)
+                    lblTime.setText("0" + hour + ":" + "0" + (minute));
+                else if(hour >= 10 && minute < 10)
+                    lblTime.setText(hour + ":" + "0" + (minute));
+                else if(hour < 10)
+                    lblTime.setText("0" + hour + ":" + (minute));
+                else
+                    lblTime.setText(hour + ":" + (minute));
+            }),
+                    new KeyFrame(Duration.seconds(1))
+            );
+            clock.setCycleCount(Animation.INDEFINITE);
+            clock.play();
 
         } catch (IOException e) {
             e.printStackTrace();
