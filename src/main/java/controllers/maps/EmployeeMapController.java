@@ -26,7 +26,6 @@ import messaging.TextMessenger;
 import models.search.SearchAPI;
 
 import java.net.URL;
-import java.time.Duration;
 import java.util.ResourceBundle;
 
 public class EmployeeMapController extends MapController {
@@ -716,7 +715,8 @@ public class EmployeeMapController extends MapController {
 
         Platform.runLater(() -> {
             // Add listener for commands
-            FirebaseAPI.checkForCommands(UserHelpers.getCurrentUser().getUsername(), EmployeeMapController.this);
+            FirebaseAPI.setCaller(EmployeeMapController.this);
+            FirebaseAPI.checkForCommands(UserHelpers.getCurrentUser().getUsername());
         });
 
     }
@@ -750,6 +750,7 @@ public class EmployeeMapController extends MapController {
     @Override
     public void btnReturn_Click(MouseEvent mouseEvent) throws Exception {
         ScreenController.logOut(btnLogOut);
+        FirebaseAPI.setCaller(null);
         ScreenController.activate(Constants.Routes.LOGIN);
     }
 

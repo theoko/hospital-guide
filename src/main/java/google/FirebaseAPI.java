@@ -128,7 +128,12 @@ public class FirebaseAPI {
 
     }
 
-    public static void checkForCommands(String username, Object caller) {
+    public static void setCaller(Object newCaller) {
+        caller = newCaller;
+    }
+
+    private static Object caller;
+    public static void checkForCommands(String username) {
 
         DatabaseReference commandsRef = FirebaseDatabase.getInstance()
                                         .getReference()
@@ -139,7 +144,7 @@ public class FirebaseAPI {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
 
-                if(snapshot.exists() && snapshot.getChildrenCount() > 0) {
+                if(snapshot.exists() && snapshot.getChildrenCount() > 0 && caller != null) {
 
                     System.out.println("we got commands!");
                     System.out.println(snapshot.getValue().toString());
