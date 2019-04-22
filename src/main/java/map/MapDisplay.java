@@ -7,11 +7,13 @@ import database.EdgeTable;
 import database.LocationTable;
 import helpers.Constants;
 import javafx.event.Event;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.StrokeLineCap;
+import javafx.stage.Stage;
 import models.map.Edge;
 import models.map.Location;
 import models.map.Map;
@@ -21,6 +23,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import static controllers.ScreenController.getScreenMap;
+import static controllers.ScreenController.getStage;
 
 public class MapDisplay {
     private final static double locRadius = 15;
@@ -244,14 +249,14 @@ public class MapDisplay {
             });
         }
 
-
-
         circle.setOnMouseEntered(event -> {
             circle.setRadius(locRadius + 6);
+            ScreenController.sceneThing.setCursor(Cursor.HAND);
         });
 
         circle.setOnMouseExited(event -> {
             circle.setRadius(locRadius);
+            ScreenController.sceneThing.setCursor(Cursor.DEFAULT);
         });
 
         loc.setNodeCircle(circle);
