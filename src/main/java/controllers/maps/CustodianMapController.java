@@ -197,6 +197,34 @@ public class CustodianMapController extends MapController {
         btnExit.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnExit.setTextOverrun(OverrunStyle.CLIP);
 
+        ImageView imgElev = new ImageView();
+        imgElev.setImage(new Image("images/SearchIcons/elev.png"));
+        imgElev.setFitHeight(30);
+        imgElev.setFitWidth(30);
+        imgElev.setPreserveRatio(true);
+        imgElev.setPickOnBounds(true);
+
+        JFXButton btnElev = new JFXButton("",imgElev);
+        btnElev.setAlignment(Pos.CENTER);
+        btnElev.setPrefWidth(60);
+        btnElev.setPrefHeight(60);
+        btnElev.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnElev.setTextOverrun(OverrunStyle.CLIP);
+
+        ImageView imgInfo = new ImageView();
+        imgInfo.setImage(new Image("images/Icons/info.png"));
+        imgInfo.setFitHeight(30);
+        imgInfo.setFitWidth(30);
+        imgInfo.setPreserveRatio(true);
+        imgInfo.setPickOnBounds(true);
+
+        JFXButton btnInfo = new JFXButton("",imgInfo);
+        btnInfo.setAlignment(Pos.CENTER);
+        btnInfo.setPrefWidth(60);
+        btnInfo.setPrefHeight(60);
+        btnInfo.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnInfo.setTextOverrun(OverrunStyle.CLIP);
+
         btnLogOut.setStyle("-fx-background-radius: 30;" );
         btnLogOut.setButtonType(JFXButton.ButtonType.RAISED);
         imgLogOut.setImage(new Image("images/Icons/signout.png"));
@@ -248,13 +276,17 @@ public class CustodianMapController extends MapController {
         searchIcons.getChildren().add(btnCoffee);
         searchIcons.getChildren().add(btnRest);
         searchIcons.getChildren().add(btnExit);
+        searchIcons.getChildren().add(btnElev);
+        searchIcons.getChildren().add(btnInfo);
+        searchIcons.setAlignment(Pos.CENTER);
 
         VBox searchNear = new VBox();
         searchNear.setPrefWidth(370);
-        searchNear.setPrefHeight(200);
-        searchNear.setSpacing(10);
+        searchNear.setPrefHeight(105);
+        searchNear.setSpacing(5);
         searchNear.getChildren().add(searchBox);
         searchNear.getChildren().add(searchIcons);
+        searchNear.setAlignment(Pos.CENTER);
 
         Label dir = new Label("Text Directions");
         dir.setPrefHeight(50);

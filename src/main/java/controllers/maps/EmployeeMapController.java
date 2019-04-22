@@ -388,6 +388,34 @@ public class EmployeeMapController extends MapController {
         btnExit.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnExit.setTextOverrun(OverrunStyle.CLIP);
 
+        ImageView imgElev = new ImageView();
+        imgElev.setImage(new Image("images/SearchIcons/elev.png"));
+        imgElev.setFitHeight(30);
+        imgElev.setFitWidth(30);
+        imgElev.setPreserveRatio(true);
+        imgElev.setPickOnBounds(true);
+
+        JFXButton btnElev = new JFXButton("",imgElev);
+        btnElev.setAlignment(Pos.CENTER);
+        btnElev.setPrefWidth(60);
+        btnElev.setPrefHeight(60);
+        btnElev.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnElev.setTextOverrun(OverrunStyle.CLIP);
+
+        ImageView imgInfo1 = new ImageView();
+        imgInfo1.setImage(new Image("images/Icons/info.png"));
+        imgInfo1.setFitHeight(30);
+        imgInfo1.setFitWidth(30);
+        imgInfo1.setPreserveRatio(true);
+        imgInfo1.setPickOnBounds(true);
+
+        JFXButton btnInfo1 = new JFXButton("",imgInfo1);
+        btnInfo1.setAlignment(Pos.CENTER);
+        btnInfo1.setPrefWidth(60);
+        btnInfo1.setPrefHeight(60);
+        btnInfo1.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnInfo1.setTextOverrun(OverrunStyle.CLIP);
+
         btnLogOut.setStyle("-fx-background-radius: 30;" );
         btnLogOut.setButtonType(JFXButton.ButtonType.RAISED);
         imgLogOut.setImage(new Image("images/Icons/signout.png"));
@@ -439,13 +467,17 @@ public class EmployeeMapController extends MapController {
         searchIcons.getChildren().add(btnCoffee);
         searchIcons.getChildren().add(btnRest);
         searchIcons.getChildren().add(btnExit);
+        searchIcons.getChildren().add(btnElev);
+        searchIcons.getChildren().add(btnInfo1);
+        searchIcons.setAlignment(Pos.CENTER);
 
         VBox searchNear = new VBox();
         searchNear.setPrefWidth(370);
-        searchNear.setPrefHeight(200);
-        searchNear.setSpacing(10);
+        searchNear.setPrefHeight(150);
+        searchNear.setSpacing(5);
         searchNear.getChildren().add(searchBox);
         searchNear.getChildren().add(searchIcons);
+        searchNear.setAlignment(Pos.CENTER);
 
         Label dir = new Label("Text Directions");
         dir.setPrefHeight(50);
@@ -702,7 +734,7 @@ public class EmployeeMapController extends MapController {
         nodeListSearch.addAnimatedNode(btnSearch);
         nodeListSearch.addAnimatedNode(searchNear);
         nodeListSearch.setRotate(90);
-        nodeListSearch.setSpacing(150);
+        nodeListSearch.setSpacing(105);
 
         nodeListUser.addAnimatedNode(btnUser);
         nodeListUser.addAnimatedNode(userBox);
