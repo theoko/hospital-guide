@@ -30,6 +30,7 @@ import static controllers.ScreenController.getStage;
 public class MapDisplay {
     private final static double locRadius = 15;
     private final static double hallRadius = 8;
+    private final static double workRadius = 11;
     private final static double locWidth = 2.0;
     public final static double edgeWidth = 5;
     private final static double xShift = -2110.0;
@@ -46,7 +47,7 @@ public class MapDisplay {
     private static Map map;
 
     public enum NodeStyle {
-        REGULAR, START, END, POINT
+        REGULAR, START, END, POINT, WORKSPACE
     }
 
     /**
@@ -101,6 +102,10 @@ public class MapDisplay {
                     mc.panMap.getChildren().add(createCircle(mc, loc, NodeStyle.END, opac, route, isAdmin));
                 }
             } else if (loc.getFloor().equals(mc.getFloor())) {
+                if(loc.getNodeType() == Constants.NodeType.WORK) {
+                    System.out.println("Creating Workspace");
+                    mc.panMap.getChildren().add(createCircle(mc, loc, NodeStyle.WORKSPACE, 1, route, isAdmin));
+                }
                 if (loc.getNodeType() != Constants.NodeType.HALL) {
                     mc.panMap.getChildren().add(createCircle(mc, loc, NodeStyle.REGULAR, 1, route, isAdmin));
                 } else if (mc.isAdmin()) {
@@ -174,6 +179,12 @@ public class MapDisplay {
                 break;
             case END:
                 circle.setFill(nodeEnd);
+                break;
+            case WORKSPACE:
+                System.out.println("Creating Workspace bitch");
+                circle.setFill(nodeFill);
+                circle.setRadius(workRadius);
+                circle.setStroke(edgeOutline);
                 break;
             default:
                 circle.setFill(edgeFill);
@@ -253,6 +264,8 @@ public class MapDisplay {
 
             if(nodeStyle == NodeStyle.REGULAR || nodeStyle == NodeStyle.END || nodeStyle == NodeStyle.START )
                 circle.setRadius(locRadius + 6);
+            else if(nodeStyle == NodeStyle.WORKSPACE)
+                circle.setRadius(workRadius + 6);
             else
                 circle.setRadius(hallRadius + 6);
             ScreenController.sceneThing.setCursor(Cursor.HAND);
@@ -261,6 +274,8 @@ public class MapDisplay {
         circle.setOnMouseExited(event -> {
             if(nodeStyle == NodeStyle.REGULAR || nodeStyle == NodeStyle.END || nodeStyle == NodeStyle.START )
                 circle.setRadius(locRadius);
+            else if(nodeStyle == NodeStyle.WORKSPACE)
+                circle.setRadius(workRadius);
             else
                 circle.setRadius(hallRadius);
             ScreenController.sceneThing.setCursor(Cursor.DEFAULT);
@@ -280,6 +295,18 @@ public class MapDisplay {
         if (!(start.getFloor().equals(floor) && end.getFloor().equals(floor))) {
             line.setOpacity(opac);
         }
+
+        line.setOnMouseEntered(event -> {
+            line.setStroke(Color.ORANGE);
+            line.setStrokeWidth(edgeWidth + 4);
+            ScreenController.sceneThing.setCursor(Cursor.HAND);
+        });
+
+        line.setOnMouseExited(event -> {
+            line.setStroke(edgeFill);
+            line.setStrokeWidth(edgeWidth);
+            ScreenController.sceneThing.setCursor(Cursor.DEFAULT);
+        });
 
         line.setOnMousePressed(Event::consume);
         line.setOnMouseDragged(Event::consume);
