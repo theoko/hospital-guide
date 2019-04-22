@@ -59,6 +59,8 @@ public abstract class PathFinder {
         while(!isEmpty()) {
             SubPath sNext = getNext();
             Location lNext = sNext.getLocation();
+            System.out.println("sNext: " + sNext);
+            System.out.println("lNext: " + lNext.getNodeID());
             if (used.containsKey(lNext.getNodeID())) {
                 continue;
             }
