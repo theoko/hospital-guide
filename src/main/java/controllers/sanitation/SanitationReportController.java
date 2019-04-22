@@ -8,12 +8,15 @@ import database.TransportationTable;
 import helpers.UserHelpers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import map.PathFinder;
+import models.analysis.SanitationAnalyzer;
 import models.map.Location;
 import models.services.SanitationRequest;
 import models.services.ServiceRequest;
@@ -21,12 +24,15 @@ import models.services.TransportationRequest;
 import models.user.User;
 
 import java.sql.Timestamp;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class SanitationReportController {
 
     public JFXButton btnFilterRequests;
     public PieChart chartPie;
+    public LineChart chartLine;
 
     ObservableList<SanitationRequest> requests = FXCollections.observableArrayList();
 
@@ -46,6 +52,44 @@ public class SanitationReportController {
         }
         return lstReqs;
     }
+
+    private void updateSummaryStats(List<SanitationRequest> requests){
+        SanitationAnalyzer analyzer=new SanitationAnalyzer();
+
+
+    }
+
+private void updateLineChart(List<SanitationRequest> requests){
+
+    ObservableList<XYChart.Series<Date,Number>> completedLine = FXCollections.observableArrayList();
+    ObservableList<XYChart.Series<Date,Number>> claimedLine = FXCollections.observableArrayList();
+    ObservableList<XYChart.Series<Date,Number>> requestedLine = FXCollections.observableArrayList();
+
+
+
+
+    for (SanitationRequest request : requests) {
+        if (request.getStatus() == ServiceRequest.Status.COMPLETE) {
+
+           // completedLine.add(new XYChart.Series<Date, Number>(new GregorianCalendar(2012, 11, 15).getTime(), 2);
+
+
+            // completedLine.add(new XYChart.Data<Date,Number>(request.getCompletedTime(),1));
+           // claimedLine.add(new LineChart.Data(request.getClaimedTime(),1));
+           // requestedLine.add(new LineChart.Data(request.getRequestTime(),1));
+        } else if (request.getClaimedTime() != null) {
+           // claimedLine.add(new LineChart.Data(request.getClaimedTime(),1));
+           // requestedLine.add(new LineChart.Data(request.getRequestTime(),1));
+        } else {
+           // requestedLine.add(new LineChart.Data(request.getRequestTime(),1));
+        }
+    }
+    chartLine.setData(completedLine);
+    chartLine.setData(claimedLine);
+    chartLine.setData(requestedLine);
+
+
+}
 
     private void updatePieChart(List<SanitationRequest> requests) {
 
