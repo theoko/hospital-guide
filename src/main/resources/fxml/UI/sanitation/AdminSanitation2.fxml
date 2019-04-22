@@ -9,6 +9,7 @@
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TableColumn?>
@@ -19,10 +20,46 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="655.0" minWidth="1200.0" prefHeight="655.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.sanitation.SanitationReportController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="655.0" minWidth="1200.0" prefHeight="655.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.sanitation.AdminSanitationController">
     <children>
         <JFXTabPane layoutY="1.0" prefHeight="639.0" prefWidth="1200.0" side="BOTTOM" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <tabs>
+            <Tab style="-fx-background-color: #022D5A;" text="Sanitation Table">
+               <content>
+                  <AnchorPane prefHeight="645.0" prefWidth="1240.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <VBox prefHeight="655.0" prefWidth="1200.0">
+                           <children>
+                              <TableView fx:id="tblData" onMouseClicked="#tblClick" prefHeight="629.0" prefWidth="1163.0">
+                                 <columns>
+                                    <TableColumn fx:id="tblLocation" prefWidth="138.0" text="Location" />
+                                    <TableColumn fx:id="tblPriority" prefWidth="92.0" text="Priority" />
+                                    <TableColumn fx:id="tblStatus" prefWidth="91.0" text="Status" />
+                                    <TableColumn fx:id="tblDescription" prefWidth="232.0" text="Description" />
+                                    <TableColumn fx:id="tblRequester" prefWidth="118.0" text="Requester" />
+                                    <TableColumn fx:id="tblClaimTime" prefWidth="157.0" text="Time Claimed" />
+                                    <TableColumn fx:id="tblServicer" prefWidth="145.0" text="Servicer" />
+                                    <TableColumn fx:id="tblServiceTime" prefWidth="225.0" text="Service Time" />
+                                 </columns>
+                              </TableView>
+                              <ButtonBar minHeight="-Infinity" prefHeight="71.0" prefWidth="1099.0" VBox.vgrow="ALWAYS">
+                                 <buttons>
+                                    <JFXButton fx:id="btnDelete" disable="true" onMouseClicked="#deleteSanitationRequest" text="Delete" textFill="WHITE">
+                                       <font>
+                                          <Font size="22.0" />
+                                       </font>
+                                    </JFXButton>
+                                 </buttons>
+                                 <padding>
+                                    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                 </padding>
+                              </ButtonBar>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
                 <Tab style="-fx-background-color: #022D5A;" text="Filter Report">
                     <VBox layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
                         <children>

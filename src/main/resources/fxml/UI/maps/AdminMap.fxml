@@ -80,7 +80,7 @@
                     <fx:include source="../settings/SettingsScreen.fxml" />
                 </AnchorPane>
                 <AnchorPane style="-fx-background-color: white;" fx:id="Clean">
-                    <fx:include source="../sanitation/AdminSanitation.fxml" />
+                    <fx:include source="../sanitation/AdminSanitation2.fxml" />
                 </AnchorPane>
                 <AnchorPane style="-fx-background-color: white;" fx:id="TabEdit">
                     <fx:include source="TableEditor.fxml" />
@@ -92,8 +92,8 @@
             </AnchorPane>
         </Tab>
 		
-		<Tab text="Sanitation Report Place Holder Location">
+	<!-- 	<Tab text="Sanitation Report Place Holder Location">
 		    <fx:include source="../sanitation/SanitationReport.fxml" />
-		</Tab>
+		</Tab> -->
     </JFXTabPane>
 </AnchorPane>
