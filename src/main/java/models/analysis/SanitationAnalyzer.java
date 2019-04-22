@@ -17,7 +17,7 @@ public class SanitationAnalyzer
     /**
      * Requests loaded from database
      */
-    ArrayList<SanitationRequest> requests;
+    private ArrayList<SanitationRequest> requests;
 
     /**
      * Summary statistics
@@ -46,12 +46,19 @@ public class SanitationAnalyzer
     private HashMap<String, Integer> custodianCompletedCount = new HashMap<>();
 
     /**
-     * Constructor which analyzes the sanitation request database.
+     * Constructor which analyzes all sanitation requests from the database.
      */
-    public SanitationAnalyzer()
+    public SanitationAnalyzer() {
+        this(SanitationTable.getSanitationRequests());
+    }
+
+    /**
+     * Constructor which analyzes list of sanitation requests.
+     */
+    public SanitationAnalyzer(ArrayList<SanitationRequest> requests)
     {
         // Load requests from database
-        requests = SanitationTable.getSanitationRequests();
+        this.requests = requests;
 
         // Calculate summary statistics
         numRequests = requests.size();
