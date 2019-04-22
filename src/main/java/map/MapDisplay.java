@@ -250,12 +250,19 @@ public class MapDisplay {
         }
 
         circle.setOnMouseEntered(event -> {
-            circle.setRadius(locRadius + 6);
+
+            if(nodeStyle == NodeStyle.REGULAR || nodeStyle == NodeStyle.END || nodeStyle == NodeStyle.START )
+                circle.setRadius(locRadius + 6);
+            else
+                circle.setRadius(hallRadius + 6);
             ScreenController.sceneThing.setCursor(Cursor.HAND);
         });
 
         circle.setOnMouseExited(event -> {
-            circle.setRadius(locRadius);
+            if(nodeStyle == NodeStyle.REGULAR || nodeStyle == NodeStyle.END || nodeStyle == NodeStyle.START )
+                circle.setRadius(locRadius);
+            else
+                circle.setRadius(hallRadius);
             ScreenController.sceneThing.setCursor(Cursor.DEFAULT);
         });
 
