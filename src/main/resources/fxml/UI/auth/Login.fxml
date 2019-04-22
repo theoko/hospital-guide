@@ -61,7 +61,7 @@
                      <children>
                          <JFXPasswordField fx:id="cardPassword" prefHeight="31.0" prefWidth="360.0" promptText="username" />
                          <!-- Add Email Text Field -->
-                         <JFXTextField fx:id="emailField" prefHeight="31.0" prefWidth="390.0" promptText="username" />
+                         <JFXTextField fx:id="emailField" prefHeight="31.0" prefWidth="390.0" promptText="email" />
                      </children>
                  </AnchorPane>
                  <!-- Add Password Field -->

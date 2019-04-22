@@ -100,11 +100,13 @@ public class WorkspaceMapController {
 
         workspacesCurrent1 = BookWorkspaceTable.getBookingsForUser(UserHelpers.getCurrentUser());
 
-        for(Book b : workspacesCurrent1) {
-            for(Workspace ws1 : workspaces.values()) {
-                if(ws1.getNodeID().equals(b.getRoomID())) {
-                    myWorkspaces1.add(ws1);
-                    break;
+        if (workspacesCurrent1 != null) {
+            for (Book b : workspacesCurrent1) {
+                for (Workspace ws1 : workspaces.values()) {
+                    if (ws1.getNodeID().equals(b.getRoomID())) {
+                        myWorkspaces1.add(ws1);
+                        break;
+                    }
                 }
             }
         }
