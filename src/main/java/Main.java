@@ -14,6 +14,9 @@ import map.PathContext;
 import map.PathFinder;
 import models.search.SearchKeywords;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
 public class Main extends Application {
     static ScreenController screenController;
 

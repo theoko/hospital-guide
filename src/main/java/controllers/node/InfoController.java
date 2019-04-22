@@ -3,6 +3,8 @@ package controllers.node;
 import com.jfoenix.controls.JFXButton;
 import controllers.ScreenController;
 import controllers.maps.MapController;
+import google.FirebaseAPI;
+import google.SnapshotGenerator;
 import helpers.DatabaseHelpers;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -13,6 +15,8 @@ import map.MapDisplay;
 import map.PathFinder;
 import models.map.Location;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,10 +52,21 @@ public abstract class InfoController extends PopUpController {
         lblShortName.setText(loc.getShortName());
     }
 
-    public final void btnDirections_OnClick(MouseEvent event) throws Exception {
+    public final void btnDirections_OnClick(MouseEvent event) {
         event.consume();
         PathFinder.printPath(mc, kiosk, loc);
+
         ScreenController.deactivate();
+
+        // Generate images and send them to firebase
+        // Mobile app will then get updated
+//        SnapshotGenerator sg = new SnapshotGenerator(mc);
+//        ArrayList<File> imgFiles = sg.generateImages(MapController.currentRoute);
+//
+//        for(File file : imgFiles) {
+//            FirebaseAPI.uploadDirectionsImage(file);
+//        }
+
     }
 
     public final void btnCancel_OnClick(MouseEvent event) {

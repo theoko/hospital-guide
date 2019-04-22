@@ -1,31 +1,34 @@
 package google;
 
 import com.google.auth.oauth2.GoogleCredentials;
-import com.google.cloud.storage.Storage;
-import com.google.cloud.storage.StorageOptions;
+import com.google.cloud.storage.*;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.*;
+import controllers.maps.MapController;
+import database.LocationTable;
 import helpers.Constants;
 import helpers.UserHelpers;
+import javafx.application.Platform;
+import map.PathFinder;
+import models.map.Location;
 import models.room.Book;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.util.*;
 
 public class FirebaseAPI {
+
+    private static final String STORAGE_BUCKET = "hospital-guide-47dc0.appspot.com";
 
     private FileInputStream serviceAccount;
     private FirebaseOptions options;
 
     public FirebaseAPI() {
+
+        System.out.println("Firebase: created instance");
 
         serviceAccount = null;
         options = null;
@@ -93,12 +96,110 @@ public class FirebaseAPI {
 
     }
 
-    public static void uploadDirectionsImage(List<File> directions) {
+    public static void uploadDirectionsImage(File directionsImage) {
 
-        Storage storage = StorageOptions.getDefaultInstance().getService();
+        new Thread(() -> {
+            Storage storage = StorageOptions.getDefaultInstance().getService();
 
+            BlobId blobId = BlobId.of(
+                    STORAGE_BUCKET,
+                            Base64.getEncoder().encodeToString("start location, end location".getBytes()) +
+                            "_" +
+                            directionsImage.getName()
+            );
+            BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
+                    .setContentType("image/png")
+                    .build();
+            BufferedImage bImage = null;
+            try {
+                bImage = ImageIO.read(directionsImage);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            try {
+                ImageIO.write(bImage, "png", bos );
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            byte [] data = bos.toByteArray();
+            Blob blob = storage.create(blobInfo, data);
+        }).start();
 
+    }
 
+    public static void setCaller(Object newCaller) {
+        caller = newCaller;
+    }
+
+    private static Object caller;
+    public static void checkForCommands(String username) {
+
+        DatabaseReference commandsRef = FirebaseDatabase.getInstance()
+                                        .getReference()
+                                        .child(Constants.FIREBASE_COMMANDS)
+                                        .child(username);
+
+        commandsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+
+                if(snapshot.exists() && snapshot.getChildrenCount() > 0 && caller != null) {
+
+                    System.out.println("we got commands!");
+                    System.out.println(snapshot.getValue().toString());
+
+                    Iterable<DataSnapshot> children = snapshot.getChildren();
+                    Iterator<DataSnapshot> iterator = children.iterator();
+
+//                    System.out.println(iterator.next());
+
+                    while(iterator.hasNext()) {
+
+                        DataSnapshot pair = iterator.next();
+
+                        System.out.println(pair.getValue().toString().substring(0, pair.getValue().toString().indexOf(":")));
+                        System.out.println(pair.getValue().toString().substring(pair.getValue().toString().indexOf(":") + 1));
+
+                        if(pair.getKey().equals("pathfinding")) {
+                            System.out.println("we got it 1");
+                            Platform.runLater(() -> {
+
+                                String startingLocation = pair.getValue().toString().substring(0, pair.getValue().toString().indexOf(":"));
+                                String destination = pair.getValue().toString().substring(pair.getValue().toString().indexOf(":") + 1);
+
+                                if(!startingLocation.equals(MapController.getTempStart())) {
+                                    MapController.setTempStart(startingLocation);
+                                }
+
+                                PathFinder.printPath(
+                                        (MapController) caller,
+                                        ((MapController) caller).getMap().getLocation(startingLocation),
+                                        ((MapController) caller).getMap().getLocation(destination)
+                                );
+
+                                // Remove commands after executing them
+                                commandsRef.child("pathfinding").removeValue((error, ref) -> System.out.println("Removed children"));
+                            });
+
+//                            commandsRef.removeEventListener(this);
+                            System.out.println("we got it 2");
+                        }
+
+                        iterator.remove();
+                    }
+
+                } else {
+                    System.out.println("no commands");
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+
+            }
+        });
 
 
     }

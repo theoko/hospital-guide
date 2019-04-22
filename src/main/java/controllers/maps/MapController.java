@@ -2,6 +2,8 @@ package controllers.maps;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTabPane;
+import google.FirebaseAPI;
+import helpers.UserHelpers;
 import images.ImageFactory;
 import javafx.animation.Interpolator;
 import javafx.fxml.Initializable;
