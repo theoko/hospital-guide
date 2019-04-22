@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="80.0" prefWidth="177.0" style="-fx-background-radius: 30;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.weather.WeatherController">
+   <AnchorPane layoutX="14.0" layoutY="10.0" prefHeight="80.0" prefWidth="156.0" style="-fx-background-color: #022D5A; -fx-background-radius: 25;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <children>
+          <Label fx:id="lblTemp" alignment="CENTER_RIGHT" layoutX="67.0" prefHeight="38.0" prefWidth="39.0" textAlignment="RIGHT" textFill="WHITE" AnchorPane.bottomAnchor="42.0" AnchorPane.topAnchor="0.0">
+            <font>
+               <Font size="24.0" />
+            </font>
+         </Label>
+          <Label alignment="CENTER" layoutX="106.0" prefHeight="38.0" prefWidth="26.0" text="°F" textFill="WHITE" AnchorPane.bottomAnchor="42.0" AnchorPane.topAnchor="0.0">
+            <font>
+               <Font size="24.0" />
+            </font>
+         </Label>
+         <Label fx:id="lblTime" alignment="CENTER_RIGHT" layoutX="7.0" layoutY="38.0" prefHeight="38.0" prefWidth="132.0" style="-fx-background-color: #0083ff; -fx-background-radius: 25;" textAlignment="RIGHT" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <font>
+               <Font size="24.0" />
+            </font>
+            <padding>
+               <Insets left="20.0" right="20.0" />
+            </padding>
+         </Label>
+      </children>
+      <effect>
+         <DropShadow />
+      </effect>
+   </AnchorPane>
+   <AnchorPane layoutX="100.0" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: #022D5A; -fx-background-radius: 40;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <children>
+         <ImageView fx:id="imgType" fitHeight="60.0" fitWidth="60.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+      </children>
+      <effect>
+         <DropShadow />
+      </effect>
+   </AnchorPane>
+</AnchorPane>

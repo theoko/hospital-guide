@@ -2,6 +2,8 @@ import controllers.ScreenController;
 import controllers.booking.DisplayCalendarController;
 import controllers.settings.SettingsController;
 import database.Database;
+import database.SanitationTable;
+import database.UserTable;
 import google.FirebaseAPI;
 import helpers.FileHelpers;
 import messaging.TextMessenger;
@@ -12,6 +14,7 @@ import database.CSVParser;
 import map.AStar;
 import map.PathContext;
 import map.PathFinder;
+import models.analysis.SanitationAnalyzer;
 import models.search.SearchKeywords;
 
 public class Main extends Application {
@@ -28,7 +31,17 @@ public class Main extends Application {
         // Initialize database
         if(!Database.getDatabase().databaseExists()) {
             CSVParser.parse(FileHelpers.getNodesCSV(), FileHelpers.getEdgesCSV(), FileHelpers.getWorkspacesCSV());
+
+            // Seed user table
+            UserTable.seed();
+
+            // Seed sanitation table
+            SanitationTable.seed();
         }
+
+        // TODO remove this
+        // Analyze sanitation requests
+        new SanitationAnalyzer();
 
         // Initialize keywords for search engine
         SearchKeywords.initialize();

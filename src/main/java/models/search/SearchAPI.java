@@ -18,7 +18,7 @@ public class SearchAPI {
     private boolean isMapController;
     private JFXAutoCompletePopup<String> autoCompletePopup = new JFXAutoCompletePopup<>();
 
-    SearchEngine searchEngine;
+    private SearchEngine searchEngine;
 
     public SearchAPI(JFXTextField searchTextField) {
         this.searchTextField = searchTextField;
@@ -26,20 +26,21 @@ public class SearchAPI {
         autoCompletePopup.setWidth(searchTextField.getWidth());
         autoCompletePopup.setHeight(300);
 
-        searchEngine = new SearchEngine();
     }
 
     public SearchAPI(JFXTextField searchTextField, boolean isMapController) {
+
         this.searchTextField = searchTextField;
         this.isMapController = isMapController;
 
         autoCompletePopup.setWidth(searchTextField.getWidth());
         autoCompletePopup.setHeight(300);
 
-        searchEngine = new SearchEngine();
     }
 
     public void searchable() {
+
+        searchEngine = new SearchEngine();
 
         // Sets field text to selected suggestion
         autoCompletePopup.setSelectionHandler(event -> {
@@ -92,11 +93,13 @@ public class SearchAPI {
 
                         autoCompletePopup.show(searchTextField);
 
+                        System.out.println("got results");
                     } else {
 
                         autoCompletePopup.getSuggestions().clear();
                         autoCompletePopup.hide();
 
+                        System.out.println("no results");
                     }
 
                 }

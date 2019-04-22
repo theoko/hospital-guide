@@ -1,20 +1,23 @@
 package google;
 
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.StorageOptions;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import helpers.Constants;
-import helpers.UIHelpers;
 import helpers.UserHelpers;
 import models.room.Book;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class FirebaseAPI {
@@ -46,6 +49,7 @@ public class FirebaseAPI {
 
     }
 
+    // TODO: generate identified to support multiple bookings for same room
     public static void sendBooking(Book booking) {
 
         Map<String, Object> currBooking = new HashMap<>();
@@ -86,6 +90,16 @@ public class FirebaseAPI {
                 System.out.println("Firebase db: deleted booking!");
             }
         });
+
+    }
+
+    public static void uploadDirectionsImage(List<File> directions) {
+
+        Storage storage = StorageOptions.getDefaultInstance().getService();
+
+
+
+
 
     }
 

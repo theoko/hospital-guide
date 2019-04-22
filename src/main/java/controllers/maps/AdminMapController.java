@@ -64,8 +64,11 @@ public class AdminMapController extends MapController {
         SearchEngineController.setParentController(this);
         MapDisplay.displayAdmin(this);
 
+        // TODO uncomment - causes failure
+        /*
         SearchAPI searchAPI = new SearchAPI(search, true);
         searchAPI.searchable();
+        */
 
         Delta deltaDragged = new Delta();
         panMap.setOnMousePressed((e) -> {
