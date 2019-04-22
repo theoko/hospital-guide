@@ -2,6 +2,7 @@ package controllers.maps;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTabPane;
+import helpers.UIHelpers;
 import images.ImageFactory;
 import javafx.animation.Interpolator;
 import javafx.fxml.Initializable;
@@ -55,6 +56,8 @@ public abstract class MapController implements Initializable {
     public ScrollPane txtPane;
     public AnchorPane tilDirections;
     public JFXTabPane tabMenu;
+    public AnchorPane panRoot;
+    //public JFXButton btn;
 
     protected String floor;
     protected List<LineTuple> lstLineTransits;
@@ -86,6 +89,8 @@ public abstract class MapController implements Initializable {
         Image img = ImageFactory.getImage(floor);
         imgMap.setImage(img);
         addDoc();
+        UIHelpers.addHover(panRoot);
+        //UIHelpers.btnRaise(btn);
 
         zoomOut();
     }

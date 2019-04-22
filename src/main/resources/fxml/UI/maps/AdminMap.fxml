@@ -13,7 +13,7 @@
 <?import net.kurobako.gesturefx.GesturePane?>
 
 <?import com.jfoenix.controls.JFXTextField?>
-<AnchorPane stylesheets="@../../../css/colorScheme.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.maps.AdminMapController">
+<AnchorPane fx:id="panRoot" stylesheets="@../../../css/colorScheme.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.maps.AdminMapController">
     <JFXTabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <Tab text="Map Editor">
             <AnchorPane>
