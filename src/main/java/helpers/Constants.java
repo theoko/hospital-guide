@@ -22,6 +22,8 @@ public class Constants {
     public static String DB_RELATION = "relation";
     public static String DB_CONDITION = "condition";
 
+    public static String FIREBASE_COMMANDS = "commands";
+
     /**
      * FILES
      */

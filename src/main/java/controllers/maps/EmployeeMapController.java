@@ -5,9 +5,12 @@ import com.jfoenix.controls.JFXNodesList;
 import com.jfoenix.controls.JFXTextField;
 import controllers.ScreenController;
 import controllers.search.SearchEngineController;
+import google.FirebaseAPI;
 import helpers.Constants;
 import helpers.UIHelpers;
 import javafx.fxml.FXML;
+import helpers.UserHelpers;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -90,12 +93,6 @@ public class EmployeeMapController extends MapController {
     }
 
     @Override
-    public void btnReturn_Click(MouseEvent mouseEvent) throws Exception {
-        ScreenController.logOut(btnLogOut);
-        ScreenController.activate(Constants.Routes.LOGIN);
-    }
-
-    @Override
     public void showFloor(String newFloor) {
         super.showFloorHelper(newFloor);
         MapDisplay.displayEmployee(this);
@@ -174,7 +171,7 @@ public class EmployeeMapController extends MapController {
         imgRoom.setPreserveRatio(true);
         imgRoom.setPickOnBounds(true);
 
-        JFXButton btnRoom = new JFXButton("",imgRoom);
+        JFXButton btnRoom = new JFXButton("", imgRoom);
         btnRoom.setAlignment(Pos.CENTER);
         btnRoom.setPrefWidth(60);
         btnRoom.setPrefHeight(60);
@@ -188,7 +185,7 @@ public class EmployeeMapController extends MapController {
         imgCal.setPreserveRatio(true);
         imgCal.setPickOnBounds(true);
 
-        JFXButton btnCal = new JFXButton("",imgCal);
+        JFXButton btnCal = new JFXButton("", imgCal);
         btnCal.setAlignment(Pos.CENTER);
         btnCal.setPrefWidth(60);
         btnCal.setPrefHeight(60);
@@ -202,7 +199,7 @@ public class EmployeeMapController extends MapController {
         imgExl.setPreserveRatio(true);
         imgExl.setPickOnBounds(true);
 
-        JFXButton btnExl = new JFXButton("",imgExl);
+        JFXButton btnExl = new JFXButton("", imgExl);
         btnExl.setAlignment(Pos.CENTER);
         btnExl.setPrefWidth(60);
         btnExl.setPrefHeight(60);
@@ -216,7 +213,7 @@ public class EmployeeMapController extends MapController {
         imgComp1.setPreserveRatio(true);
         imgComp1.setPickOnBounds(true);
 
-        JFXButton btnComp1 = new JFXButton("",imgComp1);
+        JFXButton btnComp1 = new JFXButton("", imgComp1);
         btnComp1.setAlignment(Pos.CENTER);
         btnComp1.setPrefWidth(60);
         btnComp1.setPrefHeight(60);
@@ -233,7 +230,7 @@ public class EmployeeMapController extends MapController {
         imgFlo.setPreserveRatio(true);
         imgFlo.setPickOnBounds(true);
 
-        JFXButton btnFlo = new JFXButton("",imgFlo);
+        JFXButton btnFlo = new JFXButton("", imgFlo);
         btnFlo.setAlignment(Pos.CENTER);
         btnFlo.setPrefWidth(60);
         btnFlo.setPrefHeight(60);
@@ -249,7 +246,7 @@ public class EmployeeMapController extends MapController {
         imgSign.setPreserveRatio(true);
         imgSign.setPickOnBounds(true);
 
-        JFXButton btnSign = new JFXButton("",imgSign);
+        JFXButton btnSign = new JFXButton("", imgSign);
         btnSign.setAlignment(Pos.CENTER);
         btnSign.setPrefWidth(60);
         btnSign.setPrefHeight(60);
@@ -265,7 +262,7 @@ public class EmployeeMapController extends MapController {
         imgLock.setPreserveRatio(true);
         imgLock.setPickOnBounds(true);
 
-        JFXButton btnLock = new JFXButton("",imgLock);
+        JFXButton btnLock = new JFXButton("", imgLock);
         btnLock.setAlignment(Pos.CENTER);
         btnLock.setPrefWidth(60);
         btnLock.setPrefHeight(60);
@@ -281,7 +278,7 @@ public class EmployeeMapController extends MapController {
         imgDrug.setPreserveRatio(true);
         imgDrug.setPickOnBounds(true);
 
-        JFXButton btnDrug = new JFXButton("",imgDrug);
+        JFXButton btnDrug = new JFXButton("", imgDrug);
         btnDrug.setAlignment(Pos.CENTER);
         btnDrug.setPrefWidth(60);
         btnDrug.setPrefHeight(60);
@@ -297,7 +294,7 @@ public class EmployeeMapController extends MapController {
         imgAv.setPreserveRatio(true);
         imgAv.setPickOnBounds(true);
 
-        JFXButton btnAv = new JFXButton("",imgAv);
+        JFXButton btnAv = new JFXButton("", imgAv);
         btnAv.setAlignment(Pos.CENTER);
         btnAv.setPrefWidth(60);
         btnAv.setPrefHeight(60);
@@ -313,7 +310,7 @@ public class EmployeeMapController extends MapController {
         imgIn.setPreserveRatio(true);
         imgIn.setPickOnBounds(true);
 
-        JFXButton btnIn = new JFXButton("",imgIn);
+        JFXButton btnIn = new JFXButton("", imgIn);
         btnIn.setAlignment(Pos.CENTER);
         btnIn.setPrefWidth(60);
         btnIn.setPrefHeight(60);
@@ -329,7 +326,7 @@ public class EmployeeMapController extends MapController {
         imgGift.setPreserveRatio(true);
         imgGift.setPickOnBounds(true);
 
-        JFXButton btnGift = new JFXButton("",imgGift);
+        JFXButton btnGift = new JFXButton("", imgGift);
         btnGift.setAlignment(Pos.CENTER);
         btnGift.setPrefWidth(60);
         btnGift.setPrefHeight(60);
@@ -345,7 +342,7 @@ public class EmployeeMapController extends MapController {
         imgOut.setPreserveRatio(true);
         imgOut.setPickOnBounds(true);
 
-        JFXButton btnOut = new JFXButton("",imgOut);
+        JFXButton btnOut = new JFXButton("", imgOut);
         btnOut.setAlignment(Pos.CENTER);
         btnOut.setPrefWidth(60);
         btnOut.setPrefHeight(60);
@@ -361,7 +358,7 @@ public class EmployeeMapController extends MapController {
         imgInfo.setPreserveRatio(true);
         imgInfo.setPickOnBounds(true);
 
-        JFXButton btnInfo = new JFXButton("",imgInfo);
+        JFXButton btnInfo = new JFXButton("", imgInfo);
         btnInfo.setAlignment(Pos.CENTER);
         btnInfo.setPrefWidth(60);
         btnInfo.setPrefHeight(60);
@@ -455,6 +452,7 @@ public class EmployeeMapController extends MapController {
         UIHelpers.btnRaise(btnInfo1);
 
         btnLogOut.setStyle("-fx-background-radius: 30;" );
+        btnLogOut.setStyle("-fx-background-radius: 30;");
         btnLogOut.setButtonType(JFXButton.ButtonType.RAISED);
         imgLogOut.setImage(new Image("images/Icons/signout.png"));
 
@@ -877,5 +875,50 @@ public class EmployeeMapController extends MapController {
         vboxDock.getChildren().add(nodeListRoom);
         vboxDock.getChildren().add(nodeListCal);
         vboxDock.getChildren().add(nodeListExl);
+
+        Platform.runLater(() -> {
+            // Add listener for commands
+            FirebaseAPI.setCaller(EmployeeMapController.this);
+            FirebaseAPI.checkForCommands(UserHelpers.getCurrentUser().getUsername());
+        });
+
     }
+
+    @Override
+    public void btnReturn_Click(MouseEvent mouseEvent) throws Exception {
+        ScreenController.logOut(btnLogOut);
+        FirebaseAPI.setCaller(null);
+        ScreenController.activate(Constants.Routes.LOGIN);
+    }
+
+    @Override
+    public void btnFloor3_Click(MouseEvent mouseEvent) {
+        showFloor("3");
+    }
+
+    @Override
+    public void btnFloor2_Click(MouseEvent mouseEvent) {
+        showFloor("2");
+    }
+
+    @Override
+    public void btnFloor1_Click(MouseEvent mouseEvent) {
+        showFloor("1");
+    }
+
+    @Override
+    public void btnFloorG_Click(MouseEvent mouseEvent) {
+        showFloor("G");
+    }
+
+    @Override
+    public void btnFloorL1_Click(MouseEvent mouseEvent) {
+        showFloor("L1");
+    }
+
+    @Override
+    public void btnFloorL2_Click(MouseEvent mouseEvent) {
+        showFloor("L2");
+    }
+
 }

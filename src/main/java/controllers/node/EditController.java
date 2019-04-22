@@ -29,7 +29,7 @@ public class EditController extends PopUpController {
 
     public JFXComboBox cmbNodeType, cmbBuilding;
     public JFXTextField txtName;
-    public String BATH, CONF, DEPT, ELEV, EXIT, HALL, INFO, LABS, REST, RETL, SERV, STAI;
+    public String BATH, CONF, DEPT, ELEV, EXIT, HALL, INFO, LABS, REST, RETL, SERV, WORK, WRKT, STAI;
     public JFXButton btnDefault, btnDelete;
     public JFXButton btnAddEdge;
 
@@ -111,6 +111,12 @@ public class EditController extends PopUpController {
                 break;
             case CONF:
                 cmbNodeType.setValue(CONF);
+                break;
+            case WORK:
+                cmbNodeType.setValue(WORK);
+                break;
+            case WRKT:
+                cmbNodeType.setValue(WRKT);
                 break;
             default:
                 cmbNodeType.setValue(STAI);
