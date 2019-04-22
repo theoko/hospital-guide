@@ -31,7 +31,7 @@ public class ScreenController {
 
     private static HashMap<String, String> screenMap = new HashMap<>();
     private static Stage stage;
-    private static Scene sceneThing = null;
+    public static Scene sceneThing = null;
 
     public ScreenController(Stage stage) {
         ScreenController.stage = stage;
