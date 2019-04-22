@@ -26,41 +26,7 @@
                 <Tab style="-fx-background-color: #022D5A;" text="Filter Report">
                     <VBox layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
                         <children>
-                            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
-                                <children>
-                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="200.0" style="-fx-background-color: #022D5A;" text="Place Holder" textFill="WHITE">
-                                        <font>
-                                            <Font size="24.0" />
-                                        </font>
-                                    </Label>
-                           <JFXTextField fx:id="txtStartSearch" onKeyReleased="#filterChange" prefHeight="27.0" prefWidth="800.0" />
-            <!--                <JFXComboBox fx:id="cmbStartLoc" focusColor="#022d5a" labelFloat="true" onKeyTyped="#requestClick" onMousePressed="#requestClick" onMouseReleased="#requestClick" prefHeight="27.0" prefWidth="339.0" promptText="Select Location" unFocusColor="BLACK">
-                              <items>
-                                 <FXCollections fx:factory="observableArrayList">
-                          
-                                 </FXCollections>
-                              </items>
-                           </JFXComboBox> -->
-                                </children>
-                            </HBox>
-                            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
-                                <children>
-                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="200.0" style="-fx-background-color: #022D5A;" text="Place Holder" textFill="WHITE">
-                                        <font>
-                                            <Font size="24.0" />
-                                        </font>
-                                    </Label>
-                           <JFXTextField fx:id="txtEndSearch" onKeyReleased="#filterChange" prefHeight="27.0" prefWidth="800.0" />
-              <!--                       <JFXComboBox fx:id="cmbEndLoc" focusColor="#022d5a" labelFloat="true" prefHeight="27.0" prefWidth="339.0" promptText="Select Location" unFocusColor="BLACK">
-                                        <items>
-                                            <FXCollections fx:factory="observableArrayList">
-                                     
-                                            </FXCollections>
-                                        </items>
-                                    </JFXComboBox> -->
-                                </children>
-                            </HBox>
-                            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="20.0" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                            <HBox fx:id="txtUsers" alignment="CENTER_LEFT" layoutX="10.0" layoutY="20.0" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                         <children>
                            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="200.0" style="-fx-background-color: #022D5A;" text="User Name" textFill="WHITE">
                               <font>
@@ -96,7 +62,7 @@
                             </VBox>
                             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                                 <children>
-                                    <JFXButton fx:id="btnFilterRequests" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" disable="true" onMouseClicked="#filterData" prefHeight="45.0" prefWidth="205.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Filter" textAlignment="CENTER" />
+                                    <JFXButton fx:id="btnFilter" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" disable="true" onMouseClicked="#filterData" prefHeight="45.0" prefWidth="205.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Filter" textAlignment="CENTER" />
                                     <JFXButton fx:id="btnReturn" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" onMouseClicked="#cancelScr" prefHeight="11.0" prefWidth="140.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Cancel" textAlignment="CENTER" />
                                 </children>
                         <VBox.margin>

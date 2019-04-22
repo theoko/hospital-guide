@@ -33,12 +33,18 @@ import java.util.List;
 
 public class SanitationReportController {
 
-    public JFXButton btnFilterRequests;
     public PieChart chartPie;
     public LineChart chartLine;
+
     public Text textSummaryStatistics;
     public Text textRequestToClaimTime;
     public Text textClaimToCompleteTime;
+
+    public JFXTextField txtUserNames;
+    public JFXDatePicker datStartDate;
+    public JFXDatePicker datEndDate;
+
+    public JFXButton btnFilter;
 
     public TableView<SimpleEmployee> tblEmployee;
     public TableColumn<SimpleEmployee, String> tblEmployeeEmployee;
@@ -198,7 +204,12 @@ public class SanitationReportController {
     }
 
     public void filterChange() {
-        //todo enable disable filter btn appropriately. borrow from transportation request
+
+        boolean hasNames = !txtUserNames.getText().equals("");
+        boolean hasStartDate =(datStartDate.getValue() == null);
+        boolean hasEndDate=(datStartDate.getValue() == null);
+
+        btnFilter.setDisable(hasNames||hasStartDate||hasEndDate);
     }
 
     public void cancelScr() {
@@ -214,6 +225,23 @@ public class SanitationReportController {
         updateRequests();
 
         //todo implement filtering based on inputs (specific user date ect) filter observable
+
+        List<SanitationRequest> unfilteredRequests = updateRequests();
+        List<SanitationRequest> filteredRequests;
+
+
+//        for(SanitationRequest request:unfilteredRequests){
+//            if(request.getRequestTime()>)
+//
+//        }
+//        for(SanitationRequest request:unfilteredRequests){
+//            if(request.getRequestTime()>)
+//
+//        }
+
+
+
+       // updatePieChart(filteredRequests);
 
 //
 //        // Get request data from UI fields
