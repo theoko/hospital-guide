@@ -123,6 +123,13 @@ public class UserMapController extends MapController {
         btnArrow.setPrefHeight(60);
         btnArrow.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnArrow.setTextOverrun(OverrunStyle.CLIP);
+        btnArrow.setOnMouseEntered(event -> {
+            btnArrow.setButtonType(JFXButton.ButtonType.RAISED);
+        });
+
+        btnArrow.setOnMouseExited(event -> {
+            btnArrow.setButtonType(JFXButton.ButtonType.FLAT);
+        });
 
         ImageView imgRoute = new ImageView();
         imgRoute.setImage(new Image("images/Icons/route.png"));
@@ -169,6 +176,15 @@ public class UserMapController extends MapController {
             PathFinder.printByType(this, map, Constants.NodeType.RETL);
         });
 
+        btnCoffee.setOnMouseEntered(event -> {
+            btnCoffee.setButtonType(JFXButton.ButtonType.RAISED);
+        });
+
+        btnCoffee.setOnMouseExited(event -> {
+            btnCoffee.setButtonType(JFXButton.ButtonType.FLAT);
+        });
+
+
         ImageView imgRest = new ImageView();
         imgRest.setImage(new Image("images/SearchIcons/rest.png"));
         imgRest.setFitHeight(30);
@@ -184,6 +200,14 @@ public class UserMapController extends MapController {
         btnRest.setTextOverrun(OverrunStyle.CLIP);
         btnRest.setOnMouseClicked((e) -> {
             PathFinder.printByType(this, map, Constants.NodeType.REST);
+        });
+
+        btnRest.setOnMouseEntered(event -> {
+            btnRest.setButtonType(JFXButton.ButtonType.RAISED);
+        });
+
+        btnRest.setOnMouseExited(event -> {
+            btnRest.setButtonType(JFXButton.ButtonType.FLAT);
         });
 
         ImageView imgExit = new ImageView();
@@ -203,6 +227,14 @@ public class UserMapController extends MapController {
             PathFinder.printByType(this, map, Constants.NodeType.EXIT);
         });
 
+        btnExit.setOnMouseEntered(event -> {
+            btnExit.setButtonType(JFXButton.ButtonType.RAISED);
+        });
+
+        btnExit.setOnMouseExited(event -> {
+            btnExit.setButtonType(JFXButton.ButtonType.FLAT);
+        });
+
         ImageView imgElev = new ImageView();
         imgElev.setImage(new Image("images/SearchIcons/elev.png"));
         imgElev.setFitHeight(30);
@@ -216,6 +248,14 @@ public class UserMapController extends MapController {
         btnElev.setPrefHeight(60);
         btnElev.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnElev.setTextOverrun(OverrunStyle.CLIP);
+
+        btnElev.setOnMouseEntered(event -> {
+            btnElev.setButtonType(JFXButton.ButtonType.RAISED);
+        });
+
+        btnElev.setOnMouseExited(event -> {
+            btnElev.setButtonType(JFXButton.ButtonType.FLAT);
+        });
 
         ImageView imgInfo = new ImageView();
         imgInfo.setImage(new Image("images/Icons/info.png"));
@@ -231,13 +271,39 @@ public class UserMapController extends MapController {
         btnInfo.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnInfo.setTextOverrun(OverrunStyle.CLIP);
 
+        btnInfo.setOnMouseEntered(event -> {
+            btnInfo.setButtonType(JFXButton.ButtonType.RAISED);
+        });
+
+        btnInfo.setOnMouseExited(event -> {
+            btnInfo.setButtonType(JFXButton.ButtonType.FLAT);
+        });
+
         btnLogOut.setStyle("-fx-background-radius: 30;" );
         btnLogOut.setButtonType(JFXButton.ButtonType.RAISED);
+        btnLogOut.setOnMouseEntered(event -> {
+            btnLogOut.setButtonType(JFXButton.ButtonType.RAISED);
+
+        });
+
+        btnLogOut.setOnMouseExited(event -> {
+            btnLogOut.setButtonType(JFXButton.ButtonType.FLAT);
+        });
+
+
         imgLogOut.setImage(new Image("images/Icons/signout.png"));
 
         btnText.setStyle("-fx-background-radius: 30;" );
         btnText.setButtonType(JFXButton.ButtonType.RAISED);
         imgText.setImage(new Image("images/Icons/text.png"));
+
+        btnText.setOnMouseEntered(event -> {
+            btnText.setButtonType(JFXButton.ButtonType.RAISED);
+        });
+
+        btnText.setOnMouseExited(event -> {
+            btnText.setButtonType(JFXButton.ButtonType.FLAT);
+        });
 
         vboxDock.setSpacing(8);
 
