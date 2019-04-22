@@ -244,6 +244,16 @@ public class MapDisplay {
             });
         }
 
+
+
+        circle.setOnMouseEntered(event -> {
+            circle.setRadius(locRadius + 6);
+        });
+
+        circle.setOnMouseExited(event -> {
+            circle.setRadius(locRadius);
+        });
+
         loc.setNodeCircle(circle);
         return circle;
     }

@@ -64,8 +64,8 @@ public class AdminMapController extends MapController {
         SearchEngineController.setParentController(this);
         MapDisplay.displayAdmin(this);
 
-        SearchAPI searchAPI = new SearchAPI(search, true);
-        searchAPI.searchable();
+//        SearchAPI searchAPI = new SearchAPI(search, true);
+//        searchAPI.searchable();
 
         Delta deltaDragged = new Delta();
         panMap.setOnMousePressed((e) -> {
@@ -98,7 +98,6 @@ public class AdminMapController extends MapController {
                 e1.printStackTrace();
             }
         });
-
 
         Mover mover = new Mover();
         panMap.setOnMouseMoved(e -> {
@@ -137,7 +136,46 @@ public class AdminMapController extends MapController {
                 mover.line = null;
             }
         });
+    }
 
+    @Override
+    public void btnReturn_Click(MouseEvent mouseEvent) throws Exception {
+        ScreenController.logOut(btnLogOut);
+        ScreenController.activate(Constants.Routes.LOGIN);
+    }
+
+    private void clearEdges() {
+        List<Node> lstNodes = new ArrayList<>();
+        for (Node n : panMap.getChildren()) {
+            if (n instanceof Line && !n.getId().equals(MOVER_EDGE)) {
+                lstNodes.add(n);
+            }
+        }
+        panMap.getChildren().removeAll(lstNodes);
+    }
+
+    @Override
+    public void showFloor(String newFloor) {
+        super.showFloorHelper(newFloor);
+        clearEdges();
+        MapDisplay.displayAdmin(this);
+    }
+
+    @Override
+    public boolean isAdmin() {
+        return true;
+    }
+
+    public static Location getEdgLoc() {
+        return edgLoc;
+    }
+
+    public static void setEdgLoc(Location edgLoc) {
+        AdminMapController.edgLoc = edgLoc;
+    }
+
+    @Override
+    protected void addDoc() {
         ImageView imgUser = new ImageView();
         imgUser.setImage(new Image("images/Icons/user.png"));
         imgUser.setFitHeight(30);
@@ -250,6 +288,76 @@ public class AdminMapController extends MapController {
         btnTab.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnTab.setTextOverrun(OverrunStyle.CLIP);
 
+        ImageView imgCoffee = new ImageView();
+        imgCoffee.setImage(new Image("images/SearchIcons/coffee.png"));
+        imgCoffee.setFitHeight(30);
+        imgCoffee.setFitWidth(30);
+        imgCoffee.setPreserveRatio(true);
+        imgCoffee.setPickOnBounds(true);
+
+        JFXButton btnCoffee = new JFXButton("",imgCoffee);
+        btnCoffee.setAlignment(Pos.CENTER);
+        btnCoffee.setPrefWidth(60);
+        btnCoffee.setPrefHeight(60);
+        btnCoffee.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnCoffee.setTextOverrun(OverrunStyle.CLIP);
+
+        ImageView imgRest = new ImageView();
+        imgRest.setImage(new Image("images/SearchIcons/rest.png"));
+        imgRest.setFitHeight(30);
+        imgRest.setFitWidth(30);
+        imgRest.setPreserveRatio(true);
+        imgRest.setPickOnBounds(true);
+
+        JFXButton btnRest = new JFXButton("",imgRest);
+        btnRest.setAlignment(Pos.CENTER);
+        btnRest.setPrefWidth(60);
+        btnRest.setPrefHeight(60);
+        btnRest.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnRest.setTextOverrun(OverrunStyle.CLIP);
+
+        ImageView imgExit = new ImageView();
+        imgExit.setImage(new Image("images/SearchIcons/exit.png"));
+        imgExit.setFitHeight(30);
+        imgExit.setFitWidth(30);
+        imgExit.setPreserveRatio(true);
+        imgExit.setPickOnBounds(true);
+
+        JFXButton btnExit = new JFXButton("",imgExit);
+        btnExit.setAlignment(Pos.CENTER);
+        btnExit.setPrefWidth(60);
+        btnExit.setPrefHeight(60);
+        btnExit.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnExit.setTextOverrun(OverrunStyle.CLIP);
+
+        ImageView imgElev = new ImageView();
+        imgElev.setImage(new Image("images/SearchIcons/elev.png"));
+        imgElev.setFitHeight(30);
+        imgElev.setFitWidth(30);
+        imgElev.setPreserveRatio(true);
+        imgElev.setPickOnBounds(true);
+
+        JFXButton btnElev = new JFXButton("",imgElev);
+        btnElev.setAlignment(Pos.CENTER);
+        btnElev.setPrefWidth(60);
+        btnElev.setPrefHeight(60);
+        btnElev.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnElev.setTextOverrun(OverrunStyle.CLIP);
+
+        ImageView imgInfo = new ImageView();
+        imgInfo.setImage(new Image("images/Icons/info.png"));
+        imgInfo.setFitHeight(30);
+        imgInfo.setFitWidth(30);
+        imgInfo.setPreserveRatio(true);
+        imgInfo.setPickOnBounds(true);
+
+        JFXButton btnInfo = new JFXButton("",imgInfo);
+        btnInfo.setAlignment(Pos.CENTER);
+        btnInfo.setPrefWidth(60);
+        btnInfo.setPrefHeight(60);
+        btnInfo.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnInfo.setTextOverrun(OverrunStyle.CLIP);
+
         btnLogOut.setStyle("-fx-background-radius: 30;" );
         btnLogOut.setButtonType(JFXButton.ButtonType.RAISED);
         imgLogOut.setImage(new Image("images/Icons/signout.png"));
@@ -275,24 +383,29 @@ public class AdminMapController extends MapController {
 
         HBox searchBox = new HBox();
 
-//        JFXTextField search = new JFXTextField();
-//        search.setPromptText(" Search");
-//        search.setPrefHeight(34);
-//        search.setPrefWidth(450);
-//        search.setAlignment(Pos.CENTER);
-//        search.setStyle("-fx-font-size: 18px;"
-//                + "-fx-font-weight: bold;"
-//                + "-fx-font-family: fantasy;"
-//                + "-fx-text-fill: #022D5A;"
-//                + "-fx-background-color: white");
-
-
         searchBox.getChildren().add(search);
         searchBox.getChildren().add(btnArrow);
         searchBox.setPrefHeight(60);
         searchBox.setPrefWidth(370);
         searchBox.setAlignment(Pos.CENTER);
         searchBox.setSpacing(-20);
+
+        HBox searchIcons = new HBox();
+        searchIcons.setSpacing(10);
+        searchIcons.getChildren().add(btnCoffee);
+        searchIcons.getChildren().add(btnRest);
+        searchIcons.getChildren().add(btnExit);
+        searchIcons.getChildren().add(btnElev);
+        searchIcons.getChildren().add(btnInfo);
+        searchIcons.setAlignment(Pos.CENTER);
+
+        VBox searchNear = new VBox();
+        searchNear.setPrefWidth(370);
+        searchNear.setPrefHeight(105);
+        searchNear.setSpacing(5);
+        searchNear.getChildren().add(searchBox);
+        searchNear.getChildren().add(searchIcons);
+        searchNear.setAlignment(Pos.CENTER);
 
         Label lblRoom = new Label("Conference Room and Workspace Booking");
         lblRoom.setPrefHeight(50);
@@ -393,7 +506,7 @@ public class AdminMapController extends MapController {
         JFXNodesList nodesListTab = new JFXNodesList();
 
         nodeListSearch.addAnimatedNode(btnSearch);
-        nodeListSearch.addAnimatedNode(searchBox);
+        nodeListSearch.addAnimatedNode(searchNear);
         nodeListSearch.setRotate(90);
         nodeListSearch.setSpacing(150);
 
@@ -434,72 +547,6 @@ public class AdminMapController extends MapController {
         vboxDock.getChildren().add(nodesListAlgo);
         vboxDock.getChildren().add(nodesListClean);
         vboxDock.getChildren().add(nodesListTab);
-    }
-
-    @Override
-    public void btnReturn_Click(MouseEvent mouseEvent) throws Exception {
-        ScreenController.logOut(btnLogOut);
-        ScreenController.activate(Constants.Routes.LOGIN);
-    }
-
-    @Override
-    public void btnFloor3_Click(MouseEvent mouseEvent) {
-        showFloor("3");
-    }
-
-    @Override
-    public void btnFloor2_Click(MouseEvent mouseEvent) {
-        showFloor("2");
-    }
-
-    @Override
-    public void btnFloor1_Click(MouseEvent mouseEvent) {
-        showFloor("1");
-    }
-
-    @Override
-    public void btnFloorG_Click(MouseEvent mouseEvent) {
-        showFloor("G");
-    }
-
-    @Override
-    public void btnFloorL1_Click(MouseEvent mouseEvent) {
-        showFloor("L1");
-    }
-
-    @Override
-    public void btnFloorL2_Click(MouseEvent mouseEvent) {
-        showFloor("L2");
-    }
-
-    private void clearEdges() {
-        List<Node> lstNodes = new ArrayList<>();
-        for (Node n : panMap.getChildren()) {
-            if (n instanceof Line && !n.getId().equals(MOVER_EDGE)) {
-                lstNodes.add(n);
-            }
-        }
-        panMap.getChildren().removeAll(lstNodes);
-    }
-
-    @Override
-    public void showFloor(String newFloor) {
-        super.showFloorHelper(newFloor);
-        clearEdges();
-        MapDisplay.displayAdmin(this);
-    }
-
-    @Override
-    public boolean isAdmin() {
-        return true;
-    }
-
-    public static Location getEdgLoc() {
-        return edgLoc;
-    }
-
-    public static void setEdgLoc(Location edgLoc) {
-        AdminMapController.edgLoc = edgLoc;
     }
 }
 

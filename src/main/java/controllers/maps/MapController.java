@@ -45,6 +45,7 @@ public abstract class MapController implements Initializable {
 
     public GesturePane gesMap;
     public ImageView imgMap;
+    public JFXButton btnFloor4;
     public JFXButton btnFloor3;
     public JFXButton btnFloor2;
     public JFXButton btnFloor1;
@@ -55,12 +56,6 @@ public abstract class MapController implements Initializable {
     public Pane panMap;
     public ScrollPane txtPane;
     public AnchorPane tilDirections;
-    public ImageView imgArrow3;
-    public ImageView imgArrow2;
-    public ImageView imgArrow1;
-    public ImageView imgArrowG;
-    public ImageView imgArrowL1;
-    public ImageView imgArrowL2;
     public JFXTabPane tabMenu;
 
     protected String floor;
@@ -92,6 +87,8 @@ public abstract class MapController implements Initializable {
         updateButtons();
         Image img = ImageFactory.getImage(floor);
         imgMap.setImage(img);
+        addDoc();
+
         zoomOut();
     }
 
@@ -123,14 +120,37 @@ public abstract class MapController implements Initializable {
         return tabMenu;
     }
 
+    protected abstract void addDoc();
+
     public abstract void btnReturn_Click(MouseEvent mouseEvent) throws Exception;
 
-    public abstract void btnFloor3_Click(MouseEvent mouseEvent);
-    public abstract void btnFloor2_Click(MouseEvent mouseEvent);
-    public abstract void btnFloor1_Click(MouseEvent mouseEvent);
-    public abstract void btnFloorG_Click(MouseEvent mouseEvent);
-    public abstract void btnFloorL1_Click(MouseEvent mouseEvent);
-    public abstract void btnFloorL2_Click(MouseEvent mouseEvent);
+    public void btnFloor4_Click(MouseEvent mouseEvent) {
+        showFloor("4");
+    }
+
+    public void btnFloor3_Click(MouseEvent mouseEvent) {
+        showFloor("3");
+    }
+
+    public void btnFloor2_Click(MouseEvent mouseEvent) {
+        showFloor("2");
+    }
+
+    public void btnFloor1_Click(MouseEvent mouseEvent) {
+        showFloor("1");
+    }
+
+    public void btnFloorG_Click(MouseEvent mouseEvent) {
+        showFloor("G");
+    }
+
+    public void btnFloorL1_Click(MouseEvent mouseEvent) {
+        showFloor("L1");
+    }
+
+    public void btnFloorL2_Click(MouseEvent mouseEvent) {
+        showFloor("L2");
+    }
 
     public boolean isAdmin() {
         return false;
@@ -223,12 +243,12 @@ public abstract class MapController implements Initializable {
         if (lstLineTransits.size() > 0 && lstLineTransits.size() >= transitIt) {
             String lstFloor = lstLineTransits.get(transitIt - 1).getFloor();
             if (lstFloor.equals(floor)) {
-                clearArrow();
+//                clearArrow();
                 Path line = lstLineTransits.get(transitIt - 1).getLine();
                 panner(line);
                 if (lstLineTransits.size() > transitIt) {
                     String nxtFloor = lstLineTransits.get(transitIt++).getFloor();
-                    displayArrow(nxtFloor);
+//                    displayArrow(nxtFloor);
                 } else {
                     transitIt++;
                 }
@@ -253,6 +273,7 @@ public abstract class MapController implements Initializable {
     }
 
     private void updateButtons() {
+        styleButton(btnFloor4, false);
         styleButton(btnFloor3, false);
         styleButton(btnFloor2, false);
         styleButton(btnFloor1, false);
@@ -260,6 +281,9 @@ public abstract class MapController implements Initializable {
         styleButton(btnFloorL1, false);
         styleButton(btnFloorL2, false);
         switch (floor) {
+            case "4":
+                styleButton(btnFloor4, true);
+                break;
             case "3":
                 styleButton(btnFloor3, true);
                 break;
@@ -281,16 +305,16 @@ public abstract class MapController implements Initializable {
         }
     }
 
-    private void clearArrow() {
+    /*private void clearArrow() {
         imgArrow3.setImage(null);
         imgArrow2.setImage(null);
         imgArrow1.setImage(null);
         imgArrowG.setImage(null);
         imgArrowL1.setImage(null);
         imgArrowL2.setImage(null);
-    }
+    }*/
 
-    private void displayArrow(String nxtFloor) {
+    /*private void displayArrow(String nxtFloor) {
         switch (nxtFloor) {
             case "3":
                 imgArrow3.setImage(ImageFactory.getImage("arrow"));
@@ -311,7 +335,7 @@ public abstract class MapController implements Initializable {
                 imgArrowL2.setImage(ImageFactory.getImage("arrow"));
                 break;
         }
-    }
+    }*/
 
     private void styleButton(JFXButton btn, boolean highlight) {
         btn.getStyleClass().clear();
@@ -324,7 +348,7 @@ public abstract class MapController implements Initializable {
         }
     }
 
-    private void panToLine(Path line) {
+    /*private void panToLine(Path line) {
         gesMap.reset();
         Bounds lineBounds = line.getBoundsInLocal();
         double startX = lineBounds.getMinX();
@@ -357,7 +381,7 @@ public abstract class MapController implements Initializable {
                 gesMap.animate(Duration.millis(ANIMATION_TIME)).centreOn(pnt);
             }).zoomBy(2 * MAX_ZOOM, pnt);
         }
-    }
+    }*/
 
     private void panner(Path line) {
         Bounds beforeView = gesMap.getTargetViewport();

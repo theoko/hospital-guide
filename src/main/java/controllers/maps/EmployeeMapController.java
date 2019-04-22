@@ -62,7 +62,48 @@ public class EmployeeMapController extends MapController {
 
         MapDisplay.displayEmployee(this);
         initDirections();
+    }
 
+    @Override
+    public void zoomOut() {
+        Thread t = new Thread(() -> {
+            try {
+                Thread.sleep(3700);
+                gesMap.reset();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        });
+        t.setDaemon(true);
+        t.start();
+    }
+
+    public void btn_SendDirections (MouseEvent event) {
+        if(currentRoute == null) return;
+        TextMessenger tm = new TextMessenger();
+        String input_phone_number = "+1"+textNum.getText();
+        tm.declareRecipient(input_phone_number);
+        tm.declareMessage(MapController.currentDirections);
+        tm.sendMessage();
+        event.consume();
+        event.consume();
+    }
+
+    @Override
+    public void showFloor(String newFloor) {
+        super.showFloorHelper(newFloor);
+        MapDisplay.displayEmployee(this);
+    }
+
+    @Override
+    public void displayPath(Path line) {
+        super.displayPath(line);
+        MapDisplay.displayEmployee(this);
+    }
+
+    @Override
+    protected void addDoc() {
         ImageView imgUser = new ImageView();
         imgUser.setImage(new Image("images/Icons/user.png"));
         imgUser.setFitHeight(30);
@@ -301,6 +342,77 @@ public class EmployeeMapController extends MapController {
         btnInfo.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnInfo.setTextOverrun(OverrunStyle.CLIP);
 
+        ImageView imgCoffee = new ImageView();
+        imgCoffee.setImage(new Image("images/SearchIcons/coffee.png"));
+        imgCoffee.setFitHeight(30);
+        imgCoffee.setFitWidth(30);
+        imgCoffee.setPreserveRatio(true);
+        imgCoffee.setPickOnBounds(true);
+
+        JFXButton btnCoffee = new JFXButton("",imgCoffee);
+        btnCoffee.setAlignment(Pos.CENTER);
+        btnCoffee.setPrefWidth(60);
+        btnCoffee.setPrefHeight(60);
+        btnCoffee.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnCoffee.setTextOverrun(OverrunStyle.CLIP);
+
+        ImageView imgRest = new ImageView();
+        imgRest.setImage(new Image("images/SearchIcons/rest.png"));
+        imgRest.setFitHeight(30);
+        imgRest.setFitWidth(30);
+        imgRest.setPreserveRatio(true);
+        imgRest.setPickOnBounds(true);
+
+        JFXButton btnRest = new JFXButton("",imgRest);
+        btnRest.setAlignment(Pos.CENTER);
+        btnRest.setPrefWidth(60);
+        btnRest.setPrefHeight(60);
+        btnRest.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnRest.setTextOverrun(OverrunStyle.CLIP);
+
+        ImageView imgExit = new ImageView();
+        imgExit.setImage(new Image("images/SearchIcons/exit.png"));
+        imgExit.setFitHeight(30);
+        imgExit.setFitWidth(30);
+        imgExit.setPreserveRatio(true);
+        imgExit.setPickOnBounds(true);
+
+        JFXButton btnExit = new JFXButton("",imgExit);
+        btnExit.setAlignment(Pos.CENTER);
+        btnExit.setPrefWidth(60);
+        btnExit.setPrefHeight(60);
+        btnExit.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnExit.setTextOverrun(OverrunStyle.CLIP);
+
+        ImageView imgElev = new ImageView();
+        imgElev.setImage(new Image("images/SearchIcons/elev.png"));
+        imgElev.setFitHeight(30);
+        imgElev.setFitWidth(30);
+        imgElev.setPreserveRatio(true);
+        imgElev.setPickOnBounds(true);
+
+        JFXButton btnElev = new JFXButton("",imgElev);
+        btnElev.setAlignment(Pos.CENTER);
+        btnElev.setPrefWidth(60);
+        btnElev.setPrefHeight(60);
+        btnElev.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnElev.setTextOverrun(OverrunStyle.CLIP);
+
+        ImageView imgInfo1 = new ImageView();
+        imgInfo1.setImage(new Image("images/Icons/info.png"));
+        imgInfo1.setFitHeight(30);
+        imgInfo1.setFitWidth(30);
+        imgInfo1.setPreserveRatio(true);
+        imgInfo1.setPickOnBounds(true);
+
+        JFXButton btnInfo1 = new JFXButton("",imgInfo1);
+        btnInfo1.setAlignment(Pos.CENTER);
+        btnInfo1.setPrefWidth(60);
+        btnInfo1.setPrefHeight(60);
+        btnInfo1.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnInfo1.setTextOverrun(OverrunStyle.CLIP);
+
+        btnLogOut.setStyle("-fx-background-radius: 30;" );
         btnLogOut.setStyle("-fx-background-radius: 30;");
         btnLogOut.setButtonType(JFXButton.ButtonType.RAISED);
         imgLogOut.setImage(new Image("images/Icons/signout.png"));
@@ -340,24 +452,29 @@ public class EmployeeMapController extends MapController {
 
         HBox searchBox = new HBox();
 
-//        JFXTextField search = new JFXTextField();
-//        search.setPromptText(" Search");
-//        search.setPrefHeight(34);
-//        search.setPrefWidth(450);
-//        search.setAlignment(Pos.CENTER);
-//        search.setStyle("-fx-font-size: 18px;"
-//                + "-fx-font-weight: bold;"
-//                + "-fx-font-family: fantasy;"
-//                + "-fx-text-fill: #022D5A;"
-//                + "-fx-background-color: white");
-
-
         searchBox.getChildren().add(search);
         searchBox.getChildren().add(btnArrow);
         searchBox.setPrefHeight(60);
         searchBox.setPrefWidth(370);
         searchBox.setAlignment(Pos.CENTER);
         searchBox.setSpacing(-20);
+
+        HBox searchIcons = new HBox();
+        searchIcons.setSpacing(10);
+        searchIcons.getChildren().add(btnCoffee);
+        searchIcons.getChildren().add(btnRest);
+        searchIcons.getChildren().add(btnExit);
+        searchIcons.getChildren().add(btnElev);
+        searchIcons.getChildren().add(btnInfo1);
+        searchIcons.setAlignment(Pos.CENTER);
+
+        VBox searchNear = new VBox();
+        searchNear.setPrefWidth(370);
+        searchNear.setPrefHeight(150);
+        searchNear.setSpacing(5);
+        searchNear.getChildren().add(searchBox);
+        searchNear.getChildren().add(searchIcons);
+        searchNear.setAlignment(Pos.CENTER);
 
         Label dir = new Label("Text Directions");
         dir.setPrefHeight(50);
@@ -612,9 +729,9 @@ public class EmployeeMapController extends MapController {
         JFXNodesList nodesListInfo = new JFXNodesList();
 
         nodeListSearch.addAnimatedNode(btnSearch);
-        nodeListSearch.addAnimatedNode(searchBox);
+        nodeListSearch.addAnimatedNode(searchNear);
         nodeListSearch.setRotate(90);
-        nodeListSearch.setSpacing(150);
+        nodeListSearch.setSpacing(105);
 
         nodeListUser.addAnimatedNode(btnUser);
         nodeListUser.addAnimatedNode(userBox);
@@ -722,32 +839,6 @@ public class EmployeeMapController extends MapController {
     }
 
     @Override
-    public void zoomOut() {
-        Thread t = new Thread(() -> {
-            try {
-                Thread.sleep(3700);
-                gesMap.reset();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-        });
-        t.setDaemon(true);
-        t.start();
-    }
-
-    public void btn_SendDirections (MouseEvent event) {
-        if(currentRoute == null) return;
-        TextMessenger tm = new TextMessenger();
-        String input_phone_number = "+1"+textNum.getText();
-        tm.declareRecipient(input_phone_number);
-        tm.declareMessage(MapController.currentDirections);
-        tm.sendMessage();
-        event.consume();
-        event.consume();
-    }
-
-    @Override
     public void btnReturn_Click(MouseEvent mouseEvent) throws Exception {
         ScreenController.logOut(btnLogOut);
         FirebaseAPI.setCaller(null);
@@ -784,15 +875,4 @@ public class EmployeeMapController extends MapController {
         showFloor("L2");
     }
 
-    @Override
-    public void showFloor(String newFloor) {
-        super.showFloorHelper(newFloor);
-        MapDisplay.displayEmployee(this);
-    }
-
-    @Override
-    public void displayPath(Path line) {
-        super.displayPath(line);
-        MapDisplay.displayEmployee(this);
-    }
 }

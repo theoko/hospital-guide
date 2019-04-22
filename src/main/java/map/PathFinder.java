@@ -85,9 +85,14 @@ public abstract class PathFinder {
         return path;
     }
 
-    public Stack<Location> findByType(Location start, Constants.NodeType nodeType) {
-        Stack<Location> path = new Stack<>();
-        Queue<SubPath> queue = new LinkedList<>();
+    public static void printByType(MapController mc, Map map, Constants.NodeType nodeType) {
+        Location kiosk = map.getLocation(MapController.getTempStart());
+        Location closest = findByType(kiosk, nodeType);
+        printPath(mc, kiosk, closest);
+    }
+
+    private static Location findByType(Location start, Constants.NodeType nodeType) {
+        PriorityQueue<SubPath> queue = new PriorityQueue<>();
         SubPath sStart = new SubPath("", start, 0.0);
         queue.add(sStart);
         HashMap<String, SubPath> used = new HashMap<>();
@@ -99,8 +104,7 @@ public abstract class PathFinder {
                 continue;
             }
             if (currLoc.getNodeType().equals(nodeType)) {
-                path = genPath(currSub);
-                break;
+                return currLoc;
             }
             used.put(currLoc.getNodeID(), currSub);
 
@@ -111,7 +115,7 @@ public abstract class PathFinder {
                     SubPath nxtCpy = new SubPath(
                             nxtSub.getEdgeID(),
                             nxtLoc,
-                            0.0,
+                            Math.abs(floorToInt(start.getFloor()) - floorToInt(nxtLoc.getFloor())),
                             0.0
                     );
                     nxtCpy.setParent(currSub);
@@ -119,7 +123,7 @@ public abstract class PathFinder {
                 }
             }
         }
-        return path;
+        return null;
     }
 
     protected abstract void setUp(Location start);
@@ -371,8 +375,10 @@ public abstract class PathFinder {
                 return 3;
             case "2":
                 return 4;
-            default:
+            case "3":
                 return 5;
+            default:
+                return 6;
         }
     }
 

@@ -42,7 +42,7 @@ public class Main extends Application {
         // Initialize screen controller
         screenController = new ScreenController(primaryStage);
 
-        PathFinder.setDefLocation("HLABS00103");
+        PathFinder.setDefLocation("FSERV00501");
         SettingsController.setAlgType(new PathContext(new AStar()));
         (new TextMessenger()).sendMessage();
     }
