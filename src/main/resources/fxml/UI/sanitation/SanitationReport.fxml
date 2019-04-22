@@ -142,7 +142,7 @@
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab style="-fx-background-color: #022D5A;" text="Sumary Statistics">
+            <Tab style="-fx-background-color: #022D5A;" text="Summary Statistics">
                <content>
                   <AnchorPane prefHeight="645.0" prefWidth="1240.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
@@ -157,6 +157,9 @@
                                     </Label>
                                     <Text fx:id="textSummaryStatistics" strokeType="OUTSIDE" strokeWidth="0.0" />
                                  </children>
+                                 <VBox.margin>
+                                    <Insets left="20.0" />
+                                 </VBox.margin>
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                                  <children>
@@ -164,6 +167,9 @@
                                        <font>
                                           <Font size="24.0" />
                                        </font>
+                                       <HBox.margin>
+                                          <Insets left="20.0" />
+                                       </HBox.margin>
                                     </Label>
                                     <Text fx:id="textRequestToClaimTime" strokeType="OUTSIDE" strokeWidth="0.0" />
                                  </children>
@@ -177,23 +183,25 @@
                                     </Label>
                                     <Text fx:id="textClaimToCompleteTime" strokeType="OUTSIDE" strokeWidth="0.0" />
                                  </children>
+                                 <padding>
+                                    <Insets left="20.0" />
+                                 </padding>
                               </HBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                              <HBox alignment="CENTER_LEFT" prefHeight="400.0" prefWidth="200.0" spacing="20.0">
                                  <children>
-                                    <VBox prefHeight="200.0" prefWidth="400.0">
+                                    <VBox maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="400.0">
                                        <children>
                                           <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="251.0" style="-fx-background-color: #022D5A;" text="Employee Info" textFill="WHITE">
                                              <font>
                                                 <Font size="24.0" />
                                              </font>
                                           </Label>
-                                          <TableView prefHeight="200.0" prefWidth="200.0">
+                                          <TableView fx:id="tblEmployee" maxHeight="1.7976931348623157E308" prefHeight="497.0" prefWidth="400.0">
                                             <columns>
-                                              <TableColumn prefWidth="241.0" text="Employee" />
-                                              <TableColumn prefWidth="158.0" text="Requests" />
+                                              <TableColumn fx:id="tblEmployeeEmployee" prefWidth="241.0" text="Employee" />
+                                              <TableColumn fx:id="tblEmployeeRequests" prefWidth="158.0" text="Requests" />
                                             </columns>
                                           </TableView>
-                                          <Text fx:id="textSummaryStatistics1" strokeType="OUTSIDE" strokeWidth="0.0" />
                                        </children>
                                     </VBox>
                                     <VBox prefHeight="200.0" prefWidth="600.0">
@@ -203,16 +211,19 @@
                                                 <Font size="24.0" />
                                              </font>
                                           </Label>
-                                          <TableView prefHeight="200.0" prefWidth="200.0">
+                                          <TableView fx:id="tblCustodian" prefHeight="535.0" prefWidth="600.0">
                                              <columns>
-                                                <TableColumn prefWidth="241.0" text="Employee" />
-                                                <TableColumn prefWidth="158.0" text="Claimed" />
-                                                <TableColumn prefWidth="158.0" text="Completed" />
+                                                <TableColumn fx:id="tblCustodianEmployee" prefWidth="241.0" text="Employee" />
+                                                <TableColumn fx:id="tblCustodianClaimed" prefWidth="158.0" text="Claimed" />
+                                                <TableColumn fx:id="tblCustodianCompleted" prefWidth="158.0" text="Completed" />
                                              </columns>
                                           </TableView>
                                        </children>
                                     </VBox>
                                  </children>
+                                 <padding>
+                                    <Insets left="20.0" />
+                                 </padding>
                               </HBox>
                            </children></VBox>
                      </children>

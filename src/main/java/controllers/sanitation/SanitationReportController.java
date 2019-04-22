@@ -15,15 +15,18 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import map.PathFinder;
 import models.analysis.SanitationAnalyzer;
 import models.map.Location;
 import models.services.SanitationRequest;
 import models.services.ServiceRequest;
+import models.services.SimpleEmployee;
 import models.services.TransportationRequest;
 import models.user.User;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -33,15 +36,59 @@ public class SanitationReportController {
     public JFXButton btnFilterRequests;
     public PieChart chartPie;
     public LineChart chartLine;
+    public Text textSummaryStatistics;
+    public Text textRequestToClaimTime;
+    public Text textClaimToCompleteTime;
+
+    public TableView<SimpleEmployee> tblEmployee;
+    public TableColumn<SimpleEmployee, String> tblEmployeeEmployee;
+    public TableColumn<SimpleEmployee, String> tblEmployeeRequests;
+
+    public TableView<SimpleEmployee> tblCustodian;
+    public TableColumn<SimpleEmployee, String> tblCustodianEmployee;
+    public TableColumn<SimpleEmployee, String> tblCustodianClaimed;
+    public TableColumn<SimpleEmployee, String> tblCustodianCompleted;
+
 
     ObservableList<SanitationRequest> requests = FXCollections.observableArrayList();
+
+    ObservableList<SimpleEmployee> chartEmployees = FXCollections.observableArrayList();
+    ObservableList<SimpleEmployee> chartCustodians = FXCollections.observableArrayList();
 
     //    @Override
     public void initialize() {
 
-        List<SanitationRequest> unfilteredRequests =updateRequests();
-        updatePieChart(unfilteredRequests);
 
+        initTables();
+        List<SanitationRequest> unfilteredRequests = updateRequests();
+        updatePieChart(unfilteredRequests);
+        updateSummaryStats(unfilteredRequests);
+
+
+    }
+
+//    private List updateEmployees(List<SimpleEmployee> lstReqs) {
+//        if (lstReqs != null){
+//            chartEmployees.addAll(lstReqs);
+//        }
+//        return lstReqs;
+//    }
+//    private List updateCustodians( List<SimpleEmployee> lstReqs) {
+//       ;
+//        if (lstReqs != null){
+//            chartCustodians.addAll(lstReqs);
+//        }
+//        return lstReqs;
+//    }
+
+    private void initTables() {
+        tblEmployeeEmployee.setCellValueFactory(new PropertyValueFactory<>("Name"));
+        tblEmployeeRequests.setCellValueFactory(new PropertyValueFactory<>("Requests"));
+        tblCustodianEmployee.setCellValueFactory(new PropertyValueFactory<>("Name"));
+        tblCustodianClaimed.setCellValueFactory(new PropertyValueFactory<>("Claimed"));
+        tblCustodianCompleted.setCellValueFactory(new PropertyValueFactory<>("Completed"));
+        tblEmployee.setItems(chartEmployees);
+        tblCustodian.setItems(chartCustodians);
 
     }
 
@@ -53,43 +100,76 @@ public class SanitationReportController {
         return lstReqs;
     }
 
-    private void updateSummaryStats(List<SanitationRequest> requests){
-        SanitationAnalyzer analyzer=new SanitationAnalyzer();
+    private void updateSummaryStats(List<SanitationRequest> requests) {
+        SanitationAnalyzer analyzer = new SanitationAnalyzer();
 
+        StringBuilder summaryStats = new StringBuilder();
+        summaryStats.append("Requests: " + analyzer.getNumRequests().toString() + "      Incomplete: " + analyzer.getPercentIncomplete().toString() + "%      Claimed: " + analyzer.getPercentClaimed().toString() + "%      Completed: " + analyzer.getNumCompletedRequests().toString());
+        textSummaryStatistics.setText(summaryStats.toString());
 
-    }
+        StringBuilder requestToClaimTime = new StringBuilder();
+        requestToClaimTime.append("Mean: " + analyzer.getMeanClaimedTime().toString() + "      Minimum: " + analyzer.getMinClaimedTime().toString() + "      Maximum: " + analyzer.getMaxClaimedTime().toString());
+        textRequestToClaimTime.setText(requestToClaimTime.toString());
 
-private void updateLineChart(List<SanitationRequest> requests){
+        StringBuilder claimToCompleteTime = new StringBuilder();
+        claimToCompleteTime.append("Mean: " + analyzer.getMeanCompletedTime().toString() + "      Minimum: " + analyzer.getMinCompletedTime().toString() + "      Maximum: " + analyzer.getMaxCompletedTime().toString());
+        textClaimToCompleteTime.setText(claimToCompleteTime.toString());
 
-    ObservableList<XYChart.Series<Date,Number>> completedLine = FXCollections.observableArrayList();
-    ObservableList<XYChart.Series<Date,Number>> claimedLine = FXCollections.observableArrayList();
-    ObservableList<XYChart.Series<Date,Number>> requestedLine = FXCollections.observableArrayList();
+        ArrayList<String> employees = analyzer.getEmployees();
+        ArrayList<String> custodians = analyzer.getCustodians();
 
-
-
-
-    for (SanitationRequest request : requests) {
-        if (request.getStatus() == ServiceRequest.Status.COMPLETE) {
-
-           // completedLine.add(new XYChart.Series<Date, Number>(new GregorianCalendar(2012, 11, 15).getTime(), 2);
-
-
-            // completedLine.add(new XYChart.Data<Date,Number>(request.getCompletedTime(),1));
-           // claimedLine.add(new LineChart.Data(request.getClaimedTime(),1));
-           // requestedLine.add(new LineChart.Data(request.getRequestTime(),1));
-        } else if (request.getClaimedTime() != null) {
-           // claimedLine.add(new LineChart.Data(request.getClaimedTime(),1));
-           // requestedLine.add(new LineChart.Data(request.getRequestTime(),1));
-        } else {
-           // requestedLine.add(new LineChart.Data(request.getRequestTime(),1));
+        // Employee Statistics
+        for (String employee : employees) {
+            int requestedCount = analyzer.getEmployeeRequestCount().get(employee);
+            SimpleEmployee emp = new SimpleEmployee(employee);
+            emp.setRequests(requestedCount);
+            chartEmployees.add(emp);
         }
+
+        // Custodian Statistics
+        for (String custodian : custodians) {
+            int claimedCount = analyzer.getCustodianClaimedCount().get(custodian);
+            int completedCount = analyzer.getCustodianCompletedCount().get(custodian);
+            SimpleEmployee emp = new SimpleEmployee(custodian);
+            emp.setClaimed(claimedCount);
+            emp.setCompleted(completedCount);
+            chartCustodians.add(emp);
+        }
+        tblEmployee.refresh();
+        tblCustodian.refresh();
+        //analyzer.getEmployeeRequestCount()
+
     }
-    chartLine.setData(completedLine);
-    chartLine.setData(claimedLine);
-    chartLine.setData(requestedLine);
+
+    private void updateLineChart(List<SanitationRequest> requests) {
+
+        ObservableList<XYChart.Series<Date, Number>> completedLine = FXCollections.observableArrayList();
+        ObservableList<XYChart.Series<Date, Number>> claimedLine = FXCollections.observableArrayList();
+        ObservableList<XYChart.Series<Date, Number>> requestedLine = FXCollections.observableArrayList();
 
 
-}
+        for (SanitationRequest request : requests) {
+            if (request.getStatus() == ServiceRequest.Status.COMPLETE) {
+
+                // completedLine.add(new XYChart.Series<Date, Number>(new GregorianCalendar(2012, 11, 15).getTime(), 2);
+
+
+                // completedLine.add(new XYChart.Data<Date,Number>(request.getCompletedTime(),1));
+                // claimedLine.add(new LineChart.Data(request.getClaimedTime(),1));
+                // requestedLine.add(new LineChart.Data(request.getRequestTime(),1));
+            } else if (request.getClaimedTime() != null) {
+                // claimedLine.add(new LineChart.Data(request.getClaimedTime(),1));
+                // requestedLine.add(new LineChart.Data(request.getRequestTime(),1));
+            } else {
+                // requestedLine.add(new LineChart.Data(request.getRequestTime(),1));
+            }
+        }
+        chartLine.setData(completedLine);
+        chartLine.setData(claimedLine);
+        chartLine.setData(requestedLine);
+
+
+    }
 
     private void updatePieChart(List<SanitationRequest> requests) {
 
@@ -107,21 +187,21 @@ private void updateLineChart(List<SanitationRequest> requests){
             }
         }
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
-                new PieChart.Data("Complete",complete),
-                new PieChart.Data("Claimed",claimed),
-                new PieChart.Data("Un-Claimed",notstarted)
+                new PieChart.Data("Complete", complete),
+                new PieChart.Data("Claimed", claimed),
+                new PieChart.Data("Un-Claimed", notstarted)
 
-                );
+        );
 
         chartPie.setData(pieChartData);
 
     }
 
-    public void filterChange(){
+    public void filterChange() {
         //todo enable disable filter btn appropriately. borrow from transportation request
     }
 
-    public void cancelScr(){
+    public void cancelScr() {
         //todo implement or remove from fxml
     }
 

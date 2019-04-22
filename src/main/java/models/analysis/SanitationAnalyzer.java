@@ -270,4 +270,11 @@ public class SanitationAnalyzer
     public HashMap<String, Integer> getCustodianCompletedCount() {
         return custodianCompletedCount;
     }
+
+    public ArrayList<String> getEmployees(){
+        return employees;
+    }
+    public ArrayList<String> getCustodians(){
+        return custodians;
+    }
 }
