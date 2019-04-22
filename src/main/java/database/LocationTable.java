@@ -4,6 +4,7 @@ import helpers.Constants;
 import helpers.DatabaseHelpers;
 import models.map.Edge;
 import models.map.Location;
+import models.map.Workspace;
 import models.room.Room;
 
 import java.sql.*;
@@ -153,6 +154,16 @@ public class LocationTable {
                 RoomTable.addRoom(new Room(
                         location.getNodeID(),
                         5
+                ));
+            }else if (Objects.equals(DatabaseHelpers.enumToString(location.getNodeType()), Constants.NodeType.WORK.name()) || Objects.equals(DatabaseHelpers.enumToString(location.getNodeType()), Constants.NodeType.WRKT.name())) {
+
+                // Populate conference room table
+                WorkspaceTable.addWorkspace(new Workspace(
+                        location.getNodeID(),
+                        location.getxCord(),
+                        location.getyCord(),
+                        location.getNodeType(),
+                        location.getLongName()
                 ));
             }
 
