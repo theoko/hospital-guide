@@ -34,14 +34,39 @@ public class WeatherController {
                 counter++;
                 minute = LocalDateTime.now().getMinute();
                 hour = LocalDateTime.now().getHour();
-                if(hour < 10 && minute < 10)
-                    lblTime.setText("0" + hour + ":" + "0" + (minute));
-                else if(hour >= 10 && minute < 10)
-                    lblTime.setText(hour + ":" + "0" + (minute));
-                else if(hour < 10)
-                    lblTime.setText("0" + hour + ":" + (minute));
-                else
-                    lblTime.setText(hour + ":" + (minute));
+                if(hour == 0) {
+                    if(minute < 10)
+                        lblTime.setText("12" + ":" + "0" + (minute) + " AM");
+                    else
+                        lblTime.setText("12" + ":" + (minute) + " AM");
+                }
+                if(hour == 12) {
+                    if(minute < 10)
+                        lblTime.setText("12" + ":" + "0" + (minute) + " PM");
+                    else
+                        lblTime.setText("12" + ":" + (minute) + " PM");
+                }
+                if(hour < 12) {
+                    if (hour < 10 && minute < 10)
+                        lblTime.setText("0" + hour + ":" + "0" + (minute) + " AM");
+                    else if (hour >= 10 && minute < 10)
+                        lblTime.setText(hour + ":" + "0" + (minute) + " AM");
+                    else if (hour < 10)
+                        lblTime.setText("0" + hour + ":" + (minute) + " AM");
+                    else
+                        lblTime.setText(hour + ":" + (minute) + " AM");
+                }
+                if(hour > 12) {
+                    hour = hour - 12;
+                    if (hour < 10 && minute < 10)
+                        lblTime.setText("0" + hour + ":" + "0" + (minute) + " PM");
+                    else if (hour >= 10 && minute < 10)
+                        lblTime.setText(hour + ":" + "0" + (minute) + " PM");
+                    else if (hour < 10)
+                        lblTime.setText("0" + hour + ":" + (minute) + " PM");
+                    else
+                        lblTime.setText(hour + ":" + (minute) + " PM");
+                }
                 if(counter >= 300) {
                     initializeWeather();
                     counter = 0;

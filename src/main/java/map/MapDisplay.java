@@ -30,7 +30,7 @@ import static controllers.ScreenController.getStage;
 public class MapDisplay {
     private final static double locRadius = 15;
     private final static double hallRadius = 8;
-    private final static double workRadius = 11;
+    private final static double workRadius = 8;
     private final static double locWidth = 2.0;
     public final static double edgeWidth = 5;
     private final static double xShift = -2110.0;
@@ -182,9 +182,10 @@ public class MapDisplay {
                 break;
             case WORKSPACE:
                 System.out.println("Creating Workspace bitch");
-                circle.setFill(nodeFill);
-                circle.setRadius(workRadius);
+                circle.setFill(edgeFill);
+                circle.setRadius(hallRadius);
                 circle.setStroke(edgeOutline);
+                System.out.println(circle.getRadius());
                 break;
             default:
                 circle.setFill(edgeFill);
