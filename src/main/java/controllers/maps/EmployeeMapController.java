@@ -1196,7 +1196,7 @@ public class EmployeeMapController extends MapController {
         nodesListComp.setSpacing(330);
 
         nodesListFlo.addAnimatedNode(btnFlo);
-        nodesListFlo.addAnimatedNode(boxFlo);
+        // nodesListFlo.addAnimatedNode(boxFlo);
         nodesListFlo.setRotate(70);
         nodesListFlo.setSpacing(320);
 
