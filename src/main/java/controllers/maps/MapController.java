@@ -40,13 +40,11 @@ import java.util.*;
 public abstract class MapController implements Initializable {
     private final double MAX_ZOOM = 2.0;
     private final double MIN_ZOOM = 0.01;
-    private final double ZOOM_BUFFER = 0.5;
     private final double ZOOM_PADDING_W = 500.0;
     private final double ZOOM_PADDING_H = 0;
-    private final double ANIMATION_TIME = 1000;
     private final double ZOOM_OUT = 50.0;
-    private final double ZOOM_SPEED = 0.35;
-    private final double PAN_SPEED = 0.25;
+    private final double ZOOM_SPEED = 0.5;
+    private final double PAN_SPEED = 0.5;
     private final double PARTIAL_ZOOM = 0.3;
 
     public GesturePane gesMap;
@@ -485,14 +483,17 @@ public abstract class MapController implements Initializable {
                 // Zoom out a bit
                 gesMap.animate(Duration.seconds(Math.abs(zoomOut / ZOOM_SPEED))).afterFinished(() -> {
                     // Pan as close to center of line as possible
-                    gesMap.animate(Duration.millis(calcDist(beforeCenter, lineCenter) / PAN_SPEED)).afterFinished(() -> {
+                    double panSpeed1 = calcDist(beforeCenter, lineCenter) / PAN_SPEED;
+                    gesMap.animate(Duration.millis(panSpeed1)).afterFinished(() -> {
                         // Zoom in towards line
                         Bounds afterView = gesMap.getTargetViewport();
                         Point2D afterCenter = getCenter(afterView);
                         double zoomIn = calcZoom(afterView, lineView, true);
-                        gesMap.animate(Duration.seconds(Math.abs(zoomIn / ZOOM_SPEED))).afterFinished(() -> {
+                        double zoomInSpeed = Math.abs(zoomIn / ZOOM_SPEED);
+                        gesMap.animate(Duration.seconds(zoomInSpeed)).afterFinished(() -> {
                             // Center the line
-                            gesMap.animate(Duration.millis(calcDist(afterCenter, lineCenter) / PAN_SPEED)).centreOn(lineCenter);
+                            double panSpeed2 = calcDist(afterCenter, lineCenter) / PAN_SPEED;
+                            gesMap.animate(Duration.millis(panSpeed2)).centreOn(lineCenter);
                         }).zoomBy(zoomIn, afterCenter);
                     }).centreOn(lineCenter);
                 }).zoomBy(zoomOut, beforeCenter);
@@ -501,7 +502,7 @@ public abstract class MapController implements Initializable {
                 double zoomOut = calcZoom(beforeView, lineView, true) * PARTIAL_ZOOM;
                 gesMap.animate(Duration.seconds(Math.abs(zoomOut / ZOOM_SPEED))).afterFinished(() -> {
                     // Pan as close to center of line as possible
-                    gesMap.animate(Duration.millis(calcDist(beforeCenter, lineCenter))).afterFinished(() -> {
+                    gesMap.animate(Duration.millis(calcDist(beforeCenter, lineCenter) / PAN_SPEED)).afterFinished(() -> {
                         // Finish out the zoom
                         Bounds afterView = gesMap.getTargetViewport();
                         double zoomOuter = calcZoom(afterView, lineView, true);
@@ -513,10 +514,11 @@ public abstract class MapController implements Initializable {
         } else { // Point
             MoveTo mt = ((MoveTo) line.getElements().get(0));
             Point2D pnt = new Point2D(mt.getX(), mt.getY());
-            double zoom = 2 * MAX_ZOOM;
-            gesMap.animate(Duration.seconds(zoom / ZOOM_SPEED)).afterFinished(() -> {
-                gesMap.animate(Duration.millis(calcDist(beforeCenter, pnt))).centreOn(pnt);
-            }).zoomBy(zoom, pnt);
+            double zoom = MAX_ZOOM;
+            double zoomBy = Math.abs((zoom - gesMap.getCurrentScale()) / zoom);
+            gesMap.animate(Duration.seconds(zoomBy / ZOOM_SPEED)).afterFinished(() -> {
+                gesMap.animate(Duration.millis(calcDist(beforeCenter, pnt) / PAN_SPEED)).centreOn(pnt);
+            }).zoomTo(zoom, pnt);
         }
     }
 
@@ -538,6 +540,12 @@ public abstract class MapController implements Initializable {
         }
         double zoomWidth = (start.getWidth() - endWidth) / start.getWidth();
         double zoomHeight = (start.getHeight() - endHeight) / start.getHeight();
+
+        if (zoomWidth < zoomHeight) {
+            System.out.println("Width");
+        } else {
+            System.out.println("Height");
+        }
 
         return zoomWidth < zoomHeight ? zoomWidth : zoomHeight;
     }
