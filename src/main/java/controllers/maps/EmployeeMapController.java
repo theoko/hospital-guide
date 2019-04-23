@@ -6,6 +6,7 @@ import controllers.search.SearchEngineController;
 import controllers.search.TwoLocSearchPopupController;
 import database.BookLocationTable;
 import database.LocationTable;
+import floral.api.FloralApi;
 import google.FirebaseAPI;
 import helpers.Constants;
 import helpers.api.APIHelper;
@@ -544,6 +545,14 @@ public class EmployeeMapController extends MapController {
         btnFlo.setPrefHeight(60);
         btnFlo.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnFlo.setTextOverrun(OverrunStyle.CLIP);
+        btnFlo.setOnMouseClicked(event -> {
+            try {
+                ScreenController.popUp(Constants.Routes.TWO_NODE_SEARCH);
+                TwoLocSearchPopupController.setOnSendClick(EmployeeMapController::runFloralAPI);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        });
 
         UIHelpers.btnRaise(btnFlo);
 
@@ -1290,6 +1299,20 @@ public class EmployeeMapController extends MapController {
             api.run(10, 10, 800, 600, "/css/jfoenix-components.css", endLocID, startLocID);
         } catch (Exception exception) {
             System.out.println("Failed to run Food API");
+            exception.printStackTrace();
+        }
+    }
+
+    /**
+     * Runs Floral request API
+     */
+    public static void runFloralAPI() {
+        String endLocID = APIHelper.getEndLocID();
+        FloralApi floralApi = new FloralApi();
+        try {
+            floralApi.run(10, 10, "/css/jfoenix-components.css", endLocID);
+        } catch (Exception exception){
+            System.out.println("Floral API failed");
             exception.printStackTrace();
         }
     }
