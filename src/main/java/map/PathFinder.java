@@ -133,6 +133,46 @@ public abstract class PathFinder {
         return null;
     }
 
+    public static List<Location> findNearestLocations(Location start) {
+        PriorityQueue<SubPath> queue = new PriorityQueue<>();
+        PriorityQueue<Location> qPopper = new PriorityQueue<>();
+        HashMap<String, SubPath> lstUsed = new HashMap<>();
+
+        SubPath sStart = new SubPath("", start, 0.0);
+        queue.add(sStart);
+
+        while (!queue.isEmpty()) {
+            SubPath currSub = queue.poll();
+            Location currLoc = currSub.getLocation();
+            if (lstUsed.containsKey(currLoc.getNodeID())) {
+                continue;
+            }
+            lstUsed.put(currLoc.getNodeID(), currSub);
+
+            double currDist = currSub.getDist();
+            List<SubPath> lstSubs = currLoc.getSubPaths();
+            for (SubPath nxtSub : lstSubs) {
+                Location nxtLoc = nxtSub.getLocation();
+                if (!lstUsed.containsKey(nxtLoc.getNodeID())) {
+                    SubPath nxtCpy = new SubPath(
+                            nxtSub.getEdgeID(),
+                            nxtLoc,
+                            currDist + nxtSub.getDist(),
+                            0.0);
+                    nxtCpy.setParent(currSub);
+                    queue.add(nxtCpy);
+                    qPopper.add(nxtLoc);
+                }
+            }
+        }
+
+        List<Location> lstNearest = new ArrayList<>();
+        while (!qPopper.isEmpty()) {
+            lstNearest.add(qPopper.poll());
+        }
+        return lstNearest;
+    }
+
     protected abstract void setUp(Location start);
     protected abstract boolean isEmpty();
     protected abstract SubPath getNext();
