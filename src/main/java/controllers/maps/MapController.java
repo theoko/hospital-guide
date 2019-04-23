@@ -9,6 +9,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
@@ -208,7 +209,7 @@ public abstract class MapController implements Initializable {
     private void addBreadCrumbs() {
         final double HBX_SPACING = 10.0;
         final double VBX_SPACING = 1.0;
-        final double VBX_HEIGHT = 50.0;
+        final double VBX_HEIGHT = 56.0;
 
         vbxButtons.getChildren().clear();
         vbxButtons.setSpacing(VBX_SPACING);
@@ -245,7 +246,9 @@ public abstract class MapController implements Initializable {
                 hbxDot.setAlignment(Pos.CENTER_LEFT);
                 hbxDot.setPadding(new Insets(0, 0, 0, 20));
                 Circle dot = new Circle(DOT_RADIUS);
-                dot.setFill(Color.BLACK);
+                dot.setFill(Color.NAVY);
+                dot.setStroke(Color.GOLD);
+                dot.setStrokeWidth(0);
                 hbxDot.getChildren().add(dot);
                 vbxLoad.getChildren().add(hbxDot);
             }
@@ -305,6 +308,7 @@ public abstract class MapController implements Initializable {
         Location lstLoc = path.pop();
         String lstFloor = lstLoc.getFloor();
         Circle start = MapDisplay.createCircle(this, lstLoc, MapDisplay.NodeStyle.START, 1, Constants.Routes.USER_INFO, false);
+        start.setOnMouseClicked(Event::consume);
         panMap.getChildren().add(start);
         while (!path.isEmpty()) {
             Location curLoc = path.pop();
@@ -422,6 +426,7 @@ public abstract class MapController implements Initializable {
             HBox hbx = (HBox) n;
             Circle c = (Circle) hbx.getChildren().get(0);
             c.setRadius(5.0);
+            c.setStrokeWidth(0.0);
         }
     }
 
@@ -433,6 +438,7 @@ public abstract class MapController implements Initializable {
         for (int i = 0; i < children.size(); i++) {
             HBox hbx = (HBox) children.get(i);
             Circle c = (Circle) hbx.getChildren().get(0);
+            c.setStrokeWidth(2.0);
             Timeline tl = new Timeline();
             tl.setCycleCount(Timeline.INDEFINITE);
             tl.setAutoReverse(true);
