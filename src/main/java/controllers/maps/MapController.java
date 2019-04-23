@@ -59,6 +59,8 @@ public abstract class MapController implements Initializable {
     public AnchorPane panRoot;
     //public JFXButton btn;
 
+
+
     protected String floor;
     protected List<LineTuple> lstLineTransits;
     private int transitIt;
@@ -89,7 +91,8 @@ public abstract class MapController implements Initializable {
         Image img = ImageFactory.getImage(floor);
         imgMap.setImage(img);
         addDoc();
-        UIHelpers.addHover(panRoot);
+        //panMap.getChildren();
+        UIHelpers.loopPane(panRoot);
         //UIHelpers.btnRaise(btn);
 
         zoomOut();

@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import com.jfoenix.controls.JFXScrollPane?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.ScrollPane?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="656.0" minWidth="1200.0" prefHeight="656.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AboutPageController">
    <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="1200.0" style="-fx-background-color: #022D5A;" text="Worcester Polytechnic Institute Department of Computer Science" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
       <HBox alignment="CENTER" layoutY="47.0" prefHeight="50.0" prefWidth="1200.0" style="-fx-background-color: #022D5A;" AnchorPane.bottomAnchor="559.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="47.0">
          <children>
             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="375.0" text="CS3733-D19 Software Engineering" textFill="WHITE">
@@ -19,109 +23,6 @@
             </Label>
          </children>
       </HBox>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="120.0" layoutY="115.0" prefHeight="40.0" prefWidth="388.0" style="-fx-background-color: #022D5A; -fx-background-radius: 20;" text="Professor Wilson Wong: Vice President" textFill="WHITE">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="175.0" maxWidth="600.0" prefHeight="25.0" prefWidth="600.0" text="Theo Konstantopoulos: Lead Software Engineer" textFill="#022d5a">
-         <padding>
-            <Insets left="50.0" right="50.0" />
-         </padding>
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="600.0" layoutY="291.0" maxWidth="600.0" prefHeight="25.0" prefWidth="600.0" text="Niko Gamarra: Test Engineer" textFill="#022d5a">
-         <padding>
-            <Insets left="50.0" right="50.0" />
-         </padding>
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-         <children>
-            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/H_logo.png" />
-               </image>
-            </ImageView>
-            <Label text="The Brigham &amp; Women’s Hospital maps and data used in this application are copyrighted and provided for the sole use of educational purposes.The Brigham &amp; Women’s Hospital maps and data used in this application are copyrighted and provided for the sole use of educational purposes." textFill="#022d5a" wrapText="true">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-         </children>
-      </HBox>
-      <HBox alignment="CENTER" layoutX="406.0" layoutY="356.0" prefHeight="50.0" prefWidth="388.0" style="-fx-background-radius: 30; -fx-background-color: #022D5A;" AnchorPane.bottomAnchor="250.0" AnchorPane.leftAnchor="406.0" AnchorPane.rightAnchor="406.0">
-         <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="51.0" prefWidth="388.0" style="-fx-background-radius: 30;" text="Special Thanks" textFill="WHITE">
-               <font>
-                  <Font size="22.0" />
-               </font>
-            </Label>
-         </children>
-      </HBox>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="218.0" prefWidth="600.0" text="Matt Iandoli: Assistant Lead Software Engineer" textFill="#022d5a">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="600.0" layoutY="329.0" prefWidth="600.0" text="Sophie Antoniou: Documentation Analyst" textFill="#022d5a">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="258.0" prefWidth="600.0" text="Manas Mehta: Assistant Lead Software Engineer" textFill="#022d5a">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="600.0" layoutY="179.0" prefWidth="600.0" text="Max Luu: Scrum Master" textFill="#022d5a">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="294.0" prefWidth="600.0" text="Katie Deyette: Full-Time Software Engineer" textFill="#022d5a">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="600.0" layoutY="218.0" prefWidth="600.0" text="Danya Baron: Product Owner" textFill="#022d5a">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="329.0" prefWidth="600.0" text="Garrett Smith: Full-Time Software Engineer" textFill="#022d5a">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="600.0" layoutY="258.0" prefWidth="600.0" text="Dan Oates: Project Manager" textFill="#022d5a">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutY="-3.0" prefHeight="50.0" prefWidth="1200.0" style="-fx-background-color: #022D5A;" text="Worcester Polytechnic Institute Department of Computer Science" textFill="WHITE">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutY="449.0" prefWidth="1200.0" text="along with their representative, Andrew Shinn, for their time and input " textFill="#022d5a">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutY="420.0" prefWidth="1200.0" text="We would like to thank Brigham and Women’s Faulkner Hospital" textFill="#022d5a">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="764.0" layoutY="117.0" prefHeight="37.0" prefWidth="311.0" style="-fx-background-color: #022D5A; -fx-background-radius: 20;" text="Timothy Winters: Team Coach" textFill="WHITE">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
+      <ScrollPane fx:id="scrollPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="96.0" />
    </children>
 </AnchorPane>
