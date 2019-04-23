@@ -1,11 +1,11 @@
 package controllers.maps;
 
+import bishopfishapi.Emergency;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXNodesList;
 import com.jfoenix.controls.JFXTextField;
 import controllers.ScreenController;
 import controllers.search.SearchEngineController;
-import helpers.api.APIHelper;
 import helpers.Constants;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -28,6 +28,7 @@ import java.util.ResourceBundle;
 
 // TODO include
 // import edu.wpi.cs3733.b17teamI.Foodrequest.FoodRequestTeamI;
+
 
 public class EmployeeMapController extends MapController {
 
@@ -287,6 +288,18 @@ public class EmployeeMapController extends MapController {
         btnOut.setPrefHeight(60);
         btnOut.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnOut.setTextOverrun(OverrunStyle.CLIP);
+        /*btnOut.setOnMouseClicked(event -> {
+            Emergency.setSender("Bloodorangebishopfish");
+            Emergency.setSenderPassword("Software1");
+            Emergency.setRecipient("doates625@gmail.com");
+
+            Emergency e = new Emergency();
+            try {
+                e.run(50,50, 500, 500, null, "destNode", "originNode");
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });*/
 
         ImageView imgInfo = new ImageView();
         imgInfo.setImage(new Image("images/Icons/info.png"));
@@ -317,7 +330,7 @@ public class EmployeeMapController extends MapController {
         btnFood.setTextOverrun(OverrunStyle.CLIP);
         btnFood.setOnMouseClicked( event -> {
             try {
-                // TODO implement
+                // TODO re-implement
                 /*
                 ScreenController.popUp(Constants.Routes.TWO_NODE_SEARCH);
                 String startLocID = APIHelper.getStartLocID();
