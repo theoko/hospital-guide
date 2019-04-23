@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXNodesList;
 import com.jfoenix.controls.JFXTextField;
 import controllers.ScreenController;
 import controllers.search.SearchEngineController;
+import helpers.APIHelper;
 import helpers.Constants;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -316,8 +317,16 @@ public class EmployeeMapController extends MapController {
         btnFood.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnFood.setTextOverrun(OverrunStyle.CLIP);
         btnFood.setOnMouseClicked( event -> {
-            // TODO method for FOOD API
-            // FoodRequestTeamI.API.run(10, 10, 800, 600, "css/jfoenix-components.css", )
+            try {
+                ScreenController.activate(Constants.Routes.TWO_NODE_SEARCH); // TODO popup instead?
+                String startLocID = APIHelper.getStartLocID();
+                String endLocID = APIHelper.getEndLocID();
+                FoodRequestTeamI.API api = new FoodRequestTeamI.API();
+                api.run(10, 10, 800, 600, "css/jfoenix-components.css", endLocID, startLocID);
+            } catch (Exception exception) {
+                System.out.println("Failed to run Team I food request API");
+                exception.printStackTrace();
+            }
         });
         btnLogOut.setStyle("-fx-background-radius: 30;" );
         btnLogOut.setButtonType(JFXButton.ButtonType.RAISED);

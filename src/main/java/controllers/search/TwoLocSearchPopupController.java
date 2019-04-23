@@ -5,6 +5,7 @@ import controllers.ScreenController;
 import controllers.maps.MapController;
 import database.LocationTable;
 import database.TransportationTable;
+import helpers.APIHelper;
 import helpers.UserHelpers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -61,10 +62,10 @@ public class TwoLocSearchPopupController {
         return startLoc;
     }
 
-
-
     public void sendRequest(MouseEvent event) {
-//todo implement
+        APIHelper.setStartLocID(txtStartSearch.getText());
+        APIHelper.setEndLocID(txtEndSearch.getText());
+        ScreenController.deactivate();
     }
 
     public void goBack(MouseEvent event){
