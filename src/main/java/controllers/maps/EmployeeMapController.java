@@ -15,6 +15,7 @@ import helpers.UserHelpers;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.control.OverrunStyle;
 import javafx.scene.effect.Effect;
@@ -76,9 +77,6 @@ public class EmployeeMapController extends MapController {
     public JFXDatePicker datEndDay;
     public JFXTimePicker datStartTime;
     public JFXTimePicker datEndTime;
-
-    ArrayList<Circle> workZoneCircles = new ArrayList<>();
-    ArrayList<Circle> workSpaceCircles = new ArrayList<>();
 
     List<Room> workspacesAvailable;
     List<Room> workzonesAvailable;
@@ -156,15 +154,24 @@ public class EmployeeMapController extends MapController {
     }
 
     public void initializeZones() {
-        HashMap<String, Location> lstWorkZones = LocationTable.getLocations();
-        if (lstWorkZones != null) {
-            for (Location ws : lstWorkZones.values()) {
+        workzones = LocationTable.getLocations();
+        if (workzones != null) {
+            for (Location ws : workzones.values()) {
                 if (ws.getNodeType().equals(Constants.NodeType.WORK)) {
                     double xLoc = ws.getxCord();
                     double yLoc = ws.getyCord();
                     Circle circle = new Circle(xLoc, yLoc, locRadius, nodeFill);
+                    circle.setId(ws.getNodeID());
                     circle.setStroke(nodeOutline);
                     circle.setStrokeWidth(locWidth);
+                    circle.setOnMouseEntered(event -> {
+                        circle.setRadius(locRadius + 6);
+                        ScreenController.sceneThing.setCursor(Cursor.HAND);
+                    });
+                    circle.setOnMouseExited(event -> {
+                        circle.setRadius(locRadius);
+                        ScreenController.sceneThing.setCursor(Cursor.DEFAULT);
+                    });
                     circle.setOnMouseClicked(event -> {
                         try {
                             event.consume();
@@ -173,12 +180,11 @@ public class EmployeeMapController extends MapController {
                         }
                     });
                     this.panMap.getChildren().add(circle);
-                    workZoneCircles.add(circle);
+                    ws.setNodeCircle(circle);
                 }
             }
         }
 
-        workzones = LocationTable.getLocations();
         workzonesCurrent1 = BookLocationTable.getBookingsForUser(UserHelpers.getCurrentUser());
 
         if (workzonesCurrent1 != null) {
@@ -194,42 +200,53 @@ public class EmployeeMapController extends MapController {
 
         for (Location ws : myWorkzones1) {
             if (ws.getNodeType().equals(Constants.NodeType.WORK)) {
-                double xLoc = ws.getxCord();
-                double yLoc = ws.getyCord();
-                for (Circle c : workZoneCircles) {
-                    if (c.getCenterX() == xLoc && c.getCenterY() == yLoc) {
-                        c.setFill(Color.ORANGE);
-                        c.setOnMouseClicked(Event -> {
-                            try {
-                                Event.consume();
-                                for (Location ws1 : myWorkzones1) {
-                                    if (ws1.getxCord() == c.getCenterX() && ws1.getyCord() == c.getCenterY()) {
-                                        enter = ws1;
-                                        break;
-                                    }
-                                }
-                                ScreenController.popUp(Constants.Routes.WORKSPACE_POPUP, enter, c, startTime, startDate, endTime, endDate);
-                            } catch (Exception e) {
-                                e.printStackTrace();
+                Circle c = ws.getNodeCircle();
+                c.setFill(Color.ORANGE);
+                c.setOnMouseEntered(event -> {
+                    c.setRadius(locRadius + 6);
+                    ScreenController.sceneThing.setCursor(Cursor.HAND);
+                });
+                c.setOnMouseExited(event -> {
+                    c.setRadius(locRadius);
+                    ScreenController.sceneThing.setCursor(Cursor.DEFAULT);
+                });
+                c.setOnMouseClicked(Event -> {
+                    try {
+                        Event.consume();
+                        for (Location ws1 : myWorkzones1) {
+                            if (ws1.getxCord() == c.getCenterX() && ws1.getyCord() == c.getCenterY()) {
+                                enter = ws1;
+                                break;
                             }
-                        });
-                        break;
+                        }
+                        ScreenController.popUp(Constants.Routes.WORKSPACE_POPUP, enter, c, startTime, startDate, endTime, endDate);
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                }
+                });
             }
         }
     }
 
     public void initializeSpaces() {
-        HashMap<String, Location> lstWorkSpaces = LocationTable.getLocations();
-        if (lstWorkSpaces != null) {
-            for (Location ws : lstWorkSpaces.values()) {
+        workspaces = LocationTable.getLocations();
+        if (workspaces != null) {
+            for (Location ws : workspaces.values()) {
                 if (ws.getNodeType().equals(Constants.NodeType.WRKT)) {
                     double xLoc = ws.getxCord();
                     double yLoc = ws.getyCord();
                     Circle circle = new Circle(xLoc, yLoc, locRadius, nodeFill);
                     circle.setStroke(nodeOutline);
                     circle.setStrokeWidth(locWidth);
+                    circle.setId(ws.getNodeID());
+                    circle.setOnMouseEntered(event -> {
+                        circle.setRadius(locRadius + 6);
+                        ScreenController.sceneThing.setCursor(Cursor.HAND);
+                    });
+                    circle.setOnMouseExited(event -> {
+                        circle.setRadius(locRadius);
+                        ScreenController.sceneThing.setCursor(Cursor.DEFAULT);
+                    });
                     circle.setOnMouseClicked(event -> {
                         try {
                             event.consume();
@@ -238,12 +255,11 @@ public class EmployeeMapController extends MapController {
                         }
                     });
                     this.panMap.getChildren().add(circle);
-                    workSpaceCircles.add(circle);
+                    ws.setNodeCircle(circle);
                 }
             }
         }
 
-        workspaces = LocationTable.getLocations();
         workspacesCurrent1 = BookLocationTable.getBookingsForUser(UserHelpers.getCurrentUser());
 
         if (workspacesCurrent1 != null) {
@@ -259,28 +275,31 @@ public class EmployeeMapController extends MapController {
 
         for (Location ws : myWorkspaces1) {
             if (ws.getNodeType().equals(Constants.NodeType.WRKT)) {
-                double xLoc = ws.getxCord();
-                double yLoc = ws.getyCord();
-                for (Circle c : workSpaceCircles) {
-                    if (c.getCenterX() == xLoc && c.getCenterY() == yLoc) {
-                        c.setFill(Color.ORANGE);
-                        c.setOnMouseClicked(Event -> {
-                            try {
-                                Event.consume();
-                                for (Location ws1 : myWorkspaces1) {
-                                    if (ws1.getxCord() == c.getCenterX() && ws1.getyCord() == c.getCenterY()) {
-                                        enter = ws1;
-                                        break;
-                                    }
-                                }
-                                ScreenController.popUp(Constants.Routes.WORKSPACE_POPUP, enter, c, startTime, startDate, endTime, endDate);
-                            } catch (Exception e) {
-                                e.printStackTrace();
+                Circle c = ws.getNodeCircle();
+                c.setFill(Color.ORANGE);
+                c.setOnMouseEntered(event -> {
+                    c.setRadius(locRadius + 6);
+                    ScreenController.sceneThing.setCursor(Cursor.HAND);
+                });
+                c.setOnMouseExited(event -> {
+                    c.setRadius(locRadius);
+                    ScreenController.sceneThing.setCursor(Cursor.DEFAULT);
+                });
+                c.setOnMouseClicked(Event -> {
+                    try {
+                        Event.consume();
+                        for (Location ws1 : myWorkspaces1) {
+                            if (ws1.getxCord() == c.getCenterX() && ws1.getyCord() == c.getCenterY()) {
+                                enter = ws1;
+                                break;
                             }
-                        });
-                        break;
+                        }
+                        ScreenController.popUp(Constants.Routes.WORKSPACE_POPUP, enter, c, startTime, startDate, endTime, endDate);
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                }
+                });
+
             }
         }
     }
@@ -750,7 +769,7 @@ public class EmployeeMapController extends MapController {
         btnText.setButtonType(JFXButton.ButtonType.RAISED);
         imgText.setImage(new Image("images/Icons/text.png"));
 
-       UIHelpers.btnRaise(btnText);
+        UIHelpers.btnRaise(btnText);
 
 
 
@@ -1220,7 +1239,6 @@ public class EmployeeMapController extends MapController {
             FirebaseAPI.setCaller(EmployeeMapController.this);
             FirebaseAPI.checkForCommands(UserHelpers.getCurrentUser().getUsername());
         });
-
     }
 
     @Override
@@ -1268,14 +1286,9 @@ public class EmployeeMapController extends MapController {
 
                 for (Location ws : workspacesBooked) {
                     if (ws.getNodeType().equals(Constants.NodeType.WRKT)) {
-                        double xLoc = ws.getxCord();
-                        double yLoc = ws.getyCord();
-                        for (Circle c : workSpaceCircles) {
-                            if (c.getCenterX() == xLoc && c.getCenterY() == yLoc) {
-                                c.setFill(Color.RED);
-                                break;
-                            }
-                        }
+                        System.out.println("works");
+                        Circle c = ws.getNodeCircle();
+                        c.setFill(Color.RED);
                     }
                 }
 
@@ -1292,57 +1305,51 @@ public class EmployeeMapController extends MapController {
 
                 for (Location ws : myWorkspaces) {
                     if (ws.getNodeType().equals(Constants.NodeType.WRKT)) {
-                        double xLoc = ws.getxCord();
-                        double yLoc = ws.getyCord();
-                        for (Circle c : workSpaceCircles) {
-                            if (c.getCenterX() == xLoc && c.getCenterY() == yLoc) {
-                                c.setFill(Color.ORANGE);
-                                c.setOnMouseClicked(Event -> {
-                                    try {
-                                        Event.consume();
-                                        for(Location ws1 : myWorkspaces) {
-                                            if(ws1.getxCord() == c.getCenterX() && ws1.getyCord() == c.getCenterY()) {
-                                                enter = ws1;
-                                                break;
-                                            }
-                                        }
-                                        ScreenController.popUp(Constants.Routes.WORKSPACE_POPUP, enter, c, startTime, startDate, endTime, endDate);
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
+                        Circle c = ws.getNodeCircle();
+                        c.setFill(Color.ORANGE);
+                        c.setOnMouseClicked(Event -> {
+                            try {
+                                Event.consume();
+                                for(Location ws1 : myWorkspaces) {
+                                    if(ws1.getxCord() == c.getCenterX() && ws1.getyCord() == c.getCenterY()) {
+                                        enter = ws1;
+                                        break;
                                     }
-                                });
-                                break;
+                                }
+                                ScreenController.popUp(Constants.Routes.WORKSPACE_POPUP, enter, c, startTime, startDate, endTime, endDate);
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
-                        }
+                        });
                     }
                 }
 
                 for (Room ws : workspacesAvailable) {
-                    Location ls = map.getLocation(ws.getRoomID());
-                    if (ls.getNodeType().equals(Constants.NodeType.WRKT)) {
-                        double xLoc = ls.getxCord();
-                        double yLoc = ls.getyCord();
-                        for (Circle c : workSpaceCircles) {
-                            if (c.getCenterX() == xLoc && c.getCenterY() == yLoc) {
-                                c.setFill(Color.YELLOW);
-                                c.setOnMouseClicked(Event -> {
-                                    try {
-                                        Event.consume();
-                                        for(Room ws1 : workspacesAvailable) {
-                                            Location ls1 = map.getLocation(ws1.getRoomID());
-                                            if(ls1.getxCord() == c.getCenterX() && ls1.getyCord() == c.getCenterY()) {
-                                                enter = ls1;
-                                                break;
-                                            }
-                                        }
-                                        ScreenController.popUp(Constants.Routes.WORKSPACE_POPUP, enter, c, startTime, startDate, endTime, endDate);
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                    }
-                                });
-                                break;
-                            }
+                    Location ls = new Location("",0,0,"","", Constants.NodeType.HALL,"","");
+                    for(Location ls1 : workspaces.values()) {
+                        if(ls1.getNodeID().equals(ws.getRoomID())) {
+                            ls = ls1;
+                            break;
                         }
+                    }
+                    if (ls.getNodeType().equals(Constants.NodeType.WRKT)) {
+                        Circle c = ls.getNodeCircle();
+                        c.setFill(Color.YELLOW);
+                        c.setOnMouseClicked(Event -> {
+                            try {
+                                for(Room ws1 : workspacesAvailable) {
+                                    Location ls1 = map.getLocation(ws1.getRoomID());
+                                    if(ls1.getxCord() == c.getCenterX() && ls1.getyCord() == c.getCenterY()) {
+                                        enter = ls1;
+                                        break;
+                                    }
+                                }
+
+                                ScreenController.popUp(Constants.Routes.WORKSPACE_POPUP, enter, c, startTime, startDate, endTime, endDate);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        });
                     }
                 }
             }
@@ -1378,14 +1385,8 @@ public class EmployeeMapController extends MapController {
 
                 for (Location ws : workzonesBooked) {
                     if (ws.getNodeType().equals(Constants.NodeType.WORK)) {
-                        double xLoc = ws.getxCord();
-                        double yLoc = ws.getyCord();
-                        for (Circle c : workZoneCircles) {
-                            if (c.getCenterX() == xLoc && c.getCenterY() == yLoc) {
-                                c.setFill(Color.RED);
-                                break;
-                            }
-                        }
+                        Circle c = ws.getNodeCircle();
+                        c.setFill(Color.RED);
                     }
                 }
 
@@ -1402,57 +1403,51 @@ public class EmployeeMapController extends MapController {
 
                 for (Location ws : myWorkzones) {
                     if (ws.getNodeType().equals(Constants.NodeType.WORK)) {
-                        double xLoc = ws.getxCord();
-                        double yLoc = ws.getyCord();
-                        for (Circle c : workZoneCircles) {
-                            if (c.getCenterX() == xLoc && c.getCenterY() == yLoc) {
-                                c.setFill(Color.ORANGE);
-                                c.setOnMouseClicked(Event -> {
-                                    try {
-                                        Event.consume();
-                                        for(Location ws1 : myWorkzones) {
-                                            if(ws1.getxCord() == c.getCenterX() && ws1.getyCord() == c.getCenterY()) {
-                                                enter = ws1;
-                                                break;
-                                            }
-                                        }
-                                        ScreenController.popUp(Constants.Routes.WORKSPACE_POPUP, enter, c, startTime, startDate, endTime, endDate);
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
+                        Circle c = ws.getNodeCircle();
+                        c.setFill(Color.ORANGE);
+                        c.setOnMouseClicked(Event -> {
+                            try {
+                                Event.consume();
+                                for(Location ws1 : myWorkzones) {
+                                    if(ws1.getxCord() == c.getCenterX() && ws1.getyCord() == c.getCenterY()) {
+                                        enter = ws1;
+                                        break;
                                     }
-                                });
-                                break;
+                                }
+                                ScreenController.popUp(Constants.Routes.WORKSPACE_POPUP, enter, c, startTime, startDate, endTime, endDate);
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
-                        }
+                        });
                     }
                 }
 
                 for (Room ws : workzonesAvailable) {
-                    Location ls = map.getLocation(ws.getRoomID());
-                    if (ls.getNodeType().equals(Constants.NodeType.WORK)) {
-                        double xLoc = ls.getxCord();
-                        double yLoc = ls.getyCord();
-                        for (Circle c : workZoneCircles) {
-                            if (c.getCenterX() == xLoc && c.getCenterY() == yLoc) {
-                                c.setFill(Color.YELLOW);
-                                c.setOnMouseClicked(Event -> {
-                                    try {
-                                        Event.consume();
-                                        for(Room ws1 : workzonesAvailable) {
-                                            Location ls1 = map.getLocation(ws1.getRoomID());
-                                            if(ls1.getxCord() == c.getCenterX() && ls1.getyCord() == c.getCenterY()) {
-                                                enter = ls1;
-                                                break;
-                                            }
-                                        }
-                                        ScreenController.popUp(Constants.Routes.WORKSPACE_POPUP, enter, c, startTime, startDate, endTime, endDate);
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                    }
-                                });
-                                break;
-                            }
+                    Location ls = new Location("",0,0,"","", Constants.NodeType.HALL,"","");
+                    for(Location ls1 : workzones.values()) {
+                        if(ls1.getNodeID().equals(ws.getRoomID())) {
+                            ls = ls1;
+                            break;
                         }
+                    }
+                    if (ls.getNodeType().equals(Constants.NodeType.WORK)) {
+                        Circle c = ls.getNodeCircle();
+                        c.setFill(Color.YELLOW);
+                        c.setOnMouseClicked(Event -> {
+                            try {
+                                Event.consume();
+                                for(Room ws1 : workzonesAvailable) {
+                                    Location ls1 = map.getLocation(ws1.getRoomID());
+                                    if(ls1.getxCord() == c.getCenterX() && ls1.getyCord() == c.getCenterY()) {
+                                        enter = ls1;
+                                        break;
+                                    }
+                                }
+                                ScreenController.popUp(Constants.Routes.WORKSPACE_POPUP, enter, c, startTime, startDate, endTime, endDate);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        });
                     }
                 }
             }
