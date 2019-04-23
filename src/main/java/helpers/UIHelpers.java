@@ -1,7 +1,11 @@
 package helpers;
 
-import controllers.maps.AdminMapController;
+import com.jfoenix.controls.JFXButton;
+import controllers.ScreenController;
+import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -52,6 +56,35 @@ public class UIHelpers {
 //                throw new UnsupportedOperationException(e);
 //            }
 //        });
+    }
+
+    public static void mouseHover(Node n) {
+        n.setOnMouseEntered(event -> {
+            ScreenController.sceneThing.setCursor(Cursor.HAND);
+        });
+
+        n.setOnMouseExited(event -> {
+            ScreenController.sceneThing.setCursor(Cursor.DEFAULT);
+        });
+    }
+
+
+    public static void addHover(Pane p) {
+        for (Node n : p.getChildren()) {
+            if(n instanceof JFXButton) {
+                mouseHover(n);
+            }
+        }
+    }
+
+    public static void btnRaise(JFXButton btn) {
+        btn.setOnMouseEntered(event -> {
+            btn.setButtonType(JFXButton.ButtonType.RAISED);
+        });
+
+        btn.setOnMouseExited(event -> {
+            btn.setButtonType(JFXButton.ButtonType.FLAT);
+        });
     }
 
     public static Line generateLineFromEdge(Edge e) {

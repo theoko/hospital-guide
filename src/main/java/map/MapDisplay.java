@@ -7,11 +7,13 @@ import database.EdgeTable;
 import database.LocationTable;
 import helpers.Constants;
 import javafx.event.Event;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.StrokeLineCap;
+import javafx.stage.Stage;
 import models.map.Edge;
 import models.map.Location;
 import models.map.Map;
@@ -21,6 +23,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import static controllers.ScreenController.getScreenMap;
+import static controllers.ScreenController.getStage;
 
 public class MapDisplay {
     private final static double locRadius = 15;
@@ -244,6 +249,23 @@ public class MapDisplay {
             });
         }
 
+        circle.setOnMouseEntered(event -> {
+
+            if(nodeStyle == NodeStyle.REGULAR || nodeStyle == NodeStyle.END || nodeStyle == NodeStyle.START )
+                circle.setRadius(locRadius + 6);
+            else
+                circle.setRadius(hallRadius + 6);
+            ScreenController.sceneThing.setCursor(Cursor.HAND);
+        });
+
+        circle.setOnMouseExited(event -> {
+            if(nodeStyle == NodeStyle.REGULAR || nodeStyle == NodeStyle.END || nodeStyle == NodeStyle.START )
+                circle.setRadius(locRadius);
+            else
+                circle.setRadius(hallRadius);
+            ScreenController.sceneThing.setCursor(Cursor.DEFAULT);
+        });
+
         loc.setNodeCircle(circle);
         return circle;
     }
@@ -258,6 +280,18 @@ public class MapDisplay {
         if (!(start.getFloor().equals(floor) && end.getFloor().equals(floor))) {
             line.setOpacity(opac);
         }
+
+        line.setOnMouseEntered(event -> {
+            line.setStroke(Color.ORANGE);
+            line.setStrokeWidth(edgeWidth + 4);
+            ScreenController.sceneThing.setCursor(Cursor.HAND);
+        });
+
+        line.setOnMouseExited(event -> {
+            line.setStroke(edgeFill);
+            line.setStrokeWidth(edgeWidth);
+            ScreenController.sceneThing.setCursor(Cursor.DEFAULT);
+        });
 
         line.setOnMousePressed(Event::consume);
         line.setOnMouseDragged(Event::consume);

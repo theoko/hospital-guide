@@ -14,8 +14,10 @@ import database.CSVParser;
 import map.AStar;
 import map.PathContext;
 import map.PathFinder;
-import models.analysis.SanitationAnalyzer;
 import models.search.SearchKeywords;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class Main extends Application {
     static ScreenController screenController;
@@ -39,10 +41,6 @@ public class Main extends Application {
             SanitationTable.seed();
         }
 
-        // TODO remove this
-        // Analyze sanitation requests
-        new SanitationAnalyzer();
-
         // Initialize keywords for search engine
         SearchKeywords.initialize();
 
@@ -52,7 +50,7 @@ public class Main extends Application {
         // Initialize screen controller
         screenController = new ScreenController(primaryStage);
 
-        PathFinder.setDefLocation("HLABS00103");
+        PathFinder.setDefLocation("FEXIT00201");
         SettingsController.setAlgType(new PathContext(new AStar()));
         (new TextMessenger()).sendMessage();
     }
