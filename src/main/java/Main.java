@@ -32,7 +32,7 @@ public class Main extends Application {
 
         // Initialize database
         if(!Database.getDatabase().databaseExists()) {
-            CSVParser.parse(FileHelpers.getNodesCSV(), FileHelpers.getEdgesCSV(), FileHelpers.getWorkspacesCSV());
+            CSVParser.parse(FileHelpers.getNodesCSV(), FileHelpers.getEdgesCSV());
 
             // Seed user table
             UserTable.seed();
