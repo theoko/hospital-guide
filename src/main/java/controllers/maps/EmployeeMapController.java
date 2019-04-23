@@ -6,7 +6,9 @@ import com.jfoenix.controls.JFXNodesList;
 import com.jfoenix.controls.JFXTextField;
 import controllers.ScreenController;
 import controllers.search.SearchEngineController;
+import controllers.search.TwoLocSearchPopupController;
 import helpers.Constants;
+import helpers.api.APIHelper;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -330,17 +332,9 @@ public class EmployeeMapController extends MapController {
         btnFood.setTextOverrun(OverrunStyle.CLIP);
         btnFood.setOnMouseClicked( event -> {
             try {
-                // TODO re-implement
-                /*
                 ScreenController.popUp(Constants.Routes.TWO_NODE_SEARCH);
-                String startLocID = APIHelper.getStartLocID();
-                String endLocID = APIHelper.getEndLocID();
-                */
-                FoodRequestTeamI.API api = new FoodRequestTeamI.API();
-                // api.run(10, 10, 800, 600, "/css/jfoenix-components.css", endLocID, startLocID);
-                api.run(10, 10, 800, 600, "/css/jfoenix-components.css", "start", "end");
+                TwoLocSearchPopupController.setOnSendClick(EmployeeMapController::runFoodAPI);
             } catch (Exception exception) {
-                System.out.println("Failed to run Team I food request API");
                 exception.printStackTrace();
             }
         });
@@ -756,6 +750,18 @@ public class EmployeeMapController extends MapController {
         vboxDock.getChildren().add(nodeListRoom);
         vboxDock.getChildren().add(nodeListCal);
         vboxDock.getChildren().add(nodeListExl);
+    }
+
+    public static void runFoodAPI() {
+        String startLocID = APIHelper.getStartLocID();
+        String endLocID = APIHelper.getEndLocID();
+        FoodRequestTeamI.API api = new FoodRequestTeamI.API();
+        try {
+            api.run(10, 10, 800, 600, "/css/jfoenix-components.css", endLocID, startLocID);
+        } catch (Exception exception) {
+            System.out.println("Failed to run Food API");
+            exception.printStackTrace();
+        }
     }
 
     @Override

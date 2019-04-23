@@ -10,9 +10,16 @@ import models.search.SearchAPI;
 
 public class TwoLocSearchPopupController {
 
+    // Runs when send button is pressed
+    private static Runnable onSendClick;
+
     public JFXTextField txtStartSearch;
     public JFXTextField txtEndSearch;
     public JFXButton btnSearch;
+
+    public static void setOnSendClick(Runnable runnable) {
+        onSendClick = runnable;
+    }
 
     public void initialize() {
         SearchAPI txtStartSearchAPI = new SearchAPI(txtStartSearch);
@@ -28,8 +35,11 @@ public class TwoLocSearchPopupController {
     }
 
     public void sendRequest(MouseEvent event) {
-        APIHelper.setStartLocID(txtStartSearch.getText());
-        APIHelper.setEndLocID(txtEndSearch.getText());
+        String startID = LocationTable.getLocationByLongName(txtStartSearch.getText()).iterator().next().getNodeID();
+        String endID = LocationTable.getLocationByLongName(txtStartSearch.getText()).iterator().next().getNodeID();
+        APIHelper.setStartLocID(startID);
+        APIHelper.setEndLocID(endID);
+        onSendClick.run();
         ScreenController.deactivate();
     }
 
