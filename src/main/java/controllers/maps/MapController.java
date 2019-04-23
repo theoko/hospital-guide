@@ -2,15 +2,23 @@ package controllers.maps;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTabPane;
+import helpers.Constants;
 import helpers.UIHelpers;
 import google.FirebaseAPI;
 import helpers.UserHelpers;
 import images.ImageFactory;
 import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
+import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
@@ -19,7 +27,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
@@ -30,6 +41,7 @@ import models.map.Map;
 import net.kurobako.gesturefx.GesturePane;
 
 import java.net.URL;
+import java.sql.Time;
 import java.util.*;
 
 public abstract class MapController implements Initializable {
@@ -53,27 +65,26 @@ public abstract class MapController implements Initializable {
     public JFXButton btnFloorG;
     public JFXButton btnFloorL1;
     public JFXButton btnFloorL2;
-    public JFXButton btnReturn;
     public Pane panMap;
     public ScrollPane txtPane;
-    public AnchorPane tilDirections;
     public JFXTabPane tabMenu;
     public AnchorPane panRoot;
     //public JFXButton btn;
+    public VBox vbxButtons;
 
     protected String floor;
     protected List<LineTuple> lstLineTransits;
-    private int transitIt;
     protected static String tempStart;
     private static MapController currMapControl;
     public static Stack<Location> currentRoute;
     public static String currentDirections;
     protected Map map;
+    private List<Timeline> lstTls;
 
     public MapController() {
         floor = "1";
         lstLineTransits = new LinkedList<>();
-        transitIt = 0;
+        lstTls = new ArrayList<>();
         currMapControl = this;
         currentDirections = null;
         currentRoute = null;
@@ -87,7 +98,7 @@ public abstract class MapController implements Initializable {
         gesMap.setMinScale(MIN_ZOOM);
         gesMap.setFitMode(GesturePane.FitMode.COVER);
 
-        updateButtons();
+        addFloorBtns();
         Image img = ImageFactory.getImage(floor);
         imgMap.setImage(img);
         addDoc();
@@ -129,34 +140,6 @@ public abstract class MapController implements Initializable {
 
     public abstract void btnReturn_Click(MouseEvent mouseEvent) throws Exception;
 
-    public void btnFloor4_Click(MouseEvent mouseEvent) {
-        showFloor("4");
-    }
-
-    public void btnFloor3_Click(MouseEvent mouseEvent) {
-        showFloor("3");
-    }
-
-    public void btnFloor2_Click(MouseEvent mouseEvent) {
-        showFloor("2");
-    }
-
-    public void btnFloor1_Click(MouseEvent mouseEvent) {
-        showFloor("1");
-    }
-
-    public void btnFloorG_Click(MouseEvent mouseEvent) {
-        showFloor("G");
-    }
-
-    public void btnFloorL1_Click(MouseEvent mouseEvent) {
-        showFloor("L1");
-    }
-
-    public void btnFloorL2_Click(MouseEvent mouseEvent) {
-        showFloor("L2");
-    }
-
     public boolean isAdmin() {
         return false;
     }
@@ -165,8 +148,6 @@ public abstract class MapController implements Initializable {
         floor = newFloor;
         imgMap.setImage(ImageFactory.getImage(floor));
         updateLines();
-        updateButtons();
-        displayHint();
     }
 
     public abstract void showFloor(String newFloor);
@@ -191,11 +172,105 @@ public abstract class MapController implements Initializable {
         public String getFloor() {
             return floor;
         }
-
     }
 
     public GesturePane getGesMap() {
         return gesMap;
+    }
+
+    private void addFloorBtns() {
+        final double HBX_SPACING = 10.0;
+        final double VBX_SPACING = 25.0;
+
+        vbxButtons.getChildren().clear();
+        vbxButtons.setSpacing(VBX_SPACING);
+
+        String[] strFloors = new String[] {"4", "3", "2", "1", "G", "L1", "L2"};
+        for (String strFloor : strFloors) {
+            HBox hbx = new HBox();
+            hbx.setAlignment(Pos.CENTER_LEFT);
+            hbx.setSpacing(HBX_SPACING);
+
+            JFXButton btn = new JFXButton();
+            btn.setText(strFloor);
+            btn.getStyleClass().add("jfx-button");
+            btn.getStyleClass().add("animated-option-button");
+            btn.setOnMouseClicked((e) -> {
+                showFloor(strFloor);
+                updateButtons(btn);
+            });
+            if (strFloor.equals(floor)) {
+                styleButton(btn, "highlight", "unhighlight");
+            }
+
+            hbx.getChildren().add(btn);
+            vbxButtons.getChildren().add(hbx);
+        }
+    }
+
+    private void addBreadCrumbs() {
+        final double HBX_SPACING = 10.0;
+        final double VBX_SPACING = 1.0;
+        final double VBX_HEIGHT = 50.0;
+
+        vbxButtons.getChildren().clear();
+        vbxButtons.setSpacing(VBX_SPACING);
+
+        for (LineTuple lt : lstLineTransits) {
+            String strFloor = lt.floor;
+
+            HBox hbx = new HBox();
+            hbx.setAlignment(Pos.CENTER);
+            hbx.setSpacing(HBX_SPACING);
+
+            JFXButton btn = new JFXButton();
+            btn.setText(strFloor);
+            btn.getStyleClass().add("jfx-button");
+            btn.getStyleClass().add("animated-option-button");
+            btn.setOnMouseClicked((e) -> {
+                showFloorHelper(strFloor);
+                displayHint(hbx);
+                updateBreadButtons(btn);
+            });
+
+            hbx.getChildren().add(btn);
+            vbxButtons.getChildren().add(hbx);
+
+            VBox vbxLoad = new VBox();
+            vbxLoad.setSpacing(VBX_SPACING);
+            vbxLoad.setPrefHeight(VBX_HEIGHT);
+
+            final int NUM_DOTS = 3;
+            final double DOT_RADIUS = 5.0;
+            for (int i = 0; i < NUM_DOTS; i++) {
+                HBox hbxDot = new HBox();
+                hbxDot.setPrefHeight(15.0);
+                hbxDot.setAlignment(Pos.CENTER_LEFT);
+                hbxDot.setPadding(new Insets(0, 0, 0, 20));
+                Circle dot = new Circle(DOT_RADIUS);
+                dot.setFill(Color.BLACK);
+                hbxDot.getChildren().add(dot);
+                vbxLoad.getChildren().add(hbxDot);
+            }
+            vbxButtons.getChildren().add(vbxLoad);
+        }
+
+        HBox hbxCancel = new HBox();
+        hbxCancel.setSpacing(HBX_SPACING);
+        hbxCancel.setAlignment(Pos.CENTER);
+        JFXButton btnCancel = new JFXButton();
+
+        btnCancel.setText("X");
+        btnCancel.getStyleClass().add("jfx-cancel-button");
+        btnCancel.getStyleClass().add("animated-option-button");
+        btnCancel.setOnMouseClicked((e) -> {
+            addFloorBtns();
+            clearMap();
+            showFloor(floor);
+        });
+
+        hbxCancel.getChildren().add(btnCancel);
+        vbxButtons.getChildren().add(hbxCancel);
     }
 
     public void addLine(Path line, String floor) {
@@ -215,47 +290,53 @@ public abstract class MapController implements Initializable {
         }
     }
 
-    public void clearPath(Location end) {
+    public void clearTransit() {
         lstLineTransits = new LinkedList<>();
-        transitIt = 0;
+    }
 
-        List<Node> lstNodes = new ArrayList<>();
-        for (Node n : panMap.getChildren()) {
-            if (n instanceof Path) {
-                lstNodes.add(n);
-            } else if (n instanceof Circle) {
-                Circle circle = (Circle) n;
-                if (circle.getFill().equals(MapDisplay.nodeEnd)) {
-                    circle.setFill(MapDisplay.nodeFill);
-                }
-                if (end != null && circle.getId().equals(end.getNodeID())) {
-                    circle.setFill(MapDisplay.nodeEnd);
-                }
-            }
-        }
-        for (Node n : lstNodes) {
-            panMap.getChildren().remove(n);
-        }
+    public void clearMap() {
+        panMap.getChildren().clear();
     }
 
     public void displayPath(Path line) {
         panMap.getChildren().add(0, line);
-        String startFloor = lstLineTransits.get(transitIt++).getFloor();
-        showFloor(startFloor);
-    };
+        addBreadCrumbs();
+        updateLines();
+    }
 
-    private void displayHint() {
-        if (lstLineTransits.size() > 0 && lstLineTransits.size() >= transitIt) {
-            String lstFloor = lstLineTransits.get(transitIt - 1).getFloor();
-            if (lstFloor.equals(floor)) {
-//                clearArrow();
-                Path line = lstLineTransits.get(transitIt - 1).getLine();
-                panner(line);
-                if (lstLineTransits.size() > transitIt) {
-                    String nxtFloor = lstLineTransits.get(transitIt++).getFloor();
-//                    displayArrow(nxtFloor);
-                } else {
-                    transitIt++;
+    public void displayLocations(Stack<Location> path) {
+        String lstFloor = "";
+        Location lstLoc = null;
+        while (!path.isEmpty()) {
+            Location curLoc = path.pop();
+            String curFloor = curLoc.getFloor();
+            if (path.size() == 0) {
+                Circle circle = MapDisplay.createCircle(this, curLoc, MapDisplay.NodeStyle.REGULAR, 1, Constants.Routes.USER_INFO, false);
+                panMap.getChildren().add(circle);
+            } else if (!curFloor.equals(lstFloor) ) {
+                if (lstLoc != null) {
+                    Circle circle1 = MapDisplay.createCircle(this, lstLoc, MapDisplay.NodeStyle.REGULAR, 1, Constants.Routes.USER_INFO, false);
+                    panMap.getChildren().add(circle1);
+                }
+                Circle circle2 = MapDisplay.createCircle(this, curLoc, MapDisplay.NodeStyle.REGULAR, 1, Constants.Routes.USER_INFO, false);
+                panMap.getChildren().add(circle2);
+            }
+            lstFloor = curFloor;
+            lstLoc = curLoc;
+        }
+    }
+
+    private void displayHint(HBox btnHbox) {
+        if (lstLineTransits.size() > 0) {
+            ObservableList<Node> lstNodes = vbxButtons.getChildren();
+            int i = 0;
+            for (Node n : vbxButtons.getChildren()) {
+                if (n instanceof HBox) {
+                    if (n.equals(btnHbox)) {
+                        panner(lstLineTransits.get(i).getLine());
+                        break;
+                    }
+                    i++;
                 }
             }
         }
@@ -277,116 +358,82 @@ public abstract class MapController implements Initializable {
         return map;
     }
 
-    private void updateButtons() {
-        styleButton(btnFloor4, false);
-        styleButton(btnFloor3, false);
-        styleButton(btnFloor2, false);
-        styleButton(btnFloor1, false);
-        styleButton(btnFloorG, false);
-        styleButton(btnFloorL1, false);
-        styleButton(btnFloorL2, false);
-        switch (floor) {
-            case "4":
-                styleButton(btnFloor4, true);
-                break;
-            case "3":
-                styleButton(btnFloor3, true);
-                break;
-            case "2":
-                styleButton(btnFloor2, true);
-                break;
-            case "1":
-                styleButton(btnFloor1, true);
-                break;
-            case "G":
-                styleButton(btnFloorG, true);
-                break;
-            case "L1":
-                styleButton(btnFloorL1, true);
-                break;
-            default:
-                styleButton(btnFloorL2, true);
-                break;
-        }
-    }
+    private void updateBreadButtons(JFXButton btn) {
+        deAnimate();
 
-    /*private void clearArrow() {
-        imgArrow3.setImage(null);
-        imgArrow2.setImage(null);
-        imgArrow1.setImage(null);
-        imgArrowG.setImage(null);
-        imgArrowL1.setImage(null);
-        imgArrowL2.setImage(null);
-    }*/
-
-    /*private void displayArrow(String nxtFloor) {
-        switch (nxtFloor) {
-            case "3":
-                imgArrow3.setImage(ImageFactory.getImage("arrow"));
-                break;
-            case "2":
-                imgArrow2.setImage(ImageFactory.getImage("arrow"));
-                break;
-            case "1":
-                imgArrow1.setImage(ImageFactory.getImage("arrow"));
-                break;
-            case "G":
-                imgArrowG.setImage(ImageFactory.getImage("arrow"));
-                break;
-            case "L1":
-                imgArrowL1.setImage(ImageFactory.getImage("arrow"));
-                break;
-            default:
-                imgArrowL2.setImage(ImageFactory.getImage("arrow"));
-                break;
-        }
-    }*/
-
-    private void styleButton(JFXButton btn, boolean highlight) {
-        btn.getStyleClass().clear();
-        btn.getStyleClass().add("jfx-button");
-        btn.getStyleClass().add("animated-option-button");
-        if (highlight) {
-            btn.getStyleClass().add("highlight");
-        } else {
-            btn.getStyleClass().add("unhighlight");
-        }
-    }
-
-    /*private void panToLine(Path line) {
-        gesMap.reset();
-        Bounds lineBounds = line.getBoundsInLocal();
-        double startX = lineBounds.getMinX();
-        double startY = lineBounds.getMinY();
-        double endX = lineBounds.getMaxX();
-        double endY = lineBounds.getMaxY();
-        if (endX >= 0.0) {
-            Point2D middle = new Point2D((startX + endX) / 2, (startY + endY) / 2);
-
-            double lineWidth = lineBounds.getWidth();
-            double lineHeight = lineBounds.getHeight();
-            Bounds gesView = gesMap.getTargetViewport();
-            double gesWidth = gesView.getWidth();
-            double gesHeight = gesView.getHeight();
-            double zoomWidth = (gesWidth - lineWidth) / gesWidth;
-            double zoomHeight = (gesHeight - lineHeight) / gesHeight;
-            double zoom = zoomWidth < zoomHeight ? zoomWidth : zoomHeight;
-            if (zoom > 0) {
-                zoom *= 1 - ZOOM_BUFFER;
+        ObservableList<Node> children = vbxButtons.getChildren();
+        for (int i = 0; i < children.size() - 1; i += 2) {
+            HBox nHbx = (HBox) children.get(i);
+            VBox nVbx = (VBox) children.get(i + 1);
+            JFXButton nBtn = (JFXButton) nHbx.getChildren().get(0);
+            if (nBtn.equals(btn)) {
+                styleButton(nBtn, "highlight", "unhighlight");
+                animateVbox(nVbx);
             } else {
-                zoom *= 1 + ZOOM_BUFFER;
+                styleButton(nBtn, "unhighlight", "highlight");
+                resetVbox(nVbx);
             }
-            gesMap.animate(Duration.millis(ANIMATION_TIME)).afterFinished(() -> {
-                gesMap.animate(Duration.millis(ANIMATION_TIME)).centreOn(middle);
-            }).zoomBy(zoom, middle);
-        } else {
-            MoveTo mt = ((MoveTo) line.getElements().get(0));
-            Point2D pnt = new Point2D(mt.getX(), mt.getY());
-            gesMap.animate(Duration.millis(ANIMATION_TIME)).afterFinished(() -> {
-                gesMap.animate(Duration.millis(ANIMATION_TIME)).centreOn(pnt);
-            }).zoomBy(2 * MAX_ZOOM, pnt);
         }
-    }*/
+    }
+
+    private void updateButtons(JFXButton btn) {
+        ObservableList<Node> children = vbxButtons.getChildren();
+        for (int i = 0; i < children.size(); i++) {
+            HBox nHbx = (HBox) children.get(i);
+            JFXButton nBtn = (JFXButton) nHbx.getChildren().get(0);
+            if (nBtn.equals(btn)) {
+                styleButton(nBtn, "highlight", "unhighlight");
+            } else {
+                styleButton(nBtn, "unhighlight", "highlight");
+            }
+        }
+    }
+
+    private void styleButton(JFXButton btn, String add, String remove) {
+        btn.getStyleClass().remove(remove);
+        if (!btn.getStyleClass().contains(add)) {
+            btn.getStyleClass().add(add);
+        }
+    }
+
+    private void deAnimate() {
+        for (Timeline tl : lstTls) {
+            tl.stop();
+        }
+        lstTls = new ArrayList<>();
+    }
+
+    private void resetVbox(VBox vbx) {
+        for (Node n : vbx.getChildren()) {
+            HBox hbx = (HBox) n;
+            Circle c = (Circle) hbx.getChildren().get(0);
+            c.setRadius(5.0);
+        }
+    }
+
+    private void animateVbox(VBox vbx) {
+        resetVbox(vbx);
+
+        final double PULSE_TIME = 1000.0;
+        ObservableList<Node> children = vbx.getChildren();
+        for (int i = 0; i < children.size(); i++) {
+            HBox hbx = (HBox) children.get(i);
+            Circle c = (Circle) hbx.getChildren().get(0);
+            Timeline tl = new Timeline();
+            tl.setCycleCount(Timeline.INDEFINITE);
+            tl.setAutoReverse(true);
+            tl.setDelay(Duration.millis(PULSE_TIME / children.size() * i));
+
+            KeyValue kv = new KeyValue(c.radiusProperty(), 7.5);
+            Duration d = Duration.millis(PULSE_TIME);
+
+            KeyFrame kf = new KeyFrame(d, kv);
+            tl.getKeyFrames().add(kf);
+
+            tl.play();
+            lstTls.add(tl);
+        }
+    }
 
     private void panner(Path line) {
         Bounds beforeView = gesMap.getTargetViewport();

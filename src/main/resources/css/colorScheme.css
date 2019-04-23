@@ -5,6 +5,13 @@
     -fx-font-size: 15.0;
 }
 
+.jfx-cancel-button {
+    -fx-background-color: #770400;
+    -fx-text-fill: white;
+    -fx-alignment: center;
+    -fx-font-size: 15.0;
+}
+
 .unhiglight {
     -fx-border-color: transparent;
 }

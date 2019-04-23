@@ -256,9 +256,14 @@ public abstract class PathFinder {
     }
 
     public static void printPath(MapController mc, Location start, Location end) {
-        mc.clearPath(end);
+        if (end.getNodeCircle() != null) {
+            end.getNodeCircle().setFill(MapDisplay.nodeEnd);
+        }
+        mc.clearTransit();
+        mc.clearMap();
         PathContext context = SettingsController.getAlgType();
         Stack<Location> path = context.findPath(start, end);
+        Stack<Location> path1 = (Stack<Location>) path.clone();
         MapController.currentRoute = (Stack<Location>) path.clone();
         String directions = context.txtDirections((Stack<Location>) path.clone());
         MapController.currentDirections = directions;
@@ -303,7 +308,9 @@ public abstract class PathFinder {
         }
         animateLine(line);
         mc.addLine(line, currFloor);
+
         mc.displayPath(line);
+        mc.displayLocations(path1);
     }
 
     private static void animateLine(Path line) {

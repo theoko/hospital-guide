@@ -23,31 +23,10 @@
                         <Pane fx:id="panMap" />
                     </AnchorPane>
                 </GesturePane>
-                <VBox spacing="25">
+                <VBox fx:id="vbxButtons" spacing="25">
                     <padding>
                         <Insets bottom="25" left="25" right="25" top="25" />
                     </padding>
-                    <HBox alignment="CENTER_LEFT" spacing="10">
-                        <JFXButton fx:id="btnFloor4" text="4" styleClass="animated-option-button" onMouseClicked="#btnFloor4_Click"/>
-                    </HBox>
-                    <HBox alignment="CENTER_LEFT" spacing="10">
-                        <JFXButton fx:id="btnFloor3" onMouseClicked="#btnFloor3_Click" styleClass="animated-option-button" text="3" />
-                    </HBox>
-                    <HBox alignment="CENTER_LEFT" spacing="10">
-                        <JFXButton fx:id="btnFloor2" onMouseClicked="#btnFloor2_Click" styleClass="animated-option-button" text="2" />
-                    </HBox>
-                    <HBox alignment="CENTER_LEFT" spacing="10">
-                        <JFXButton fx:id="btnFloor1" onMouseClicked="#btnFloor1_Click" styleClass="animated-option-button" text="1" />
-                    </HBox>
-                    <HBox alignment="CENTER_LEFT" spacing="10">
-                        <JFXButton fx:id="btnFloorG" onMouseClicked="#btnFloorG_Click" styleClass="animated-option-button" text="G" />
-                    </HBox>
-                    <HBox alignment="CENTER_LEFT" spacing="10">
-                        <JFXButton fx:id="btnFloorL1" onMouseClicked="#btnFloorL1_Click" styleClass="animated-option-button" text="L1" />
-                    </HBox>
-                    <HBox alignment="CENTER_LEFT" spacing="10">
-                        <JFXButton fx:id="btnFloorL2" onMouseClicked="#btnFloorL2_Click" styleClass="animated-option-button" text="L2" />
-                    </HBox>
                 </VBox>
                 <AnchorPane AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="200.0">
                     <VBox fx:id="vboxDock" prefHeight="468.0" prefWidth="60.0"

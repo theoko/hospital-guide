@@ -74,12 +74,6 @@ public class CustodianMapController extends MapController {
     @Override
     public void showFloor(String newFloor) {
         super.showFloorHelper(newFloor);
-        MapDisplay.displayEmployee(this);
-    }
-
-    @Override
-    public void displayPath(Path line) {
-        super.displayPath(line);
         MapDisplay.displayCust(this);
     }
 
