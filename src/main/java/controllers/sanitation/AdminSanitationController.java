@@ -52,24 +52,62 @@ public class AdminSanitationController extends SanitationController {
     public TableColumn<SimpleEmployee, String> tblCustodianClaimed;
     public TableColumn<SimpleEmployee, String> tblCustodianCompleted;
 
+    public TableColumn<SanitationRequest,String> tblRequestTime;
+
 
     ObservableList<SanitationRequest> requests = FXCollections.observableArrayList();
 
     ObservableList<SimpleEmployee> chartEmployees = FXCollections.observableArrayList();
     ObservableList<SimpleEmployee> chartCustodians = FXCollections.observableArrayList();
 
+    ArrayList<String> filteredUsersGlobal = new ArrayList<String>();
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        super.initialize(location, resources);
+       // super.initialize(location, resources);
 
         initTables();
         List<SanitationRequest> unfilteredRequests = updateRequests();
 
+        SanitationAnalyzer fullAnalyzer=new SanitationAnalyzer();
+        filteredUsersGlobal.addAll(fullAnalyzer.getEmployees());
 
         if (unfilteredRequests != null) {
             updatePieChart(unfilteredRequests);
             updateSummaryStats();
             requests.addAll(unfilteredRequests);
+        }
+
+
+        initSanitation();
+        updateSanitation();
+
+forceSimpleEmployeeUpdate(fullAnalyzer);
+
+    }
+    public void forceSimpleEmployeeUpdate(SanitationAnalyzer fullAnalyzer){
+        ArrayList<String> employees = fullAnalyzer.getEmployees();
+        ArrayList<String> custodians = fullAnalyzer.getCustodians();
+
+        for (String employee : employees) {
+
+            int requestedCount = fullAnalyzer.getEmployeeRequestCount().get(employee);
+            SimpleEmployee emp = new SimpleEmployee(employee);
+            emp.setRequests(requestedCount);
+            chartEmployees.add(emp);
+
+        }
+
+        chartCustodians.clear();
+        // Custodian Statistics
+        for (String custodian : custodians) {
+            int claimedCount = fullAnalyzer.getCustodianClaimedCount().get(custodian);
+            int completedCount = fullAnalyzer.getCustodianCompletedCount().get(custodian);
+            SimpleEmployee emp = new SimpleEmployee(custodian);
+            emp.setClaimed(claimedCount);
+            emp.setCompleted(completedCount);
+            chartCustodians.add(emp);
         }
     }
 
@@ -108,6 +146,8 @@ public class AdminSanitationController extends SanitationController {
         tblEmployee.setItems(chartEmployees);
         tblCustodian.setItems(chartCustodians);
 
+
+
     }
 
     private List updateRequests() {
@@ -143,21 +183,25 @@ public class AdminSanitationController extends SanitationController {
         chartEmployees.clear();
         // Employee Statistics
         for (String employee : employees) {
-            int requestedCount = analyzer.getEmployeeRequestCount().get(employee);
-            SimpleEmployee emp = new SimpleEmployee(employee);
-            emp.setRequests(requestedCount);
-            chartEmployees.add(emp);
+            if(filteredUsersGlobal.contains(employee)) {
+                int requestedCount = analyzer.getEmployeeRequestCount().get(employee);
+                SimpleEmployee emp = new SimpleEmployee(employee);
+                emp.setRequests(requestedCount);
+                chartEmployees.add(emp);
+            }
         }
 
         chartCustodians.clear();
         // Custodian Statistics
         for (String custodian : custodians) {
-            int claimedCount = analyzer.getCustodianClaimedCount().get(custodian);
-            int completedCount = analyzer.getCustodianCompletedCount().get(custodian);
-            SimpleEmployee emp = new SimpleEmployee(custodian);
-            emp.setClaimed(claimedCount);
-            emp.setCompleted(completedCount);
-            chartCustodians.add(emp);
+            if(filteredUsersGlobal.contains(custodian)) {
+                int claimedCount = analyzer.getCustodianClaimedCount().get(custodian);
+                int completedCount = analyzer.getCustodianCompletedCount().get(custodian);
+                SimpleEmployee emp = new SimpleEmployee(custodian);
+                emp.setClaimed(claimedCount);
+                emp.setCompleted(completedCount);
+                chartCustodians.add(emp);
+            }
         }
         tblEmployee.refresh();
         tblCustodian.refresh();
@@ -193,6 +237,29 @@ public class AdminSanitationController extends SanitationController {
         chartLine.setData(requestedLine);
 
 
+    }
+
+
+
+    private void initSanitation(){
+        tblLocation.setCellValueFactory(new PropertyValueFactory<>("LocationShortName"));
+        tblPriority.setCellValueFactory(new PropertyValueFactory<>("Priority"));
+        tblStatus.setCellValueFactory(new PropertyValueFactory<>("Status"));
+        tblDescription.setCellValueFactory(new PropertyValueFactory<>("Description"));
+        tblRequester.setCellValueFactory(new PropertyValueFactory<>("RequesterUserName"));
+        tblRequestTime.setCellValueFactory(new PropertyValueFactory<>("RequestTime"));
+        tblClaimTime.setCellValueFactory(new PropertyValueFactory<>("ClaimedTime"));
+        tblServiceTime.setCellValueFactory(new PropertyValueFactory<>("CompletedTime"));
+        tblServicer.setCellValueFactory(new PropertyValueFactory<>("ServicerUserName"));
+        tblData.setItems(requests);
+    }
+
+    protected List updateSanitation() {
+        List<SanitationRequest> lstReqs = SanitationTable.getSanitationRequests();
+        if (lstReqs != null) {
+            requests.addAll(lstReqs);
+        }
+        return lstReqs;
     }
 
     private void updatePieChart(List<SanitationRequest> requests) {
@@ -240,19 +307,36 @@ public class AdminSanitationController extends SanitationController {
 //        //todo implement or remove from fxml
 //    }
 
-    public void filterData(MouseEvent event) {
-        event.consume();
-        updateRequests();
+    public void btnClear(){
+        datEndDate.getEditor().clear();
+        datStartDate.getEditor().clear();
+        txtUserNames.clear();
 
-        //todo implement filtering based on inputs (specific user date ect) filter observable
+        filterData();
+        filterData();
+    }
+
+    public void filterData() {
+//        event.consume();
+//        updateRequests();
+
         List<SanitationRequest> fullList = updateRequests();
 
         if (txtUserNames.getText().equals("") && datStartDate.getValue() == null && datStartDate.getValue() == null) {//clear search
+            updateSanitation();
             SanitationAnalyzer analyzer = new SanitationAnalyzer();
             updateSummaryStats(analyzer);
             updatePieChart(fullList);
             requests.clear();
             requests.addAll(fullList);
+            updateSummaryStats(analyzer);
+
+            forceSimpleEmployeeUpdate(analyzer);
+
+
+            tblCustodian.refresh();
+            tblEmployee.refresh();
+
 
         } else {
 
@@ -264,7 +348,10 @@ public class AdminSanitationController extends SanitationController {
                 userListTrimmed.add(newString);
             }
 
-            List<SanitationRequest> filteredList = null;
+            //List<SanitationRequest> filteredList = new List;
+
+            List<SanitationRequest> filteredList = new ArrayList<>();
+
 
             Timestamp earliestTime = fullList.get(0).getRequestTime();
             Timestamp latestTime = fullList.get(0).getRequestTime();
@@ -300,6 +387,9 @@ public class AdminSanitationController extends SanitationController {
                 if (req.getRequestTime().after(earliestTime) && req.getRequestTime().before(latestTime)) {//if a request is between the min and max date
                     if (txtUserNames.getText().equals("")) {//if no user is specified
                         filteredList.add(req);//add the request to the result
+                        userListTrimmed.add(req.getRequesterUserName());
+                        userListTrimmed.add(req.getServicerUserName());
+
                     } else {//a user or several are specified
                         for (String name : userList) {//loop through all specified users
                             if (name.equals(req.getRequesterUserName()) || name.equals(req.getServicerUserName())) {//if the request has a user name we are looking for
@@ -318,6 +408,9 @@ public class AdminSanitationController extends SanitationController {
             updatePieChart(finalList);
             requests.clear();
             requests.addAll(filteredList);
+            filteredUsersGlobal.clear();
+            filteredUsersGlobal.addAll(userListTrimmed);
+           // forceSimpleEmployeeUpdate(analyzer);
 
         }
 
@@ -325,33 +418,10 @@ public class AdminSanitationController extends SanitationController {
         List<SanitationRequest> filteredRequests;
 
 
-//        for(SanitationRequest request:unfilteredRequests){
-//            if(request.getRequestTime()>)
-//
-//        }
-//        for(SanitationRequest request:unfilteredRequests){
-//            if(request.getRequestTime()>)
-//
-//        }
+        tblEmployee.refresh();
+        tblCustodian.refresh();
+        tblData.refresh();
 
-
-        // updatePieChart(filteredRequests);
-
-//
-//        // Get request data from UI fields
-//        String description = txtDetails.getText();
-//
-//        //get locations form search fields
-//        Location startLoc =LocationTable.getLocationByLongName(txtStartSearch.getText()).iterator().next();
-//        Location endLoc=LocationTable.getLocationByLongName(txtEndSearch.getText()).iterator().next();
-//
-//        TransportationRequest request = new TransportationRequest(startLoc,endLoc, txtDetails.getText(),datDate.toString(),datTime.toString(), UserHelpers.getCurrentUser());
-//
-//        TransportationTable.addTransportationRequest(request);
-//
-//
-//        updateTransportation();
-//        tblData.refresh();
     }
 
 
