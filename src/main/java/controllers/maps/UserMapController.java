@@ -49,12 +49,6 @@ public class UserMapController extends MapController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
-        gesMap.setOnMouseMoved( (e) -> {
-                    mouseCnt += 1;
-                    secCnt = 0L;
-                    System.out.println(mouseCnt);
-                }
-        );
         SearchEngineController.setParentController(this);
         MapDisplay.displayUser(this);
         initDirections();

@@ -73,13 +73,6 @@ public class AdminMapController extends MapController {
         SearchEngineController.setParentController(this);
         MapDisplay.displayAdmin(this);
 
-        gesMap.setOnMouseMoved( (e) -> {
-                    mouseCnt += 1;
-                    secCnt = 0L;
-                    System.out.println(mouseCnt);
-                }
-        );
-
 //        SearchAPI searchAPI = new SearchAPI(search, true);
 //        searchAPI.searchable();
 

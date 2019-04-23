@@ -66,7 +66,8 @@ public class ScreenController {
                 //int timeCnt = lc.getTime();
                 car.add(org.saveStateToMemento());
                 theCnt = mouseCnt;
-                if (secCnt == 25) {
+                int threshold = 5;
+                if (secCnt == 30) {
                     Platform.runLater(() -> {
                         try {
                             ScreenController.activate(Constants.Routes.WELCOME);
