@@ -38,6 +38,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import static controllers.ScreenController.mouseCnt;
+import static controllers.ScreenController.secCnt;
+
 public class AdminMapController extends MapController {
     private final static String MOVER_EDGE = "";
 
@@ -69,6 +72,13 @@ public class AdminMapController extends MapController {
         super.initialize(location, resources);
         SearchEngineController.setParentController(this);
         MapDisplay.displayAdmin(this);
+
+        gesMap.setOnMouseMoved( (e) -> {
+                    mouseCnt += 1;
+                    secCnt = 0L;
+                    System.out.println(mouseCnt);
+                }
+        );
 
 //        SearchAPI searchAPI = new SearchAPI(search, true);
 //        searchAPI.searchable();

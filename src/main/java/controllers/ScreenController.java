@@ -40,8 +40,8 @@ public class ScreenController {
     private static Stage stage;
     public static Scene sceneThing = null;
     public static long mouseCnt = 0;
-    private static long theCnt = 0;
-    private static long secCnt = 0;
+    public static long theCnt = 0;
+    public static long secCnt = 0;
     static Originator org = new Originator();
     static Caretaker car = new Caretaker();
 
@@ -60,12 +60,13 @@ public class ScreenController {
                 LogoutController lc = new LogoutController() {
                     @Override
                     public void initialize(URL location, ResourceBundle resources) {
+
                     }
                 };
                 //int timeCnt = lc.getTime();
                 car.add(org.saveStateToMemento());
                 theCnt = mouseCnt;
-                if (secCnt == 10) {
+                if (secCnt == 25) {
                     Platform.runLater(() -> {
                         try {
                             ScreenController.activate(Constants.Routes.WELCOME);
@@ -73,7 +74,6 @@ public class ScreenController {
                             e.printStackTrace();
                         }
                     });
-                    mouseCnt = 0L;
                     secCnt = 0;
                 }
                 try {
@@ -89,14 +89,14 @@ public class ScreenController {
                     System.out.println(secCnt);
                 }
                 else {
-                    secCnt = 0;
+                    secCnt = 0L;
+                    mouseCnt = 0L;
+                    theCnt = 0L;
                 }
             }
         });
         t.setDaemon(true);
         t.start();
-
-
     }
 
     public static HashMap<String, String> getScreenMap() {
@@ -171,13 +171,13 @@ public class ScreenController {
     public static void activate(Constants.Routes route) throws Exception {
         stage = new Stage();
         URL url = routeToURL(route);
-
         FXMLLoader loader = new FXMLLoader(url);
         Parent root = loader.load();
 
         if (sceneThing == null) {
             sceneThing = new Scene(root);
             addStyles(sceneThing);
+            autoLog(sceneThing);
             stage.setTitle("Brigham and Women's Pathfinder Application");
             stage.setScene(sceneThing);
             stage.setResizable(true);
@@ -192,12 +192,13 @@ public class ScreenController {
         @Override
         public void handle(MouseEvent mouseEvent) {
             mouseCnt += 1;
-            secCnt = 0;
+            secCnt = 0L;
             System.out.println(mouseCnt);
         }
     };
 
     public static void autoLog(Scene scene) throws Exception {
+        System.out.println("mousemoved");
         scene.setOnMouseClicked(mouseHandler);
         scene.setOnMouseMoved(mouseHandler);
         scene.setOnMousePressed(mouseHandler);

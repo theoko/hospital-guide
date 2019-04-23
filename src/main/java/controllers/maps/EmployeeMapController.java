@@ -41,6 +41,9 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
 
+import static controllers.ScreenController.mouseCnt;
+import static controllers.ScreenController.secCnt;
+
 public class EmployeeMapController extends MapController {
 
     public VBox vboxDock;
@@ -73,6 +76,7 @@ public class EmployeeMapController extends MapController {
     public JFXTimePicker datStartTime;
     public JFXTimePicker datEndTime;
 
+
     LocalDate startDate;
     LocalDate endDate;
 
@@ -85,7 +89,12 @@ public class EmployeeMapController extends MapController {
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
         SearchEngineController.setParentController(this);
-
+        gesMap.setOnMouseMoved( (e) -> {
+            mouseCnt += 1;
+            secCnt = 0L;
+            System.out.println(mouseCnt);
+                }
+        );
         /*SearchAPI searchAPI = new SearchAPI(search, true);
         searchAPI.searchable();*/
 
