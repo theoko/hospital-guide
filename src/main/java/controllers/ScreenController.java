@@ -96,7 +96,7 @@ public class ScreenController {
         this.addScreen(Constants.Routes.ADD, "/fxml/UI/node/AddPopUp.fxml");
         this.addScreen(Constants.Routes.CALENDAR, "/fxml/UI/booking/CalendarTab.fxml");
         this.addScreen(Constants.Routes.EDGE_EDITOR, "/fxml/UI/node/EdgeEditor.fxml");
-        this.addScreen(Constants.Routes.TWO_NODE_SEARCH, "/fxml/UI/search.TwoLocSearchPopup.fxml");
+        this.addScreen(Constants.Routes.TWO_NODE_SEARCH, "/fxml/UI/search/TwoLocSearchPopup.fxml");
     }
 
     public void addScreen(Constants.Routes route, String layout) {
