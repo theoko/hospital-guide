@@ -932,7 +932,7 @@ all-purpose a 1 1 & 1 0 01144494
 all-round a 1 1 & 1 1 00553130  
 all-time a 1 1 & 1 1 00530380  
 all-victorious a 1 1 & 1 1 00600614  
-all-weather a 1 1 & 1 1 02072838  
+all-weatherController a 1 1 & 1 1 02072838
 all_important a 1 1 & 1 0 01324424  
 all_in a 1 2 & ; 1 0 02514367  
 all_over a 1 1 & 1 1 01043468  
@@ -21638,10 +21638,10 @@ wearisome a 1 1 & 1 1 01396248
 weary a 1 2 & + 1 1 02514641  
 wearying a 1 1 & 1 1 00875912  
 weasel-worded a 1 1 & 1 0 01982146  
-weather a 1 1 & 1 1 01451993  
-weather-beaten a 2 1 & 2 1 02530038 02669308  
-weather-bound a 1 1 & 1 0 00588407  
-weather-stripped a 1 1 & 1 0 01451093  
+weatherController a 1 1 & 1 1 01451993
+weatherController-beaten a 2 1 & 2 1 02530038 02669308
+weatherController-bound a 1 1 & 1 0 00588407
+weatherController-stripped a 1 1 & 1 0 01451093
 weathered a 1 1 & 1 0 02669308  
 weatherly a 1 3 \ + ; 1 0 03208703  
 weatherproof a 1 1 & 1 0 01952969  

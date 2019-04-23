@@ -8,20 +8,26 @@ public class ImageFactory {
 
     public static void load() {
             Thread t = new Thread(() -> {
-                Image fl3 = new Image("/images/Original/03_thethirdfloor.png");
+                Image fl4 = new Image("/images/maps/floor4.png");
+                imgMap.put("4", fl4);
+                Image fl3 = new Image("/images/maps/floor3.png");
                 imgMap.put("3", fl3);
-                Image fl2 = new Image("/images/Original/02_thesecondfloor.png");
+                Image fl2 = new Image("/images/maps/floor2.png");
                 imgMap.put("2", fl2);
-                Image fl1 = new Image("/images/Original/01_thefirstfloor.png");
+                Image fl1 = new Image("/images/maps/floor1.png");
                 imgMap.put("1", fl1);
-                Image flG = new Image("/images/Original/00_thegroundfloor.png");
+                Image flG = new Image("/images/maps/floorG.png");
                 imgMap.put("G", flG);
-                Image flL1 = new Image("/images/Original/00_thelowerlevel1.png");
+                Image flL1 = new Image("/images/maps/floorL1.png");
                 imgMap.put("L1", flL1);
-                Image flL2 = new Image("/images/Original/00_thelowerlevel2.png");
+                Image flL2 = new Image("/images/maps/floorL2.png");
                 imgMap.put("L2", flL2);
                 Image arrow = new Image("/images/Arrow.gif");
                 imgMap.put("arrow", arrow);
+                Image arrowUp = new Image("/images/ArrowUp.gif");
+                imgMap.put("arrowUp", arrowUp);
+                Image arrowDown = new Image("/images/ArrowDown.gif");
+                imgMap.put("arrowDown", arrowDown);
             });
             t.setDaemon(true);
             t.start();

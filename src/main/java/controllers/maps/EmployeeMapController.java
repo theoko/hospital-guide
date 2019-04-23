@@ -1,29 +1,49 @@
 package controllers.maps;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXNodesList;
-import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.*;
 import controllers.ScreenController;
 import controllers.search.SearchEngineController;
+import database.BookLocationTable;
+import database.LocationTable;
+import google.FirebaseAPI;
 import helpers.Constants;
+import helpers.DatabaseHelpers;
+import helpers.UIHelpers;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import helpers.UserHelpers;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.control.OverrunStyle;
+import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Path;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Polygon;
+import javafx.util.Duration;
 import map.MapDisplay;
+import map.PathFinder;
 import messaging.TextMessenger;
+import models.map.Location;
+import models.room.Book;
+import models.room.Room;
 import models.search.SearchAPI;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class EmployeeMapController extends MapController {
@@ -44,23 +64,277 @@ public class EmployeeMapController extends MapController {
     public AnchorPane Out;
     public AnchorPane Gift;
     public AnchorPane Info;
+    public AnchorPane WorkBooking;
 
     public JFXTextField search;
     public JFXTextField textNum;
     public ImageView imgText;
     public JFXButton btnText;
+    public JFXToggleButton tglSpace;
+    public JFXToggleButton tglZone;
+
+    public JFXDatePicker datStartDay;
+    public JFXDatePicker datEndDay;
+    public JFXTimePicker datStartTime;
+    public JFXTimePicker datEndTime;
+
+    List<Room> workspacesAvailable;
+    List<Room> workzonesAvailable;
+
+    ArrayList<Location> workspacesBooked = new ArrayList<>();
+    HashMap<String, Location> workspaces;
+    List<Book> workspacesCurrent;
+    List<Book> workspacesCurrent1;
+    ArrayList<Location> myWorkspaces = new ArrayList<>();
+    ArrayList<Location> myWorkspaces1 = new ArrayList<>();
+
+    ArrayList<Location> workzonesBooked = new ArrayList<>();
+    HashMap<String, Location> workzones;
+    List<Book> workzonesCurrent;
+    List<Book> workzonesCurrent1;
+    ArrayList<Location> myWorkzones = new ArrayList<>();
+    ArrayList<Location> myWorkzones1 = new ArrayList<>();
+
+    Location enter;
+
+    private final static double locRadius = 11;
+    private final static Color nodeFill = Color.GREEN;
+    private final static Color nodeOutline = Color.BLACK;
+    private final static double locWidth = 2.0;
+
+    LocalDate startDate;
+    LocalDate endDate;
+
+    LocalTime startTime;
+    LocalTime endTime;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
         SearchEngineController.setParentController(this);
 
-        SearchAPI searchAPI = new SearchAPI(search, true);
-        searchAPI.searchable();
+        /*SearchAPI searchAPI = new SearchAPI(search, true);
+        searchAPI.searchable();*/
 
         MapDisplay.displayEmployee(this);
         initDirections();
+    }
 
+    @Override
+    public void zoomOut() {
+        Thread t = new Thread(() -> {
+            try {
+                Thread.sleep(3700);
+                gesMap.centreOn(gesMap.targetPointAtViewportCentre());
+                gesMap.animate(Duration.millis(1000)).zoomTo(.5, gesMap.targetPointAtViewportCentre());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        });
+        t.setDaemon(true);
+        t.start();
+    }
+
+    public void btn_SendDirections (MouseEvent event) {
+        if(currentRoute == null) return;
+        TextMessenger tm = new TextMessenger();
+        String input_phone_number = "+1"+textNum.getText();
+        tm.declareRecipient(input_phone_number);
+        tm.declareMessage(MapController.currentDirections);
+        tm.sendMessage();
+        event.consume();
+        event.consume();
+    }
+
+    @Override
+    public void showFloor(String newFloor) {
+        super.showFloorHelper(newFloor);
+        MapDisplay.displayEmployee(this);
+    }
+
+    public void initializeZones() {
+        workzones = LocationTable.getLocations();
+        if (workzones != null) {
+            for (Location ws : workzones.values()) {
+                if (ws.getNodeType().equals(Constants.NodeType.WORK)) {
+                    double xLoc = ws.getxCord();
+                    double yLoc = ws.getyCord();
+                    Circle circle = new Circle(xLoc, yLoc, locRadius, nodeFill);
+                    circle.setId(ws.getNodeID());
+                    circle.setStroke(nodeOutline);
+                    circle.setStrokeWidth(locWidth);
+                    circle.setOnMouseEntered(event -> {
+                        circle.setRadius(locRadius + 6);
+                        ScreenController.sceneThing.setCursor(Cursor.HAND);
+                    });
+                    circle.setOnMouseExited(event -> {
+                        circle.setRadius(locRadius);
+                        ScreenController.sceneThing.setCursor(Cursor.DEFAULT);
+                    });
+                    circle.setOnMouseClicked(event -> {
+                        try {
+                            event.consume();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    });
+                    this.panMap.getChildren().add(circle);
+                    ws.setNodeCircle(circle);
+                }
+            }
+        }
+
+        workzonesCurrent1 = BookLocationTable.getBookingsForUser(UserHelpers.getCurrentUser());
+
+        if (workzonesCurrent1 != null) {
+            for (Book b : workzonesCurrent1) {
+                for (Location ws1 : workzones.values()) {
+                    if (ws1.getNodeID().equals(b.getRoomID()) && ws1.getNodeType().equals(Constants.NodeType.WORK)) {
+                        myWorkzones1.add(ws1);
+                        break;
+                    }
+                }
+            }
+        }
+
+        for (Location ws : myWorkzones1) {
+            if (ws.getNodeType().equals(Constants.NodeType.WORK)) {
+                Circle c = ws.getNodeCircle();
+                c.setFill(Color.ORANGE);
+                c.setOnMouseEntered(event -> {
+                    c.setRadius(locRadius + 6);
+                    ScreenController.sceneThing.setCursor(Cursor.HAND);
+                });
+                c.setOnMouseExited(event -> {
+                    c.setRadius(locRadius);
+                    ScreenController.sceneThing.setCursor(Cursor.DEFAULT);
+                });
+                c.setOnMouseClicked(Event -> {
+                    try {
+                        Event.consume();
+                        for (Location ws1 : myWorkzones1) {
+                            if (ws1.getxCord() == c.getCenterX() && ws1.getyCord() == c.getCenterY()) {
+                                enter = ws1;
+                                break;
+                            }
+                        }
+                        ScreenController.popUp(Constants.Routes.WORKSPACE_POPUP, enter, c, startTime, startDate, endTime, endDate);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
+        }
+    }
+
+    public void initializeSpaces() {
+        workspaces = LocationTable.getLocations();
+        if (workspaces != null) {
+            for (Location ws : workspaces.values()) {
+                if (ws.getNodeType().equals(Constants.NodeType.WRKT)) {
+                    double xLoc = ws.getxCord();
+                    double yLoc = ws.getyCord();
+                    Circle circle = new Circle(xLoc, yLoc, locRadius, nodeFill);
+                    circle.setStroke(nodeOutline);
+                    circle.setStrokeWidth(locWidth);
+                    circle.setId(ws.getNodeID());
+                    circle.setOnMouseEntered(event -> {
+                        circle.setRadius(locRadius + 6);
+                        ScreenController.sceneThing.setCursor(Cursor.HAND);
+                    });
+                    circle.setOnMouseExited(event -> {
+                        circle.setRadius(locRadius);
+                        ScreenController.sceneThing.setCursor(Cursor.DEFAULT);
+                    });
+                    circle.setOnMouseClicked(event -> {
+                        try {
+                            event.consume();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    });
+                    this.panMap.getChildren().add(circle);
+                    ws.setNodeCircle(circle);
+                }
+            }
+        }
+
+        workspacesCurrent1 = BookLocationTable.getBookingsForUser(UserHelpers.getCurrentUser());
+
+        if (workspacesCurrent1 != null) {
+            for (Book b : workspacesCurrent1) {
+                for (Location ws1 : workspaces.values()) {
+                    if (ws1.getNodeID().equals(b.getRoomID()) && ws1.getNodeType().equals(Constants.NodeType.WRKT)) {
+                        myWorkspaces1.add(ws1);
+                        break;
+                    }
+                }
+            }
+        }
+
+        for (Location ws : myWorkspaces1) {
+            if (ws.getNodeType().equals(Constants.NodeType.WRKT)) {
+                Circle c = ws.getNodeCircle();
+                c.setFill(Color.ORANGE);
+                c.setOnMouseEntered(event -> {
+                    c.setRadius(locRadius + 6);
+                    ScreenController.sceneThing.setCursor(Cursor.HAND);
+                });
+                c.setOnMouseExited(event -> {
+                    c.setRadius(locRadius);
+                    ScreenController.sceneThing.setCursor(Cursor.DEFAULT);
+                });
+                c.setOnMouseClicked(Event -> {
+                    try {
+                        Event.consume();
+                        for (Location ws1 : myWorkspaces1) {
+                            if (ws1.getxCord() == c.getCenterX() && ws1.getyCord() == c.getCenterY()) {
+                                enter = ws1;
+                                break;
+                            }
+                        }
+                        ScreenController.popUp(Constants.Routes.WORKSPACE_POPUP, enter, c, startTime, startDate, endTime, endDate);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+
+            }
+        }
+    }
+    public void selectZone(ActionEvent event) {
+        event.consume();
+        if(getFloor().equals("4")) {
+            if(tglZone.isSelected()) {
+                this.clearMap();
+                initializeZones();
+                tglSpace.setSelected(false);
+            }
+            else {
+                this.clearMap();
+                this.showFloor(getFloor());
+            }
+        }
+    }
+
+    public void selectSpace(ActionEvent event) {
+        event.consume();
+        if(getFloor().equals("4")) {
+            if(tglSpace.isSelected()) {
+                this.clearMap();
+                initializeSpaces();
+                tglZone.setSelected(false);
+            }
+            else {
+                this.clearMap();
+                this.showFloor(getFloor());
+            }
+        }
+    }
+
+    @Override
+    protected void addDoc() {
         ImageView imgUser = new ImageView();
         imgUser.setImage(new Image("images/Icons/user.png"));
         imgUser.setFitHeight(30);
@@ -103,6 +377,8 @@ public class EmployeeMapController extends MapController {
         btnArrow.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnArrow.setTextOverrun(OverrunStyle.CLIP);
 
+        UIHelpers.btnRaise(btnArrow);
+
         ImageView imgRoute = new ImageView();
         imgRoute.setImage(new Image("images/Icons/route.png"));
         imgRoute.setFitHeight(30);
@@ -124,12 +400,76 @@ public class EmployeeMapController extends MapController {
         imgRoom.setPreserveRatio(true);
         imgRoom.setPickOnBounds(true);
 
-        JFXButton btnRoom = new JFXButton("",imgRoom);
+        JFXButton btnRoom = new JFXButton("", imgRoom);
         btnRoom.setAlignment(Pos.CENTER);
         btnRoom.setPrefWidth(60);
         btnRoom.setPrefHeight(60);
         btnRoom.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnRoom.setTextOverrun(OverrunStyle.CLIP);
+
+        ImageView imgBookG = new ImageView();
+        imgBookG.setImage(new Image("images/Icons/bookG.png"));
+        imgBookG.setFitHeight(30);
+        imgBookG.setFitWidth(30);
+        imgBookG.setPreserveRatio(true);
+        imgBookG.setPickOnBounds(true);
+
+        JFXButton btnBookG = new JFXButton("", imgBookG);
+        btnBookG.setAlignment(Pos.CENTER);
+        btnBookG.setPrefWidth(60);
+        btnBookG.setPrefHeight(60);
+        btnBookG.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnBookG.setTextOverrun(OverrunStyle.CLIP);
+
+        UIHelpers.btnRaise(btnBookG);
+
+        ImageView imgBookT = new ImageView();
+        imgBookT.setImage(new Image("images/Icons/bookT.png"));
+        imgBookT.setFitHeight(30);
+        imgBookT.setFitWidth(30);
+        imgBookT.setPreserveRatio(true);
+        imgBookT.setPickOnBounds(true);
+
+        JFXButton btnBookT = new JFXButton("", imgBookT);
+        btnBookT.setAlignment(Pos.CENTER);
+        btnBookT.setPrefWidth(60);
+        btnBookT.setPrefHeight(60);
+        btnBookT.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnBookT.setTextOverrun(OverrunStyle.CLIP);
+
+        UIHelpers.btnRaise(btnBookT);
+
+        ImageView imgSpace = new ImageView();
+        imgSpace.setImage(new Image("images/Icons/space.png"));
+        imgSpace.setFitHeight(30);
+        imgSpace.setFitWidth(30);
+        imgSpace.setPreserveRatio(true);
+        imgSpace.setPickOnBounds(true);
+
+        JFXButton btnSpace = new JFXButton("", imgSpace);
+        btnSpace.setAlignment(Pos.CENTER);
+        btnSpace.setPrefWidth(60);
+        btnSpace.setPrefHeight(60);
+        btnSpace.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnSpace.setTextOverrun(OverrunStyle.CLIP);
+
+        UIHelpers.btnRaise(btnSpace);
+
+        ImageView imgZone = new ImageView();
+        imgZone.setImage(new Image("images/Icons/zone.png"));
+        imgZone.setFitHeight(30);
+        imgZone.setFitWidth(30);
+        imgZone.setPreserveRatio(true);
+        imgZone.setPickOnBounds(true);
+
+        JFXButton btnZone = new JFXButton("", imgZone);
+        btnZone.setAlignment(Pos.CENTER);
+        btnZone.setPrefWidth(60);
+        btnZone.setPrefHeight(60);
+        btnZone.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnZone.setTextOverrun(OverrunStyle.CLIP);
+
+        UIHelpers.btnRaise(btnZone);
 
         ImageView imgCal = new ImageView();
         imgCal.setImage(new Image("images/Icons/cald.png"));
@@ -138,7 +478,7 @@ public class EmployeeMapController extends MapController {
         imgCal.setPreserveRatio(true);
         imgCal.setPickOnBounds(true);
 
-        JFXButton btnCal = new JFXButton("",imgCal);
+        JFXButton btnCal = new JFXButton("", imgCal);
         btnCal.setAlignment(Pos.CENTER);
         btnCal.setPrefWidth(60);
         btnCal.setPrefHeight(60);
@@ -152,7 +492,7 @@ public class EmployeeMapController extends MapController {
         imgExl.setPreserveRatio(true);
         imgExl.setPickOnBounds(true);
 
-        JFXButton btnExl = new JFXButton("",imgExl);
+        JFXButton btnExl = new JFXButton("", imgExl);
         btnExl.setAlignment(Pos.CENTER);
         btnExl.setPrefWidth(60);
         btnExl.setPrefHeight(60);
@@ -166,12 +506,15 @@ public class EmployeeMapController extends MapController {
         imgComp1.setPreserveRatio(true);
         imgComp1.setPickOnBounds(true);
 
-        JFXButton btnComp1 = new JFXButton("",imgComp1);
+        JFXButton btnComp1 = new JFXButton("", imgComp1);
         btnComp1.setAlignment(Pos.CENTER);
         btnComp1.setPrefWidth(60);
         btnComp1.setPrefHeight(60);
         btnComp1.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnComp1.setTextOverrun(OverrunStyle.CLIP);
+
+        UIHelpers.btnRaise(btnComp1);
+
 
         ImageView imgFlo = new ImageView();
         imgFlo.setImage(new Image("images/Icons/florist.png"));
@@ -180,12 +523,14 @@ public class EmployeeMapController extends MapController {
         imgFlo.setPreserveRatio(true);
         imgFlo.setPickOnBounds(true);
 
-        JFXButton btnFlo = new JFXButton("",imgFlo);
+        JFXButton btnFlo = new JFXButton("", imgFlo);
         btnFlo.setAlignment(Pos.CENTER);
         btnFlo.setPrefWidth(60);
         btnFlo.setPrefHeight(60);
         btnFlo.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnFlo.setTextOverrun(OverrunStyle.CLIP);
+
+        UIHelpers.btnRaise(btnFlo);
 
         ImageView imgSign = new ImageView();
         imgSign.setImage(new Image("images/Icons/sign.png"));
@@ -194,12 +539,14 @@ public class EmployeeMapController extends MapController {
         imgSign.setPreserveRatio(true);
         imgSign.setPickOnBounds(true);
 
-        JFXButton btnSign = new JFXButton("",imgSign);
+        JFXButton btnSign = new JFXButton("", imgSign);
         btnSign.setAlignment(Pos.CENTER);
         btnSign.setPrefWidth(60);
         btnSign.setPrefHeight(60);
         btnSign.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnSign.setTextOverrun(OverrunStyle.CLIP);
+
+        UIHelpers.btnRaise(btnSign);
 
         ImageView imgLock = new ImageView();
         imgLock.setImage(new Image("images/Icons/lock.png"));
@@ -208,12 +555,14 @@ public class EmployeeMapController extends MapController {
         imgLock.setPreserveRatio(true);
         imgLock.setPickOnBounds(true);
 
-        JFXButton btnLock = new JFXButton("",imgLock);
+        JFXButton btnLock = new JFXButton("", imgLock);
         btnLock.setAlignment(Pos.CENTER);
         btnLock.setPrefWidth(60);
         btnLock.setPrefHeight(60);
         btnLock.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnLock.setTextOverrun(OverrunStyle.CLIP);
+
+        UIHelpers.btnRaise(btnLock);
 
         ImageView imgDrug = new ImageView();
         imgDrug.setImage(new Image("images/Icons/drug.png"));
@@ -222,12 +571,14 @@ public class EmployeeMapController extends MapController {
         imgDrug.setPreserveRatio(true);
         imgDrug.setPickOnBounds(true);
 
-        JFXButton btnDrug = new JFXButton("",imgDrug);
+        JFXButton btnDrug = new JFXButton("", imgDrug);
         btnDrug.setAlignment(Pos.CENTER);
         btnDrug.setPrefWidth(60);
         btnDrug.setPrefHeight(60);
         btnDrug.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnDrug.setTextOverrun(OverrunStyle.CLIP);
+
+        UIHelpers.btnRaise(btnDrug);
 
         ImageView imgAv = new ImageView();
         imgAv.setImage(new Image("images/Icons/av.png"));
@@ -236,12 +587,14 @@ public class EmployeeMapController extends MapController {
         imgAv.setPreserveRatio(true);
         imgAv.setPickOnBounds(true);
 
-        JFXButton btnAv = new JFXButton("",imgAv);
+        JFXButton btnAv = new JFXButton("", imgAv);
         btnAv.setAlignment(Pos.CENTER);
         btnAv.setPrefWidth(60);
         btnAv.setPrefHeight(60);
         btnAv.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnAv.setTextOverrun(OverrunStyle.CLIP);
+
+        UIHelpers.btnRaise(btnAv);
 
         ImageView imgIn = new ImageView();
         imgIn.setImage(new Image("images/Icons/in.png"));
@@ -250,12 +603,14 @@ public class EmployeeMapController extends MapController {
         imgIn.setPreserveRatio(true);
         imgIn.setPickOnBounds(true);
 
-        JFXButton btnIn = new JFXButton("",imgIn);
+        JFXButton btnIn = new JFXButton("", imgIn);
         btnIn.setAlignment(Pos.CENTER);
         btnIn.setPrefWidth(60);
         btnIn.setPrefHeight(60);
         btnIn.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnIn.setTextOverrun(OverrunStyle.CLIP);
+
+        UIHelpers.btnRaise(btnIn);
 
         ImageView imgGift = new ImageView();
         imgGift.setImage(new Image("images/Icons/gift.png"));
@@ -264,12 +619,14 @@ public class EmployeeMapController extends MapController {
         imgGift.setPreserveRatio(true);
         imgGift.setPickOnBounds(true);
 
-        JFXButton btnGift = new JFXButton("",imgGift);
+        JFXButton btnGift = new JFXButton("", imgGift);
         btnGift.setAlignment(Pos.CENTER);
         btnGift.setPrefWidth(60);
         btnGift.setPrefHeight(60);
         btnGift.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnGift.setTextOverrun(OverrunStyle.CLIP);
+
+        UIHelpers.btnRaise(btnGift);
 
         ImageView imgOut = new ImageView();
         imgOut.setImage(new Image("images/Icons/out.png"));
@@ -278,12 +635,14 @@ public class EmployeeMapController extends MapController {
         imgOut.setPreserveRatio(true);
         imgOut.setPickOnBounds(true);
 
-        JFXButton btnOut = new JFXButton("",imgOut);
+        JFXButton btnOut = new JFXButton("", imgOut);
         btnOut.setAlignment(Pos.CENTER);
         btnOut.setPrefWidth(60);
         btnOut.setPrefHeight(60);
         btnOut.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnOut.setTextOverrun(OverrunStyle.CLIP);
+
+        UIHelpers.btnRaise(btnOut);
 
         ImageView imgInfo = new ImageView();
         imgInfo.setImage(new Image("images/Icons/info.png"));
@@ -292,20 +651,128 @@ public class EmployeeMapController extends MapController {
         imgInfo.setPreserveRatio(true);
         imgInfo.setPickOnBounds(true);
 
-        JFXButton btnInfo = new JFXButton("",imgInfo);
+        JFXButton btnInfo = new JFXButton("", imgInfo);
         btnInfo.setAlignment(Pos.CENTER);
         btnInfo.setPrefWidth(60);
         btnInfo.setPrefHeight(60);
         btnInfo.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnInfo.setTextOverrun(OverrunStyle.CLIP);
 
+        UIHelpers.btnRaise(btnInfo);
+
+
+        ImageView imgCoffee = new ImageView();
+        imgCoffee.setImage(new Image("images/SearchIcons/coffee.png"));
+        imgCoffee.setFitHeight(30);
+        imgCoffee.setFitWidth(30);
+        imgCoffee.setPreserveRatio(true);
+        imgCoffee.setPickOnBounds(true);
+
+        JFXButton btnCoffee = new JFXButton("",imgCoffee);
+        btnCoffee.setAlignment(Pos.CENTER);
+        btnCoffee.setPrefWidth(60);
+        btnCoffee.setPrefHeight(60);
+        btnCoffee.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnCoffee.setTextOverrun(OverrunStyle.CLIP);
+        btnCoffee.setOnMouseClicked((e) -> {
+            PathFinder.printByType(this, map, Constants.NodeType.RETL);
+        });
+
+        UIHelpers.btnRaise(btnCoffee);
+
+        ImageView imgRest = new ImageView();
+        imgRest.setImage(new Image("images/SearchIcons/rest.png"));
+        imgRest.setFitHeight(30);
+        imgRest.setFitWidth(30);
+        imgRest.setPreserveRatio(true);
+        imgRest.setPickOnBounds(true);
+
+        JFXButton btnRest = new JFXButton("",imgRest);
+        btnRest.setAlignment(Pos.CENTER);
+        btnRest.setPrefWidth(60);
+        btnRest.setPrefHeight(60);
+        btnRest.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnRest.setTextOverrun(OverrunStyle.CLIP);
+        btnRest.setOnMouseClicked((e) -> {
+            PathFinder.printByType(this, map, Constants.NodeType.REST, Constants.NodeType.BATH);
+        });
+
+        UIHelpers.btnRaise(btnRest);
+
+        ImageView imgExit = new ImageView();
+        imgExit.setImage(new Image("images/SearchIcons/exit.png"));
+        imgExit.setFitHeight(30);
+        imgExit.setFitWidth(30);
+        imgExit.setPreserveRatio(true);
+        imgExit.setPickOnBounds(true);
+
+        JFXButton btnExit = new JFXButton("",imgExit);
+        btnExit.setAlignment(Pos.CENTER);
+        btnExit.setPrefWidth(60);
+        btnExit.setPrefHeight(60);
+        btnExit.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnExit.setTextOverrun(OverrunStyle.CLIP);
+        btnExit.setOnMouseClicked((e) -> {
+            PathFinder.printByType(this, map, Constants.NodeType.EXIT);
+        });
+
+        UIHelpers.btnRaise(btnExit);
+
+
+
+        ImageView imgElev = new ImageView();
+        imgElev.setImage(new Image("images/SearchIcons/elev.png"));
+        imgElev.setFitHeight(30);
+        imgElev.setFitWidth(30);
+        imgElev.setPreserveRatio(true);
+        imgElev.setPickOnBounds(true);
+
+        JFXButton btnElev = new JFXButton("",imgElev);
+        btnElev.setAlignment(Pos.CENTER);
+        btnElev.setPrefWidth(60);
+        btnElev.setPrefHeight(60);
+        btnElev.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnElev.setTextOverrun(OverrunStyle.CLIP);
+        btnElev.setOnMouseClicked((e) -> {
+            PathFinder.printByType(this, map, Constants.NodeType.ELEV, Constants.NodeType.STAI);
+        });
+
+        UIHelpers.btnRaise(btnElev);
+
+        ImageView imgInfo1 = new ImageView();
+        imgInfo1.setImage(new Image("images/Icons/info.png"));
+        imgInfo1.setFitHeight(30);
+        imgInfo1.setFitWidth(30);
+        imgInfo1.setPreserveRatio(true);
+        imgInfo1.setPickOnBounds(true);
+
+        JFXButton btnInfo1 = new JFXButton("",imgInfo1);
+        btnInfo1.setAlignment(Pos.CENTER);
+        btnInfo1.setPrefWidth(60);
+        btnInfo1.setPrefHeight(60);
+        btnInfo1.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnInfo1.setTextOverrun(OverrunStyle.CLIP);
+        btnInfo1.setOnMouseClicked((e) -> {
+            PathFinder.printByType(this, map, Constants.NodeType.INFO);
+        });
+
+        UIHelpers.btnRaise(btnInfo1);
+
         btnLogOut.setStyle("-fx-background-radius: 30;" );
+        btnLogOut.setStyle("-fx-background-radius: 30;");
         btnLogOut.setButtonType(JFXButton.ButtonType.RAISED);
         imgLogOut.setImage(new Image("images/Icons/signout.png"));
+
+        UIHelpers.btnRaise(btnLogOut);
 
         btnText.setStyle("-fx-background-radius: 30;" );
         btnText.setButtonType(JFXButton.ButtonType.RAISED);
         imgText.setImage(new Image("images/Icons/text.png"));
+
+        UIHelpers.btnRaise(btnText);
+
+
+
 
         vboxDock.setSpacing(8);
 
@@ -338,24 +805,29 @@ public class EmployeeMapController extends MapController {
 
         HBox searchBox = new HBox();
 
-//        JFXTextField search = new JFXTextField();
-//        search.setPromptText(" Search");
-//        search.setPrefHeight(34);
-//        search.setPrefWidth(450);
-//        search.setAlignment(Pos.CENTER);
-//        search.setStyle("-fx-font-size: 18px;"
-//                + "-fx-font-weight: bold;"
-//                + "-fx-font-family: fantasy;"
-//                + "-fx-text-fill: #022D5A;"
-//                + "-fx-background-color: white");
-
-
         searchBox.getChildren().add(search);
         searchBox.getChildren().add(btnArrow);
         searchBox.setPrefHeight(60);
         searchBox.setPrefWidth(370);
         searchBox.setAlignment(Pos.CENTER);
         searchBox.setSpacing(-20);
+
+        HBox searchIcons = new HBox();
+        searchIcons.setSpacing(10);
+        searchIcons.getChildren().add(btnCoffee);
+        searchIcons.getChildren().add(btnRest);
+        searchIcons.getChildren().add(btnExit);
+        searchIcons.getChildren().add(btnElev);
+        searchIcons.getChildren().add(btnInfo1);
+        searchIcons.setAlignment(Pos.CENTER);
+
+        VBox searchNear = new VBox();
+        searchNear.setPrefWidth(370);
+        searchNear.setPrefHeight(150);
+        searchNear.setSpacing(5);
+        searchNear.getChildren().add(searchBox);
+        searchNear.getChildren().add(searchIcons);
+        searchNear.setAlignment(Pos.CENTER);
 
         Label dir = new Label("Text Directions");
         dir.setPrefHeight(50);
@@ -393,6 +865,38 @@ public class EmployeeMapController extends MapController {
         boxRoom.setAlignment(Pos.CENTER_LEFT);
         boxRoom.setPrefSize(1200,760);
         boxRoom.setSpacing(5);
+
+
+        HBox boxSpace = new HBox();
+        boxSpace.getChildren().add(btnSpace);
+        boxSpace.getChildren().add(tglSpace);
+        boxSpace.setPrefHeight(60);
+        boxSpace.setPrefWidth(150);
+        boxSpace.setAlignment(Pos.CENTER);
+        boxSpace.setSpacing(-5);
+
+        HBox boxZone = new HBox();
+        boxZone.getChildren().add(btnZone);
+        boxZone.getChildren().add(tglZone);
+        boxZone.setPrefHeight(60);
+        boxZone.setPrefWidth(150);
+        boxZone.setAlignment(Pos.CENTER);
+        boxZone.setSpacing(-5);
+
+        HBox hboxWork = new HBox();
+        hboxWork.getChildren().add(boxSpace);
+        hboxWork.getChildren().add(boxZone);
+        hboxWork.setPrefHeight(60);
+        hboxWork.setPrefWidth(320);
+        hboxWork.setAlignment(Pos.CENTER);
+        hboxWork.setSpacing(5);
+
+        VBox boxWork = new VBox();
+        boxWork.getChildren().add(hboxWork);
+        boxWork.getChildren().add(WorkBooking);
+        boxWork.setAlignment(Pos.CENTER_RIGHT);
+        boxWork.setPrefSize(150,150);
+        boxWork.setSpacing(-15);
 
         Label lblCal = new Label("My Bookings Calendar");
         lblCal.setPrefHeight(50);
@@ -608,11 +1112,13 @@ public class EmployeeMapController extends MapController {
         JFXNodesList nodesListOut = new JFXNodesList();
         JFXNodesList nodesListGift = new JFXNodesList();
         JFXNodesList nodesListInfo = new JFXNodesList();
+        JFXNodesList nodesListBook = new JFXNodesList();
+        JFXNodesList nodesListWork = new JFXNodesList();
 
         nodeListSearch.addAnimatedNode(btnSearch);
-        nodeListSearch.addAnimatedNode(searchBox);
+        nodeListSearch.addAnimatedNode(searchNear);
         nodeListSearch.setRotate(90);
-        nodeListSearch.setSpacing(150);
+        nodeListSearch.setSpacing(105);
 
         nodeListUser.addAnimatedNode(btnUser);
         nodeListUser.addAnimatedNode(userBox);
@@ -624,10 +1130,15 @@ public class EmployeeMapController extends MapController {
         nodeListRoute.setRotate(90);
         nodeListRoute.setSpacing(-135);
 
-        nodeListRoom.addAnimatedNode(btnRoom);
-        nodeListRoom.addAnimatedNode(boxRoom);
-        nodeListRoom.setRotate(95);
-        nodeListRoom.setSpacing(240);
+        nodesListBook.addAnimatedNode(btnBookT);
+        nodesListBook.addAnimatedNode(boxRoom);
+        nodesListBook.setRotate(95);
+        nodesListBook.setSpacing(240);
+
+        nodesListWork.addAnimatedNode(btnBookG);
+        nodesListWork.addAnimatedNode(boxWork);
+        nodesListWork.setRotate(75);
+        nodesListWork.setSpacing(-150);
 
         nodeListCal.addAnimatedNode(btnCal);
         nodeListCal.addAnimatedNode(boxCal);
@@ -684,6 +1195,18 @@ public class EmployeeMapController extends MapController {
         nodesListInfo.setRotate(115);
         nodesListInfo.setSpacing(330);
 
+        VBox boxBook = new VBox();
+        boxBook.getChildren().add(nodesListWork);
+        boxBook.getChildren().add(nodesListBook);
+        boxBook.setAlignment(Pos.CENTER_LEFT);
+        boxBook.setPrefSize(60,150);
+        boxBook.setSpacing(5);
+
+        nodeListRoom.addAnimatedNode(btnRoom);
+        nodeListRoom.addAnimatedNode(boxBook);
+        nodeListRoom.setRotate(90);
+        nodeListRoom.setSpacing(-30);
+
         VBox boxReq = new VBox();
         boxReq.getChildren().add(nodesListComp);
         boxReq.getChildren().add(nodesListFlo);
@@ -710,79 +1233,225 @@ public class EmployeeMapController extends MapController {
         vboxDock.getChildren().add(nodeListRoom);
         vboxDock.getChildren().add(nodeListCal);
         vboxDock.getChildren().add(nodeListExl);
+
+        Platform.runLater(() -> {
+            // Add listener for commands
+            FirebaseAPI.setCaller(EmployeeMapController.this);
+            FirebaseAPI.checkForCommands(UserHelpers.getCurrentUser().getUsername());
+        });
     }
 
     @Override
-    public void zoomOut() {
-        Thread t = new Thread(() -> {
-            try {
-                Thread.sleep(3700);
-                gesMap.reset();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-        });
-        t.setDaemon(true);
-        t.start();
-    }
-
-    public void btn_SendDirections (MouseEvent event) {
-        if(currentRoute == null) return;
-        TextMessenger tm = new TextMessenger();
-        String input_phone_number = "+1"+textNum.getText();
-        tm.declareRecipient(input_phone_number);
-        tm.declareMessage(MapController.currentDirections);
-        tm.sendMessage();
-        event.consume();
-        event.consume();
+    public void associateUserWithDirections(Location start, Location end) {
+        FirebaseAPI.addDirectionsForUser(UserHelpers.getCurrentUser().getUsername(), start, end);
     }
 
     @Override
     public void btnReturn_Click(MouseEvent mouseEvent) throws Exception {
         ScreenController.logOut(btnLogOut);
+        FirebaseAPI.setCaller(null);
         ScreenController.activate(Constants.Routes.LOGIN);
     }
 
-    @Override
-    public void btnFloor3_Click(MouseEvent mouseEvent) {
-        showFloor("3");
-    }
+    public void btnSearch(MouseEvent event) {
+        event.consume();
+        if(tglSpace.isSelected()) {
+            if(datStartDay != null && datEndDay != null && datStartTime != null && datEndTime != null) {
+                startDate = datStartDay.getValue();
+                endDate = datEndDay.getValue();
+                startTime = datStartTime.getValue();
+                endTime = datEndTime.getValue();
 
-    @Override
-    public void btnFloor2_Click(MouseEvent mouseEvent) {
-        showFloor("2");
-    }
+                workspacesAvailable = LocationTable.checkAvailabilityByTime(
+                        DatabaseHelpers.getDateTime(startDate, startTime),
+                        DatabaseHelpers.getDateTime(endDate, endTime)
+                );
 
-    @Override
-    public void btnFloor1_Click(MouseEvent mouseEvent) {
-        showFloor("1");
-    }
+                for(Room ws2 : workspacesAvailable) {
+                    System.out.println(ws2.toString());
+                }
 
-    @Override
-    public void btnFloorG_Click(MouseEvent mouseEvent) {
-        showFloor("G");
-    }
+                for(Location ws : workspaces.values()) {
+                    boolean isBooked = true;
+                    for(Room ws1 : workspacesAvailable) {
+                        if(ws1.getRoomID().equals(ws.getNodeID())) {
+                            isBooked = false;
+                            break;
+                        }
+                    }
+                    if(isBooked) {
+                        workspacesBooked.add(ws);
+                    }
+                }
 
-    @Override
-    public void btnFloorL1_Click(MouseEvent mouseEvent) {
-        showFloor("L1");
-    }
+                for (Location ws : workspacesBooked) {
+                    if (ws.getNodeType().equals(Constants.NodeType.WRKT)) {
+                        System.out.println("works");
+                        Circle c = ws.getNodeCircle();
+                        c.setFill(Color.RED);
+                    }
+                }
 
-    @Override
-    public void btnFloorL2_Click(MouseEvent mouseEvent) {
-        showFloor("L2");
-    }
+                workspacesCurrent = BookLocationTable.getBookingsForUser(UserHelpers.getCurrentUser());
 
-    @Override
-    public void showFloor(String newFloor) {
-        super.showFloorHelper(newFloor);
-        MapDisplay.displayEmployee(this);
-    }
+                for(Book b : workspacesCurrent) {
+                    for(Location ws1 : workspaces.values()) {
+                        if(ws1.getNodeID().equals(b.getRoomID()) && ws1.getNodeType().equals(Constants.NodeType.WRKT)) {
+                            myWorkspaces.add(ws1);
+                            break;
+                        }
+                    }
+                }
 
-    @Override
-    public void displayPath(Path line) {
-        super.displayPath(line);
-        MapDisplay.displayEmployee(this);
+                for (Location ws : myWorkspaces) {
+                    if (ws.getNodeType().equals(Constants.NodeType.WRKT)) {
+                        Circle c = ws.getNodeCircle();
+                        c.setFill(Color.ORANGE);
+                        c.setOnMouseClicked(Event -> {
+                            try {
+                                Event.consume();
+                                for(Location ws1 : myWorkspaces) {
+                                    if(ws1.getxCord() == c.getCenterX() && ws1.getyCord() == c.getCenterY()) {
+                                        enter = ws1;
+                                        break;
+                                    }
+                                }
+                                ScreenController.popUp(Constants.Routes.WORKSPACE_POPUP, enter, c, startTime, startDate, endTime, endDate);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        });
+                    }
+                }
+
+                for (Room ws : workspacesAvailable) {
+                    Location ls = new Location("",0,0,"","", Constants.NodeType.HALL,"","");
+                    for(Location ls1 : workspaces.values()) {
+                        if(ls1.getNodeID().equals(ws.getRoomID())) {
+                            ls = ls1;
+                            break;
+                        }
+                    }
+                    if (ls.getNodeType().equals(Constants.NodeType.WRKT)) {
+                        Circle c = ls.getNodeCircle();
+                        c.setFill(Color.YELLOW);
+                        c.setOnMouseClicked(Event -> {
+                            try {
+                                for(Room ws1 : workspacesAvailable) {
+                                    Location ls1 = map.getLocation(ws1.getRoomID());
+                                    if(ls1.getxCord() == c.getCenterX() && ls1.getyCord() == c.getCenterY()) {
+                                        enter = ls1;
+                                        break;
+                                    }
+                                }
+
+                                ScreenController.popUp(Constants.Routes.WORKSPACE_POPUP, enter, c, startTime, startDate, endTime, endDate);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        });
+                    }
+                }
+            }
+        }
+        else if(tglZone.isSelected()) {
+            if(datStartDay != null && datEndDay != null && datStartTime != null && datEndTime != null) {
+                startDate = datStartDay.getValue();
+                endDate = datEndDay.getValue();
+                startTime = datStartTime.getValue();
+                endTime = datEndTime.getValue();
+
+                workzonesAvailable = LocationTable.checkAvailabilityByTime(
+                        DatabaseHelpers.getDateTime(startDate, startTime),
+                        DatabaseHelpers.getDateTime(endDate, endTime)
+                );
+
+                for(Room ws2 : workzonesAvailable) {
+                    System.out.println(ws2.toString());
+                }
+
+                for(Location ws : workzones.values()) {
+                    boolean isBooked = true;
+                    for(Room ws1 : workzonesAvailable) {
+                        if(ws1.getRoomID().equals(ws.getNodeID())) {
+                            isBooked = false;
+                            break;
+                        }
+                    }
+                    if(isBooked) {
+                        workzonesBooked.add(ws);
+                    }
+                }
+
+                for (Location ws : workzonesBooked) {
+                    if (ws.getNodeType().equals(Constants.NodeType.WORK)) {
+                        Circle c = ws.getNodeCircle();
+                        c.setFill(Color.RED);
+                    }
+                }
+
+                workzonesCurrent = BookLocationTable.getBookingsForUser(UserHelpers.getCurrentUser());
+
+                for(Book b : workzonesCurrent) {
+                    for(Location ws1 : workzones.values()) {
+                        if(ws1.getNodeID().equals(b.getRoomID()) && ws1.getNodeType().equals(Constants.NodeType.WORK)) {
+                            myWorkzones.add(ws1);
+                            break;
+                        }
+                    }
+                }
+
+                for (Location ws : myWorkzones) {
+                    if (ws.getNodeType().equals(Constants.NodeType.WORK)) {
+                        Circle c = ws.getNodeCircle();
+                        c.setFill(Color.ORANGE);
+                        c.setOnMouseClicked(Event -> {
+                            try {
+                                Event.consume();
+                                for(Location ws1 : myWorkzones) {
+                                    if(ws1.getxCord() == c.getCenterX() && ws1.getyCord() == c.getCenterY()) {
+                                        enter = ws1;
+                                        break;
+                                    }
+                                }
+                                ScreenController.popUp(Constants.Routes.WORKSPACE_POPUP, enter, c, startTime, startDate, endTime, endDate);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        });
+                    }
+                }
+
+                for (Room ws : workzonesAvailable) {
+                    Location ls = new Location("",0,0,"","", Constants.NodeType.HALL,"","");
+                    for(Location ls1 : workzones.values()) {
+                        if(ls1.getNodeID().equals(ws.getRoomID())) {
+                            ls = ls1;
+                            break;
+                        }
+                    }
+                    if (ls.getNodeType().equals(Constants.NodeType.WORK)) {
+                        Circle c = ls.getNodeCircle();
+                        c.setFill(Color.YELLOW);
+                        c.setOnMouseClicked(Event -> {
+                            try {
+                                Event.consume();
+                                for(Room ws1 : workzonesAvailable) {
+                                    Location ls1 = map.getLocation(ws1.getRoomID());
+                                    if(ls1.getxCord() == c.getCenterX() && ls1.getyCord() == c.getCenterY()) {
+                                        enter = ls1;
+                                        break;
+                                    }
+                                }
+                                ScreenController.popUp(Constants.Routes.WORKSPACE_POPUP, enter, c, startTime, startDate, endTime, endDate);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        });
+                    }
+                }
+            }
+        }
+
     }
 }

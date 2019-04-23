@@ -50,14 +50,21 @@
             <JFXButton fx:id="loginButton" alignment="CENTER" buttonType="RAISED" layoutX="974.0" layoutY="17.0" onAction="#employeeLogin" prefHeight="60.0" prefWidth="212.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Employee Login" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="17.0" />
             </children>
         </AnchorPane>
-      <HBox alignment="CENTER" layoutY="91.0" prefHeight="138.0" prefWidth="1200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="90.0">
+      <AnchorPane prefHeight="138.0" prefWidth="1200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="90.0">
          <children>
-              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="101.0" prefWidth="736.0" text="Information Kiosk" textFill="WHITE">
-                  <font>
-                      <Font name="System Bold" size="72.0" />
-                  </font>
-              </Label>
+            <HBox alignment="CENTER" prefHeight="138.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="101.0" prefWidth="736.0" text="Information Kiosk" textFill="WHITE">
+                        <font>
+                            <Font name="System Bold" size="72.0" />
+                        </font>
+                    </Label>
+               </children>
+            </HBox>
+             <AnchorPane AnchorPane.rightAnchor="15" AnchorPane.topAnchor="30.0">
+                 <fx:include source="../weather/Weather.fxml" />
+             </AnchorPane>
          </children>
-      </HBox>
+      </AnchorPane>
     </children>
 </AnchorPane>

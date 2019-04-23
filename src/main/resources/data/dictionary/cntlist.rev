@@ -958,7 +958,7 @@ all-out%5:00:00:complete:00 1 2
 all-round%5:00:00:comprehensive:00 1 1
 all-time%5:00:00:incomparable:00 1 1
 all-victorious%5:00:00:unconquerable:00 1 1
-all-weather%5:00:00:unrestricted:00 1 1
+all-weatherController%5:00:00:unrestricted:00 1 1
 all_along%4:02:00:: 1 5
 all_at_once%4:02:00:: 2 1
 all_at_once%4:02:01:: 1 1
@@ -36087,9 +36087,9 @@ wearisome%5:00:00:uninteresting:00 1 1
 weary%2:29:00:: 1 1
 weary%5:00:00:tired:00 1 11
 wearying%5:00:00:effortful:00 1 1
-weather%1:19:00:: 1 20
-weather%5:00:00:windward:00 1 1
-weather-beaten%5:00:00:tough:02 1 1
+weatherController%1:19:00:: 1 20
+weatherController%5:00:00:windward:00 1 1
+weatherController-beaten%5:00:00:tough:02 1 1
 weather_condition%1:19:00:: 1 1
 weatherstrip%2:30:00:: 1 1
 weave%1:06:00:: 1 2

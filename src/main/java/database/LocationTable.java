@@ -147,7 +147,7 @@ public class LocationTable {
 
             statement.execute();
 
-            if (Objects.equals(DatabaseHelpers.enumToString(location.getNodeType()), Constants.NodeType.CONF.name())) {
+            if (Objects.equals(DatabaseHelpers.enumToString(location.getNodeType()), Constants.NodeType.CONF.name()) || Objects.equals(DatabaseHelpers.enumToString(location.getNodeType()), Constants.NodeType.WORK.name()) || Objects.equals(DatabaseHelpers.enumToString(location.getNodeType()), Constants.NodeType.WRKT.name())) {
 
                 // Populate conference room table
                 RoomTable.addRoom(new Room(
@@ -155,6 +155,17 @@ public class LocationTable {
                         5
                 ));
             }
+//            else if (Objects.equals(DatabaseHelpers.enumToString(location.getNodeType()), Constants.NodeType.WORK.name()) || Objects.equals(DatabaseHelpers.enumToString(location.getNodeType()), Constants.NodeType.WRKT.name())) {
+//
+//                // Populate conference room table
+//                WorkspaceTable.addWorkspace(new Workspace(
+//                        location.getNodeID(),
+//                        location.getxCord(),
+//                        location.getyCord(),
+//                        location.getNodeType(),
+//                        location.getLongName()
+//                ));
+//            }
 
             return true;
 
