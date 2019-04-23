@@ -13,6 +13,7 @@
 <?import net.kurobako.gesturefx.GesturePane?>
 
 <?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXToggleButton?>
 <AnchorPane fx:id="panRoot" stylesheets="@../../../css/colorScheme.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.maps.AdminMapController">
     <JFXTabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <Tab text="Map Editor">
@@ -66,6 +67,8 @@
                     <fx:include source="../weather/Weather.fxml"/>
                 </AnchorPane>
                 <JFXTextField fx:id="search" prefWidth="450" prefHeight="34" promptText=" Search"  alignment="CENTER" style=" -fx-font-size: 18px; -fx-font-weight: bold; -fx-font-family: fantasy; -fx-text-fill: #022D5A; -fx-background-color: white" />
+                <JFXToggleButton fx:id="tglZone" prefWidth="50" prefHeight="50" />
+                <JFXToggleButton fx:id="tglSpace" prefWidth="50" prefHeight="50" />
             </AnchorPane>
         </Tab>
     </JFXTabPane>

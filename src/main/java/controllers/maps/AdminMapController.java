@@ -3,10 +3,12 @@ package controllers.maps;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXNodesList;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXToggleButton;
 import controllers.ScreenController;
 import controllers.search.SearchEngineController;
 import google.FirebaseAPI;
 import helpers.Constants;
+import helpers.UIHelpers;
 import helpers.UserHelpers;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -49,6 +51,8 @@ public class AdminMapController extends MapController {
     public AnchorPane TabEdit;
 
     public JFXTextField search;
+    public JFXToggleButton tglSpace;
+    public JFXToggleButton tglZone;
 
     private static Location edgLoc = null;
 
@@ -233,6 +237,70 @@ public class AdminMapController extends MapController {
         btnRoom.setPrefHeight(60);
         btnRoom.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnRoom.setTextOverrun(OverrunStyle.CLIP);
+
+        ImageView imgBookG = new ImageView();
+        imgBookG.setImage(new Image("images/Icons/bookG.png"));
+        imgBookG.setFitHeight(30);
+        imgBookG.setFitWidth(30);
+        imgBookG.setPreserveRatio(true);
+        imgBookG.setPickOnBounds(true);
+
+        JFXButton btnBookG = new JFXButton("", imgBookG);
+        btnBookG.setAlignment(Pos.CENTER);
+        btnBookG.setPrefWidth(60);
+        btnBookG.setPrefHeight(60);
+        btnBookG.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnBookG.setTextOverrun(OverrunStyle.CLIP);
+
+        UIHelpers.btnRaise(btnBookG);
+
+        ImageView imgBookT = new ImageView();
+        imgBookT.setImage(new Image("images/Icons/bookT.png"));
+        imgBookT.setFitHeight(30);
+        imgBookT.setFitWidth(30);
+        imgBookT.setPreserveRatio(true);
+        imgBookT.setPickOnBounds(true);
+
+        JFXButton btnBookT = new JFXButton("", imgBookT);
+        btnBookT.setAlignment(Pos.CENTER);
+        btnBookT.setPrefWidth(60);
+        btnBookT.setPrefHeight(60);
+        btnBookT.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnBookT.setTextOverrun(OverrunStyle.CLIP);
+
+        UIHelpers.btnRaise(btnBookT);
+
+        ImageView imgSpace = new ImageView();
+        imgSpace.setImage(new Image("images/Icons/space.png"));
+        imgSpace.setFitHeight(30);
+        imgSpace.setFitWidth(30);
+        imgSpace.setPreserveRatio(true);
+        imgSpace.setPickOnBounds(true);
+
+        JFXButton btnSpace = new JFXButton("", imgSpace);
+        btnSpace.setAlignment(Pos.CENTER);
+        btnSpace.setPrefWidth(60);
+        btnSpace.setPrefHeight(60);
+        btnSpace.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnSpace.setTextOverrun(OverrunStyle.CLIP);
+
+        UIHelpers.btnRaise(btnSpace);
+
+        ImageView imgZone = new ImageView();
+        imgZone.setImage(new Image("images/Icons/zone.png"));
+        imgZone.setFitHeight(30);
+        imgZone.setFitWidth(30);
+        imgZone.setPreserveRatio(true);
+        imgZone.setPickOnBounds(true);
+
+        JFXButton btnZone = new JFXButton("", imgZone);
+        btnZone.setAlignment(Pos.CENTER);
+        btnZone.setPrefWidth(60);
+        btnZone.setPrefHeight(60);
+        btnZone.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnZone.setTextOverrun(OverrunStyle.CLIP);
+
+        UIHelpers.btnRaise(btnZone);
 
         ImageView imgEdit = new ImageView();
         imgEdit.setImage(new Image("images/Icons/edit.png"));
@@ -427,6 +495,30 @@ public class AdminMapController extends MapController {
         boxRoom.setPrefSize(1200,760);
         boxRoom.setSpacing(5);
 
+        HBox boxSpace = new HBox();
+        boxSpace.getChildren().add(btnSpace);
+        boxSpace.getChildren().add(tglSpace);
+        boxSpace.setPrefHeight(60);
+        boxSpace.setPrefWidth(150);
+        boxSpace.setAlignment(Pos.CENTER);
+        boxSpace.setSpacing(-5);
+
+        HBox boxZone = new HBox();
+        boxZone.getChildren().add(btnZone);
+        boxZone.getChildren().add(tglZone);
+        boxZone.setPrefHeight(60);
+        boxZone.setPrefWidth(150);
+        boxZone.setAlignment(Pos.CENTER);
+        boxZone.setSpacing(-5);
+
+        VBox boxWork = new VBox();
+        boxWork.getChildren().add(boxZone);
+        boxWork.getChildren().add(boxSpace);
+        boxWork.setAlignment(Pos.CENTER_LEFT);
+        boxWork.setPrefSize(150,150);
+        boxWork.setSpacing(5);
+
+
         Label lblEdit = new Label("User Dashboard");
         lblEdit.setPrefHeight(50);
         lblEdit.setPrefWidth(1200);
@@ -506,6 +598,8 @@ public class AdminMapController extends MapController {
         JFXNodesList nodesListAlgo = new JFXNodesList();
         JFXNodesList nodesListClean = new JFXNodesList();
         JFXNodesList nodesListTab = new JFXNodesList();
+        JFXNodesList nodesListBook = new JFXNodesList();
+        JFXNodesList nodesListWork = new JFXNodesList();
 
         nodeListSearch.addAnimatedNode(btnSearch);
         nodeListSearch.addAnimatedNode(searchNear);
@@ -517,10 +611,15 @@ public class AdminMapController extends MapController {
         nodeListUser.setRotate(90);
         nodeListUser.setSpacing(60);
 
-        nodeListRoom.addAnimatedNode(btnRoom);
-        nodeListRoom.addAnimatedNode(boxRoom);
-        nodeListRoom.setRotate(85);
-        nodeListRoom.setSpacing(240);
+        nodesListBook.addAnimatedNode(btnBookT);
+        nodesListBook.addAnimatedNode(boxRoom);
+        nodesListBook.setRotate(85);
+        nodesListBook.setSpacing(240);
+
+        nodesListWork.addAnimatedNode(btnBookG);
+        nodesListWork.addAnimatedNode(boxWork);
+        nodesListWork.setRotate(90);
+        nodesListWork.setSpacing(-10);
 
         nodesListEdit.addAnimatedNode(btnEdit);
         nodesListEdit.addAnimatedNode(boxEdit);
@@ -541,6 +640,18 @@ public class AdminMapController extends MapController {
         nodesListTab.addAnimatedNode(boxTab);
         nodesListTab.setRotate(105);
         nodesListTab.setSpacing(260);
+
+        VBox boxBook = new VBox();
+        boxBook.getChildren().add(nodesListWork);
+        boxBook.getChildren().add(nodesListBook);
+        boxBook.setAlignment(Pos.CENTER_LEFT);
+        boxBook.setPrefSize(60,150);
+        boxBook.setSpacing(5);
+
+        nodeListRoom.addAnimatedNode(btnRoom);
+        nodeListRoom.addAnimatedNode(boxBook);
+        nodeListRoom.setRotate(90);
+        nodeListRoom.setSpacing(-30);
 
         vboxDock.getChildren().add(nodeListUser);
         vboxDock.getChildren().add(nodeListSearch);
