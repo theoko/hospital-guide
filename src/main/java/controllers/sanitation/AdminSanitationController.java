@@ -20,10 +20,10 @@ import models.services.ServiceRequest;
 import models.services.SimpleEmployee;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.*;
 
 public class AdminSanitationController extends SanitationController {
     public JFXButton btnDelete;
@@ -64,16 +64,20 @@ public class AdminSanitationController extends SanitationController {
 
         initTables();
         List<SanitationRequest> unfilteredRequests = updateRequests();
-        updatePieChart(unfilteredRequests);
-        updateSummaryStats(unfilteredRequests);
+
+
+        if (unfilteredRequests != null) {
+            updatePieChart(unfilteredRequests);
+            updateSummaryStats();
+            requests.addAll(unfilteredRequests);
+        }
     }
 
 
-
-    public void tblClick(){
+    public void tblClick() {
 
         SanitationRequest selected = tblData.getSelectionModel().getSelectedItem();
-        if(selected!=null)
+        if (selected != null)
             btnDelete.setDisable(false);
     }
 
@@ -108,14 +112,18 @@ public class AdminSanitationController extends SanitationController {
 
     private List updateRequests() {
         List<SanitationRequest> lstReqs = SanitationTable.getSanitationRequests();
-        if (lstReqs != null) {
-            requests.addAll(lstReqs);
-        }
+        //if (lstReqs != null) {
+        //    requests.addAll(lstReqs);
+        //}
         return lstReqs;
     }
 
-    private void updateSummaryStats(List<SanitationRequest> requests) {
-        SanitationAnalyzer analyzer = new SanitationAnalyzer();
+    private void updateSummaryStats() {
+        updateSummaryStats(new SanitationAnalyzer());
+    }
+
+    private void updateSummaryStats(SanitationAnalyzer analyzer) {
+        //SanitationAnalyzer analyzer = new SanitationAnalyzer();
 
         StringBuilder summaryStats = new StringBuilder();
         summaryStats.append("Requests: " + analyzer.getNumRequests().toString() + "      Incomplete: " + analyzer.getPercentIncomplete().toString() + "%      Claimed: " + analyzer.getPercentClaimed().toString() + "%      Completed: " + analyzer.getNumCompletedRequests().toString());
@@ -132,6 +140,7 @@ public class AdminSanitationController extends SanitationController {
         ArrayList<String> employees = analyzer.getEmployees();
         ArrayList<String> custodians = analyzer.getCustodians();
 
+        chartEmployees.clear();
         // Employee Statistics
         for (String employee : employees) {
             int requestedCount = analyzer.getEmployeeRequestCount().get(employee);
@@ -140,6 +149,7 @@ public class AdminSanitationController extends SanitationController {
             chartEmployees.add(emp);
         }
 
+        chartCustodians.clear();
         // Custodian Statistics
         for (String custodian : custodians) {
             int claimedCount = analyzer.getCustodianClaimedCount().get(custodian);
@@ -214,10 +224,12 @@ public class AdminSanitationController extends SanitationController {
     public void filterChange() {
 
         boolean hasNames = !txtUserNames.getText().equals("");
-        boolean hasStartDate =(datStartDate.getValue() == null);
-        boolean hasEndDate=(datStartDate.getValue() == null);
+        boolean hasStartDate = (datStartDate.getValue() == null);
+        boolean hasEndDate = (datStartDate.getValue() == null);
 
-        btnFilter.setDisable(hasNames||hasStartDate||hasEndDate);
+        //btnFilter.setDisable(hasNames||hasStartDate||hasEndDate);//old only search
+
+        btnFilter.setDisable(false);//new clear search
     }
 
     public void cancelScr() {
@@ -233,6 +245,81 @@ public class AdminSanitationController extends SanitationController {
         updateRequests();
 
         //todo implement filtering based on inputs (specific user date ect) filter observable
+        List<SanitationRequest> fullList = updateRequests();
+
+        if (txtUserNames.getText().equals("") && datStartDate.getValue() == null && datStartDate.getValue() == null) {//clear search
+            SanitationAnalyzer analyzer = new SanitationAnalyzer();
+            updateSummaryStats(analyzer);
+            updatePieChart(fullList);
+            requests.clear();
+            requests.addAll(fullList);
+
+        } else {
+
+            String users = txtUserNames.getText() + ",";
+            List<String> userList = Arrays.asList(users.split("\\s*,\\s*"));
+            ArrayList<String> userListTrimmed = new ArrayList<String>();
+            for (int i = 0; i < userList.size(); i++) {
+                String newString = userList.get(i);
+                userListTrimmed.add(newString);
+            }
+
+            List<SanitationRequest> filteredList = null;
+
+            Timestamp earliestTime = fullList.get(0).getRequestTime();
+            Timestamp latestTime = fullList.get(0).getRequestTime();
+
+            for (SanitationRequest request : fullList
+            ) {
+                Timestamp currentTime = request.getRequestTime();
+                if (currentTime.before(earliestTime)) {
+                    earliestTime = currentTime;
+                }
+                if (currentTime.after(latestTime)) {
+                    latestTime = currentTime;
+                }
+
+            }
+
+            if (datStartDate.getValue() != null) {
+                Date date = Date.from(datStartDate.getValue().atStartOfDay()
+                        .atZone(ZoneId.systemDefault()).toInstant());
+                Timestamp timeStamp = new Timestamp(date.getTime());
+                earliestTime = timeStamp;
+            }
+
+            if (datEndDate.getValue() != null) {
+                Date date = Date.from(datEndDate.getValue().atStartOfDay()
+                        .atZone(ZoneId.systemDefault()).toInstant());
+                Timestamp timeStamp = new Timestamp(date.getTime());
+                latestTime = timeStamp;
+            }
+
+
+            for (SanitationRequest req : fullList) {//lop through all requests
+                if (req.getRequestTime().after(earliestTime) && req.getRequestTime().before(latestTime)) {//if a request is between the min and max date
+                    if (txtUserNames.getText().equals("")) {//if no user is specified
+                        filteredList.add(req);//add the request to the result
+                    } else {//a user or several are specified
+                        for (String name : userList) {//loop through all specified users
+                            if (name.equals(req.getRequesterUserName()) || name.equals(req.getServicerUserName())) {//if the request has a user name we are looking for
+                                filteredList.add(req);//add the request to the result
+                            }
+                        }
+                    }
+                }
+            }
+
+
+            ArrayList<SanitationRequest> finalList = new ArrayList<SanitationRequest>(filteredList);
+
+            SanitationAnalyzer analyzer = new SanitationAnalyzer(finalList);//call with filtered list arg
+            updateSummaryStats(analyzer);
+            updatePieChart(finalList);
+            requests.clear();
+            requests.addAll(filteredList);
+
+        }
 
         List<SanitationRequest> unfilteredRequests = updateRequests();
         List<SanitationRequest> filteredRequests;
@@ -246,7 +333,6 @@ public class AdminSanitationController extends SanitationController {
 //            if(request.getRequestTime()>)
 //
 //        }
-
 
 
         // updatePieChart(filteredRequests);
