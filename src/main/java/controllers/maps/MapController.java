@@ -72,6 +72,7 @@ public abstract class MapController implements Initializable {
     public static String currentDirections;
     protected Map map;
     private List<Timeline> lstTls;
+    private boolean doesPan;
 
     public MapController() {
         floor = "1";
@@ -80,6 +81,7 @@ public abstract class MapController implements Initializable {
         currMapControl = this;
         currentDirections = null;
         currentRoute = null;
+        doesPan = true;
     }
 
     @Override
@@ -142,6 +144,7 @@ public abstract class MapController implements Initializable {
         floor = newFloor;
         imgMap.setImage(ImageFactory.getImage(floor));
         updateLines();
+        updateLocations();
     }
 
     public abstract void showFloor(String newFloor);
@@ -299,24 +302,39 @@ public abstract class MapController implements Initializable {
     }
 
     public void displayLocations(Stack<Location> path) {
-        String lstFloor = "";
-        Location lstLoc = null;
+        Location lstLoc = path.pop();
+        String lstFloor = lstLoc.getFloor();
+        Circle start = MapDisplay.createCircle(this, lstLoc, MapDisplay.NodeStyle.START, 1, Constants.Routes.USER_INFO, false);
+        panMap.getChildren().add(start);
         while (!path.isEmpty()) {
             Location curLoc = path.pop();
             String curFloor = curLoc.getFloor();
             if (path.size() == 0) {
-                Circle circle = MapDisplay.createCircle(this, curLoc, MapDisplay.NodeStyle.REGULAR, 1, Constants.Routes.USER_INFO, false);
-                panMap.getChildren().add(circle);
+                Circle end = MapDisplay.createCircle(this, curLoc, MapDisplay.NodeStyle.END, 1, Constants.Routes.USER_INFO, false);
+                panMap.getChildren().add(end);
             } else if (!curFloor.equals(lstFloor) ) {
-                if (lstLoc != null) {
-                    Circle circle1 = MapDisplay.createCircle(this, lstLoc, MapDisplay.NodeStyle.REGULAR, 1, Constants.Routes.USER_INFO, false);
-                    panMap.getChildren().add(circle1);
-                }
+                Circle circle1 = MapDisplay.createCircle(this, lstLoc, MapDisplay.NodeStyle.REGULAR, 1, Constants.Routes.USER_INFO, false);
+                panMap.getChildren().add(circle1);
                 Circle circle2 = MapDisplay.createCircle(this, curLoc, MapDisplay.NodeStyle.REGULAR, 1, Constants.Routes.USER_INFO, false);
                 panMap.getChildren().add(circle2);
             }
             lstFloor = curFloor;
             lstLoc = curLoc;
+        }
+        updateLocations();
+    }
+
+    private void updateLocations() {
+        for (Node n : panMap.getChildren()) {
+            if (n instanceof Circle) {
+                Circle circ = (Circle) n;
+                Location loc = map.getLocation(circ.getId());
+                if (loc.getFloor().equals(floor)) {
+                    circ.setOpacity(1);
+                } else {
+                    circ.setOpacity(MapDisplay.opac);
+                }
+            }
         }
     }
 
@@ -327,7 +345,9 @@ public abstract class MapController implements Initializable {
             for (Node n : vbxButtons.getChildren()) {
                 if (n instanceof HBox) {
                     if (n.equals(btnHbox)) {
-                        panner(lstLineTransits.get(i).getLine());
+                        if (doesPan) {
+                            panner(lstLineTransits.get(i).getLine());
+                        }
                         break;
                     }
                     i++;
