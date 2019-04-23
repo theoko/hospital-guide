@@ -116,6 +116,8 @@ forceSimpleEmployeeUpdate(fullAnalyzer);
 
         SanitationRequest selected = tblData.getSelectionModel().getSelectedItem();
         if (selected != null)
+
+
             btnDelete.setDisable(false);
     }
 
@@ -296,7 +298,26 @@ forceSimpleEmployeeUpdate(fullAnalyzer);
 
         //btnFilter.setDisable(hasNames||hasStartDate||hasEndDate);//old only search
 
-        btnFilter.setDisable(false);//new clear search
+        boolean startAfterEnd= false;
+
+        if (datStartDate.getValue() != null&&datEndDate.getValue() != null) {
+            Date startDate = Date.from(datStartDate.getValue().atStartOfDay()
+                    .atZone(ZoneId.systemDefault()).toInstant());
+            Timestamp startTime = new Timestamp(startDate.getTime());
+
+
+            Date endDate = Date.from(datEndDate.getValue().atStartOfDay()
+                    .atZone(ZoneId.systemDefault()).toInstant());
+            Timestamp endTime = new Timestamp(endDate.getTime());
+
+            if(startTime.after(endTime)){
+                startAfterEnd=true;
+            }
+
+        }
+
+
+        btnFilter.setDisable(startAfterEnd);//new clear search
     }
 
     public void cancelScr() {

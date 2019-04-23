@@ -199,7 +199,7 @@
                                                 </font>
                                             </Label>
                                             <JFXDatePicker fx:id="datStartDate" onAction="#filterChange" onKeyTyped="#filterChange" promptText="Select Date" />
-                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Filters by date request was made." />
+                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Filters by date request was made" />
                                         </children>
                                     </HBox>
                                     <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
@@ -210,7 +210,7 @@
                                                 </font>
                                             </Label>
                                  <JFXDatePicker fx:id="datEndDate" onAction="#filterChange" onKeyTyped="#filterChange" promptText="Select Date" />
-                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Filters by date request was made." />
+                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Filters by date request was made" />
                                         </children>
                                     </HBox>
                                 </children>
