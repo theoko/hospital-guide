@@ -604,15 +604,15 @@ WHALL00702,1740,1500,2,Tower,HALL,Hallway Connector 7 Floor 2,Hallway W0702
 WHALL00802,1720,1745,2,Shapiro,HALL,Hallway Connector 8 Floor 2,Hallway W0802
 WHALL00902,1690,2240,2,Shapiro,HALL,Hallway Connector 9 Floor 2,Hallway W0902
 WHALL01002,1690,2455,2,BTM,HALL,Hallway Connector 10 Floor 2,Hallway W1002
-FWORK00104,2764,2125,4,Flexible Workspaces,WORK,Work Zone 3,Work Zone 3
-FWORK00204,2679,2555,4,Flexible Workspaces,WORK,Work Zone 4,Work Zone 4
+FWORK00104,2764,2122,4,Flexible Workspaces,WORK,Work Zone 3,Work Zone 3
+FWORK00204,2680,2555,4,Flexible Workspaces,WORK,Work Zone 4,Work Zone 4
 FWORK00304,3105,2125,4,Flexible Workspaces,WORK,Work Zone 2,Work Zone 2
 FWORK00404,3021,2500,4,Flexible Workspaces,WORK,Work Zone 1,Work Zone 1
 FWORK00504,3288,2845,4,Flexible Workspaces,WORK,Work Zone 5,Work Zone 5
 FWORK00604,3561,2920,4,Flexible Workspaces,WORK,Pantry,Pantry
 FWORK00704,3683,2760,4,Flexible Workspaces,WORK,Mission Hill Conference Room,Mission Hill Conference Room
 FWORK00804,3807,2784,4,Flexible Workspaces,WORK,Mission Hill Auditorium,Mission Hill Auditorium
-FWORK00904,3679,2722,4,Flexible Workspaces,WORK,Classroom 1,Classroom 1
+FWORK00904,3682,2723,4,Flexible Workspaces,WORK,Classroom 1,Classroom 1
 FWORK01004,3872,2534,4,Flexible Workspaces,WORK,Classroom 2,Classroom 2
 FWORK01104,3804,2368,4,Flexible Workspaces,WORK,Classroom 3,Classroom 3
 FWORK01204,3698,2093,4,Flexible Workspaces,WORK,Classroom 4,Classroom 4
@@ -645,7 +645,7 @@ FHALL01904,3725,2787,4,Flexible Workspaces,HALL,Hallway Workspace 4-19,Hallway W
 FHALL02004,3650,2403,4,Flexible Workspaces,HALL,Hallway Workspace 4-20,Hallway Workspace 4-20
 FHALL02104,3675,2382,4,Flexible Workspaces,HALL,Hallway Workspace 4-21,Hallway Workspace 4-21
 FHALL02204,3261,2401,4,Flexible Workspaces,HALL,Hallway Workspace 4-22,Hallway Workspace 4-22
-FHALL02304,3258,2637,4,Flexible Workspaces,HALL,Hallway Workspace 4-23,Hallway Workspace 4-23
+FHALL02304,3260,2637,4,Flexible Workspaces,HALL,Hallway Workspace 4-23,Hallway Workspace 4-23
 FHALL02404,3289,2637,4,Flexible Workspaces,HALL,Hallway Workspace 4-24,Hallway Workspace 4-24
 FHALL02504,3289,2876,4,Flexible Workspaces,HALL,Hallway Workspace 4-25,Hallway Workspace 4-25
 FHALL02604,3560,2877,4,Flexible Workspaces,HALL,Hallway Workspace 4-26,Hallway Workspace 4-26
@@ -665,3 +665,36 @@ FELEV00102,3712,2557,2,Flexible Workspaces,ELEV,Elevator Workspace 2-1,Elevator 
 FELEV00104,3711,2556,4,Flexible Workspaces,ELEV,Elevator Workspace 4-1,Elevator Workspace 4-1
 FHALL03004,3784,2596,4,Flexible Workspaces,HALL,Hallway Workspace 4-29,Hallway Workspace 4-29
 FHALL03104,3443,2159,4,Flexible Workspaces,HALL,Hallway Workspace 4-30,Hallway Workspace 4-30
+FWRKT00104,2639,2005,4,Flexible Workspaces,WRKT,Workspace Table 3-1,Workspace Table 3-1
+FWRKT00204,2640,2075,4,Flexible Workspaces,WRKT,Workspace Table 3-2,Workspace Table 3-2
+FWRKT00304,2759,1994,4,Flexible Workspaces,WRKT,Workspace Table 3-3,Workspace Table 3-3
+FWRKT00404,2759,2065,4,Flexible Workspaces,WRKT,Workspace Table 3-4,Workspace Table 3-4
+FWRKT00504,2838,1994,4,Flexible Workspaces,WRKT,Workspace Table 3-5,Workspace Table 3-5
+FWRKT00604,2838,2065,4,Flexible Workspaces,WRKT,Workspace Table 3-6,Workspace Table 3-6
+FWRKT00704,2907,1994,4,Flexible Workspaces,WRKT,Workspace Table 3-7,Workspace Table 3-7
+FWRKT00804,2907,2065,4,Flexible Workspaces,WRKT,Workspace Table 3-8,Workspace Table 3-8
+FWRKT00904,2550,2004,4,Flexible Workspaces,WRKT,Workspace Table 3-9,Workspace Table 3-9
+FWRKT01004,2550,2091,4,Flexible Workspaces,WRKT,Workspace Table 3-10,Workspace Table 3-10
+FWRKT01104,2670,2165,4,Flexible Workspaces,WRKT,Workspace Table 3-11,Workspace Table 3-11
+FWRKT01204,2550,2180,4,Flexible Workspaces,WRKT,Workspace Table 3-12,Workspace Table 3-12
+FHALL00104,2714,2106,4,Flexible Workspaces,HALL,Hallway Workspace 4-31,Hallway Workspace 4-31
+FHALL03204,2575,2106,4,Flexible Workspaces,HALL,Hallway Workspace 4-32,Hallway Workspace 4-32
+FHALL03304,2575,2039,4,Flexible Workspaces,HALL,Hallway Workspace 4-33,Hallway Workspace 4-33
+FHALL03404,2573,1969,4,Flexible Workspaces,HALL,Hallway Workspace 4-34,Hallway Workspace 4-34
+FHALL03504,2714,1969,4,Flexible Workspaces,HALL,Hallway Workspace 4-35,Hallway Workspace 4-35
+FHALL03604,2713,2040,4,Flexible Workspaces,HALL,Hallway Workspace 4-36,Hallway Workspace 4-36
+FHALL03704,2574,2212,4,Flexible Workspaces,HALL,Hallway Workspace 4-37,Hallway Workspace 4-37
+FHALL03804,2744,2211,4,Flexible Workspaces,HALL,Hallway Workspace 4-38,Hallway Workspace 4-38
+FHALL03904,2798,2108,4,Flexible Workspaces,HALL,Hallway Workspace 4-39,Hallway Workspace 4-39
+FHALL04004,2798,2065,4,Flexible Workspaces,HALL,Hallway Workspace 4-40,Hallway Workspace 4-40
+FHALL04104,2797,1994,4,Flexible Workspaces,HALL,Hallway Workspace 4-41,Hallway Workspace 4-41
+FHALL04204,2884,2108,4,Flexible Workspaces,HALL,Hallway Workspace 4-42,Hallway Workspace 4-42
+FHALL04304,2873,2065,4,Flexible Workspaces,HALL,Hallway Workspace 4-43,Hallway Workspace 4-43
+FHALL04404,2873,1993,4,Flexible Workspaces,HALL,Hallway Workspace 4-44,Hallway Workspace 4-44
+FHALL04504,2899,2131,4,Flexible Workspaces,HALL,Hallway Workspace 4-45,Hallway Workspace 4-45
+FHALL04604,2889,2159,4,Flexible Workspaces,HALL,Hallway Workspace 4-46,Hallway Workspace 4-46
+FHALL04704,2709,2212,4,Flexible Workspaces,HALL,Hallway Workspace 4-47,Hallway Workspace 4-47
+FWRKT01304,2606,2150,4,Flexible Workspaces,WRKT,Workspace Table 3-13,Workspace Table 3-13
+FWRKT01404,2603,2186,4,Flexible Workspaces,WRKT,Workspace Table 3-14,Workspace Table 3-14
+FHALL04804,2575,2186,4,Flexible Workspaces,HALL,Hallway Workspace 4-48,Hallway Workspace 4-48
+FHALL04904,2575,2161,4,Flexible Workspaces,HALL,Hallway Workspace 4-49,Hallway Workspace 4-49
