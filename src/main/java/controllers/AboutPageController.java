@@ -411,7 +411,7 @@ public class AboutPageController {
         hbox3.setPrefHeight(300);
         hbox3.setPrefWidth(1200);
         vbox1.getChildren().add(hbox3);
-        hbox3.setSpacing(5);
+       // hbox3.setSpacing(3);
 
         hbox3.setAlignment(Pos.CENTER);
 
@@ -616,7 +616,7 @@ public class AboutPageController {
         lbl19.setTextFill(Color.WHITE);
         lbl19.setStyle("-fx-background-radius: ;");
         lbl19.setAlignment(Pos.CENTER);
-
+//
         Label lbl20 = new Label();
         lbl20.setFont(new Font(18));
         lbl20.setTextFill(Color.WHITE);
@@ -627,7 +627,7 @@ public class AboutPageController {
         AnchorPane.setTopAnchor(lbl19, 0.0);
         AnchorPane.setRightAnchor(lbl19, 0.0);
         AnchorPane.setLeftAnchor(lbl19, 0.0);
-
+//
         AnchorPane.setBottomAnchor(anchorLbl10, 0.0);
         AnchorPane.setRightAnchor(anchorLbl10, 0.0);
         AnchorPane.setLeftAnchor(anchorLbl10, 0.0);
@@ -636,9 +636,9 @@ public class AboutPageController {
         AnchorPane.setRightAnchor(lbl20,0.0);
         AnchorPane.setLeftAnchor(lbl20, 0.0);
 
-        anchorLbl10.getChildren().add(lbl17);
-        anchorLbl10.getChildren().add(lbl18);
-
+        anchorLbl10.getChildren().add(lbl19);
+        anchorLbl10.getChildren().add(lbl20);
+//
         anchorLbl10.setVisible(false);
 
         anchorPane10.setOnMouseEntered(event -> {
@@ -648,7 +648,7 @@ public class AboutPageController {
         anchorPane10.setOnMouseExited(event -> {
             anchorLbl10.setVisible(false);
         });
-
+//
         anchorPane10.getChildren().add(anchorLbl10);
         hbox3.getChildren().add(anchorPane10);
 
