@@ -13,6 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import sun.plugin.javascript.navig.Anchor;
 
 public class AboutPageController {
@@ -24,9 +25,9 @@ public class AboutPageController {
         scrollPane.setPadding(new Insets(50, 50, 50, 50));
 
         VBox vbox1 = new VBox();
-        vbox1.setPadding(new Insets(50, 50, 50, 50));
+        vbox1.setPadding(new Insets(25, 25, 25, 25));
         vbox1.setSpacing(5);
-        vbox1.setPrefHeight(760);
+        vbox1.setPrefHeight(1000);
         vbox1.setPrefWidth(1200);
         scrollPane.setContent(vbox1);
 
@@ -61,7 +62,7 @@ public class AboutPageController {
         lbl2.setText("Lead Software Engineer");
         lbl2.setAlignment(Pos.CENTER);
 
-         AnchorPane.setTopAnchor(lbl1, 0.0);
+         AnchorPane.setTopAnchor(lbl1, 5.0);
          AnchorPane.setRightAnchor(lbl1, 0.0);
          AnchorPane.setLeftAnchor(lbl1, 0.0);
 
@@ -89,7 +90,7 @@ public class AboutPageController {
         anchorPane1.getChildren().add(anchorLbl1);
 
         HBox hbox1 = new HBox();
-        hbox1.setPrefHeight(300);
+        hbox1.setPrefHeight(250);
         hbox1.setPrefWidth(1200);
 
         hbox1.getChildren().add(anchorPane1);
@@ -109,8 +110,8 @@ public class AboutPageController {
 
        AnchorPane anchorLbl2 = new AnchorPane();
        anchorLbl2.setPrefWidth(200);
-        anchorLbl2.setPrefHeight(60);
-        anchorLbl2.setStyle("-fx-background-color: #022D5A;  -fx-background-radius: 25;");
+        anchorLbl2.setPrefHeight(75);
+        anchorLbl2.setStyle("-fx-background-color: #022D5A;  -fx-background-radius: 35;");
 
         Label lbl3 = new Label();
         lbl3.setText("Matt Iandoli");
@@ -124,9 +125,11 @@ public class AboutPageController {
         lbl4.setTextFill(Color.WHITE);
         lbl4.setStyle("-fx-background-color: #0083ff; -fx-background-radius: 25;");
         lbl4.setText("Assistant Lead Software Engineer");
-        lbl4.setAlignment(Pos.CENTER);
 
-        AnchorPane.setTopAnchor(lbl3, 0.0);
+        lbl4.setTextAlignment(TextAlignment.CENTER);
+        lbl4.setWrapText(true);
+
+        AnchorPane.setTopAnchor(lbl3, 2.5);
         AnchorPane.setRightAnchor(lbl3, 0.0);
         AnchorPane.setLeftAnchor(lbl3, 0.0);
 
@@ -136,12 +139,11 @@ public class AboutPageController {
 
          AnchorPane.setBottomAnchor(lbl4, 0.0);
          AnchorPane.setRightAnchor(lbl4,0.0);
-        AnchorPane.setLeftAnchor(lbl4, 0.0);
+         AnchorPane.setLeftAnchor(lbl4, 0.0);
 
         anchorLbl2.getChildren().add(lbl3);
-         anchorLbl2.getChildren().add(lbl4);
-
-         anchorLbl2.setVisible(false);
+        anchorLbl2.getChildren().add(lbl4);
+        anchorLbl2.setVisible(false);
 
         anchorPane2.setOnMouseEntered(event -> {
            anchorLbl2.setVisible(true);
@@ -152,11 +154,9 @@ public class AboutPageController {
        });
 
         anchorPane2.getChildren().add(anchorLbl2);
-
-      hbox1.getChildren().add(anchorPane2);
-      //hbox1.setSpacing(5);
-      hbox1.setAlignment(Pos.CENTER);
-
+        hbox1.getChildren().add(anchorPane2);
+        //hbox1.setSpacing(5);
+         hbox1.setAlignment(Pos.CENTER);
 
         AnchorPane anchorPane3 = new AnchorPane();
         anchorPane3.setPrefWidth(250);
@@ -173,7 +173,7 @@ public class AboutPageController {
 
         AnchorPane anchorLbl3 = new AnchorPane();
         anchorLbl3.setPrefWidth(200);
-        anchorLbl3.setPrefHeight(60);
+        anchorLbl3.setPrefHeight(75);
         anchorLbl3.setStyle("-fx-background-color: #022D5A;  -fx-background-radius: 25;");
 
         Label lbl5 = new Label();
@@ -188,9 +188,11 @@ public class AboutPageController {
         lbl6.setTextFill(Color.WHITE);
         lbl6.setStyle("-fx-background-color: #0083ff; -fx-background-radius: 25;");
         lbl6.setText("Assistant Lead Software Engineer");
-        lbl6.setAlignment(Pos.CENTER);
+        //lbl6.setAlignment(Pos.CENTER);
+        lbl6.setTextAlignment(TextAlignment.CENTER);
+        lbl6.setWrapText(true);
 
-        AnchorPane.setTopAnchor(lbl5, 0.0);
+        AnchorPane.setTopAnchor(lbl5, 2.5);
         AnchorPane.setRightAnchor(lbl5, 0.0);
         AnchorPane.setLeftAnchor(lbl5, 0.0);
 
@@ -220,7 +222,7 @@ public class AboutPageController {
         hbox1.getChildren().add(anchorPane3);
 
         HBox hbox2 = new HBox();
-        hbox2.setPrefHeight(300);
+        hbox2.setPrefHeight(250);
         hbox2.setPrefWidth(1200);
         vbox1.getChildren().add(hbox2);
 
@@ -258,7 +260,7 @@ public class AboutPageController {
         lbl8.setText("Full Time Software Engineer");
         lbl8.setAlignment(Pos.CENTER);
 
-        AnchorPane.setTopAnchor(lbl7, 0.0);
+        AnchorPane.setTopAnchor(lbl7, 5.0);
         AnchorPane.setRightAnchor(lbl7, 0.0);
         AnchorPane.setLeftAnchor(lbl7, 0.0);
 
@@ -319,7 +321,7 @@ public class AboutPageController {
         lbl10.setText("Product Owner");
         lbl10.setAlignment(Pos.CENTER);
 
-        AnchorPane.setTopAnchor(lbl9, 0.0);
+        AnchorPane.setTopAnchor(lbl9, 5.0);
         AnchorPane.setRightAnchor(lbl9, 0.0);
         AnchorPane.setLeftAnchor(lbl9, 0.0);
 
@@ -379,7 +381,7 @@ public class AboutPageController {
         lbl12.setText("Full-Time Software Engineer");
         lbl12.setAlignment(Pos.CENTER);
 
-        AnchorPane.setTopAnchor(lbl11, 0.0);
+        AnchorPane.setTopAnchor(lbl11, 5.0);
         AnchorPane.setRightAnchor(lbl11, 0.0);
         AnchorPane.setLeftAnchor(lbl11, 0.0);
 
@@ -408,10 +410,10 @@ public class AboutPageController {
         hbox2.getChildren().add(anchorPane6);
 
         HBox hbox3 = new HBox();
-        hbox3.setPrefHeight(300);
+        hbox3.setPrefHeight(250);
         hbox3.setPrefWidth(1200);
         vbox1.getChildren().add(hbox3);
-       // hbox3.setSpacing(3);
+       //hbox3.setSpacing(3);
 
         hbox3.setAlignment(Pos.CENTER);
 
@@ -446,7 +448,7 @@ public class AboutPageController {
         lbl14.setText("Scrum Master");
         lbl14.setAlignment(Pos.CENTER);
 
-        AnchorPane.setTopAnchor(lbl13, 0.0);
+        AnchorPane.setTopAnchor(lbl13, 5.0);
         AnchorPane.setRightAnchor(lbl13, 0.0);
         AnchorPane.setLeftAnchor(lbl13, 0.0);
 
@@ -505,7 +507,7 @@ public class AboutPageController {
         lbl16.setText("Project Manager");
         lbl16.setAlignment(Pos.CENTER);
 
-        AnchorPane.setTopAnchor(lbl15, 0.0);
+        AnchorPane.setTopAnchor(lbl15, 5.0);
         AnchorPane.setRightAnchor(lbl15, 0.0);
         AnchorPane.setLeftAnchor(lbl15, 0.0);
 
@@ -565,7 +567,7 @@ public class AboutPageController {
         lbl18.setText("Test Engineer");
         lbl18.setAlignment(Pos.CENTER);
 
-        AnchorPane.setTopAnchor(lbl17, 0.0);
+        AnchorPane.setTopAnchor(lbl17, 5.0);
         AnchorPane.setRightAnchor(lbl17, 0.0);
         AnchorPane.setLeftAnchor(lbl17, 0.0);
 
@@ -624,7 +626,7 @@ public class AboutPageController {
         lbl20.setText("Documentation Analyst");
         lbl20.setAlignment(Pos.CENTER);
 
-        AnchorPane.setTopAnchor(lbl19, 0.0);
+        AnchorPane.setTopAnchor(lbl19, 5.0);
         AnchorPane.setRightAnchor(lbl19, 0.0);
         AnchorPane.setLeftAnchor(lbl19, 0.0);
 //
