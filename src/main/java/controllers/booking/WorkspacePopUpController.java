@@ -2,7 +2,7 @@ package controllers.booking;
 
 import controllers.ScreenController;
 import controllers.node.PopUpController;
-import database.BookWorkspaceTable;
+import database.BookLocationTable;
 import helpers.DatabaseHelpers;
 import helpers.UserHelpers;
 import javafx.fxml.Initializable;
@@ -11,7 +11,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import models.map.Location;
-import models.map.Workspace;
 import models.room.Book;
 
 import java.net.URL;
@@ -23,17 +22,12 @@ import java.util.ResourceBundle;
 public class WorkspacePopUpController extends PopUpController implements Initializable {
 
     Circle circle;
-    Workspace ws;
-    Workspace booking;
-    Workspace enter;
+    Location ws;
     int a = 0;
     LocalDate StartDate;
     LocalTime StartTime;
     LocalDate EndDate;
     LocalTime EndTime;
-    private final static double xShift = 20;
-    private final static double yShift = -262;
-    private final static double scale = 0.44;
 
     public Label lblNodeID;
     public Label lblLocation;
@@ -53,15 +47,15 @@ public class WorkspacePopUpController extends PopUpController implements Initial
 //        ZonedDateTime calEndTime = DatabaseHelpers.getCalDateTime(EndDate, EndTime);
 //        book.setCalStartDate(calStartTime);
 //        book.setCalEndDate(calEndTime);
-        BookWorkspaceTable.createBooking(book);
+        BookLocationTable.createBooking(book);
         circle.setFill(Color.ORANGE);
         ScreenController.deactivate();
     }
 
     public void removeBooking(MouseEvent event) {
         event.consume();
-        Book remove = BookWorkspaceTable.getBookByRoomID(ws.getNodeID());
-        BookWorkspaceTable.deleteWorkspaceBook(remove);
+        Book remove = BookLocationTable.getBookByRoomID(ws.getNodeID());
+        BookLocationTable.deleteLocationeBook(remove);
         circle.setFill(Color.YELLOW);
         ScreenController.deactivate();
     }
@@ -74,7 +68,7 @@ public class WorkspacePopUpController extends PopUpController implements Initial
     public void setLoc(Location loc) {
     }
 
-    public void setWorkspace(Workspace ws) {
+    public void setWorkspace(Location ws) {
         this.ws = ws;
         lblNodeID.setText(ws.getNodeID());
         lblLocation.setText("(" + ws.getxCord() + ", " + ws.getyCord() + ")");
@@ -100,14 +94,6 @@ public class WorkspacePopUpController extends PopUpController implements Initial
 
     public void setEndTime(LocalTime EndTime) {
         this.EndTime = EndTime;
-    }
-
-    public static double scaleX(double x) {
-        return (x - xShift) * scale;
-    }
-
-    public static double scaleY(double y) {
-        return (y - yShift) * scale;
     }
 
     @Override
