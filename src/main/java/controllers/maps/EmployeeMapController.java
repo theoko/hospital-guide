@@ -3,6 +3,7 @@ package controllers.maps;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXNodesList;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXToggleButton;
 import controllers.ScreenController;
 import controllers.search.SearchEngineController;
 import google.FirebaseAPI;
@@ -15,6 +16,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.OverrunStyle;
+import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -56,6 +58,8 @@ public class EmployeeMapController extends MapController {
     public JFXTextField textNum;
     public ImageView imgText;
     public JFXButton btnText;
+    public JFXToggleButton tglSpace;
+    public JFXToggleButton tglZone;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -104,8 +108,16 @@ public class EmployeeMapController extends MapController {
         workspace1.setStroke(Color.BLACK);
         workspace1.setFill(Color.GREEN);
         workspace1.setOpacity(0.5);
-        if(newFloor.equals("4"))
+
+        if(newFloor.equals("4")) {
             this.panMap.getChildren().add(workspace1);
+//            workspace1.setOnMouseEntered(event -> {
+//                workspace1.
+//            });
+//            workspace1.setOnMouseExited(event -> {
+//                workspace1.resize( 120, 50);
+//            });
+        }
     }
 
     @Override
@@ -181,6 +193,70 @@ public class EmployeeMapController extends MapController {
         btnRoom.setPrefHeight(60);
         btnRoom.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnRoom.setTextOverrun(OverrunStyle.CLIP);
+
+        ImageView imgBookG = new ImageView();
+        imgBookG.setImage(new Image("images/Icons/bookG.png"));
+        imgBookG.setFitHeight(30);
+        imgBookG.setFitWidth(30);
+        imgBookG.setPreserveRatio(true);
+        imgBookG.setPickOnBounds(true);
+
+        JFXButton btnBookG = new JFXButton("", imgBookG);
+        btnBookG.setAlignment(Pos.CENTER);
+        btnBookG.setPrefWidth(60);
+        btnBookG.setPrefHeight(60);
+        btnBookG.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnBookG.setTextOverrun(OverrunStyle.CLIP);
+
+        UIHelpers.btnRaise(btnBookG);
+
+        ImageView imgBookT = new ImageView();
+        imgBookT.setImage(new Image("images/Icons/bookT.png"));
+        imgBookT.setFitHeight(30);
+        imgBookT.setFitWidth(30);
+        imgBookT.setPreserveRatio(true);
+        imgBookT.setPickOnBounds(true);
+
+        JFXButton btnBookT = new JFXButton("", imgBookT);
+        btnBookT.setAlignment(Pos.CENTER);
+        btnBookT.setPrefWidth(60);
+        btnBookT.setPrefHeight(60);
+        btnBookT.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnBookT.setTextOverrun(OverrunStyle.CLIP);
+
+        UIHelpers.btnRaise(btnBookT);
+
+        ImageView imgSpace = new ImageView();
+        imgSpace.setImage(new Image("images/Icons/space.png"));
+        imgSpace.setFitHeight(30);
+        imgSpace.setFitWidth(30);
+        imgSpace.setPreserveRatio(true);
+        imgSpace.setPickOnBounds(true);
+
+        JFXButton btnSpace = new JFXButton("", imgSpace);
+        btnSpace.setAlignment(Pos.CENTER);
+        btnSpace.setPrefWidth(60);
+        btnSpace.setPrefHeight(60);
+        btnSpace.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnSpace.setTextOverrun(OverrunStyle.CLIP);
+
+        UIHelpers.btnRaise(btnSpace);
+
+        ImageView imgZone = new ImageView();
+        imgZone.setImage(new Image("images/Icons/zone.png"));
+        imgZone.setFitHeight(30);
+        imgZone.setFitWidth(30);
+        imgZone.setPreserveRatio(true);
+        imgZone.setPickOnBounds(true);
+
+        JFXButton btnZone = new JFXButton("", imgZone);
+        btnZone.setAlignment(Pos.CENTER);
+        btnZone.setPrefWidth(60);
+        btnZone.setPrefHeight(60);
+        btnZone.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnZone.setTextOverrun(OverrunStyle.CLIP);
+
+        UIHelpers.btnRaise(btnZone);
 
         ImageView imgCal = new ImageView();
         imgCal.setImage(new Image("images/Icons/cald.png"));
@@ -577,6 +653,30 @@ public class EmployeeMapController extends MapController {
         boxRoom.setPrefSize(1200,760);
         boxRoom.setSpacing(5);
 
+
+        HBox boxSpace = new HBox();
+        boxSpace.getChildren().add(btnSpace);
+        boxSpace.getChildren().add(tglSpace);
+        boxSpace.setPrefHeight(60);
+        boxSpace.setPrefWidth(150);
+        boxSpace.setAlignment(Pos.CENTER);
+        boxSpace.setSpacing(-5);
+
+        HBox boxZone = new HBox();
+        boxZone.getChildren().add(btnZone);
+        boxZone.getChildren().add(tglZone);
+        boxZone.setPrefHeight(60);
+        boxZone.setPrefWidth(150);
+        boxZone.setAlignment(Pos.CENTER);
+        boxZone.setSpacing(-5);
+
+        VBox boxWork = new VBox();
+        boxWork.getChildren().add(boxZone);
+        boxWork.getChildren().add(boxSpace);
+        boxWork.setAlignment(Pos.CENTER_LEFT);
+        boxWork.setPrefSize(150,150);
+        boxWork.setSpacing(5);
+
         Label lblCal = new Label("My Bookings Calendar");
         lblCal.setPrefHeight(50);
         lblCal.setPrefWidth(1200);
@@ -791,6 +891,8 @@ public class EmployeeMapController extends MapController {
         JFXNodesList nodesListOut = new JFXNodesList();
         JFXNodesList nodesListGift = new JFXNodesList();
         JFXNodesList nodesListInfo = new JFXNodesList();
+        JFXNodesList nodesListBook = new JFXNodesList();
+        JFXNodesList nodesListWork = new JFXNodesList();
 
         nodeListSearch.addAnimatedNode(btnSearch);
         nodeListSearch.addAnimatedNode(searchNear);
@@ -807,10 +909,15 @@ public class EmployeeMapController extends MapController {
         nodeListRoute.setRotate(90);
         nodeListRoute.setSpacing(-135);
 
-        nodeListRoom.addAnimatedNode(btnRoom);
-        nodeListRoom.addAnimatedNode(boxRoom);
-        nodeListRoom.setRotate(95);
-        nodeListRoom.setSpacing(240);
+        nodesListBook.addAnimatedNode(btnBookT);
+        nodesListBook.addAnimatedNode(boxRoom);
+        nodesListBook.setRotate(95);
+        nodesListBook.setSpacing(240);
+
+        nodesListWork.addAnimatedNode(btnBookG);
+        nodesListWork.addAnimatedNode(boxWork);
+        nodesListWork.setRotate(90);
+        nodesListWork.setSpacing(-10);
 
         nodeListCal.addAnimatedNode(btnCal);
         nodeListCal.addAnimatedNode(boxCal);
@@ -866,6 +973,18 @@ public class EmployeeMapController extends MapController {
         nodesListInfo.addAnimatedNode(boxInfo);
         nodesListInfo.setRotate(115);
         nodesListInfo.setSpacing(330);
+
+        VBox boxBook = new VBox();
+        boxBook.getChildren().add(nodesListWork);
+        boxBook.getChildren().add(nodesListBook);
+        boxBook.setAlignment(Pos.CENTER_LEFT);
+        boxBook.setPrefSize(60,150);
+        boxBook.setSpacing(5);
+
+        nodeListRoom.addAnimatedNode(btnRoom);
+        nodeListRoom.addAnimatedNode(boxBook);
+        nodeListRoom.setRotate(90);
+        nodeListRoom.setSpacing(-30);
 
         VBox boxReq = new VBox();
         boxReq.getChildren().add(nodesListComp);

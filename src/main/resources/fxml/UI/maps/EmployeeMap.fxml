@@ -10,6 +10,7 @@
 <?import javafx.scene.text.Font?>
 
 <?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXToggleButton?>
 <AnchorPane fx:id="panRoot" stylesheets="@../../../css/colorScheme.css" xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml" fx:controller="controllers.maps.EmployeeMapController">
     <JFXTabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0"
@@ -90,6 +91,8 @@
                 <AnchorPane AnchorPane.topAnchor="15" AnchorPane.rightAnchor="15">
                     <fx:include source="../weather/Weather.fxml"/>
                 </AnchorPane>
+                <JFXToggleButton fx:id="tglZone" prefWidth="50" prefHeight="50" />
+                <JFXToggleButton fx:id="tglSpace" prefWidth="50" prefHeight="50" />
                 <JFXTextField fx:id="search" prefWidth="450" prefHeight="34" promptText=" Search"  alignment="CENTER" style=" -fx-font-size: 18px; -fx-font-weight: bold; -fx-font-family: fantasy; -fx-text-fill: #022D5A; -fx-background-color: white" />
                 <JFXTextField fx:id="textNum" prefWidth="450" prefHeight="34" promptText=" Phone Number"  alignment="CENTER" style=" -fx-font-size: 18px; -fx-font-weight: bold; -fx-font-family: fantasy; -fx-text-fill: #022D5A; -fx-background-color: white" />
                 <JFXButton fx:id="btnText" contentDisplay="CENTER" onMouseClicked="#btn_SendDirections" prefHeight="60.0" prefWidth="60.0" textOverrun="CLIP">
