@@ -282,7 +282,7 @@ public class CustodianMapController extends MapController {
 
         VBox searchNear = new VBox();
         searchNear.setPrefWidth(370);
-        searchNear.setPrefHeight(105);
+        searchNear.setPrefHeight(150);
         searchNear.setSpacing(5);
         searchNear.getChildren().add(searchBox);
         searchNear.getChildren().add(searchIcons);
@@ -334,7 +334,7 @@ public class CustodianMapController extends MapController {
         nodeListSearch.addAnimatedNode(btnSearch);
         nodeListSearch.addAnimatedNode(searchNear);
         nodeListSearch.setRotate(90);
-        nodeListSearch.setSpacing(150);
+        nodeListSearch.setSpacing(105);
 
         nodeListUser.addAnimatedNode(btnUser);
         nodeListUser.addAnimatedNode(userBox);
