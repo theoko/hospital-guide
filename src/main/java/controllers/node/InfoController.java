@@ -6,6 +6,7 @@ import controllers.maps.MapController;
 import google.FirebaseAPI;
 import google.SnapshotGenerator;
 import helpers.DatabaseHelpers;
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -54,6 +55,10 @@ public abstract class InfoController extends PopUpController {
 
     public final void btnDirections_OnClick(MouseEvent event) {
         event.consume();
+
+        Platform.runLater(() -> {
+            mc.associateUserWithDirections(kiosk, loc);
+        });
         PathFinder.printPath(mc, kiosk, loc);
 
         ScreenController.deactivate();

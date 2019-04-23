@@ -3,6 +3,7 @@ package map;
 import com.jfoenix.controls.JFXButton;
 import controllers.maps.MapController;
 import controllers.settings.SettingsController;
+import google.FirebaseAPI;
 import helpers.Constants;
 import helpers.MapHelpers;
 import javafx.animation.Interpolator;
@@ -261,6 +262,7 @@ public abstract class PathFinder {
         Stack<Location> path = context.findPath(start, end);
         MapController.currentRoute = (Stack<Location>) path.clone();
         String directions = context.txtDirections((Stack<Location>) path.clone());
+        FirebaseAPI.addDirections(start, end, directions);
         MapController.currentDirections = directions;
         addDirections(mc.txtPane, directions);
         HashMap<String, Location> lstLocations = mc.getMap().getAllLocations();

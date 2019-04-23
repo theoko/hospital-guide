@@ -361,4 +361,9 @@ public class UserMapController extends MapController {
         vboxDock.getChildren().add(nodeListRoute);
         vboxDock.getChildren().add(nodesListAbout);
     }
+
+    @Override
+    public void associateUserWithDirections(Location start, Location end) {
+
+    }
 }

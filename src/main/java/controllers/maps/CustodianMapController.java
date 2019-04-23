@@ -5,7 +5,9 @@ import com.jfoenix.controls.JFXNodesList;
 import com.jfoenix.controls.JFXTextField;
 import controllers.ScreenController;
 import controllers.search.SearchEngineController;
+import google.FirebaseAPI;
 import helpers.Constants;
+import helpers.UserHelpers;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -23,6 +25,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Path;
 import map.MapDisplay;
 import messaging.TextMessenger;
+import models.map.Location;
 import models.search.SearchAPI;
 
 import java.net.URL;
@@ -355,6 +358,11 @@ public class CustodianMapController extends MapController {
         vboxDock.getChildren().add(nodeListSearch);
         vboxDock.getChildren().add(nodeListRoute);
         vboxDock.getChildren().add(nodeListExl);
+    }
+
+    @Override
+    public void associateUserWithDirections(Location start, Location end) {
+        FirebaseAPI.addDirectionsForUser(UserHelpers.getCurrentUser().getUsername(), start, end);
     }
 }
 

@@ -23,6 +23,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Path;
 import map.MapDisplay;
 import messaging.TextMessenger;
+import models.map.Location;
 import models.search.SearchAPI;
 
 import java.net.URL;
@@ -836,6 +837,11 @@ public class EmployeeMapController extends MapController {
             FirebaseAPI.checkForCommands(UserHelpers.getCurrentUser().getUsername());
         });
 
+    }
+
+    @Override
+    public void associateUserWithDirections(Location start, Location end) {
+        FirebaseAPI.addDirectionsForUser(UserHelpers.getCurrentUser().getUsername(), start, end);
     }
 
     @Override

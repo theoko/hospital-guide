@@ -2,28 +2,22 @@ package controllers.maps;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTabPane;
-import google.FirebaseAPI;
-import helpers.UserHelpers;
 import images.ImageFactory;
-import javafx.animation.Interpolator;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
 import map.MapDisplay;
-import map.PathFinder;
 import models.map.Location;
 import models.map.Map;
 import net.kurobako.gesturefx.GesturePane;
@@ -121,6 +115,8 @@ public abstract class MapController implements Initializable {
     }
 
     protected abstract void addDoc();
+
+    abstract public void associateUserWithDirections(Location start, Location end);
 
     public abstract void btnReturn_Click(MouseEvent mouseEvent) throws Exception;
 

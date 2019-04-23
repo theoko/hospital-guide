@@ -5,7 +5,9 @@ import com.jfoenix.controls.JFXNodesList;
 import com.jfoenix.controls.JFXTextField;
 import controllers.ScreenController;
 import controllers.search.SearchEngineController;
+import google.FirebaseAPI;
 import helpers.Constants;
+import helpers.UserHelpers;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -547,6 +549,11 @@ public class AdminMapController extends MapController {
         vboxDock.getChildren().add(nodesListAlgo);
         vboxDock.getChildren().add(nodesListClean);
         vboxDock.getChildren().add(nodesListTab);
+    }
+
+    @Override
+    public void associateUserWithDirections(Location start, Location end) {
+        FirebaseAPI.addDirectionsForUser(UserHelpers.getCurrentUser().getUsername(), start, end);
     }
 }
 
