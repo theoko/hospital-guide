@@ -4,12 +4,18 @@ import controllers.maps.AdminMapController;
 import controllers.maps.MapController;
 import controllers.node.*;
 import controllers.user.PopUpControllerUser;
+import controllers.welcome.LogoutController;
+import helpers.Caretaker;
 import helpers.Constants;
+import helpers.Originator;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
@@ -26,12 +32,19 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashMap;
+import java.util.ResourceBundle;
 
 public class ScreenController {
 
     private static HashMap<String, String> screenMap = new HashMap<>();
     private static Stage stage;
     public static Scene sceneThing = null;
+    public static long mouseCnt = 0;
+    private static long theCnt = 0;
+    private static long secCnt = 0;
+    static Originator org = new Originator();
+    static Caretaker car = new Caretaker();
+
 
     public ScreenController(Stage stage) {
         ScreenController.stage = stage;
@@ -41,6 +54,48 @@ public class ScreenController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        Thread t = new Thread(() -> {
+            System.out.println("here");
+            while(true) {
+                LogoutController lc = new LogoutController() {
+                    @Override
+                    public void initialize(URL location, ResourceBundle resources) {
+                    }
+                };
+                //int timeCnt = lc.getTime();
+                car.add(org.saveStateToMemento());
+                theCnt = mouseCnt;
+                if (secCnt == 10) {
+                    Platform.runLater(() -> {
+                        try {
+                            ScreenController.activate(Constants.Routes.WELCOME);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    });
+                    mouseCnt = 0L;
+                    secCnt = 0;
+                }
+                try {
+                    Thread.sleep(1000L);
+                    System.out.println("SavedCount");
+                    System.out.println(theCnt);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if (car.get(car.mementoList.size() - 1) == theCnt) {
+                    secCnt += 1;
+                    System.out.println("secCnt");
+                    System.out.println(secCnt);
+                }
+                else {
+                    secCnt = 0;
+                }
+            }
+        });
+        t.setDaemon(true);
+        t.start();
+
 
     }
 
@@ -112,6 +167,7 @@ public class ScreenController {
         stage.close();
     }
 
+
     public static void activate(Constants.Routes route) throws Exception {
         stage = new Stage();
         URL url = routeToURL(route);
@@ -130,6 +186,22 @@ public class ScreenController {
         } else {
             sceneThing.setRoot(root);
         }
+    }
+
+    public static EventHandler<MouseEvent> mouseHandler = new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent mouseEvent) {
+            mouseCnt += 1;
+            secCnt = 0;
+            System.out.println(mouseCnt);
+        }
+    };
+
+    public static void autoLog(Scene scene) throws Exception {
+        scene.setOnMouseClicked(mouseHandler);
+        scene.setOnMouseMoved(mouseHandler);
+        scene.setOnMousePressed(mouseHandler);
+        scene.setOnMouseReleased(mouseHandler);
     }
 
     public static void infoPopUp(Constants.Routes route, Location loc, MapController mc, Map map) throws IOException {
