@@ -1279,6 +1279,9 @@ public class EmployeeMapController extends MapController {
 
     }
 
+    /**
+     * Runs Food request API
+     */
     public static void runFoodAPI() {
         String startLocID = APIHelper.getStartLocID();
         String endLocID = APIHelper.getEndLocID();
