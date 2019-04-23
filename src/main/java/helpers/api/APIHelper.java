@@ -2,7 +2,10 @@
  * Helper for interfacing with APIs.
  */
 
-package helpers;
+package helpers.api;
+
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 
 public class APIHelper {
 

@@ -5,9 +5,8 @@ import com.jfoenix.controls.JFXNodesList;
 import com.jfoenix.controls.JFXTextField;
 import controllers.ScreenController;
 import controllers.search.SearchEngineController;
-import helpers.APIHelper;
+import helpers.api.APIHelper;
 import helpers.Constants;
-import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -318,11 +317,15 @@ public class EmployeeMapController extends MapController {
         btnFood.setTextOverrun(OverrunStyle.CLIP);
         btnFood.setOnMouseClicked( event -> {
             try {
-                ScreenController.activate(Constants.Routes.TWO_NODE_SEARCH); // TODO popup instead?
+                // TODO implement
+                /*
+                ScreenController.popUp(Constants.Routes.TWO_NODE_SEARCH);
                 String startLocID = APIHelper.getStartLocID();
                 String endLocID = APIHelper.getEndLocID();
+                */
                 FoodRequestTeamI.API api = new FoodRequestTeamI.API();
-                api.run(10, 10, 800, 600, "css/jfoenix-components.css", endLocID, startLocID);
+                // api.run(10, 10, 800, 600, "/css/jfoenix-components.css", endLocID, startLocID);
+                api.run(10, 10, 800, 600, "/css/jfoenix-components.css", "start", "end");
             } catch (Exception exception) {
                 System.out.println("Failed to run Team I food request API");
                 exception.printStackTrace();
