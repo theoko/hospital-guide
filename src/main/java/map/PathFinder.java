@@ -12,9 +12,7 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Label;
-import javafx.scene.control.OverrunStyle;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -25,6 +23,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.*;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
+import models.map.DirectionStep;
 import models.map.Location;
 import models.map.Map;
 import models.map.SubPath;
@@ -50,6 +49,7 @@ public abstract class PathFinder {
 
     /**
      * Finds a path from the start map to the end map using a*
+     *
      * @return A stack of locations that contains the path
      */
     public Stack<Location> findPath(Location start, Location end) {
@@ -57,7 +57,7 @@ public abstract class PathFinder {
         setUp(start);
         HashMap<String, SubPath> used = new HashMap<>();
 
-        while(!isEmpty()) {
+        while (!isEmpty()) {
             SubPath sNext = getNext();
             Location lNext = sNext.getLocation();
             System.out.println("sNext: " + sNext);
@@ -174,14 +174,20 @@ public abstract class PathFinder {
     }
 
     protected abstract void setUp(Location start);
+
     protected abstract boolean isEmpty();
+
     protected abstract SubPath getNext();
+
     protected abstract void addNext(SubPath next);
+
     protected abstract double getDist(SubPath loc1, SubPath loc2);
+
     protected abstract double getHeuristic(Location loc1, Location loc2);
 
     /**
      * Generates a path from the given parent map and end map
+     *
      * @param end The end map
      * @return A stack of locations containing the path
      */
@@ -199,7 +205,17 @@ public abstract class PathFinder {
         return path;
     }
 
-    public static final String txtDirections(Stack<Location> path) {
+    public static final String txtDirections(Stack<Location>path){
+        Stack<DirectionStep> directionStepStack=makeDirectionStack(path);
+
+        StringBuilder result=new StringBuilder();
+        while (!directionStepStack.isEmpty()) {
+            result.append(directionStepStack.pop().getDiections()+"\n");
+        }
+        return result.toString();
+    }
+
+    public static final Stack<DirectionStep> makeDirectionStack(Stack<Location> path) {
         String directions = "";
         Location start = null;
 
@@ -209,8 +225,17 @@ public abstract class PathFinder {
 
         double distance = 0.0;
         double totDist = 0.0;
+
+
+
+        Stack<DirectionStep> directionStepStack=new Stack<>();
+
+
         while (!path.isEmpty()) {
             loc3 = path.pop();
+
+            String currentFloor=loc3.getFloor();
+
             if (loc2 == null) {
                 start = loc3;
             }
@@ -263,6 +288,16 @@ public abstract class PathFinder {
             // Rotate
             loc1 = loc2;
             loc2 = loc3;
+
+
+            //extract data from string and put in setp stack
+            DirectionStep step = new DirectionStep();
+            step.setFloor(currentFloor);
+            String currentDirections = directions.substring(0, directions.indexOf("\n"));
+            step.setDiections(currentDirections);
+            directions.replaceFirst(currentDirections,"");//delete it from the string
+
+            directionStepStack.add(step);
         }
         Location end = loc3;
         int numFloors;
@@ -297,7 +332,20 @@ public abstract class PathFinder {
                 directions += " second";
             }
         }
-        return directions;
+
+        //add extras into new data format
+        String[] arrDirections = directions.split("\n");
+        for(String extras:arrDirections){
+            DirectionStep step = new DirectionStep();
+            step.setFloor("");
+            step.setDiections(extras);
+            directionStepStack.add(step);
+        }
+
+
+
+
+        return directionStepStack;
     }
 
     public static void printPath(MapController mc, Location start, Location end) {
@@ -313,7 +361,7 @@ public abstract class PathFinder {
         String directions = context.txtDirections((Stack<Location>) path.clone());
         FirebaseAPI.addDirections(start, end, directions);
         MapController.currentDirections = directions;
-        addDirections(mc.txtPane, directions);
+        addDirections(mc.txtPane, makeDirectionStack(path));
         HashMap<String, Location> lstLocations = mc.getMap().getAllLocations();
 
         Path line = null;
@@ -406,6 +454,7 @@ public abstract class PathFinder {
 
     /**
      * Equation to calculate the distance between two points
+     *
      * @param x1 X-Location of point 1
      * @param y1 Y-Location of point 1
      * @param x2 X-Location of point 2
@@ -437,69 +486,139 @@ public abstract class PathFinder {
         }
     }
 
-    private static void addDirections(ScrollPane txtPane, String directions) {
+    private static void addDirections(ScrollPane txtPane, Stack<DirectionStep> directionSteps) {
         VBox vbox = new VBox();
+
+
+        //Creating a column
+        TreeTableColumn<HBox, HBox> column = new TreeTableColumn<>("Directions");
+        column.setPrefWidth(150);
+
+
         vbox.setPadding(new Insets(10, 10, 10, 15));
         vbox.setStyle("-fx-background-radius: 20;");
         vbox.setSpacing(5);
         vbox.setAlignment(Pos.CENTER);
-        String[] arrDirections = directions.split("\n");
-        for (String direction : arrDirections) {
-            Label lbl = new Label(direction);
-            lbl.setFont(new Font(18));
-            lbl.setTextFill(Color.WHITE);
-            lbl.setPrefWidth(330);
-            lbl.setPrefHeight(40);
-            lbl.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
-            lbl.setAlignment(Pos.CENTER);
-            lbl.setPadding(new Insets(5, 4, 4, 5));
-            if (lbl.getText().contains("left")) {
-                HBox left = new HBox();
-                left.getChildren().add(lbl);
-                ImageView imgLeft = new ImageView();
-                imgLeft.setImage(new Image("images/Icons/left.png"));
-                imgLeft.setFitHeight(40);
-                imgLeft.setFitWidth(40);
-                imgLeft.setPreserveRatio(true);
-                imgLeft.setPickOnBounds(true);
-                imgLeft.setStyle("-fx-background-color: green;");
-                AnchorPane leftPane = new AnchorPane();
-                leftPane.getChildren().add(imgLeft);
-                leftPane.setPrefWidth(40);
-                leftPane.setPrefHeight(40);
-                leftPane.setStyle("-fx-background-color: green;" + "-fx-background-radius: 20;");
-                left.getChildren().add(leftPane);
-                left.setSpacing(-40);
-                left.setAlignment(Pos.CENTER);
-                vbox.getChildren().add(left);
-            } else if (lbl.getText().contains("right")) {
-                HBox right = new HBox();
-                right.getChildren().add(lbl);
-                ImageView imgRight = new ImageView();
-                imgRight.setImage(new Image("images/Icons/right.png"));
-                imgRight.setFitHeight(40);
-                imgRight.setFitWidth(40);
-                imgRight.setPreserveRatio(true);
-                imgRight.setPickOnBounds(true);
-                imgRight.setStyle("-fx-background-color: green;");
-                AnchorPane rightPane = new AnchorPane();
-                rightPane.getChildren().add(imgRight);
-                rightPane.setPrefWidth(40);
-                rightPane.setPrefHeight(40);
-                rightPane.setStyle("-fx-background-color: green;" + "-fx-background-radius: 20;");
-                right.getChildren().add(rightPane);
-                right.setSpacing(-40);
-                right.setAlignment(Pos.CENTER);
-                vbox.getChildren().add(right);
-            } else if (lbl.getText().contains("Distance") || lbl.getText().contains("Time")) {
-                lbl.setStyle("-fx-font-size: 20px;" + "-fx-font-weight: BOLD;" + "-fx-background-color: green;" + "-fx-background-radius: 30;");
-                lbl.setTextFill(Color.BLACK);
-                vbox.getChildren().add(lbl);
-            } else {
-                vbox.getChildren().add(lbl);
+        //String[] arrDirections = directions.split("\n"); todo
+
+        String lastFloor = "";
+
+
+
+        Label lbl = new Label();
+
+        final TreeTableView<HBox> treeTableView = new TreeTableView<>();
+        final TreeItem<HBox> root = new TreeItem<>();
+
+
+        for (DirectionStep step : directionSteps) {
+            String floor=step.getFloor();
+            String direction = step.getDiections();
+
+            if (!floor.equals(lastFloor)) {// Is a new floor
+
+                treeTableView.setRoot(root);
+                lbl.setText(floor);
+                lbl.setTextFill(Color.WHITE);
+                lbl.setPrefWidth(330);
+                lbl.setPrefHeight(40);
+                lbl.setStyle("-fx-background-color: purple;" + "-fx-background-radius: 30;");
+                lbl.setAlignment(Pos.CENTER);
+                lbl.setPadding(new Insets(5, 4, 4, 5));
+                lastFloor = floor;
+                HBox other = new HBox();
+                other.getChildren().add(lbl);
+                root.setValue(other);
+                root.setExpanded(true);
+
+            }else {// is a new step on the same floor
+                lbl.setText(direction);
+                lbl.setFont(new Font(18));
+                lbl.setTextFill(Color.WHITE);
+                lbl.setPrefWidth(330);
+                lbl.setPrefHeight(40);
+                lbl.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+                lbl.setAlignment(Pos.CENTER);
+                lbl.setPadding(new Insets(5, 4, 4, 5));
+
+
+//            //put floor deciding stuff here
+//            if (lbl.getText().contains("Take the stairs") || lbl.getText().contains("Take the elevator")) {
+//                HBox floor = new HBox();
+//                floor.getChildren().add(lbl);
+//                final TreeItem<HBox> root = new TreeItem<>(floor);
+//
+//                root.setExpanded(true);
+//            }
+
+
+                final TreeItem<HBox> childNode = new TreeItem<>();
+
+
+                if (lbl.getText().contains("left")) {
+                    HBox left = new HBox();
+                    left.getChildren().add(lbl);
+                    ImageView imgLeft = new ImageView();
+                    imgLeft.setImage(new Image("images/Icons/left.png"));
+                    imgLeft.setFitHeight(40);
+                    imgLeft.setFitWidth(40);
+                    imgLeft.setPreserveRatio(true);
+                    imgLeft.setPickOnBounds(true);
+                    imgLeft.setStyle("-fx-background-color: green;");
+                    AnchorPane leftPane = new AnchorPane();
+                    leftPane.getChildren().add(imgLeft);
+                    leftPane.setPrefWidth(40);
+                    leftPane.setPrefHeight(40);
+                    leftPane.setStyle("-fx-background-color: green;" + "-fx-background-radius: 20;");
+                    left.getChildren().add(leftPane);
+                    left.setSpacing(-40);
+                    left.setAlignment(Pos.CENTER);
+                    //vbox.getChildren().add(left); todo fix
+                    childNode.setValue(left);
+
+                } else if (lbl.getText().contains("right")) {
+                    HBox right = new HBox();
+                    right.getChildren().add(lbl);
+                    ImageView imgRight = new ImageView();
+                    imgRight.setImage(new Image("images/Icons/right.png"));
+                    imgRight.setFitHeight(40);
+                    imgRight.setFitWidth(40);
+                    imgRight.setPreserveRatio(true);
+                    imgRight.setPickOnBounds(true);
+                    imgRight.setStyle("-fx-background-color: green;");
+                    AnchorPane rightPane = new AnchorPane();
+                    rightPane.getChildren().add(imgRight);
+                    rightPane.setPrefWidth(40);
+                    rightPane.setPrefHeight(40);
+                    rightPane.setStyle("-fx-background-color: green;" + "-fx-background-radius: 20;");
+                    right.getChildren().add(rightPane);
+                    right.setSpacing(-40);
+                    right.setAlignment(Pos.CENTER);
+                    //vbox.getChildren().add(right); todo fix
+                    childNode.setValue(right);
+
+                } else if (lbl.getText().contains("Distance") || lbl.getText().contains("Time")) {
+                    lbl.setStyle("-fx-font-size: 20px;" + "-fx-font-weight: BOLD;" + "-fx-background-color: green;" + "-fx-background-radius: 30;");
+                    lbl.setTextFill(Color.BLACK);
+                    //vbox.getChildren().add(lbl); todo fix
+                    HBox other = new HBox();
+                    other.getChildren().add(lbl);
+                    childNode.setValue(other);
+
+                } else {
+                    //vbox.getChildren().add(lbl); todo fix
+                    HBox other = new HBox();
+                    other.getChildren().add(lbl);
+                    childNode.setValue(other);
+
+                }
+                root.getChildren().add(childNode);
+
             }
         }
-        txtPane.setContent(vbox);
+
+
+        txtPane.setContent(treeTableView);
         txtPane.setVisible(true);
     }
 
