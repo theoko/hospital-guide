@@ -15,6 +15,7 @@ import helpers.UserHelpers;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.control.OverrunStyle;
 import javafx.scene.effect.Effect;
@@ -163,6 +164,14 @@ public class EmployeeMapController extends MapController {
                     Circle circle = new Circle(xLoc, yLoc, locRadius, nodeFill);
                     circle.setStroke(nodeOutline);
                     circle.setStrokeWidth(locWidth);
+                    circle.setOnMouseEntered(event -> {
+                         circle.setRadius(locRadius + 6);
+                        ScreenController.sceneThing.setCursor(Cursor.HAND);
+                    });
+                    circle.setOnMouseExited(event -> {
+                            circle.setRadius(locRadius);
+                        ScreenController.sceneThing.setCursor(Cursor.DEFAULT);
+                    });
                     circle.setOnMouseClicked(event -> {
                         try {
                             event.consume();
@@ -197,6 +206,15 @@ public class EmployeeMapController extends MapController {
                 for (Circle c : workZoneCircles) {
                     if (c.getCenterX() == xLoc && c.getCenterY() == yLoc) {
                         c.setFill(Color.ORANGE);
+                        System.out.println("does");
+                        c.setOnMouseEntered(event -> {
+                            c.setRadius(locRadius + 6);
+                            ScreenController.sceneThing.setCursor(Cursor.HAND);
+                        });
+                        c.setOnMouseExited(event -> {
+                            c.setRadius(locRadius);
+                            ScreenController.sceneThing.setCursor(Cursor.DEFAULT);
+                        });
                         c.setOnMouseClicked(Event -> {
                             try {
                                 Event.consume();
@@ -228,6 +246,14 @@ public class EmployeeMapController extends MapController {
                     Circle circle = new Circle(xLoc, yLoc, locRadius, nodeFill);
                     circle.setStroke(nodeOutline);
                     circle.setStrokeWidth(locWidth);
+                    circle.setOnMouseEntered(event -> {
+                        circle.setRadius(locRadius + 6);
+                        ScreenController.sceneThing.setCursor(Cursor.HAND);
+                    });
+                    circle.setOnMouseExited(event -> {
+                        circle.setRadius(locRadius);
+                        ScreenController.sceneThing.setCursor(Cursor.DEFAULT);
+                    });
                     circle.setOnMouseClicked(event -> {
                         try {
                             event.consume();
@@ -262,6 +288,14 @@ public class EmployeeMapController extends MapController {
                 for (Circle c : workSpaceCircles) {
                     if (c.getCenterX() == xLoc && c.getCenterY() == yLoc) {
                         c.setFill(Color.ORANGE);
+                        c.setOnMouseEntered(event -> {
+                            c.setRadius(locRadius + 6);
+                            ScreenController.sceneThing.setCursor(Cursor.HAND);
+                        });
+                        c.setOnMouseExited(event -> {
+                            c.setRadius(locRadius);
+                            ScreenController.sceneThing.setCursor(Cursor.DEFAULT);
+                        });
                         c.setOnMouseClicked(Event -> {
                             try {
                                 Event.consume();
