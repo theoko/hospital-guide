@@ -308,18 +308,34 @@ public abstract class MapController implements Initializable {
         Location lstLoc = path.pop();
         String lstFloor = lstLoc.getFloor();
         Circle start = MapDisplay.createCircle(this, lstLoc, MapDisplay.NodeStyle.START, 1, Constants.Routes.USER_INFO, false);
-        start.setOnMouseClicked(Event::consume);
+        start.setOnMouseClicked(event -> {
+            addFloorBtns();
+            clearMap();
+            showFloor(floor);
+        });
         panMap.getChildren().add(start);
         while (!path.isEmpty()) {
             Location curLoc = path.pop();
             String curFloor = curLoc.getFloor();
             if (path.size() == 0) {
                 Circle end = MapDisplay.createCircle(this, curLoc, MapDisplay.NodeStyle.END, 1, Constants.Routes.USER_INFO, false);
+                end.setOnMouseClicked(event -> {
+                    addFloorBtns();
+                    clearMap();
+                    showFloor(floor);
+                });
                 panMap.getChildren().add(end);
             } else if (!curFloor.equals(lstFloor) ) {
                 Circle circle1 = MapDisplay.createCircle(this, lstLoc, MapDisplay.NodeStyle.REGULAR, 1, Constants.Routes.USER_INFO, false);
+                final String prevFloor = lstFloor;
+                circle1.setOnMouseClicked(event -> {
+                    showFloorHelper(curFloor);
+                });
                 panMap.getChildren().add(circle1);
                 Circle circle2 = MapDisplay.createCircle(this, curLoc, MapDisplay.NodeStyle.REGULAR, 1, Constants.Routes.USER_INFO, false);
+                circle2.setOnMouseClicked(event -> {
+                    showFloorHelper(prevFloor);
+                });
                 panMap.getChildren().add(circle2);
             }
             lstFloor = curFloor;
