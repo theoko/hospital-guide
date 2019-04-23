@@ -205,13 +205,16 @@ public abstract class PathFinder {
         return path;
     }
 
-    public static final String txtDirections(Stack<Location>path){
-        Stack<DirectionStep> directionStepStack=makeDirectionStack(path);
+    public static final String txtDirections(Stack<Location> path) {
+        Stack<DirectionStep> directionStepStack = makeDirectionStack(path);
 
-        StringBuilder result=new StringBuilder();
-        while (!directionStepStack.isEmpty()) {
-            result.append(directionStepStack.pop().getDiections()+"\n");
+        StringBuilder result = new StringBuilder();
+        for (DirectionStep step : directionStepStack) {
+            result.append(step.getDiections() + "\n");
         }
+//        while (!directionStepStack.isEmpty()) {
+//            result.append(directionStepStack.pop().getDiections()+"\n");
+//        }
         return result.toString();
     }
 
@@ -227,23 +230,27 @@ public abstract class PathFinder {
         double totDist = 0.0;
 
 
+        Stack<DirectionStep> directionStepStack = new Stack<>();
 
-        Stack<DirectionStep> directionStepStack=new Stack<>();
-
+        String currentDirections = "";
 
         while (!path.isEmpty()) {
             loc3 = path.pop();
 
-            String currentFloor=loc3.getFloor();
+            String currentFloor = loc3.getFloor();
 
             if (loc2 == null) {
                 start = loc3;
             }
             if (loc1 != null && loc2 != null) {
+                String tempStr = "";
+
                 if (loc2.getNodeType() == Constants.NodeType.ELEV && loc3.getNodeType() == Constants.NodeType.ELEV) { // On and off the elevator
-                    directions += "Take the elevator from FL " + loc2.getFloor() + " to FL " + loc3.getFloor() + "\n";
+                    tempStr += "Take the elevator from FL " + loc2.getFloor() + " to FL " + loc3.getFloor() + "\n";
+                    currentDirections = tempStr;
                 } else if (loc2.getNodeType() == Constants.NodeType.STAI && loc3.getNodeType() == Constants.NodeType.STAI) { // On and off the stairs
-                    directions += "Take the stairs from FL " + loc2.getFloor() + " to FL " + loc3.getFloor() + "\n";
+                    tempStr += "Take the stairs from FL " + loc2.getFloor() + " to FL " + loc3.getFloor() + "\n";
+                    currentDirections = tempStr;
                 } else {
                     int x1 = loc1.getxCord();
                     int y1 = -1 * loc1.getyCord();
@@ -268,18 +275,21 @@ public abstract class PathFinder {
 
                     totDist += a;
                     if (angle > STRAIGHT_ANGLE - TURN_SENSITIVITY && angle < STRAIGHT_ANGLE + TURN_SENSITIVITY) {
-                        directions += "Turn ";
+                        tempStr += "Turn ";
                         if (cross > 0) { // Right
-                            directions += "right";
+                            tempStr += "right";
                         } else { // Left
-                            directions += "left";
+                            tempStr += "left";
                         }
                         int displayDist = (int) (totDist * PIXEL_TO_METERS);
                         if (displayDist != 1) {
-                            directions += " in " + displayDist + " meters\n";
+                            tempStr += " in " + displayDist + " meters\n";
                         } else {
-                            directions += " in " + displayDist + " meter\n";
+                            tempStr += " in " + displayDist + " meter\n";
                         }
+                        directions += tempStr;
+                        currentDirections = tempStr;
+
                         totDist = 0.0;
                     }
                 }
@@ -289,15 +299,25 @@ public abstract class PathFinder {
             loc1 = loc2;
             loc2 = loc3;
 
-
-            //extract data from string and put in setp stack
-            DirectionStep step = new DirectionStep();
-            step.setFloor(currentFloor);
-            String currentDirections = directions.substring(0, directions.indexOf("\n"));
-            step.setDiections(currentDirections);
-            directions.replaceFirst(currentDirections,"");//delete it from the string
-
-            directionStepStack.add(step);
+            if (!directionStepStack.empty()) {
+                if (!currentDirections.equals(directionStepStack.get(directionStepStack.size() - 1).getDiections())) {
+                    //extract data from string and put in setp stack
+                    DirectionStep step = new DirectionStep();
+                    step.setFloor(currentFloor);
+                    //String currentDirections = directions.substring(0, directions.indexOf("\n"));
+                    step.setDiections(currentDirections);
+                    // directions.replaceFirst(currentDirections,"");//delete it from the string
+                    directionStepStack.add(step);
+                }
+            } else {
+                //extract data from string and put in setp stack
+                DirectionStep step = new DirectionStep();
+                step.setFloor(currentFloor);
+                //String currentDirections = directions.substring(0, directions.indexOf("\n"));
+                step.setDiections(currentDirections);
+                // directions.replaceFirst(currentDirections,"");//delete it from the string
+                directionStepStack.add(step);
+            }
         }
         Location end = loc3;
         int numFloors;
@@ -335,14 +355,12 @@ public abstract class PathFinder {
 
         //add extras into new data format
         String[] arrDirections = directions.split("\n");
-        for(String extras:arrDirections){
+        for (String extras : arrDirections) {
             DirectionStep step = new DirectionStep();
             step.setFloor("");
             step.setDiections(extras);
             directionStepStack.add(step);
         }
-
-
 
 
         return directionStepStack;
@@ -361,7 +379,7 @@ public abstract class PathFinder {
         String directions = context.txtDirections((Stack<Location>) path.clone());
         FirebaseAPI.addDirections(start, end, directions);
         MapController.currentDirections = directions;
-        addDirections(mc.txtPane, makeDirectionStack(path));
+        addDirections(mc.txtPane, makeDirectionStack((Stack<Location>) path.clone()));
         HashMap<String, Location> lstLocations = mc.getMap().getAllLocations();
 
         Path line = null;
@@ -491,33 +509,33 @@ public abstract class PathFinder {
 
 
         //Creating a column
-        TreeTableColumn<HBox, HBox> column = new TreeTableColumn<>("Directions");
-        column.setPrefWidth(150);
+//        TreeTableColumn<HBox, HBox> column = new TreeTableColumn<>("Directions");
+//        column.setPrefWidth(150);
 
 
         vbox.setPadding(new Insets(10, 10, 10, 15));
         vbox.setStyle("-fx-background-radius: 20;");
         vbox.setSpacing(5);
         vbox.setAlignment(Pos.CENTER);
-        //String[] arrDirections = directions.split("\n"); todo
+        //String[] arrDirections = directions.split("\n");todo delete once working
 
         String lastFloor = "";
 
 
-
         Label lbl = new Label();
 
-        final TreeTableView<HBox> treeTableView = new TreeTableView<>();
+        //final TreeTableView<HBox> treeTableView = new TreeTableView<>();
         final TreeItem<HBox> root = new TreeItem<>();
 
 
         for (DirectionStep step : directionSteps) {
-            String floor=step.getFloor();
+            String floor = step.getFloor();
             String direction = step.getDiections();
 
-            if (!floor.equals(lastFloor)) {// Is a new floor
+            final TreeItem<HBox> parentNode = new TreeItem<>();
 
-                treeTableView.setRoot(root);
+            if (!floor.equals(lastFloor)) {// Is a new floor
+                root.getChildren().addAll(parentNode);
                 lbl.setText(floor);
                 lbl.setTextFill(Color.WHITE);
                 lbl.setPrefWidth(330);
@@ -526,12 +544,13 @@ public abstract class PathFinder {
                 lbl.setAlignment(Pos.CENTER);
                 lbl.setPadding(new Insets(5, 4, 4, 5));
                 lastFloor = floor;
-                HBox other = new HBox();
-                other.getChildren().add(lbl);
-                root.setValue(other);
+                HBox floorBox = new HBox();
+                floorBox.getChildren().add(lbl);
+                root.setValue(floorBox);
                 root.setExpanded(true);
+                parentNode.setValue(floorBox);
 
-            }else {// is a new step on the same floor
+            } else {// is a new step on the same floor
                 lbl.setText(direction);
                 lbl.setFont(new Font(18));
                 lbl.setTextFill(Color.WHITE);
@@ -557,7 +576,6 @@ public abstract class PathFinder {
 
                 if (lbl.getText().contains("left")) {
                     HBox left = new HBox();
-                    left.getChildren().add(lbl);
                     ImageView imgLeft = new ImageView();
                     imgLeft.setImage(new Image("images/Icons/left.png"));
                     imgLeft.setFitHeight(40);
@@ -573,12 +591,12 @@ public abstract class PathFinder {
                     left.getChildren().add(leftPane);
                     left.setSpacing(-40);
                     left.setAlignment(Pos.CENTER);
-                    //vbox.getChildren().add(left); todo fix
+                    left.getChildren().add(lbl);
+                    //vbox.getChildren().add(left); todo delete once working
                     childNode.setValue(left);
 
                 } else if (lbl.getText().contains("right")) {
                     HBox right = new HBox();
-                    right.getChildren().add(lbl);
                     ImageView imgRight = new ImageView();
                     imgRight.setImage(new Image("images/Icons/right.png"));
                     imgRight.setFitHeight(40);
@@ -594,29 +612,43 @@ public abstract class PathFinder {
                     right.getChildren().add(rightPane);
                     right.setSpacing(-40);
                     right.setAlignment(Pos.CENTER);
-                    //vbox.getChildren().add(right); todo fix
+                    right.getChildren().add(lbl);
+                    //vbox.getChildren().add(right);todo delete once working
                     childNode.setValue(right);
 
                 } else if (lbl.getText().contains("Distance") || lbl.getText().contains("Time")) {
                     lbl.setStyle("-fx-font-size: 20px;" + "-fx-font-weight: BOLD;" + "-fx-background-color: green;" + "-fx-background-radius: 30;");
                     lbl.setTextFill(Color.BLACK);
-                    //vbox.getChildren().add(lbl); todo fix
+                    //vbox.getChildren().add(lbl);todo delete once working
                     HBox other = new HBox();
                     other.getChildren().add(lbl);
                     childNode.setValue(other);
 
                 } else {
-                    //vbox.getChildren().add(lbl); todo fix
+                    //vbox.getChildren().add(lbl); todo delete once working
                     HBox other = new HBox();
                     other.getChildren().add(lbl);
                     childNode.setValue(other);
 
                 }
-                root.getChildren().add(childNode);
+                parentNode.getChildren().add(childNode);
 
             }
         }
 
+        //Creating a column
+        TreeTableColumn<HBox,HBox> column = new TreeTableColumn<>("Directions");
+        column.setPrefWidth(200);
+
+        //Defining cell content
+//        column.setCellValueFactory((TreeTableColumn.CellDataFeatures<HBox , HBox> p) ->
+//                p.getValue().getValue());//todo FIX THIS
+
+        final TreeTableView<HBox> treeTableView = new TreeTableView<>(root);
+        treeTableView.setPrefWidth(200);
+        treeTableView.getColumns().add(column);
+
+        treeTableView.setShowRoot(true);
 
         txtPane.setContent(treeTableView);
         txtPane.setVisible(true);
