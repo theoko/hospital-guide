@@ -6,7 +6,6 @@ import helpers.FileHelpers;
 import map.MapParser;
 import models.map.Edge;
 import models.map.Location;
-import models.map.Workspace;
 
 import java.io.*;
 import java.util.HashMap;
@@ -16,7 +15,7 @@ public class CSVParser {
 
     public static void main(String[] args) throws IOException {
         if(!Database.getDatabase().databaseExists()) {
-            parse(FileHelpers.getNodesCSV(), FileHelpers.getEdgesCSV(), FileHelpers.getWorkspacesCSV());
+            parse(FileHelpers.getNodesCSV(), FileHelpers.getEdgesCSV());
             System.out.println("Parsed");
         } else {
             System.out.println("Already here.");
@@ -28,17 +27,15 @@ public class CSVParser {
 
 //        if(FileHelpers.checkJar()) {
             export("eNodes.csv", "eEdges.csv");
-            export("eWorkspaces.csv");
 
 //        } else {
 //            export("data/eNodes.csv", "data/eEdges.csv");
 //        }
     }
 
-    public static void parse(InputStream pathNodes, InputStream pathEdges, InputStream pathWorkspaces) {
+    public static void parse(InputStream pathNodes, InputStream pathEdges) {
         HashMap<String, Location> lstLocations = parseNodes(pathNodes);
         parseEdges(pathEdges, lstLocations);
-        HashMap<String, Workspace> lstWorkspaces = parseWorkspaces(pathWorkspaces);
     }
 
     public static void export(String pathNodes, String pathEdges) throws IOException {
@@ -51,10 +48,6 @@ public class CSVParser {
 //            exportEdges(strToPath(pathEdges), lstLocations);
 //        }
 
-    }
-
-    public static void export(String pathWorkspaces) throws IOException {
-        HashMap<String, Workspace> lstWorspaces = exportWorkspaces(pathWorkspaces);
     }
 
     private static HashMap<String, Location> parseNodes(InputStream pathNodes) {
@@ -129,44 +122,6 @@ public class CSVParser {
         }
     }
 
-    private static HashMap<String, Workspace> parseWorkspaces(InputStream pathWorkspaces) {
-        // nodeID,xcoord,ycoord,floor,building,nodeType,longName,shortName
-
-        HashMap<String, Workspace> lstWorkspaces = new HashMap<>();
-
-        // Declares a new file reader
-        BufferedReader br = null;
-        String line;
-        String splitter = ","; // CSV default seperator
-
-        try {
-            br = new BufferedReader(new InputStreamReader(pathWorkspaces)); // Creates a new file reader
-            br.readLine(); // Ignores first line
-            // Loop until EOF
-            while ((line = br.readLine()) != null) {
-                // Split line
-                String[] splitLine = line.split(splitter);
-                String wsID = splitLine[0];
-                // Create a new map with the given fields
-                Workspace newWS = new Workspace(wsID, Integer.parseInt(splitLine[1]), Integer.parseInt(splitLine[2]), Constants.NodeType.valueOf(splitLine[3]), splitLine[4]);
-
-                lstWorkspaces.put(wsID, newWS);
-                WorkspaceTable.addWorkspace(newWS);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally { // Close file reader
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return lstWorkspaces;
-    }
-
     private static HashMap<String, Location> exportNodes(String pathNodes) throws IOException {
         // nodeID,xcoord,ycoord,floor,building,nodeType,longName,shortName
 
@@ -222,35 +177,6 @@ public class CSVParser {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private static HashMap<String, Workspace> exportWorkspaces(String pathWorkspaces) throws IOException {
-        // nodeID,xcoord,ycoord,floor,building,nodeType,longName,shortName
-
-        HashMap<String, Workspace> lstWorkspaces = new HashMap<>();
-        File csvFile = new File(pathWorkspaces);
-
-        FileHelpers.recreateFile(csvFile);
-
-        try {
-            FileWriter oFile = new FileWriter(csvFile);
-            CSVWriter writer = new CSVWriter(oFile);
-            String[] header = {"nodeID", "xcoord", "ycoord", "nodeType", "Name"};
-            writer.writeNext(header);
-
-            lstWorkspaces = WorkspaceTable.getWorkspaces();
-            if (lstWorkspaces != null) {
-                for (Workspace ws : lstWorkspaces.values()) {
-                    String[] data = ws.getStringsLocation();
-                    writer.writeNext(data);
-                }
-            }
-
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return lstWorkspaces;
     }
 
     private static String strToPath(String path) {

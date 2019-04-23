@@ -7,7 +7,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import models.map.Location;
 import models.map.Map;
-import models.map.Workspace;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -23,7 +22,7 @@ public abstract class PopUpController implements Initializable {
     public ScrollPane txtPane;
     protected Circle circle;
     protected Location kiosk;
-    protected Workspace ws;
+    protected Location ws;
     protected LocalDate StartDate;
     protected LocalTime StartTime;
     protected LocalDate EndDate;
@@ -57,7 +56,7 @@ public abstract class PopUpController implements Initializable {
         this.txtPane = txtPane;
     }
 
-    public void setWorkspace(Workspace ws) {
+    public void setWorkspace(Location ws) {
         this.ws = ws;
     }
 

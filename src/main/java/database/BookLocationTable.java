@@ -274,7 +274,7 @@ public class BookLocationTable {
         PreparedStatement statement;
         try {
             statement = Database.getDatabase().getConnection().prepareStatement(
-                    "DELETE FROM " + Constants.BOOK_WORKSPACE_TABLE +
+                    "DELETE FROM " + Constants.BOOK_LOCATION_TABLE +
                             " WHERE BOOKINGID=?"
             );
             statement.setInt(1, book.getBookingID());
