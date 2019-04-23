@@ -521,44 +521,99 @@ public abstract class PathFinder {
 
         String lastFloor = "";
 
+        VBox content = new VBox();
+        VBox rootContent = new VBox();
+        rootContent.setPrefWidth(350);
+        content.setPrefWidth(350);
 
-        Label lbl = new Label();
+
 
         //final TreeTableView<HBox> treeTableView = new TreeTableView<>();
-        final TreeItem<HBox> root = new TreeItem<>();
+        // final TreeItem<HBox> root = new TreeItem<>();
 
+        TitledPane currentPane = new TitledPane();
+        boolean first =true;
+        for (DirectionStep step : directionSteps) {//loop through steps in directions
+            Label lbl = new Label();
 
-        for (DirectionStep step : directionSteps) {
             String floor = step.getFloor();
             String direction = step.getDiections();
 
             final TreeItem<HBox> parentNode = new TreeItem<>();
 
-            if (!floor.equals(lastFloor)) {// Is a new floor
-                root.getChildren().addAll(parentNode);
-                lbl.setText(floor);
-                lbl.setTextFill(Color.WHITE);
-                lbl.setPrefWidth(330);
-                lbl.setPrefHeight(40);
-                lbl.setStyle("-fx-background-color: purple;" + "-fx-background-radius: 30;");
-                lbl.setAlignment(Pos.CENTER);
-                lbl.setPadding(new Insets(5, 4, 4, 5));
+
+            if (!floor.equals(lastFloor)||first) {// Is a new floor
+                //    root.getChildren().addAll(parentNode);
+                first=false;
+                currentPane.setContent(content);
+
+                content.getChildren().removeAll();
+                currentPane = buildTitledPane(step);
                 lastFloor = floor;
-                HBox floorBox = new HBox();
-                floorBox.getChildren().add(lbl);
-                root.setValue(floorBox);
-                root.setExpanded(true);
-                parentNode.setValue(floorBox);
+                rootContent.getChildren().add(currentPane);
+
 
             } else {// is a new step on the same floor
-                lbl.setText(direction);
-                lbl.setFont(new Font(18));
-                lbl.setTextFill(Color.WHITE);
-                lbl.setPrefWidth(330);
-                lbl.setPrefHeight(40);
-                lbl.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
-                lbl.setAlignment(Pos.CENTER);
-                lbl.setPadding(new Insets(5, 4, 4, 5));
+
+                HBox component = buildPaneChildren(step);
+                content.getChildren().add(component);
+                // parentNode.getChildren().add(childNode);
+
+            }
+        }
+
+        //Creating a column
+//        TreeTableColumn<HBox,HBox> column = new TreeTableColumn<>("Directions");
+//        column.setPrefWidth(200);
+
+        //Defining cell content
+//        column.setCellValueFactory((TreeTableColumn.CellDataFeatures<HBox , HBox> p) ->
+//                p.getValue().getValue());//todo FIX THIS
+
+//        final TreeTableView<HBox> treeTableView = new TreeTableView<>(root);
+//        treeTableView.setPrefWidth(200);
+//        treeTableView.getColumns().add(column);
+//
+//        treeTableView.setShowRoot(true);
+
+        txtPane.setContent(rootContent);
+        txtPane.setVisible(true);
+    }
+
+    private static TitledPane buildTitledPane(DirectionStep step) {
+        TitledPane titledPane = new TitledPane();
+        Label lbl = new Label();
+        String floor = step.getFloor();
+
+        lbl.setText(floor);
+        lbl.setTextFill(Color.WHITE);
+        lbl.setPrefWidth(330);
+        lbl.setPrefHeight(40);
+        lbl.setStyle("-fx-background-color: purple;" + "-fx-background-radius: 30;");
+        lbl.setAlignment(Pos.CENTER);
+        lbl.setPadding(new Insets(5, 4, 4, 5));
+        HBox floorBox = new HBox();
+        floorBox.getChildren().add(lbl);
+        //    root.setValue(floorBox);
+        //      root.setExpanded(true);
+
+        titledPane.setText(floor);
+        return titledPane;
+    }
+
+    private static HBox buildPaneChildren(DirectionStep step){
+        Label lbl = new Label();
+
+        HBox result = new HBox();
+        String direction=step.getDiections();
+        lbl.setText(direction);
+        lbl.setFont(new Font(18));
+        lbl.setTextFill(Color.WHITE);
+        lbl.setPrefWidth(330);
+        lbl.setPrefHeight(40);
+        lbl.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        lbl.setAlignment(Pos.CENTER);
+        lbl.setPadding(new Insets(5, 4, 6, 5));
 
 
 //            //put floor deciding stuff here
@@ -571,87 +626,73 @@ public abstract class PathFinder {
 //            }
 
 
-                final TreeItem<HBox> childNode = new TreeItem<>();
+        final TreeItem<HBox> childNode = new TreeItem<>();
 
 
-                if (lbl.getText().contains("left")) {
-                    HBox left = new HBox();
-                    ImageView imgLeft = new ImageView();
-                    imgLeft.setImage(new Image("images/Icons/left.png"));
-                    imgLeft.setFitHeight(40);
-                    imgLeft.setFitWidth(40);
-                    imgLeft.setPreserveRatio(true);
-                    imgLeft.setPickOnBounds(true);
-                    imgLeft.setStyle("-fx-background-color: green;");
-                    AnchorPane leftPane = new AnchorPane();
-                    leftPane.getChildren().add(imgLeft);
-                    leftPane.setPrefWidth(40);
-                    leftPane.setPrefHeight(40);
-                    leftPane.setStyle("-fx-background-color: green;" + "-fx-background-radius: 20;");
-                    left.getChildren().add(leftPane);
-                    left.setSpacing(-40);
-                    left.setAlignment(Pos.CENTER);
-                    left.getChildren().add(lbl);
-                    //vbox.getChildren().add(left); todo delete once working
-                    childNode.setValue(left);
+        if (lbl.getText().contains("left")) {
+            HBox left = new HBox();
+            ImageView imgLeft = new ImageView();
+            imgLeft.setImage(new Image("images/Icons/left.png"));
+            imgLeft.setFitHeight(40);
+            imgLeft.setFitWidth(40);
+            imgLeft.setPreserveRatio(true);
+            imgLeft.setPickOnBounds(true);
+            imgLeft.setStyle("-fx-background-color: green;");
+            AnchorPane leftPane = new AnchorPane();
+            leftPane.getChildren().add(imgLeft);
+            leftPane.setPrefWidth(40);
+            leftPane.setPrefHeight(40);
+            leftPane.setStyle("-fx-background-color: green;" + "-fx-background-radius: 20;");
+            left.getChildren().add(leftPane);
+            left.setSpacing(-40);
+            left.setAlignment(Pos.CENTER);
+            left.getChildren().add(lbl);
+            //vbox.getChildren().add(left); todo delete once working
+            //content.getChildren().add(left);
+            result.getChildren().add(left);
 
-                } else if (lbl.getText().contains("right")) {
-                    HBox right = new HBox();
-                    ImageView imgRight = new ImageView();
-                    imgRight.setImage(new Image("images/Icons/right.png"));
-                    imgRight.setFitHeight(40);
-                    imgRight.setFitWidth(40);
-                    imgRight.setPreserveRatio(true);
-                    imgRight.setPickOnBounds(true);
-                    imgRight.setStyle("-fx-background-color: green;");
-                    AnchorPane rightPane = new AnchorPane();
-                    rightPane.getChildren().add(imgRight);
-                    rightPane.setPrefWidth(40);
-                    rightPane.setPrefHeight(40);
-                    rightPane.setStyle("-fx-background-color: green;" + "-fx-background-radius: 20;");
-                    right.getChildren().add(rightPane);
-                    right.setSpacing(-40);
-                    right.setAlignment(Pos.CENTER);
-                    right.getChildren().add(lbl);
-                    //vbox.getChildren().add(right);todo delete once working
-                    childNode.setValue(right);
+        } else if (lbl.getText().contains("right")) {
+            HBox right = new HBox();
+            ImageView imgRight = new ImageView();
+            imgRight.setImage(new Image("images/Icons/right.png"));
+            imgRight.setFitHeight(40);
+            imgRight.setFitWidth(40);
+            imgRight.setPreserveRatio(true);
+            imgRight.setPickOnBounds(true);
+            imgRight.setStyle("-fx-background-color: green;");
+            AnchorPane rightPane = new AnchorPane();
+            rightPane.getChildren().add(imgRight);
+            rightPane.setPrefWidth(40);
+            rightPane.setPrefHeight(40);
+            rightPane.setStyle("-fx-background-color: green;" + "-fx-background-radius: 20;");
+            right.getChildren().add(rightPane);
+            right.setSpacing(-40);
+            right.setAlignment(Pos.CENTER);
+            right.getChildren().add(lbl);
+            //vbox.getChildren().add(right);todo delete once working
+            //content.getChildren().add(right);
+            result.getChildren().add(right);
 
-                } else if (lbl.getText().contains("Distance") || lbl.getText().contains("Time")) {
-                    lbl.setStyle("-fx-font-size: 20px;" + "-fx-font-weight: BOLD;" + "-fx-background-color: green;" + "-fx-background-radius: 30;");
-                    lbl.setTextFill(Color.BLACK);
-                    //vbox.getChildren().add(lbl);todo delete once working
-                    HBox other = new HBox();
-                    other.getChildren().add(lbl);
-                    childNode.setValue(other);
+        } else if (lbl.getText().contains("Distance") || lbl.getText().contains("Time")) {
+            lbl.setStyle("-fx-font-size: 20px;" + "-fx-font-weight: BOLD;" + "-fx-background-color: green;" + "-fx-background-radius: 30;");
+            lbl.setTextFill(Color.BLACK);
+            //vbox.getChildren().add(lbl);todo delete once working
+            HBox other = new HBox();
+            other.getChildren().add(lbl);
+           // content.getChildren().add(other);
+            result.getChildren().add(other);
 
-                } else {
-                    //vbox.getChildren().add(lbl); todo delete once working
-                    HBox other = new HBox();
-                    other.getChildren().add(lbl);
-                    childNode.setValue(other);
+        } else {
+            //vbox.getChildren().add(lbl); todo delete once working
+            HBox other = new HBox();
+            other.getChildren().add(lbl);
+            //content.getChildren().add(other);
+            result.getChildren().add(other);
 
-                }
-                parentNode.getChildren().add(childNode);
-
-            }
         }
 
-        //Creating a column
-        TreeTableColumn<HBox,HBox> column = new TreeTableColumn<>("Directions");
-        column.setPrefWidth(200);
+        return result;
 
-        //Defining cell content
-//        column.setCellValueFactory((TreeTableColumn.CellDataFeatures<HBox , HBox> p) ->
-//                p.getValue().getValue());//todo FIX THIS
-
-        final TreeTableView<HBox> treeTableView = new TreeTableView<>(root);
-        treeTableView.setPrefWidth(200);
-        treeTableView.getColumns().add(column);
-
-        treeTableView.setShowRoot(true);
-
-        txtPane.setContent(treeTableView);
-        txtPane.setVisible(true);
     }
 
 }
