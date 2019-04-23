@@ -88,12 +88,16 @@ public abstract class PathFinder {
     }
 
     public static void printByType(MapController mc, Map map, Constants.NodeType nodeType) {
+        printByType(mc, map, nodeType, nodeType);
+    }
+
+    public static void printByType(MapController mc, Map map, Constants.NodeType nodeType1, Constants.NodeType nodeType2) {
         Location kiosk = map.getLocation(MapController.getTempStart());
-        Location closest = findByType(kiosk, nodeType);
+        Location closest = findByType(kiosk, nodeType1, nodeType2);
         printPath(mc, kiosk, closest);
     }
 
-    private static Location findByType(Location start, Constants.NodeType nodeType) {
+    private static Location findByType(Location start, Constants.NodeType nodeType1, Constants.NodeType nodeType2) {
         PriorityQueue<SubPath> queue = new PriorityQueue<>();
         SubPath sStart = new SubPath("", start, 0.0);
         queue.add(sStart);
@@ -105,7 +109,7 @@ public abstract class PathFinder {
             if (used.containsKey(currLoc.getNodeID())) {
                 continue;
             }
-            if (currLoc.getNodeType().equals(nodeType)) {
+            if (currLoc.getNodeType().equals(nodeType1) || currLoc.getNodeType().equals(nodeType2)) {
                 return currLoc;
             }
             used.put(currLoc.getNodeID(), currSub);

@@ -24,6 +24,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import map.MapDisplay;
+import map.PathFinder;
 import messaging.TextMessenger;
 import models.search.SearchAPI;
 
@@ -375,6 +376,9 @@ public class EmployeeMapController extends MapController {
         btnCoffee.setPrefHeight(60);
         btnCoffee.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnCoffee.setTextOverrun(OverrunStyle.CLIP);
+        btnCoffee.setOnMouseClicked((e) -> {
+            PathFinder.printByType(this, map, Constants.NodeType.RETL);
+        });
 
         UIHelpers.btnRaise(btnCoffee);
 
@@ -391,6 +395,9 @@ public class EmployeeMapController extends MapController {
         btnRest.setPrefHeight(60);
         btnRest.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnRest.setTextOverrun(OverrunStyle.CLIP);
+        btnRest.setOnMouseClicked((e) -> {
+            PathFinder.printByType(this, map, Constants.NodeType.REST, Constants.NodeType.BATH);
+        });
 
         UIHelpers.btnRaise(btnRest);
 
@@ -407,6 +414,9 @@ public class EmployeeMapController extends MapController {
         btnExit.setPrefHeight(60);
         btnExit.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnExit.setTextOverrun(OverrunStyle.CLIP);
+        btnExit.setOnMouseClicked((e) -> {
+            PathFinder.printByType(this, map, Constants.NodeType.EXIT);
+        });
 
         UIHelpers.btnRaise(btnExit);
 
@@ -425,6 +435,9 @@ public class EmployeeMapController extends MapController {
         btnElev.setPrefHeight(60);
         btnElev.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnElev.setTextOverrun(OverrunStyle.CLIP);
+        btnElev.setOnMouseClicked((e) -> {
+            PathFinder.printByType(this, map, Constants.NodeType.ELEV, Constants.NodeType.STAI);
+        });
 
         UIHelpers.btnRaise(btnElev);
 
@@ -441,7 +454,9 @@ public class EmployeeMapController extends MapController {
         btnInfo1.setPrefHeight(60);
         btnInfo1.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnInfo1.setTextOverrun(OverrunStyle.CLIP);
-
+        btnInfo1.setOnMouseClicked((e) -> {
+            PathFinder.printByType(this, map, Constants.NodeType.INFO);
+        });
 
         UIHelpers.btnRaise(btnInfo1);
 
