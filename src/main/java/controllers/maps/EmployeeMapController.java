@@ -1,14 +1,15 @@
 package controllers.maps;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXNodesList;
-import com.jfoenix.controls.JFXTextField;
-import com.jfoenix.controls.JFXToggleButton;
+import com.jfoenix.controls.*;
 import controllers.ScreenController;
 import controllers.search.SearchEngineController;
+import database.BookWorkspaceTable;
+import database.WorkspaceTable;
 import google.FirebaseAPI;
 import helpers.Constants;
+import helpers.DatabaseHelpers;
 import helpers.UIHelpers;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import helpers.UserHelpers;
 import javafx.application.Platform;
@@ -20,6 +21,7 @@ import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Path;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -30,9 +32,13 @@ import map.MapDisplay;
 import map.PathFinder;
 import messaging.TextMessenger;
 import models.map.Location;
+import models.map.Workspace;
+import models.room.Book;
 import models.search.SearchAPI;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ResourceBundle;
 
 public class EmployeeMapController extends MapController {
@@ -53,6 +59,7 @@ public class EmployeeMapController extends MapController {
     public AnchorPane Out;
     public AnchorPane Gift;
     public AnchorPane Info;
+    public AnchorPane WorkBooking;
 
     public JFXTextField search;
     public JFXTextField textNum;
@@ -60,6 +67,19 @@ public class EmployeeMapController extends MapController {
     public JFXButton btnText;
     public JFXToggleButton tglSpace;
     public JFXToggleButton tglZone;
+
+    public JFXDatePicker datStartDay;
+    public JFXDatePicker datEndDay;
+    public JFXTimePicker datStartTime;
+    public JFXTimePicker datEndTime;
+
+    LocalDate startDate;
+    LocalDate endDate;
+
+    LocalTime startTime;
+    LocalTime endTime;
+
+    private Polygon workspace1;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -71,6 +91,7 @@ public class EmployeeMapController extends MapController {
 
         MapDisplay.displayEmployee(this);
         initDirections();
+        initializeZones();
     }
 
     @Override
@@ -103,20 +124,33 @@ public class EmployeeMapController extends MapController {
     public void showFloor(String newFloor) {
         super.showFloorHelper(newFloor);
         MapDisplay.displayEmployee(this);
+    }
+
+    public void initializeZones() {
         double points1[] = {2580, 1980, 2580, 2030, 2700, 2030, 2700, 1980};
-        Polygon workspace1 = new Polygon(points1);
+        workspace1 = new Polygon(points1);
         workspace1.setStroke(Color.BLACK);
         workspace1.setFill(Color.GREEN);
         workspace1.setOpacity(0.5);
+    }
 
-        if(newFloor.equals("4")) {
-            this.panMap.getChildren().add(workspace1);
-//            workspace1.setOnMouseEntered(event -> {
-//                workspace1.
-//            });
-//            workspace1.setOnMouseExited(event -> {
-//                workspace1.resize( 120, 50);
-//            });
+
+    public void selectZone(ActionEvent event) {
+        event.consume();
+        if(getFloor().equals("4")) {
+            if(tglZone.isSelected()) {
+                this.clearMap();
+                this.panMap.getChildren().add(workspace1);
+                workspace1.setOnMousePressed(event1 -> {
+                    System.out.println("fuck me");
+                   // ScreenController.popUp(Constants.Routes.WORKSPACE_POPUP, enter, c, startTime, startDate, endTime, endDate);
+                });
+            }
+            else {
+                this.clearMap();
+                this.showFloor(getFloor());
+                this.panMap.getChildren().remove(workspace1);
+            }
         }
     }
 
@@ -670,12 +704,20 @@ public class EmployeeMapController extends MapController {
         boxZone.setAlignment(Pos.CENTER);
         boxZone.setSpacing(-5);
 
+        HBox hboxWork = new HBox();
+        hboxWork.getChildren().add(boxSpace);
+        hboxWork.getChildren().add(boxZone);
+        hboxWork.setPrefHeight(60);
+        hboxWork.setPrefWidth(320);
+        hboxWork.setAlignment(Pos.CENTER);
+        hboxWork.setSpacing(5);
+
         VBox boxWork = new VBox();
-        boxWork.getChildren().add(boxZone);
-        boxWork.getChildren().add(boxSpace);
-        boxWork.setAlignment(Pos.CENTER_LEFT);
+        boxWork.getChildren().add(hboxWork);
+        boxWork.getChildren().add(WorkBooking);
+        boxWork.setAlignment(Pos.CENTER_RIGHT);
         boxWork.setPrefSize(150,150);
-        boxWork.setSpacing(5);
+        boxWork.setSpacing(-15);
 
         Label lblCal = new Label("My Bookings Calendar");
         lblCal.setPrefHeight(50);
@@ -916,8 +958,8 @@ public class EmployeeMapController extends MapController {
 
         nodesListWork.addAnimatedNode(btnBookG);
         nodesListWork.addAnimatedNode(boxWork);
-        nodesListWork.setRotate(90);
-        nodesListWork.setSpacing(-10);
+        nodesListWork.setRotate(75);
+        nodesListWork.setSpacing(-150);
 
         nodeListCal.addAnimatedNode(btnCal);
         nodeListCal.addAnimatedNode(boxCal);
@@ -1031,5 +1073,111 @@ public class EmployeeMapController extends MapController {
         ScreenController.logOut(btnLogOut);
         FirebaseAPI.setCaller(null);
         ScreenController.activate(Constants.Routes.LOGIN);
+    }
+
+    public void btnSearch(MouseEvent event) {
+        event.consume();
+     /*   if(datStartDay != null && datEndDay != null && datStartTime != null && datEndTime != null) {
+            startDate = datStartDay.getValue();
+            endDate = datEndDay.getValue();
+            startTime = datStartTime.getValue();
+            endTime = datEndTime.getValue();
+
+            workspacesAvailable = WorkspaceTable.checkAvailabilityByTime(
+                    DatabaseHelpers.getDateTime(startDate, startTime),
+                    DatabaseHelpers.getDateTime(endDate, endTime)
+            );
+
+            for(Workspace ws : workspaces.values()) {
+                boolean isBooked = true;
+                for(Workspace ws1 : workspacesAvailable) {
+                    if(ws1 == ws) {
+                        isBooked = false;
+                        break;
+                    }
+                }
+                if(isBooked) {
+                    workspacesBooked.add(ws);
+                }
+            }
+
+            for (Workspace ws : workspacesBooked) {
+                if (ws.getNodeType() != null) {
+                    double xLoc = scaleX(ws.getxCord());
+                    double yLoc = scaleY(ws.getyCord());
+                    for (Circle c : themCircles) {
+                        if (c.getCenterX() == xLoc && c.getCenterY() == yLoc) {
+                            c.setFill(Color.RED);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            workspacesCurrent = BookWorkspaceTable.getBookingsForUser(UserHelpers.getCurrentUser());
+
+            for(Book b : workspacesCurrent) {
+                for(Workspace ws1 : workspaces.values()) {
+                    if(ws1.getNodeID().equals(b.getRoomID())) {
+                        myWorkspaces.add(ws1);
+                        break;
+                    }
+                }
+            }
+
+            for (Workspace ws : myWorkspaces) {
+                if (ws.getNodeType() != null) {
+                    double xLoc = scaleX(ws.getxCord());
+                    double yLoc = scaleY(ws.getyCord());
+                    for (Circle c : themCircles) {
+                        if (c.getCenterX() == xLoc && c.getCenterY() == yLoc) {
+                            c.setFill(Color.ORANGE);
+                            c.setOnMouseClicked(Event -> {
+                                try {
+                                    Event.consume();
+                                    for(Workspace ws1 : myWorkspaces) {
+                                        if(scaleX(ws1.getxCord()) == c.getCenterX() && scaleY(ws1.getyCord()) == c.getCenterY()) {
+                                            enter = ws1;
+                                            break;
+                                        }
+                                    }
+                                    ScreenController.popUp(Constants.Routes.WORKSPACE_POPUP, enter, c, startTime, startDate, endTime, endDate);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            });
+                            break;
+                        }
+                    }
+                }
+            }
+
+            for (Workspace ws : workspacesAvailable) {
+                if (ws.getNodeType() != null) {
+                    double xLoc = scaleX(ws.getxCord());
+                    double yLoc = scaleY(ws.getyCord());
+                    for (Circle c : themCircles) {
+                        if (c.getCenterX() == xLoc && c.getCenterY() == yLoc) {
+                            c.setFill(Color.YELLOW);
+                            c.setOnMouseClicked(Event -> {
+                                try {
+                                    Event.consume();
+                                    for(Workspace ws1 : workspacesAvailable) {
+                                        if(scaleX(ws1.getxCord()) == c.getCenterX() && scaleY(ws1.getyCord()) == c.getCenterY()) {
+                                            enter = ws1;
+                                            break;
+                                        }
+                                    }
+                                    ScreenController.popUp(Constants.Routes.WORKSPACE_POPUP, enter, c, startTime, startDate, endTime, endDate);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            });
+                            break;
+                        }
+                    }
+                }
+            }
+        }*/
     }
 }

@@ -319,14 +319,4 @@ public class WorkspaceMapController {
             }
         }
     }
-
-    public void logOut(MouseEvent event) {
-        event.consume();
-        ScreenController.logOut(btnReturn);
-        try {
-            ScreenController.activate(Constants.Routes.WELCOME);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }
