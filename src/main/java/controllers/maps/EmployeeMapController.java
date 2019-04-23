@@ -7,6 +7,8 @@ import controllers.ScreenController;
 import controllers.search.SearchEngineController;
 import google.FirebaseAPI;
 import helpers.Constants;
+import helpers.UIHelpers;
+import javafx.fxml.FXML;
 import helpers.UserHelpers;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -16,12 +18,13 @@ import javafx.scene.control.OverrunStyle;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Path;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Path;
 import map.MapDisplay;
+import map.PathFinder;
 import messaging.TextMessenger;
 import models.map.Location;
 import models.search.SearchAPI;
@@ -58,8 +61,8 @@ public class EmployeeMapController extends MapController {
         super.initialize(location, resources);
         SearchEngineController.setParentController(this);
 
-        SearchAPI searchAPI = new SearchAPI(search, true);
-        searchAPI.searchable();
+        /*SearchAPI searchAPI = new SearchAPI(search, true);
+        searchAPI.searchable();*/
 
         MapDisplay.displayEmployee(this);
         initDirections();
@@ -98,12 +101,6 @@ public class EmployeeMapController extends MapController {
     }
 
     @Override
-    public void displayPath(Path line) {
-        super.displayPath(line);
-        MapDisplay.displayEmployee(this);
-    }
-
-    @Override
     protected void addDoc() {
         ImageView imgUser = new ImageView();
         imgUser.setImage(new Image("images/Icons/user.png"));
@@ -112,7 +109,7 @@ public class EmployeeMapController extends MapController {
         imgUser.setPreserveRatio(true);
         imgUser.setPickOnBounds(true);
 
-        JFXButton btnUser = new JFXButton("", imgUser);
+        JFXButton btnUser = new JFXButton("",imgUser);
         btnUser.setAlignment(Pos.CENTER);
         btnUser.setPrefWidth(60);
         btnUser.setPrefHeight(60);
@@ -126,7 +123,7 @@ public class EmployeeMapController extends MapController {
         imgSearch.setPreserveRatio(true);
         imgSearch.setPickOnBounds(true);
 
-        JFXButton btnSearch = new JFXButton("", imgSearch);
+        JFXButton btnSearch = new JFXButton("",imgSearch);
         btnSearch.setAlignment(Pos.CENTER);
         btnSearch.setPrefWidth(60);
         btnSearch.setPrefHeight(60);
@@ -140,12 +137,14 @@ public class EmployeeMapController extends MapController {
         imgArrow.setPreserveRatio(true);
         imgArrow.setPickOnBounds(true);
 
-        JFXButton btnArrow = new JFXButton("", imgArrow);
+        JFXButton btnArrow = new JFXButton("",imgArrow);
         btnArrow.setAlignment(Pos.CENTER);
         btnArrow.setPrefWidth(60);
         btnArrow.setPrefHeight(60);
         btnArrow.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnArrow.setTextOverrun(OverrunStyle.CLIP);
+
+        UIHelpers.btnRaise(btnArrow);
 
         ImageView imgRoute = new ImageView();
         imgRoute.setImage(new Image("images/Icons/route.png"));
@@ -154,7 +153,7 @@ public class EmployeeMapController extends MapController {
         imgRoute.setPreserveRatio(true);
         imgRoute.setPickOnBounds(true);
 
-        JFXButton btnRoute = new JFXButton("", imgRoute);
+        JFXButton btnRoute = new JFXButton("",imgRoute);
         btnRoute.setAlignment(Pos.CENTER);
         btnRoute.setPrefWidth(60);
         btnRoute.setPrefHeight(60);
@@ -217,6 +216,9 @@ public class EmployeeMapController extends MapController {
         btnComp1.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnComp1.setTextOverrun(OverrunStyle.CLIP);
 
+        UIHelpers.btnRaise(btnComp1);
+
+
         ImageView imgFlo = new ImageView();
         imgFlo.setImage(new Image("images/Icons/florist.png"));
         imgFlo.setFitHeight(30);
@@ -230,6 +232,8 @@ public class EmployeeMapController extends MapController {
         btnFlo.setPrefHeight(60);
         btnFlo.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnFlo.setTextOverrun(OverrunStyle.CLIP);
+
+        UIHelpers.btnRaise(btnFlo);
 
         ImageView imgSign = new ImageView();
         imgSign.setImage(new Image("images/Icons/sign.png"));
@@ -245,6 +249,8 @@ public class EmployeeMapController extends MapController {
         btnSign.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnSign.setTextOverrun(OverrunStyle.CLIP);
 
+        UIHelpers.btnRaise(btnSign);
+
         ImageView imgLock = new ImageView();
         imgLock.setImage(new Image("images/Icons/lock.png"));
         imgLock.setFitHeight(30);
@@ -258,6 +264,8 @@ public class EmployeeMapController extends MapController {
         btnLock.setPrefHeight(60);
         btnLock.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnLock.setTextOverrun(OverrunStyle.CLIP);
+
+        UIHelpers.btnRaise(btnLock);
 
         ImageView imgDrug = new ImageView();
         imgDrug.setImage(new Image("images/Icons/drug.png"));
@@ -273,6 +281,8 @@ public class EmployeeMapController extends MapController {
         btnDrug.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnDrug.setTextOverrun(OverrunStyle.CLIP);
 
+        UIHelpers.btnRaise(btnDrug);
+
         ImageView imgAv = new ImageView();
         imgAv.setImage(new Image("images/Icons/av.png"));
         imgAv.setFitHeight(30);
@@ -286,6 +296,8 @@ public class EmployeeMapController extends MapController {
         btnAv.setPrefHeight(60);
         btnAv.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnAv.setTextOverrun(OverrunStyle.CLIP);
+
+        UIHelpers.btnRaise(btnAv);
 
         ImageView imgIn = new ImageView();
         imgIn.setImage(new Image("images/Icons/in.png"));
@@ -301,6 +313,8 @@ public class EmployeeMapController extends MapController {
         btnIn.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnIn.setTextOverrun(OverrunStyle.CLIP);
 
+        UIHelpers.btnRaise(btnIn);
+
         ImageView imgGift = new ImageView();
         imgGift.setImage(new Image("images/Icons/gift.png"));
         imgGift.setFitHeight(30);
@@ -314,6 +328,8 @@ public class EmployeeMapController extends MapController {
         btnGift.setPrefHeight(60);
         btnGift.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnGift.setTextOverrun(OverrunStyle.CLIP);
+
+        UIHelpers.btnRaise(btnGift);
 
         ImageView imgOut = new ImageView();
         imgOut.setImage(new Image("images/Icons/out.png"));
@@ -329,6 +345,8 @@ public class EmployeeMapController extends MapController {
         btnOut.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnOut.setTextOverrun(OverrunStyle.CLIP);
 
+        UIHelpers.btnRaise(btnOut);
+
         ImageView imgInfo = new ImageView();
         imgInfo.setImage(new Image("images/Icons/info.png"));
         imgInfo.setFitHeight(30);
@@ -343,6 +361,9 @@ public class EmployeeMapController extends MapController {
         btnInfo.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnInfo.setTextOverrun(OverrunStyle.CLIP);
 
+        UIHelpers.btnRaise(btnInfo);
+
+
         ImageView imgCoffee = new ImageView();
         imgCoffee.setImage(new Image("images/SearchIcons/coffee.png"));
         imgCoffee.setFitHeight(30);
@@ -356,6 +377,11 @@ public class EmployeeMapController extends MapController {
         btnCoffee.setPrefHeight(60);
         btnCoffee.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnCoffee.setTextOverrun(OverrunStyle.CLIP);
+        btnCoffee.setOnMouseClicked((e) -> {
+            PathFinder.printByType(this, map, Constants.NodeType.RETL);
+        });
+
+        UIHelpers.btnRaise(btnCoffee);
 
         ImageView imgRest = new ImageView();
         imgRest.setImage(new Image("images/SearchIcons/rest.png"));
@@ -370,6 +396,11 @@ public class EmployeeMapController extends MapController {
         btnRest.setPrefHeight(60);
         btnRest.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnRest.setTextOverrun(OverrunStyle.CLIP);
+        btnRest.setOnMouseClicked((e) -> {
+            PathFinder.printByType(this, map, Constants.NodeType.REST, Constants.NodeType.BATH);
+        });
+
+        UIHelpers.btnRaise(btnRest);
 
         ImageView imgExit = new ImageView();
         imgExit.setImage(new Image("images/SearchIcons/exit.png"));
@@ -384,6 +415,13 @@ public class EmployeeMapController extends MapController {
         btnExit.setPrefHeight(60);
         btnExit.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnExit.setTextOverrun(OverrunStyle.CLIP);
+        btnExit.setOnMouseClicked((e) -> {
+            PathFinder.printByType(this, map, Constants.NodeType.EXIT);
+        });
+
+        UIHelpers.btnRaise(btnExit);
+
+
 
         ImageView imgElev = new ImageView();
         imgElev.setImage(new Image("images/SearchIcons/elev.png"));
@@ -398,6 +436,11 @@ public class EmployeeMapController extends MapController {
         btnElev.setPrefHeight(60);
         btnElev.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnElev.setTextOverrun(OverrunStyle.CLIP);
+        btnElev.setOnMouseClicked((e) -> {
+            PathFinder.printByType(this, map, Constants.NodeType.ELEV, Constants.NodeType.STAI);
+        });
+
+        UIHelpers.btnRaise(btnElev);
 
         ImageView imgInfo1 = new ImageView();
         imgInfo1.setImage(new Image("images/Icons/info.png"));
@@ -412,15 +455,27 @@ public class EmployeeMapController extends MapController {
         btnInfo1.setPrefHeight(60);
         btnInfo1.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnInfo1.setTextOverrun(OverrunStyle.CLIP);
+        btnInfo1.setOnMouseClicked((e) -> {
+            PathFinder.printByType(this, map, Constants.NodeType.INFO);
+        });
+
+        UIHelpers.btnRaise(btnInfo1);
 
         btnLogOut.setStyle("-fx-background-radius: 30;" );
         btnLogOut.setStyle("-fx-background-radius: 30;");
         btnLogOut.setButtonType(JFXButton.ButtonType.RAISED);
         imgLogOut.setImage(new Image("images/Icons/signout.png"));
 
-        btnText.setStyle("-fx-background-radius: 30;");
+        UIHelpers.btnRaise(btnLogOut);
+
+        btnText.setStyle("-fx-background-radius: 30;" );
         btnText.setButtonType(JFXButton.ButtonType.RAISED);
         imgText.setImage(new Image("images/Icons/text.png"));
+
+       UIHelpers.btnRaise(btnText);
+
+
+
 
         vboxDock.setSpacing(8);
 
@@ -850,35 +905,4 @@ public class EmployeeMapController extends MapController {
         FirebaseAPI.setCaller(null);
         ScreenController.activate(Constants.Routes.LOGIN);
     }
-
-    @Override
-    public void btnFloor3_Click(MouseEvent mouseEvent) {
-        showFloor("3");
-    }
-
-    @Override
-    public void btnFloor2_Click(MouseEvent mouseEvent) {
-        showFloor("2");
-    }
-
-    @Override
-    public void btnFloor1_Click(MouseEvent mouseEvent) {
-        showFloor("1");
-    }
-
-    @Override
-    public void btnFloorG_Click(MouseEvent mouseEvent) {
-        showFloor("G");
-    }
-
-    @Override
-    public void btnFloorL1_Click(MouseEvent mouseEvent) {
-        showFloor("L1");
-    }
-
-    @Override
-    public void btnFloorL2_Click(MouseEvent mouseEvent) {
-        showFloor("L2");
-    }
-
 }
