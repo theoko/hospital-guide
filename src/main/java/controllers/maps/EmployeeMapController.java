@@ -23,6 +23,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Polygon;
 import map.MapDisplay;
 import map.PathFinder;
 import messaging.TextMessenger;
@@ -98,6 +99,13 @@ public class EmployeeMapController extends MapController {
     public void showFloor(String newFloor) {
         super.showFloorHelper(newFloor);
         MapDisplay.displayEmployee(this);
+        double points1[] = {2580, 1980, 2580, 2030, 2700, 2030, 2700, 1980};
+        Polygon workspace1 = new Polygon(points1);
+        workspace1.setStroke(Color.BLACK);
+        workspace1.setFill(Color.GREEN);
+        workspace1.setOpacity(0.5);
+        if(newFloor.equals("4"))
+            this.panMap.getChildren().add(workspace1);
     }
 
     @Override

@@ -40,13 +40,13 @@ public class WeatherController {
                     else
                         lblTime.setText("12" + ":" + (minute) + " AM");
                 }
-                if(hour == 12) {
+                else if(hour == 12) {
                     if(minute < 10)
                         lblTime.setText("12" + ":" + "0" + (minute) + " PM");
                     else
                         lblTime.setText("12" + ":" + (minute) + " PM");
                 }
-                if(hour < 12) {
+                else if(hour < 12) {
                     if (hour < 10 && minute < 10)
                         lblTime.setText("0" + hour + ":" + "0" + (minute) + " AM");
                     else if (hour >= 10 && minute < 10)
@@ -56,7 +56,7 @@ public class WeatherController {
                     else
                         lblTime.setText(hour + ":" + (minute) + " AM");
                 }
-                if(hour > 12) {
+                else if(hour > 12) {
                     hour = hour - 12;
                     if (hour < 10 && minute < 10)
                         lblTime.setText("0" + hour + ":" + "0" + (minute) + " PM");
