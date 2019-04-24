@@ -10,7 +10,7 @@ public class AutoLogoutController {
 
     public JFXTextField txtTime;
     public JFXButton btnSubmit;
-    public double time = 5;
+    public double time = 1;
 
     public AutoLogoutController() {
         this.time = time;

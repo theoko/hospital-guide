@@ -31,6 +31,9 @@ import java.util.ResourceBundle;
 
 public class CustodianMapController extends MapController {
 
+
+    public AnchorPane paneDock;
+    public VBox vboxDock;
     public ImageView imgLogOut;
     public JFXButton btnLogOut;
     public AnchorPane tilDirections;
@@ -49,6 +52,7 @@ public class CustodianMapController extends MapController {
 
         SearchAPI searchAPI = new SearchAPI(search, true);
         searchAPI.searchable();
+
     }
 
     public void btn_SendDirections (MouseEvent event) {
@@ -61,6 +65,14 @@ public class CustodianMapController extends MapController {
         event.consume();
         event.consume();
     }
+
+    @Override
+    public void btnReturn_Click(MouseEvent mouseEvent) throws Exception {
+        ScreenController.logOut(btnLogOut);
+        ScreenController.activate(Constants.Routes.LOGIN);
+    }
+
+
 
     @Override
     public void showFloor(String newFloor) {
@@ -434,12 +446,6 @@ public class CustodianMapController extends MapController {
     @Override
     public void associateUserWithDirections(Location start, Location end) {
         FirebaseAPI.addDirectionsForUser(UserHelpers.getCurrentUser().getUsername(), start, end);
-    }
-
-    @Override
-    public void btnReturn_Click(MouseEvent mouseEvent) throws Exception {
-        ScreenController.logOut(btnLogOut);
-        ScreenController.activate(Constants.Routes.LOGIN);
     }
 }
 
