@@ -515,12 +515,6 @@ public abstract class PathFinder {
     private static void addDirections(ScrollPane txtPane, Stack<DirectionStep> directionSteps) {
         VBox vbox = new VBox();
 
-
-        //Creating a column
-//        TreeTableColumn<HBox, HBox> column = new TreeTableColumn<>("Directions");
-//        column.setPrefWidth(150);
-
-
         vbox.setPadding(new Insets(10, 10, 10, 15));
         vbox.setStyle("-fx-background-radius: 20;");
         vbox.setSpacing(5);
@@ -534,17 +528,12 @@ public abstract class PathFinder {
         rootContent.setPrefWidth(375);
         content.setPrefWidth(375);
 
-
-        //final TreeTableView<HBox> treeTableView = new TreeTableView<>();
-        // final TreeItem<HBox> root = new TreeItem<>();
-
         TitledPane currentPane = new TitledPane();
         boolean first = true;
         int i = 0;
         for (DirectionStep step : directionSteps) {//loop through steps in directions
 
             String floor = step.getFloor();
-//            String direction = step.getDiections();
 
             final TreeItem<HBox> parentNode = new TreeItem<>();
 
@@ -560,9 +549,6 @@ public abstract class PathFinder {
                 }
                 content = new VBox();
                 content.setPrefWidth(350);
-
-                //content.getChildren().removeAll();
-
 
                 currentPane = buildTitledPane(step);
                 if (currentPane != null) {
@@ -597,25 +583,9 @@ public abstract class PathFinder {
                 AnchorPane componentAnchor = new AnchorPane();
                 componentAnchor.getChildren().add(component);
                 content.getChildren().add(componentAnchor);
-                // parentNode.getChildren().add(childNode);
-                //currentPane.setContent(content);
+
             }
         }
-
-        //Creating a column
-//        TreeTableColumn<HBox,HBox> column = new TreeTableColumn<>("Directions");
-//        column.setPrefWidth(200);
-
-        //Defining cell content
-//        column.setCellValueFactory((TreeTableColumn.CellDataFeatures<HBox , HBox> p) ->
-//                p.getValue().getValue());//todo FIX THIS
-
-//        final TreeTableView<HBox> treeTableView = new TreeTableView<>(root);
-//        treeTableView.setPrefWidth(200);
-//        treeTableView.getColumns().add(column);
-//
-//        treeTableView.setShowRoot(true);
-
         AnchorPane rootContentAnchor=new AnchorPane();
         rootContentAnchor.getChildren().add(rootContent);
         txtPane.setContent(rootContentAnchor);
@@ -662,17 +632,6 @@ public abstract class PathFinder {
         lbl.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         lbl.setAlignment(Pos.CENTER);
         lbl.setPadding(new Insets(25, 4, 25, 5));
-
-
-//            //put floor deciding stuff here
-//            if (lbl.getText().contains("Take the stairs") || lbl.getText().contains("Take the elevator")) {
-//                HBox floor = new HBox();
-//                floor.getChildren().add(lbl);
-//                final TreeItem<HBox> root = new TreeItem<>(floor);
-//
-//                root.setExpanded(true);
-//            }
-
 
         final TreeItem<HBox> childNode = new TreeItem<>();
 
@@ -762,10 +721,8 @@ public abstract class PathFinder {
             result.getChildren().add(up);
 
     } else {
-            //vbox.getChildren().add(lbl); todo delete once working
             HBox other = new HBox();
             other.getChildren().add(lbl);
-            //content.getChildren().add(other);
             result.getChildren().add(other);
 
         }
