@@ -70,13 +70,11 @@ public class AdminMapController extends MapController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-
-        //todo ADD in MAX's thing
-//        gesMap.setOnMouseMoved( (e) -> {
-//                    mouseCnt += 1;
-//                    secCnt = 0L;
-//                }
-//        );
+        gesMap.setOnMouseMoved( (e) -> {
+                    mouseCnt += 1;
+                    secCnt = 0L;
+                }
+        );
         super.initialize(location, resources);
         SearchEngineController.setParentController(this);
         MapDisplay.displayAdmin(this);
