@@ -68,15 +68,15 @@ public class UIHelpers {
         });
     }
 
-    public static void loopPane(Pane p) {
-        for (Node n : p.getChildren()) {
-            if (n instanceof Pane) {
-                loopPane((Pane) n);
-            } else if (n instanceof JFXButton) {
-                mouseHover(n);
-            }
-        }
-    }
+//    public static void loopPane(Pane p) {
+//        for (Node n : p.getChildren()) {
+//            if (n instanceof Pane) {
+//                loopPane((Pane) n);
+//            } else if (n instanceof JFXButton) {
+//                mouseHover(n);
+//            }
+//        }
+//    }
 
     public static void btnRaise(JFXButton btn) {
         btn.setOnMouseEntered(event -> {
