@@ -2,6 +2,8 @@ import controllers.ScreenController;
 import controllers.booking.DisplayCalendarController;
 import controllers.settings.SettingsController;
 import database.Database;
+import database.SanitationTable;
+import database.UserTable;
 import google.FirebaseAPI;
 import helpers.FileHelpers;
 import messaging.TextMessenger;
@@ -31,6 +33,12 @@ public class Main extends Application {
         // Initialize database
         if(!Database.getDatabase().databaseExists()) {
             CSVParser.parse(FileHelpers.getNodesCSV(), FileHelpers.getEdgesCSV());
+
+            // Seed user table
+            UserTable.seed();
+
+            // Seed sanitation table
+            SanitationTable.seed();
         }
 
         // Initialize keywords for search engine
