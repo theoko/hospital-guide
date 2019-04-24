@@ -245,11 +245,19 @@ public abstract class PathFinder {
             if (loc1 != null && loc2 != null) {
                 String tempStr = "";
 
+                String directionUpDown="";
+                if(floorToInt(loc2.getFloor())>floorToInt(loc3.getFloor())){
+                    directionUpDown = "down";
+                }else{
+                    directionUpDown="up";
+                }
+
+
                 if (loc2.getNodeType() == Constants.NodeType.ELEV && loc3.getNodeType() == Constants.NodeType.ELEV) { // On and off the elevator
-                    tempStr += "Take the elevator from FL " + loc2.getFloor() + " to FL " + loc3.getFloor() + "\n";
+                    tempStr += "Take the elevator "+directionUpDown+" from FL " + loc2.getFloor() + " to FL " + loc3.getFloor() + "\n";
                     currentDirections = tempStr;
                 } else if (loc2.getNodeType() == Constants.NodeType.STAI && loc3.getNodeType() == Constants.NodeType.STAI) { // On and off the stairs
-                    tempStr += "Take the stairs from FL " + loc2.getFloor() + " to FL " + loc3.getFloor() + "\n";
+                    tempStr += "Take the stairs "+directionUpDown +" from FL " + loc2.getFloor() + " to FL " + loc3.getFloor() + "\n";
                     currentDirections = tempStr;
                 } else {
                     int x1 = loc1.getxCord();
@@ -523,42 +531,74 @@ public abstract class PathFinder {
 
         VBox content = new VBox();
         VBox rootContent = new VBox();
-        rootContent.setPrefWidth(350);
-        content.setPrefWidth(350);
-
+        rootContent.setPrefWidth(375);
+        content.setPrefWidth(375);
 
 
         //final TreeTableView<HBox> treeTableView = new TreeTableView<>();
         // final TreeItem<HBox> root = new TreeItem<>();
 
         TitledPane currentPane = new TitledPane();
-        boolean first =true;
+        boolean first = true;
+        int i = 0;
         for (DirectionStep step : directionSteps) {//loop through steps in directions
-            Label lbl = new Label();
 
             String floor = step.getFloor();
-            String direction = step.getDiections();
+//            String direction = step.getDiections();
 
             final TreeItem<HBox> parentNode = new TreeItem<>();
 
 
-            if (!floor.equals(lastFloor)||first) {// Is a new floor
+            if ((!floor.equals(lastFloor) || first)) {// Is a new floor
                 //    root.getChildren().addAll(parentNode);
-                first=false;
-                currentPane.setContent(content);
+                first = false;
+                HBox component = buildPaneChildren(step);
+                content.getChildren().add(component);
 
-                content.getChildren().removeAll();
+                if (currentPane != null) {
+                    currentPane.setContent(content);
+                }
+                content = new VBox();
+                content.setPrefWidth(350);
+
+                //content.getChildren().removeAll();
+
+
                 currentPane = buildTitledPane(step);
-                lastFloor = floor;
-                rootContent.getChildren().add(currentPane);
+                if (currentPane != null) {
+                    lastFloor = floor;
+                    rootContent.getChildren().add(currentPane);
+                } else {
+                    Label lbl = new Label();
 
+                    HBox result = new HBox();
+                    String direction = step.getDiections();
+                    lbl.setText(direction);
+                    lbl.setFont(new Font(18));
+                    lbl.setTextFill(Color.WHITE);
+                    lbl.setPrefWidth(330);
+                    lbl.setPrefHeight(40);
+                    lbl.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+                    lbl.setAlignment(Pos.CENTER);
+                    lbl.setPadding(new Insets(25, 4, 25, 5));
+                    if (lbl.getText().contains("Distance") || lbl.getText().contains("Time")) {
+                        lbl.setStyle("-fx-font-size: 20px;" + "-fx-font-weight: BOLD;" + "-fx-background-color: green;" + "-fx-background-radius: 30;");
+                        lbl.setTextFill(Color.BLACK);
+                        HBox other = new HBox();
+                        other.getChildren().add(lbl);
+                        rootContent.getChildren().add(other);
+                    }
+
+                }
 
             } else {// is a new step on the same floor
 
                 HBox component = buildPaneChildren(step);
-                content.getChildren().add(component);
+                AnchorPane componentAnchor = new AnchorPane();
+                componentAnchor.getChildren().add(component);
+                content.getChildren().add(componentAnchor);
                 // parentNode.getChildren().add(childNode);
-
+                //currentPane.setContent(content);
             }
         }
 
@@ -576,7 +616,9 @@ public abstract class PathFinder {
 //
 //        treeTableView.setShowRoot(true);
 
-        txtPane.setContent(rootContent);
+        AnchorPane rootContentAnchor=new AnchorPane();
+        rootContentAnchor.getChildren().add(rootContent);
+        txtPane.setContent(rootContentAnchor);
         txtPane.setVisible(true);
     }
 
@@ -596,24 +638,30 @@ public abstract class PathFinder {
         floorBox.getChildren().add(lbl);
         //    root.setValue(floorBox);
         //      root.setExpanded(true);
-
-        titledPane.setText(floor);
+        String lable;
+        if (step.getFloor().equals("")) {
+            return null;
+        } else {
+            lable = "Floor: ";
+        }
+        titledPane.setText(lable + floor);
         return titledPane;
     }
 
-    private static HBox buildPaneChildren(DirectionStep step){
+    private static HBox buildPaneChildren(DirectionStep step) {
         Label lbl = new Label();
 
         HBox result = new HBox();
-        String direction=step.getDiections();
+        result.setPadding(new Insets(10,0,10,0));
+        String direction = step.getDiections();
         lbl.setText(direction);
         lbl.setFont(new Font(18));
         lbl.setTextFill(Color.WHITE);
-        lbl.setPrefWidth(330);
-        lbl.setPrefHeight(40);
+        lbl.setPrefWidth(270);
+        lbl.setPrefHeight(20);
         lbl.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         lbl.setAlignment(Pos.CENTER);
-        lbl.setPadding(new Insets(5, 4, 6, 5));
+        lbl.setPadding(new Insets(25, 4, 25, 5));
 
 
 //            //put floor deciding stuff here
@@ -633,8 +681,8 @@ public abstract class PathFinder {
             HBox left = new HBox();
             ImageView imgLeft = new ImageView();
             imgLeft.setImage(new Image("images/Icons/left.png"));
-            imgLeft.setFitHeight(40);
-            imgLeft.setFitWidth(40);
+            imgLeft.setFitHeight(80);
+            imgLeft.setFitWidth(80);
             imgLeft.setPreserveRatio(true);
             imgLeft.setPickOnBounds(true);
             imgLeft.setStyle("-fx-background-color: green;");
@@ -644,45 +692,76 @@ public abstract class PathFinder {
             leftPane.setPrefHeight(40);
             leftPane.setStyle("-fx-background-color: green;" + "-fx-background-radius: 20;");
             left.getChildren().add(leftPane);
-            left.setSpacing(-40);
+            left.setSpacing(0);
             left.setAlignment(Pos.CENTER);
             left.getChildren().add(lbl);
-            //vbox.getChildren().add(left); todo delete once working
-            //content.getChildren().add(left);
             result.getChildren().add(left);
 
         } else if (lbl.getText().contains("right")) {
             HBox right = new HBox();
             ImageView imgRight = new ImageView();
             imgRight.setImage(new Image("images/Icons/right.png"));
-            imgRight.setFitHeight(40);
-            imgRight.setFitWidth(40);
+            imgRight.setFitHeight(80);
+            imgRight.setFitWidth(80);
             imgRight.setPreserveRatio(true);
             imgRight.setPickOnBounds(true);
             imgRight.setStyle("-fx-background-color: green;");
             AnchorPane rightPane = new AnchorPane();
+            imgRight.toFront();
             rightPane.getChildren().add(imgRight);
             rightPane.setPrefWidth(40);
             rightPane.setPrefHeight(40);
             rightPane.setStyle("-fx-background-color: green;" + "-fx-background-radius: 20;");
             right.getChildren().add(rightPane);
-            right.setSpacing(-40);
+            right.setSpacing(0);
             right.setAlignment(Pos.CENTER);
             right.getChildren().add(lbl);
-            //vbox.getChildren().add(right);todo delete once working
-            //content.getChildren().add(right);
             result.getChildren().add(right);
 
-        } else if (lbl.getText().contains("Distance") || lbl.getText().contains("Time")) {
-            lbl.setStyle("-fx-font-size: 20px;" + "-fx-font-weight: BOLD;" + "-fx-background-color: green;" + "-fx-background-radius: 30;");
-            lbl.setTextFill(Color.BLACK);
-            //vbox.getChildren().add(lbl);todo delete once working
-            HBox other = new HBox();
-            other.getChildren().add(lbl);
-           // content.getChildren().add(other);
-            result.getChildren().add(other);
+        }else if(lbl.getText().contains("down")){
+            HBox down = new HBox();
+            ImageView imgDown = new ImageView();
+            imgDown.setImage(new Image("images/Icons/down.png"));
+            imgDown.setFitHeight(80);
+            imgDown.setFitWidth(80);
+            imgDown.setPreserveRatio(true);
+            imgDown.setPickOnBounds(true);
+            imgDown.setStyle("-fx-background-color: green;");
+            AnchorPane downPane = new AnchorPane();
+            imgDown.toFront();
+            downPane.getChildren().add(imgDown);
+            downPane.setPrefWidth(40);
+            downPane.setPrefHeight(40);
+            downPane.setStyle("-fx-background-color: green;" + "-fx-background-radius: 20;");
+            down.getChildren().add(downPane);
+            down.setSpacing(0);
+            down.setAlignment(Pos.CENTER);
+            down.getChildren().add(lbl);
+            result.getChildren().add(down);
 
-        } else {
+        } else if(lbl.getText().contains("up")){
+
+            HBox up = new HBox();
+            ImageView imgUp = new ImageView();
+            imgUp.setImage(new Image("images/Icons/up.png"));
+            imgUp.setFitHeight(80);
+            imgUp.setFitWidth(80);
+            imgUp.setPreserveRatio(true);
+            imgUp.setPickOnBounds(true);
+            imgUp.setStyle("-fx-background-color: green;");
+            AnchorPane upPane = new AnchorPane();
+            imgUp.toFront();
+            upPane.getChildren().add(imgUp);
+            upPane.setPrefWidth(40);
+            upPane.setPrefHeight(40);
+            upPane.setStyle("-fx-background-color: green;" + "-fx-background-radius: 20;");
+            up.getChildren().add(upPane);
+            up.setSpacing(0);
+            up.setAlignment(Pos.CENTER);
+            up.getChildren().add(lbl);
+            result.getChildren().add(up);
+
+    } else {
             //vbox.getChildren().add(lbl); todo delete once working
             HBox other = new HBox();
             other.getChildren().add(lbl);
