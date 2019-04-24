@@ -4,7 +4,6 @@ import helpers.Constants;
 import helpers.DatabaseHelpers;
 import models.map.Edge;
 import models.map.Location;
-import models.map.Workspace;
 import models.room.Room;
 
 import java.sql.*;
@@ -148,24 +147,25 @@ public class LocationTable {
 
             statement.execute();
 
-            if (Objects.equals(DatabaseHelpers.enumToString(location.getNodeType()), Constants.NodeType.CONF.name())) {
+            if (Objects.equals(DatabaseHelpers.enumToString(location.getNodeType()), Constants.NodeType.CONF.name()) || Objects.equals(DatabaseHelpers.enumToString(location.getNodeType()), Constants.NodeType.WORK.name()) || Objects.equals(DatabaseHelpers.enumToString(location.getNodeType()), Constants.NodeType.WRKT.name())) {
 
                 // Populate conference room table
                 RoomTable.addRoom(new Room(
                         location.getNodeID(),
                         5
                 ));
-            }else if (Objects.equals(DatabaseHelpers.enumToString(location.getNodeType()), Constants.NodeType.WORK.name()) || Objects.equals(DatabaseHelpers.enumToString(location.getNodeType()), Constants.NodeType.WRKT.name())) {
-
-                // Populate conference room table
-                WorkspaceTable.addWorkspace(new Workspace(
-                        location.getNodeID(),
-                        location.getxCord(),
-                        location.getyCord(),
-                        location.getNodeType(),
-                        location.getLongName()
-                ));
             }
+//            else if (Objects.equals(DatabaseHelpers.enumToString(location.getNodeType()), Constants.NodeType.WORK.name()) || Objects.equals(DatabaseHelpers.enumToString(location.getNodeType()), Constants.NodeType.WRKT.name())) {
+//
+//                // Populate conference room table
+//                WorkspaceTable.addWorkspace(new Workspace(
+//                        location.getNodeID(),
+//                        location.getxCord(),
+//                        location.getyCord(),
+//                        location.getNodeType(),
+//                        location.getLongName()
+//                ));
+//            }
 
             return true;
 

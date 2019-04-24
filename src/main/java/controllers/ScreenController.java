@@ -23,7 +23,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import models.map.Location;
 import models.map.Map;
-import models.map.Workspace;
 import models.user.User;
 
 import java.io.IOException;
@@ -132,7 +131,6 @@ public class ScreenController {
         this.addScreen(Constants.Routes.CREATE_USER, "/fxml/UI/user/CreateUser.fxml");
         this.addScreen(Constants.Routes.USER_POPUP, "/fxml/UI/user/CreateUserPopUp.fxml");
         this.addScreen(Constants.Routes.EDIT_POPUP, "/fxml/UI/user/EditUserPopUp.fxml");
-        this.addScreen(Constants.Routes.WORKSPACE, "/fxml/UI/booking/Workspace.fxml");
         this.addScreen(Constants.Routes.WORKSPACE_POPUP, "/fxml/UI/booking/WorkspacePopUp.fxml");
         this.addScreen(Constants.Routes.REQUESTS, "/fxml/UI/requests/Requests.fxml");
         this.addScreen(Constants.Routes.IT, "/fxml/UI/requests/ITServiceRequest.fxml");
@@ -287,7 +285,7 @@ public class ScreenController {
         displayPopUp(root);
     }
 
-    public static void popUp(Constants.Routes route, Workspace ws, Circle circle, LocalTime StartTime, LocalDate StartDate, LocalTime EndTime, LocalDate EndDate) throws Exception {
+    public static void popUp(Constants.Routes route, Location ws, Circle circle, LocalTime StartTime, LocalDate StartDate, LocalTime EndTime, LocalDate EndDate) throws Exception {
         stage = new Stage();
         URL url = routeToURL(route);
 

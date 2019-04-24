@@ -57,10 +57,8 @@ public class Database {
     public static void dropTables() {
         SanitationTable.dropTable();
         BookLocationTable.dropTable();
-        BookWorkspaceTable.dropTable();
         RoomTable.dropTable();
         EdgeTable.dropTable();
-        WorkspaceTable.dropTable();
         LocationTable.dropTable();
         UserTable.dropTable();
     }
@@ -71,11 +69,9 @@ public class Database {
     private static void createTables() {
         UserTable.createTable();
         LocationTable.createtable();
-        WorkspaceTable.createtable();
         EdgeTable.createTable();
         RoomTable.createTable();
         BookLocationTable.createTable();
-        BookWorkspaceTable.createTable();
         SanitationTable.createTable();
         TransportationTable.createTable();
     }

@@ -6,7 +6,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import models.map.Location;
-import models.map.Workspace;
 
 import java.util.ArrayList;
 
@@ -20,11 +19,6 @@ public class VisualRealtimeController {
         VisualRealtimeController.panMap = panMap;
     }
     public static void removeCircle(Location c) {
-
-        panMap.getChildren().remove(c.getNodeCircle());
-
-    }
-    public static void removeCircle(Workspace c) {
 
         panMap.getChildren().remove(c.getNodeCircle());
 

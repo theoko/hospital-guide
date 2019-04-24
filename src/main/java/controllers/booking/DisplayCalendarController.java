@@ -6,15 +6,13 @@ import com.calendarfx.model.Entry;
 import com.calendarfx.view.CalendarView;
 import com.calendarfx.view.DateControl;
 import database.BookLocationTable;
-import database.BookWorkspaceTable;
 import database.LocationTable;
-import database.WorkspaceTable;
+import helpers.Constants;
 import helpers.DatabaseHelpers;
 import helpers.UserHelpers;
 import javafx.application.Platform;
 import javafx.scene.layout.BorderPane;
 import models.map.Location;
-import models.map.Workspace;
 import models.room.Book;
 
 import java.time.LocalDate;
@@ -93,8 +91,8 @@ public class DisplayCalendarController extends DateControl {
         getWorkspaces().removeEntry(workspaces);
         LocalDateTime startTime = workspaces.getStartAsLocalDateTime();
         LocalDateTime endTime = workspaces.getEndAsLocalDateTime();
-        Book book = BookWorkspaceTable.getBookByTimes(startTime, endTime);
-        BookWorkspaceTable.deleteWorkspaceBook(book);
+        Book book = BookLocationTable.getBookByTimes(startTime, endTime);
+        BookLocationTable.deleteLocationeBook(book);
 
     }
 
@@ -102,38 +100,47 @@ public class DisplayCalendarController extends DateControl {
         getLocations().removeEntry(location);
         LocalDateTime startTime = location.getStartAsLocalDateTime();
         LocalDateTime endTime = location.getEndAsLocalDateTime();
-        Book book = BookWorkspaceTable.getBookByTimes(startTime, endTime);
+        Book book = BookLocationTable.getBookByTimes(startTime, endTime);
         BookLocationTable.deleteLocationeBook(book);
 
     }
 
 
     public void setWorkspaces(){
-        List<Book> bookingsForUser = BookWorkspaceTable.getBookingsForUser(UserHelpers.getCurrentUser());
+        List<Book> bookingsForUser = BookLocationTable.getBookingsForUser(UserHelpers.getCurrentUser());
        if (bookingsForUser != null) {
            for (Book bk : bookingsForUser) {
-               String[] start = bk.getStartDate().split(" ");
-               String[] end = bk.getEndDate().split(" ");
-               String startDay = start[0];
-               String startTime = start[1].substring(0, start[1].indexOf("."));
-               String endDay = end[0];
-               String endTime = end[1].substring(0, end[1].indexOf("."));
-               ZonedDateTime calStartTime = DatabaseHelpers.getCalDateTime(startDay, startTime);
-               ZonedDateTime calEndTime = DatabaseHelpers.getCalDateTime(endDay, endTime);
-               bk.setCalStartDate(calStartTime);
-               bk.setCalEndDate(calEndTime);
+               for(Location l: LocationTable.getLocations().values()) {
+                   if(l.getNodeID().equals(bk.getRoomID()) && (l.getNodeType().equals(Constants.NodeType.WORK) || l.getNodeType().equals(Constants.NodeType.WRKT))) {
+                       String[] start = bk.getStartDate().split(" ");
+                       String[] end = bk.getEndDate().split(" ");
+                       String startDay = start[0];
+                       String startTime = start[1].substring(0, start[1].indexOf("."));
+                       String endDay = end[0];
+                       String endTime = end[1].substring(0, end[1].indexOf("."));
+                       ZonedDateTime calStartTime = DatabaseHelpers.getCalDateTime(startDay, startTime);
+                       ZonedDateTime calEndTime = DatabaseHelpers.getCalDateTime(endDay, endTime);
+                       bk.setCalStartDate(calStartTime);
+                       bk.setCalEndDate(calEndTime);
+                       break;
+                   }
+               }
            }
        }
         if (bookingsForUser != null) {
             for (Book book : bookingsForUser) {
-                String roomID = book.getRoomID();
-                Workspace room = WorkspaceTable.getWorkspaceByID(roomID);
-
-                if (room != null && book.getCalStartDate() != null) {
-                    String name = room.getLongName();
-                    Entry<String> newEntry = new Entry<>(name);
-                    createEntryAt(book.getCalStartDate(), workspaces);
-                    getWorkspaces().addEntry(newEntry);
+                for(Location l: LocationTable.getLocations().values()) {
+                    if (l.getNodeID().equals(book.getRoomID()) && (l.getNodeType().equals(Constants.NodeType.WORK) || l.getNodeType().equals(Constants.NodeType.WRKT))) {
+                        String roomID = book.getRoomID();
+                        Location room = LocationTable.getLocationByID(roomID);
+                        if (room != null && book.getCalStartDate() != null) {
+                            String name = room.getLongName();
+                            Entry<String> newEntry = new Entry<>(name);
+                            createEntryAt(book.getCalStartDate(), workspaces);
+                            getWorkspaces().addEntry(newEntry);
+                        }
+                        break;
+                    }
                 }
             }
         }
@@ -142,31 +149,36 @@ public class DisplayCalendarController extends DateControl {
     public void setLocations() {
         List<Book> bookingsForUser = BookLocationTable.getBookingsForUser(UserHelpers.getCurrentUser());
         if (bookingsForUser != null) {
-
-
             for (Book bk : bookingsForUser) {
-                String[] start = bk.getStartDate().split(" ");
-                String[] end = bk.getEndDate().split(" ");
-                String startDay = start[0];
-                String startTime = start[1].substring(0, start[1].indexOf("."));
-                String endDay = end[0];
-                String endTime = end[1].substring(0, end[1].indexOf("."));
-                ZonedDateTime calStartTime = DatabaseHelpers.getCalDateTime(startDay, startTime);
-                ZonedDateTime calEndTime = DatabaseHelpers.getCalDateTime(endDay, endTime);
-                bk.setCalStartDate(calStartTime);
-                bk.setCalEndDate(calEndTime);
+                for(Location l: LocationTable.getLocations().values()) {
+                    if (l.getNodeID().equals(bk.getRoomID()) && (l.getNodeType().equals(Constants.NodeType.CONF))) {
+                        String[] start = bk.getStartDate().split(" ");
+                        String[] end = bk.getEndDate().split(" ");
+                        String startDay = start[0];
+                        String startTime = start[1].substring(0, start[1].indexOf("."));
+                        String endDay = end[0];
+                        String endTime = end[1].substring(0, end[1].indexOf("."));
+                        ZonedDateTime calStartTime = DatabaseHelpers.getCalDateTime(startDay, startTime);
+                        ZonedDateTime calEndTime = DatabaseHelpers.getCalDateTime(endDay, endTime);
+                        bk.setCalStartDate(calStartTime);
+                        bk.setCalEndDate(calEndTime);
+                    }
+                }
             }
         }
         if (bookingsForUser != null) {
             for (Book book : bookingsForUser) {
-                String roomID = book.getRoomID();
-                Location room = LocationTable.getLocationByID(roomID);
-
-                if (room != null && book.getCalStartDate() != null) {
-                    String name = room.getLongName();
-                    Entry<String> newEntry = new Entry<>(name);
-                    createEntryAt(book.getCalStartDate(), locations);
-                    getLocations().addEntry(newEntry);
+                for(Location l: LocationTable.getLocations().values()) {
+                    if (l.getNodeID().equals(book.getRoomID()) && (l.getNodeType().equals(Constants.NodeType.CONF))) {
+                        String roomID = book.getRoomID();
+                        Location room = LocationTable.getLocationByID(roomID);
+                        if (room != null && book.getCalStartDate() != null) {
+                            String name = room.getLongName();
+                            Entry<String> newEntry = new Entry<>(name);
+                            createEntryAt(book.getCalStartDate(), locations);
+                            getLocations().addEntry(newEntry);
+                        }
+                    }
                 }
             }
         }

@@ -9,6 +9,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
@@ -29,6 +30,7 @@ import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
 import map.MapDisplay;
+import map.PathFinder;
 import models.map.Location;
 import models.map.Map;
 import net.kurobako.gesturefx.GesturePane;
@@ -38,15 +40,15 @@ import java.util.*;
 
 public abstract class MapController implements Initializable {
     private final double MAX_ZOOM = 2.0;
-    private final double MIN_ZOOM = 0.01;
-    private final double ZOOM_BUFFER = 0.5;
+    private final double MIN_ZOOM = 0.1;
     private final double ZOOM_PADDING_W = 500.0;
     private final double ZOOM_PADDING_H = 0;
-    private final double ANIMATION_TIME = 1000;
     private final double ZOOM_OUT = 50.0;
-    private final double ZOOM_SPEED = 0.35;
-    private final double PAN_SPEED = 0.25;
+    private final double ZOOM_SPEED = 0.5;
+    private final double PAN_SPEED = 0.5;
     private final double PARTIAL_ZOOM = 0.3;
+    private final double ZOOM_RESET = 0.5;
+    private final double RESET_SPEED = 1000;
 
     public GesturePane gesMap;
     public ImageView imgMap;
@@ -72,6 +74,10 @@ public abstract class MapController implements Initializable {
     public static String currentDirections;
     protected Map map;
     private List<Timeline> lstTls;
+    private boolean doesPan;
+    private List<JFXButton> lstBreadBtns;
+    private List<HBox> lstBreadHbxs;
+    private HashMap<String, Boolean> lstTransits;
 
     public MapController() {
         floor = "1";
@@ -80,6 +86,10 @@ public abstract class MapController implements Initializable {
         currMapControl = this;
         currentDirections = null;
         currentRoute = null;
+        doesPan = true;
+        lstBreadBtns = new ArrayList<>();
+        lstBreadHbxs = new ArrayList<>();
+        lstTransits = new HashMap<>();
     }
 
     @Override
@@ -104,8 +114,8 @@ public abstract class MapController implements Initializable {
         Thread t = new Thread(() -> {
             try {
                 Thread.sleep(1000);
-                gesMap.reset();
-//                gesMap.setMinScale(gesMap.getCurrentScale());
+                gesMap.centreOn(gesMap.targetPointAtViewportCentre());
+                gesMap.animate(Duration.millis(RESET_SPEED)).zoomTo(ZOOM_RESET, gesMap.targetPointAtViewportCentre());
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -142,6 +152,7 @@ public abstract class MapController implements Initializable {
         floor = newFloor;
         imgMap.setImage(ImageFactory.getImage(floor));
         updateLines();
+        updateLocations();
     }
 
     public abstract void showFloor(String newFloor);
@@ -154,7 +165,7 @@ public abstract class MapController implements Initializable {
         private Path line;
         private String floor;
 
-        public LineTuple(Path line, String floor) {
+        LineTuple(Path line, String floor) {
             this.line = line;
             this.floor = floor;
         }
@@ -205,7 +216,7 @@ public abstract class MapController implements Initializable {
     private void addBreadCrumbs() {
         final double HBX_SPACING = 10.0;
         final double VBX_SPACING = 1.0;
-        final double VBX_HEIGHT = 50.0;
+        final double VBX_HEIGHT = 56.0;
 
         vbxButtons.getChildren().clear();
         vbxButtons.setSpacing(VBX_SPACING);
@@ -222,10 +233,11 @@ public abstract class MapController implements Initializable {
             btn.getStyleClass().add("jfx-button");
             btn.getStyleClass().add("animated-option-button");
             btn.setOnMouseClicked((e) -> {
-                showFloorHelper(strFloor);
-                displayHint(hbx);
-                updateBreadButtons(btn);
+                showBreadCrumb(hbx, btn);
             });
+
+            lstBreadHbxs.add(hbx);
+            lstBreadBtns.add(btn);
 
             hbx.getChildren().add(btn);
             vbxButtons.getChildren().add(hbx);
@@ -242,7 +254,9 @@ public abstract class MapController implements Initializable {
                 hbxDot.setAlignment(Pos.CENTER_LEFT);
                 hbxDot.setPadding(new Insets(0, 0, 0, 20));
                 Circle dot = new Circle(DOT_RADIUS);
-                dot.setFill(Color.BLACK);
+                dot.setFill(Color.NAVY);
+                dot.setStroke(Color.GOLD);
+                dot.setStrokeWidth(0);
                 hbxDot.getChildren().add(dot);
                 vbxLoad.getChildren().add(hbxDot);
             }
@@ -258,13 +272,26 @@ public abstract class MapController implements Initializable {
         btnCancel.getStyleClass().add("jfx-cancel-button");
         btnCancel.getStyleClass().add("animated-option-button");
         btnCancel.setOnMouseClicked((e) -> {
-            addFloorBtns();
-            clearMap();
-            showFloor(floor);
+            cancelBreadCrumbs();
         });
 
         hbxCancel.getChildren().add(btnCancel);
         vbxButtons.getChildren().add(hbxCancel);
+    }
+
+    private void showBreadCrumb(HBox hbx, JFXButton btn) {
+        showFloorHelper(btn.getText());
+        displayHint(hbx);
+        updateBreadButtons(btn);
+    }
+
+    private void cancelBreadCrumbs() {
+        addFloorBtns();
+        clearMap();
+        showFloor(floor);
+        lstBreadHbxs = new ArrayList<>();
+        lstBreadBtns = new ArrayList<>();
+        gesMap.animate(Duration.millis(RESET_SPEED)).zoomTo(ZOOM_RESET, gesMap.targetPointAtViewportCentre());
     }
 
     public void addLine(Path line, String floor) {
@@ -296,27 +323,110 @@ public abstract class MapController implements Initializable {
         panMap.getChildren().add(0, line);
         addBreadCrumbs();
         updateLines();
+        showBreadCrumb(lstBreadHbxs.get(0), lstBreadBtns.get(0));
     }
 
     public void displayLocations(Stack<Location> path) {
-        String lstFloor = "";
-        Location lstLoc = null;
+        Location lstLoc = path.pop();
+        String lstFloor = lstLoc.getFloor();
+        Circle start = MapDisplay.createCircle(this, lstLoc, MapDisplay.NodeStyle.START, 1, Constants.Routes.USER_INFO, false);
+        start.setOnMouseClicked(event -> {
+            cancelBreadCrumbs();
+        });
+
+        int i = 0;
+        panMap.getChildren().add(start);
         while (!path.isEmpty()) {
             Location curLoc = path.pop();
             String curFloor = curLoc.getFloor();
             if (path.size() == 0) {
-                Circle circle = MapDisplay.createCircle(this, curLoc, MapDisplay.NodeStyle.REGULAR, 1, Constants.Routes.USER_INFO, false);
-                panMap.getChildren().add(circle);
+                Circle end = MapDisplay.createCircle(this, curLoc, MapDisplay.NodeStyle.END, 1, Constants.Routes.USER_INFO, false);
+                end.setOnMouseClicked(event -> {
+                    cancelBreadCrumbs();
+                });
+                panMap.getChildren().add(end);
             } else if (!curFloor.equals(lstFloor) ) {
-                if (lstLoc != null) {
-                    Circle circle1 = MapDisplay.createCircle(this, lstLoc, MapDisplay.NodeStyle.REGULAR, 1, Constants.Routes.USER_INFO, false);
-                    panMap.getChildren().add(circle1);
-                }
+                lstTransits.put(lstLoc.getNodeID(), upOrDown(lstFloor, curFloor));
+                Circle circle1 = MapDisplay.createCircle(this, lstLoc, MapDisplay.NodeStyle.REGULAR, 1, Constants.Routes.USER_INFO, false);
+                final int index = i;
+                circle1.setOnMouseClicked(event -> {
+                    showBreadCrumb(lstBreadHbxs.get(index + 1), lstBreadBtns.get(index + 1));
+                });
+                panMap.getChildren().add(circle1);
+
+                lstTransits.put(curLoc.getNodeID(), upOrDown(curFloor, lstFloor));
                 Circle circle2 = MapDisplay.createCircle(this, curLoc, MapDisplay.NodeStyle.REGULAR, 1, Constants.Routes.USER_INFO, false);
+                circle2.setOnMouseClicked(event -> {
+                    showBreadCrumb(lstBreadHbxs.get(index), lstBreadBtns.get(index));
+                });
                 panMap.getChildren().add(circle2);
+
+                i++;
             }
             lstFloor = curFloor;
             lstLoc = curLoc;
+        }
+        updateLocations();
+    }
+
+    private Boolean upOrDown(String flrStart, String flrEnd) {
+        int intStart = PathFinder.floorToInt(flrStart);
+        int intEnd = PathFinder.floorToInt(flrEnd);
+        return intStart - intEnd < 0;
+    }
+
+    private void updateLocations() {
+        clearArrows();
+        List<Node> lstArrows = new ArrayList<>();
+        for (Node n : panMap.getChildren()) {
+            if (n instanceof Circle) {
+                Circle circ = (Circle) n;
+                Location loc = map.getLocation(circ.getId());
+                if (loc.getFloor().equals(floor)) {
+                    circ.setOpacity(1);
+                    if (loc.getNodeType().equals(Constants.NodeType.ELEV) || loc.getNodeType().equals(Constants.NodeType.STAI)) {
+                        if (lstTransits.containsKey(loc.getNodeID())) {
+                            lstArrows.add(addArrow(loc, lstTransits.get(loc.getNodeID())));
+                        }
+                    }
+                } else {
+                    circ.setOpacity(MapDisplay.opac);
+                }
+            }
+        }
+        for (Node arrow : lstArrows) {
+            panMap.getChildren().add(arrow);
+        }
+    }
+
+    private Node addArrow(Location loc, boolean isUp) {
+        final double fitWidth = 50.0;
+        final double xOffSet = 10.0;
+        final double yOffSet = 25.0;
+
+        ImageView imgArrow = new ImageView();
+        if (isUp) {
+            imgArrow.setImage(ImageFactory.getImage("arrowUp"));
+        } else {
+            imgArrow.setImage(ImageFactory.getImage("arrowDown"));
+        }
+        imgArrow.setPreserveRatio(true);
+        imgArrow.setFitWidth(fitWidth);
+        imgArrow.setX(loc.getxCord() + xOffSet);
+        imgArrow.setY(loc.getyCord() - yOffSet);
+        return imgArrow;
+    }
+
+    private void clearArrows() {
+        List<Node> lstNodes = new ArrayList<>();
+        for (Node n : panMap.getChildren()) {
+            if (n instanceof ImageView) {
+                lstNodes.add(n);
+            }
+        }
+
+        for (Node n : lstNodes) {
+            panMap.getChildren().remove(n);
         }
     }
 
@@ -327,7 +437,9 @@ public abstract class MapController implements Initializable {
             for (Node n : vbxButtons.getChildren()) {
                 if (n instanceof HBox) {
                     if (n.equals(btnHbox)) {
-                        panner(lstLineTransits.get(i).getLine());
+                        if (doesPan) {
+                            panner(lstLineTransits.get(i).getLine());
+                        }
                         break;
                     }
                     i++;
@@ -402,6 +514,7 @@ public abstract class MapController implements Initializable {
             HBox hbx = (HBox) n;
             Circle c = (Circle) hbx.getChildren().get(0);
             c.setRadius(5.0);
+            c.setStrokeWidth(0.0);
         }
     }
 
@@ -413,6 +526,7 @@ public abstract class MapController implements Initializable {
         for (int i = 0; i < children.size(); i++) {
             HBox hbx = (HBox) children.get(i);
             Circle c = (Circle) hbx.getChildren().get(0);
+            c.setStrokeWidth(2.0);
             Timeline tl = new Timeline();
             tl.setCycleCount(Timeline.INDEFINITE);
             tl.setAutoReverse(true);
@@ -443,14 +557,17 @@ public abstract class MapController implements Initializable {
                 // Zoom out a bit
                 gesMap.animate(Duration.seconds(Math.abs(zoomOut / ZOOM_SPEED))).afterFinished(() -> {
                     // Pan as close to center of line as possible
-                    gesMap.animate(Duration.millis(calcDist(beforeCenter, lineCenter) / PAN_SPEED)).afterFinished(() -> {
+                    double panSpeed1 = calcDist(beforeCenter, lineCenter) / PAN_SPEED;
+                    gesMap.animate(Duration.millis(panSpeed1)).afterFinished(() -> {
                         // Zoom in towards line
                         Bounds afterView = gesMap.getTargetViewport();
                         Point2D afterCenter = getCenter(afterView);
                         double zoomIn = calcZoom(afterView, lineView, true);
-                        gesMap.animate(Duration.seconds(Math.abs(zoomIn / ZOOM_SPEED))).afterFinished(() -> {
+                        double zoomInSpeed = Math.abs(zoomIn / ZOOM_SPEED);
+                        gesMap.animate(Duration.seconds(zoomInSpeed)).afterFinished(() -> {
                             // Center the line
-                            gesMap.animate(Duration.millis(calcDist(afterCenter, lineCenter) / PAN_SPEED)).centreOn(lineCenter);
+                            double panSpeed2 = calcDist(afterCenter, lineCenter) / PAN_SPEED;
+                            gesMap.animate(Duration.millis(panSpeed2)).centreOn(lineCenter);
                         }).zoomBy(zoomIn, afterCenter);
                     }).centreOn(lineCenter);
                 }).zoomBy(zoomOut, beforeCenter);
@@ -459,7 +576,7 @@ public abstract class MapController implements Initializable {
                 double zoomOut = calcZoom(beforeView, lineView, true) * PARTIAL_ZOOM;
                 gesMap.animate(Duration.seconds(Math.abs(zoomOut / ZOOM_SPEED))).afterFinished(() -> {
                     // Pan as close to center of line as possible
-                    gesMap.animate(Duration.millis(calcDist(beforeCenter, lineCenter))).afterFinished(() -> {
+                    gesMap.animate(Duration.millis(calcDist(beforeCenter, lineCenter) / PAN_SPEED)).afterFinished(() -> {
                         // Finish out the zoom
                         Bounds afterView = gesMap.getTargetViewport();
                         double zoomOuter = calcZoom(afterView, lineView, true);
@@ -471,10 +588,11 @@ public abstract class MapController implements Initializable {
         } else { // Point
             MoveTo mt = ((MoveTo) line.getElements().get(0));
             Point2D pnt = new Point2D(mt.getX(), mt.getY());
-            double zoom = 2 * MAX_ZOOM;
-            gesMap.animate(Duration.seconds(zoom / ZOOM_SPEED)).afterFinished(() -> {
-                gesMap.animate(Duration.millis(calcDist(beforeCenter, pnt))).centreOn(pnt);
-            }).zoomBy(zoom, pnt);
+            double zoom = MAX_ZOOM;
+            double zoomBy = Math.abs((zoom - gesMap.getCurrentScale()) / zoom);
+            gesMap.animate(Duration.seconds(zoomBy / ZOOM_SPEED)).afterFinished(() -> {
+                gesMap.animate(Duration.millis(calcDist(beforeCenter, pnt) / PAN_SPEED)).centreOn(pnt);
+            }).zoomTo(zoom, pnt);
         }
     }
 
