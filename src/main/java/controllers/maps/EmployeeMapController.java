@@ -380,13 +380,13 @@ public class EmployeeMapController extends MapController {
         start.setPromptText("Select Path");
         start.setStyle("-fx-background-color: #ffffff");
         start.setPrefWidth(300);
-        start.setPrefHeight(35);
+        start.setPrefHeight(40);
 
         //path.setEditable(true);
         end.setPromptText("Select Path");
         end.setStyle("-fx-background-color: #ffffff");
         end.setPrefWidth(300);
-        end.setPrefHeight(35);
+        end.setPrefHeight(40);
 
         ImageView imgPath = new ImageView();
         imgPath.setImage(new Image("images/Icons/path.png"));
@@ -975,10 +975,16 @@ public class EmployeeMapController extends MapController {
 
         HBox pathBox = new HBox();
 
-        pathBox.getChildren().add(start);
-        pathBox.getChildren().add(lblStart);
-        pathBox.getChildren().add(end);
-        pathBox.getChildren().add(lblEnd);
+        HBox pathBox1 = new HBox();
+        pathBox1.setSpacing(-25.0);
+        pathBox1.getChildren().add(start);
+        pathBox1.getChildren().add(lblStart);
+        pathBox.getChildren().add(pathBox1);
+        HBox pathBox2 = new HBox();
+        pathBox2.setSpacing(-25.0);
+        pathBox2.getChildren().add(end);
+        pathBox2.getChildren().add(lblEnd);
+        pathBox.getChildren().add(pathBox2);
         pathBox.setAlignment(Pos.CENTER);
         pathBox.setPrefSize(700,40);
         pathBox.setSpacing(20);
