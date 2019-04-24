@@ -6,6 +6,7 @@ import controllers.search.SearchEngineController;
 import controllers.search.TwoLocSearchPopupController;
 import database.BookLocationTable;
 import database.LocationTable;
+import edu.wpi.cs3733.d19.teamMService.Main;
 import floral.api.FloralApi;
 import google.FirebaseAPI;
 import helpers.Constants;
@@ -693,6 +694,17 @@ public class EmployeeMapController extends MapController {
         btnSign.setPrefHeight(60);
         btnSign.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnSign.setTextOverrun(OverrunStyle.CLIP);
+        btnSign.setOnMouseClicked(event -> {
+            runLanguageAPI();
+            /*
+            try {
+                ScreenController.popUp(Constants.Routes.TWO_NODE_SEARCH);
+                TwoLocSearchPopupController.setOnSendClick(EmployeeMapController::runLanguageAPI);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+            */
+        });
         UIHelpers.mouseHover(btnSign);
         btnSign.setTooltip(new Tooltip("Interpreter"));
         UIHelpers.btnRaise(btnSign);
@@ -1375,7 +1387,7 @@ public class EmployeeMapController extends MapController {
         nodesListFlo.setSpacing(320);
 
         nodesListInt.addAnimatedNode(btnSign);
-        nodesListInt.addAnimatedNode(boxInt);
+        // nodesListInt.addAnimatedNode(boxInt);
         nodesListInt.setRotate(75);
         nodesListInt.setSpacing(310);
 
@@ -1499,7 +1511,20 @@ public class EmployeeMapController extends MapController {
         try {
             floralApi.run(10, 10, "/css/jfoenix-components.css", endLocID);
         } catch (Exception exception){
-            System.out.println("Floral API failed");
+            System.out.println("Failed to run Floral API");
+            exception.printStackTrace();
+        }
+    }
+
+    /**
+     * Runs Language request API
+     */
+    public static void runLanguageAPI() {
+        Main api = new Main();
+        try {
+            api.run(10, 10, 800, 600, "/css/jfoenix-components.css", "destination");
+        } catch (Exception exception) {
+            System.out.println("Failed to run Language API");
             exception.printStackTrace();
         }
     }
