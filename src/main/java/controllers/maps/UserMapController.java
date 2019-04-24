@@ -434,7 +434,7 @@ public class UserMapController extends MapController {
 
         Label dir = new Label("Text Directions");
         dir.setPrefHeight(50);
-        dir.setPrefWidth(400);
+        dir.setPrefWidth(510);
         dir.setTextFill(Color.WHITE);
         dir.setAlignment(Pos.CENTER);
         dir.setStyle("-fx-background-color: radial-gradient(radius 120%, #022D5A, derive(#022D5A, -60%), derive(#022D5A, 60%));" +
@@ -448,7 +448,7 @@ public class UserMapController extends MapController {
         pathDir.getChildren().add(tilDirections);
         pathDir.getChildren().add(textBox);
         pathDir.setAlignment(Pos.CENTER);
-        pathDir.setPrefSize(400,700);
+        pathDir.setPrefSize(510,700);
         pathDir.setSpacing(5);
 
         Label lblAbout = new Label("About Us");
@@ -496,7 +496,7 @@ public class UserMapController extends MapController {
         nodeListRoute.addAnimatedNode(btnRoute);
         nodeListRoute.addAnimatedNode(pathDir);
         nodeListRoute.setRotate(90);
-        nodeListRoute.setSpacing(-135);
+        nodeListRoute.setSpacing(-75);
 
         nodesListAbout.addAnimatedNode(btnAbout);
         nodesListAbout.addAnimatedNode(boxAbout);

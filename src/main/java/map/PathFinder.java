@@ -515,7 +515,7 @@ public abstract class PathFinder {
     private static void addDirections(ScrollPane txtPane, Stack<DirectionStep> directionSteps) {
         VBox vbox = new VBox();
 
-        vbox.setPadding(new Insets(10, 10, 10, 15));
+        vbox.setPadding(new Insets(10, 4, 10, 4));
         vbox.setStyle("-fx-background-radius: 20;");
         vbox.setSpacing(5);
         vbox.setAlignment(Pos.CENTER);
@@ -525,8 +525,12 @@ public abstract class PathFinder {
 
         VBox content = new VBox();
         VBox rootContent = new VBox();
-        rootContent.setPrefWidth(375);
-        content.setPrefWidth(375);
+        rootContent.setPrefWidth(430);
+        content.setPrefWidth(430);
+        content.setSpacing(5);
+        rootContent.setSpacing(5);
+        rootContent.setAlignment(Pos.CENTER);
+        rootContent.setPadding(new Insets(10, 10, 10, 15));
 
         TitledPane currentPane = new TitledPane();
         boolean first = true;
@@ -534,9 +538,6 @@ public abstract class PathFinder {
         for (DirectionStep step : directionSteps) {//loop through steps in directions
 
             String floor = step.getFloor();
-
-            final TreeItem<HBox> parentNode = new TreeItem<>();
-
 
             if ((!floor.equals(lastFloor) || first)) {// Is a new floor
                 //    root.getChildren().addAll(parentNode);
@@ -548,7 +549,8 @@ public abstract class PathFinder {
                     currentPane.setContent(content);
                 }
                 content = new VBox();
-                content.setPrefWidth(350);
+                content.setPrefWidth(420);
+                content.setSpacing(5);
 
                 currentPane = buildTitledPane(step);
                 if (currentPane != null) {
@@ -562,11 +564,11 @@ public abstract class PathFinder {
                     lbl.setText(direction);
                     lbl.setFont(new Font(18));
                     lbl.setTextFill(Color.WHITE);
-                    lbl.setPrefWidth(330);
+                    lbl.setPrefWidth(430);
                     lbl.setPrefHeight(40);
                     lbl.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
                     lbl.setAlignment(Pos.CENTER);
-                    lbl.setPadding(new Insets(25, 4, 25, 5));
+                    lbl.setPadding(new Insets(4, 5, 4, 5));
                     if (lbl.getText().contains("Distance") || lbl.getText().contains("Time")) {
                         lbl.setStyle("-fx-font-size: 20px;" + "-fx-font-weight: BOLD;" + "-fx-background-color: green;" + "-fx-background-radius: 30;");
                         lbl.setTextFill(Color.BLACK);
@@ -599,9 +601,9 @@ public abstract class PathFinder {
 
         lbl.setText(floor);
         lbl.setTextFill(Color.WHITE);
-        lbl.setPrefWidth(330);
+        lbl.setPrefWidth(430);
         lbl.setPrefHeight(40);
-        lbl.setStyle("-fx-background-color: purple;" + "-fx-background-radius: 30;");
+        lbl.setStyle("-fx-background-color: purple;" + "-fx-background-radius: 20;");
         lbl.setAlignment(Pos.CENTER);
         lbl.setPadding(new Insets(5, 4, 4, 5));
         HBox floorBox = new HBox();
@@ -615,6 +617,7 @@ public abstract class PathFinder {
             lable = "Floor: ";
         }
         titledPane.setText(lable + floor);
+        titledPane.setStyle("-fx-font-size: 18px");
         return titledPane;
     }
 
@@ -622,26 +625,24 @@ public abstract class PathFinder {
         Label lbl = new Label();
 
         HBox result = new HBox();
-        result.setPadding(new Insets(10,0,10,0));
+        result.setPadding(new Insets(3,-10,3,-10));
         String direction = step.getDiections();
         lbl.setText(direction);
         lbl.setFont(new Font(18));
         lbl.setTextFill(Color.WHITE);
-        lbl.setPrefWidth(270);
-        lbl.setPrefHeight(20);
+        lbl.setPrefWidth(390);
+        //lbl.setPrefHeight(20);
+        lbl.setWrapText(true);
         lbl.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         lbl.setAlignment(Pos.CENTER);
-        lbl.setPadding(new Insets(25, 4, 25, 5));
-
-        final TreeItem<HBox> childNode = new TreeItem<>();
-
+        lbl.setPadding(new Insets(5, 5, 5, 5));
 
         if (lbl.getText().contains("left")) {
             HBox left = new HBox();
             ImageView imgLeft = new ImageView();
             imgLeft.setImage(new Image("images/Icons/left.png"));
-            imgLeft.setFitHeight(80);
-            imgLeft.setFitWidth(80);
+            imgLeft.setFitHeight(40);
+            imgLeft.setFitWidth(40);
             imgLeft.setPreserveRatio(true);
             imgLeft.setPickOnBounds(true);
             imgLeft.setStyle("-fx-background-color: green;");
@@ -660,8 +661,8 @@ public abstract class PathFinder {
             HBox right = new HBox();
             ImageView imgRight = new ImageView();
             imgRight.setImage(new Image("images/Icons/right.png"));
-            imgRight.setFitHeight(80);
-            imgRight.setFitWidth(80);
+            imgRight.setFitHeight(40);
+            imgRight.setFitWidth(40);
             imgRight.setPreserveRatio(true);
             imgRight.setPickOnBounds(true);
             imgRight.setStyle("-fx-background-color: green;");
@@ -681,8 +682,8 @@ public abstract class PathFinder {
             HBox down = new HBox();
             ImageView imgDown = new ImageView();
             imgDown.setImage(new Image("images/Icons/down.png"));
-            imgDown.setFitHeight(80);
-            imgDown.setFitWidth(80);
+            imgDown.setFitHeight(40);
+            imgDown.setFitWidth(40);
             imgDown.setPreserveRatio(true);
             imgDown.setPickOnBounds(true);
             imgDown.setStyle("-fx-background-color: green;");
@@ -703,8 +704,8 @@ public abstract class PathFinder {
             HBox up = new HBox();
             ImageView imgUp = new ImageView();
             imgUp.setImage(new Image("images/Icons/up.png"));
-            imgUp.setFitHeight(80);
-            imgUp.setFitWidth(80);
+            imgUp.setFitHeight(40);
+            imgUp.setFitWidth(40);
             imgUp.setPreserveRatio(true);
             imgUp.setPickOnBounds(true);
             imgUp.setStyle("-fx-background-color: green;");
