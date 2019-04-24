@@ -950,6 +950,23 @@ public class EmployeeMapController extends MapController {
             }
         });
 
+        ImageView imgBaby = new ImageView();
+        imgBaby.setImage(new Image("images/Icons/baby.png"));
+        imgBaby.setFitHeight(30);
+        imgBaby.setFitWidth(30);
+        imgBaby.setPreserveRatio(true);
+        imgBaby.setPickOnBounds(true);
+
+        JFXButton btnBaby = new JFXButton("",imgBaby);
+        btnBaby.setAlignment(Pos.CENTER);
+        btnBaby.setPrefWidth(60);
+        btnBaby.setPrefHeight(60);
+        btnBaby.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnBaby.setTextOverrun(OverrunStyle.CLIP);
+        btnBaby.setOnMouseClicked( event -> {
+            //add here
+        });
+
         btnLogOut.setStyle("-fx-background-radius: 30;" );
         btnLogOut.setStyle("-fx-background-radius: 30;");
         btnLogOut.setButtonType(JFXButton.ButtonType.RAISED);
@@ -1172,7 +1189,7 @@ public class EmployeeMapController extends MapController {
         boxInt.setPrefSize(1200,700);
         boxInt.setSpacing(5);
 
-        Label lblLock = new Label("Interpreter Service Request");
+        Label lblLock = new Label("Security Service Request");
         lblLock.setPrefHeight(50);
         lblLock.setPrefWidth(1200);
         lblLock.setTextFill(Color.WHITE);
@@ -1409,6 +1426,11 @@ public class EmployeeMapController extends MapController {
         nodeListRoom.setRotate(90);
         nodeListRoom.setSpacing(-30);
 
+        HBox boxReqMain = new HBox();
+        boxReqMain.setAlignment(Pos.CENTER);
+        boxReqMain.setPrefSize(130,700);
+        boxReqMain.setSpacing(5);
+
         VBox boxReq = new VBox();
         boxReq.getChildren().add(nodesListComp);
         boxReq.getChildren().add(nodesListFlo);
@@ -1418,17 +1440,26 @@ public class EmployeeMapController extends MapController {
         boxReq.getChildren().add(nodesListAv);
         boxReq.getChildren().add(nodesListInTr);
         boxReq.getChildren().add(nodesListOut);
-        boxReq.getChildren().add(nodesListGift);
-        boxReq.getChildren().add(nodesListInfo);
-        boxReq.getChildren().add(btnFood);
         boxReq.setAlignment(Pos.CENTER);
-        boxReq.setPrefSize(60,800);
+        boxReq.setPrefSize(60,700);
         boxReq.setSpacing(5);
 
+        VBox boxReq1 = new VBox();
+        boxReq1.getChildren().add(nodesListGift);
+        boxReq1.getChildren().add(nodesListInfo);
+        boxReq1.getChildren().add(btnFood);
+        boxReq1.getChildren().add(btnBaby);
+        boxReq1.setAlignment(Pos.CENTER);
+        boxReq1.setPrefSize(60,700);
+        boxReq1.setSpacing(5);
+
+        boxReqMain.getChildren().add(boxReq1);
+        boxReqMain.getChildren().add(boxReq);
+
         nodeListExl.addAnimatedNode(btnExl);
-        nodeListExl.addAnimatedNode(boxReq);
+        nodeListExl.addAnimatedNode(boxReqMain);
         nodeListExl.setRotate(150);
-        nodeListExl.setSpacing(-220);
+        nodeListExl.setSpacing(-170);
 
         vboxDock.getChildren().add(nodeListUser);
         vboxDock.getChildren().add(nodeListSearch);
