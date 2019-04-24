@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" prefHeight="643.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CreditPage.CreditPageController">
+    <children>
+        <HBox minHeight="100.0" minWidth="1200.0" prefWidth="1200.0">
+            <children>
+                <Label alignment="CENTER" contentDisplay="CENTER" minHeight="100.0" minWidth="1200.0" style="-fx-background-color: #022D5A;" text="Features Credit" textFill="WHITE">
+                    <font>
+                        <Font size="40.0" />
+                    </font>
+                </Label>
+            </children>
+        </HBox>
+        <HBox layoutX="4.0" layoutY="107.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.bottomAnchor="743.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="-4.0" AnchorPane.topAnchor="107.0">
+            <children>
+                <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="1200.0" text="WPI Computer Science Department" textFill="#022d5a">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+            </children>
+        </HBox>
+        <HBox layoutX="-2.0" layoutY="131.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="131.0">
+            <children>
+                <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="1200.0" text="CS3733-D19 Software Engineering" textFill="#022d5a">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+            </children>
+        </HBox>
+        <HBox layoutX="-1.0" layoutY="158.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="158.0">
+            <children>
+                <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="1200.0" text="Professor Wong" textFill="#022d5a">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+            </children>
+        </HBox>
+        <HBox alignment="TOP_CENTER" prefHeight="44.0" prefWidth="1200.0" AnchorPane.bottomAnchor="629.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="200.0">
+            <children>
+                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="225.0" style="-fx-background-color: #022D5A; -fx-background-radius: 20;" text="Special Thank You to:" textFill="WHITE">
+                    <font>
+                        <Font size="20.0" />
+                    </font>
+                </Label>
+            </children>
+        </HBox>
+        <HBox alignment="CENTER" layoutX="259.0" layoutY="239.0" prefHeight="40.0" prefWidth="200.0" spacing="375.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="260.0">
+            <children>
+                <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="225.0" style="-fx-background-color: #022D5A; -fx-background-radius: 20;" text="Developer Team Name" textFill="WHITE">
+                    <font>
+                        <Font size="17.0" />
+                    </font>
+                </Label>
+                <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="150.0" style="-fx-background-color: #022D5A; -fx-background-radius: 20;" text="Feature:" textFill="WHITE">
+                    <font>
+                        <Font size="17.0" />
+                    </font>
+                </Label>
+            </children>
+            <padding>
+                <Insets right="40.0" />
+            </padding>
+        </HBox>
+        <HBox layoutX="162.0" layoutY="275.0" prefHeight="50.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="320.0">
+            <children>
+                <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="600.0" text="Team I (B17)" textFill="#022d5a">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="600.0" text="Food Service Request" textFill="#022d5a">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                    <padding>
+                        <Insets right="40.0" />
+                    </padding>
+                </Label>
+            </children>
+        </HBox>
+        <HBox layoutX="129.0" layoutY="300.0" prefHeight="50.0" prefWidth="1200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="370.0">
+            <children>
+                <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="600.0" text="Team G (D19)" textFill="#022d5a">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="600.0" text="Floral Request" textFill="#022d5a">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                    <padding>
+                        <Insets right="40.0" />
+                    </padding>
+                </Label>
+            </children>
+        </HBox>
+        <HBox layoutX="213.0" layoutY="325.0" prefHeight="50.0" prefWidth="1200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="420.0">
+            <children>
+                <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="600.0" text="Team M (D19)" textFill="#022d5a">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="600.0" text="Language Request" textFill="#022d5a">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                    <padding>
+                        <Insets right="40.0" />
+                    </padding>
+                </Label>
+            </children>
+        </HBox>
+        <HBox alignment="CENTER" layoutX="516.0" layoutY="455.0" prefHeight="147.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="455.0">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@../../../images/H_logo.png" />
+                </image>
+            </ImageView>
+         </children>
+         <padding>
+            <Insets bottom="20.0" top="20.0" />
+         </padding></HBox>
+    </children>
+</AnchorPane>

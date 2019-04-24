@@ -40,6 +40,8 @@ public class UserMapController extends MapController {
     public ImageView imgText;
     public JFXButton btnText;
     public AnchorPane AboutUs;
+    public AnchorPane Info;
+    public AnchorPane Credit;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -206,6 +208,39 @@ public class UserMapController extends MapController {
         UIHelpers.mouseHover(btnAbout);
         btnAbout.setTooltip(new Tooltip("About"));
 
+        ImageView imgQues = new ImageView();
+        imgQues.setImage(new Image("images/Icons/ques.png"));
+        imgQues.setFitHeight(30);
+        imgQues.setFitWidth(30);
+        imgQues.setPreserveRatio(true);
+        imgQues.setPickOnBounds(true);
+
+        JFXButton btnQues = new JFXButton("",imgQues);
+        btnQues.setAlignment(Pos.CENTER);
+        btnQues.setPrefWidth(60);
+        btnQues.setPrefHeight(60);
+        btnQues.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnQues.setTextOverrun(OverrunStyle.CLIP);
+
+        UIHelpers.mouseHover(btnQues);
+        btnAbout.setTooltip(new Tooltip("FAQs"));
+
+        ImageView imgCredit = new ImageView();
+        imgCredit.setImage(new Image("images/Icons/credit.png"));
+        imgCredit.setFitHeight(30);
+        imgCredit.setFitWidth(30);
+        imgCredit.setPreserveRatio(true);
+        imgCredit.setPickOnBounds(true);
+
+        JFXButton btnCredit = new JFXButton("",imgCredit);
+        btnCredit.setAlignment(Pos.CENTER);
+        btnCredit.setPrefWidth(60);
+        btnCredit.setPrefHeight(60);
+        btnCredit.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnCredit.setTextOverrun(OverrunStyle.CLIP);
+
+        UIHelpers.mouseHover(btnCredit);
+        btnCredit.setTooltip(new Tooltip("Credits"));
 
         ImageView imgCoffee = new ImageView();
         imgCoffee.setImage(new Image("images/SearchIcons/coffee.png"));
@@ -455,11 +490,49 @@ public class UserMapController extends MapController {
         boxAbout.setPrefSize(1200,700);
         boxAbout.setSpacing(5);
 
+        Label lblQues = new Label("Frequently Asked Questions");
+        lblQues.setPrefHeight(50);
+        lblQues.setPrefWidth(1200);
+        lblQues.setTextFill(Color.WHITE);
+        lblQues.setAlignment(Pos.CENTER);
+        lblQues.setStyle("-fx-background-color: radial-gradient(radius 120%, #022D5A, derive(#022D5A, -60%), derive(#022D5A, 60%));" +
+                "-fx-background-radius: 30;" +
+                "-fx-font-size: 24;" +
+                "-fx-font-weight: BOLD");
+        lblQues.setPadding(new Insets(10, 10, 10, 10));
+
+        VBox boxQues = new VBox();
+        boxQues.getChildren().add(lblQues);
+        boxQues.getChildren().add(Info);
+        boxQues.setAlignment(Pos.CENTER);
+        boxQues.setPrefSize(1200,700);
+        boxQues.setSpacing(5);
+
+        Label lblCredit = new Label("Credits");
+        lblCredit.setPrefHeight(50);
+        lblCredit.setPrefWidth(1200);
+        lblCredit.setTextFill(Color.WHITE);
+        lblCredit.setAlignment(Pos.CENTER);
+        lblCredit.setStyle("-fx-background-color: radial-gradient(radius 120%, #022D5A, derive(#022D5A, -60%), derive(#022D5A, 60%));" +
+                "-fx-background-radius: 30;" +
+                "-fx-font-size: 24;" +
+                "-fx-font-weight: BOLD");
+        lblCredit.setPadding(new Insets(10, 10, 10, 10));
+
+        VBox boxCredit = new VBox();
+        boxCredit.getChildren().add(lblCredit);
+        boxCredit.getChildren().add(Credit);
+        boxCredit.setAlignment(Pos.CENTER);
+        boxCredit.setPrefSize(1200,700);
+        boxCredit.setSpacing(5);
+
         JFXNodesList nodeListSearch = new JFXNodesList();
         JFXNodesList nodeListUser = new JFXNodesList();
         JFXNodesList nodeListRoute = new JFXNodesList();
         JFXNodesList nodesListAbout = new JFXNodesList();
         JFXNodesList nodesListPath = new JFXNodesList();
+        JFXNodesList nodesListQues = new JFXNodesList();
+        JFXNodesList nodesListCredit = new JFXNodesList();
 
 
         nodesListPath.addAnimatedNode(btnPath);
@@ -489,11 +562,23 @@ public class UserMapController extends MapController {
         nodesListAbout.setRotate(90);
         nodesListAbout.setSpacing(255);
 
+        nodesListQues.addAnimatedNode(btnQues);
+        nodesListQues.addAnimatedNode(boxQues);
+        nodesListQues.setRotate(100);
+        nodesListQues.setSpacing(255);
+
+        nodesListCredit.addAnimatedNode(btnCredit);
+        nodesListCredit.addAnimatedNode(boxCredit);
+        nodesListCredit.setRotate(105);
+        nodesListCredit.setSpacing(295);
+
         vboxDock.getChildren().add(nodeListUser);
         vboxDock.getChildren().add(nodeListSearch);
         vboxDock.getChildren().add(nodeListRoute);
         vboxDock.getChildren().add(nodesListPath);
         vboxDock.getChildren().add(nodesListAbout);
+        vboxDock.getChildren().add(nodesListQues);
+        vboxDock.getChildren().add(nodesListCredit);
 
     }
 
