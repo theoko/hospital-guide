@@ -35,7 +35,7 @@ public abstract class PathFinder {
     protected static final double FLOOR_HEURISTIC = 100000;
     protected static final double STRAIGHT_ANGLE = 90.0;
     protected static final double TURN_SENSITIVITY = 45.0;
-    protected static final double PIXEL_TO_METERS = 0.08;
+    protected static final double PIXEL_TO_FEET = 0.18;
     private static double LINE_WIDTH = 3.5;
     private static double LINE_LENGTH = 5.0;
     private static double LINE_GAP = 10.0;
@@ -289,11 +289,11 @@ public abstract class PathFinder {
                         } else { // Left
                             tempStr += "left";
                         }
-                        int displayDist = (int) (totDist * PIXEL_TO_METERS);
+                        int displayDist = (int) (totDist * PIXEL_TO_FEET);
                         if (displayDist != 1) {
-                            tempStr += " in " + displayDist + " meters\n";
+                            tempStr += " in " + displayDist + " feet\n";
                         } else {
-                            tempStr += " in " + displayDist + " meter\n";
+                            tempStr += " in " + displayDist + " foot\n";
                         }
                         directions += tempStr;
                         currentDirections = tempStr;
@@ -335,8 +335,8 @@ public abstract class PathFinder {
             numFloors = 0;
         }
 
-        distance = distance * PIXEL_TO_METERS;
-        directions += "Distance: " + (int) distance + " meters\n";
+        distance = distance * PIXEL_TO_FEET;
+        directions += "Distance: " + (int) distance + " feet\n";
         int time = (int) (distance / SPEED + numFloors * FLOOR_TIME);
         int minutes = time / 60;
         int seconds = time - minutes * 60;
@@ -439,39 +439,41 @@ public abstract class PathFinder {
     }
 
     private static void animateLine(Path line) {
-        line.setStroke(Color.BLACK);
-        line.setOpacity(MapDisplay.opac);
-        line.getStrokeDashArray().setAll(LINE_LENGTH, LINE_GAP);
-        line.setStrokeWidth(LINE_WIDTH);
-        line.setStrokeLineCap(StrokeLineCap.ROUND);
-        line.setStrokeLineJoin(StrokeLineJoin.ROUND);
-        final double maxOffset =
-                line.getStrokeDashArray().stream()
-                        .reduce(
-                                0d,
-                                (a, b) -> a - b
-                        );
+        if (line != null) {
+            line.setStroke(Color.BLACK);
+            line.setOpacity(MapDisplay.opac);
+            line.getStrokeDashArray().setAll(LINE_LENGTH, LINE_GAP);
+            line.setStrokeWidth(LINE_WIDTH);
+            line.setStrokeLineCap(StrokeLineCap.ROUND);
+            line.setStrokeLineJoin(StrokeLineJoin.ROUND);
+            final double maxOffset =
+                    line.getStrokeDashArray().stream()
+                            .reduce(
+                                    0d,
+                                    (a, b) -> a - b
+                            );
 
-        Timeline timeline = new Timeline(
-                new KeyFrame(
-                        Duration.ZERO,
-                        new KeyValue(
-                                line.strokeDashOffsetProperty(),
-                                0,
-                                Interpolator.LINEAR
-                        )
-                ),
-                new KeyFrame(
-                        Duration.seconds(3),
-                        new KeyValue(
-                                line.strokeDashOffsetProperty(),
-                                maxOffset,
-                                Interpolator.LINEAR
-                        )
-                )
-        );
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
+            Timeline timeline = new Timeline(
+                    new KeyFrame(
+                            Duration.ZERO,
+                            new KeyValue(
+                                    line.strokeDashOffsetProperty(),
+                                    0,
+                                    Interpolator.LINEAR
+                            )
+                    ),
+                    new KeyFrame(
+                            Duration.seconds(3),
+                            new KeyValue(
+                                    line.strokeDashOffsetProperty(),
+                                    maxOffset,
+                                    Interpolator.LINEAR
+                            )
+                    )
+            );
+            timeline.setCycleCount(Timeline.INDEFINITE);
+            timeline.play();
+        }
     }
 
     public static String getDefLocation() {
