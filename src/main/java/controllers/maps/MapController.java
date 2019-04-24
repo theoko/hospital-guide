@@ -66,6 +66,8 @@ public abstract class MapController implements Initializable {
     //public JFXButton btn;
     public VBox vbxButtons;
 
+
+
     protected String floor;
     protected List<LineTuple> lstLineTransits;
     protected static String tempStart;
@@ -104,7 +106,8 @@ public abstract class MapController implements Initializable {
         Image img = ImageFactory.getImage(floor);
         imgMap.setImage(img);
         addDoc();
-        UIHelpers.addHover(panRoot);
+        //panMap.getChildren();
+        //UIHelpers.loopPane(panRoot);
         //UIHelpers.btnRaise(btn);
 
         zoomOut();
