@@ -17,6 +17,7 @@ import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -211,6 +212,9 @@ public abstract class MapController implements Initializable {
                 styleButton(btn, "highlight", "unhighlight");
             }
 
+            UIHelpers.mouseHover(btn);
+           // btn.setTooltip(new Tooltip(""));
+
             hbx.getChildren().add(btn);
             vbxButtons.getChildren().add(hbx);
         }
@@ -238,6 +242,9 @@ public abstract class MapController implements Initializable {
             btn.setOnMouseClicked((e) -> {
                 showBreadCrumb(hbx, btn);
             });
+
+
+            UIHelpers.mouseHover(btn);
 
             lstBreadHbxs.add(hbx);
             lstBreadBtns.add(btn);
@@ -277,6 +284,9 @@ public abstract class MapController implements Initializable {
         btnCancel.setOnMouseClicked((e) -> {
             cancelBreadCrumbs();
         });
+
+        UIHelpers.mouseHover(btnCancel);
+
 
         hbxCancel.getChildren().add(btnCancel);
         vbxButtons.getChildren().add(hbxCancel);
