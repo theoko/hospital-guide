@@ -4,6 +4,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -28,15 +29,20 @@ public class AboutPageController {
         vbox1.setPrefWidth(1200);
         scrollPane.setContent(vbox1);
 
+        DropShadow dropShadow = new DropShadow();
+        dropShadow.setRadius(5.0);
+        dropShadow.setOffsetX(3.0);
+        dropShadow.setOffsetY(3.0);
+        dropShadow.setColor(Color.color(0.4, 0.5, 0.5));
+
         AnchorPane anchorPane1 = new AnchorPane();
-        anchorPane1.setPrefWidth(250);
-        anchorPane1.setPrefHeight(150);
+        anchorPane1.setPrefWidth(200);
         ImageView imgTheo = new ImageView();
         imgTheo.setImage(new Image("images/teamPics/theo.png"));
-        imgTheo.setFitHeight(200);
-        imgTheo.setFitWidth(250);
+        imgTheo.setFitWidth(200);
         imgTheo.setPreserveRatio(true);
         imgTheo.setPickOnBounds(true);
+        imgTheo.setEffect(dropShadow);
         //imgTheo.setRotate(-);
         anchorPane1.getChildren().add(imgTheo);
 
@@ -86,26 +92,24 @@ public class AboutPageController {
         anchorPane1.getChildren().add(anchorLbl1);
 
         HBox hbox1 = new HBox();
-        hbox1.setPrefHeight(250);
+        hbox1.setSpacing(25.0);
         hbox1.setPrefWidth(1200);
 
         hbox1.getChildren().add(anchorPane1);
         vbox1.getChildren().add(hbox1);
 
        AnchorPane anchorPane2 = new AnchorPane();
-       anchorPane2.setPrefWidth(250);
-       anchorPane2.setPrefHeight(150);
+       anchorPane2.setPrefWidth(200);
        ImageView imgMatt = new ImageView();
        imgMatt.setImage(new Image("images/teamPics/matt.JPG"));
-       imgMatt.setFitHeight(200);
-       imgMatt.setFitWidth(250);
+       imgMatt.setFitWidth(200);
        imgMatt.setPreserveRatio(true);
        imgMatt.setPickOnBounds(true);
+       imgMatt.setEffect(dropShadow);
        anchorPane2.getChildren().add(imgMatt);
 
        AnchorPane anchorLbl2 = new AnchorPane();
        anchorLbl2.setPrefWidth(200);
-        anchorLbl2.setPrefHeight(75);
         anchorLbl2.setStyle("-fx-background-color: #022D5A;  -fx-background-radius: 35;");
 
         Label lbl3 = new Label();
@@ -153,21 +157,18 @@ public class AboutPageController {
          hbox1.setAlignment(Pos.CENTER);
 
         AnchorPane anchorPane3 = new AnchorPane();
-        anchorPane3.setPrefWidth(250);
-        anchorPane3.setPrefHeight(150);
+        anchorPane3.setPrefWidth(200);
         ImageView imgManas = new ImageView();
         imgManas.setImage(new Image("images/teamPics/Manas.jpg"));
-        imgManas.setFitHeight(200);
-        imgManas.setFitWidth(250);
+        imgManas.setFitWidth(200);
         imgManas.setPreserveRatio(true);
         imgManas.setPickOnBounds(true);
-        //imgManas.setRotate(-90);
+        imgManas.setEffect(dropShadow);
         anchorPane3.getChildren().add(imgManas);
 
 
         AnchorPane anchorLbl3 = new AnchorPane();
         anchorLbl3.setPrefWidth(200);
-        anchorLbl3.setPrefHeight(75);
         anchorLbl3.setStyle("-fx-background-color: #022D5A;  -fx-background-radius: 25;");
 
         Label lbl5 = new Label();
@@ -215,7 +216,7 @@ public class AboutPageController {
         hbox1.getChildren().add(anchorPane3);
 
         HBox hbox2 = new HBox();
-        hbox2.setPrefHeight(250);
+        hbox2.setSpacing(25.0);
         hbox2.setPrefWidth(1200);
         vbox1.getChildren().add(hbox2);
 
@@ -223,20 +224,17 @@ public class AboutPageController {
 
 
         AnchorPane anchorPane4 = new AnchorPane();
-        anchorPane4.setPrefWidth(250);
-        anchorPane4.setPrefHeight(150);
+        anchorPane4.setPrefWidth(200);
         ImageView imgKatie = new ImageView();
         imgKatie.setImage(new Image("images/teamPics/katie.jpg"));
-        imgKatie.setFitHeight(200);
-        imgKatie.setFitWidth(250);
+        imgKatie.setFitWidth(200);
         imgKatie.setPreserveRatio(true);
         imgKatie.setPickOnBounds(true);
-        //imgManas.setRotate(-90);
+        imgKatie.setEffect(dropShadow);
         anchorPane4.getChildren().add(imgKatie);
 
         AnchorPane anchorLbl4 = new AnchorPane();
         anchorLbl4.setPrefWidth(200);
-        anchorLbl4.setPrefHeight(60);
         anchorLbl4.setStyle("-fx-background-color: #022D5A;  -fx-background-radius: 25;");
 
         Label lbl7 = new Label();
@@ -282,20 +280,18 @@ public class AboutPageController {
 
 
         AnchorPane anchorPane5 = new AnchorPane();
-        anchorPane5.setPrefWidth(250);
-        anchorPane5.setPrefHeight(150);
+        anchorPane5.setPrefWidth(200);
         ImageView imgDanya = new ImageView();
         imgDanya.setImage(new Image("images/teamPics/danya.JPG"));
-        imgDanya.setFitHeight(200);
-        imgDanya.setFitWidth(250);
+        imgDanya.setFitWidth(200);
         imgDanya.setPreserveRatio(true);
         imgDanya.setPickOnBounds(true);
+        imgDanya.setEffect(dropShadow);
         //imgDanya.setRotate(-180);
         anchorPane5.getChildren().add(imgDanya);
 
         AnchorPane anchorLbl5 = new AnchorPane();
         anchorLbl5.setPrefWidth(200);
-        anchorLbl5.setPrefHeight(60);
         anchorLbl5.setStyle("-fx-background-color: #022D5A;  -fx-background-radius: 25;");
 
         Label lbl9 = new Label();
@@ -342,20 +338,17 @@ public class AboutPageController {
 
 
         AnchorPane anchorPane6 = new AnchorPane();
-        anchorPane6.setPrefWidth(250);
-        anchorPane6.setPrefHeight(150);
+        anchorPane6.setPrefWidth(200);
         ImageView imgGarrett = new ImageView();
         imgGarrett.setImage(new Image("images/teamPics/garrett.jpg"));
-        imgGarrett.setFitHeight(200);
-        imgGarrett.setFitWidth(250);
+        imgGarrett.setFitWidth(200);
         imgGarrett.setPreserveRatio(true);
         imgGarrett.setPickOnBounds(true);
-        //imgDanya.setRotate(-180);
+        imgGarrett.setEffect(dropShadow);
         anchorPane6.getChildren().add(imgGarrett);
 
         AnchorPane anchorLbl6 = new AnchorPane();
         anchorLbl6.setPrefWidth(200);
-        anchorLbl6.setPrefHeight(60);
         anchorLbl6.setStyle("-fx-background-color: #022D5A;  -fx-background-radius: 25;");
 
         Label lbl11 = new Label();
@@ -400,7 +393,7 @@ public class AboutPageController {
         hbox2.getChildren().add(anchorPane6);
 
         HBox hbox3 = new HBox();
-        hbox3.setPrefHeight(250);
+        hbox3.setSpacing(25.0);
         hbox3.setPrefWidth(1200);
         vbox1.getChildren().add(hbox3);
        //hbox3.setSpacing(3);
@@ -408,20 +401,17 @@ public class AboutPageController {
         hbox3.setAlignment(Pos.CENTER);
 
         AnchorPane anchorPane7 = new AnchorPane();
-        anchorPane7.setPrefWidth(250);
-        anchorPane7.setPrefHeight(150);
+        anchorPane7.setPrefWidth(200);
         ImageView imgMax = new ImageView();
         imgMax.setImage(new Image("images/teamPics/max.jpg"));
-        imgMax.setFitHeight(200);
-        imgMax.setFitWidth(250);
+        imgMax.setFitWidth(200);
         imgMax.setPreserveRatio(true);
         imgMax.setPickOnBounds(true);
-        //imgDanya.setRotate(-180);
+        imgMax.setEffect(dropShadow);
         anchorPane7.getChildren().add(imgMax);
 
         AnchorPane anchorLbl7 = new AnchorPane();
         anchorLbl7.setPrefWidth(200);
-        anchorLbl7.setPrefHeight(60);
         anchorLbl7.setStyle("-fx-background-color: #022D5A;  -fx-background-radius: 25;");
 
         Label lbl13 = new Label();
@@ -466,15 +456,13 @@ public class AboutPageController {
         hbox3.getChildren().add(anchorPane7);
 
         AnchorPane anchorPane8 = new AnchorPane();
-        anchorPane8.setPrefWidth(250);
-        anchorPane8.setPrefHeight(150);
+        anchorPane8.setPrefWidth(200);
         ImageView imgDan = new ImageView();
         imgDan.setImage(new Image("images/teamPics/dan.jpg"));
-        imgDan.setFitHeight(200);
-        imgDan.setFitWidth(250);
+        imgDan.setFitWidth(200);
         imgDan.setPreserveRatio(true);
         imgDan.setPickOnBounds(true);
-        //imgDanya.setRotate(-180);
+        imgDan.setEffect(dropShadow);
         anchorPane8.getChildren().add(imgDan);
 
         AnchorPane anchorLbl8 = new AnchorPane();
@@ -525,20 +513,17 @@ public class AboutPageController {
 
 
         AnchorPane anchorPane9 = new AnchorPane();
-        anchorPane9.setPrefWidth(250);
-        anchorPane9.setPrefHeight(150);
+        anchorPane9.setPrefWidth(200);
         ImageView imgNiko = new ImageView();
         imgNiko.setImage(new Image("images/teamPics/niko.jpg"));
-        imgNiko.setFitHeight(200);
-        imgNiko.setFitWidth(250);
+        imgNiko.setFitWidth(200);
         imgNiko.setPreserveRatio(true);
         imgNiko.setPickOnBounds(true);
-        //imgNiko.setRotate(-90);
+        imgNiko.setEffect(dropShadow);
         anchorPane9.getChildren().add(imgNiko);
 
         AnchorPane anchorLbl9 = new AnchorPane();
         anchorLbl9.setPrefWidth(200);
-        anchorLbl9.setPrefHeight(60);
         anchorLbl9.setStyle("-fx-background-color: #022D5A;  -fx-background-radius: 25;");
 
         Label lbl17 = new Label();
@@ -583,12 +568,10 @@ public class AboutPageController {
         hbox3.getChildren().add(anchorPane9);
 
         AnchorPane anchorPane10 = new AnchorPane();
-        anchorPane10.setPrefWidth(250);
-        anchorPane10.setPrefHeight(150);
+        anchorPane10.setPrefWidth(200);
         ImageView imgSophie = new ImageView();
         imgSophie.setImage(new Image("images/teamPics/sophie.jpg"));
-        imgSophie.setFitHeight(200);
-        imgSophie.setFitWidth(250);
+        imgSophie.setFitWidth(200);
         imgSophie.setPreserveRatio(true);
         imgSophie.setPickOnBounds(true);
         //imgNiko.setRotate(-90);
@@ -596,7 +579,6 @@ public class AboutPageController {
 
         AnchorPane anchorLbl10 = new AnchorPane();
         anchorLbl10.setPrefWidth(200);
-        anchorLbl10.setPrefHeight(60);
         anchorLbl10.setStyle("-fx-background-color: #022D5A;  -fx-background-radius: 25;");
 
         Label lbl19 = new Label();
