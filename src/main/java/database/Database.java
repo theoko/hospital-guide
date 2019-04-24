@@ -43,8 +43,6 @@ public class Database {
         if(!Database.getDatabase().databaseExists()) {
             createTables();
         }
-
-
     }
 
     public static Database getDatabase(){
