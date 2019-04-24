@@ -1,7 +1,6 @@
 package controllers.maps;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXNodesList;
 import com.jfoenix.controls.JFXTextField;
 import controllers.ScreenController;
@@ -10,13 +9,10 @@ import google.FirebaseAPI;
 import helpers.Constants;
 import helpers.UIHelpers;
 import helpers.UserHelpers;
-import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.OverrunStyle;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -24,7 +20,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Path;
 import map.MapDisplay;
 import map.PathFinder;
 import messaging.TextMessenger;
@@ -36,8 +31,6 @@ import java.util.ResourceBundle;
 
 public class CustodianMapController extends MapController {
 
-    public AnchorPane paneDock;
-    public VBox vboxDock;
     public ImageView imgLogOut;
     public JFXButton btnLogOut;
     public AnchorPane tilDirections;

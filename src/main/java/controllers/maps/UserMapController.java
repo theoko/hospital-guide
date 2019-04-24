@@ -1,7 +1,6 @@
 package controllers.maps;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXNodesList;
 import com.jfoenix.controls.JFXTextField;
 import controllers.ScreenController;
@@ -10,7 +9,6 @@ import helpers.Constants;
 import helpers.UIHelpers;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.control.OverrunStyle;
 import javafx.scene.control.Tooltip;
@@ -21,10 +19,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Path;
 import map.MapDisplay;
 import map.PathFinder;
-import messaging.EmailMessenger;
 import messaging.TextMessenger;
 import models.map.Location;
 import models.search.SearchAPI;
@@ -36,9 +32,6 @@ import static controllers.ScreenController.mouseCnt;
 import static controllers.ScreenController.secCnt;
 
 public class UserMapController extends MapController {
-
-    public AnchorPane paneDock;
-    public VBox vboxDock;
     public ImageView imgLogOut;
     public JFXButton btnLogOut;
     public AnchorPane tilDirections;
@@ -47,8 +40,6 @@ public class UserMapController extends MapController {
     public ImageView imgText;
     public JFXButton btnText;
     public AnchorPane AboutUs;
-
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -511,7 +502,6 @@ public class UserMapController extends MapController {
         nodesListAbout.addAnimatedNode(boxAbout);
         nodesListAbout.setRotate(90);
         nodesListAbout.setSpacing(255);
-
 
         vboxDock.getChildren().add(nodeListUser);
         vboxDock.getChildren().add(nodeListSearch);

@@ -2,6 +2,7 @@ package controllers.maps;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXNodesList;
 import com.jfoenix.controls.JFXTabPane;
 import helpers.Constants;
 import helpers.UIHelpers;
@@ -10,23 +11,17 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.MoveTo;
@@ -55,13 +50,7 @@ public abstract class MapController implements Initializable {
 
     public GesturePane gesMap;
     public ImageView imgMap;
-    public JFXButton btnFloor4;
-    public JFXButton btnFloor3;
-    public JFXButton btnFloor2;
-    public JFXButton btnFloor1;
-    public JFXButton btnFloorG;
-    public JFXButton btnFloorL1;
-    public JFXButton btnFloorL2;
+    public VBox vboxDock;
     public Pane panMap;
     public ScrollPane txtPane;
     public JFXTabPane tabMenu;
@@ -119,9 +108,18 @@ public abstract class MapController implements Initializable {
             lstLocs();
         }));
 
-        //panMap.getChildren();
-        //UIHelpers.loopPane(panRoot);
-        //UIHelpers.btnRaise(btn);
+        for (Node n1 : vboxDock.getChildren()) {
+            JFXNodesList nl1 = (JFXNodesList) n1;
+            JFXButton btn = (JFXButton) nl1.getChildren().get(0);
+            btn.setOnMouseClicked(event -> {
+                for (Node n2 : vboxDock.getChildren()) {
+                    if (!n1.equals(n2)) {
+                        JFXNodesList nl2 = (JFXNodesList) n2;
+                        nl2.animateList(false);
+                    }
+                }
+            });
+        }
 
         zoomOut();
     }

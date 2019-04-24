@@ -189,12 +189,10 @@ public class ScreenController {
         public void handle(MouseEvent mouseEvent) {
             mouseCnt += 1;
             secCnt = 0L;
-            System.out.println(mouseCnt);
         }
     };
 
     public static void autoLog(Scene scene) throws Exception {
-        System.out.println("mousemoved");
         scene.setOnMouseClicked(mouseHandler);
         scene.setOnMouseMoved(mouseHandler);
         scene.setOnMousePressed(mouseHandler);

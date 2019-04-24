@@ -1,17 +1,16 @@
 package controllers.maps;
 
-import com.jfoenix.controls.*;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXNodesList;
+import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXToggleButton;
 import controllers.ScreenController;
 import controllers.search.SearchEngineController;
 import google.FirebaseAPI;
 import helpers.Constants;
 import helpers.UIHelpers;
-import helpers.UIHelpers;
 import helpers.UserHelpers;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Point3D;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -24,9 +23,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import javafx.scene.transform.Transform;
 import map.MapDisplay;
 import models.map.Location;
 import models.search.SearchAPI;
@@ -43,7 +40,6 @@ import static controllers.ScreenController.secCnt;
 public class AdminMapController extends MapController {
     private final static String MOVER_EDGE = "";
 
-    public VBox vboxDock;
     public ImageView imgLogOut;
     public JFXButton btnLogOut;
     public AnchorPane roomBooking;
