@@ -49,6 +49,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import static controllers.ScreenController.mouseCnt;
+import static controllers.ScreenController.secCnt;
+
 public class EmployeeMapController extends MapController {
 
     public VBox vboxDock;
@@ -127,6 +130,12 @@ public class EmployeeMapController extends MapController {
 
         SearchAPI searchAPI = new SearchAPI(search, true);
         searchAPI.searchable();
+        gesMap.setOnMouseMoved( (e) -> {
+            mouseCnt += 1;
+            secCnt = 0L;
+            System.out.println(mouseCnt);
+                }
+        );
 
         MapDisplay.displayEmployee(this);
         initDirections();
@@ -362,7 +371,7 @@ public class EmployeeMapController extends MapController {
         }
 
         for (Location ws : myConf1) {
-            if (ws.getNodeType().equals(Constants.NodeType.CONF)) {
+            if (ws.getNodeType().equals(Constants.NodeType.CONF) && ws.getFloor().equals(floor)) {
                 Circle c = ws.getNodeCircle();
                 c.setFill(Color.ORANGE);
                 c.setOnMouseEntered(event -> {
@@ -901,6 +910,7 @@ public class EmployeeMapController extends MapController {
                 exception.printStackTrace();
             }
         });
+
         btnLogOut.setStyle("-fx-background-radius: 30;" );
         btnLogOut.setStyle("-fx-background-radius: 30;");
         btnLogOut.setButtonType(JFXButton.ButtonType.RAISED);

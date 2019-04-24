@@ -30,6 +30,9 @@ import models.search.SearchAPI;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import static controllers.ScreenController.mouseCnt;
+import static controllers.ScreenController.secCnt;
+
 public class UserMapController extends MapController {
 
     public AnchorPane paneDock;
@@ -49,6 +52,13 @@ public class UserMapController extends MapController {
         SearchEngineController.setParentController(this);
         MapDisplay.displayUser(this);
         initDirections();
+
+        gesMap.setOnMouseMoved( (e) -> {
+                    mouseCnt += 1;
+                    secCnt = 0L;
+                    System.out.println(mouseCnt);
+                }
+        );
 
         SearchAPI searchAPI = new SearchAPI(search, true);
         searchAPI.searchable();
