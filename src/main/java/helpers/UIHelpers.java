@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import controllers.ScreenController;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;

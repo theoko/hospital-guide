@@ -142,6 +142,7 @@ public class UserMapController extends MapController {
 
         UIHelpers.btnRaise(btnArrow);
         btnArrow.setTooltip(new Tooltip("Enter"));
+        UIHelpers.mouseHover(btnArrow);
 
 //        btnArrow.setOnMouseEntered(event -> {
 //            btnArrow.setButtonType(JFXButton.ButtonType.RAISED);

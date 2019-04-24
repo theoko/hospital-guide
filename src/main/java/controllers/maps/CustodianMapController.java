@@ -175,7 +175,7 @@ public class CustodianMapController extends MapController {
         btnRest.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnRest.setTextOverrun(OverrunStyle.CLIP);
         UIHelpers.mouseHover(btnRest);
-        btnRest.setTooltip(new Tooltip("Rest Room"));
+        btnRest.setTooltip(new Tooltip("Restroom"));
         btnRest.setOnMouseClicked((e) -> {
             PathFinder.printByType(this, map, Constants.NodeType.REST, Constants.NodeType.BATH);
         });
@@ -213,7 +213,7 @@ public class CustodianMapController extends MapController {
         btnElev.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnElev.setTextOverrun(OverrunStyle.CLIP);
         UIHelpers.mouseHover(btnElev);
-        btnElev.setTooltip(new Tooltip("Elevtor"));
+        btnElev.setTooltip(new Tooltip("Elevator"));
         btnElev.setOnMouseClicked((e) -> {
             PathFinder.printByType(this, map, Constants.NodeType.ELEV, Constants.NodeType.STAI);
         });
