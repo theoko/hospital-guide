@@ -30,7 +30,7 @@ public class Main extends Application {
 
         // Initialize database
         if(!Database.getDatabase().databaseExists()) {
-            CSVParser.parse(FileHelpers.getNodesCSV(), FileHelpers.getEdgesCSV(), FileHelpers.getWorkspacesCSV());
+            CSVParser.parse(FileHelpers.getNodesCSV(), FileHelpers.getEdgesCSV());
         }
 
         // Initialize keywords for search engine
@@ -42,7 +42,7 @@ public class Main extends Application {
         // Initialize screen controller
         screenController = new ScreenController(primaryStage);
 
-        PathFinder.setDefLocation("FSERV00501");
+        PathFinder.setDefLocation("FEXIT00201");
         SettingsController.setAlgType(new PathContext(new AStar()));
         (new TextMessenger()).sendMessage();
     }

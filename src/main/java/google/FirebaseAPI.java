@@ -17,6 +17,9 @@ import models.room.Book;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 public class FirebaseAPI {
@@ -68,14 +71,7 @@ public class FirebaseAPI {
                 .child(UserHelpers.getCurrentUser().getUsername())
                 .child(String.valueOf(booking.getRoomID()));
 
-        databaseReference.updateChildren(currBooking, new DatabaseReference.CompletionListener() {
-
-            @Override
-            public void onComplete(DatabaseError error, DatabaseReference ref) {
-                System.out.println("Firebase db: added booking!");
-            }
-
-        });
+        databaseReference.updateChildren(currBooking, (error, ref) -> System.out.println("Firebase db: added booking!"));
 
     }
 
@@ -201,6 +197,55 @@ public class FirebaseAPI {
             }
         });
 
+
+    }
+
+    static String hashLocations(Location start, Location end) {
+        try {
+            String hashLoc = start.getNodeID() + ":" + end.getNodeID();
+            byte[] md5Directions = MessageDigest.getInstance("MD5").digest(hashLoc.getBytes());
+            BigInteger no = new BigInteger(1, md5Directions);
+            String hashtext = no.toString(16);
+            while (hashtext.length() < 32) {
+                hashtext = "0" + hashtext;
+            }
+
+            return hashtext;
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+
+            return null;
+        }
+    }
+
+    public static void addDirections(Location start, Location end, String directions) {
+
+            DatabaseReference directionsRef = FirebaseDatabase.getInstance()
+                .getReference()
+                .child("directions");
+
+            String finalHashtext = hashLocations(start, end);
+            Map<String, Object> currDirections = new HashMap<>();
+            currDirections.put(finalHashtext, directions);
+            directionsRef.updateChildren(currDirections, (error, ref) -> {
+                System.out.println("Added directions with hash: " + finalHashtext);
+            });
+
+    }
+
+    public static void addDirectionsForUser(String username, Location start, Location end) {
+
+        DatabaseReference userRef = FirebaseDatabase.getInstance()
+                .getReference()
+                .child(username)
+                .child("directions");
+
+        String finalHashtext = hashLocations(start, end);
+        Map<String, Object> currDirections = new HashMap<>();
+        currDirections.put(finalHashtext, start.getNodeID() + ":" + end.getNodeID());
+        userRef.updateChildren(currDirections, (error, ref) -> {
+            System.out.println("Associated directions with hash: " + finalHashtext);
+        });
 
     }
 
