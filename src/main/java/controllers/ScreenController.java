@@ -49,7 +49,7 @@ public class ScreenController {
         ScreenController.stage = stage;
         try {
             this.initializeScreens(ScreenController.stage);
-            activate(Constants.Routes.WELCOME);
+            activate(Constants.Routes.LOGO);
         } catch (Exception e) {
             e.printStackTrace();
         }
