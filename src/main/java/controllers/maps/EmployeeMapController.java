@@ -126,12 +126,6 @@ public class EmployeeMapController extends MapController {
 
         SearchAPI searchAPI = new SearchAPI(search, true);
         searchAPI.searchable();
-        gesMap.setOnMouseMoved( (e) -> {
-            mouseCnt += 1;
-            secCnt = 0L;
-            System.out.println(mouseCnt);
-                }
-        );
 
         MapDisplay.displayEmployee(this);
         initDirections();

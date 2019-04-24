@@ -53,46 +53,6 @@ public class ScreenController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        /*Thread t = new Thread(() -> {
-            System.out.println("here");
-            while(true) {
-                LogoutController lc = new LogoutController() {
-                    @Override
-                    public void initialize(URL location, ResourceBundle resources) {
-
-                    }
-                };
-                //int timeCnt = lc.getTime();
-                car.add(org.saveStateToMemento());
-                theCnt = mouseCnt;
-                if (secCnt > lc.time*60) {
-                    Platform.runLater(() -> {
-                        try {
-                            ScreenController.activate(Constants.Routes.WELCOME);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    });
-                    secCnt = 0;
-                }
-                try {
-                    Thread.sleep(1000L);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                if (car.get(car.mementoList.size() - 1) == theCnt) {
-                    secCnt += 1;
-                    System.out.println(secCnt);
-                }
-                else {
-                    secCnt = 0L;
-                    mouseCnt = 0L;
-                    theCnt = 0L;
-                }
-            }
-        });
-        t.setDaemon(true);
-        t.start();*/
     }
 
     public static HashMap<String, String> getScreenMap() {
