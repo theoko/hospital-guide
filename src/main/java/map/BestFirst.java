@@ -39,7 +39,7 @@ public class BestFirst extends PathFinder {
     @Override
     protected double getHeuristic(Location loc1, Location loc2) {
         double heuristic = calcDist(loc1.getxCord(), loc1.getyCord(), loc2.getxCord(), loc2.getyCord());
-        heuristic += FLOOR_HEURISTIC * Math.abs(floorToInt(loc1.getFloor()) - floorToInt(loc2.getFloor()));
+        heuristic += CHANGE_FLOOR + FLOOR_HEURISTIC * Math.abs(floorToInt(loc1.getFloor()) - floorToInt(loc2.getFloor()));
         return heuristic;
     }
 

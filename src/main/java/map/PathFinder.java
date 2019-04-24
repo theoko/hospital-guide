@@ -32,7 +32,8 @@ import java.util.*;
 
 public abstract class PathFinder {
 
-    protected static final double FLOOR_HEURISTIC = 100000;
+    protected static final double FLOOR_HEURISTIC = 10000;
+    protected static final double CHANGE_FLOOR = 100000;
     protected static final double STRAIGHT_ANGLE = 90.0;
     protected static final double TURN_SENSITIVITY = 45.0;
     protected static final double PIXEL_TO_FEET = 0.18;
