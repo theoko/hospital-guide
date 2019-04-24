@@ -59,11 +59,11 @@ public class UIHelpers {
     }
 
     public static void mouseHover(JFXButton btn) {
-        n.setOnMouseEntered(event -> {
+        btn.setOnMouseEntered(event -> {
             ScreenController.sceneThing.setCursor(Cursor.HAND);
         });
 
-        n.setOnMouseExited(event -> {
+        btn.setOnMouseExited(event -> {
             ScreenController.sceneThing.setCursor(Cursor.DEFAULT);
         });
     }
