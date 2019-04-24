@@ -384,14 +384,13 @@ public abstract class MapController implements Initializable {
         for (Node n : panMap.getChildren()) {
             if (n instanceof Circle) {
                 Circle circ = (Circle) n;
-                if (circ.getId() != null) {
-                    Location loc = map.getLocation(circ.getId());
-                    if (loc.getFloor().equals(floor)) {
-                        circ.setOpacity(1);
-                        if (loc.getNodeType().equals(Constants.NodeType.ELEV) || loc.getNodeType().equals(Constants.NodeType.STAI)) {
-                            if (lstTransits.containsKey(loc.getNodeID())) {
-                                lstArrows.add(addArrow(loc, lstTransits.get(loc.getNodeID())));
-                            }
+                Location loc = map.getLocation(circ.getId());
+                if(loc == null) continue;
+                if (loc.getFloor().equals(floor)) {
+                    circ.setOpacity(1);
+                    if (loc.getNodeType().equals(Constants.NodeType.ELEV) || loc.getNodeType().equals(Constants.NodeType.STAI)) {
+                        if (lstTransits.containsKey(loc.getNodeID())) {
+                            lstArrows.add(addArrow(loc, lstTransits.get(loc.getNodeID())));
                         }
                     } else {
                         circ.setOpacity(MapDisplay.opac);

@@ -13,7 +13,7 @@ public class DatabaseHelpers {
 
     public static boolean isValidFloor(String floor) {
         ArrayList<String> validFloorList = new ArrayList<String>(
-                Arrays.asList("1", "2", "3", "G", "L1", "L2")
+                Arrays.asList("1", "2", "3", "G", "L1", "L2", "4")
         );
         return validFloorList.contains(floor);
     }
