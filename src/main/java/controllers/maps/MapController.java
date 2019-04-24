@@ -36,6 +36,9 @@ import net.kurobako.gesturefx.GesturePane;
 import java.net.URL;
 import java.util.*;
 
+import static controllers.ScreenController.mouseCnt;
+import static controllers.ScreenController.secCnt;
+
 public abstract class MapController implements Initializable {
     private final double MAX_ZOOM = 2.0;
     private final double MIN_ZOOM = 0.1;
@@ -122,6 +125,12 @@ public abstract class MapController implements Initializable {
         }
 
         zoomOut();
+
+        gesMap.setOnMouseMoved( (e) -> {
+                    mouseCnt += 1;
+                    secCnt = 0L;
+                }
+        );
     }
 
     public void zoomOut() {
@@ -249,6 +258,9 @@ public abstract class MapController implements Initializable {
 
         vbxButtons.getChildren().clear();
         vbxButtons.setSpacing(VBX_SPACING);
+
+        lstBreadHbxs = new ArrayList<>();
+        lstBreadBtns = new ArrayList<>();
 
         for (LineTuple lt : lstLineTransits) {
             String strFloor = lt.floor;
@@ -424,9 +436,9 @@ public abstract class MapController implements Initializable {
                         if (lstTransits.containsKey(loc.getNodeID())) {
                             lstArrows.add(addArrow(loc, lstTransits.get(loc.getNodeID())));
                         }
-                    } else {
-                        circ.setOpacity(MapDisplay.opac);
                     }
+                } else {
+                    circ.setOpacity(MapDisplay.opac);
                 }
             }
         }

@@ -375,6 +375,11 @@ public abstract class PathFinder {
     }
 
     public static void printPath(MapController mc, Location start, Location end) {
+        if(mc.getMap().getLocation(PathFinder.getDefLocation()) == null) {
+            System.out.println("YOU ARE NOT BREAKING THIS");
+            PathFinder.setDefLocation("FEXIT00201");
+            start = mc.getMap().getLocation(PathFinder.getDefLocation());
+        }
         if (end.getNodeCircle() != null) {
             end.getNodeCircle().setFill(MapDisplay.nodeEnd);
         }

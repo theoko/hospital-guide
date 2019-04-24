@@ -1,16 +1,22 @@
 package controllers.auth;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXToggleButton;
 import controllers.ScreenController;
 import database.UserTable;
 import helpers.Constants;
+import helpers.UIHelpers;
 import javafx.event.ActionEvent;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import models.user.User;
 
-public class AuthController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class AuthController implements Initializable {
     public JFXTextField emailField;
     public JFXPasswordField passwordField;
     public Label errorMessage;
@@ -21,6 +27,7 @@ public class AuthController {
     public Label passText;
     public Label emailText;
     public Label cardScanText;
+    public JFXButton submitButton, cancelButton;
 
     private int currentlyAuthenticatedUsers = 0;
 
@@ -163,5 +170,11 @@ public class AuthController {
             emailText.setVisible(true);
             emailField.requestFocus();
         }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        UIHelpers.mouseHover(submitButton);
+        UIHelpers.mouseHover(cancelButton);
     }
 }

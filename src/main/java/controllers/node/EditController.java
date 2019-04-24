@@ -58,7 +58,7 @@ public class EditController extends PopUpController {
         String locID = loc.getNodeID();
         List<Node> lstNodes = new ArrayList<>();
         for (Node n : mc.panMap.getChildren()) {
-            if (n instanceof Circle && n.getId() != null && n.getId().equals(locID)) {
+            if (n instanceof Circle && n.getId() != null && n.getId().equals(locID) && !n.getId().equals(PathFinder.getDefLocation())) {
                 lstNodes.add(n);
             }
             for (SubPath sp : loc.getSubPaths()) {
