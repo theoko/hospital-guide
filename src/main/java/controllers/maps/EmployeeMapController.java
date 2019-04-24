@@ -128,7 +128,7 @@ public class EmployeeMapController extends MapController {
         MapDisplay.displayEmployee(this);
         initDirections();
 
-        List<Node> lstNodes = boxReq.getChildren();
+        /*List<Node> lstNodes = boxReq.getChildren();
         lstNodes.addAll(boxReq1.getChildren());
         for (Node n1 : lstNodes) {
             JFXButton btn;
@@ -149,7 +149,7 @@ public class EmployeeMapController extends MapController {
                     }
                 }
             });
-        }
+        }*/
     }
 
     @Override
