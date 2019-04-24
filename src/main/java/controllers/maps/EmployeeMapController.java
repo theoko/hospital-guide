@@ -360,7 +360,7 @@ public class EmployeeMapController extends MapController {
         }
 
         for (Location ws : myConf1) {
-            if (ws.getNodeType().equals(Constants.NodeType.CONF)) {
+            if (ws.getNodeType().equals(Constants.NodeType.CONF) && ws.getFloor().equals(floor)) {
                 Circle c = ws.getNodeCircle();
                 c.setFill(Color.ORANGE);
                 c.setOnMouseEntered(event -> {
