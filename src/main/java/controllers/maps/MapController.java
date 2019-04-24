@@ -259,6 +259,9 @@ public abstract class MapController implements Initializable {
         vbxButtons.getChildren().clear();
         vbxButtons.setSpacing(VBX_SPACING);
 
+        lstBreadHbxs = new ArrayList<>();
+        lstBreadBtns = new ArrayList<>();
+
         for (LineTuple lt : lstLineTransits) {
             String strFloor = lt.floor;
 
@@ -433,9 +436,9 @@ public abstract class MapController implements Initializable {
                         if (lstTransits.containsKey(loc.getNodeID())) {
                             lstArrows.add(addArrow(loc, lstTransits.get(loc.getNodeID())));
                         }
-                    } else {
-                        circ.setOpacity(MapDisplay.opac);
                     }
+                } else {
+                    circ.setOpacity(MapDisplay.opac);
                 }
             }
         }
