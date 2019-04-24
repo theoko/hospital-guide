@@ -24,6 +24,10 @@ public class ImageFactory {
                 imgMap.put("L2", flL2);
                 Image arrow = new Image("/images/Arrow.gif");
                 imgMap.put("arrow", arrow);
+                Image arrowUp = new Image("/images/ArrowUp.gif");
+                imgMap.put("arrowUp", arrowUp);
+                Image arrowDown = new Image("/images/ArrowDown.gif");
+                imgMap.put("arrowDown", arrowDown);
             });
             t.setDaemon(true);
             t.start();

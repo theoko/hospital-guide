@@ -3,6 +3,7 @@ package map;
 import com.jfoenix.controls.JFXButton;
 import controllers.maps.MapController;
 import controllers.settings.SettingsController;
+import google.FirebaseAPI;
 import helpers.Constants;
 import helpers.MapHelpers;
 import javafx.animation.Interpolator;
@@ -88,12 +89,16 @@ public abstract class PathFinder {
     }
 
     public static void printByType(MapController mc, Map map, Constants.NodeType nodeType) {
+        printByType(mc, map, nodeType, nodeType);
+    }
+
+    public static void printByType(MapController mc, Map map, Constants.NodeType nodeType1, Constants.NodeType nodeType2) {
         Location kiosk = map.getLocation(MapController.getTempStart());
-        Location closest = findByType(kiosk, nodeType);
+        Location closest = findByType(kiosk, nodeType1, nodeType2);
         printPath(mc, kiosk, closest);
     }
 
-    private static Location findByType(Location start, Constants.NodeType nodeType) {
+    private static Location findByType(Location start, Constants.NodeType nodeType1, Constants.NodeType nodeType2) {
         PriorityQueue<SubPath> queue = new PriorityQueue<>();
         SubPath sStart = new SubPath("", start, 0.0);
         queue.add(sStart);
@@ -105,7 +110,7 @@ public abstract class PathFinder {
             if (used.containsKey(currLoc.getNodeID())) {
                 continue;
             }
-            if (currLoc.getNodeType().equals(nodeType)) {
+            if (currLoc.getNodeType().equals(nodeType1) || currLoc.getNodeType().equals(nodeType2)) {
                 return currLoc;
             }
             used.put(currLoc.getNodeID(), currSub);
@@ -126,6 +131,46 @@ public abstract class PathFinder {
             }
         }
         return null;
+    }
+
+    public static List<Location> findNearestLocations(Location start) {
+        PriorityQueue<SubPath> queue = new PriorityQueue<>();
+        PriorityQueue<Location> qPopper = new PriorityQueue<>();
+        HashMap<String, SubPath> lstUsed = new HashMap<>();
+
+        SubPath sStart = new SubPath("", start, 0.0);
+        queue.add(sStart);
+
+        while (!queue.isEmpty()) {
+            SubPath currSub = queue.poll();
+            Location currLoc = currSub.getLocation();
+            if (lstUsed.containsKey(currLoc.getNodeID())) {
+                continue;
+            }
+            lstUsed.put(currLoc.getNodeID(), currSub);
+
+            double currDist = currSub.getDist();
+            List<SubPath> lstSubs = currLoc.getSubPaths();
+            for (SubPath nxtSub : lstSubs) {
+                Location nxtLoc = nxtSub.getLocation();
+                if (!lstUsed.containsKey(nxtLoc.getNodeID())) {
+                    SubPath nxtCpy = new SubPath(
+                            nxtSub.getEdgeID(),
+                            nxtLoc,
+                            currDist + nxtSub.getDist(),
+                            0.0);
+                    nxtCpy.setParent(currSub);
+                    queue.add(nxtCpy);
+                    qPopper.add(nxtLoc);
+                }
+            }
+        }
+
+        List<Location> lstNearest = new ArrayList<>();
+        while (!qPopper.isEmpty()) {
+            lstNearest.add(qPopper.poll());
+        }
+        return lstNearest;
     }
 
     protected abstract void setUp(Location start);
@@ -256,11 +301,17 @@ public abstract class PathFinder {
     }
 
     public static void printPath(MapController mc, Location start, Location end) {
-        mc.clearPath(end);
+        if (end.getNodeCircle() != null) {
+            end.getNodeCircle().setFill(MapDisplay.nodeEnd);
+        }
+        mc.clearTransit();
+        mc.clearMap();
         PathContext context = SettingsController.getAlgType();
         Stack<Location> path = context.findPath(start, end);
+        Stack<Location> path1 = (Stack<Location>) path.clone();
         MapController.currentRoute = (Stack<Location>) path.clone();
         String directions = context.txtDirections((Stack<Location>) path.clone());
+        FirebaseAPI.addDirections(start, end, directions);
         MapController.currentDirections = directions;
         addDirections(mc.txtPane, directions);
         HashMap<String, Location> lstLocations = mc.getMap().getAllLocations();
@@ -303,7 +354,9 @@ public abstract class PathFinder {
         }
         animateLine(line);
         mc.addLine(line, currFloor);
+
         mc.displayPath(line);
+        mc.displayLocations(path1);
     }
 
     private static void animateLine(Path line) {

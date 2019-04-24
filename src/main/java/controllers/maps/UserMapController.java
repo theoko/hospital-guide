@@ -78,12 +78,6 @@ public class UserMapController extends MapController {
     }
 
     @Override
-    public void displayPath(Path line) {
-        super.displayPath(line);
-        MapDisplay.displayUser(this);
-    }
-
-    @Override
     protected void addDoc() {
         ImageView imgUser = new ImageView();
         imgUser.setImage(new Image("images/Icons/user.png"));
@@ -219,7 +213,7 @@ public class UserMapController extends MapController {
         btnRest.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnRest.setTextOverrun(OverrunStyle.CLIP);
         btnRest.setOnMouseClicked((e) -> {
-            PathFinder.printByType(this, map, Constants.NodeType.REST);
+            PathFinder.printByType(this, map, Constants.NodeType.REST, Constants.NodeType.BATH);
         });
 
        UIHelpers.btnRaise(btnRest);
@@ -264,6 +258,9 @@ public class UserMapController extends MapController {
         btnElev.setPrefHeight(60);
         btnElev.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnElev.setTextOverrun(OverrunStyle.CLIP);
+        btnElev.setOnMouseClicked((e) -> {
+            PathFinder.printByType(this, map, Constants.NodeType.ELEV, Constants.NodeType.STAI);
+        });
 
         UIHelpers.btnRaise(btnElev);
         UIHelpers.mouseHover(btnElev);
@@ -282,6 +279,9 @@ public class UserMapController extends MapController {
         btnInfo.setPrefHeight(60);
         btnInfo.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnInfo.setTextOverrun(OverrunStyle.CLIP);
+        btnInfo.setOnMouseClicked((e) -> {
+            PathFinder.printByType(this, map, Constants.NodeType.INFO);
+        });
 
         UIHelpers.btnRaise(btnInfo);
         UIHelpers.mouseHover(btnInfo);
@@ -428,5 +428,10 @@ public class UserMapController extends MapController {
         vboxDock.getChildren().add(nodeListSearch);
         vboxDock.getChildren().add(nodeListRoute);
         vboxDock.getChildren().add(nodesListAbout);
+    }
+
+    @Override
+    public void associateUserWithDirections(Location start, Location end) {
+
     }
 }
