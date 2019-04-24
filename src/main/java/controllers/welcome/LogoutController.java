@@ -23,16 +23,20 @@ import java.util.ResourceBundle;
 public abstract class LogoutController implements Initializable {
 
     public JFXTextField txtTime;
-    public int theTime = 5;
+    public JFXButton btnSubmit;
+    public double time = 1;
 
-    public int getTime(){
-        return Integer.parseInt(txtTime.getText());
+    public LogoutController() {
+        this.time = time;
+    }
+
+    public double getTime(){
+        return Double.parseDouble(txtTime.getText());
     }
 
     public void btnSubmit_Clicked(MouseEvent mouseEvent) {
         mouseEvent.consume();
-        theTime = getTime();
-        ScreenController.deactivate();
+        time = getTime();
         try {
             ScreenController.activate(Constants.Routes.WELCOME);
         } catch (Exception e) {
