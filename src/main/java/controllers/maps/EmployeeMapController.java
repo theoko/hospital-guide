@@ -19,6 +19,7 @@ import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.OverrunStyle;
 import javafx.scene.control.Tooltip;
@@ -110,9 +111,15 @@ public class EmployeeMapController extends MapController {
     LocalTime startTime;
     LocalTime endTime;
 
+    VBox boxReq, boxReq1;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        boxReq = new VBox();
+        boxReq1 = new VBox();
+
         super.initialize(location, resources);
+
         SearchEngineController.setParentController(this);
 
         SearchAPI searchAPI = new SearchAPI(search, true);
@@ -120,6 +127,29 @@ public class EmployeeMapController extends MapController {
 
         MapDisplay.displayEmployee(this);
         initDirections();
+
+        List<Node> lstNodes = boxReq.getChildren();
+        lstNodes.addAll(boxReq1.getChildren());
+        for (Node n1 : lstNodes) {
+            JFXButton btn;
+            if (n1 instanceof JFXNodesList) {
+                JFXNodesList nl1 = (JFXNodesList) n1;
+                 btn = (JFXButton) nl1.getChildren().get(0);
+            } else {
+                btn = (JFXButton) n1;
+            }
+
+            btn.setOnMouseClicked(event -> {
+                for (Node n2 : lstNodes) {
+                    if (!n1.equals(n2)) {
+                        if (n2 instanceof JFXNodesList) {
+                            JFXNodesList nl2 = (JFXNodesList) n2;
+                            nl2.animateList(false);
+                        }
+                    }
+                }
+            });
+        }
     }
 
     @Override
@@ -1378,24 +1408,24 @@ public class EmployeeMapController extends MapController {
         boxReqMain.setPrefSize(130,700);
         boxReqMain.setSpacing(5);
 
-        VBox boxReq = new VBox();
         boxReq.getChildren().add(nodesListComp);
         boxReq.getChildren().add(nodesListFlo);
         boxReq.getChildren().add(nodesListInt);
         boxReq.getChildren().add(nodesListLock);
         boxReq.getChildren().add(nodesListDrug);
         boxReq.getChildren().add(nodesListAv);
-        boxReq.getChildren().add(nodesListInTr);
-        boxReq.getChildren().add(nodesListOut);
+
         boxReq.setAlignment(Pos.CENTER);
         boxReq.setPrefSize(60,700);
         boxReq.setSpacing(5);
 
-        VBox boxReq1 = new VBox();
+
         boxReq1.getChildren().add(nodesListGift);
         boxReq1.getChildren().add(nodesListInfo);
         boxReq1.getChildren().add(btnFood);
-        boxReq1.getChildren().add(btnBaby);
+        boxReq.getChildren().add(nodesListOut);
+        boxReq.getChildren().add(nodesListInTr);
+//        boxReq1.getChildren().add(btnBaby);
         boxReq1.setAlignment(Pos.CENTER);
         boxReq1.setPrefSize(60,700);
         boxReq1.setSpacing(5);

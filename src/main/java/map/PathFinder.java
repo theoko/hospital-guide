@@ -439,39 +439,41 @@ public abstract class PathFinder {
     }
 
     private static void animateLine(Path line) {
-        line.setStroke(Color.BLACK);
-        line.setOpacity(MapDisplay.opac);
-        line.getStrokeDashArray().setAll(LINE_LENGTH, LINE_GAP);
-        line.setStrokeWidth(LINE_WIDTH);
-        line.setStrokeLineCap(StrokeLineCap.ROUND);
-        line.setStrokeLineJoin(StrokeLineJoin.ROUND);
-        final double maxOffset =
-                line.getStrokeDashArray().stream()
-                        .reduce(
-                                0d,
-                                (a, b) -> a - b
-                        );
+        if (line != null) {
+            line.setStroke(Color.BLACK);
+            line.setOpacity(MapDisplay.opac);
+            line.getStrokeDashArray().setAll(LINE_LENGTH, LINE_GAP);
+            line.setStrokeWidth(LINE_WIDTH);
+            line.setStrokeLineCap(StrokeLineCap.ROUND);
+            line.setStrokeLineJoin(StrokeLineJoin.ROUND);
+            final double maxOffset =
+                    line.getStrokeDashArray().stream()
+                            .reduce(
+                                    0d,
+                                    (a, b) -> a - b
+                            );
 
-        Timeline timeline = new Timeline(
-                new KeyFrame(
-                        Duration.ZERO,
-                        new KeyValue(
-                                line.strokeDashOffsetProperty(),
-                                0,
-                                Interpolator.LINEAR
-                        )
-                ),
-                new KeyFrame(
-                        Duration.seconds(3),
-                        new KeyValue(
-                                line.strokeDashOffsetProperty(),
-                                maxOffset,
-                                Interpolator.LINEAR
-                        )
-                )
-        );
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
+            Timeline timeline = new Timeline(
+                    new KeyFrame(
+                            Duration.ZERO,
+                            new KeyValue(
+                                    line.strokeDashOffsetProperty(),
+                                    0,
+                                    Interpolator.LINEAR
+                            )
+                    ),
+                    new KeyFrame(
+                            Duration.seconds(3),
+                            new KeyValue(
+                                    line.strokeDashOffsetProperty(),
+                                    maxOffset,
+                                    Interpolator.LINEAR
+                            )
+                    )
+            );
+            timeline.setCycleCount(Timeline.INDEFINITE);
+            timeline.play();
+        }
     }
 
     public static String getDefLocation() {
