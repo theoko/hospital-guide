@@ -102,24 +102,23 @@ public class FileHelpers {
                 inputStream =  FileHelpers.class.getResourceAsStream(inputPath);
                 outputStream = new FileOutputStream("./" + outputPath);
 
-                byte[] buf = new byte[1024];
+                if (inputStream != null && outputStream != null) {
+                    byte[] buf = new byte[1024];
 
-                int bytesRead;
+                    int bytesRead;
 
-                while ((bytesRead = inputStream.read(buf)) > 0) {
+                    while ((bytesRead = inputStream.read(buf)) > 0) {
 
-                    outputStream.write(buf, 0, bytesRead);
+                        outputStream.write(buf, 0, bytesRead);
 
+                    }
                 }
-
             }
             finally {
-
-
-                inputStream.close();
-
-                outputStream.close();
-
+                if (inputStream != null && outputStream != null) {
+                    inputStream.close();
+                    outputStream.close();
+                }
             }
 
             return "./" + outputPath;
