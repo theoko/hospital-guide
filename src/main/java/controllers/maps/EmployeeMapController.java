@@ -74,7 +74,6 @@ public class EmployeeMapController extends MapController {
     public JFXButton btnText;
     public JFXToggleButton tglSpace;
     public JFXToggleButton tglZone;
-    public JFXToggleButton tglConf;
 
     public JFXDatePicker datStartDay;
     public JFXDatePicker datEndDay;
@@ -83,7 +82,6 @@ public class EmployeeMapController extends MapController {
 
     List<Room> workspacesAvailable;
     List<Room> workzonesAvailable;
-    List<Room> confAvailable;
 
     ArrayList<Location> workspacesBooked = new ArrayList<>();
     HashMap<String, Location> workspaces;
@@ -98,13 +96,6 @@ public class EmployeeMapController extends MapController {
     List<Book> workzonesCurrent1;
     ArrayList<Location> myWorkzones = new ArrayList<>();
     ArrayList<Location> myWorkzones1 = new ArrayList<>();
-
-    ArrayList<Location> confBooked = new ArrayList<>();
-    HashMap<String, Location> conf;
-    List<Book> confCurrent;
-    List<Book> confCurrent1;
-    ArrayList<Location> myConf = new ArrayList<>();
-    ArrayList<Location> myConf1 = new ArrayList<>();
 
     Location enter;
 
@@ -315,95 +306,16 @@ public class EmployeeMapController extends MapController {
         }
     }
 
-    public void initializeConf() {
-        conf = LocationTable.getLocations();
-        if (conf != null) {
-            for (Location ws : conf.values()) {
-                if (ws.getNodeType().equals(Constants.NodeType.CONF) && ws.getFloor().equals(floor)) {
-                    double xLoc = ws.getxCord();
-                    double yLoc = ws.getyCord();
-                    Circle circle = new Circle(xLoc, yLoc, locRadius, nodeFill);
-                    circle.setStroke(nodeOutline);
-                    circle.setStrokeWidth(locWidth);
-                    circle.setId(ws.getNodeID());
-                    circle.setOnMouseEntered(event -> {
-                        circle.setRadius(locRadius + 6);
-                        ScreenController.sceneThing.setCursor(Cursor.HAND);
-                    });
-                    circle.setOnMouseExited(event -> {
-                        circle.setRadius(locRadius);
-                        ScreenController.sceneThing.setCursor(Cursor.DEFAULT);
-                    });
-                    circle.setOnMouseClicked(event -> {
-                        try {
-                            event.consume();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    });
-                    this.panMap.getChildren().add(circle);
-                    ws.setNodeCircle(circle);
-                }
-            }
-        }
-
-        confCurrent1 = BookLocationTable.getBookingsForUser(UserHelpers.getCurrentUser());
-
-        if (confCurrent1 != null) {
-            for (Book b : confCurrent1) {
-                for (Location ws1 : conf.values()) {
-                    if (ws1.getNodeID().equals(b.getRoomID()) && ws1.getNodeType().equals(Constants.NodeType.CONF)) {
-                        myConf1.add(ws1);
-                        System.out.println("Ba,");
-                        break;
-                    }
-                }
-            }
-        }
-
-        for (Location ws : myConf1) {
-            if (ws.getNodeType().equals(Constants.NodeType.CONF)) {
-                Circle c = ws.getNodeCircle();
-                c.setFill(Color.ORANGE);
-                c.setOnMouseEntered(event -> {
-                    c.setRadius(locRadius + 6);
-                    ScreenController.sceneThing.setCursor(Cursor.HAND);
-                });
-                c.setOnMouseExited(event -> {
-                    c.setRadius(locRadius);
-                    ScreenController.sceneThing.setCursor(Cursor.DEFAULT);
-                });
-                c.setOnMouseClicked(Event -> {
-                    try {
-                        Event.consume();
-                        for (Location ws1 : myConf1) {
-                            if (ws1.getxCord() == c.getCenterX() && ws1.getyCord() == c.getCenterY()) {
-                                enter = ws1;
-                                break;
-                            }
-                        }
-                        ScreenController.popUp(Constants.Routes.WORKSPACE_POPUP, enter, c, startTime, startDate, endTime, endDate);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
-
-            }
-        }
-    }
-
     public void selectZone(ActionEvent event) {
         event.consume();
         if(tglZone.isSelected()) {
             tglSpace.setSelected(false);
-            tglConf.setSelected(false);
         }
         if(getFloor().equals("4")) {
             if(tglZone.isSelected()) {
                 this.clearMap();
                 initializeZones();
                 tglSpace.setSelected(false);
-                tglConf.setSelected(false);
             }
             else {
                 this.clearMap();
@@ -416,14 +328,12 @@ public class EmployeeMapController extends MapController {
         event.consume();
         if(tglSpace.isSelected()) {
             tglZone.setSelected(false);
-            tglConf.setSelected(false);
         }
         if(getFloor().equals("4")) {
             if(tglSpace.isSelected()) {
                 this.clearMap();
                 initializeSpaces();
                 tglZone.setSelected(false);
-                tglConf.setSelected(false);
             }
             else {
                 this.clearMap();
@@ -432,18 +342,6 @@ public class EmployeeMapController extends MapController {
         }
     }
 
-    public void selectConf(ActionEvent event) {
-        event.consume();
-        if (tglConf.isSelected()) {
-            this.clearMap();
-            initializeConf();
-            tglZone.setSelected(false);
-            tglSpace.setSelected(false);
-        } else {
-            this.clearMap();
-            this.showFloor(getFloor());
-        }
-    }
 
     @Override
     protected void addDoc() {
@@ -477,8 +375,6 @@ public class EmployeeMapController extends MapController {
         btnPath.setTextOverrun(OverrunStyle.CLIP);
 
         UIHelpers.mouseHover(btnPath);
-
-
 
         ImageView imgUser = new ImageView();
         imgUser.setImage(new Image("images/Icons/user.png"));
@@ -568,7 +464,6 @@ public class EmployeeMapController extends MapController {
         imgBookG.setPreserveRatio(true);
         imgBookG.setPickOnBounds(true);
 
-
         JFXButton btnBookG = new JFXButton("", imgBookG);
         btnBookG.setAlignment(Pos.CENTER);
         btnBookG.setPrefWidth(60);
@@ -625,20 +520,6 @@ public class EmployeeMapController extends MapController {
         btnZone.setPrefHeight(60);
         btnZone.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnZone.setTextOverrun(OverrunStyle.CLIP);
-
-        ImageView imgConf = new ImageView();
-        imgConf.setImage(new Image("images/Icons/conf.png"));
-        imgConf.setFitHeight(30);
-        imgConf.setFitWidth(30);
-        imgConf.setPreserveRatio(true);
-        imgConf.setPickOnBounds(true);
-
-        JFXButton btnConf = new JFXButton("", imgConf);
-        btnConf.setAlignment(Pos.CENTER);
-        btnConf.setPrefWidth(60);
-        btnConf.setPrefHeight(60);
-        btnConf.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
-        btnConf.setTextOverrun(OverrunStyle.CLIP);
 
         ImageView imgCal = new ImageView();
         imgCal.setImage(new Image("images/Icons/cald.png"));
@@ -1177,18 +1058,9 @@ public class EmployeeMapController extends MapController {
         boxZone.setAlignment(Pos.CENTER);
         boxZone.setSpacing(-5);
 
-        HBox boxConf = new HBox();
-        boxConf.getChildren().add(btnConf);
-        boxConf.getChildren().add(tglConf);
-        boxConf.setPrefHeight(60);
-        boxConf.setPrefWidth(150);
-        boxConf.setAlignment(Pos.CENTER);
-        boxConf.setSpacing(-5);
-
         HBox hboxWork = new HBox();
         hboxWork.getChildren().add(boxSpace);
         hboxWork.getChildren().add(boxZone);
-        hboxWork.getChildren().add(boxConf);
         hboxWork.setPrefHeight(60);
         hboxWork.setPrefWidth(500);
         hboxWork.setAlignment(Pos.CENTER);
@@ -1820,105 +1692,5 @@ public class EmployeeMapController extends MapController {
                 }
             }
         }
-
-        if(tglConf.isSelected()) {
-            if(datStartDay != null && datEndDay != null && datStartTime != null && datEndTime != null) {
-                startDate = datStartDay.getValue();
-                endDate = datEndDay.getValue();
-                startTime = datStartTime.getValue();
-                endTime = datEndTime.getValue();
-
-                confAvailable = LocationTable.checkAvailabilityByTime(
-                        DatabaseHelpers.getDateTime(startDate, startTime),
-                        DatabaseHelpers.getDateTime(endDate, endTime)
-                );
-
-                for(Room ws2 : confAvailable) {
-                    System.out.println(ws2.toString());
-                }
-
-                for(Location ws : conf.values()) {
-                    boolean isBooked = true;
-                    for(Room ws1 : confAvailable) {
-                        if(ws1.getRoomID().equals(ws.getNodeID())) {
-                            isBooked = false;
-                            break;
-                        }
-                    }
-                    if(isBooked) {
-                        confBooked.add(ws);
-                    }
-                }
-
-                for (Location ws : confBooked) {
-                    if (ws.getNodeType().equals(Constants.NodeType.CONF)) {
-                        Circle c = ws.getNodeCircle();
-                        c.setFill(Color.RED);
-                    }
-                }
-
-                confCurrent = BookLocationTable.getBookingsForUser(UserHelpers.getCurrentUser());
-
-                for(Book b : confCurrent) {
-                    for(Location ws1 : conf.values()) {
-                        if(ws1.getNodeID().equals(b.getRoomID()) && ws1.getNodeType().equals(Constants.NodeType.CONF)) {
-                            myConf.add(ws1);
-                            break;
-                        }
-                    }
-                }
-
-                for (Location ws : myConf) {
-                    if (ws.getNodeType().equals(Constants.NodeType.CONF)) {
-                        Circle c = ws.getNodeCircle();
-                        c.setFill(Color.ORANGE);
-                        c.setOnMouseClicked(Event -> {
-                            try {
-                                Event.consume();
-                                for(Location ws1 : myConf) {
-                                    if(ws1.getxCord() == c.getCenterX() && ws1.getyCord() == c.getCenterY()) {
-                                        enter = ws1;
-                                        break;
-                                    }
-                                }
-                                ScreenController.popUp(Constants.Routes.WORKSPACE_POPUP, enter, c, startTime, startDate, endTime, endDate);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        });
-                    }
-                }
-
-                for (Room ws : confAvailable) {
-                    Location ls = new Location("",0,0,"","", Constants.NodeType.HALL,"","");
-                    for(Location ls1 : conf.values()) {
-                        if(ls1.getNodeID().equals(ws.getRoomID())) {
-                            ls = ls1;
-                            break;
-                        }
-                    }
-                    if (ls.getNodeType().equals(Constants.NodeType.CONF)) {
-                        Circle c = ls.getNodeCircle();
-                        c.setFill(Color.YELLOW);
-                        c.setOnMouseClicked(Event -> {
-                            try {
-                                for(Room ws1 : confAvailable) {
-                                    Location ls1 = map.getLocation(ws1.getRoomID());
-                                    if(ls1.getxCord() == c.getCenterX() && ls1.getyCord() == c.getCenterY()) {
-                                        enter = ls1;
-                                        break;
-                                    }
-                                }
-
-                                ScreenController.popUp(Constants.Routes.WORKSPACE_POPUP, enter, c, startTime, startDate, endTime, endDate);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        });
-                    }
-                }
-            }
-        }
-
     }
 }
