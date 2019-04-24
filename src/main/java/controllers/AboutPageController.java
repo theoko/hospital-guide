@@ -43,6 +43,7 @@ public class AboutPageController {
         panName.setPrefHeight(25);
         Label lblName = new Label("Team F");
         lblName.setTextAlignment(TextAlignment.CENTER);
+        lblName.setAlignment(Pos.CENTER);
         lblName.setTextFill(Color.WHITE);
         panName.getChildren().add(lblName);
         AnchorPane.setRightAnchor(lblName, 0.0);
@@ -60,6 +61,7 @@ public class AboutPageController {
         panProf.setPrefWidth(100);
         panProf.setPrefHeight(25);
         Label lblProf = new Label("Prof. Wong");
+        lblProf.setAlignment(Pos.CENTER);
         lblProf.setTextFill(Color.WHITE);
         lblProf.setTextAlignment(TextAlignment.CENTER);
         panProf.getChildren().add(lblProf);
@@ -74,6 +76,7 @@ public class AboutPageController {
         panCoach.setPrefWidth(100);
         panCoach.setPrefHeight(25);
         Label lblCoach = new Label("Tim Winters");
+        lblCoach.setAlignment(Pos.CENTER);
         lblCoach.setTextAlignment(TextAlignment.CENTER);
         lblCoach.setTextFill(Color.WHITE);
         panCoach.getChildren().add(lblCoach);
