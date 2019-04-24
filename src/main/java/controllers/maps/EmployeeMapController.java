@@ -366,6 +366,7 @@ public class EmployeeMapController extends MapController {
                 for (Location ws1 : conf.values()) {
                     if (ws1.getNodeID().equals(b.getRoomID()) && ws1.getNodeType().equals(Constants.NodeType.CONF)) {
                         myConf1.add(ws1);
+                        System.out.println("Ba,");
                         break;
                     }
                 }
@@ -373,7 +374,7 @@ public class EmployeeMapController extends MapController {
         }
 
         for (Location ws : myConf1) {
-            if (ws.getNodeType().equals(Constants.NodeType.CONF) && ws.getFloor().equals(floor)) {
+            if (ws.getNodeType().equals(Constants.NodeType.CONF)) {
                 Circle c = ws.getNodeCircle();
                 c.setFill(Color.ORANGE);
                 c.setOnMouseEntered(event -> {
@@ -405,6 +406,10 @@ public class EmployeeMapController extends MapController {
 
     public void selectZone(ActionEvent event) {
         event.consume();
+        if(tglZone.isSelected()) {
+            tglSpace.setSelected(false);
+            tglConf.setSelected(false);
+        }
         if(getFloor().equals("4")) {
             if(tglZone.isSelected()) {
                 this.clearMap();
@@ -421,6 +426,10 @@ public class EmployeeMapController extends MapController {
 
     public void selectSpace(ActionEvent event) {
         event.consume();
+        if(tglSpace.isSelected()) {
+            tglZone.setSelected(false);
+            tglConf.setSelected(false);
+        }
         if(getFloor().equals("4")) {
             if(tglSpace.isSelected()) {
                 this.clearMap();
@@ -1731,6 +1740,105 @@ public class EmployeeMapController extends MapController {
                                         break;
                                     }
                                 }
+                                ScreenController.popUp(Constants.Routes.WORKSPACE_POPUP, enter, c, startTime, startDate, endTime, endDate);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        });
+                    }
+                }
+            }
+        }
+
+        if(tglConf.isSelected()) {
+            if(datStartDay != null && datEndDay != null && datStartTime != null && datEndTime != null) {
+                startDate = datStartDay.getValue();
+                endDate = datEndDay.getValue();
+                startTime = datStartTime.getValue();
+                endTime = datEndTime.getValue();
+
+                confAvailable = LocationTable.checkAvailabilityByTime(
+                        DatabaseHelpers.getDateTime(startDate, startTime),
+                        DatabaseHelpers.getDateTime(endDate, endTime)
+                );
+
+                for(Room ws2 : confAvailable) {
+                    System.out.println(ws2.toString());
+                }
+
+                for(Location ws : conf.values()) {
+                    boolean isBooked = true;
+                    for(Room ws1 : confAvailable) {
+                        if(ws1.getRoomID().equals(ws.getNodeID())) {
+                            isBooked = false;
+                            break;
+                        }
+                    }
+                    if(isBooked) {
+                        confBooked.add(ws);
+                    }
+                }
+
+                for (Location ws : confBooked) {
+                    if (ws.getNodeType().equals(Constants.NodeType.CONF)) {
+                        Circle c = ws.getNodeCircle();
+                        c.setFill(Color.RED);
+                    }
+                }
+
+                confCurrent = BookLocationTable.getBookingsForUser(UserHelpers.getCurrentUser());
+
+                for(Book b : confCurrent) {
+                    for(Location ws1 : conf.values()) {
+                        if(ws1.getNodeID().equals(b.getRoomID()) && ws1.getNodeType().equals(Constants.NodeType.CONF)) {
+                            myConf.add(ws1);
+                            break;
+                        }
+                    }
+                }
+
+                for (Location ws : myConf) {
+                    if (ws.getNodeType().equals(Constants.NodeType.CONF)) {
+                        Circle c = ws.getNodeCircle();
+                        c.setFill(Color.ORANGE);
+                        c.setOnMouseClicked(Event -> {
+                            try {
+                                Event.consume();
+                                for(Location ws1 : myConf) {
+                                    if(ws1.getxCord() == c.getCenterX() && ws1.getyCord() == c.getCenterY()) {
+                                        enter = ws1;
+                                        break;
+                                    }
+                                }
+                                ScreenController.popUp(Constants.Routes.WORKSPACE_POPUP, enter, c, startTime, startDate, endTime, endDate);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        });
+                    }
+                }
+
+                for (Room ws : confAvailable) {
+                    Location ls = new Location("",0,0,"","", Constants.NodeType.HALL,"","");
+                    for(Location ls1 : conf.values()) {
+                        if(ls1.getNodeID().equals(ws.getRoomID())) {
+                            ls = ls1;
+                            break;
+                        }
+                    }
+                    if (ls.getNodeType().equals(Constants.NodeType.CONF)) {
+                        Circle c = ls.getNodeCircle();
+                        c.setFill(Color.YELLOW);
+                        c.setOnMouseClicked(Event -> {
+                            try {
+                                for(Room ws1 : confAvailable) {
+                                    Location ls1 = map.getLocation(ws1.getRoomID());
+                                    if(ls1.getxCord() == c.getCenterX() && ls1.getyCord() == c.getCenterY()) {
+                                        enter = ls1;
+                                        break;
+                                    }
+                                }
+
                                 ScreenController.popUp(Constants.Routes.WORKSPACE_POPUP, enter, c, startTime, startDate, endTime, endDate);
                             } catch (Exception e) {
                                 e.printStackTrace();
