@@ -107,7 +107,7 @@ public abstract class MapController implements Initializable {
         imgMap.setImage(img);
         addDoc();
         //panMap.getChildren();
-        UIHelpers.loopPane(panRoot);
+        //UIHelpers.loopPane(panRoot);
         //UIHelpers.btnRaise(btn);
 
         zoomOut();

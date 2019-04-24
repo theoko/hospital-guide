@@ -65,14 +65,34 @@ public class FirebaseAPI {
         currBooking.put("startDate", booking.getStartDate());
         currBooking.put("endDate", booking.getEndDate());
 
+        String generatedID = booking.getRoomID() + "_";
+        generatedID += generateHash(booking.getStartDate() + ":" + booking.getEndDate());
+
         DatabaseReference databaseReference = FirebaseDatabase.getInstance()
                 .getReference()
                 .child(Constants.BOOK_LOCATION_TABLE)
                 .child(UserHelpers.getCurrentUser().getUsername())
-                .child(String.valueOf(booking.getRoomID()));
+                .child(generatedID);
 
         databaseReference.updateChildren(currBooking, (error, ref) -> System.out.println("Firebase db: added booking!"));
 
+    }
+
+    private static String generateHash(String string) {
+        try {
+            byte[] md5Str = MessageDigest.getInstance("MD5").digest(string.getBytes());
+            BigInteger no = new BigInteger(1, md5Str);
+            String hashtext = no.toString(16);
+            while (hashtext.length() < 32) {
+                hashtext = "0" + hashtext;
+            }
+
+            return hashtext;
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+
+            return null;
+        }
     }
 
     public static void deleteBooking(String roomID) {

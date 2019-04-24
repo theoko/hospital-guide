@@ -12,6 +12,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.control.OverrunStyle;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -29,6 +30,9 @@ import models.search.SearchAPI;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import static controllers.ScreenController.mouseCnt;
+import static controllers.ScreenController.secCnt;
 
 public class UserMapController extends MapController {
 
@@ -49,6 +53,13 @@ public class UserMapController extends MapController {
         SearchEngineController.setParentController(this);
         MapDisplay.displayUser(this);
         initDirections();
+
+        gesMap.setOnMouseMoved( (e) -> {
+                    mouseCnt += 1;
+                    secCnt = 0L;
+                    System.out.println(mouseCnt);
+                }
+        );
 
         SearchAPI searchAPI = new SearchAPI(search, true);
         searchAPI.searchable();
@@ -92,6 +103,9 @@ public class UserMapController extends MapController {
         btnUser.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnUser.setTextOverrun(OverrunStyle.CLIP);
 
+        UIHelpers.mouseHover(btnUser);
+        btnUser.setTooltip(new Tooltip("Account"));
+
 
         ImageView imgSearch = new ImageView();
         imgSearch.setImage(new Image("images/Icons/search.png"));
@@ -107,6 +121,8 @@ public class UserMapController extends MapController {
         btnSearch.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnSearch.setTextOverrun(OverrunStyle.CLIP);
 
+        UIHelpers.mouseHover(btnSearch);
+        btnSearch.setTooltip(new Tooltip("Search"));
 
 
         ImageView imgArrow = new ImageView();
@@ -125,6 +141,7 @@ public class UserMapController extends MapController {
 
 
         UIHelpers.btnRaise(btnArrow);
+        btnArrow.setTooltip(new Tooltip("Enter"));
 
 //        btnArrow.setOnMouseEntered(event -> {
 //            btnArrow.setButtonType(JFXButton.ButtonType.RAISED);
@@ -149,6 +166,8 @@ public class UserMapController extends MapController {
         btnRoute.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnRoute.setTextOverrun(OverrunStyle.CLIP);
 
+        UIHelpers.mouseHover(btnRoute);
+        btnRoute.setTooltip(new Tooltip("Directions"));
 
 
         ImageView imgAbout = new ImageView();
@@ -165,8 +184,8 @@ public class UserMapController extends MapController {
         btnAbout.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnAbout.setTextOverrun(OverrunStyle.CLIP);
 
-
-
+        UIHelpers.mouseHover(btnAbout);
+        btnAbout.setTooltip(new Tooltip("About"));
 
         ImageView imgCoffee = new ImageView();
         imgCoffee.setImage(new Image("images/SearchIcons/coffee.png"));
@@ -186,6 +205,8 @@ public class UserMapController extends MapController {
         });
 
         UIHelpers.btnRaise(btnCoffee);
+        UIHelpers.mouseHover(btnCoffee);
+        btnCoffee.setTooltip(new Tooltip("Food"));
 
 
         ImageView imgRest = new ImageView();
@@ -206,6 +227,8 @@ public class UserMapController extends MapController {
         });
 
        UIHelpers.btnRaise(btnRest);
+       UIHelpers.mouseHover(btnRest);
+       btnRest.setTooltip(new Tooltip("Restroom"));
 
 
 
@@ -227,6 +250,8 @@ public class UserMapController extends MapController {
         });
 
         UIHelpers.btnRaise(btnExit);
+        UIHelpers.mouseHover(btnExit);
+        btnExit.setTooltip(new Tooltip("Exit"));
 
 
 
@@ -248,6 +273,8 @@ public class UserMapController extends MapController {
         });
 
         UIHelpers.btnRaise(btnElev);
+        UIHelpers.mouseHover(btnElev);
+        btnElev.setTooltip(new Tooltip("Elevators"));
 
         ImageView imgInfo = new ImageView();
         imgInfo.setImage(new Image("images/Icons/info.png"));
@@ -267,11 +294,16 @@ public class UserMapController extends MapController {
         });
 
         UIHelpers.btnRaise(btnInfo);
+        UIHelpers.mouseHover(btnInfo);
+        btnInfo.setTooltip(new Tooltip("Information"));
+
 
         btnLogOut.setStyle("-fx-background-radius: 30;" );
         btnLogOut.setButtonType(JFXButton.ButtonType.RAISED);
 
         UIHelpers.btnRaise(btnLogOut);
+        UIHelpers.mouseHover(btnLogOut);
+        btnLogOut.setTooltip(new Tooltip("Log Out"));
 
 
         imgLogOut.setImage(new Image("images/Icons/signout.png"));
@@ -281,6 +313,9 @@ public class UserMapController extends MapController {
         imgText.setImage(new Image("images/Icons/text.png"));
 
         UIHelpers.btnRaise(btnText);
+        UIHelpers.mouseHover(btnText);
+        btnText.setTooltip(new Tooltip("Send Text"));
+
 
         vboxDock.setSpacing(8);
 

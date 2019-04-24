@@ -9,6 +9,7 @@ import controllers.search.SearchEngineController;
 import google.FirebaseAPI;
 import helpers.Constants;
 import helpers.UIHelpers;
+import helpers.UIHelpers;
 import helpers.UserHelpers;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -18,6 +19,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.OverrunStyle;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -37,6 +39,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import static controllers.ScreenController.mouseCnt;
+import static controllers.ScreenController.secCnt;
 
 public class AdminMapController extends MapController {
     private final static String MOVER_EDGE = "";
@@ -66,12 +71,18 @@ public class AdminMapController extends MapController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        gesMap.setOnMouseMoved( (e) -> {
+                    mouseCnt += 1;
+                    secCnt = 0L;
+                }
+        );
         super.initialize(location, resources);
         SearchEngineController.setParentController(this);
         MapDisplay.displayAdmin(this);
 
-//        SearchAPI searchAPI = new SearchAPI(search, true);
-//        searchAPI.searchable();
+        SearchAPI searchAPI = new SearchAPI(search, true);
+        searchAPI.searchable();
 
         Delta deltaDragged = new Delta();
         panMap.setOnMousePressed((e) -> {
@@ -195,6 +206,8 @@ public class AdminMapController extends MapController {
         btnUser.setPrefHeight(60);
         btnUser.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnUser.setTextOverrun(OverrunStyle.CLIP);
+        UIHelpers.mouseHover(btnUser);
+        btnUser.setTooltip(new Tooltip("Account"));
 
         ImageView imgSearch = new ImageView();
         imgSearch.setImage(new Image("images/Icons/search.png"));
@@ -209,6 +222,8 @@ public class AdminMapController extends MapController {
         btnSearch.setPrefHeight(60);
         btnSearch.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnSearch.setTextOverrun(OverrunStyle.CLIP);
+        UIHelpers.mouseHover(btnSearch);
+        btnSearch.setTooltip(new Tooltip("Search"));
 
         ImageView imgArrow = new ImageView();
         imgArrow.setImage(new Image("images/Icons/arrow.png"));
@@ -223,6 +238,8 @@ public class AdminMapController extends MapController {
         btnArrow.setPrefHeight(60);
         btnArrow.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnArrow.setTextOverrun(OverrunStyle.CLIP);
+        UIHelpers.mouseHover(btnArrow);
+        btnArrow.setTooltip(new Tooltip("Enter"));
 
         ImageView imgRoom = new ImageView();
         imgRoom.setImage(new Image("images/Icons/room.png"));
@@ -237,6 +254,8 @@ public class AdminMapController extends MapController {
         btnRoom.setPrefHeight(60);
         btnRoom.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnRoom.setTextOverrun(OverrunStyle.CLIP);
+        UIHelpers.mouseHover(btnRoom);
+        btnRoom.setTooltip(new Tooltip("Book Room"));
 
         ImageView imgBookG = new ImageView();
         imgBookG.setImage(new Image("images/Icons/bookG.png"));
@@ -315,6 +334,8 @@ public class AdminMapController extends MapController {
         btnEdit.setPrefHeight(60);
         btnEdit.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnEdit.setTextOverrun(OverrunStyle.CLIP);
+        UIHelpers.mouseHover(btnEdit);
+        btnEdit.setTooltip(new Tooltip("Edit"));
 
         ImageView imgAlgo = new ImageView();
         imgAlgo.setImage(new Image("images/Icons/algo.png"));
@@ -329,6 +350,8 @@ public class AdminMapController extends MapController {
         btnAlgo.setPrefHeight(60);
         btnAlgo.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnAlgo.setTextOverrun(OverrunStyle.CLIP);
+        UIHelpers.mouseHover(btnAlgo);
+        btnAlgo.setTooltip(new Tooltip("Search Algorithm"));
 
         ImageView imgClean = new ImageView();
         imgClean.setImage(new Image("images/Icons/clean.png"));
@@ -343,6 +366,8 @@ public class AdminMapController extends MapController {
         btnClean.setPrefHeight(60);
         btnClean.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnClean.setTextOverrun(OverrunStyle.CLIP);
+        UIHelpers.mouseHover(btnClean);
+        btnClean.setTooltip(new Tooltip("Spill Request"));
 
         ImageView imgTab = new ImageView();
         imgTab.setImage(new Image("images/Icons/tabEdit.png"));
@@ -357,6 +382,8 @@ public class AdminMapController extends MapController {
         btnTab.setPrefHeight(60);
         btnTab.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnTab.setTextOverrun(OverrunStyle.CLIP);
+        UIHelpers.mouseHover(btnTab);
+        btnTab.setTooltip(new Tooltip("Tab"));
 
         ImageView imgCoffee = new ImageView();
         imgCoffee.setImage(new Image("images/SearchIcons/coffee.png"));
@@ -371,6 +398,8 @@ public class AdminMapController extends MapController {
         btnCoffee.setPrefHeight(60);
         btnCoffee.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnCoffee.setTextOverrun(OverrunStyle.CLIP);
+        UIHelpers.mouseHover(btnCoffee);
+        btnCoffee.setTooltip(new Tooltip("Food"));
 
         ImageView imgRest = new ImageView();
         imgRest.setImage(new Image("images/SearchIcons/rest.png"));
@@ -385,6 +414,8 @@ public class AdminMapController extends MapController {
         btnRest.setPrefHeight(60);
         btnRest.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnRest.setTextOverrun(OverrunStyle.CLIP);
+        UIHelpers.mouseHover(btnRest);
+        btnRest.setTooltip(new Tooltip("Rest Room"));
 
         ImageView imgExit = new ImageView();
         imgExit.setImage(new Image("images/SearchIcons/exit.png"));
@@ -399,6 +430,8 @@ public class AdminMapController extends MapController {
         btnExit.setPrefHeight(60);
         btnExit.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnExit.setTextOverrun(OverrunStyle.CLIP);
+        UIHelpers.mouseHover(btnExit);
+        btnExit.setTooltip(new Tooltip("Exit"));
 
         ImageView imgElev = new ImageView();
         imgElev.setImage(new Image("images/SearchIcons/elev.png"));
@@ -413,6 +446,8 @@ public class AdminMapController extends MapController {
         btnElev.setPrefHeight(60);
         btnElev.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnElev.setTextOverrun(OverrunStyle.CLIP);
+        UIHelpers.mouseHover(btnElev);
+        btnElev.setTooltip(new Tooltip("Elevator"));
 
         ImageView imgInfo = new ImageView();
         imgInfo.setImage(new Image("images/Icons/info.png"));
@@ -427,6 +462,8 @@ public class AdminMapController extends MapController {
         btnInfo.setPrefHeight(60);
         btnInfo.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnInfo.setTextOverrun(OverrunStyle.CLIP);
+        UIHelpers.mouseHover(btnInfo);
+        btnInfo.setTooltip(new Tooltip("Information"));
 
         btnLogOut.setStyle("-fx-background-radius: 30;" );
         btnLogOut.setButtonType(JFXButton.ButtonType.RAISED);
