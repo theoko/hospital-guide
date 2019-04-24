@@ -58,7 +58,7 @@ public class UIHelpers {
 //        });
     }
 
-    public static void mouseHover(Node n) {
+    public static void mouseHover(JFXButton btn) {
         n.setOnMouseEntered(event -> {
             ScreenController.sceneThing.setCursor(Cursor.HAND);
         });

@@ -486,7 +486,7 @@ public class EmployeeMapController extends MapController {
         btnLogOut.setButtonType(JFXButton.ButtonType.RAISED);
         imgLogOut.setImage(new Image("images/Icons/signout.png"));
         UIHelpers.mouseHover(btnLogOut);
-        btnLogOut.setTooltip(new Tooltip("LogOut"));
+        btnLogOut.setTooltip(new Tooltip("Log Out"));
         UIHelpers.btnRaise(btnLogOut);
 
         btnText.setStyle("-fx-background-radius: 30;" );
