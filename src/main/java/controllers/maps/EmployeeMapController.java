@@ -29,6 +29,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import javafx.util.Duration;
 import map.MapDisplay;
 import map.PathFinder;
 import messaging.TextMessenger;
@@ -133,7 +134,8 @@ public class EmployeeMapController extends MapController {
         Thread t = new Thread(() -> {
             try {
                 Thread.sleep(3700);
-                gesMap.reset();
+                gesMap.centreOn(gesMap.targetPointAtViewportCentre());
+                gesMap.animate(Duration.millis(1000)).zoomTo(.5, gesMap.targetPointAtViewportCentre());
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

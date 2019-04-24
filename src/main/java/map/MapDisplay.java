@@ -171,9 +171,11 @@ public class MapDisplay {
                 break;
             case START:
                 circle.setFill(nodeStart);
+                circle.setStroke(Color.BLACK);
                 break;
             case END:
                 circle.setFill(nodeEnd);
+                circle.setStroke(Color.BLACK);
                 break;
             default:
                 circle.setFill(edgeFill);
