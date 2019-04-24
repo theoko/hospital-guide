@@ -622,7 +622,7 @@ public class EmployeeMapController extends MapController {
         btnExl.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnExl.setTextOverrun(OverrunStyle.CLIP);
         UIHelpers.mouseHover(btnExl);
-        btnExl.setTooltip(new Tooltip("External Transport"));
+        btnExl.setTooltip(new Tooltip("Service Requests"));
 
         ImageView imgComp1 = new ImageView();
         imgComp1.setImage(new Image("images/Icons/comp.png"));
@@ -832,6 +832,7 @@ public class EmployeeMapController extends MapController {
         btnRest.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnRest.setTextOverrun(OverrunStyle.CLIP);
         UIHelpers.mouseHover(btnRest);
+        btnRest.setTooltip(new Tooltip("Rest Rooms"));
         btnRest.setTooltip(new Tooltip("RestRoom"));
         btnRest.setOnMouseClicked((e) -> {
             PathFinder.printByType(this, map, Constants.NodeType.REST, Constants.NodeType.BATH);
@@ -876,6 +877,7 @@ public class EmployeeMapController extends MapController {
         btnElev.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnElev.setTextOverrun(OverrunStyle.CLIP);
         UIHelpers.mouseHover(btnElev);
+        btnElev.setTooltip(new Tooltip("Elevators"));
         btnElev.setTooltip(new Tooltip("Elevator"));
         btnElev.setOnMouseClicked((e) -> {
             PathFinder.printByType(this, map, Constants.NodeType.ELEV, Constants.NodeType.STAI);
