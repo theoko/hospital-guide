@@ -49,7 +49,6 @@ public class AboutPageController {
         lbl1.setText("Theo Konstantapoulos");
         lbl1.setFont(new Font(18));
         lbl1.setTextFill(Color.WHITE);
-        lbl1.setStyle("-fx-background-radius: ;");
         lbl1.setAlignment(Pos.CENTER);
 
         Label lbl2 = new Label();
@@ -98,11 +97,10 @@ public class AboutPageController {
        anchorPane2.setPrefHeight(150);
        ImageView imgMatt = new ImageView();
        imgMatt.setImage(new Image("images/teamPics/matt.JPG"));
-       imgMatt.setFitHeight(150);
+       imgMatt.setFitHeight(200);
        imgMatt.setFitWidth(250);
        imgMatt.setPreserveRatio(true);
        imgMatt.setPickOnBounds(true);
-       imgMatt.setRotate(-90);
        anchorPane2.getChildren().add(imgMatt);
 
        AnchorPane anchorLbl2 = new AnchorPane();
@@ -114,7 +112,6 @@ public class AboutPageController {
         lbl3.setText("Matt Iandoli");
         lbl3.setFont(new Font(18));
         lbl3.setTextFill(Color.WHITE);
-        lbl3.setStyle("-fx-background-radius: ;");
         lbl3.setAlignment(Pos.CENTER);
 
         Label lbl4 = new Label();
@@ -177,7 +174,6 @@ public class AboutPageController {
         lbl5.setText("Manas Mehta");
         lbl5.setFont(new Font(18));
         lbl5.setTextFill(Color.WHITE);
-        lbl5.setStyle("-fx-background-radius: ;");
         lbl5.setAlignment(Pos.CENTER);
 
         Label lbl6 = new Label();
@@ -247,7 +243,6 @@ public class AboutPageController {
         lbl7.setText("Katie Deyette");
         lbl7.setFont(new Font(18));
         lbl7.setTextFill(Color.WHITE);
-        lbl7.setStyle("-fx-background-radius: ;");
         lbl7.setAlignment(Pos.CENTER);
 
         Label lbl8 = new Label();
@@ -290,7 +285,7 @@ public class AboutPageController {
         anchorPane5.setPrefWidth(250);
         anchorPane5.setPrefHeight(150);
         ImageView imgDanya = new ImageView();
-        imgDanya.setImage(new Image("images/teamPics/danya.jpg"));
+        imgDanya.setImage(new Image("images/teamPics/danya.JPG"));
         imgDanya.setFitHeight(200);
         imgDanya.setFitWidth(250);
         imgDanya.setPreserveRatio(true);
@@ -307,7 +302,6 @@ public class AboutPageController {
         lbl9.setText("Danya Baron");
         lbl9.setFont(new Font(18));
         lbl9.setTextFill(Color.WHITE);
-        lbl9.setStyle("-fx-background-radius: ;");
         lbl9.setAlignment(Pos.CENTER);
 
 
@@ -368,7 +362,6 @@ public class AboutPageController {
         lbl11.setText("Garrett Smith");
         lbl11.setFont(new Font(18));
         lbl11.setTextFill(Color.WHITE);
-        lbl11.setStyle("-fx-background-radius: ;");
         lbl11.setAlignment(Pos.CENTER);
 
         Label lbl12 = new Label();
@@ -435,7 +428,6 @@ public class AboutPageController {
         lbl13.setText("Max Luu");
         lbl13.setFont(new Font(18));
         lbl13.setTextFill(Color.WHITE);
-        lbl13.setStyle("-fx-background-radius: ;");
         lbl13.setAlignment(Pos.CENTER);
 
         Label lbl14 = new Label();
@@ -494,7 +486,6 @@ public class AboutPageController {
         lbl15.setText("Dan Oates");
         lbl15.setFont(new Font(18));
         lbl15.setTextFill(Color.WHITE);
-        lbl15.setStyle("-fx-background-radius: ;");
         lbl15.setAlignment(Pos.CENTER);
 
         Label lbl16 = new Label();
@@ -554,7 +545,6 @@ public class AboutPageController {
         lbl17.setText("Niko Gamarra");
         lbl17.setFont(new Font(18));
         lbl17.setTextFill(Color.WHITE);
-        lbl17.setStyle("-fx-background-radius: ;");
         lbl17.setAlignment(Pos.CENTER);
 
         Label lbl18 = new Label();
@@ -613,7 +603,6 @@ public class AboutPageController {
         lbl19.setText("Sophie Antoniou");
         lbl19.setFont(new Font(18));
         lbl19.setTextFill(Color.WHITE);
-        lbl19.setStyle("-fx-background-radius: ;");
         lbl19.setAlignment(Pos.CENTER);
 //
         Label lbl20 = new Label();
