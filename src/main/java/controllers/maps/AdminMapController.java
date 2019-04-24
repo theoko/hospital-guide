@@ -9,12 +9,8 @@ import controllers.search.SearchEngineController;
 import google.FirebaseAPI;
 import helpers.Constants;
 import helpers.UIHelpers;
-import helpers.UIHelpers;
 import helpers.UserHelpers;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Point3D;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -27,9 +23,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import javafx.scene.transform.Transform;
 import map.MapDisplay;
 import models.map.Location;
 import models.search.SearchAPI;
@@ -46,13 +40,18 @@ import static controllers.ScreenController.secCnt;
 public class AdminMapController extends MapController {
     private final static String MOVER_EDGE = "";
 
-    public VBox vboxDock;
     public ImageView imgLogOut;
     public JFXButton btnLogOut;
     public AnchorPane UserD;
     public AnchorPane Algo;
     public AnchorPane Clean;
     public AnchorPane TabEdit;
+
+
+
+    public JFXTextField search;
+    public JFXToggleButton tglSpace;
+    public JFXToggleButton tglZone;
     public AnchorPane Time;
 
     private static Location edgLoc = null;
@@ -266,6 +265,87 @@ public class AdminMapController extends MapController {
         btnTab.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnTab.setTextOverrun(OverrunStyle.CLIP);
         UIHelpers.mouseHover(btnTab);
+        btnTab.setTooltip(new Tooltip("Tab"));
+
+        ImageView imgCoffee = new ImageView();
+        imgCoffee.setImage(new Image("images/SearchIcons/coffee.png"));
+        imgCoffee.setFitHeight(30);
+        imgCoffee.setFitWidth(30);
+        imgCoffee.setPreserveRatio(true);
+        imgCoffee.setPickOnBounds(true);
+
+        JFXButton btnCoffee = new JFXButton("",imgCoffee);
+        btnCoffee.setAlignment(Pos.CENTER);
+        btnCoffee.setPrefWidth(60);
+        btnCoffee.setPrefHeight(60);
+        btnCoffee.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnCoffee.setTextOverrun(OverrunStyle.CLIP);
+        UIHelpers.mouseHover(btnCoffee);
+        btnCoffee.setTooltip(new Tooltip("Food"));
+
+        ImageView imgRest = new ImageView();
+        imgRest.setImage(new Image("images/SearchIcons/rest.png"));
+        imgRest.setFitHeight(30);
+        imgRest.setFitWidth(30);
+        imgRest.setPreserveRatio(true);
+        imgRest.setPickOnBounds(true);
+
+        JFXButton btnRest = new JFXButton("",imgRest);
+        btnRest.setAlignment(Pos.CENTER);
+        btnRest.setPrefWidth(60);
+        btnRest.setPrefHeight(60);
+        btnRest.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnRest.setTextOverrun(OverrunStyle.CLIP);
+        UIHelpers.mouseHover(btnRest);
+        btnRest.setTooltip(new Tooltip("Restroom"));
+
+        ImageView imgExit = new ImageView();
+        imgExit.setImage(new Image("images/SearchIcons/exit.png"));
+        imgExit.setFitHeight(30);
+        imgExit.setFitWidth(30);
+        imgExit.setPreserveRatio(true);
+        imgExit.setPickOnBounds(true);
+
+        JFXButton btnExit = new JFXButton("",imgExit);
+        btnExit.setAlignment(Pos.CENTER);
+        btnExit.setPrefWidth(60);
+        btnExit.setPrefHeight(60);
+        btnExit.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnExit.setTextOverrun(OverrunStyle.CLIP);
+        UIHelpers.mouseHover(btnExit);
+        btnExit.setTooltip(new Tooltip("Exit"));
+
+        ImageView imgElev = new ImageView();
+        imgElev.setImage(new Image("images/SearchIcons/elev.png"));
+        imgElev.setFitHeight(30);
+        imgElev.setFitWidth(30);
+        imgElev.setPreserveRatio(true);
+        imgElev.setPickOnBounds(true);
+
+        JFXButton btnElev = new JFXButton("",imgElev);
+        btnElev.setAlignment(Pos.CENTER);
+        btnElev.setPrefWidth(60);
+        btnElev.setPrefHeight(60);
+        btnElev.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnElev.setTextOverrun(OverrunStyle.CLIP);
+        UIHelpers.mouseHover(btnElev);
+        btnElev.setTooltip(new Tooltip("Elevator"));
+
+        ImageView imgInfo = new ImageView();
+        imgInfo.setImage(new Image("images/Icons/info.png"));
+        imgInfo.setFitHeight(30);
+        imgInfo.setFitWidth(30);
+        imgInfo.setPreserveRatio(true);
+        imgInfo.setPickOnBounds(true);
+
+        JFXButton btnInfo = new JFXButton("",imgInfo);
+        btnInfo.setAlignment(Pos.CENTER);
+        btnInfo.setPrefWidth(60);
+        btnInfo.setPrefHeight(60);
+        btnInfo.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnInfo.setTextOverrun(OverrunStyle.CLIP);
+        UIHelpers.mouseHover(btnInfo);
+        btnInfo.setTooltip(new Tooltip("Information"));
         btnTab.setTooltip(new Tooltip("Tabular Node Edit"));
 
         ImageView imgTime = new ImageView();
