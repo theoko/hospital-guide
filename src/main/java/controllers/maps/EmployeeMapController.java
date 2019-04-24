@@ -15,6 +15,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.OverrunStyle;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -119,6 +120,8 @@ public class EmployeeMapController extends MapController {
         btnUser.setPrefHeight(60);
         btnUser.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnUser.setTextOverrun(OverrunStyle.CLIP);
+        UIHelpers.mouseHover(btnUser);
+        btnUser.setTooltip(new Tooltip("Account"));
 
         ImageView imgSearch = new ImageView();
         imgSearch.setImage(new Image("images/Icons/search.png"));
@@ -133,6 +136,8 @@ public class EmployeeMapController extends MapController {
         btnSearch.setPrefHeight(60);
         btnSearch.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnSearch.setTextOverrun(OverrunStyle.CLIP);
+        UIHelpers.mouseHover(btnSearch);
+        btnSearch.setTooltip(new Tooltip("Search Bar"));
 
         ImageView imgArrow = new ImageView();
         imgArrow.setImage(new Image("images/Icons/arrow.png"));
@@ -147,7 +152,8 @@ public class EmployeeMapController extends MapController {
         btnArrow.setPrefHeight(60);
         btnArrow.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnArrow.setTextOverrun(OverrunStyle.CLIP);
-
+        UIHelpers.mouseHover(btnArrow);
+        btnArrow.setTooltip(new Tooltip("Enter"));
         UIHelpers.btnRaise(btnArrow);
 
         ImageView imgRoute = new ImageView();
@@ -163,6 +169,8 @@ public class EmployeeMapController extends MapController {
         btnRoute.setPrefHeight(60);
         btnRoute.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnRoute.setTextOverrun(OverrunStyle.CLIP);
+        UIHelpers.mouseHover(btnRoute);
+        btnRoute.setTooltip(new Tooltip("Directions"));
 
         ImageView imgRoom = new ImageView();
         imgRoom.setImage(new Image("images/Icons/room.png"));
@@ -177,6 +185,8 @@ public class EmployeeMapController extends MapController {
         btnRoom.setPrefHeight(60);
         btnRoom.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnRoom.setTextOverrun(OverrunStyle.CLIP);
+        UIHelpers.mouseHover(btnRoom);
+        btnRoom.setTooltip(new Tooltip("Book Room"));
 
         ImageView imgCal = new ImageView();
         imgCal.setImage(new Image("images/Icons/cald.png"));
@@ -191,6 +201,8 @@ public class EmployeeMapController extends MapController {
         btnCal.setPrefHeight(60);
         btnCal.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnCal.setTextOverrun(OverrunStyle.CLIP);
+        UIHelpers.mouseHover(btnCal);
+        btnCal.setTooltip(new Tooltip("Calendar"));
 
         ImageView imgExl = new ImageView();
         imgExl.setImage(new Image("images/Icons/excl.png"));
@@ -205,6 +217,8 @@ public class EmployeeMapController extends MapController {
         btnExl.setPrefHeight(60);
         btnExl.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnExl.setTextOverrun(OverrunStyle.CLIP);
+        UIHelpers.mouseHover(btnExl);
+        btnExl.setTooltip(new Tooltip("External Transport"));
 
         ImageView imgComp1 = new ImageView();
         imgComp1.setImage(new Image("images/Icons/comp.png"));
@@ -219,7 +233,8 @@ public class EmployeeMapController extends MapController {
         btnComp1.setPrefHeight(60);
         btnComp1.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnComp1.setTextOverrun(OverrunStyle.CLIP);
-
+        UIHelpers.mouseHover(btnComp1);
+        btnComp1.setTooltip(new Tooltip("IT Services"));
         UIHelpers.btnRaise(btnComp1);
 
 
@@ -236,7 +251,8 @@ public class EmployeeMapController extends MapController {
         btnFlo.setPrefHeight(60);
         btnFlo.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnFlo.setTextOverrun(OverrunStyle.CLIP);
-
+        UIHelpers.mouseHover(btnFlo);
+        btnFlo.setTooltip(new Tooltip("Flower Request"));
         UIHelpers.btnRaise(btnFlo);
 
         ImageView imgSign = new ImageView();
@@ -252,7 +268,8 @@ public class EmployeeMapController extends MapController {
         btnSign.setPrefHeight(60);
         btnSign.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnSign.setTextOverrun(OverrunStyle.CLIP);
-
+        UIHelpers.mouseHover(btnSign);
+        btnSign.setTooltip(new Tooltip("Interpreter"));
         UIHelpers.btnRaise(btnSign);
 
         ImageView imgLock = new ImageView();
@@ -268,6 +285,8 @@ public class EmployeeMapController extends MapController {
         btnLock.setPrefHeight(60);
         btnLock.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnLock.setTextOverrun(OverrunStyle.CLIP);
+        UIHelpers.mouseHover(btnLock);
+        btnLock.setTooltip(new Tooltip("Security"));
 
         UIHelpers.btnRaise(btnLock);
 
@@ -284,7 +303,8 @@ public class EmployeeMapController extends MapController {
         btnDrug.setPrefHeight(60);
         btnDrug.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnDrug.setTextOverrun(OverrunStyle.CLIP);
-
+        UIHelpers.mouseHover(btnDrug);
+        btnDrug.setTooltip(new Tooltip("Prescription"));
         UIHelpers.btnRaise(btnDrug);
 
         ImageView imgAv = new ImageView();
@@ -300,7 +320,8 @@ public class EmployeeMapController extends MapController {
         btnAv.setPrefHeight(60);
         btnAv.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnAv.setTextOverrun(OverrunStyle.CLIP);
-
+        UIHelpers.mouseHover(btnAv);
+        btnAv.setTooltip(new Tooltip("Audio/Visual"));
         UIHelpers.btnRaise(btnAv);
 
         ImageView imgIn = new ImageView();
@@ -316,7 +337,8 @@ public class EmployeeMapController extends MapController {
         btnIn.setPrefHeight(60);
         btnIn.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnIn.setTextOverrun(OverrunStyle.CLIP);
-
+        UIHelpers.mouseHover(btnIn);
+        btnIn.setTooltip(new Tooltip("Internal Transport"));
         UIHelpers.btnRaise(btnIn);
 
         ImageView imgGift = new ImageView();
@@ -332,7 +354,8 @@ public class EmployeeMapController extends MapController {
         btnGift.setPrefHeight(60);
         btnGift.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnGift.setTextOverrun(OverrunStyle.CLIP);
-
+        UIHelpers.mouseHover(btnGift);
+        btnGift.setTooltip(new Tooltip("Gift"));
         UIHelpers.btnRaise(btnGift);
 
         ImageView imgOut = new ImageView();
@@ -348,7 +371,8 @@ public class EmployeeMapController extends MapController {
         btnOut.setPrefHeight(60);
         btnOut.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnOut.setTextOverrun(OverrunStyle.CLIP);
-
+        UIHelpers.mouseHover(btnOut);
+        btnOut.setTooltip(new Tooltip("Patient Information"));
         UIHelpers.btnRaise(btnOut);
 
         ImageView imgInfo = new ImageView();
@@ -364,7 +388,8 @@ public class EmployeeMapController extends MapController {
         btnInfo.setPrefHeight(60);
         btnInfo.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnInfo.setTextOverrun(OverrunStyle.CLIP);
-
+        UIHelpers.mouseHover(btnInfo);
+        btnInfo.setTooltip(new Tooltip("Information"));
         UIHelpers.btnRaise(btnInfo);
 
 
@@ -381,7 +406,8 @@ public class EmployeeMapController extends MapController {
         btnCoffee.setPrefHeight(60);
         btnCoffee.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnCoffee.setTextOverrun(OverrunStyle.CLIP);
-
+        UIHelpers.mouseHover(btnCoffee);
+        btnCoffee.setTooltip(new Tooltip("Food"));
         UIHelpers.btnRaise(btnCoffee);
 
         ImageView imgRest = new ImageView();
@@ -397,7 +423,8 @@ public class EmployeeMapController extends MapController {
         btnRest.setPrefHeight(60);
         btnRest.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnRest.setTextOverrun(OverrunStyle.CLIP);
-
+        UIHelpers.mouseHover(btnRest);
+        btnRest.setTooltip(new Tooltip("RestRoom"));
         UIHelpers.btnRaise(btnRest);
 
         ImageView imgExit = new ImageView();
@@ -413,7 +440,8 @@ public class EmployeeMapController extends MapController {
         btnExit.setPrefHeight(60);
         btnExit.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnExit.setTextOverrun(OverrunStyle.CLIP);
-
+        UIHelpers.mouseHover(btnExit);
+        btnExit.setTooltip(new Tooltip("Exit"));
         UIHelpers.btnRaise(btnExit);
 
 
@@ -431,8 +459,10 @@ public class EmployeeMapController extends MapController {
         btnElev.setPrefHeight(60);
         btnElev.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnElev.setTextOverrun(OverrunStyle.CLIP);
-
+        UIHelpers.mouseHover(btnElev);
+        btnElev.setTooltip(new Tooltip("Elevator"));
         UIHelpers.btnRaise(btnElev);
+
 
         ImageView imgInfo1 = new ImageView();
         imgInfo1.setImage(new Image("images/Icons/info.png"));
@@ -447,15 +477,16 @@ public class EmployeeMapController extends MapController {
         btnInfo1.setPrefHeight(60);
         btnInfo1.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnInfo1.setTextOverrun(OverrunStyle.CLIP);
-
-
+        UIHelpers.mouseHover(btnInfo1);
+        btnInfo1.setTooltip(new Tooltip("Information"));
         UIHelpers.btnRaise(btnInfo1);
 
         btnLogOut.setStyle("-fx-background-radius: 30;" );
         btnLogOut.setStyle("-fx-background-radius: 30;");
         btnLogOut.setButtonType(JFXButton.ButtonType.RAISED);
         imgLogOut.setImage(new Image("images/Icons/signout.png"));
-
+        UIHelpers.mouseHover(btnLogOut);
+        btnLogOut.setTooltip(new Tooltip("LogOut"));
         UIHelpers.btnRaise(btnLogOut);
 
         btnText.setStyle("-fx-background-radius: 30;" );
