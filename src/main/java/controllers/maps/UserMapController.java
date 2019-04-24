@@ -565,8 +565,8 @@ public class UserMapController extends MapController {
 
         nodesListAbout.addAnimatedNode(btnAbout);
         nodesListAbout.addAnimatedNode(boxAbout);
-        nodesListAbout.setRotate(90);
-        nodesListAbout.setSpacing(255);
+        nodesListAbout.setRotate(95);
+        nodesListAbout.setSpacing(275);
 
         nodesListQues.addAnimatedNode(btnQues);
         nodesListQues.addAnimatedNode(boxQues);
