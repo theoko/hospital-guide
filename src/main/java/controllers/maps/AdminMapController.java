@@ -40,6 +40,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import static controllers.ScreenController.mouseCnt;
+import static controllers.ScreenController.secCnt;
+
 public class AdminMapController extends MapController {
     private final static String MOVER_EDGE = "";
 
