@@ -859,6 +859,8 @@ public class EmployeeMapController extends MapController {
                 exception.printStackTrace();
             }
         });
+        btnFood.setTooltip(new Tooltip("Food"));
+        UIHelpers.btnRaise(btnFood);
 
         ImageView imgBaby = new ImageView();
         imgBaby.setImage(new Image("images/Icons/baby.png"));
@@ -876,6 +878,8 @@ public class EmployeeMapController extends MapController {
         btnBaby.setOnMouseClicked( event -> {
             //add here
         });
+        btnInfo1.setTooltip(new Tooltip("Babysitting"));
+        UIHelpers.btnRaise(btnBaby);
 
         btnLogOut.setStyle("-fx-background-radius: 30;" );
         btnLogOut.setStyle("-fx-background-radius: 30;");

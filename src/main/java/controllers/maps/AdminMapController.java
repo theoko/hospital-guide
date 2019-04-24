@@ -274,7 +274,7 @@ public class AdminMapController extends MapController {
         btnCoffee.setPrefHeight(60);
         btnCoffee.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnCoffee.setTextOverrun(OverrunStyle.CLIP);
-        UIHelpers.mouseHover(btnCoffee);
+        UIHelpers.btnRaise(btnCoffee);
         btnCoffee.setTooltip(new Tooltip("Food"));
 
         ImageView imgRest = new ImageView();
@@ -290,7 +290,7 @@ public class AdminMapController extends MapController {
         btnRest.setPrefHeight(60);
         btnRest.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnRest.setTextOverrun(OverrunStyle.CLIP);
-        UIHelpers.mouseHover(btnRest);
+        UIHelpers.btnRaise(btnRest);
         btnRest.setTooltip(new Tooltip("Restroom"));
 
         ImageView imgExit = new ImageView();
@@ -306,7 +306,7 @@ public class AdminMapController extends MapController {
         btnExit.setPrefHeight(60);
         btnExit.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnExit.setTextOverrun(OverrunStyle.CLIP);
-        UIHelpers.mouseHover(btnExit);
+        UIHelpers.btnRaise(btnExit);
         btnExit.setTooltip(new Tooltip("Exit"));
 
         ImageView imgElev = new ImageView();
@@ -322,7 +322,7 @@ public class AdminMapController extends MapController {
         btnElev.setPrefHeight(60);
         btnElev.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnElev.setTextOverrun(OverrunStyle.CLIP);
-        UIHelpers.mouseHover(btnElev);
+        UIHelpers.btnRaise(btnElev);
         btnElev.setTooltip(new Tooltip("Elevator"));
 
         ImageView imgInfo = new ImageView();
@@ -338,7 +338,7 @@ public class AdminMapController extends MapController {
         btnInfo.setPrefHeight(60);
         btnInfo.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnInfo.setTextOverrun(OverrunStyle.CLIP);
-        UIHelpers.mouseHover(btnInfo);
+        UIHelpers.btnRaise(btnInfo);
         btnInfo.setTooltip(new Tooltip("Information"));
         btnTab.setTooltip(new Tooltip("Tabular Node Edit"));
 
@@ -361,6 +361,7 @@ public class AdminMapController extends MapController {
         btnLogOut.setStyle("-fx-background-radius: 30;" );
         btnLogOut.setButtonType(JFXButton.ButtonType.RAISED);
         imgLogOut.setImage(new Image("images/Icons/signout.png"));
+        UIHelpers.btnRaise(btnLogOut);
 
         vboxDock.setSpacing(8);
 
