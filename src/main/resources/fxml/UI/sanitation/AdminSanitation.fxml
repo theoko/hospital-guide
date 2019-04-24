@@ -1,39 +1,240 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="655.0" minWidth="1200.0" prefHeight="655.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.sanitation.AdminSanitationController">
-    <VBox prefHeight="655.0" prefWidth="1200.0">
-        <TableView fx:id="tblData" onMouseClicked="#tblClick" prefHeight="629.0" prefWidth="1163.0">
-            <columns>
-                <TableColumn fx:id="tblLocation" prefWidth="138.0" text="Location" />
-                <TableColumn fx:id="tblPriority" prefWidth="92.0" text="Priority" />
-                <TableColumn fx:id="tblStatus" prefWidth="91.0" text="Status" />
-                <TableColumn fx:id="tblDescription" prefWidth="232.0" text="Description" />
-                <TableColumn fx:id="tblRequester" prefWidth="118.0" text="Requester" />
-                <TableColumn fx:id="tblClaimTime" prefWidth="157.0" text="Time Claimed" />
-                <TableColumn fx:id="tblServicer" prefWidth="145.0" text="Servicer" />
-                <TableColumn fx:id="tblServiceTime" prefWidth="225.0" text="Service Time" />
-            </columns>
-        </TableView>
-        <ButtonBar minHeight="-Infinity" prefHeight="71.0" prefWidth="1099.0" VBox.vgrow="ALWAYS">
-            <buttons>
-                <JFXButton fx:id="btnDelete" disable="true" onMouseClicked="#deleteSanitationRequest" text="Delete" textFill="WHITE">
-                    <font>
-                        <Font size="22.0" />
-                    </font>
-                </JFXButton>
-            </buttons>
-            <padding>
-                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-            </padding>
-        </ButtonBar>
-    </VBox>
+    <children>
+        <JFXTabPane layoutY="1.0" prefHeight="639.0" prefWidth="1200.0" side="BOTTOM" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <tabs>
+            <Tab style="-fx-background-color: #022D5A;" text="Sanitation Table">
+               <content>
+                  <AnchorPane prefHeight="645.0" prefWidth="1240.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <VBox prefHeight="655.0" prefWidth="1200.0">
+                           <children>
+                              <TableView fx:id="tblData" onMouseClicked="#tblClick" prefHeight="629.0" prefWidth="1163.0">
+                                 <columns>
+                                    <TableColumn fx:id="tblLocation" prefWidth="138.0" text="Location" />
+                                    <TableColumn fx:id="tblPriority" prefWidth="92.0" text="Priority" />
+                                    <TableColumn fx:id="tblStatus" prefWidth="91.0" text="Status" />
+                                    <TableColumn fx:id="tblDescription" prefWidth="232.0" text="Description" />
+                                    <TableColumn fx:id="tblRequester" prefWidth="118.0" text="Requester" />
+                                    <TableColumn fx:id="tblRequestTime" prefWidth="157.0" text="Time Requested" />
+                                    <TableColumn fx:id="tblClaimTime" prefWidth="157.0" text="Time Claimed" />
+                                    <TableColumn fx:id="tblServicer" prefWidth="145.0" text="Servicer" />
+                                    <TableColumn fx:id="tblServiceTime" prefWidth="225.0" text="Service Time" />
+                                 </columns>
+                              </TableView>
+                              <ButtonBar minHeight="-Infinity" prefHeight="71.0" prefWidth="1099.0" VBox.vgrow="ALWAYS">
+                                 <buttons>
+                                    <JFXButton fx:id="btnDelete" disable="true" onMouseClicked="#deleteSanitationRequest" text="Delete" textFill="WHITE">
+                                       <font>
+                                          <Font size="22.0" />
+                                       </font>
+                                    </JFXButton>
+                                 </buttons>
+                                 <padding>
+                                    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                 </padding>
+                              </ButtonBar>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab style="-fx-background-color: #022D5A;" text="Pie Chart">
+               <content>
+                  <AnchorPane prefHeight="645.0" prefWidth="1240.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <VBox layoutX="10.0" layoutY="27.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="1200.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="27.0">
+                           <children>
+                              <PieChart fx:id="chartPie" prefHeight="635.0" prefWidth="1200.0" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+<!--             <Tab style="-fx-background-color: #022D5A;" text="Line Graph">
+               <content>
+                  <AnchorPane prefHeight="645.0" prefWidth="1240.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <LineChart fx:id="chartLine" prefHeight="625.0" prefWidth="1038.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <xAxis>
+                            <CategoryAxis side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis side="LEFT" />
+                          </yAxis>
+                        </LineChart>
+                        <VBox layoutX="10.0" layoutY="27.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="1200.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="27.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab> -->
+            <Tab style="-fx-background-color: #022D5A;" text="Summary Statistics">
+               <content>
+                  <AnchorPane prefHeight="645.0" prefWidth="1240.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <VBox layoutX="10.0" layoutY="27.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="1200.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="27.0">
+                           <children>
+                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                                 <children>
+                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="251.0" style="-fx-background-color: #022D5A;" text="Summary Statistics" textFill="WHITE">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <Text fx:id="textSummaryStatistics" strokeType="OUTSIDE" strokeWidth="0.0" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets left="20.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                                 <children>
+                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="410.0" style="-fx-background-color: #022D5A;" text="Request Time to Claim Time (min)" textFill="WHITE">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="20.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Text fx:id="textRequestToClaimTime" strokeType="OUTSIDE" strokeWidth="0.0" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                                 <children>
+                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="410.0" style="-fx-background-color: #022D5A;" text="Claim Time to Complete Time (min)" textFill="WHITE">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <Text fx:id="textClaimToCompleteTime" strokeType="OUTSIDE" strokeWidth="0.0" />
+                                 </children>
+                                 <padding>
+                                    <Insets left="20.0" />
+                                 </padding>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="400.0" prefWidth="200.0" spacing="20.0">
+                                 <children>
+                                    <VBox maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="400.0">
+                                       <children>
+                                          <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="251.0" style="-fx-background-color: #022D5A;" text="Employee Info" textFill="WHITE">
+                                             <font>
+                                                <Font size="24.0" />
+                                             </font>
+                                          </Label>
+                                          <TableView fx:id="tblEmployee" maxHeight="1.7976931348623157E308" prefHeight="497.0" prefWidth="400.0">
+                                            <columns>
+                                              <TableColumn fx:id="tblEmployeeEmployee" prefWidth="241.0" text="Employee" />
+                                              <TableColumn fx:id="tblEmployeeRequests" prefWidth="158.0" text="Requests" />
+                                            </columns>
+                                          </TableView>
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="200.0" prefWidth="600.0">
+                                       <children>
+                                          <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="251.0" style="-fx-background-color: #022D5A;" text="Custodian Info" textFill="WHITE">
+                                             <font>
+                                                <Font size="24.0" />
+                                             </font>
+                                          </Label>
+                                          <TableView fx:id="tblCustodian" prefHeight="535.0" prefWidth="600.0">
+                                             <columns>
+                                                <TableColumn fx:id="tblCustodianEmployee" prefWidth="241.0" text="Employee" />
+                                                <TableColumn fx:id="tblCustodianClaimed" prefWidth="158.0" text="Claimed" />
+                                                <TableColumn fx:id="tblCustodianCompleted" prefWidth="158.0" text="Completed" />
+                                             </columns>
+                                          </TableView>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                                 <padding>
+                                    <Insets left="20.0" />
+                                 </padding>
+                              </HBox>
+                           </children></VBox>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+                <Tab style="-fx-background-color: #022D5A;" text="Filter Report">
+                    <VBox layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+                        <children>
+                            <HBox fx:id="txtUsers" alignment="CENTER_LEFT" layoutX="10.0" layoutY="20.0" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                        <children>
+                           <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="200.0" style="-fx-background-color: #022D5A;" text="User Name" textFill="WHITE">
+                              <font>
+                                 <Font size="24.0" />
+                              </font>
+                           </Label>
+                           <JFXTextField fx:id="txtUserNames" onKeyReleased="#filterChange" prefHeight="27.0" prefWidth="800.0" promptText="User names seperated by commas " />
+                        </children>
+                            </HBox>
+                            <VBox prefHeight="200.0" prefWidth="100.0">
+                                <children>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                                        <children>
+                                            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="200.0" style="-fx-background-color: #022D5A;" text="Start Date" textFill="WHITE">
+                                                <font>
+                                                    <Font size="24.0" />
+                                                </font>
+                                            </Label>
+                                            <JFXDatePicker fx:id="datStartDate" onAction="#filterChange" onKeyTyped="#filterChange" promptText="Select Date" />
+                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Filters by date request was made." />
+                                        </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                                        <children>
+                                            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: #022D5A;" text="End Date" textFill="WHITE">
+                                                <font>
+                                                    <Font size="24.0" />
+                                                </font>
+                                            </Label>
+                                 <JFXDatePicker fx:id="datEndDate" onAction="#filterChange" onKeyTyped="#filterChange" promptText="Select Date" />
+                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Filters by date request was made." />
+                                        </children>
+                                    </HBox>
+                                </children>
+                            </VBox>
+                            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                                <children>
+                                    <JFXButton fx:id="btnFilter" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" defaultButton="true" disable="true" onMouseClicked="#filterData" onMouseReleased="#filterData" prefHeight="45.0" prefWidth="205.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Filter" textAlignment="CENTER" />
+                           <JFXButton fx:id="btnClear" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" disable="false" onMouseClicked="#btnClear" prefHeight="45.0" prefWidth="205.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Clear" textAlignment="CENTER" />
+                                </children>
+                        <VBox.margin>
+                           <Insets bottom="30.0" />
+                        </VBox.margin>
+                            </HBox>
+                        </children>
+                        <opaqueInsets>
+                            <Insets top="20.0" />
+                        </opaqueInsets>
+                        <padding>
+                            <Insets left="15.0" top="10.0" />
+                        </padding>
+                    </VBox>
+                </Tab>
+          
+            </tabs>
+        </JFXTabPane>
+    </children>
 </AnchorPane>

@@ -5,9 +5,6 @@
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.LineChart?>
-<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
@@ -37,6 +34,7 @@
                                     <TableColumn fx:id="tblStatus" prefWidth="91.0" text="Status" />
                                     <TableColumn fx:id="tblDescription" prefWidth="232.0" text="Description" />
                                     <TableColumn fx:id="tblRequester" prefWidth="118.0" text="Requester" />
+                                    <TableColumn fx:id="tblRequestTime" prefWidth="157.0" text="Time Requested" />
                                     <TableColumn fx:id="tblClaimTime" prefWidth="157.0" text="Time Claimed" />
                                     <TableColumn fx:id="tblServicer" prefWidth="145.0" text="Servicer" />
                                     <TableColumn fx:id="tblServiceTime" prefWidth="225.0" text="Service Time" />
@@ -60,61 +58,6 @@
                   </AnchorPane>
                </content>
             </Tab>
-                <Tab style="-fx-background-color: #022D5A;" text="Filter Report">
-                    <VBox layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
-                        <children>
-                            <HBox fx:id="txtUsers" alignment="CENTER_LEFT" layoutX="10.0" layoutY="20.0" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
-                        <children>
-                           <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="200.0" style="-fx-background-color: #022D5A;" text="User Name" textFill="WHITE">
-                              <font>
-                                 <Font size="24.0" />
-                              </font>
-                           </Label>
-                           <JFXTextField fx:id="txtUserNames" onKeyReleased="#filterChange" prefHeight="27.0" prefWidth="800.0" promptText="User names seperated by comma " />
-                        </children>
-                            </HBox>
-                            <VBox prefHeight="200.0" prefWidth="100.0">
-                                <children>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
-                                        <children>
-                                            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="200.0" style="-fx-background-color: #022D5A;" text="Start Date" textFill="WHITE">
-                                                <font>
-                                                    <Font size="24.0" />
-                                                </font>
-                                            </Label>
-                                            <JFXDatePicker fx:id="datStartDate" onAction="#filterChange" onKeyTyped="#filterChange" promptText="Select Date" />
-                                        </children>
-                                    </HBox>
-                                    <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
-                                        <children>
-                                            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: #022D5A;" text="End Date" textFill="WHITE">
-                                                <font>
-                                                    <Font size="24.0" />
-                                                </font>
-                                            </Label>
-                                 <JFXDatePicker fx:id="datEndDate" onAction="#filterChange" onKeyTyped="#filterChange" promptText="Select Date" />
-                                        </children>
-                                    </HBox>
-                                </children>
-                            </VBox>
-                            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
-                                <children>
-                                    <JFXButton fx:id="btnFilter" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" disable="true" onMouseClicked="#filterData" prefHeight="45.0" prefWidth="205.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Filter" textAlignment="CENTER" />
-                                    <JFXButton fx:id="btnReturn" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" onMouseClicked="#cancelScr" prefHeight="11.0" prefWidth="140.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Cancel" textAlignment="CENTER" />
-                                </children>
-                        <VBox.margin>
-                           <Insets bottom="30.0" />
-                        </VBox.margin>
-                            </HBox>
-                        </children>
-                        <opaqueInsets>
-                            <Insets top="20.0" />
-                        </opaqueInsets>
-                        <padding>
-                            <Insets left="15.0" top="10.0" />
-                        </padding>
-                    </VBox>
-                </Tab>
             <Tab style="-fx-background-color: #022D5A;" text="Pie Chart">
                <content>
                   <AnchorPane prefHeight="645.0" prefWidth="1240.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -128,7 +71,7 @@
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab style="-fx-background-color: #022D5A;" text="Line Graph">
+<!--             <Tab style="-fx-background-color: #022D5A;" text="Line Graph">
                <content>
                   <AnchorPane prefHeight="645.0" prefWidth="1240.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
@@ -144,7 +87,7 @@
                      </children>
                   </AnchorPane>
                </content>
-            </Tab>
+            </Tab> -->
             <Tab style="-fx-background-color: #022D5A;" text="Summary Statistics">
                <content>
                   <AnchorPane prefHeight="645.0" prefWidth="1240.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -166,7 +109,7 @@
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                                  <children>
-                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="371.0" style="-fx-background-color: #022D5A;" text="Request Time to Claim Time" textFill="WHITE">
+                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="410.0" style="-fx-background-color: #022D5A;" text="Request Time to Claim Time (min)" textFill="WHITE">
                                        <font>
                                           <Font size="24.0" />
                                        </font>
@@ -179,7 +122,7 @@
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                                  <children>
-                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="371.0" style="-fx-background-color: #022D5A;" text="Claim Time to Complete Time" textFill="WHITE">
+                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="410.0" style="-fx-background-color: #022D5A;" text="Claim Time to Complete Time (min)" textFill="WHITE">
                                        <font>
                                           <Font size="24.0" />
                                        </font>
@@ -233,6 +176,63 @@
                   </AnchorPane>
                </content>
             </Tab>
+                <Tab style="-fx-background-color: #022D5A;" text="Filter Report">
+                    <VBox layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+                        <children>
+                            <HBox fx:id="txtUsers" alignment="CENTER_LEFT" layoutX="10.0" layoutY="20.0" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                        <children>
+                           <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="200.0" style="-fx-background-color: #022D5A;" text="User Name" textFill="WHITE">
+                              <font>
+                                 <Font size="24.0" />
+                              </font>
+                           </Label>
+                           <JFXTextField fx:id="txtUserNames" onKeyReleased="#filterChange" prefHeight="27.0" prefWidth="800.0" promptText="User names seperated by commas " />
+                        </children>
+                            </HBox>
+                            <VBox prefHeight="200.0" prefWidth="100.0">
+                                <children>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                                        <children>
+                                            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="200.0" style="-fx-background-color: #022D5A;" text="Start Date" textFill="WHITE">
+                                                <font>
+                                                    <Font size="24.0" />
+                                                </font>
+                                            </Label>
+                                            <JFXDatePicker fx:id="datStartDate" onAction="#filterChange" onKeyTyped="#filterChange" promptText="Select Date" />
+                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Filters by date request was made" />
+                                        </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                                        <children>
+                                            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: #022D5A;" text="End Date" textFill="WHITE">
+                                                <font>
+                                                    <Font size="24.0" />
+                                                </font>
+                                            </Label>
+                                 <JFXDatePicker fx:id="datEndDate" onAction="#filterChange" onKeyTyped="#filterChange" promptText="Select Date" />
+                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Filters by date request was made" />
+                                        </children>
+                                    </HBox>
+                                </children>
+                            </VBox>
+                            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                                <children>
+                                    <JFXButton fx:id="btnFilter" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" defaultButton="true" disable="true" onMouseClicked="#filterData" onMouseReleased="#filterData" prefHeight="45.0" prefWidth="205.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Filter" textAlignment="CENTER" />
+                           <JFXButton fx:id="btnClear" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" disable="false" onMouseClicked="#btnClear" prefHeight="45.0" prefWidth="205.0" style="-fx-text-fill: WHITE; -fx-font-size: 24px;" text="Clear" textAlignment="CENTER" />
+                                </children>
+                        <VBox.margin>
+                           <Insets bottom="30.0" />
+                        </VBox.margin>
+                            </HBox>
+                        </children>
+                        <opaqueInsets>
+                            <Insets top="20.0" />
+                        </opaqueInsets>
+                        <padding>
+                            <Insets left="15.0" top="10.0" />
+                        </padding>
+                    </VBox>
+                </Tab>
           
             </tabs>
         </JFXTabPane>
