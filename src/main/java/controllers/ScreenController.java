@@ -66,8 +66,7 @@ public class ScreenController {
                 //int timeCnt = lc.getTime();
                 car.add(org.saveStateToMemento());
                 theCnt = mouseCnt;
-                int threshold = 5;
-                if (secCnt == 30) {
+                if (secCnt > lc.time*60) {
                     Platform.runLater(() -> {
                         try {
                             ScreenController.activate(Constants.Routes.WELCOME);
@@ -79,14 +78,11 @@ public class ScreenController {
                 }
                 try {
                     Thread.sleep(1000L);
-                    System.out.println("SavedCount");
-                    System.out.println(theCnt);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 if (car.get(car.mementoList.size() - 1) == theCnt) {
                     secCnt += 1;
-                    System.out.println("secCnt");
                     System.out.println(secCnt);
                 }
                 else {
