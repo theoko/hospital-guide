@@ -448,14 +448,12 @@ public class EmployeeMapController extends MapController {
     @Override
     protected void addDoc() {
 
-        start.getItems().add(new Label("heh"));
         //path.setEditable(true);
         start.setPromptText("Select Path");
         start.setStyle("-fx-background-color: #ffffff");
         start.setPrefWidth(300);
         start.setPrefHeight(35);
 
-        end.getItems().add(new Label("heh"));
         //path.setEditable(true);
         end.setPromptText("Select Path");
         end.setStyle("-fx-background-color: #ffffff");
@@ -525,7 +523,6 @@ public class EmployeeMapController extends MapController {
         btnArrow.setPrefHeight(60);
         btnArrow.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnArrow.setTextOverrun(OverrunStyle.CLIP);
-        UIHelpers.mouseHover(btnArrow);
         btnArrow.setTooltip(new Tooltip("Enter"));
         UIHelpers.btnRaise(btnArrow);
 
@@ -575,7 +572,6 @@ public class EmployeeMapController extends MapController {
         btnBookG.setPrefHeight(60);
         btnBookG.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnBookG.setTextOverrun(OverrunStyle.CLIP);
-        UIHelpers.mouseHover(btnBookG);
         btnBookG.setTooltip(new Tooltip("Visual Booking"));
 
         UIHelpers.btnRaise(btnBookG);
@@ -593,7 +589,6 @@ public class EmployeeMapController extends MapController {
         btnBookT.setPrefHeight(60);
         btnBookT.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnBookT.setTextOverrun(OverrunStyle.CLIP);
-        UIHelpers.mouseHover(btnBookT);
         btnBookT.setTooltip(new Tooltip("Table Booking"));
         UIHelpers.btnRaise(btnBookT);
 
@@ -685,7 +680,6 @@ public class EmployeeMapController extends MapController {
         btnComp1.setPrefHeight(60);
         btnComp1.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnComp1.setTextOverrun(OverrunStyle.CLIP);
-        UIHelpers.mouseHover(btnComp1);
         btnComp1.setTooltip(new Tooltip("IT Services"));
         UIHelpers.btnRaise(btnComp1);
 
@@ -703,7 +697,6 @@ public class EmployeeMapController extends MapController {
         btnFlo.setPrefHeight(60);
         btnFlo.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnFlo.setTextOverrun(OverrunStyle.CLIP);
-        UIHelpers.mouseHover(btnFlo);
         btnFlo.setTooltip(new Tooltip("Flower Request"));
         btnFlo.setOnMouseClicked(event -> {
             try {
@@ -740,7 +733,6 @@ public class EmployeeMapController extends MapController {
             }
             */
         });
-        UIHelpers.mouseHover(btnSign);
         btnSign.setTooltip(new Tooltip("Interpreter"));
         UIHelpers.btnRaise(btnSign);
 
@@ -757,7 +749,6 @@ public class EmployeeMapController extends MapController {
         btnLock.setPrefHeight(60);
         btnLock.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnLock.setTextOverrun(OverrunStyle.CLIP);
-        UIHelpers.mouseHover(btnLock);
         btnLock.setTooltip(new Tooltip("Security"));
 
         UIHelpers.btnRaise(btnLock);
@@ -775,7 +766,6 @@ public class EmployeeMapController extends MapController {
         btnDrug.setPrefHeight(60);
         btnDrug.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnDrug.setTextOverrun(OverrunStyle.CLIP);
-        UIHelpers.mouseHover(btnDrug);
         btnDrug.setTooltip(new Tooltip("Prescription"));
         UIHelpers.btnRaise(btnDrug);
 
@@ -792,7 +782,6 @@ public class EmployeeMapController extends MapController {
         btnAv.setPrefHeight(60);
         btnAv.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnAv.setTextOverrun(OverrunStyle.CLIP);
-        UIHelpers.mouseHover(btnAv);
         btnAv.setTooltip(new Tooltip("Audio/Visual"));
         UIHelpers.btnRaise(btnAv);
 
@@ -809,7 +798,6 @@ public class EmployeeMapController extends MapController {
         btnIn.setPrefHeight(60);
         btnIn.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnIn.setTextOverrun(OverrunStyle.CLIP);
-        UIHelpers.mouseHover(btnIn);
         btnIn.setTooltip(new Tooltip("Internal Transport"));
         UIHelpers.btnRaise(btnIn);
 
@@ -826,7 +814,6 @@ public class EmployeeMapController extends MapController {
         btnGift.setPrefHeight(60);
         btnGift.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnGift.setTextOverrun(OverrunStyle.CLIP);
-        UIHelpers.mouseHover(btnGift);
         btnGift.setTooltip(new Tooltip("Gift"));
         UIHelpers.btnRaise(btnGift);
 
@@ -843,7 +830,6 @@ public class EmployeeMapController extends MapController {
         btnOut.setPrefHeight(60);
         btnOut.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnOut.setTextOverrun(OverrunStyle.CLIP);
-        UIHelpers.mouseHover(btnOut);
         btnOut.setTooltip(new Tooltip("External Transportation"));
         UIHelpers.btnRaise(btnOut);
 
@@ -861,7 +847,6 @@ public class EmployeeMapController extends MapController {
         btnInfo.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnInfo.setTextOverrun(OverrunStyle.CLIP);
 
-        UIHelpers.mouseHover(btnInfo);
         btnInfo.setTooltip(new Tooltip("Information"));
         UIHelpers.btnRaise(btnInfo);
 
@@ -880,7 +865,6 @@ public class EmployeeMapController extends MapController {
         btnCoffee.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnCoffee.setTextOverrun(OverrunStyle.CLIP);
 
-        UIHelpers.mouseHover(btnCoffee);
         btnCoffee.setTooltip(new Tooltip("Food"));
         btnCoffee.setOnMouseClicked((e) -> {
             PathFinder.printByType(this, map, Constants.NodeType.RETL);
@@ -901,7 +885,6 @@ public class EmployeeMapController extends MapController {
         btnRest.setPrefHeight(60);
         btnRest.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnRest.setTextOverrun(OverrunStyle.CLIP);
-        UIHelpers.mouseHover(btnRest);
         btnRest.setTooltip(new Tooltip("Rest Rooms"));
        // btnRest.setTooltip(new Tooltip("RestRoom"));
         btnRest.setOnMouseClicked((e) -> {
@@ -923,7 +906,6 @@ public class EmployeeMapController extends MapController {
         btnExit.setPrefHeight(60);
         btnExit.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnExit.setTextOverrun(OverrunStyle.CLIP);
-        UIHelpers.mouseHover(btnExit);
         btnExit.setTooltip(new Tooltip("Exit"));
         btnExit.setOnMouseClicked((e) -> {
             PathFinder.printByType(this, map, Constants.NodeType.EXIT);
@@ -946,7 +928,6 @@ public class EmployeeMapController extends MapController {
         btnElev.setPrefHeight(60);
         btnElev.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnElev.setTextOverrun(OverrunStyle.CLIP);
-        UIHelpers.mouseHover(btnElev);
         btnElev.setTooltip(new Tooltip("Elevators"));
        // btnElev.setTooltip(new Tooltip("Elevator"));
         btnElev.setOnMouseClicked((e) -> {
@@ -973,7 +954,6 @@ public class EmployeeMapController extends MapController {
             PathFinder.printByType(this, map, Constants.NodeType.INFO);
         });
 
-        UIHelpers.mouseHover(btnInfo1);
         btnInfo1.setTooltip(new Tooltip("Information"));
         UIHelpers.btnRaise(btnInfo1);
 
@@ -1020,9 +1000,9 @@ public class EmployeeMapController extends MapController {
         btnLogOut.setStyle("-fx-background-radius: 30;");
         btnLogOut.setButtonType(JFXButton.ButtonType.RAISED);
         imgLogOut.setImage(new Image("images/Icons/signout.png"));
-        UIHelpers.mouseHover(btnLogOut);
-        btnLogOut.setTooltip(new Tooltip("Log Out"));
         UIHelpers.btnRaise(btnLogOut);
+        btnLogOut.setTooltip(new Tooltip("Log Out"));
+
 
         btnText.setStyle("-fx-background-radius: 30;" );
         btnText.setButtonType(JFXButton.ButtonType.RAISED);

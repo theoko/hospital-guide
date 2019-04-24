@@ -82,10 +82,12 @@ public class UIHelpers {
     public static void btnRaise(JFXButton btn) {
         btn.setOnMouseEntered(event -> {
             btn.setButtonType(JFXButton.ButtonType.RAISED);
+            ScreenController.sceneThing.setCursor(Cursor.HAND);
         });
 
         btn.setOnMouseExited(event -> {
             btn.setButtonType(JFXButton.ButtonType.FLAT);
+            ScreenController.sceneThing.setCursor(Cursor.DEFAULT);
         });
     }
 

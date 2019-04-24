@@ -225,7 +225,6 @@ public class UserMapController extends MapController {
         });
 
         UIHelpers.btnRaise(btnCoffee);
-        UIHelpers.mouseHover(btnCoffee);
         btnCoffee.setTooltip(new Tooltip("Food"));
 
 
@@ -247,7 +246,6 @@ public class UserMapController extends MapController {
         });
 
        UIHelpers.btnRaise(btnRest);
-       UIHelpers.mouseHover(btnRest);
        btnRest.setTooltip(new Tooltip("Restroom"));
 
 
@@ -269,7 +267,6 @@ public class UserMapController extends MapController {
         });
 
         UIHelpers.btnRaise(btnExit);
-        UIHelpers.mouseHover(btnExit);
         btnExit.setTooltip(new Tooltip("Exit"));
 
 
@@ -292,7 +289,6 @@ public class UserMapController extends MapController {
         });
 
         UIHelpers.btnRaise(btnElev);
-        UIHelpers.mouseHover(btnElev);
         btnElev.setTooltip(new Tooltip("Elevators"));
 
         ImageView imgInfo = new ImageView();
@@ -313,7 +309,6 @@ public class UserMapController extends MapController {
         });
 
         UIHelpers.btnRaise(btnInfo);
-        UIHelpers.mouseHover(btnInfo);
         btnInfo.setTooltip(new Tooltip("Information"));
 
 
@@ -321,7 +316,6 @@ public class UserMapController extends MapController {
         btnLogOut.setButtonType(JFXButton.ButtonType.RAISED);
 
         UIHelpers.btnRaise(btnLogOut);
-        UIHelpers.mouseHover(btnLogOut);
         btnLogOut.setTooltip(new Tooltip("Log Out"));
 
 
@@ -332,7 +326,6 @@ public class UserMapController extends MapController {
         imgText.setImage(new Image("images/Icons/text.png"));
 
         UIHelpers.btnRaise(btnText);
-        UIHelpers.mouseHover(btnText);
         btnText.setTooltip(new Tooltip("Send Text"));
 
 

@@ -13,6 +13,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.OverrunStyle;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -83,14 +84,12 @@ public class CustodianMapController extends MapController {
     @Override
     protected void addDoc() {
 
-        start.getItems().add(new Label("heh"));
         //path.setEditable(true);
         start.setPromptText("Select Path");
         start.setStyle("-fx-background-color: #ffffff");
         start.setPrefWidth(300);
         start.setPrefHeight(35);
 
-        end.getItems().add(new Label("heh"));
         //path.setEditable(true);
         end.setPromptText("Select Path");
         end.setStyle("-fx-background-color: #ffffff");
@@ -128,6 +127,8 @@ public class CustodianMapController extends MapController {
         btnUser.setPrefHeight(60);
         btnUser.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnUser.setTextOverrun(OverrunStyle.CLIP);
+        UIHelpers.mouseHover(btnUser);
+        btnUser.setTooltip(new Tooltip("Account"));
 
         ImageView imgSearch = new ImageView();
         imgSearch.setImage(new Image("images/Icons/search.png"));
@@ -142,6 +143,8 @@ public class CustodianMapController extends MapController {
         btnSearch.setPrefHeight(60);
         btnSearch.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnSearch.setTextOverrun(OverrunStyle.CLIP);
+        UIHelpers.mouseHover(btnSearch);
+        btnSearch.setTooltip(new Tooltip("Search Bar"));
 
         ImageView imgArrow = new ImageView();
         imgArrow.setImage(new Image("images/Icons/arrow.png"));
@@ -156,6 +159,8 @@ public class CustodianMapController extends MapController {
         btnArrow.setPrefHeight(60);
         btnArrow.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnArrow.setTextOverrun(OverrunStyle.CLIP);
+        UIHelpers.mouseHover(btnArrow);
+        btnArrow.setTooltip(new Tooltip("Enter"));
 
         ImageView imgRoute = new ImageView();
         imgRoute.setImage(new Image("images/Icons/route.png"));
@@ -170,6 +175,8 @@ public class CustodianMapController extends MapController {
         btnRoute.setPrefHeight(60);
         btnRoute.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnRoute.setTextOverrun(OverrunStyle.CLIP);
+        UIHelpers.mouseHover(btnRoute);
+        btnRoute.setTooltip(new Tooltip("Directions"));
 
         ImageView imgExl = new ImageView();
         imgExl.setImage(new Image("images/Icons/excl.png"));
@@ -184,6 +191,8 @@ public class CustodianMapController extends MapController {
         btnExl.setPrefHeight(60);
         btnExl.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnExl.setTextOverrun(OverrunStyle.CLIP);
+        UIHelpers.mouseHover(btnExl);
+        btnExl.setTooltip(new Tooltip("Service Requests"));
 
         ImageView imgCoffee = new ImageView();
         imgCoffee.setImage(new Image("images/SearchIcons/coffee.png"));
@@ -191,6 +200,7 @@ public class CustodianMapController extends MapController {
         imgCoffee.setFitWidth(30);
         imgCoffee.setPreserveRatio(true);
         imgCoffee.setPickOnBounds(true);
+
 
         JFXButton btnCoffee = new JFXButton("",imgCoffee);
         btnCoffee.setAlignment(Pos.CENTER);
@@ -201,6 +211,7 @@ public class CustodianMapController extends MapController {
         btnCoffee.setOnMouseClicked((e) -> {
             PathFinder.printByType(this, map, Constants.NodeType.RETL);
         });
+        UIHelpers.btnRaise(btnCoffee);
 
         ImageView imgRest = new ImageView();
         imgRest.setImage(new Image("images/SearchIcons/rest.png"));
@@ -218,6 +229,7 @@ public class CustodianMapController extends MapController {
         btnRest.setOnMouseClicked((e) -> {
             PathFinder.printByType(this, map, Constants.NodeType.REST, Constants.NodeType.BATH);
         });
+        UIHelpers.btnRaise(btnRest);
 
         ImageView imgExit = new ImageView();
         imgExit.setImage(new Image("images/SearchIcons/exit.png"));
@@ -235,6 +247,7 @@ public class CustodianMapController extends MapController {
         btnExit.setOnMouseClicked((e) -> {
             PathFinder.printByType(this, map, Constants.NodeType.EXIT);
         });
+        UIHelpers.btnRaise(btnExit);
 
         ImageView imgElev = new ImageView();
         imgElev.setImage(new Image("images/SearchIcons/elev.png"));
@@ -252,6 +265,7 @@ public class CustodianMapController extends MapController {
         btnElev.setOnMouseClicked((e) -> {
             PathFinder.printByType(this, map, Constants.NodeType.ELEV, Constants.NodeType.STAI);
         });
+        UIHelpers.btnRaise(btnElev);
 
         ImageView imgInfo = new ImageView();
         imgInfo.setImage(new Image("images/Icons/info.png"));
@@ -269,6 +283,7 @@ public class CustodianMapController extends MapController {
         btnInfo.setOnMouseClicked((e) -> {
             PathFinder.printByType(this, map, Constants.NodeType.INFO);
         });
+        UIHelpers.btnRaise(btnInfo);
 
         btnLogOut.setStyle("-fx-background-radius: 30;" );
         btnLogOut.setButtonType(JFXButton.ButtonType.RAISED);
@@ -277,6 +292,7 @@ public class CustodianMapController extends MapController {
         btnText.setStyle("-fx-background-radius: 30;" );
         btnText.setButtonType(JFXButton.ButtonType.RAISED);
         imgText.setImage(new Image("images/Icons/text.png"));
+        UIHelpers.btnRaise(btnLogOut);
 
         vboxDock.setSpacing(8);
 
