@@ -53,7 +53,7 @@ public class ScreenController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Thread t = new Thread(() -> {
+        /*Thread t = new Thread(() -> {
             System.out.println("here");
             while(true) {
                 LogoutController lc = new LogoutController() {
@@ -92,7 +92,7 @@ public class ScreenController {
             }
         });
         t.setDaemon(true);
-        t.start();
+        t.start();*/
     }
 
     public static HashMap<String, String> getScreenMap() {
