@@ -8,16 +8,15 @@ import javafx.scene.input.MouseEvent;
 
 public class AutoLogoutController {
 
-    public JFXTextField txtTime;
-    public JFXButton btnSubmit;
-    public double time = 1;
+    public JFXTextField txtDescription;
+    public double time = 5;
 
     public AutoLogoutController() {
         this.time = time;
     }
 
     public double getTime(){
-        return Double.parseDouble(txtTime.getText());
+        return Double.parseDouble(txtDescription.getText());
     }
 
     public void btnSubmit_Clicked(MouseEvent mouseEvent) {

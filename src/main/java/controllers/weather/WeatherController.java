@@ -92,7 +92,6 @@ public class WeatherController {
             reader.close();
 
             String type = this.getKey(this.getKeyFromArray(this.getKey(result.toString(), "weather"), 0), "main");
-            System.out.println(type);
             switch (type) {
                 case "\"Clear\"":
                     imgType.setImage(new Image("images/Weather/sun.png"));

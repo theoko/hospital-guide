@@ -414,7 +414,7 @@ public class AdminMapController extends MapController {
         nodesListTime.addAnimatedNode(btnTime);
         nodesListTime.addAnimatedNode(Time);
         nodesListTime.setRotate(90);
-        nodesListTime.setSpacing(105);
+        nodesListTime.setSpacing(145);
 
         vboxDock.getChildren().add(nodeListUser);
         vboxDock.getChildren().add(nodesListEdit);
