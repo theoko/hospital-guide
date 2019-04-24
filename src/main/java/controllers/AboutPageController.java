@@ -24,7 +24,7 @@ public class AboutPageController {
 
         VBox vbox1 = new VBox();
         vbox1.setPadding(new Insets(25, 25, 25, 25));
-        vbox1.setSpacing(5);
+        vbox1.setSpacing(25);
         vbox1.setPrefHeight(1000);
         vbox1.setPrefWidth(1200);
         scrollPane.setContent(vbox1);
@@ -34,6 +34,55 @@ public class AboutPageController {
         dropShadow.setOffsetX(3.0);
         dropShadow.setOffsetY(3.0);
         dropShadow.setColor(Color.color(0.4, 0.5, 0.5));
+
+        HBox name = new HBox();
+        name.setAlignment(Pos.CENTER);
+        AnchorPane panName = new AnchorPane();
+        panName.setStyle("-fx-background-color: #022D5A;  -fx-background-radius: 25;");
+        panName.setPrefWidth(100);
+        panName.setPrefHeight(25);
+        Label lblName = new Label("Team F");
+        lblName.setTextAlignment(TextAlignment.CENTER);
+        lblName.setTextFill(Color.WHITE);
+        panName.getChildren().add(lblName);
+        AnchorPane.setRightAnchor(lblName, 0.0);
+        AnchorPane.setTopAnchor(lblName, 0.0);
+        AnchorPane.setLeftAnchor(lblName, 0.0);
+        AnchorPane.setBottomAnchor(lblName, 0.0);
+        name.getChildren().add(panName);
+        vbox1.getChildren().add(name);
+
+        HBox profs = new HBox();
+        profs.setAlignment(Pos.CENTER);
+        profs.setSpacing(25.0);
+        AnchorPane panProf = new AnchorPane();
+        panProf.setStyle("-fx-background-color: #022D5A;  -fx-background-radius: 25;");
+        panProf.setPrefWidth(100);
+        panProf.setPrefHeight(25);
+        Label lblProf = new Label("Prof. Wong");
+        lblProf.setTextFill(Color.WHITE);
+        lblProf.setTextAlignment(TextAlignment.CENTER);
+        panProf.getChildren().add(lblProf);
+        AnchorPane.setRightAnchor(lblProf, 0.0);
+        AnchorPane.setTopAnchor(lblProf, 0.0);
+        AnchorPane.setLeftAnchor(lblProf, 0.0);
+        AnchorPane.setBottomAnchor(lblProf, 0.0);
+        profs.getChildren().add(panProf);
+
+        AnchorPane panCoach = new AnchorPane();
+        panCoach.setStyle("-fx-background-color: #022D5A;  -fx-background-radius: 25;");
+        panCoach.setPrefWidth(100);
+        panCoach.setPrefHeight(25);
+        Label lblCoach = new Label("Tim Winters");
+        lblCoach.setTextAlignment(TextAlignment.CENTER);
+        lblCoach.setTextFill(Color.WHITE);
+        panCoach.getChildren().add(lblCoach);
+        AnchorPane.setRightAnchor(lblCoach, 0.0);
+        AnchorPane.setTopAnchor(lblCoach, 0.0);
+        AnchorPane.setLeftAnchor(lblCoach, 0.0);
+        AnchorPane.setBottomAnchor(lblCoach, 0.0);
+        profs.getChildren().add(panCoach);
+        vbox1.getChildren().add(profs);
 
         AnchorPane anchorPane1 = new AnchorPane();
         anchorPane1.setPrefWidth(200);
@@ -110,6 +159,7 @@ public class AboutPageController {
 
        AnchorPane anchorLbl2 = new AnchorPane();
        anchorLbl2.setPrefWidth(200);
+     anchorLbl2.setPrefHeight(90);
         anchorLbl2.setStyle("-fx-background-color: #022D5A;  -fx-background-radius: 35;");
 
         Label lbl3 = new Label();
@@ -169,6 +219,7 @@ public class AboutPageController {
 
         AnchorPane anchorLbl3 = new AnchorPane();
         anchorLbl3.setPrefWidth(200);
+     anchorLbl3.setPrefHeight(90);
         anchorLbl3.setStyle("-fx-background-color: #022D5A;  -fx-background-radius: 25;");
 
         Label lbl5 = new Label();
@@ -235,6 +286,7 @@ public class AboutPageController {
 
         AnchorPane anchorLbl4 = new AnchorPane();
         anchorLbl4.setPrefWidth(200);
+     anchorLbl4.setPrefHeight(60);
         anchorLbl4.setStyle("-fx-background-color: #022D5A;  -fx-background-radius: 25;");
 
         Label lbl7 = new Label();
@@ -244,10 +296,10 @@ public class AboutPageController {
         lbl7.setAlignment(Pos.CENTER);
 
         Label lbl8 = new Label();
-        lbl8.setFont(new Font(18));
+        lbl8.setFont(new Font(17));
         lbl8.setTextFill(Color.WHITE);
         lbl8.setStyle("-fx-background-color: #0083ff; -fx-background-radius: 25;");
-        lbl8.setText("Full Time Software Engineer");
+        lbl8.setText("Senior Software Engineer");
         lbl8.setAlignment(Pos.CENTER);
 
         AnchorPane.setTopAnchor(lbl7, 5.0);
@@ -292,6 +344,7 @@ public class AboutPageController {
 
         AnchorPane anchorLbl5 = new AnchorPane();
         anchorLbl5.setPrefWidth(200);
+     anchorLbl5.setPrefHeight(60);
         anchorLbl5.setStyle("-fx-background-color: #022D5A;  -fx-background-radius: 25;");
 
         Label lbl9 = new Label();
@@ -349,6 +402,7 @@ public class AboutPageController {
 
         AnchorPane anchorLbl6 = new AnchorPane();
         anchorLbl6.setPrefWidth(200);
+     anchorLbl6.setPrefHeight(60);
         anchorLbl6.setStyle("-fx-background-color: #022D5A;  -fx-background-radius: 25;");
 
         Label lbl11 = new Label();
@@ -358,10 +412,10 @@ public class AboutPageController {
         lbl11.setAlignment(Pos.CENTER);
 
         Label lbl12 = new Label();
-        lbl12.setFont(new Font(18));
+        lbl12.setFont(new Font(17));
         lbl12.setTextFill(Color.WHITE);
         lbl12.setStyle("-fx-background-color: #0083ff; -fx-background-radius: 25;");
-        lbl12.setText("Full-Time Software Engineer");
+        lbl12.setText("Senior Software Engineer");
         lbl12.setAlignment(Pos.CENTER);
 
         AnchorPane.setTopAnchor(lbl11, 5.0);
@@ -412,6 +466,7 @@ public class AboutPageController {
 
         AnchorPane anchorLbl7 = new AnchorPane();
         anchorLbl7.setPrefWidth(200);
+     anchorLbl7.setPrefHeight(60);
         anchorLbl7.setStyle("-fx-background-color: #022D5A;  -fx-background-radius: 25;");
 
         Label lbl13 = new Label();
@@ -524,6 +579,7 @@ public class AboutPageController {
 
         AnchorPane anchorLbl9 = new AnchorPane();
         anchorLbl9.setPrefWidth(200);
+     anchorLbl9.setPrefHeight(60);
         anchorLbl9.setStyle("-fx-background-color: #022D5A;  -fx-background-radius: 25;");
 
         Label lbl17 = new Label();
@@ -579,6 +635,7 @@ public class AboutPageController {
 
         AnchorPane anchorLbl10 = new AnchorPane();
         anchorLbl10.setPrefWidth(200);
+     anchorLbl10.setPrefHeight(60);
         anchorLbl10.setStyle("-fx-background-color: #022D5A;  -fx-background-radius: 25;");
 
         Label lbl19 = new Label();
@@ -621,6 +678,12 @@ public class AboutPageController {
 //
         anchorPane10.getChildren().add(anchorLbl10);
         hbox3.getChildren().add(anchorPane10);
+
+        HBox hbxCopy = new HBox();
+        Label lblCopy = new Label("The Brigham & Womens Hospital maps and data used in this application are copyrighted and provided for the sole use of educational purposes.");
+        lblCopy.setWrapText(true);
+        hbxCopy.getChildren().add(lblCopy);
+        vbox1.getChildren().add(hbxCopy);
 
 
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
