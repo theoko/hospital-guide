@@ -138,6 +138,7 @@
                 </AnchorPane>
                 <JFXToggleButton fx:id="tglZone" onAction="#selectZone" prefWidth="50" prefHeight="50" />
                 <JFXToggleButton fx:id="tglSpace" onAction="#selectSpace" prefWidth="50" prefHeight="50" />
+                <JFXToggleButton fx:id="tglConf" onAction="#selectConf" prefWidth="50" prefHeight="50" />
                 <JFXTextField fx:id="search" prefWidth="450" prefHeight="34" promptText=" Search"  alignment="CENTER" style=" -fx-font-size: 18px; -fx-font-weight: bold; -fx-font-family: fantasy; -fx-text-fill: #022D5A; -fx-background-color: white" />
                 <JFXTextField fx:id="textNum" prefWidth="450" prefHeight="34" promptText=" Phone Number"  alignment="CENTER" style=" -fx-font-size: 18px; -fx-font-weight: bold; -fx-font-family: fantasy; -fx-text-fill: #022D5A; -fx-background-color: white" />
                 <JFXButton fx:id="btnText" contentDisplay="CENTER" onMouseClicked="#btn_SendDirections" prefHeight="60.0" prefWidth="60.0" textOverrun="CLIP">

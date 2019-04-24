@@ -71,6 +71,7 @@ public class EmployeeMapController extends MapController {
     public JFXButton btnText;
     public JFXToggleButton tglSpace;
     public JFXToggleButton tglZone;
+    public JFXToggleButton tglConf;
 
     public JFXDatePicker datStartDay;
     public JFXDatePicker datEndDay;
@@ -79,6 +80,7 @@ public class EmployeeMapController extends MapController {
 
     List<Room> workspacesAvailable;
     List<Room> workzonesAvailable;
+    List<Room> confAvailable;
 
     ArrayList<Location> workspacesBooked = new ArrayList<>();
     HashMap<String, Location> workspaces;
@@ -93,6 +95,13 @@ public class EmployeeMapController extends MapController {
     List<Book> workzonesCurrent1;
     ArrayList<Location> myWorkzones = new ArrayList<>();
     ArrayList<Location> myWorkzones1 = new ArrayList<>();
+
+    ArrayList<Location> confBooked = new ArrayList<>();
+    HashMap<String, Location> conf;
+    List<Book> confCurrent;
+    List<Book> confCurrent1;
+    ArrayList<Location> myConf = new ArrayList<>();
+    ArrayList<Location> myConf1 = new ArrayList<>();
 
     Location enter;
 
@@ -301,6 +310,83 @@ public class EmployeeMapController extends MapController {
             }
         }
     }
+
+    public void initializeConf() {
+        conf = LocationTable.getLocations();
+        if (conf != null) {
+            for (Location ws : conf.values()) {
+                if (ws.getNodeType().equals(Constants.NodeType.CONF) && ws.getFloor().equals(floor)) {
+                    double xLoc = ws.getxCord();
+                    double yLoc = ws.getyCord();
+                    Circle circle = new Circle(xLoc, yLoc, locRadius, nodeFill);
+                    circle.setStroke(nodeOutline);
+                    circle.setStrokeWidth(locWidth);
+                    circle.setId(ws.getNodeID());
+                    circle.setOnMouseEntered(event -> {
+                        circle.setRadius(locRadius + 6);
+                        ScreenController.sceneThing.setCursor(Cursor.HAND);
+                    });
+                    circle.setOnMouseExited(event -> {
+                        circle.setRadius(locRadius);
+                        ScreenController.sceneThing.setCursor(Cursor.DEFAULT);
+                    });
+                    circle.setOnMouseClicked(event -> {
+                        try {
+                            event.consume();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    });
+                    this.panMap.getChildren().add(circle);
+                    ws.setNodeCircle(circle);
+                }
+            }
+        }
+
+        confCurrent1 = BookLocationTable.getBookingsForUser(UserHelpers.getCurrentUser());
+
+        if (confCurrent1 != null) {
+            for (Book b : confCurrent1) {
+                for (Location ws1 : conf.values()) {
+                    if (ws1.getNodeID().equals(b.getRoomID()) && ws1.getNodeType().equals(Constants.NodeType.CONF)) {
+                        myConf1.add(ws1);
+                        break;
+                    }
+                }
+            }
+        }
+
+        for (Location ws : myConf1) {
+            if (ws.getNodeType().equals(Constants.NodeType.CONF)) {
+                Circle c = ws.getNodeCircle();
+                c.setFill(Color.ORANGE);
+                c.setOnMouseEntered(event -> {
+                    c.setRadius(locRadius + 6);
+                    ScreenController.sceneThing.setCursor(Cursor.HAND);
+                });
+                c.setOnMouseExited(event -> {
+                    c.setRadius(locRadius);
+                    ScreenController.sceneThing.setCursor(Cursor.DEFAULT);
+                });
+                c.setOnMouseClicked(Event -> {
+                    try {
+                        Event.consume();
+                        for (Location ws1 : myConf1) {
+                            if (ws1.getxCord() == c.getCenterX() && ws1.getyCord() == c.getCenterY()) {
+                                enter = ws1;
+                                break;
+                            }
+                        }
+                        ScreenController.popUp(Constants.Routes.WORKSPACE_POPUP, enter, c, startTime, startDate, endTime, endDate);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+
+            }
+        }
+    }
+
     public void selectZone(ActionEvent event) {
         event.consume();
         if(getFloor().equals("4")) {
@@ -308,6 +394,7 @@ public class EmployeeMapController extends MapController {
                 this.clearMap();
                 initializeZones();
                 tglSpace.setSelected(false);
+                tglConf.setSelected(false);
             }
             else {
                 this.clearMap();
@@ -323,11 +410,25 @@ public class EmployeeMapController extends MapController {
                 this.clearMap();
                 initializeSpaces();
                 tglZone.setSelected(false);
+                tglConf.setSelected(false);
             }
             else {
                 this.clearMap();
                 this.showFloor(getFloor());
             }
+        }
+    }
+
+    public void selectConf(ActionEvent event) {
+        event.consume();
+        if (tglConf.isSelected()) {
+            this.clearMap();
+            initializeConf();
+            tglZone.setSelected(false);
+            tglSpace.setSelected(false);
+        } else {
+            this.clearMap();
+            this.showFloor(getFloor());
         }
     }
 
@@ -451,8 +552,6 @@ public class EmployeeMapController extends MapController {
         btnSpace.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnSpace.setTextOverrun(OverrunStyle.CLIP);
 
-        UIHelpers.btnRaise(btnSpace);
-
         ImageView imgZone = new ImageView();
         imgZone.setImage(new Image("images/Icons/zone.png"));
         imgZone.setFitHeight(30);
@@ -467,7 +566,19 @@ public class EmployeeMapController extends MapController {
         btnZone.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnZone.setTextOverrun(OverrunStyle.CLIP);
 
-        UIHelpers.btnRaise(btnZone);
+        ImageView imgConf = new ImageView();
+        imgConf.setImage(new Image("images/Icons/conf.png"));
+        imgConf.setFitHeight(30);
+        imgConf.setFitWidth(30);
+        imgConf.setPreserveRatio(true);
+        imgConf.setPickOnBounds(true);
+
+        JFXButton btnConf = new JFXButton("", imgConf);
+        btnConf.setAlignment(Pos.CENTER);
+        btnConf.setPrefWidth(60);
+        btnConf.setPrefHeight(60);
+        btnConf.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnConf.setTextOverrun(OverrunStyle.CLIP);
 
         ImageView imgCal = new ImageView();
         imgCal.setImage(new Image("images/Icons/cald.png"));
@@ -881,11 +992,20 @@ public class EmployeeMapController extends MapController {
         boxZone.setAlignment(Pos.CENTER);
         boxZone.setSpacing(-5);
 
+        HBox boxConf = new HBox();
+        boxConf.getChildren().add(btnConf);
+        boxConf.getChildren().add(tglConf);
+        boxConf.setPrefHeight(60);
+        boxConf.setPrefWidth(150);
+        boxConf.setAlignment(Pos.CENTER);
+        boxConf.setSpacing(-5);
+
         HBox hboxWork = new HBox();
         hboxWork.getChildren().add(boxSpace);
         hboxWork.getChildren().add(boxZone);
+        hboxWork.getChildren().add(boxConf);
         hboxWork.setPrefHeight(60);
-        hboxWork.setPrefWidth(320);
+        hboxWork.setPrefWidth(500);
         hboxWork.setAlignment(Pos.CENTER);
         hboxWork.setSpacing(5);
 
