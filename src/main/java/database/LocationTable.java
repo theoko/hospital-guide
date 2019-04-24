@@ -162,7 +162,7 @@ public class LocationTable {
 //                        location.getNodeID(),
 //                        location.getxCord(),
 //                        location.getyCord(),
-//                        location.getNodeType(),
+//                        locatioadn.getNodeType(),
 //                        location.getLongName()
 //                ));
 //            }

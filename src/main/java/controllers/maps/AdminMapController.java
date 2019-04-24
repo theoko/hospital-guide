@@ -142,6 +142,8 @@ public class AdminMapController extends MapController {
                 mover.line = null;
             }
         });
+        TableEditorController.mapC = getCurrMapControl();
+        TableEditorController.localMap = map;
     }
 
     @Override

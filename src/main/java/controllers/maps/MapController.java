@@ -382,6 +382,7 @@ public abstract class MapController implements Initializable {
             if (n instanceof Circle) {
                 Circle circ = (Circle) n;
                 Location loc = map.getLocation(circ.getId());
+                if(loc == null) continue;
                 if (loc.getFloor().equals(floor)) {
                     circ.setOpacity(1);
                     if (loc.getNodeType().equals(Constants.NodeType.ELEV) || loc.getNodeType().equals(Constants.NodeType.STAI)) {
