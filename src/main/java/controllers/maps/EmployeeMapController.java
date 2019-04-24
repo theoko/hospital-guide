@@ -3,10 +3,14 @@ package controllers.maps;
 import com.jfoenix.controls.*;
 import controllers.ScreenController;
 import controllers.search.SearchEngineController;
+import controllers.search.TwoLocSearchPopupController;
 import database.BookLocationTable;
 import database.LocationTable;
+import edu.wpi.cs3733.d19.teamMService.Main;
+import floral.api.FloralApi;
 import google.FirebaseAPI;
 import helpers.Constants;
+import helpers.api.APIHelper;
 import helpers.DatabaseHelpers;
 import helpers.UIHelpers;
 import javafx.event.ActionEvent;
@@ -18,6 +22,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.control.OverrunStyle;
+import javafx.scene.control.Tooltip;
 import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -46,6 +51,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import static controllers.ScreenController.mouseCnt;
+import static controllers.ScreenController.secCnt;
+
 public class EmployeeMapController extends MapController {
 
     public VBox vboxDock;
@@ -72,6 +80,7 @@ public class EmployeeMapController extends MapController {
     public JFXButton btnText;
     public JFXToggleButton tglSpace;
     public JFXToggleButton tglZone;
+    public JFXToggleButton tglConf;
 
     public JFXDatePicker datStartDay;
     public JFXDatePicker datEndDay;
@@ -80,6 +89,7 @@ public class EmployeeMapController extends MapController {
 
     List<Room> workspacesAvailable;
     List<Room> workzonesAvailable;
+    List<Room> confAvailable;
 
     ArrayList<Location> workspacesBooked = new ArrayList<>();
     HashMap<String, Location> workspaces;
@@ -94,6 +104,13 @@ public class EmployeeMapController extends MapController {
     List<Book> workzonesCurrent1;
     ArrayList<Location> myWorkzones = new ArrayList<>();
     ArrayList<Location> myWorkzones1 = new ArrayList<>();
+
+    ArrayList<Location> confBooked = new ArrayList<>();
+    HashMap<String, Location> conf;
+    List<Book> confCurrent;
+    List<Book> confCurrent1;
+    ArrayList<Location> myConf = new ArrayList<>();
+    ArrayList<Location> myConf1 = new ArrayList<>();
 
     Location enter;
 
@@ -113,8 +130,14 @@ public class EmployeeMapController extends MapController {
         super.initialize(location, resources);
         SearchEngineController.setParentController(this);
 
-        /*SearchAPI searchAPI = new SearchAPI(search, true);
-        searchAPI.searchable();*/
+        SearchAPI searchAPI = new SearchAPI(search, true);
+        searchAPI.searchable();
+        gesMap.setOnMouseMoved( (e) -> {
+            mouseCnt += 1;
+            secCnt = 0L;
+            System.out.println(mouseCnt);
+                }
+        );
 
         MapDisplay.displayEmployee(this);
         initDirections();
@@ -303,6 +326,83 @@ public class EmployeeMapController extends MapController {
             }
         }
     }
+
+    public void initializeConf() {
+        conf = LocationTable.getLocations();
+        if (conf != null) {
+            for (Location ws : conf.values()) {
+                if (ws.getNodeType().equals(Constants.NodeType.CONF) && ws.getFloor().equals(floor)) {
+                    double xLoc = ws.getxCord();
+                    double yLoc = ws.getyCord();
+                    Circle circle = new Circle(xLoc, yLoc, locRadius, nodeFill);
+                    circle.setStroke(nodeOutline);
+                    circle.setStrokeWidth(locWidth);
+                    circle.setId(ws.getNodeID());
+                    circle.setOnMouseEntered(event -> {
+                        circle.setRadius(locRadius + 6);
+                        ScreenController.sceneThing.setCursor(Cursor.HAND);
+                    });
+                    circle.setOnMouseExited(event -> {
+                        circle.setRadius(locRadius);
+                        ScreenController.sceneThing.setCursor(Cursor.DEFAULT);
+                    });
+                    circle.setOnMouseClicked(event -> {
+                        try {
+                            event.consume();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    });
+                    this.panMap.getChildren().add(circle);
+                    ws.setNodeCircle(circle);
+                }
+            }
+        }
+
+        confCurrent1 = BookLocationTable.getBookingsForUser(UserHelpers.getCurrentUser());
+
+        if (confCurrent1 != null) {
+            for (Book b : confCurrent1) {
+                for (Location ws1 : conf.values()) {
+                    if (ws1.getNodeID().equals(b.getRoomID()) && ws1.getNodeType().equals(Constants.NodeType.CONF)) {
+                        myConf1.add(ws1);
+                        break;
+                    }
+                }
+            }
+        }
+
+        for (Location ws : myConf1) {
+            if (ws.getNodeType().equals(Constants.NodeType.CONF) && ws.getFloor().equals(floor)) {
+                Circle c = ws.getNodeCircle();
+                c.setFill(Color.ORANGE);
+                c.setOnMouseEntered(event -> {
+                    c.setRadius(locRadius + 6);
+                    ScreenController.sceneThing.setCursor(Cursor.HAND);
+                });
+                c.setOnMouseExited(event -> {
+                    c.setRadius(locRadius);
+                    ScreenController.sceneThing.setCursor(Cursor.DEFAULT);
+                });
+                c.setOnMouseClicked(Event -> {
+                    try {
+                        Event.consume();
+                        for (Location ws1 : myConf1) {
+                            if (ws1.getxCord() == c.getCenterX() && ws1.getyCord() == c.getCenterY()) {
+                                enter = ws1;
+                                break;
+                            }
+                        }
+                        ScreenController.popUp(Constants.Routes.WORKSPACE_POPUP, enter, c, startTime, startDate, endTime, endDate);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+
+            }
+        }
+    }
+
     public void selectZone(ActionEvent event) {
         event.consume();
         if(getFloor().equals("4")) {
@@ -310,6 +410,7 @@ public class EmployeeMapController extends MapController {
                 this.clearMap();
                 initializeZones();
                 tglSpace.setSelected(false);
+                tglConf.setSelected(false);
             }
             else {
                 this.clearMap();
@@ -325,11 +426,25 @@ public class EmployeeMapController extends MapController {
                 this.clearMap();
                 initializeSpaces();
                 tglZone.setSelected(false);
+                tglConf.setSelected(false);
             }
             else {
                 this.clearMap();
                 this.showFloor(getFloor());
             }
+        }
+    }
+
+    public void selectConf(ActionEvent event) {
+        event.consume();
+        if (tglConf.isSelected()) {
+            this.clearMap();
+            initializeConf();
+            tglZone.setSelected(false);
+            tglSpace.setSelected(false);
+        } else {
+            this.clearMap();
+            this.showFloor(getFloor());
         }
     }
 
@@ -348,6 +463,8 @@ public class EmployeeMapController extends MapController {
         btnUser.setPrefHeight(60);
         btnUser.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnUser.setTextOverrun(OverrunStyle.CLIP);
+        UIHelpers.mouseHover(btnUser);
+        btnUser.setTooltip(new Tooltip("Account"));
 
         ImageView imgSearch = new ImageView();
         imgSearch.setImage(new Image("images/Icons/search.png"));
@@ -362,6 +479,8 @@ public class EmployeeMapController extends MapController {
         btnSearch.setPrefHeight(60);
         btnSearch.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnSearch.setTextOverrun(OverrunStyle.CLIP);
+        UIHelpers.mouseHover(btnSearch);
+        btnSearch.setTooltip(new Tooltip("Search Bar"));
 
         ImageView imgArrow = new ImageView();
         imgArrow.setImage(new Image("images/Icons/arrow.png"));
@@ -376,7 +495,8 @@ public class EmployeeMapController extends MapController {
         btnArrow.setPrefHeight(60);
         btnArrow.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnArrow.setTextOverrun(OverrunStyle.CLIP);
-
+        UIHelpers.mouseHover(btnArrow);
+        btnArrow.setTooltip(new Tooltip("Enter"));
         UIHelpers.btnRaise(btnArrow);
 
         ImageView imgRoute = new ImageView();
@@ -392,6 +512,8 @@ public class EmployeeMapController extends MapController {
         btnRoute.setPrefHeight(60);
         btnRoute.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnRoute.setTextOverrun(OverrunStyle.CLIP);
+        UIHelpers.mouseHover(btnRoute);
+        btnRoute.setTooltip(new Tooltip("Directions"));
 
         ImageView imgRoom = new ImageView();
         imgRoom.setImage(new Image("images/Icons/room.png"));
@@ -406,6 +528,8 @@ public class EmployeeMapController extends MapController {
         btnRoom.setPrefHeight(60);
         btnRoom.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnRoom.setTextOverrun(OverrunStyle.CLIP);
+        UIHelpers.mouseHover(btnRoom);
+        btnRoom.setTooltip(new Tooltip("Book Room"));
 
         ImageView imgBookG = new ImageView();
         imgBookG.setImage(new Image("images/Icons/bookG.png"));
@@ -453,8 +577,6 @@ public class EmployeeMapController extends MapController {
         btnSpace.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnSpace.setTextOverrun(OverrunStyle.CLIP);
 
-        UIHelpers.btnRaise(btnSpace);
-
         ImageView imgZone = new ImageView();
         imgZone.setImage(new Image("images/Icons/zone.png"));
         imgZone.setFitHeight(30);
@@ -469,7 +591,19 @@ public class EmployeeMapController extends MapController {
         btnZone.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnZone.setTextOverrun(OverrunStyle.CLIP);
 
-        UIHelpers.btnRaise(btnZone);
+        ImageView imgConf = new ImageView();
+        imgConf.setImage(new Image("images/Icons/conf.png"));
+        imgConf.setFitHeight(30);
+        imgConf.setFitWidth(30);
+        imgConf.setPreserveRatio(true);
+        imgConf.setPickOnBounds(true);
+
+        JFXButton btnConf = new JFXButton("", imgConf);
+        btnConf.setAlignment(Pos.CENTER);
+        btnConf.setPrefWidth(60);
+        btnConf.setPrefHeight(60);
+        btnConf.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnConf.setTextOverrun(OverrunStyle.CLIP);
 
         ImageView imgCal = new ImageView();
         imgCal.setImage(new Image("images/Icons/cald.png"));
@@ -484,6 +618,8 @@ public class EmployeeMapController extends MapController {
         btnCal.setPrefHeight(60);
         btnCal.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnCal.setTextOverrun(OverrunStyle.CLIP);
+        UIHelpers.mouseHover(btnCal);
+        btnCal.setTooltip(new Tooltip("Calendar"));
 
         ImageView imgExl = new ImageView();
         imgExl.setImage(new Image("images/Icons/excl.png"));
@@ -498,6 +634,8 @@ public class EmployeeMapController extends MapController {
         btnExl.setPrefHeight(60);
         btnExl.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnExl.setTextOverrun(OverrunStyle.CLIP);
+        UIHelpers.mouseHover(btnExl);
+        btnExl.setTooltip(new Tooltip("Service Requests"));
 
         ImageView imgComp1 = new ImageView();
         imgComp1.setImage(new Image("images/Icons/comp.png"));
@@ -512,7 +650,8 @@ public class EmployeeMapController extends MapController {
         btnComp1.setPrefHeight(60);
         btnComp1.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnComp1.setTextOverrun(OverrunStyle.CLIP);
-
+        UIHelpers.mouseHover(btnComp1);
+        btnComp1.setTooltip(new Tooltip("IT Services"));
         UIHelpers.btnRaise(btnComp1);
 
 
@@ -529,6 +668,16 @@ public class EmployeeMapController extends MapController {
         btnFlo.setPrefHeight(60);
         btnFlo.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnFlo.setTextOverrun(OverrunStyle.CLIP);
+        UIHelpers.mouseHover(btnFlo);
+        btnFlo.setTooltip(new Tooltip("Flower Request"));
+        btnFlo.setOnMouseClicked(event -> {
+            try {
+                ScreenController.popUp(Constants.Routes.TWO_NODE_SEARCH);
+                TwoLocSearchPopupController.setOnSendClick(EmployeeMapController::runFloralAPI);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        });
 
         UIHelpers.btnRaise(btnFlo);
 
@@ -545,7 +694,19 @@ public class EmployeeMapController extends MapController {
         btnSign.setPrefHeight(60);
         btnSign.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnSign.setTextOverrun(OverrunStyle.CLIP);
-
+        btnSign.setOnMouseClicked(event -> {
+            runLanguageAPI();
+            /*
+            try {
+                ScreenController.popUp(Constants.Routes.TWO_NODE_SEARCH);
+                TwoLocSearchPopupController.setOnSendClick(EmployeeMapController::runLanguageAPI);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+            */
+        });
+        UIHelpers.mouseHover(btnSign);
+        btnSign.setTooltip(new Tooltip("Interpreter"));
         UIHelpers.btnRaise(btnSign);
 
         ImageView imgLock = new ImageView();
@@ -561,6 +722,8 @@ public class EmployeeMapController extends MapController {
         btnLock.setPrefHeight(60);
         btnLock.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnLock.setTextOverrun(OverrunStyle.CLIP);
+        UIHelpers.mouseHover(btnLock);
+        btnLock.setTooltip(new Tooltip("Security"));
 
         UIHelpers.btnRaise(btnLock);
 
@@ -577,7 +740,8 @@ public class EmployeeMapController extends MapController {
         btnDrug.setPrefHeight(60);
         btnDrug.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnDrug.setTextOverrun(OverrunStyle.CLIP);
-
+        UIHelpers.mouseHover(btnDrug);
+        btnDrug.setTooltip(new Tooltip("Prescription"));
         UIHelpers.btnRaise(btnDrug);
 
         ImageView imgAv = new ImageView();
@@ -593,7 +757,8 @@ public class EmployeeMapController extends MapController {
         btnAv.setPrefHeight(60);
         btnAv.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnAv.setTextOverrun(OverrunStyle.CLIP);
-
+        UIHelpers.mouseHover(btnAv);
+        btnAv.setTooltip(new Tooltip("Audio/Visual"));
         UIHelpers.btnRaise(btnAv);
 
         ImageView imgIn = new ImageView();
@@ -609,7 +774,8 @@ public class EmployeeMapController extends MapController {
         btnIn.setPrefHeight(60);
         btnIn.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnIn.setTextOverrun(OverrunStyle.CLIP);
-
+        UIHelpers.mouseHover(btnIn);
+        btnIn.setTooltip(new Tooltip("Internal Transport"));
         UIHelpers.btnRaise(btnIn);
 
         ImageView imgGift = new ImageView();
@@ -625,7 +791,8 @@ public class EmployeeMapController extends MapController {
         btnGift.setPrefHeight(60);
         btnGift.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnGift.setTextOverrun(OverrunStyle.CLIP);
-
+        UIHelpers.mouseHover(btnGift);
+        btnGift.setTooltip(new Tooltip("Gift"));
         UIHelpers.btnRaise(btnGift);
 
         ImageView imgOut = new ImageView();
@@ -641,7 +808,8 @@ public class EmployeeMapController extends MapController {
         btnOut.setPrefHeight(60);
         btnOut.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnOut.setTextOverrun(OverrunStyle.CLIP);
-
+        UIHelpers.mouseHover(btnOut);
+        btnOut.setTooltip(new Tooltip("Patient Information"));
         UIHelpers.btnRaise(btnOut);
 
         ImageView imgInfo = new ImageView();
@@ -657,7 +825,8 @@ public class EmployeeMapController extends MapController {
         btnInfo.setPrefHeight(60);
         btnInfo.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnInfo.setTextOverrun(OverrunStyle.CLIP);
-
+        UIHelpers.mouseHover(btnInfo);
+        btnInfo.setTooltip(new Tooltip("Information"));
         UIHelpers.btnRaise(btnInfo);
 
 
@@ -674,6 +843,8 @@ public class EmployeeMapController extends MapController {
         btnCoffee.setPrefHeight(60);
         btnCoffee.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnCoffee.setTextOverrun(OverrunStyle.CLIP);
+        UIHelpers.mouseHover(btnCoffee);
+        btnCoffee.setTooltip(new Tooltip("Food"));
         btnCoffee.setOnMouseClicked((e) -> {
             PathFinder.printByType(this, map, Constants.NodeType.RETL);
         });
@@ -693,6 +864,9 @@ public class EmployeeMapController extends MapController {
         btnRest.setPrefHeight(60);
         btnRest.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnRest.setTextOverrun(OverrunStyle.CLIP);
+        UIHelpers.mouseHover(btnRest);
+        btnRest.setTooltip(new Tooltip("Rest Rooms"));
+        btnRest.setTooltip(new Tooltip("RestRoom"));
         btnRest.setOnMouseClicked((e) -> {
             PathFinder.printByType(this, map, Constants.NodeType.REST, Constants.NodeType.BATH);
         });
@@ -712,6 +886,8 @@ public class EmployeeMapController extends MapController {
         btnExit.setPrefHeight(60);
         btnExit.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnExit.setTextOverrun(OverrunStyle.CLIP);
+        UIHelpers.mouseHover(btnExit);
+        btnExit.setTooltip(new Tooltip("Exit"));
         btnExit.setOnMouseClicked((e) -> {
             PathFinder.printByType(this, map, Constants.NodeType.EXIT);
         });
@@ -733,11 +909,15 @@ public class EmployeeMapController extends MapController {
         btnElev.setPrefHeight(60);
         btnElev.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnElev.setTextOverrun(OverrunStyle.CLIP);
+        UIHelpers.mouseHover(btnElev);
+        btnElev.setTooltip(new Tooltip("Elevators"));
+        btnElev.setTooltip(new Tooltip("Elevator"));
         btnElev.setOnMouseClicked((e) -> {
             PathFinder.printByType(this, map, Constants.NodeType.ELEV, Constants.NodeType.STAI);
         });
 
         UIHelpers.btnRaise(btnElev);
+
 
         ImageView imgInfo1 = new ImageView();
         imgInfo1.setImage(new Image("images/Icons/info.png"));
@@ -756,13 +936,55 @@ public class EmployeeMapController extends MapController {
             PathFinder.printByType(this, map, Constants.NodeType.INFO);
         });
 
+        UIHelpers.mouseHover(btnInfo1);
+        btnInfo1.setTooltip(new Tooltip("Information"));
         UIHelpers.btnRaise(btnInfo1);
+
+        ImageView imgFood = new ImageView();
+        imgFood.setImage(new Image("images/Icons/food.png"));
+        imgFood.setFitHeight(30);
+        imgFood.setFitWidth(30);
+        imgFood.setPreserveRatio(true);
+        imgFood.setPickOnBounds(true);
+
+        JFXButton btnFood = new JFXButton("",imgFood);
+        btnFood.setAlignment(Pos.CENTER);
+        btnFood.setPrefWidth(60);
+        btnFood.setPrefHeight(60);
+        btnFood.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnFood.setTextOverrun(OverrunStyle.CLIP);
+        btnFood.setOnMouseClicked( event -> {
+            try {
+                ScreenController.popUp(Constants.Routes.TWO_NODE_SEARCH);
+                TwoLocSearchPopupController.setOnSendClick(EmployeeMapController::runFoodAPI);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        });
+
+        ImageView imgBaby = new ImageView();
+        imgBaby.setImage(new Image("images/Icons/baby.png"));
+        imgBaby.setFitHeight(30);
+        imgBaby.setFitWidth(30);
+        imgBaby.setPreserveRatio(true);
+        imgBaby.setPickOnBounds(true);
+
+        JFXButton btnBaby = new JFXButton("",imgBaby);
+        btnBaby.setAlignment(Pos.CENTER);
+        btnBaby.setPrefWidth(60);
+        btnBaby.setPrefHeight(60);
+        btnBaby.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnBaby.setTextOverrun(OverrunStyle.CLIP);
+        btnBaby.setOnMouseClicked( event -> {
+            //add here
+        });
 
         btnLogOut.setStyle("-fx-background-radius: 30;" );
         btnLogOut.setStyle("-fx-background-radius: 30;");
         btnLogOut.setButtonType(JFXButton.ButtonType.RAISED);
         imgLogOut.setImage(new Image("images/Icons/signout.png"));
-
+        UIHelpers.mouseHover(btnLogOut);
+        btnLogOut.setTooltip(new Tooltip("Log Out"));
         UIHelpers.btnRaise(btnLogOut);
 
         btnText.setStyle("-fx-background-radius: 30;" );
@@ -883,11 +1105,20 @@ public class EmployeeMapController extends MapController {
         boxZone.setAlignment(Pos.CENTER);
         boxZone.setSpacing(-5);
 
+        HBox boxConf = new HBox();
+        boxConf.getChildren().add(btnConf);
+        boxConf.getChildren().add(tglConf);
+        boxConf.setPrefHeight(60);
+        boxConf.setPrefWidth(150);
+        boxConf.setAlignment(Pos.CENTER);
+        boxConf.setSpacing(-5);
+
         HBox hboxWork = new HBox();
         hboxWork.getChildren().add(boxSpace);
         hboxWork.getChildren().add(boxZone);
+        hboxWork.getChildren().add(boxConf);
         hboxWork.setPrefHeight(60);
-        hboxWork.setPrefWidth(320);
+        hboxWork.setPrefWidth(500);
         hboxWork.setAlignment(Pos.CENTER);
         hboxWork.setSpacing(5);
 
@@ -970,7 +1201,7 @@ public class EmployeeMapController extends MapController {
         boxInt.setPrefSize(1200,700);
         boxInt.setSpacing(5);
 
-        Label lblLock = new Label("Interpreter Service Request");
+        Label lblLock = new Label("Security Service Request");
         lblLock.setPrefHeight(50);
         lblLock.setPrefWidth(1200);
         lblLock.setTextFill(Color.WHITE);
@@ -1151,12 +1382,12 @@ public class EmployeeMapController extends MapController {
         nodesListComp.setSpacing(330);
 
         nodesListFlo.addAnimatedNode(btnFlo);
-        nodesListFlo.addAnimatedNode(boxFlo);
+        // nodesListFlo.addAnimatedNode(boxFlo);
         nodesListFlo.setRotate(70);
         nodesListFlo.setSpacing(320);
 
         nodesListInt.addAnimatedNode(btnSign);
-        nodesListInt.addAnimatedNode(boxInt);
+        // nodesListInt.addAnimatedNode(boxInt);
         nodesListInt.setRotate(75);
         nodesListInt.setSpacing(310);
 
@@ -1207,6 +1438,11 @@ public class EmployeeMapController extends MapController {
         nodeListRoom.setRotate(90);
         nodeListRoom.setSpacing(-30);
 
+        HBox boxReqMain = new HBox();
+        boxReqMain.setAlignment(Pos.CENTER);
+        boxReqMain.setPrefSize(130,700);
+        boxReqMain.setSpacing(5);
+
         VBox boxReq = new VBox();
         boxReq.getChildren().add(nodesListComp);
         boxReq.getChildren().add(nodesListFlo);
@@ -1216,16 +1452,26 @@ public class EmployeeMapController extends MapController {
         boxReq.getChildren().add(nodesListAv);
         boxReq.getChildren().add(nodesListInTr);
         boxReq.getChildren().add(nodesListOut);
-        boxReq.getChildren().add(nodesListGift);
-        boxReq.getChildren().add(nodesListInfo);
         boxReq.setAlignment(Pos.CENTER);
         boxReq.setPrefSize(60,700);
         boxReq.setSpacing(5);
 
+        VBox boxReq1 = new VBox();
+        boxReq1.getChildren().add(nodesListGift);
+        boxReq1.getChildren().add(nodesListInfo);
+        boxReq1.getChildren().add(btnFood);
+        boxReq1.getChildren().add(btnBaby);
+        boxReq1.setAlignment(Pos.CENTER);
+        boxReq1.setPrefSize(60,700);
+        boxReq1.setSpacing(5);
+
+        boxReqMain.getChildren().add(boxReq1);
+        boxReqMain.getChildren().add(boxReq);
+
         nodeListExl.addAnimatedNode(btnExl);
-        nodeListExl.addAnimatedNode(boxReq);
+        nodeListExl.addAnimatedNode(boxReqMain);
         nodeListExl.setRotate(150);
-        nodeListExl.setSpacing(-220);
+        nodeListExl.setSpacing(-170);
 
         vboxDock.getChildren().add(nodeListUser);
         vboxDock.getChildren().add(nodeListSearch);
@@ -1239,6 +1485,48 @@ public class EmployeeMapController extends MapController {
             FirebaseAPI.setCaller(EmployeeMapController.this);
             FirebaseAPI.checkForCommands(UserHelpers.getCurrentUser().getUsername());
         });
+    }
+
+    /**
+     * Runs Food request API
+     */
+    public static void runFoodAPI() {
+        String startLocID = APIHelper.getStartLocID();
+        String endLocID = APIHelper.getEndLocID();
+        FoodRequestTeamI.API api = new FoodRequestTeamI.API();
+        try {
+            api.run(10, 10, 800, 600, "/css/jfoenix-components.css", endLocID, startLocID);
+        } catch (Exception exception) {
+            System.out.println("Failed to run Food API");
+            exception.printStackTrace();
+        }
+    }
+
+    /**
+     * Runs Floral request API
+     */
+    public static void runFloralAPI() {
+        String endLocID = APIHelper.getEndLocID();
+        FloralApi floralApi = new FloralApi();
+        try {
+            floralApi.run(10, 10, "/css/jfoenix-components.css", endLocID);
+        } catch (Exception exception){
+            System.out.println("Failed to run Floral API");
+            exception.printStackTrace();
+        }
+    }
+
+    /**
+     * Runs Language request API
+     */
+    public static void runLanguageAPI() {
+        Main api = new Main();
+        try {
+            api.run(10, 10, 800, 600, "/css/jfoenix-components.css", "destination");
+        } catch (Exception exception) {
+            System.out.println("Failed to run Language API");
+            exception.printStackTrace();
+        }
     }
 
     @Override

@@ -54,6 +54,5 @@ public class SecurityController implements Initializable {
         colThreatLevel.setCellValueFactory(new PropertyValueFactory<>("ThreatLevel"));
         colDescription.setCellValueFactory(new PropertyValueFactory<>("Description"));
         tblSecurity.setItems(listRequests);
-
     }
 }

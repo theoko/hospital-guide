@@ -345,7 +345,9 @@ public class LocationTable {
             // We need to check if a ROOM is to be removed
             // In that case, the room should first be removed from the rooms table
             // since in the constraints defined
-            if(deleteLocation.getNodeType() == Constants.NodeType.CONF) {
+            if(deleteLocation.getNodeType() == Constants.NodeType.CONF ||
+                deleteLocation.getNodeType() == Constants.NodeType.WORK ||
+                deleteLocation.getNodeType() == Constants.NodeType.WRKT) {
 
                 System.out.println("Conference room with ID: " + deleteLocation.getNodeID());
 

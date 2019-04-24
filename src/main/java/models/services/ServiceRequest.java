@@ -81,6 +81,24 @@ public abstract class ServiceRequest {
     }
 
     /**
+     * Attribute comparators
+     */
+    public boolean isClaimed() {
+        return servicer != null;
+    }
+    public boolean isCompleted() {
+        return completedTime != null;
+    }
+    public Integer getMinutesRequestedToClaimed() {
+        if (claimedTime == null) return null;
+        return (int)((claimedTime.getTime() - requestTime.getTime()) / 60000);
+    }
+    public Integer getMinutesClaimedToCompleted() {
+        if (claimedTime == null || completedTime == null) return null;
+        return (int)((completedTime.getTime() - claimedTime.getTime()) / 60000);
+    }
+
+    /**
      * Attribute getters
      */
     public int getRequestID() {
@@ -102,6 +120,10 @@ public abstract class ServiceRequest {
     public User getRequester() {
         return requester;
     }
+    public Integer getRequesterID() {
+        if (requester == null) return null;
+        return requester.getUserID();
+    }
     public String getRequesterUserName() {
         if(requester==null) return null;
         return requester.getUsername();
@@ -115,6 +137,10 @@ public abstract class ServiceRequest {
     }
     public User getServicer() {
         return servicer;
+    }
+    public Integer getServicerID() {
+        if (servicer == null) return null;
+        return servicer.getUserID();
     }
     public Timestamp getClaimedTime() {
         return claimedTime;

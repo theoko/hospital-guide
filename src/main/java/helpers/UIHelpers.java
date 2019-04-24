@@ -58,24 +58,25 @@ public class UIHelpers {
 //        });
     }
 
-    public static void mouseHover(Node n) {
-        n.setOnMouseEntered(event -> {
+    public static void mouseHover(JFXButton btn) {
+        btn.setOnMouseEntered(event -> {
             ScreenController.sceneThing.setCursor(Cursor.HAND);
         });
 
-        n.setOnMouseExited(event -> {
+        btn.setOnMouseExited(event -> {
             ScreenController.sceneThing.setCursor(Cursor.DEFAULT);
         });
     }
 
-
-    public static void addHover(Pane p) {
-        for (Node n : p.getChildren()) {
-            if(n instanceof JFXButton) {
-                mouseHover(n);
-            }
-        }
-    }
+//    public static void loopPane(Pane p) {
+//        for (Node n : p.getChildren()) {
+//            if (n instanceof Pane) {
+//                loopPane((Pane) n);
+//            } else if (n instanceof JFXButton) {
+//                mouseHover(n);
+//            }
+//        }
+//    }
 
     public static void btnRaise(JFXButton btn) {
         btn.setOnMouseEntered(event -> {

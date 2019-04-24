@@ -5,6 +5,12 @@ build/
 out/
 derby.log
 teamF/
+APIDatabase/
+apiDB/
+myDB/
+database_sanitation/
+softEngDatabase/
+softEngTestDatabase/
 *.class
 *.jar
 *.lock
