@@ -1,9 +1,6 @@
 package controllers.maps;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXNodesList;
-import com.jfoenix.controls.JFXTextField;
-import com.jfoenix.controls.JFXToggleButton;
+import com.jfoenix.controls.*;
 import controllers.ScreenController;
 import controllers.search.SearchEngineController;
 import google.FirebaseAPI;
@@ -54,6 +51,8 @@ public class AdminMapController extends MapController {
     public AnchorPane Algo;
     public AnchorPane Clean;
     public AnchorPane TabEdit;
+
+
 
     public JFXTextField search;
     public JFXToggleButton tglSpace;
@@ -415,7 +414,7 @@ public class AdminMapController extends MapController {
         btnRest.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnRest.setTextOverrun(OverrunStyle.CLIP);
         UIHelpers.mouseHover(btnRest);
-        btnRest.setTooltip(new Tooltip("Rest Room"));
+        btnRest.setTooltip(new Tooltip("Restroom"));
 
         ImageView imgExit = new ImageView();
         imgExit.setImage(new Image("images/SearchIcons/exit.png"));

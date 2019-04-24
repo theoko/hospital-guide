@@ -449,6 +449,39 @@ public class EmployeeMapController extends MapController {
 
     @Override
     protected void addDoc() {
+
+        start.getItems().add(new Label("heh"));
+        //path.setEditable(true);
+        start.setPromptText("Select Path");
+        start.setStyle("-fx-background-color: #ffffff");
+        start.setPrefWidth(300);
+        start.setPrefHeight(35);
+
+        end.getItems().add(new Label("heh"));
+        //path.setEditable(true);
+        end.setPromptText("Select Path");
+        end.setStyle("-fx-background-color: #ffffff");
+        end.setPrefWidth(300);
+        end.setPrefHeight(35);
+
+        ImageView imgPath = new ImageView();
+        imgPath.setImage(new Image("images/Icons/path.png"));
+        imgPath.setFitWidth(30);
+        imgPath.setFitHeight(30);
+        imgPath.setPreserveRatio(true);
+        imgPath.setPickOnBounds(true);
+
+        JFXButton btnPath = new JFXButton("", imgPath);
+        btnPath.setAlignment(Pos.CENTER);
+        btnPath.setPrefWidth(60);
+        btnPath.setPrefHeight(60);
+        btnPath.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnPath.setTextOverrun(OverrunStyle.CLIP);
+
+        UIHelpers.mouseHover(btnPath);
+
+
+
         ImageView imgUser = new ImageView();
         imgUser.setImage(new Image("images/Icons/user.png"));
         imgUser.setFitHeight(30);
@@ -995,6 +1028,41 @@ public class EmployeeMapController extends MapController {
 
         HBox userBox = new HBox();
 
+
+        Label lblStart = new Label("Start");
+        lblStart.setPrefHeight(40);
+        lblStart.setPrefWidth(150);
+        lblStart.setTextFill(Color.WHITE);
+        lblStart.setAlignment(Pos.CENTER);
+        lblStart.setStyle("-fx-background-color: radial-gradient(radius 120%, #022D5A, derive(#022D5A, -60%), derive(#022D5A, 60%));" +
+                "-fx-background-radius: 20;" +
+                "-fx-font-size: 18;" +
+                "-fx-font-weight: BOLD");
+        lblStart.setPadding(new Insets(5, 10, 5, 10));
+
+
+        Label lblEnd = new Label("End");
+        lblEnd.setPrefHeight(40);
+        lblEnd.setPrefWidth(150);
+        lblEnd.setTextFill(Color.WHITE);
+        lblEnd.setAlignment(Pos.CENTER);
+        lblEnd.setStyle("-fx-background-color: radial-gradient(radius 120%, #022D5A, derive(#022D5A, -60%), derive(#022D5A, 60%));" +
+                "-fx-background-radius: 20;" +
+                "-fx-font-size: 18;" +
+                "-fx-font-weight: BOLD");
+        lblEnd.setPadding(new Insets(5, 10, 5, 10));
+
+        HBox pathBox = new HBox();
+
+        pathBox.getChildren().add(start);
+        pathBox.getChildren().add(lblStart);
+        pathBox.getChildren().add(end);
+        pathBox.getChildren().add(lblEnd);
+        pathBox.setAlignment(Pos.CENTER);
+        pathBox.setPrefSize(700,40);
+        pathBox.setSpacing(20);
+        pathBox.setTranslateY(100.0);
+
         userBox.getChildren().add(user);
         userBox.getChildren().add(btnLogOut);
         userBox.setStyle( "-fx-background-radius: 20;");
@@ -1310,6 +1378,7 @@ public class EmployeeMapController extends MapController {
         JFXNodesList nodeListRoute = new JFXNodesList();
         JFXNodesList nodeListRoom = new JFXNodesList();
         JFXNodesList nodeListCal = new JFXNodesList();
+        JFXNodesList nodesListPath = new JFXNodesList();
         JFXNodesList nodeListExl = new JFXNodesList();
         JFXNodesList nodesListComp = new JFXNodesList();
         JFXNodesList nodesListFlo = new JFXNodesList();
@@ -1333,6 +1402,12 @@ public class EmployeeMapController extends MapController {
         nodeListUser.addAnimatedNode(userBox);
         nodeListUser.setRotate(90);
         nodeListUser.setSpacing(60);
+
+        nodesListPath.addAnimatedNode(btnPath);
+        nodesListPath.addAnimatedNode(pathBox);
+
+        nodesListPath.setRotate(90);
+        nodesListPath.setSpacing(250);
 
         nodeListRoute.addAnimatedNode(btnRoute);
         nodeListRoute.addAnimatedNode(pathDir);
@@ -1440,6 +1515,7 @@ public class EmployeeMapController extends MapController {
         vboxDock.getChildren().add(nodeListUser);
         vboxDock.getChildren().add(nodeListSearch);
         vboxDock.getChildren().add(nodeListRoute);
+        vboxDock.getChildren().add(nodesListPath);
         vboxDock.getChildren().add(nodeListRoom);
         vboxDock.getChildren().add(nodeListCal);
         vboxDock.getChildren().add(nodeListExl);
