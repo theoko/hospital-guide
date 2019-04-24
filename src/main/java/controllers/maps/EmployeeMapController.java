@@ -3,10 +3,13 @@ package controllers.maps;
 import com.jfoenix.controls.*;
 import controllers.ScreenController;
 import controllers.search.SearchEngineController;
+import controllers.search.TwoLocSearchPopupController;
 import database.BookLocationTable;
 import database.LocationTable;
+import floral.api.FloralApi;
 import google.FirebaseAPI;
 import helpers.Constants;
+import helpers.api.APIHelper;
 import helpers.DatabaseHelpers;
 import helpers.UIHelpers;
 import javafx.event.ActionEvent;
@@ -46,6 +49,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import static controllers.ScreenController.mouseCnt;
+import static controllers.ScreenController.secCnt;
 
 public class EmployeeMapController extends MapController {
 
@@ -123,8 +129,14 @@ public class EmployeeMapController extends MapController {
         super.initialize(location, resources);
         SearchEngineController.setParentController(this);
 
-        /*SearchAPI searchAPI = new SearchAPI(search, true);
-        searchAPI.searchable();*/
+        SearchAPI searchAPI = new SearchAPI(search, true);
+        searchAPI.searchable();
+        gesMap.setOnMouseMoved( (e) -> {
+            mouseCnt += 1;
+            secCnt = 0L;
+            System.out.println(mouseCnt);
+                }
+        );
 
         MapDisplay.displayEmployee(this);
         initDirections();
@@ -662,6 +674,15 @@ public class EmployeeMapController extends MapController {
         btnFlo.setTextOverrun(OverrunStyle.CLIP);
         UIHelpers.mouseHover(btnFlo);
         btnFlo.setTooltip(new Tooltip("Flower Request"));
+        btnFlo.setOnMouseClicked(event -> {
+            try {
+                ScreenController.popUp(Constants.Routes.TWO_NODE_SEARCH);
+                TwoLocSearchPopupController.setOnSendClick(EmployeeMapController::runFloralAPI);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        });
+
         UIHelpers.btnRaise(btnFlo);
 
         ImageView imgSign = new ImageView();
@@ -913,6 +934,28 @@ public class EmployeeMapController extends MapController {
         UIHelpers.mouseHover(btnInfo1);
         btnInfo1.setTooltip(new Tooltip("Information"));
         UIHelpers.btnRaise(btnInfo1);
+
+        ImageView imgFood = new ImageView();
+        imgFood.setImage(new Image("images/Icons/food.png"));
+        imgFood.setFitHeight(30);
+        imgFood.setFitWidth(30);
+        imgFood.setPreserveRatio(true);
+        imgFood.setPickOnBounds(true);
+
+        JFXButton btnFood = new JFXButton("",imgFood);
+        btnFood.setAlignment(Pos.CENTER);
+        btnFood.setPrefWidth(60);
+        btnFood.setPrefHeight(60);
+        btnFood.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnFood.setTextOverrun(OverrunStyle.CLIP);
+        btnFood.setOnMouseClicked( event -> {
+            try {
+                ScreenController.popUp(Constants.Routes.TWO_NODE_SEARCH);
+                TwoLocSearchPopupController.setOnSendClick(EmployeeMapController::runFoodAPI);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        });
 
         btnLogOut.setStyle("-fx-background-radius: 30;" );
         btnLogOut.setStyle("-fx-background-radius: 30;");
@@ -1317,7 +1360,7 @@ public class EmployeeMapController extends MapController {
         nodesListComp.setSpacing(330);
 
         nodesListFlo.addAnimatedNode(btnFlo);
-        nodesListFlo.addAnimatedNode(boxFlo);
+        // nodesListFlo.addAnimatedNode(boxFlo);
         nodesListFlo.setRotate(70);
         nodesListFlo.setSpacing(320);
 
@@ -1384,8 +1427,9 @@ public class EmployeeMapController extends MapController {
         boxReq.getChildren().add(nodesListOut);
         boxReq.getChildren().add(nodesListGift);
         boxReq.getChildren().add(nodesListInfo);
+        boxReq.getChildren().add(btnFood);
         boxReq.setAlignment(Pos.CENTER);
-        boxReq.setPrefSize(60,700);
+        boxReq.setPrefSize(60,800);
         boxReq.setSpacing(5);
 
         nodeListExl.addAnimatedNode(btnExl);
@@ -1405,6 +1449,35 @@ public class EmployeeMapController extends MapController {
             FirebaseAPI.setCaller(EmployeeMapController.this);
             FirebaseAPI.checkForCommands(UserHelpers.getCurrentUser().getUsername());
         });
+    }
+
+    /**
+     * Runs Food request API
+     */
+    public static void runFoodAPI() {
+        String startLocID = APIHelper.getStartLocID();
+        String endLocID = APIHelper.getEndLocID();
+        FoodRequestTeamI.API api = new FoodRequestTeamI.API();
+        try {
+            api.run(10, 10, 800, 600, "/css/jfoenix-components.css", endLocID, startLocID);
+        } catch (Exception exception) {
+            System.out.println("Failed to run Food API");
+            exception.printStackTrace();
+        }
+    }
+
+    /**
+     * Runs Floral request API
+     */
+    public static void runFloralAPI() {
+        String endLocID = APIHelper.getEndLocID();
+        FloralApi floralApi = new FloralApi();
+        try {
+            floralApi.run(10, 10, "/css/jfoenix-components.css", endLocID);
+        } catch (Exception exception){
+            System.out.println("Floral API failed");
+            exception.printStackTrace();
+        }
     }
 
     @Override

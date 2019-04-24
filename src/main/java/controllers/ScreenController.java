@@ -4,12 +4,18 @@ import controllers.maps.AdminMapController;
 import controllers.maps.MapController;
 import controllers.node.*;
 import controllers.user.PopUpControllerUser;
+import controllers.welcome.LogoutController;
+import helpers.Caretaker;
 import helpers.Constants;
+import helpers.Originator;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
@@ -25,12 +31,19 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashMap;
+import java.util.ResourceBundle;
 
 public class ScreenController {
 
     private static HashMap<String, String> screenMap = new HashMap<>();
     private static Stage stage;
     public static Scene sceneThing = null;
+    public static long mouseCnt = 0;
+    public static long theCnt = 0;
+    public static long secCnt = 0;
+    static Originator org = new Originator();
+    static Caretaker car = new Caretaker();
+
 
     public ScreenController(Stage stage) {
         ScreenController.stage = stage;
@@ -40,7 +53,46 @@ public class ScreenController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        Thread t = new Thread(() -> {
+            System.out.println("here");
+            while(true) {
+                LogoutController lc = new LogoutController() {
+                    @Override
+                    public void initialize(URL location, ResourceBundle resources) {
 
+                    }
+                };
+                //int timeCnt = lc.getTime();
+                car.add(org.saveStateToMemento());
+                theCnt = mouseCnt;
+                if (secCnt > lc.time*60) {
+                    Platform.runLater(() -> {
+                        try {
+                            ScreenController.activate(Constants.Routes.WELCOME);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    });
+                    secCnt = 0;
+                }
+                try {
+                    Thread.sleep(1000L);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if (car.get(car.mementoList.size() - 1) == theCnt) {
+                    secCnt += 1;
+                    System.out.println(secCnt);
+                }
+                else {
+                    secCnt = 0L;
+                    mouseCnt = 0L;
+                    theCnt = 0L;
+                }
+            }
+        });
+        t.setDaemon(true);
+        t.start();
     }
 
     public static HashMap<String, String> getScreenMap() {
@@ -94,6 +146,7 @@ public class ScreenController {
         this.addScreen(Constants.Routes.ADD, "/fxml/UI/node/AddPopUp.fxml");
         this.addScreen(Constants.Routes.CALENDAR, "/fxml/UI/booking/CalendarTab.fxml");
         this.addScreen(Constants.Routes.EDGE_EDITOR, "/fxml/UI/node/EdgeEditor.fxml");
+        this.addScreen(Constants.Routes.TWO_NODE_SEARCH, "/fxml/UI/search/TwoLocSearchPopup.fxml");
     }
 
     public void addScreen(Constants.Routes route, String layout) {
@@ -110,16 +163,17 @@ public class ScreenController {
         stage.close();
     }
 
+
     public static void activate(Constants.Routes route) throws Exception {
         stage = new Stage();
         URL url = routeToURL(route);
-
         FXMLLoader loader = new FXMLLoader(url);
         Parent root = loader.load();
 
         if (sceneThing == null) {
             sceneThing = new Scene(root);
             addStyles(sceneThing);
+            autoLog(sceneThing);
             stage.setTitle("Brigham and Women's Pathfinder Application");
             stage.setScene(sceneThing);
             stage.setResizable(true);
@@ -128,6 +182,23 @@ public class ScreenController {
         } else {
             sceneThing.setRoot(root);
         }
+    }
+
+    public static EventHandler<MouseEvent> mouseHandler = new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent mouseEvent) {
+            mouseCnt += 1;
+            secCnt = 0L;
+            System.out.println(mouseCnt);
+        }
+    };
+
+    public static void autoLog(Scene scene) throws Exception {
+        System.out.println("mousemoved");
+        scene.setOnMouseClicked(mouseHandler);
+        scene.setOnMouseMoved(mouseHandler);
+        scene.setOnMousePressed(mouseHandler);
+        scene.setOnMouseReleased(mouseHandler);
     }
 
     public static void infoPopUp(Constants.Routes route, Location loc, MapController mc, Map map) throws IOException {

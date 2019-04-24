@@ -71,5 +71,9 @@
                 <JFXToggleButton fx:id="tglSpace" prefWidth="50" prefHeight="50" />
             </AnchorPane>
         </Tab>
+		
+	<!-- 	<Tab text="Sanitation Report Place Holder Location">
+		    <fx:include source="../sanitation/SanitationReport.fxml" />
+		</Tab> -->
     </JFXTabPane>
 </AnchorPane>
