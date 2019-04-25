@@ -56,6 +56,16 @@ public abstract class InfoController extends PopUpController {
         PathFinder.printPath(mc, kiosk, loc);
 
         ScreenController.deactivate();
+
+        // Generate images and send them to firebase
+        // Mobile app will then get updated
+//        SnapshotGenerator sg = new SnapshotGenerator(mc);
+//        ArrayList<File> imgFiles = sg.generateImages(MapController.currentRoute);
+//
+//        for(File file : imgFiles) {
+//            FirebaseAPI.uploadDirectionsImage(file);
+//        }
+
     }
 
     public final void btnCancel_OnClick(MouseEvent event) {
