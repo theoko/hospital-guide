@@ -31,7 +31,7 @@
                     </padding>
                 </VBox>
                 <AnchorPane AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="260.0">
-                    <VBox fx:id="vboxDock" prefHeight="264.0" prefWidth="60.0"
+                    <VBox fx:id="vboxDock" prefHeight="400.0" prefWidth="60.0"
                           style="-fx-background-color: #022D5A; -fx-background-radius: 30;"
                           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
                           AnchorPane.topAnchor="0.0"/>
@@ -49,11 +49,17 @@
                         </padding>
                     </JFXButton>
                 </AnchorPane>
-                <AnchorPane style="-fx-background-color: #022D5A; -fx-background-radius: 30;" fx:id="tilDirections" prefWidth="400.0" prefHeight="500.0">
+                <AnchorPane style="-fx-background-color: #022D5A; -fx-background-radius: 30;" fx:id="tilDirections" prefWidth="510.0" prefHeight="500.0">
                     <ScrollPane fx:id="txtPane" style="-fx-background-radius: 22; -fx-padding: 10, 10, 10, 10;" AnchorPane.leftAnchor="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
                 </AnchorPane>
                 <AnchorPane fx:id="AboutUs" style="-fx-background-color: white;">
                     <fx:include source="../../../AboutPage.fxml"/>
+                </AnchorPane>
+                <AnchorPane fx:id="Info" style="-fx-background-color: white;">
+                    <fx:include source="../AppInfo/AppInfo.fxml"/>
+                </AnchorPane>
+                <AnchorPane fx:id="Credit" style="-fx-background-color: white;">
+                    <fx:include source="../CreditPage/CreditPage.fxml"/>
                 </AnchorPane>
                 <AnchorPane AnchorPane.topAnchor="15" AnchorPane.rightAnchor="15">
                     <fx:include source="../weather/Weather.fxml"/>

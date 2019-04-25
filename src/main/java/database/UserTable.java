@@ -1,6 +1,7 @@
 package database;
 
 import helpers.Constants;
+import helpers.Constants.Auth;
 import models.user.User;
 
 import java.sql.PreparedStatement;
@@ -31,6 +32,30 @@ public class UserTable {
             statement.execute(usersTable);
         } catch (SQLException | NullPointerException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Seeds table with a few users
+     */
+    public static void seed() {
+
+        // Seed settings
+        final int numEmployees = 5;
+        final int numCustodians = 3;
+
+        // Procedurally generate employees
+        for (int i = 1; i <= numEmployees; i++) {
+            String username = "Employee-" + i;
+            User employee = new User(0, username, "password", Auth.EMPLOYEE);
+            createUser(employee);
+        }
+
+        // Procedurally generate custodians
+        for (int i = 1; i <= numCustodians; i++) {
+            String username = "Custodian-" + i;
+            User custodian = new User(0, username, "password", Auth.CUSTODIAN);
+            createUser(custodian);
         }
     }
 
@@ -212,6 +237,33 @@ public class UserTable {
 
             return null;
         }
+    }
+
+    /**
+     * Returns list of users in table with given authorization
+     */
+    public static ArrayList<User> getUsersWithAuth(Auth auth) {
+        ArrayList<User> employees = new ArrayList<>();
+        for (User user : getUsers()) {
+            if (user.getUserType().equals(auth)) {
+                employees.add(user);
+            }
+        }
+        return employees;
+    }
+
+    /**
+     * Returns list of employees in table.
+     */
+    public static ArrayList<User> getEmployees() {
+        return getUsersWithAuth(Auth.EMPLOYEE);
+    }
+
+    /**
+     * Returns list of custodians in table.
+     */
+    public static ArrayList<User> getCustodians() {
+        return getUsersWithAuth(Auth.CUSTODIAN);
     }
 
     /**

@@ -9,9 +9,9 @@ import helpers.Constants;
 import helpers.UIHelpers;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.control.OverrunStyle;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -19,10 +19,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Path;
 import map.MapDisplay;
 import map.PathFinder;
-import messaging.EmailMessenger;
 import messaging.TextMessenger;
 import models.map.Location;
 import models.search.SearchAPI;
@@ -30,10 +28,10 @@ import models.search.SearchAPI;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class UserMapController extends MapController {
+import static controllers.ScreenController.mouseCnt;
+import static controllers.ScreenController.secCnt;
 
-    public AnchorPane paneDock;
-    public VBox vboxDock;
+public class UserMapController extends MapController {
     public ImageView imgLogOut;
     public JFXButton btnLogOut;
     public AnchorPane tilDirections;
@@ -42,6 +40,8 @@ public class UserMapController extends MapController {
     public ImageView imgText;
     public JFXButton btnText;
     public AnchorPane AboutUs;
+    public AnchorPane Info;
+    public AnchorPane Credit;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -78,6 +78,37 @@ public class UserMapController extends MapController {
 
     @Override
     protected void addDoc() {
+
+        //path.setEditable(true);
+        start.setPromptText("Select Path");
+        start.setStyle("-fx-background-color: #ffffff");
+        start.setPrefWidth(300);
+        start.setPrefHeight(40);
+
+        //path.setEditable(true);
+        end.setPromptText("Select Path");
+        end.setStyle("-fx-background-color: #ffffff");
+        end.setPrefWidth(300);
+        end.setPrefHeight(40);
+
+
+        ImageView imgPath = new ImageView();
+        imgPath.setImage(new Image("images/Icons/path.png"));
+        imgPath.setFitWidth(30);
+        imgPath.setFitHeight(30);
+        imgPath.setPreserveRatio(true);
+        imgPath.setPickOnBounds(true);
+
+        JFXButton btnPath = new JFXButton("", imgPath);
+        btnPath.setAlignment(Pos.CENTER);
+        btnPath.setPrefWidth(60);
+        btnPath.setPrefHeight(60);
+        btnPath.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnPath.setTextOverrun(OverrunStyle.CLIP);
+
+        UIHelpers.mouseHover(btnPath);
+
+
         ImageView imgUser = new ImageView();
         imgUser.setImage(new Image("images/Icons/user.png"));
         imgUser.setFitHeight(30);
@@ -91,6 +122,9 @@ public class UserMapController extends MapController {
         btnUser.setPrefHeight(60);
         btnUser.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnUser.setTextOverrun(OverrunStyle.CLIP);
+
+        UIHelpers.mouseHover(btnUser);
+        btnUser.setTooltip(new Tooltip("Account"));
 
 
         ImageView imgSearch = new ImageView();
@@ -107,6 +141,8 @@ public class UserMapController extends MapController {
         btnSearch.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnSearch.setTextOverrun(OverrunStyle.CLIP);
 
+        UIHelpers.mouseHover(btnSearch);
+        btnSearch.setTooltip(new Tooltip("Search"));
 
 
         ImageView imgArrow = new ImageView();
@@ -125,6 +161,8 @@ public class UserMapController extends MapController {
 
 
         UIHelpers.btnRaise(btnArrow);
+        btnArrow.setTooltip(new Tooltip("Enter"));
+        UIHelpers.mouseHover(btnArrow);
 
 //        btnArrow.setOnMouseEntered(event -> {
 //            btnArrow.setButtonType(JFXButton.ButtonType.RAISED);
@@ -149,6 +187,8 @@ public class UserMapController extends MapController {
         btnRoute.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnRoute.setTextOverrun(OverrunStyle.CLIP);
 
+        UIHelpers.mouseHover(btnRoute);
+        btnRoute.setTooltip(new Tooltip("Directions"));
 
 
         ImageView imgAbout = new ImageView();
@@ -165,8 +205,42 @@ public class UserMapController extends MapController {
         btnAbout.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
         btnAbout.setTextOverrun(OverrunStyle.CLIP);
 
+        UIHelpers.mouseHover(btnAbout);
+        btnAbout.setTooltip(new Tooltip("About"));
 
+        ImageView imgQues = new ImageView();
+        imgQues.setImage(new Image("images/Icons/ques.png"));
+        imgQues.setFitHeight(30);
+        imgQues.setFitWidth(30);
+        imgQues.setPreserveRatio(true);
+        imgQues.setPickOnBounds(true);
 
+        JFXButton btnQues = new JFXButton("",imgQues);
+        btnQues.setAlignment(Pos.CENTER);
+        btnQues.setPrefWidth(60);
+        btnQues.setPrefHeight(60);
+        btnQues.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnQues.setTextOverrun(OverrunStyle.CLIP);
+
+        UIHelpers.mouseHover(btnQues);
+        btnAbout.setTooltip(new Tooltip("FAQs"));
+
+        ImageView imgCredit = new ImageView();
+        imgCredit.setImage(new Image("images/Icons/credit.png"));
+        imgCredit.setFitHeight(30);
+        imgCredit.setFitWidth(30);
+        imgCredit.setPreserveRatio(true);
+        imgCredit.setPickOnBounds(true);
+
+        JFXButton btnCredit = new JFXButton("",imgCredit);
+        btnCredit.setAlignment(Pos.CENTER);
+        btnCredit.setPrefWidth(60);
+        btnCredit.setPrefHeight(60);
+        btnCredit.setStyle("-fx-background-color: #022D5A;" + "-fx-background-radius: 30;");
+        btnCredit.setTextOverrun(OverrunStyle.CLIP);
+
+        UIHelpers.mouseHover(btnCredit);
+        btnCredit.setTooltip(new Tooltip("Credits"));
 
         ImageView imgCoffee = new ImageView();
         imgCoffee.setImage(new Image("images/SearchIcons/coffee.png"));
@@ -186,6 +260,7 @@ public class UserMapController extends MapController {
         });
 
         UIHelpers.btnRaise(btnCoffee);
+        btnCoffee.setTooltip(new Tooltip("Food"));
 
 
         ImageView imgRest = new ImageView();
@@ -206,7 +281,7 @@ public class UserMapController extends MapController {
         });
 
        UIHelpers.btnRaise(btnRest);
-
+       btnRest.setTooltip(new Tooltip("Restroom"));
 
 
         ImageView imgExit = new ImageView();
@@ -227,6 +302,7 @@ public class UserMapController extends MapController {
         });
 
         UIHelpers.btnRaise(btnExit);
+        btnExit.setTooltip(new Tooltip("Exit"));
 
 
 
@@ -248,6 +324,7 @@ public class UserMapController extends MapController {
         });
 
         UIHelpers.btnRaise(btnElev);
+        btnElev.setTooltip(new Tooltip("Elevators"));
 
         ImageView imgInfo = new ImageView();
         imgInfo.setImage(new Image("images/Icons/info.png"));
@@ -267,11 +344,14 @@ public class UserMapController extends MapController {
         });
 
         UIHelpers.btnRaise(btnInfo);
+        btnInfo.setTooltip(new Tooltip("Information"));
+
 
         btnLogOut.setStyle("-fx-background-radius: 30;" );
         btnLogOut.setButtonType(JFXButton.ButtonType.RAISED);
 
         UIHelpers.btnRaise(btnLogOut);
+        btnLogOut.setTooltip(new Tooltip("Log Out"));
 
 
         imgLogOut.setImage(new Image("images/Icons/signout.png"));
@@ -281,6 +361,8 @@ public class UserMapController extends MapController {
         imgText.setImage(new Image("images/Icons/text.png"));
 
         UIHelpers.btnRaise(btnText);
+        btnText.setTooltip(new Tooltip("Send Text"));
+
 
         vboxDock.setSpacing(8);
 
@@ -300,6 +382,46 @@ public class UserMapController extends MapController {
         user.setTextFill(Color.WHITE);
         user.setStyle("-fx-background-color: radial-gradient(radius 120%, #022D5A, derive(#022D5A, -60%), derive(#022D5A, 60%));" + "-fx-background-radius: 10;" + "-fx-font-size: 24;");
         user.setPadding(new Insets(0, 0, 0, 10));
+
+        Label lblStart = new Label("Start");
+        lblStart.setPrefHeight(40);
+        lblStart.setPrefWidth(150);
+        lblStart.setTextFill(Color.WHITE);
+        lblStart.setAlignment(Pos.CENTER);
+        lblStart.setStyle("-fx-background-color: radial-gradient(radius 120%, #022D5A, derive(#022D5A, -60%), derive(#022D5A, 60%));" +
+                "-fx-background-radius: 20;" +
+                "-fx-font-size: 18;" +
+                "-fx-font-weight: BOLD");
+        lblStart.setPadding(new Insets(5, 10, 5, 10));
+
+
+        Label lblEnd = new Label("End");
+        lblEnd.setPrefHeight(40);
+        lblEnd.setPrefWidth(150);
+        lblEnd.setTextFill(Color.WHITE);
+        lblEnd.setAlignment(Pos.CENTER);
+        lblEnd.setStyle("-fx-background-color: radial-gradient(radius 120%, #022D5A, derive(#022D5A, -60%), derive(#022D5A, 60%));" +
+                "-fx-background-radius: 20;" +
+                "-fx-font-size: 18;" +
+                "-fx-font-weight: BOLD");
+        lblEnd.setPadding(new Insets(5, 10, 5, 10));
+
+        HBox pathBox = new HBox();
+
+        HBox pathBox1 = new HBox();
+        pathBox1.setSpacing(-25.0);
+        pathBox1.getChildren().add(start);
+        pathBox1.getChildren().add(lblStart);
+        pathBox.getChildren().add(pathBox1);
+        HBox pathBox2 = new HBox();
+        pathBox2.setSpacing(-25.0);
+        pathBox2.getChildren().add(end);
+        pathBox2.getChildren().add(lblEnd);
+        pathBox.getChildren().add(pathBox2);
+        pathBox.setAlignment(Pos.CENTER);
+        pathBox.setPrefSize(700,40);
+        pathBox.setSpacing(20);
+        pathBox.setTranslateY(100.0);
 
         HBox userBox = new HBox();
 
@@ -339,7 +461,7 @@ public class UserMapController extends MapController {
 
         Label dir = new Label("Text Directions");
         dir.setPrefHeight(50);
-        dir.setPrefWidth(400);
+        dir.setPrefWidth(510);
         dir.setTextFill(Color.WHITE);
         dir.setAlignment(Pos.CENTER);
         dir.setStyle("-fx-background-color: radial-gradient(radius 120%, #022D5A, derive(#022D5A, -60%), derive(#022D5A, 60%));" +
@@ -353,7 +475,7 @@ public class UserMapController extends MapController {
         pathDir.getChildren().add(tilDirections);
         pathDir.getChildren().add(textBox);
         pathDir.setAlignment(Pos.CENTER);
-        pathDir.setPrefSize(400,700);
+        pathDir.setPrefSize(510,700);
         pathDir.setSpacing(5);
 
         Label lblAbout = new Label("About Us");
@@ -374,10 +496,57 @@ public class UserMapController extends MapController {
         boxAbout.setPrefSize(1200,700);
         boxAbout.setSpacing(5);
 
+        Label lblQues = new Label("Frequently Asked Questions");
+        lblQues.setPrefHeight(50);
+        lblQues.setPrefWidth(1200);
+        lblQues.setTextFill(Color.WHITE);
+        lblQues.setAlignment(Pos.CENTER);
+        lblQues.setStyle("-fx-background-color: radial-gradient(radius 120%, #022D5A, derive(#022D5A, -60%), derive(#022D5A, 60%));" +
+                "-fx-background-radius: 30;" +
+                "-fx-font-size: 24;" +
+                "-fx-font-weight: BOLD");
+        lblQues.setPadding(new Insets(10, 10, 10, 10));
+
+        VBox boxQues = new VBox();
+        boxQues.getChildren().add(lblQues);
+        boxQues.getChildren().add(Info);
+        boxQues.setAlignment(Pos.CENTER);
+        boxQues.setPrefSize(1200,700);
+        boxQues.setSpacing(5);
+
+        Label lblCredit = new Label("Credits");
+        lblCredit.setPrefHeight(50);
+        lblCredit.setPrefWidth(1200);
+        lblCredit.setTextFill(Color.WHITE);
+        lblCredit.setAlignment(Pos.CENTER);
+        lblCredit.setStyle("-fx-background-color: radial-gradient(radius 120%, #022D5A, derive(#022D5A, -60%), derive(#022D5A, 60%));" +
+                "-fx-background-radius: 30;" +
+                "-fx-font-size: 24;" +
+                "-fx-font-weight: BOLD");
+        lblCredit.setPadding(new Insets(10, 10, 10, 10));
+
+        VBox boxCredit = new VBox();
+        boxCredit.getChildren().add(lblCredit);
+        boxCredit.getChildren().add(Credit);
+        boxCredit.setAlignment(Pos.CENTER);
+        boxCredit.setPrefSize(1200,700);
+        boxCredit.setSpacing(5);
+
         JFXNodesList nodeListSearch = new JFXNodesList();
         JFXNodesList nodeListUser = new JFXNodesList();
         JFXNodesList nodeListRoute = new JFXNodesList();
         JFXNodesList nodesListAbout = new JFXNodesList();
+        JFXNodesList nodesListPath = new JFXNodesList();
+        JFXNodesList nodesListQues = new JFXNodesList();
+        JFXNodesList nodesListCredit = new JFXNodesList();
+
+
+        nodesListPath.addAnimatedNode(btnPath);
+        nodesListPath.addAnimatedNode(pathBox);
+
+        nodesListPath.setRotate(90);
+        nodesListPath.setSpacing(250);
+
 
         nodeListSearch.addAnimatedNode(btnSearch);
         nodeListSearch.addAnimatedNode(searchNear);
@@ -392,17 +561,31 @@ public class UserMapController extends MapController {
         nodeListRoute.addAnimatedNode(btnRoute);
         nodeListRoute.addAnimatedNode(pathDir);
         nodeListRoute.setRotate(90);
-        nodeListRoute.setSpacing(-135);
+        nodeListRoute.setSpacing(-75);
 
         nodesListAbout.addAnimatedNode(btnAbout);
         nodesListAbout.addAnimatedNode(boxAbout);
-        nodesListAbout.setRotate(90);
-        nodesListAbout.setSpacing(255);
+        nodesListAbout.setRotate(95);
+        nodesListAbout.setSpacing(275);
+
+        nodesListQues.addAnimatedNode(btnQues);
+        nodesListQues.addAnimatedNode(boxQues);
+        nodesListQues.setRotate(100);
+        nodesListQues.setSpacing(255);
+
+        nodesListCredit.addAnimatedNode(btnCredit);
+        nodesListCredit.addAnimatedNode(boxCredit);
+        nodesListCredit.setRotate(105);
+        nodesListCredit.setSpacing(295);
 
         vboxDock.getChildren().add(nodeListUser);
         vboxDock.getChildren().add(nodeListSearch);
         vboxDock.getChildren().add(nodeListRoute);
+        vboxDock.getChildren().add(nodesListPath);
         vboxDock.getChildren().add(nodesListAbout);
+        vboxDock.getChildren().add(nodesListQues);
+        vboxDock.getChildren().add(nodesListCredit);
+
     }
 
     @Override

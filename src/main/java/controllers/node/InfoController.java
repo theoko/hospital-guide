@@ -24,9 +24,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public abstract class InfoController extends PopUpController {
-    public Label lblNodeID;
-    public Label lblLocation;
-    public Label lblFloor;
     public Label lblBuilding;
     public Label lblNodeType;
     public Label lblLongName;
@@ -44,9 +41,6 @@ public abstract class InfoController extends PopUpController {
 
     public final void setLoc(Location loc) {
         this.loc = loc;
-        lblNodeID.setText(loc.getNodeID());
-        lblLocation.setText("(" + loc.getxCord() + ", " + loc.getyCord() + ")");
-        lblFloor.setText(loc.getFloor());
         lblBuilding.setText(loc.getBuilding());
         lblNodeType.setText(DatabaseHelpers.enumToString(loc.getNodeType()));
         lblLongName.setText(loc.getLongName());

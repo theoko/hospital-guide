@@ -11,22 +11,29 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
+import map.MapDisplay;
 import models.map.*;
 import controllers.node.*;
 import controllers.ScreenController;
 import org.w3c.dom.NodeList;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class TableEditorController extends PopUpController implements Initializable {
-    private ObservableList<LocationTableEntry> nodeList = FXCollections.observableArrayList();
-    private ObservableList<EdgeTableEntry> edgeList = FXCollections.observableArrayList();
-
+    private static ObservableList<LocationTableEntry> nodeList = FXCollections.observableArrayList();
+    private static ObservableList<EdgeTableEntry> edgeList = FXCollections.observableArrayList();
+    public static MapController mapC;
+    public static Map localMap;
     private LocationTableEntry selected_lte;
 
     @FXML
@@ -94,6 +101,41 @@ public class TableEditorController extends PopUpController implements Initializa
         nodes.setItems(nodeList);
         edges.setItems(edgeList);
     }
+    public void visuallyUpdateNodes() {
+        List<Node> lstNodes = new ArrayList<>();
+
+        for (Node n : mapC.panMap.getChildren()) {
+            try {
+                if (n instanceof Circle && n.getId() != null && n.getId().equals(loc.getNodeID())) {
+                    lstNodes.add(n);
+                }
+                    if (n instanceof Line && n.getId().contains(loc.getNodeID())) {
+                        lstNodes.add(n);
+                    }
+            } catch(Exception e) {}
+        }
+        for(Node n : lstNodes) {
+            if(n instanceof Circle) {
+
+                Location local = LocationTable.getLocations().get(n.getId());
+                try {
+                    mapC.panMap.getChildren().remove(n);
+                } catch(Exception e){}
+                loc = local;
+                visualAddNode();
+            } else if(n instanceof Line) {
+                for(Edge e : EdgeTable.getEdges(LocationTable.getLocations())) {
+                    try {
+                        if (e.getEdgeID().equals(n.getId())) {
+                            mapC.panMap.getChildren().remove(n);
+                            visualAddEdge(e.getStart(), e.getEnd(), e);
+                        }
+                    } catch(Exception err) {}
+                }
+            }
+        }
+        if(lstNodes.size() == 0) visualAddNode();
+    }
     public void clearNodeEditorText() {
         nodeIDText.clear();
         xText.clear();
@@ -103,6 +145,36 @@ public class TableEditorController extends PopUpController implements Initializa
         buildingText.clear();
         typeText.clear();
         editNodeButton.setDisable(true);
+    }
+    public void visualDeleteNode() {
+        List<Node> lstNodes = new ArrayList<>();
+//        loc = localMap.getLocation(locID);
+//        resetEdges();
+//        for(EdgeTableEntry e : edgeList) {
+//            if(e.getNodeID1().equals(loc.getNodeID()) || e.getNodeID2().equals(loc.getNodeID())) {
+//                EdgeTable.remo
+//            }
+//        }
+        for (Node n : mapC.panMap.getChildren()) {
+            try {
+                if (n instanceof Circle && n.getId() != null && n.getId().equals(loc.getNodeID())) {
+                    lstNodes.add(n);
+                }
+                for (SubPath sp : loc.getSubPaths()) {
+                    if (n instanceof Line && n.getId().equals(sp.getEdgeID())) {
+                        lstNodes.add(n);
+                    }
+                }
+            } catch(Exception e) {}
+        }
+        mapC.panMap.getChildren().removeAll(lstNodes);
+        LocationTable.deleteLocation(loc);
+        ScreenController.deactivate();
+    }
+    public void visualDeleteNode(String locID) {
+        loc = localMap.getLocation(locID);
+        visualDeleteNode();
+
     }
     public void updateEditableNode() {
         LocationTableEntry lte = nodes.getSelectionModel().getSelectedItem();
@@ -122,13 +194,13 @@ public class TableEditorController extends PopUpController implements Initializa
             editNodeButton.setDisable(false);
         }
     }
-    public void resetNodes() {
+    public static void resetNodes() {
         nodeList.clear();
         for(Location loc : LocationTable.getLocations().values()) {
             nodeList.add(new LocationTableEntry(loc));
         }
     }
-    public void resetEdges() {
+    public static void resetEdges() {
         edgeList.clear();
         for(Edge e : EdgeTable.getEdges(LocationTable.getLocations())) {
             edgeList.add(new EdgeTableEntry(e));
@@ -148,9 +220,47 @@ public class TableEditorController extends PopUpController implements Initializa
     public void deleteEdge() {
         ObservableList<EdgeTableEntry> entriesToDelete = edges.getSelectionModel().getSelectedItems();
         for(EdgeTableEntry e : entriesToDelete) {
+            visualDeleteEdge(e);
             EdgeTable.removeEdgeByID(e.toEdge());
             edgeList.remove(e);
         }
+    }
+    public void visualDeleteEdge(EdgeTableEntry e) {
+        List<Node> lstNodes = new ArrayList<>();
+
+        for (Node n : mapC.panMap.getChildren()) {
+            try {
+                if (n instanceof Line && n.getId() != null) {
+                    if(n.getId().contains(e.getNodeID1()) && n.getId().contains(e.getNodeID2())) {
+                        lstNodes.add(n);
+                    }
+                }
+                for (SubPath sp : loc.getSubPaths()) {
+                    if (n instanceof Line && n.getId().equals(sp.getEdgeID())) {
+                        lstNodes.add(n);
+                    }
+                }
+            } catch(Exception er) {}
+        }
+        mapC.panMap.getChildren().removeAll(lstNodes);
+    }
+    public void visualAddNode() {
+        if(loc.getFloor().equals(mapC.getFloor())) {
+            if(loc.getNodeType() != Constants.NodeType.HALL)
+                mapC.panMap.getChildren().add(MapDisplay.createCircle
+                        (mapC, loc, MapDisplay.NodeStyle.REGULAR, 1, Constants.Routes.EDIT_LOCATION, true));
+            else
+                mapC.panMap.getChildren().add(0, MapDisplay.createCircle(
+                        mapC, loc, MapDisplay.NodeStyle.POINT, 1, Constants.Routes.EDIT_LOCATION, true));
+        }
+    }
+    public void visualAddEdge(Location start, Location end, Edge e) {
+        if(start.getFloor().equals(end.getFloor())) {
+            Line l = MapDisplay.creatLine(mapC, start, end, e);
+            mapC.panMap.getChildren().add(0, l);
+            e.setLine(l);
+        }
+
     }
     public void addEdge() {
         String nodeID1 = startText.getText();
@@ -170,16 +280,21 @@ public class TableEditorController extends PopUpController implements Initializa
             EdgeTable.addEdge(e);
             startText.setText("");
             endText.setText("");
+            visualAddEdge(nodeStart, nodeEnd, e);
             resetEdges();
+
         }
     }
     public void deleteNode() {
         ObservableList<LocationTableEntry> entriesToDelete = nodes.getSelectionModel().getSelectedItems();
         for(LocationTableEntry loc : entriesToDelete) {
+
+            visualDeleteNode(loc.getID());
             LocationTable.deleteLocation(loc.toLocation());
             nodeList.remove(loc);
+
         }
-        resetEdges();
+        resetEvent();
         clearNodeEditorText();
         warningText.clear();
 
@@ -207,6 +322,8 @@ public class TableEditorController extends PopUpController implements Initializa
                 throw new Exception();
             }
             LocationTable.updateLocation(loc);
+            this.loc = loc;
+            visuallyUpdateNodes();
 //            if(!LocationTable.updateLocation(loc)) throw new Exception();
             resetNodes();
             warningText.clear();
@@ -243,7 +360,10 @@ public class TableEditorController extends PopUpController implements Initializa
             loc.setNodeType(DatabaseHelpers.stringToEnum(typeText.getText()));
 
             if(!LocationTable.addLocation(loc)) throw new Exception();
+            this.loc = loc;
+            visualAddNode();
             resetNodes();
+
             warningText.clear();
             clearNodeEditorText();
         } catch(Exception e) {
@@ -254,5 +374,13 @@ public class TableEditorController extends PopUpController implements Initializa
         ScreenController.deactivate();
         ScreenController.activate(Constants.Routes.ADMIN_MAP);
     }
+    public void resetEvent() {
+        resetNodes();
+        resetEdges();
+    }
+    public void resetEvent(MouseEvent mouseEvent) {
+        resetEvent();
+    }
 
 }
+

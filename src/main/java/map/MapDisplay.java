@@ -272,7 +272,7 @@ public class MapDisplay {
         return circle;
     }
 
-    private static Line creatLine(MapController mc, Location start, Location end, Edge edge) {
+    public static Line creatLine(MapController mc, Location start, Location end, Edge edge) {
         Line line = new Line();
         bindLineCircle(mc, line, start, end);
         line.setStroke(edgeFill);

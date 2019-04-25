@@ -1,0 +1,31 @@
+package controllers.AutoLogout;
+
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
+import controllers.ScreenController;
+import helpers.Constants;
+import javafx.scene.input.MouseEvent;
+
+public class AutoLogoutController {
+
+    public JFXTextField txtDescription;
+    public double time = 5;
+
+    public AutoLogoutController() {
+        this.time = time;
+    }
+
+    public double getTime(){
+        return Double.parseDouble(txtDescription.getText());
+    }
+
+    public void btnSubmit_Clicked(MouseEvent mouseEvent) {
+        mouseEvent.consume();
+        time = getTime();
+        try {
+            ScreenController.activate(Constants.Routes.WELCOME);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}

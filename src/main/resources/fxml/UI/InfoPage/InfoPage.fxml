@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.InfoPage.InfoPageController">
+    <children>
+        <HBox prefWidth="700.0">
+            <children>
+                <Label alignment="CENTER" contentDisplay="CENTER" minHeight="100.0" minWidth="1200.0" style="-fx-background-color: #022D5A;" text="Application Information" textFill="WHITE">
+                    <font>
+                        <Font size="40.0" />
+                    </font>
+                </Label>
+                <HBox prefHeight="25.0" prefWidth="200.0" />
+            </children>
+        </HBox>
+        <HBox alignment="CENTER" layoutX="516.0" layoutY="460.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="1425.0">
+            <children>
+                <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../../images/H_logo.png" />
+                    </image>
+                </ImageView>
+            </children>
+        </HBox>
+        <HBox alignment="CENTER" layoutX="172.0" layoutY="165.0" prefHeight="75.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="125.0">
+            <children>
+                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="45.0" prefWidth="280.0" style="-fx-background-color: #022D5A; -fx-background-radius: 20;" text="Commonly Asked Questions" textFill="WHITE">
+                    <font>
+                        <Font size="20.0" />
+                    </font>
+                </Label>
+            </children>
+        </HBox>
+        <HBox layoutX="487.0" layoutY="275.0" prefHeight="100.0" prefWidth="200.0" spacing="70.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="225.0">
+            <children>
+                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="350.0" style="-fx-background-color: #022D5A; -fx-background-radius: 20;" text="How do I get directions to my personal destination?" textFill="WHITE">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <JFXTextArea focusColor="#022d5a" text="There are different ways to find your path. If you know where you want to go on the map simply select a node and click the directions button in the pop up window. If you know the name of your destination you can either search it in the search bar or select it from a drop down field which can be sorted by floor or node type." unFocusColor="#022d5a">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </JFXTextArea>
+            </children>
+        </HBox>
+        <HBox layoutX="100.0" layoutY="338.0" prefHeight="100.0" prefWidth="200.0" spacing="170.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="335.0">
+            <children>
+                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="250.0" style="-fx-background-color: #022D5A; -fx-background-radius: 20;" text="How do I find the nearest restroom?" textFill="WHITE">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <JFXTextArea text="The nearest restroom can be selected from the map or searched for in the search bar. ">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </JFXTextArea>
+            </children>
+        </HBox>
+        <HBox layoutX="100.0" layoutY="449.0" prefHeight="120.0" prefWidth="200.0" spacing="195.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="445.0">
+            <children>
+                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="225.0" style="-fx-background-color: #022D5A; -fx-background-radius: 20;" text="How can I make a service request? " textFill="WHITE">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <JFXTextArea text="A service request can be made by selecting the request tab on the vertical dock located on the right edge of the map. Requests for services such as IT, floral deliveries, transportation, gift shop orders, interpreters, prescriptions, patient information, security, or visual audio can be found on this page. Simply select a request and fill out the prompted fields before submitting.">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </JFXTextArea>
+            </children>
+        </HBox>
+        <HBox layoutX="100.0" layoutY="576.0" prefHeight="100.0" prefWidth="200.0" spacing="220.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
+            <children>
+                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: #022D5A; -fx-background-radius: 20;" text="How do I book a workspace?" textFill="WHITE">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <JFXTextArea text="A workspace can be booked by an employee by selecting the .... TA workspace can be selected or a user can view the available spaces for a specific time. After inserting the desired date, start time, and end time, the booking can be submitted. ">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </JFXTextArea>
+            </children>
+        </HBox>
+        <HBox layoutX="100.0" layoutY="696.0" prefHeight="115.0" prefWidth="200.0" spacing="180.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
+            <children>
+                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="240.0" style="-fx-background-color: #022D5A; -fx-background-radius: 20;" text="How do I book a conference room?" textFill="WHITE">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <JFXTextArea text="The process of booking a conference room is similar to booking a workspace. The user must... Conference rooms can be selected based off  a specific room or by viewing the available spaces for a given date and time. The user must input their desired date, start time, and end time for the booking before submitting.">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </JFXTextArea>
+            </children>
+        </HBox>
+        <HBox layoutX="100.0" layoutY="825.0" prefHeight="100.0" prefWidth="200.0" spacing="130.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
+            <children>
+                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="290.0" style="-fx-background-color: #022D5A; -fx-background-radius: 20;" text="It is possible to report a spill to a custodian?" textFill="WHITE">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <JFXTextArea text="Yes, spills can be reported by selecting the location of the spill on the map and making a sanitation request. Requests can be submitted by selecting the level of priority for the spill and a brief description. Custodians will be alerted of these spills and can mark them complete after cleaning.">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </JFXTextArea>
+            </children>
+        </HBox>
+        <HBox layoutX="100.0" layoutY="942.0" prefHeight="100.0" prefWidth="200.0" spacing="70.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
+            <children>
+                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="350.0" style="-fx-background-color: #022D5A; -fx-background-radius: 20;" text="How do I change my starting location for pathfinding?" textFill="WHITE">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <JFXTextArea text="The start location for pathfinding can be changed by selecting your desired start location on the map and clicking the button &quot;Start Here&quot; that will appear on the pop up window. However, Admins of the application can alter the default start location of the kiosk. ">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </JFXTextArea>
+            </children>
+        </HBox>
+        <HBox layoutX="100.0" layoutY="1056.0" prefHeight="100.0" prefWidth="200.0" spacing="130.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
+            <children>
+                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="290.0" style="-fx-background-color: #022D5A; -fx-background-radius: 20;" text="How do I become a user of the application?" textFill="WHITE">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <JFXTextArea text="Employees will be automatically added as a user by administration. Individuals who are not employeed by the hospital will not be granted access to login to the application but can still gain access to the pathfinding application by selecting the &quot;Get Started&quot; button on the login screen.">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </JFXTextArea>
+            </children>
+        </HBox>
+        <HBox layoutX="100.0" layoutY="1172.0" prefHeight="100.0" prefWidth="200.0" spacing="180.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
+            <children>
+                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="240.0" style="-fx-background-color: #022D5A; -fx-background-radius: 20;" text="Do I need to logout after every use?" textFill="WHITE">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <JFXTextArea text="While employees are encouraged to log out after every use, there is an automatic logout after 5 minutes of no use as a method of security to protect individual accoutns. This timeout period can be changed by the user if they chose.">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </JFXTextArea>
+            </children>
+        </HBox>
+        <HBox layoutX="100.0" layoutY="1292.0" prefHeight="100.0" prefWidth="200.0" spacing="90.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
+            <children>
+                <VBox prefHeight="40.0" prefWidth="327.0" style="-fx-background-color: #022D5A; -fx-background-radius: 20;">
+                    <children>
+                        <Label text="What do I do if I can't find my desired destination" textFill="WHITE">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                            <padding>
+                                <Insets left="10.0" />
+                            </padding>
+                        </Label>
+                        <Label text="on the map or in the drop down?" textFill="WHITE">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                            <padding>
+                                <Insets left="10.0" />
+                            </padding>
+                        </Label>
+                    </children>
+                    <HBox.margin>
+                        <Insets bottom="65.0" />
+                    </HBox.margin>
+                </VBox>
+                <JFXTextArea text="If you are unable to find your destination on the map or the dropdown, use the search bar which can be found on the right edge of the map on the vertical dock. Simply search the name of your destination or a keyword and look through the search results for your destination. ">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </JFXTextArea>
+            </children>
+        </HBox>
+    </children>
+</AnchorPane>

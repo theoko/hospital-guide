@@ -30,7 +30,7 @@
                     </padding>
                 </VBox>
                 <AnchorPane AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="200.0">
-                    <VBox fx:id="vboxDock" prefHeight="468.0" prefWidth="60.0"
+                    <VBox fx:id="vboxDock" prefHeight="400.0" prefWidth="60.0"
                           style="-fx-background-color: #022D5A; -fx-background-radius: 30;"
                           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
                           AnchorPane.topAnchor="0.0"/>
@@ -48,9 +48,6 @@
                         </padding>
                     </JFXButton>
                 </AnchorPane>
-                <AnchorPane style="-fx-background-color: white;" fx:id="roomBooking">
-                    <fx:include source="../booking/RoomBookingWindow.fxml" />
-                </AnchorPane>
                 <AnchorPane style="-fx-background-color: white;" fx:id="UserD">
                     <fx:include source="../user/CreateUser.fxml" />
                 </AnchorPane>
@@ -66,10 +63,14 @@
                 <AnchorPane AnchorPane.topAnchor="15" AnchorPane.rightAnchor="15">
                     <fx:include source="../weather/Weather.fxml"/>
                 </AnchorPane>
-                <JFXTextField fx:id="search" prefWidth="450" prefHeight="34" promptText=" Search"  alignment="CENTER" style=" -fx-font-size: 18px; -fx-font-weight: bold; -fx-font-family: fantasy; -fx-text-fill: #022D5A; -fx-background-color: white" />
-                <JFXToggleButton fx:id="tglZone" prefWidth="50" prefHeight="50" />
-                <JFXToggleButton fx:id="tglSpace" prefWidth="50" prefHeight="50" />
+                <AnchorPane fx:id="Time" >
+                    <fx:include source="../logout/LogoutTimeSet.fxml"/>
+                </AnchorPane>
             </AnchorPane>
         </Tab>
+		
+	<!-- 	<Tab text="Sanitation Report Place Holder Location">
+		    <fx:include source="../sanitation/SanitationReport.fxml" />
+		</Tab> -->
     </JFXTabPane>
 </AnchorPane>

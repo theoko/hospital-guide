@@ -75,7 +75,26 @@ public class SanitationRequest extends ServiceRequest implements Comparable<Sani
     }
 
     /**
-     * Converts priority to integer
+     * Converts status to comparable integer.
+     */
+    private Integer statusToInt() {
+        switch(status) {
+            case INCOMPLETE: return 1;
+            case COMPLETE: return 2;
+            default: return 0;
+        }
+    }
+
+    /**
+     * Converts claimed status to comparable integer.
+     */
+    private Integer claimedToInt() {
+        if (servicer == null) return 1;
+        else return 2;
+    }
+
+    /**
+     * Converts priority to comparable integer.
      */
     private Integer priorityToInt() {
         switch(priority) {
@@ -87,14 +106,27 @@ public class SanitationRequest extends ServiceRequest implements Comparable<Sani
     }
 
     /**
-     * @brief Compares sanitation requests based on priority then request timestamp
+     * @brief Compares sanitation requests based on the following field order:
+     * - Incomplete before complete
+     * - Unclaimed before claimed
+     * - Highest priority first
+     * - Earliest request time first
      */
     public int compareTo(SanitationRequest request) {
-        int priorityCmp = priorityToInt().compareTo(request.priorityToInt());
-        if (priorityCmp == 0) {
-            return requestTime.compareTo(request.requestTime);
-        } else {
-            return priorityCmp;
-        }
+
+        // Compare by status (incomplete before complete)
+        Integer cmp = statusToInt().compareTo(request.statusToInt());
+        if (cmp != 0) return cmp;
+
+        // Compare by claimed status (unclaimed before claimed)
+        cmp = claimedToInt().compareTo(request.claimedToInt());
+        if (cmp != 0) return cmp;
+
+        // Compare by priority (highest first)
+        cmp = priorityToInt().compareTo(request.priorityToInt());
+        if (cmp != 0) return cmp;
+
+        // Compare by request time (earliest first)
+        return requestTime.compareTo(request.requestTime);
     }
 }

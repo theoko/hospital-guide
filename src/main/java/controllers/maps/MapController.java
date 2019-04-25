@@ -1,6 +1,8 @@
 package controllers.maps;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXNodesList;
 import com.jfoenix.controls.JFXTabPane;
 import helpers.Constants;
 import helpers.UIHelpers;
@@ -9,7 +11,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
@@ -20,10 +21,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.MoveTo;
@@ -37,6 +35,9 @@ import net.kurobako.gesturefx.GesturePane;
 
 import java.net.URL;
 import java.util.*;
+
+import static controllers.ScreenController.mouseCnt;
+import static controllers.ScreenController.secCnt;
 
 public abstract class MapController implements Initializable {
     private final double MAX_ZOOM = 2.0;
@@ -52,19 +53,15 @@ public abstract class MapController implements Initializable {
 
     public GesturePane gesMap;
     public ImageView imgMap;
-    public JFXButton btnFloor4;
-    public JFXButton btnFloor3;
-    public JFXButton btnFloor2;
-    public JFXButton btnFloor1;
-    public JFXButton btnFloorG;
-    public JFXButton btnFloorL1;
-    public JFXButton btnFloorL2;
+    public VBox vboxDock;
     public Pane panMap;
     public ScrollPane txtPane;
     public JFXTabPane tabMenu;
     public AnchorPane panRoot;
     //public JFXButton btn;
     public VBox vbxButtons;
+
+    protected JFXComboBox start, end;
 
     protected String floor;
     protected List<LineTuple> lstLineTransits;
@@ -73,6 +70,7 @@ public abstract class MapController implements Initializable {
     public static Stack<Location> currentRoute;
     public static String currentDirections;
     protected Map map;
+    private HashMap<String, Location> longNames;
     private List<Timeline> lstTls;
     private boolean doesPan;
     private List<JFXButton> lstBreadBtns;
@@ -103,11 +101,36 @@ public abstract class MapController implements Initializable {
         addFloorBtns();
         Image img = ImageFactory.getImage(floor);
         imgMap.setImage(img);
+        start = new JFXComboBox();
+        end = new JFXComboBox();
         addDoc();
-        UIHelpers.addHover(panRoot);
-        //UIHelpers.btnRaise(btn);
+        start.valueProperty().addListener(((observable, oldValue, newValue) -> {
+            lstLocs();
+        }));
+        end.valueProperty().addListener(((observable, oldValue, newValue) -> {
+            lstLocs();
+        }));
+
+        for (Node n1 : vboxDock.getChildren()) {
+            JFXNodesList nl1 = (JFXNodesList) n1;
+            JFXButton btn = (JFXButton) nl1.getChildren().get(0);
+            btn.setOnMouseClicked(event -> {
+                for (Node n2 : vboxDock.getChildren()) {
+                    if (!n1.equals(n2)) {
+                        JFXNodesList nl2 = (JFXNodesList) n2;
+                        nl2.animateList(false);
+                    }
+                }
+            });
+        }
 
         zoomOut();
+
+        gesMap.setOnMouseMoved( (e) -> {
+                    mouseCnt += 1;
+                    secCnt = 0L;
+                }
+        );
     }
 
     public void zoomOut() {
@@ -123,6 +146,16 @@ public abstract class MapController implements Initializable {
         });
         t.setDaemon(true);
         t.start();
+    }
+
+    private void lstLocs() {
+        if (start.getValue() != null && end.getValue() != null) {
+            String strStart = (String) start.getValue();
+            String strEnd = (String) end.getValue();
+            Location locStart = longNames.get(strStart);
+            Location locEnd = longNames.get(strEnd);
+            PathFinder.printPath(this, locStart, locEnd);
+        }
     }
 
     protected void initDirections() {
@@ -183,6 +216,8 @@ public abstract class MapController implements Initializable {
         return gesMap;
     }
 
+
+
     private void addFloorBtns() {
         final double HBX_SPACING = 10.0;
         final double VBX_SPACING = 25.0;
@@ -208,6 +243,9 @@ public abstract class MapController implements Initializable {
                 styleButton(btn, "highlight", "unhighlight");
             }
 
+            UIHelpers.mouseHover(btn);
+           // btn.setTooltip(new Tooltip(""));
+
             hbx.getChildren().add(btn);
             vbxButtons.getChildren().add(hbx);
         }
@@ -220,6 +258,9 @@ public abstract class MapController implements Initializable {
 
         vbxButtons.getChildren().clear();
         vbxButtons.setSpacing(VBX_SPACING);
+
+        lstBreadHbxs = new ArrayList<>();
+        lstBreadBtns = new ArrayList<>();
 
         for (LineTuple lt : lstLineTransits) {
             String strFloor = lt.floor;
@@ -235,6 +276,9 @@ public abstract class MapController implements Initializable {
             btn.setOnMouseClicked((e) -> {
                 showBreadCrumb(hbx, btn);
             });
+
+
+            UIHelpers.mouseHover(btn);
 
             lstBreadHbxs.add(hbx);
             lstBreadBtns.add(btn);
@@ -274,6 +318,9 @@ public abstract class MapController implements Initializable {
         btnCancel.setOnMouseClicked((e) -> {
             cancelBreadCrumbs();
         });
+
+        UIHelpers.mouseHover(btnCancel);
+
 
         hbxCancel.getChildren().add(btnCancel);
         vbxButtons.getChildren().add(hbxCancel);
@@ -382,6 +429,7 @@ public abstract class MapController implements Initializable {
             if (n instanceof Circle) {
                 Circle circ = (Circle) n;
                 Location loc = map.getLocation(circ.getId());
+                if(loc == null) continue;
                 if (loc.getFloor().equals(floor)) {
                     circ.setOpacity(1);
                     if (loc.getNodeType().equals(Constants.NodeType.ELEV) || loc.getNodeType().equals(Constants.NodeType.STAI)) {
@@ -458,6 +506,20 @@ public abstract class MapController implements Initializable {
 
     public void setMap(Map map) {
         this.map = map;
+        longNames = new HashMap<>();
+        for (Location loc : map.getAllLocations().values()) {
+            if (!loc.getNodeType().equals(Constants.NodeType.HALL)) {
+                longNames.put(loc.getLongName(), loc);
+            }
+        }
+        popCombo(start);
+        popCombo(end);
+    }
+
+    private void popCombo(JFXComboBox cmbBox) {
+        for (Location loc : longNames.values()) {
+            cmbBox.getItems().add(loc.getLongName());
+        }
     }
 
     public Map getMap() {
