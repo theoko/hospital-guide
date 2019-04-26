@@ -129,6 +129,7 @@ modules.xml
 *.nar
 *.ear
 *.zip
+!movie.zip
 *.tar.gz
 *.rar
 
